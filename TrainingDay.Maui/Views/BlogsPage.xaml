@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
+             xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
+             x:Class="TrainingDay.Maui.Views.BlogsPage"
+             Title="{x:Static resx:AppResources.NewsString}">
+    <ContentPage.BindingContext>
+        <viewModels:BlogsPageViewModel/>
+    </ContentPage.BindingContext>
+    <VerticalStackLayout>
+        <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsLoadingItems}">
+            <CollectionView ItemsSource="{Binding BlogsCollection}" RemainingItemsThresholdReachedCommand="{Binding NewBlogLoadCommand}" 
+                                RemainingItemsThreshold="{Binding Page}" ItemSizingStrategy="MeasureAllItems">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Frame Style="{DynamicResource FrameCellStyle}">
+                                <StackLayout>
+                                    <Label Text="{Binding Title}" FontSize="Medium" FontAttributes="Bold" TextDecorations="Underline" HorizontalTextAlignment="Center">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={x:Reference Page}, Path=BindingContext.OpenBlogCommand}" CommandParameter="{Binding }"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <Label Text="{Binding DateTime}" FontSize="13" HorizontalTextAlignment="End" TextColor="Gray"/>
+                                </StackLayout>
+                            </Frame>
+
+                            <BoxView HeightRequest="1" BackgroundColor="gray" VerticalOptions="End"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </VerticalStackLayout>
+</ContentPage>

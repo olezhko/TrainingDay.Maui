@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
+             x:Class="TrainingDay.Maui.Controls.AlarmListCell">
+    <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand" Padding="5">
+        <StackLayout Spacing="3">
+            <Label x:Name="NameLabel" FontAttributes="Bold" />
+            <Label x:Name="TrainingNameLabel"/>
+            <Label x:Name="TimeLabel">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span x:Name="StartSpan"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <StackLayout Orientation="Horizontal" Spacing="0">
+                <Label x:Name="FrequencyLabel" />
+                <controls:DaysOfWeekView x:Name="DaysOfWeekView" HorizontalOptions="FillAndExpand"/>
+            </StackLayout>
+        </StackLayout>
+        <Switch x:Name="ActiveSwitch" IsToggled="{Binding IsActive}" VerticalOptions="Center" HorizontalOptions="EndAndExpand" Toggled="ActiveSwitch_OnToggled"/>
+    </StackLayout>
+</ContentView>

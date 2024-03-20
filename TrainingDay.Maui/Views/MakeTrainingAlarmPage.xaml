@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
+             xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
+             xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="TrainingDay.Maui.Views.MakeTrainingAlarmPage"
+             Title="MakeTrainingAlarmPage">
+    <ContentPage.BindingContext>
+        <viewModels:MakeTrainingAlarmPageViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <ImageButton WidthRequest="40" HeightRequest="40" Padding="0" Source="close" Command="{Binding CloseCommand}" BackgroundColor="Transparent">
+                <ImageButton.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Gray, Dark=White}" />
+                </ImageButton.Behaviors>
+            </ImageButton>
+
+            <ImageButton Grid.Column="2" WidthRequest="40" HeightRequest="40" Padding="0" Source="save" Command="{Binding SaveAlarmCommand}" BackgroundColor="Transparent">
+                <ImageButton.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Gray, Dark=White}" />
+                </ImageButton.Behaviors>
+            </ImageButton>
+        </Grid>
+
+        <StackLayout Grid.Row="1" Spacing="0">
+            <Picker x:Name="TrainingsPicker" Title="{x:Static resx:AppResources.SelectTraining}" Margin="5" FontSize="Large" ItemDisplayBinding="{Binding Title}"
+                ItemsSource="{Binding TrainingItems}" SelectedItem="{Binding SelectedTrainingItem, Mode=TwoWay}" />
+
+            <Entry Margin="5" Placeholder="{x:Static resx:AppResources.NameString}" Text="{Binding Alarm.Name}"/>
+
+            <TimePicker Margin="5" FontSize="24" HorizontalOptions="Center" Time="{Binding Alarm.Time}" />
+
+            <Label Margin="5" FontSize="24" HorizontalOptions="Center" Text="{x:Static resx:AppResources.OnTheseDays}" />
+
+            <controls:DaysOfWeekSelection x:Name="DaysOfWeekSelection" Margin="5" Days="{Binding Alarm.Days, Mode=TwoWay}" HorizontalOptions="Center" />
+        </StackLayout>
+
+        <Button x:Name="RemoveToolbarItem" Grid.Row="2" Text="{x:Static resx:AppResources.RemoveString}" Padding="40,0" TextColor="Red" CornerRadius="20" 
+            Command="{Binding DeleteAlarmCommand}" HorizontalOptions="Center" Margin="20"/>
+    </Grid>
+</ContentPage>

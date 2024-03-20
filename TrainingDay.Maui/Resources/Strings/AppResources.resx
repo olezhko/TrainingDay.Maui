@@ -1,0 +1,717 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="Achievements" xml:space="preserve">
+    <value>Achievements</value>
+  </data>
+  <data name="AddTrainingString" xml:space="preserve">
+    <value>Add workout</value>
+  </data>
+  <data name="Advice" xml:space="preserve">
+    <value>Advice and Tips</value>
+  </data>
+  <data name="AdviceAfterTrainingMessage" xml:space="preserve">
+    <value>After workout, the post-workout routine is useful, the post-workout routine allows smoothing the transition from high-intensity work to a state of rest. You thereby reduce the burden on the heart muscle, which has to pump blood intensively, to remove its stagnation from the muscles and provide it with internal organs. Suitable: Easy running, smoothly turning into walking (you can in place). Easy work on a bicycle or elliptical simulator, a stepper with a smooth decrease in intensity up to a stop. Jumping on the rope at a slow pace. Sparring with a pear. 3 rounds of 2 minutes each. Performing a complex of general warm-up or yoga complexes. The goal is to normalize breathing with light exercises.</value>
+  </data>
+  <data name="AdviceBeforeTrainingMessage" xml:space="preserve">
+    <value>Stretching before workout is a complex of exercises for preparing the body for physical activity, which will help you avoid injuries and conduct the session as efficiently as possible. Stretching speeds up metabolic processes. Stretching before exercise improves blood circulation, which will saturate your muscles with oxygen and nutrients. This will help improve endurance during class. The warmed muscles are better compressed and relax during workout, which means that your strengths will be higher during the exercises. Suitable basic exercises like hand swing, jumps, push-ups and sit-ups for at least five minutes.</value>
+  </data>
+  <data name="AdviceString" xml:space="preserve">
+    <value>Advice</value>
+  </data>
+  <data name="AlreadyHaveAccountQuestion" xml:space="preserve">
+    <value>Already have an account?</value>
+  </data>
+  <data name="AuthorString" xml:space="preserve">
+    <value>Author: {0}</value>
+  </data>
+  <data name="BeginsAt" xml:space="preserve">
+    <value>begins at</value>
+  </data>
+  <data name="BuyString" xml:space="preserve">
+    <value>Buy</value>
+  </data>
+  <data name="CancelString" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CancelTrainingQuestion" xml:space="preserve">
+    <value>Cancel workout?</value>
+  </data>
+  <data name="ChangesAcceptAfterReboot" xml:space="preserve">
+    <value>Changes will be accepted after restart application</value>
+  </data>
+  <data name="ChooseGroupOrNewString" xml:space="preserve">
+    <value>Group:</value>
+  </data>
+  <data name="ChooseLanguage" xml:space="preserve">
+    <value>Language:</value>
+  </data>
+  <data name="ChoseAction" xml:space="preserve">
+    <value>Choose action</value>
+  </data>
+  <data name="ContinueLastTrainingQuestion" xml:space="preserve">
+    <value>Continue last workout?</value>
+  </data>
+  <data name="CopiedString" xml:space="preserve">
+    <value>_Copy</value>
+  </data>
+  <data name="CopyExercisesFinishedMessage" xml:space="preserve">
+    <value>Coping exercises completed</value>
+  </data>
+  <data name="CopyString" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="CreateNewString" xml:space="preserve">
+    <value>Create new</value>
+  </data>
+  <data name="CreateSuperSetString" xml:space="preserve">
+    <value>Create SuperSet</value>
+  </data>
+  <data name="CurrentString" xml:space="preserve">
+    <value>Current</value>
+  </data>
+  <data name="CurrentTimeString" xml:space="preserve">
+    <value>Time: {0}</value>
+  </data>
+  <data name="DateTimeFormat" xml:space="preserve">
+    <value>{0}</value>
+  </data>
+  <data name="DayFreqString" xml:space="preserve">
+    <value>Repeat every (days)</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="DayTextEveryDay" xml:space="preserve">
+    <value>Every day</value>
+  </data>
+  <data name="DayTextFriday" xml:space="preserve">
+    <value>Fri</value>
+  </data>
+  <data name="DayTextMonday" xml:space="preserve">
+    <value>Mon</value>
+  </data>
+  <data name="DayTextSaturday" xml:space="preserve">
+    <value>Sat</value>
+  </data>
+  <data name="DayTextSunday" xml:space="preserve">
+    <value>Sun</value>
+  </data>
+  <data name="DayTextThursday" xml:space="preserve">
+    <value>Thu</value>
+  </data>
+  <data name="DayTextThusday" xml:space="preserve">
+    <value>Tue</value>
+  </data>
+  <data name="DayTextWensdey" xml:space="preserve">
+    <value>Wed</value>
+  </data>
+  <data name="DeleteAlarmQuestion" xml:space="preserve">
+    <value>Delete this alarm?</value>
+  </data>
+  <data name="DeletedString" xml:space="preserve">
+    <value>Deleted</value>
+  </data>
+  <data name="DeleteExercise" xml:space="preserve">
+    <value>Delete this exercise?</value>
+  </data>
+  <data name="DeleteExerciseFromSuperSetQuestion" xml:space="preserve">
+    <value>Delete exercise from SuperSet?</value>
+  </data>
+  <data name="DeleteTraining" xml:space="preserve">
+    <value>Delete this workout?</value>
+  </data>
+  <data name="Denied" xml:space="preserve">
+    <value>Denied</value>
+  </data>
+  <data name="DistanceString" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="DistinctExercisesPercentFormat" xml:space="preserve">
+    <value>Different finished exercises: {0:0.0}%</value>
+  </data>
+  <data name="DownloadingString" xml:space="preserve">
+    <value>Downloading</value>
+  </data>
+  <data name="Duplicate" xml:space="preserve">
+    <value>Duplicate</value>
+  </data>
+  <data name="ElapsedTimeString" xml:space="preserve">
+    <value>Time: {0:hh\:mm\:ss}</value>
+  </data>
+  <data name="EnterEmail" xml:space="preserve">
+    <value>Enter email</value>
+  </data>
+  <data name="EnterNick" xml:space="preserve">
+    <value>Enter nick</value>
+  </data>
+  <data name="EnterPassword" xml:space="preserve">
+    <value>Enter password</value>
+  </data>
+  <data name="EnterTrainingName" xml:space="preserve">
+    <value>Enter workout name and press OK</value>
+  </data>
+  <data name="Execution" xml:space="preserve">
+    <value>Execution</value>
+  </data>
+  <data name="ExerciseForTypeString" xml:space="preserve">
+    <value>Exercise for </value>
+  </data>
+  <data name="ExerciseInTrainings" xml:space="preserve">
+    <value>Exercise is in workouts:</value>
+  </data>
+  <data name="ExercisesString" xml:space="preserve">
+    <value>Exercises</value>
+  </data>
+  <data name="FilterString" xml:space="preserve">
+    <value>Muscle`s filter</value>
+  </data>
+  <data name="For" xml:space="preserve">
+    <value>For</value>
+  </data>
+  <data name="ForgotPasswordAction" xml:space="preserve">
+    <value>Forgot Password?</value>
+  </data>
+  <data name="GoalString" xml:space="preserve">
+    <value>Goal</value>
+  </data>
+  <data name="GotItString" xml:space="preserve">
+    <value>Got it</value>
+  </data>
+  <data name="GroupingDefaultName" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="GroupingEnterNameofGroup" xml:space="preserve">
+    <value>Enter group`s name</value>
+  </data>
+  <data name="GroupingTrainingNotInGroup" xml:space="preserve">
+    <value>Workout already in Default group</value>
+  </data>
+  <data name="HalfYearString" xml:space="preserve">
+    <value>Half year</value>
+  </data>
+  <data name="Hello" xml:space="preserve">
+    <value>Hello, </value>
+  </data>
+  <data name="HelperString" xml:space="preserve">
+    <value>HELPER</value>
+  </data>
+  <data name="HipsString" xml:space="preserve">
+    <value>Hips</value>
+  </data>
+  <data name="HistoryTrainings" xml:space="preserve">
+    <value>Past workouts</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Hours</value>
+  </data>
+  <data name="HourString" xml:space="preserve">
+    <value>h</value>
+  </data>
+  <data name="InAppPurchase" xml:space="preserve">
+    <value>In-App Purchase</value>
+  </data>
+  <data name="KilogramsString" xml:space="preserve">
+    <value> kg </value>
+  </data>
+  <data name="LanguageString" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="LastImplementedFormatString" xml:space="preserve">
+    <value>Last: {0}</value>
+  </data>
+  <data name="LoginAction" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="LoginWithGoogle" xml:space="preserve">
+    <value>Login with Google</value>
+  </data>
+  <data name="LogoutAction" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="MakeTrainingString" xml:space="preserve">
+    <value>START</value>
+  </data>
+  <data name="MarkTheRequiredExercisesAndPressFormat" xml:space="preserve">
+    <value>Checkmark the required exercises and press {0}</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Minutes</value>
+  </data>
+  <data name="MinuteString" xml:space="preserve">
+    <value>min</value>
+  </data>
+  <data name="MoreThanYearString" xml:space="preserve">
+    <value>More than year</value>
+  </data>
+  <data name="MostOftenDayFormat" xml:space="preserve">
+    <value>Most often day: {0:0}</value>
+  </data>
+  <data name="MostPopularExercises" xml:space="preserve">
+    <value>TOP exercises</value>
+  </data>
+  <data name="MoveExercisesFinishedMessage" xml:space="preserve">
+    <value>Moving workouts finished</value>
+  </data>
+  <data name="MoveString" xml:space="preserve">
+    <value>Move</value>
+  </data>
+  <data name="NameFormatString" xml:space="preserve">
+    <value>Name: {0}</value>
+  </data>
+  <data name="NameString" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="NewsString" xml:space="preserve">
+    <value>News</value>
+  </data>
+  <data name="NoAdsString" xml:space="preserve">
+    <value>No Ads</value>
+  </data>
+  <data name="NoExercisesFilterString" xml:space="preserve">
+    <value>Your filter term of did not match any exercises</value>
+  </data>
+  <data name="NoExercisesNeedAddNewString" xml:space="preserve">
+    <value>No exercises. You should add exercise.</value>
+  </data>
+  <data name="NoLastTrainings" xml:space="preserve">
+    <value>No workouts completed yet</value>
+  </data>
+  <data name="NoNotificationsString" xml:space="preserve">
+    <value>No notifications. You should add notification.</value>
+  </data>
+  <data name="NoString" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="NotAllFieldsEntered" xml:space="preserve">
+    <value>Not all fields entered</value>
+  </data>
+  <data name="NotExecutedYet" xml:space="preserve">
+    <value>Not executed yet</value>
+  </data>
+  <data name="Notification" xml:space="preserve">
+    <value>Notification</value>
+  </data>
+  <data name="NoTrainingsNeedAddNewString" xml:space="preserve">
+    <value>No workouts. You should add workout.</value>
+  </data>
+  <data name="NoWorkoutLimit" xml:space="preserve">
+    <value>No Workout Limit</value>
+  </data>
+  <data name="OkString" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="OneMounthString" xml:space="preserve">
+    <value>Mounth</value>
+  </data>
+  <data name="OneTrainingPerWeekCountFormat" xml:space="preserve">
+    <value>Maximum weeks with workout: {0:0}</value>
+  </data>
+  <data name="OnTheseDays" xml:space="preserve">
+    <value>On these days</value>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>Or</value>
+  </data>
+  <data name="PleaseEnterYourNewWeight" xml:space="preserve">
+    <value>Enter your new weight. Maybe something has changed.</value>
+  </data>
+  <data name="PreparedAbdominalString" xml:space="preserve">
+    <value>Abdominal</value>
+  </data>
+  <data name="PreparedArmsStrength" xml:space="preserve">
+    <value>Strong arms</value>
+  </data>
+  <data name="PreparedBackReady" xml:space="preserve">
+    <value>Strong and embossed back</value>
+  </data>
+  <data name="PreparedCardioString" xml:space="preserve">
+    <value>Cardio</value>
+  </data>
+  <data name="PreparedFitnessString" xml:space="preserve">
+    <value>Fitness</value>
+  </data>
+  <data name="PreparedHomeString" xml:space="preserve">
+    <value>Without Inventory</value>
+  </data>
+  <data name="PreparedMaximumUpperBody" xml:space="preserve">
+    <value>Maximum Upper Body</value>
+  </data>
+  <data name="PreparedNiceStomach" xml:space="preserve">
+    <value>Flat Stomach</value>
+  </data>
+  <data name="PreparedTrainingForBeginners" xml:space="preserve">
+    <value>Workout for beginners</value>
+  </data>
+  <data name="PreparedWideShoulders" xml:space="preserve">
+    <value>Wide Shoulders</value>
+  </data>
+  <data name="RateAppString" xml:space="preserve">
+    <value>Rate App</value>
+  </data>
+  <data name="RegisterAction" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="RemoveString" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="RepeatEvery" xml:space="preserve">
+    <value>Repeat every</value>
+  </data>
+  <data name="RepeatString" xml:space="preserve">
+    <value>Repeat</value>
+  </data>
+  <data name="RepsAndWeightString" xml:space="preserve">
+    <value>Repetitions | Weight</value>
+  </data>
+  <data name="RepsString" xml:space="preserve">
+    <value>Repetitions</value>
+  </data>
+  <data name="RestorePurchase" xml:space="preserve">
+    <value>Restore Purchase</value>
+  </data>
+  <data name="ReturnToTrainingMessage" xml:space="preserve">
+    <value>You have not implemented a workout for a long time. Maybe today is that day?</value>
+  </data>
+  <data name="SavedString" xml:space="preserve">
+    <value>Saved</value>
+  </data>
+  <data name="SaveTrainingString" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ScreenOnWhenImplementing" xml:space="preserve">
+    <value>The screen should be turned on when doing a workout</value>
+  </data>
+  <data name="ScreenOnWhenImplementingTip" xml:space="preserve">
+    <value>Disable to save battery</value>
+  </data>
+  <data name="SearchByNameString" xml:space="preserve">
+    <value>Search by Name</value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+    <value>Seconds</value>
+  </data>
+  <data name="SecondString" xml:space="preserve">
+    <value>sec</value>
+  </data>
+  <data name="SelectAllString" xml:space="preserve">
+    <value>Select all</value>
+  </data>
+  <data name="SelectMusclesString" xml:space="preserve">
+    <value>Select muscles</value>
+  </data>
+  <data name="SelectPeriodString" xml:space="preserve">
+    <value>Period:</value>
+  </data>
+  <data name="SelectString" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="SelectTraining" xml:space="preserve">
+    <value>Workout:</value>
+  </data>
+  <data name="SendPassword" xml:space="preserve">
+    <value>Send Password</value>
+  </data>
+  <data name="SetFrequency" xml:space="preserve">
+    <value>Set frequency</value>
+  </data>
+  <data name="SettingsString" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="SettingsTrainingString" xml:space="preserve">
+    <value>Workout settings</value>
+  </data>
+  <data name="SharedString" xml:space="preserve">
+    <value>Shared</value>
+  </data>
+  <data name="ShareTrainingString" xml:space="preserve">
+    <value>Share workout</value>
+  </data>
+  <data name="ShortDescriptionString1" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="ShowAdvicesOnImplementing" xml:space="preserve">
+    <value>Show warm-up and cool-down tips while doing a workout</value>
+  </data>
+  <data name="ShowToolTipsString" xml:space="preserve">
+    <value>Show tooltips</value>
+  </data>
+  <data name="SkipString" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="StartPosition" xml:space="preserve">
+    <value>Starting Position</value>
+  </data>
+  <data name="StopString" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="SuperSetControl" xml:space="preserve">
+    <value>SuperSet Control</value>
+  </data>
+  <data name="SuperSetCreatedMessage" xml:space="preserve">
+    <value>SuperSet created</value>
+  </data>
+  <data name="SupersetInvalidMessage" xml:space="preserve">
+    <value>To create a Superset you need more than 2 exercises</value>
+  </data>
+  <data name="SuperSetString" xml:space="preserve">
+    <value>SuperSet</value>
+  </data>
+  <data name="Synchronization" xml:space="preserve">
+    <value>Synchronization</value>
+  </data>
+  <data name="SynchronizationDownloadingQuestion" xml:space="preserve">
+    <value>Are you sure? Your unsynchronized data will be deleted.</value>
+  </data>
+  <data name="SynchronizationFinishedFailed" xml:space="preserve">
+    <value>Synchronization Finished Failed</value>
+  </data>
+  <data name="SynchronizationFinishedSuccessful" xml:space="preserve">
+    <value>Synchronization Finished Successful</value>
+  </data>
+  <data name="ThisExerciseAlreadyInWorkoutMessage" xml:space="preserve">
+    <value>This exercise is already exists in workout</value>
+  </data>
+  <data name="ThreeMounthString" xml:space="preserve">
+    <value>3 month</value>
+  </data>
+  <data name="TimeString" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="ToolTipAddTrainingButton" xml:space="preserve">
+    <value>Click this button to add a new workout</value>
+  </data>
+  <data name="ToolTipAddWeightAndRepsString" xml:space="preserve">
+    <value>This button will add a set for the exercise (Set means how many reps you will do the exercise with a given weight)</value>
+  </data>
+  <data name="ToolTipCancelImplementingTraining" xml:space="preserve">
+    <value>This button cancels the workout.</value>
+  </data>
+  <data name="ToolTipFilterMuscle" xml:space="preserve">
+    <value>Click on the desired muscle to apply a filter for those muscles</value>
+  </data>
+  <data name="ToolTipFinishExercise" xml:space="preserve">
+    <value>This button ends the exercise.</value>
+  </data>
+  <data name="ToolTipGoogleSync" xml:space="preserve">
+    <value>Log in to be able to sync between devices.</value>
+  </data>
+  <data name="ToolTipHoldImageExercises" xml:space="preserve">
+    <value>To change the order of the exercises, you need to hold the image of the exercise and drag it to the desired position.</value>
+  </data>
+  <data name="ToolTipSelectExercisesToTrainingButton" xml:space="preserve">
+    <value>Press the button to select exercises for workout</value>
+  </data>
+  <data name="ToolTipSkipExercise" xml:space="preserve">
+    <value>This button skips the exercise, this exercise will not appear in completed</value>
+  </data>
+  <data name="ToolTipStartWorkout" xml:space="preserve">
+    <value>Click this button to start your workout</value>
+  </data>
+  <data name="ToolTipSuperSet" xml:space="preserve">
+    <value>SuperSet is a combination of two or more exercises designed to work the same muscle or muscles of the antagonists. The most common way to use supersets is to train muscle groups with different functions. For example: biceps / triceps</value>
+  </data>
+  <data name="ToolTipTapHoldTraining" xml:space="preserve">
+    <value>Press and hold on a workout to see settings.</value>
+  </data>
+  <data name="TotalExercisesFormat" xml:space="preserve">
+    <value>Finished exercises: {0:0}</value>
+  </data>
+  <data name="TotalTimeSpent" xml:space="preserve">
+    <value>Time spent:</value>
+  </data>
+  <data name="TotalTrainingsFormat" xml:space="preserve">
+    <value>Finished workouts: {0:0}</value>
+  </data>
+  <data name="TrainingFinishedString" xml:space="preserve">
+    <value>Workout finished</value>
+  </data>
+  <data name="TrainingNotifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="TrainingsBaseString" xml:space="preserve">
+    <value>Workouts</value>
+  </data>
+  <data name="TrainingString" xml:space="preserve">
+    <value>Workout</value>
+  </data>
+  <data name="TrainingToGroupString" xml:space="preserve">
+    <value>Add to Group</value>
+  </data>
+  <data name="TrainingUnGroupString" xml:space="preserve">
+    <value>Remove from Group "{0}"</value>
+  </data>
+  <data name="TwoMonthString" xml:space="preserve">
+    <value>2 month</value>
+  </data>
+  <data name="TwoWeeksString" xml:space="preserve">
+    <value>2 weeks</value>
+  </data>
+  <data name="UploadingString" xml:space="preserve">
+    <value>Uploading</value>
+  </data>
+  <data name="VideoString" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="WaistHipMessage" xml:space="preserve">
+    <value>Index value = {0:0.00}._Read more?</value>
+  </data>
+  <data name="WaistHipTitle" xml:space="preserve">
+    <value>Waist-Hip Index</value>
+  </data>
+  <data name="WaistString" xml:space="preserve">
+    <value>Waist</value>
+  </data>
+  <data name="WeekString" xml:space="preserve">
+    <value>Week</value>
+  </data>
+  <data name="WeightControlString" xml:space="preserve">
+    <value>Body</value>
+  </data>
+  <data name="WeightLabel" xml:space="preserve">
+    <value>Weight:</value>
+  </data>
+  <data name="WeightNotifyString" xml:space="preserve">
+    <value>Weight entry notifications</value>
+  </data>
+  <data name="WeightString" xml:space="preserve">
+    <value>Weight</value>
+  </data>
+  <data name="WorkoutAddedErrorString" xml:space="preserve">
+    <value>Workout not added. The file format may not be correct.</value>
+  </data>
+  <data name="WorkoutAddedString" xml:space="preserve">
+    <value>Workout added</value>
+  </data>
+  <data name="WorkoutLimitMessage" xml:space="preserve">
+    <value>In the application there is a limit on the creation of 3 workouts. Do you want to remove limit for $2.99?</value>
+  </data>
+  <data name="YearString" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="YesString" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="YouDontHaveAccountQuestion" xml:space="preserve">
+    <value>You don't have an account?</value>
+  </data>
+</root>

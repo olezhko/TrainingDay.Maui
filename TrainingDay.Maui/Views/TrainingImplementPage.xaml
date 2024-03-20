@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
+             x:Class="TrainingDay.Maui.Views.TrainingImplementPage"
+             BindingContext="{x:Reference Name=Page}" Shell.PresentationMode="ModalAnimated">
+    <controls:TooltipControlContainer x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <StackLayout Orientation="Horizontal" Grid.ColumnSpan="3">
+            <Label FontSize="Title" Text="{Binding CurrentTime,StringFormat={x:Static resx:AppResources.CurrentTimeString}}" HorizontalOptions="StartAndExpand" VerticalOptions="Center" HorizontalTextAlignment="End"/>
+            <ImageButton WidthRequest="40" HeightRequest="40" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="add_empty"
+                                     Command="{Binding AddExercisesCommand}" BackgroundColor="Transparent">
+                <ImageButton.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Gray, Dark=White}" />
+                </ImageButton.Behaviors>
+            </ImageButton>
+        </StackLayout>
+
+        <controls:StepProgressBar x:Name="StepProgressBarControl" Grid.Row="1" Grid.ColumnSpan="3" SteppedColor="{DynamicResource ListItemBackgroundColor}" >
+            <controls:StepProgressBar.ItemTemplate>
+                <DataTemplate>
+                    <Grid VerticalOptions="FillAndExpand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Label IsVisible="{Binding IsSuperSet}" Text="{x:Static resx:AppResources.SuperSetString}" FontSize="Large" HorizontalTextAlignment="Center" TextColor="Orange"/>
+                        <IndicatorView IsVisible="{Binding IsSuperSet}" Grid.Row="1" x:Name="indicatorView" IndicatorSize="{OnPlatform Android='9', iOS='10'}" MaximumVisible="6" HideSingle="True" 
+                                           IndicatorColor="DimGray" SelectedIndicatorColor="Orange" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Padding="10"/>
+
+                        <CarouselView Loop="False" Grid.Row="2" ItemsSource="{Binding SuperSetItems}" HorizontalOptions="Center" IndicatorView="indicatorView">
+                            <CarouselView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" />
+                            </CarouselView.ItemsLayout>
+                            <CarouselView.ItemTemplate>
+                                <DataTemplate>
+                                    <controls:ExerciseView Margin="5"/>
+                                </DataTemplate>
+                            </CarouselView.ItemTemplate>
+                        </CarouselView>
+                    </Grid>
+                </DataTemplate>
+            </controls:StepProgressBar.ItemTemplate>
+        </controls:StepProgressBar>
+
+        <StackLayout x:Name="CancelButton" Grid.Row="2" Grid.Column="0">
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="CancelTrainingClicked"/>
+            </StackLayout.GestureRecognizers>
+            <Frame CornerRadius="20" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Red" HeightRequest="40" WidthRequest="40"  Padding="0" Margin="0">
+                <Image Source="clear.png" HeightRequest="40" WidthRequest="40" />
+            </Frame>
+        </StackLayout>
+        <StackLayout x:Name="SkipButton" Grid.Row="2" Grid.Column="1">
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="SkipButtonClicked"/>
+            </StackLayout.GestureRecognizers>
+            <Frame CornerRadius="20" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="DimGray" HeightRequest="40" WidthRequest="40" Padding="0" Margin="0">
+                <Image Source="skip.png" HeightRequest="40" WidthRequest="40" />
+            </Frame>
+        </StackLayout>
+        <StackLayout x:Name="FinishButton" Grid.Row="2" Grid.Column="2" >
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="FinishButtonClicked"/>
+            </StackLayout.GestureRecognizers>
+            <Frame CornerRadius="20" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Green" HeightRequest="40" WidthRequest="40" Padding="0" Margin="0">
+                <Image Source="accept" HeightRequest="40" WidthRequest="40" />
+            </Frame>
+        </StackLayout>
+
+        <controls:ToolTipControl x:Name="ToolTipCancelImplementingTraining" Text="{x:Static resx:AppResources.ToolTipCancelImplementingTraining}" Title="{x:Static resx:AppResources.Execution}" Grid.ColumnSpan="3" Grid.RowSpan="3"
+                                     NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipWorkingCancel,Mode=TwoWay}"
+                                     AttachedControl="CancelButton" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}" Position="TopLeft"
+                                     ParentHeight="{Binding Source={x:Reference MainGrid},Path=Height}"
+                                     ParentWidth="{Binding Source={x:Reference MainGrid},Path=Width}">
+            <controls:ToolTipControl.EmptyView>
+                <Frame CornerRadius="15" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Red" HeightRequest="30" WidthRequest="30" Padding="0" Margin="0">
+                    <Image Source="clear.png" />
+                </Frame>
+            </controls:ToolTipControl.EmptyView>
+        </controls:ToolTipControl>
+        <controls:ToolTipControl Text="{x:Static resx:AppResources.ToolTipSkipExercise}" Title="{x:Static resx:AppResources.Execution}" Grid.ColumnSpan="3" Grid.RowSpan="3"
+                                         NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipWorkingSkip,Mode=TwoWay}"
+                                         AttachedControl="SkipButton" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}"
+                                         ParentHeight="{Binding Source={x:Reference MainGrid},Path=Height}" Position="TopLeft" 
+                                         ParentWidth="{Binding Source={x:Reference MainGrid},Path=Width}">
+            <controls:ToolTipControl.EmptyView>
+                <Frame CornerRadius="15" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="DimGray" HeightRequest="30" WidthRequest="30" Padding="0" Margin="0">
+                    <Image Source="skip.png" />
+                </Frame>
+            </controls:ToolTipControl.EmptyView>
+        </controls:ToolTipControl>
+        <controls:ToolTipControl Text="{x:Static resx:AppResources.ToolTipFinishExercise}" Title="{x:Static resx:AppResources.Execution}" Grid.ColumnSpan="3" Grid.RowSpan="3"
+                                         NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipWorkingReady,Mode=TwoWay}"
+                                         AttachedControl="FinishButton" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}"
+                                         ParentHeight="{Binding Source={x:Reference MainGrid},Path=Height}" Position="TopLeft"
+                                         ParentWidth="{Binding Source={x:Reference MainGrid},Path=Width}">
+            <controls:ToolTipControl.EmptyView>
+                <Frame CornerRadius="15" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Green" HeightRequest="30" WidthRequest="30" Padding="0" Margin="0">
+                    <Image Source="accept" />
+                </Frame>
+            </controls:ToolTipControl.EmptyView>
+        </controls:ToolTipControl>
+    </controls:TooltipControlContainer>
+</ContentPage>

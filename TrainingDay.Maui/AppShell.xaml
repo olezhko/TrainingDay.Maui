@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="TrainingDay.Maui.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:TrainingDay.Maui.Views"
+    xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
+    Shell.FlyoutBehavior="Disabled"
+    Title="TrainingDay">
+
+    <TabBar>
+        <ShellContent Title="{x:Static resx:AppResources.TrainingsBaseString}" Icon="main.png" ContentTemplate="{DataTemplate views:TrainingItemsBasePage}" Route="workouts"/>
+        <ShellContent Title="{x:Static resx:AppResources.WeightControlString}" Icon="weight.png" ContentTemplate="{DataTemplate views:WeightViewAndSetPage}" Route="body"/>
+        <ShellContent Title="{x:Static resx:AppResources.NewsString}" Icon="notes.png" ContentTemplate="{DataTemplate views:BlogsPage}" Route="blogs"/>
+        <ShellContent Title="{x:Static resx:AppResources.Account}" Icon="account.png" ContentTemplate="{DataTemplate views:SettingsPage}" Route="settings"/>
+    </TabBar>
+
+</Shell>

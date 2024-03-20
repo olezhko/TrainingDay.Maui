@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
+             xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="TrainingDay.Maui.Views.SettingsPage"
+             Title="{x:Static resx:AppResources.Account}" Padding="5">
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*,auto" ColumnSpacing="10" Margin="10,0">
+            <Label Grid.Column="0" Text="{x:Static resx:AppResources.Account}" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
+
+            <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="star.png" Clicked="OpenStatistics_Click">
+                <ImageButton.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Gray, Dark=White}" />
+                </ImageButton.Behaviors>
+            </ImageButton>
+        </Grid>
+    </Shell.TitleView>
+
+    <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Default">
+        <StackLayout Spacing="5">
+            <Frame Style="{StaticResource FrameCellStyle}" CornerRadius="20" IsVisible="False"
+		        BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight},Dark={StaticResource ListItemBackgroundColor}}" Padding="10">
+                <StackLayout>
+                    <StackLayout.BindingContext>
+                        <viewModels:AuthViewModel/>
+                    </StackLayout.BindingContext>
+
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="auto,auto">
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Style.Triggers>
+                                    <DataTrigger TargetType="Grid" Binding="{Binding CurrentAction}" Value="{x:Static viewModels:AuthActions.None}">
+                                        <Setter Property="IsVisible" Value="True"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                                <Setter Property="IsVisible" Value="False"/>
+                            </Style>
+                        </Grid.Style>
+                        <Button Text="{x:Static resx:AppResources.LoginAction}" CornerRadius="10" Command="{Binding StartActionCommand}" CommandParameter="{x:Static viewModels:AuthActions.Login}"/>
+                        <Button Text="{x:Static resx:AppResources.RegisterAction}" CornerRadius="10" Grid.Column="1" Command="{Binding StartActionCommand}" CommandParameter="{x:Static viewModels:AuthActions.Register}"/>
+
+                        <Frame CornerRadius="10" Padding="0" Grid.Row="1" Grid.ColumnSpan="2" Background="White" HorizontalOptions="Center" >
+                            <Frame.IsVisible>
+                                <OnPlatform x:TypeArguments="x:Boolean">
+                                    <On Platform="iOS" Value="False" />
+                                    <On Platform="Android" Value="True" />
+                                </OnPlatform>
+                            </Frame.IsVisible>
+                            <StackLayout x:Name="GoogleAuthButton" Orientation="Horizontal" Spacing="10" Padding="5">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GoogleCommand}"/>
+                                </StackLayout.GestureRecognizers>
+                                <Image Source="google.png" BackgroundColor="Transparent" WidthRequest="25" HeightRequest="25"/>
+                                <Label VerticalOptions="Center" Text="{x:Static resx:AppResources.LoginWithGoogle}" BackgroundColor="White" TextColor="Black"/>
+                            </StackLayout>
+                        </Frame>
+
+                        <Frame CornerRadius="10" Padding="0" Grid.Row="2" Grid.ColumnSpan="2" Background="White" HorizontalOptions="Center">
+                            <Frame.IsVisible>
+                                <OnPlatform x:TypeArguments="x:Boolean">
+                                    <On Platform="iOS" Value="True" />
+                                    <On Platform="Android" Value="False" />
+                                </OnPlatform>
+                            </Frame.IsVisible>
+                            <StackLayout x:Name="AppleAuthButton" Orientation="Horizontal" Spacing="10" Padding="5">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding AppleCommand}"/>
+                                </StackLayout.GestureRecognizers>
+                                <Image Source="apple.png" BackgroundColor="Transparent" WidthRequest="25" HeightRequest="25"/>
+                                <Label VerticalOptions="Center" Text="Sign in with Apple" BackgroundColor="White" TextColor="Black"/>
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+
+                    <StackLayout Spacing="5">
+                        <StackLayout.Style>
+                            <Style TargetType="StackLayout">
+                                <Style.Triggers>
+                                    <DataTrigger TargetType="StackLayout" Binding="{Binding CurrentAction}" Value="{x:Static viewModels:AuthActions.None}">
+                                        <Setter Property="IsVisible" Value="False"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="StackLayout" Binding="{Binding CurrentAction}" Value="{x:Static viewModels:AuthActions.Off}">
+                                        <Setter Property="IsVisible" Value="False"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackLayout.Style>
+
+                        <Entry Text="{Binding Email}" Placeholder="{x:Static resx:AppResources.EnterEmail}" FontSize="Body" Keyboard="Email" BackgroundColor="Transparent"/>
+                        <Entry Text="{Binding Nick}" Placeholder="{x:Static resx:AppResources.EnterNick}" FontSize="Body" IsVisible="{Binding IsRegisterAction}" BackgroundColor="Transparent"/>
+                        <Grid>
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="Grid" Binding="{Binding CurrentAction}" Value="{x:Static viewModels:AuthActions.None}">
+                                            <Setter Property="IsVisible" Value="False"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Grid" Binding="{Binding CurrentAction}" Value="{x:Static viewModels:AuthActions.ForgotPassword}">
+                                            <Setter Property="IsVisible" Value="False"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                    <Setter Property="IsVisible" Value="True"/>
+                                </Style>
+                            </Grid.Style>
+                            <Entry x:Name="PasswordEntry" Text="{Binding Password}" Placeholder="{x:Static resx:AppResources.EnterPassword}" FontSize="Body" IsPassword="True" BackgroundColor="Transparent" />
+
+                            <ImageButton x:Name="PassShowButton" HorizontalOptions="End" VerticalOptions="Center" Source="pass_show.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" Clicked="PassShowButton_OnClicked"/>
+                        </Grid>
+
+
+                        <Button Text="{x:Static resx:AppResources.LoginAction}" Command="{Binding LoginCommand}" IsVisible="{Binding IsLoginAction}"/>
+                        <Button Text="{x:Static resx:AppResources.RegisterAction}" Command="{Binding RegisterCommand}" IsVisible="{Binding IsRegisterAction}"/>
+                        <Button Text="{x:Static resx:AppResources.SendPassword}" Command="{Binding ForgotPasswordCommand}" IsVisible="{Binding IsForgotPasswordAction}"/>
+
+                        <Label Text="{x:Static resx:AppResources.ForgotPasswordAction}" TextColor="Gray" HorizontalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding StartActionCommand}" CommandParameter="{x:Static viewModels:AuthActions.ForgotPassword}"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                            <StackLayout.Style>
+                                <Style TargetType="StackLayout">
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="StackLayout" Binding="{Binding CurrentAction}" Value="{x:Static viewModels:AuthActions.Register}">
+                                            <Setter Property="IsVisible" Value="True"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                    <Setter Property="IsVisible" Value="False"/>
+                                </Style>
+                            </StackLayout.Style>
+                            <Label Text="{x:Static resx:AppResources.AlreadyHaveAccountQuestion}" TextColor="Gray" HorizontalOptions="Center"/>
+
+                            <Label Text="{x:Static resx:AppResources.LoginAction}" TextColor="Orange" HorizontalOptions="Center" TextDecorations="Underline">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding StartActionCommand}" CommandParameter="{x:Static viewModels:AuthActions.Login}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </StackLayout>
+
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" >
+                            <StackLayout.Style>
+                                <Style TargetType="StackLayout">
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="StackLayout" Binding="{Binding CurrentAction}" Value="{x:Static viewModels:AuthActions.Login}">
+                                            <Setter Property="IsVisible" Value="True"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                    <Setter Property="IsVisible" Value="False"/>
+                                </Style>
+                            </StackLayout.Style>
+                            <Label Text="{x:Static resx:AppResources.YouDontHaveAccountQuestion}" TextColor="Gray" HorizontalOptions="Center"/>
+
+                            <Label Text="{x:Static resx:AppResources.RegisterAction}" TextColor="Orange" HorizontalOptions="Center" TextDecorations="Underline">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding StartActionCommand}" CommandParameter="{x:Static viewModels:AuthActions.Register}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </StackLayout>
+                    </StackLayout>
+
+                    <Grid IsVisible="{Binding IsLogin}" Margin="10" RowDefinitions="Auto,Auto,Auto">
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{x:Static resx:AppResources.Hello}" FontSize="Medium" />
+                                    <Span x:Name="EmailSpan" FontSize="Medium" TextDecorations="Underline" TextColor="Orange"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <Button Grid.Row="1" Text="{x:Static resx:AppResources.LogoutAction}" Command="{Binding LogoutCommand}"/>
+
+                        <StackLayout Grid.Row="2" x:Name="SyncFrame">
+                            <Label Text="{x:Static resx:AppResources.Synchronization}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Large"/>
+
+                            <Grid RowDefinitions="Auto,auto" >
+                                <Label Text="{Binding LastSyncDateTime}" VerticalTextAlignment="Center" Grid.Row="0"/>
+                                <Grid Grid.Row="1" ColumnDefinitions="*,*">
+                                    <Button Style="{DynamicResource ActionButton}" Text="{x:Static resx:AppResources.UploadingString}" Command="{Binding SyncGoogleCommand}" Padding="10,0" BorderColor="Transparent"/>
+                                    <Button Style="{DynamicResource ActionButton}" Text="{x:Static resx:AppResources.DownloadingString}" Command="{Binding SyncFromGoogleCommand}" Padding="10,0" Grid.Column="1" BorderColor="Transparent"/>
+                                </Grid>
+
+                                <ActivityIndicator Grid.RowSpan="2" IsRunning="{Binding IsSyncActive}" Color="Orange" IsVisible="{Binding IsSyncActive}"/>
+                            </Grid>
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
+            </Frame>
+
+            <Frame Style="{StaticResource FrameCellStyle}" CornerRadius="20" BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight},Dark={StaticResource ListItemBackgroundColor}}" Padding="5">
+                <StackLayout>
+                    <Label Text="{x:Static resx:AppResources.SettingsString}" FontSize="Title" HorizontalOptions="Center"/>
+                    <Picker x:Name="LanguagePicker" BackgroundColor="Transparent" HorizontalOptions="FillAndExpand" ItemDisplayBinding="{Binding NativeName}" Title="{x:Static resx:AppResources.ChooseLanguage}"/>
+                    <StackLayout Margin="5">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{x:Static resx:AppResources.ScreenOnWhenImplementing}" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
+                            <Switch Toggled="ScreenOnImplementedSwitch_OnToggled" x:Name="ScreenOnImplementedSwitch" />
+                        </StackLayout>
+                        <Label Text="{x:Static resx:AppResources.ScreenOnWhenImplementingTip}" FontSize="Small" TextColor="Gray" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal" Margin="5">
+                        <Label Text="{x:Static resx:AppResources.ShowAdvicesOnImplementing}" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
+                        <Switch x:Name="ShowAdvicesOnImplementingSwitch" Toggled="ShowAdvicesOnImplementingSwitch_OnToggled" />
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+
+            <Button x:Name="DonateButton" Style="{StaticResource ActionButton}" Text="Donate" Clicked="Donate_Click" BackgroundColor="Orange" TextColor="Black" CornerRadius="20">
+                <Button.IsVisible>
+                    <OnPlatform x:TypeArguments="x:Boolean">
+                        <On Platform="iOS" Value="False" />
+                        <On Platform="Android" Value="True" />
+                    </OnPlatform>
+                </Button.IsVisible>
+            </Button>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

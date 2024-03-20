@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels"
+             xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
+             xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
+             x:Class="TrainingDay.Maui.Views.FilterPage"
+             Title="{x:Static resx:AppResources.FilterString}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="AcceptFilter_Click" IconImageSource="accept" />
+    </ContentPage.ToolbarItems>
+    <ScrollView>
+        <Grid x:Name="MainGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <StackLayout Grid.Row="0" Orientation="Horizontal">
+                <CheckBox
+                x:Name="NoEquipmentCheckBox"
+                HorizontalOptions="Start"
+                IsChecked="{Binding Filter.IsNoEquipmentFilter}" />
+                <Label
+                HorizontalOptions="StartAndExpand"
+                Text="{x:Static resx:AppResources.PreparedHomeString}"
+                VerticalOptions="Center" />
+            </StackLayout>
+
+            <Image
+            x:Name="MuscleImage"
+            Grid.Row="1"
+            Aspect="AspectFit"
+            HeightRequest="514"
+            HorizontalOptions="FillAndExpand"
+            Source="muscle.png"
+            VerticalOptions="Start"
+            WidthRequest="496" />
+            <skia:SKCanvasView
+            x:Name="SkiaView"
+            Grid.Row="1"
+            PaintSurface="OnPaintSurface"
+            VerticalOptions="Start" />
+
+            <FlexLayout
+            x:Name="MusclesListView"
+            Grid.Row="2"
+            AlignContent="Start"
+            AlignItems="Center"
+            Direction="Row"
+            HorizontalOptions="Center"
+            JustifyContent="Center"
+            VerticalOptions="Center"
+            Wrap="Wrap">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Frame
+                        Margin="1"
+                        Padding="10,5"
+                        BorderColor="White"
+                        CornerRadius="5">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="MusclesListView_OnItemTapped" />
+                            </Frame.GestureRecognizers>
+                            <Frame.Style>
+                                <Style TargetType="Frame">
+                                    <Style.Triggers>
+                                        <DataTrigger
+                                        Binding="{Binding IsChecked}"
+                                        TargetType="Frame"
+                                        Value="True">
+                                            <Setter Property="BackgroundColor" Value="White" />
+                                        </DataTrigger>
+                                        <DataTrigger
+                                        Binding="{Binding IsChecked}"
+                                        TargetType="Frame"
+                                        Value="False">
+                                            <Setter Property="BackgroundColor" Value="DimGray" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Frame.Style>
+                            <Label FontSize="Default" Text="{Binding Text}">
+                                <Label.Style>
+                                    <Style TargetType="Label">
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                            Binding="{Binding IsChecked}"
+                                            TargetType="Label"
+                                            Value="True">
+                                                <Setter Property="TextColor" Value="Black" />
+                                            </DataTrigger>
+                                            <DataTrigger
+                                            Binding="{Binding IsChecked}"
+                                            TargetType="Label"
+                                            Value="False">
+                                                <Setter Property="TextColor" Value="LightGray" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Label.Style>
+                            </Label>
+                        </Frame>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
+
+            <controls:ToolTipControl
+            Title="{x:Static resx:AppResources.FilterString}"
+            Grid.Row="1"
+            AttachedControl="MusclesListView"
+            NeverShow="{Binding Source={x:Static Application.Current}, Path=ToolTipManager.ToolTipFilterMuscle, Mode=TwoWay}"
+            NeverShowText="{x:Static resx:AppResources.GotItString}"
+            ParentHeight="{Binding Source={x:Reference MusclesListView}, Path=Height}"
+            ParentWidth="{Binding Source={x:Reference MusclesListView}, Path=Width}"
+            Position="Center"
+            SkipText="{x:Static resx:AppResources.SkipString}"
+            Text="{x:Static resx:AppResources.ToolTipFilterMuscle}" />
+        </Grid>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
+             xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
+             xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="TrainingDay.Maui.Views.StatisticsPage"
+             Title="{x:Static resx:AppResources.Achievements}" Padding="10">
+    <ContentPage.BindingContext>
+        <viewModels:StatisticsViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <!--<ToolbarItem IconImageSource="share" Command="{Binding ShareResultsCommand}"/>-->
+    </ContentPage.ToolbarItems>
+    
+    <Grid Padding="5">
+        <Label HorizontalTextAlignment="Center" VerticalOptions="Start" Text="{x:Static resx:AppResources.NoLastTrainings}" FontSize="Medium" IsVisible="{Binding IsLastTrainingsAvailable, Converter={StaticResource InverseBooleanConverter}}"/>
+
+        <StackLayout Spacing="10" IsVisible="{Binding IsLastTrainingsAvailable}">
+            <StackLayout Orientation="Horizontal" Spacing="10">
+                <Image Source="medal.png" WidthRequest="30" HeightRequest="30"/>
+                <Label Text="{Binding TotalTrainings,StringFormat={x:Static resx:AppResources.TotalTrainingsFormat}}" VerticalOptions="Center"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" Spacing="10">
+                <Image Source="medal.png" WidthRequest="30" HeightRequest="30"/>
+                <Label Text="{Binding TotalExercises,StringFormat={x:Static resx:AppResources.TotalExercisesFormat}}" VerticalOptions="Center"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" Spacing="10">
+                <Image Source="medal.png" WidthRequest="30" HeightRequest="30"/>
+                <Label Text="{Binding TotalTime}" VerticalOptions="Center"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" Spacing="10">
+                <Image Source="medal.png" WidthRequest="30" HeightRequest="30"/>
+                <Label Text="{Binding DistinctExercisesPercent,StringFormat={x:Static resx:AppResources.DistinctExercisesPercentFormat}}" VerticalOptions="Center"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" Spacing="10">
+                <Image Source="medal.png" WidthRequest="30" HeightRequest="30"/>
+                <Label Text="{Binding OneTrainingPerWeekCount,StringFormat={x:Static resx:AppResources.OneTrainingPerWeekCountFormat}}" VerticalOptions="Center"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" Spacing="10">
+                <Image Source="medal.png" WidthRequest="30" HeightRequest="30"/>
+                <Label Text="{Binding MostOftenDay,StringFormat={x:Static resx:AppResources.MostOftenDayFormat}}" VerticalOptions="Center"/>
+            </StackLayout>
+
+            <Frame CornerRadius="5" BackgroundColor="{AppThemeBinding Dark={StaticResource ListItemBackgroundColor}, Light={StaticResource ListItemBackgroundColorLight}}"
+           IsVisible="{Binding IsShowTopExercisesBlock}">
+                <StackLayout Spacing="10">
+                    <Label FontSize="Title" Text="{x:Static resx:AppResources.MostPopularExercises}" HorizontalTextAlignment="Center"/>
+
+                    <StackLayout Orientation="Horizontal" Spacing="10">
+                        <Image WidthRequest="30" HeightRequest="30" Source="champion" >
+                            <Image.Behaviors>
+                                <toolkit:IconTintColorBehavior TintColor="Gold" />
+                            </Image.Behaviors>
+                        </Image>
+                        <Label Text="{Binding Top1ExerciseName}" VerticalOptions="Center"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal" Spacing="10">
+                        <Image WidthRequest="30" HeightRequest="30" Source="champion" >
+                            <Image.Behaviors>
+                                <toolkit:IconTintColorBehavior TintColor="Silver" />
+                            </Image.Behaviors>
+                        </Image>
+                        <Label Text="{Binding Top2ExerciseName}" VerticalOptions="Center"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal" Spacing="10">
+                        <Image WidthRequest="30" HeightRequest="30" Source="champion" >
+                            <Image.Behaviors>
+                                <toolkit:IconTintColorBehavior TintColor="#CD7F32" />
+                            </Image.Behaviors>
+                        </Image>
+                        <Label Text="{Binding Top3ExerciseName}" VerticalOptions="Center"/>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </Grid>
+</ContentPage>

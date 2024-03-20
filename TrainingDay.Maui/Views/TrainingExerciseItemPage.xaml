@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
+             x:Class="TrainingDay.Maui.Views.TrainingExerciseItemPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="accept" Clicked="Save_clicked" />
+    </ContentPage.ToolbarItems>
+    <Grid>
+        <controls:ExerciseView x:Name="ExerciseView" ImageTappedEvent="ExerciseView_OnImageTappedEvent" IsNameVisible="False"/>
+
+        <Frame HeightRequest="250" WidthRequest="250" IsVisible="False" x:Name="ImageFrame" VerticalOptions="Center" HorizontalOptions="Center">
+            <Image x:Name="FullscreenImage">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="FullscreenImageTapped"/>
+                </Image.GestureRecognizers>
+            </Image>
+        </Frame>
+    </Grid>
+</ContentPage>

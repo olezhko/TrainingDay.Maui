@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
+             xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
+             xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="TrainingDay.Maui.Views.PreparedTrainingsPage"
+             Title="{x:Static resx:AppResources.AddTrainingString}">
+    <ContentPage.BindingContext>
+        <viewModels:PreparedTrainingsPageViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowSpacing="0" RowDefinitions="*,Auto">
+
+        <CollectionView Margin="5,0" BackgroundColor="Transparent" ItemsSource="{Binding PreparedTrainingsCollection}" SelectionMode="Single">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Style="{StaticResource FrameCellStyle}" VerticalOptions="Fill">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+            Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:PreparedTrainingsPageViewModel}}, Path=ItemSelectedCommand}"
+            CommandParameter="{Binding .}" NumberOfTapsRequired="1" />
+                        </Frame.GestureRecognizers>
+                        <Grid Padding="0" VerticalOptions="Fill">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="20" />
+                            </Grid.ColumnDefinitions>
+                            <Grid
+                            Margin="-5"
+                            HeightRequest="80"
+                            WidthRequest="80">
+                                <Frame BackgroundColor="Transparent" CornerRadius="5" />
+                                <Image
+                                Aspect="AspectFit"
+                                HeightRequest="80"
+                                HorizontalOptions="Start"
+                                Source="{Binding TrainingImageUrl}"
+                                VerticalOptions="Center"
+                                WidthRequest="80" />
+                            </Grid>
+                            <Label
+                            Grid.Column="1"
+                            Padding="10,0"
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            HorizontalOptions="StartAndExpand"
+                            Text="{Binding Name}"
+                            TextTransform="Uppercase"
+                            VerticalOptions="Center" />
+
+                            <Image Grid.Column="2" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center" Source="arrow_left" BackgroundColor="Transparent">
+                                <Image.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="Gray" />
+                                </Image.Behaviors>
+                            </Image>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Grid.Row="1" Margin="5" BackgroundColor="RoyalBlue" Command="{Binding CreateNewTrainingCommand}"
+            Style="{DynamicResource ActionButton}" Text="{x:Static resx:AppResources.CreateNewString}" FontSize="Body"/>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
+             xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
+             xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="TrainingDay.Maui.Views.TrainingExercisesPage"
+             Title="{Binding ExerciseActionString}" x:Name="ContentPage" >
+    <ContentPage.BindingContext>
+        <viewModels:TrainingExercisesPageViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="add" Command="{Binding AddExercisesCommand}" Order="Primary" />
+        <ToolbarItem IconImageSource="settings" Command="{Binding ShowTrainingSettingsPageCommand}" Order="Primary" />
+    </ContentPage.ToolbarItems>
+
+    <controls:TooltipControlContainer x:Name="Container" RowSpacing="2">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Entry Keyboard="Text" Text="{Binding Training.Title}" FontSize="22" HorizontalOptions="FillAndExpand" Placeholder="{x:Static resx:AppResources.NameString}" />
+
+        <CollectionView ItemsSource="{Binding Training.Exercises}" Grid.Row="1" x:Name="ItemsListView" SelectionMode="Single" 
+                    ItemsUpdatingScrollMode="KeepScrollOffset">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid RowDefinitions="auto,*" RowSpacing="0" Margin="0" Padding="0" >
+                        <Frame Grid.Row="0" MinimumHeightRequest="80" x:Name="viewCell" Style="{StaticResource FrameCellStyle}" Margin="5,4,5,5">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BindingContext.ItemTappedCommand, Source={x:Reference ItemsListView}}"
+                                              CommandParameter="{Binding}"/>
+                                <DropGestureRecognizer
+                                AllowDrop="True"
+                                DragLeaveCommand="{Binding BindingContext.ItemDragLeave, Source={x:Reference ItemsListView}}"
+                                DragLeaveCommandParameter="{Binding}"
+                                DragOverCommand="{Binding BindingContext.ItemDraggedOver, Source={x:Reference ItemsListView}}"
+                                DragOverCommandParameter="{Binding}"
+                                Drop="DropGestureRecognizer_Drop_Collection"
+                                DropCommand="{Binding BindingContext.ItemDropped, Source={x:Reference ItemsListView}}"
+                                DropCommandParameter="{Binding}" />
+                            </Frame.GestureRecognizers>
+                            <Grid Padding="0" Margin="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="70"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="30"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Frame Grid.Column="0" Padding="5" VerticalOptions="Center" BackgroundColor="White" CornerRadius="5">
+                                    <Grid>
+                                        <controls:ImageCache x:Name="ImageControl" HeightRequest="60" WidthRequest="60" ImageUrl="{Binding ExerciseImageUrl}">
+                                            <controls:ImageCache.GestureRecognizers>
+                                                <DragGestureRecognizer
+                                                CanDrag="True"
+                                                DragStarting="DragGestureRecognizer_DragStarting_Collection"
+                                                DragStartingCommand="{Binding BindingContext.ItemDragged, Source={x:Reference ItemsListView}}"
+                                                DragStartingCommandParameter="{Binding}" />
+                                            </controls:ImageCache.GestureRecognizers>
+                                        </controls:ImageCache>
+                                        <Border VerticalOptions="End" BackgroundColor="RoyalBlue" Padding="0" Margin="-5,-5,-5,-6" HorizontalOptions="Fill"
+                                                          IsVisible="{Binding SuperSetId,Converter={StaticResource SuperSetMenuConverter}}" >
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="0,0,5,5" />
+                                            </Border.StrokeShape>
+                                            <Label HorizontalOptions="Center" FontSize="11">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{x:Static resx:AppResources.SuperSetString}" TextColor="White"/>
+                                                        <Span Text=" "/>
+                                                        <Span Text="{Binding SuperSetNum}" TextColor="White"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </Border>
+                                    </Grid>
+                                </Frame>
+
+                                <CheckBox Grid.Column="2" VerticalOptions="Center" IsChecked="{Binding IsSelected, Mode=TwoWay}" HorizontalOptions="CenterAndExpand"
+                                  IsVisible="{Binding IsCheckBoxVisible}">
+                                    <CheckBox.Behaviors>
+                                        <toolkit:EventToCommandBehavior EventName="CheckedChanged" Command="{Binding Source={x:Reference ContentPage}, 
+                                    Path=BindingContext.ExercisesCheckedChangedCommand}" CommandParameter="{Binding }"/>
+                                    </CheckBox.Behaviors>
+                                </CheckBox>
+
+                                <StackLayout Orientation="Vertical" Grid.Column="1" Padding="0" Margin="0" VerticalOptions="Center">
+                                    <Label Text="{Binding ExerciseItemName}" FontSize="17" HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand" VerticalOptions="Start" Margin="0"/>
+                                    <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" HorizontalOptions="Center" Wrap="Wrap" VerticalOptions="Center" Direction="Row"
+                                        JustifyContent="Center" AlignItems="Center" AlignContent="Start">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+                                                <Frame Style="{StaticResource MuscleFrameCellStyle}" Margin="1">
+                                                    <Label Text="{Binding Name}" FontSize="11" TextColor="White"/>
+                                                </Frame>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </FlexLayout>
+                                </StackLayout>
+
+                                <ImageButton WidthRequest="40" HeightRequest="40" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="add_empty"
+                                     Command="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.DeleteExerciseCommand}" CommandParameter="{Binding }" BackgroundColor="Transparent" IsVisible="{Binding IsCheckBoxVisible,Converter={StaticResource InverseBooleanConverter}}">
+                                    <ImageButton.Behaviors>
+                                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Gray, Dark=White}" />
+                                    </ImageButton.Behaviors>
+                                </ImageButton>
+                            </Grid>
+                        </Frame>
+
+                        <BoxView Grid.Row="1" HeightRequest="1" BackgroundColor="gray" VerticalOptions="End"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button x:Name="MakeTrainingButton" Command="{Binding MakeTrainingCommand}" Text="{x:Static resx:AppResources.MakeTrainingString}" 
+            Grid.Row="2" TextColor="White" BackgroundColor="RoyalBlue" Margin="1" FontSize="Body" CornerRadius="20" controls:TooltipControlContainer.IgnoreVisible="True"
+            IsVisible="{Binding IsExercisesCheckBoxVisible,Converter={StaticResource InverseBooleanConverter}}"/>
+
+        <Grid Grid.Row="3" IsVisible="{Binding IsExercisesCheckBoxVisible}" HorizontalOptions="FillAndExpand"
+          controls:TooltipControlContainer.IgnoreVisible="True">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" CornerRadius="20" Text="{x:Static resx:AppResources.CancelString}" Command="{Binding CancelActionCommand}" HorizontalOptions="FillAndExpand" Style="{DynamicResource ActionButton}" />
+            <Button Grid.Column="1" CornerRadius="20" Text="{Binding ExerciseActionString}" Command="{Binding StartActionCommand}" HorizontalOptions="FillAndExpand" Style="{DynamicResource ActionButton}" BackgroundColor="RoyalBlue" />
+        </Grid>
+
+        <controls:ToolTipControl  x:Name="ToolTipHoldImageExercises" Grid.Row="1" 
+                              Text="{x:Static resx:AppResources.ToolTipHoldImageExercises}" Title="{x:Static resx:AppResources.SettingsTrainingString}" 
+                              NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipHoldImageExercises,Mode=TwoWay}" 
+                              AttachedControl="ItemsListView" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}" Position="Center"
+                              ParentHeight="{Binding Source={x:Reference Container},Path=Height}"
+                              ParentWidth="{Binding Source={x:Reference Container},Path=Width}"/>
+
+        <controls:ToolTipControl  Grid.Row="1" 
+                              Text="{x:Static resx:AppResources.ToolTipStartWorkout}" Title="{x:Static resx:AppResources.Execution}" 
+                              NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipStartWorkout,Mode=TwoWay}" 
+                              AttachedControl="MakeTrainingButton" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}" Position="Center"
+                              ParentHeight="{Binding Source={x:Reference Container},Path=Height}"
+                              ParentWidth="{Binding Source={x:Reference Container},Path=Width}"/>
+    </controls:TooltipControlContainer>
+</ContentPage>

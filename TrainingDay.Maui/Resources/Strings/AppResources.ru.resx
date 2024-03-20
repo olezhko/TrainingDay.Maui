@@ -1,0 +1,729 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Account" xml:space="preserve">
+    <value>Аккаунт</value>
+  </data>
+  <data name="Achievements" xml:space="preserve">
+    <value>Достижения</value>
+  </data>
+  <data name="AddTrainingString" xml:space="preserve">
+    <value>Добавление тренировки</value>
+  </data>
+  <data name="Advice" xml:space="preserve">
+    <value>Советы</value>
+  </data>
+  <data name="AdviceAfterTrainingMessage" xml:space="preserve">
+    <value>Заминка. 
+Заминка позволяет сгладить переход от высокоинтенсивной работы к состоянию покоя. Вы тем самым снижаете нагрузку на сердечную мышцу, которой приходится усиленно прокачивать кровь, чтобы убрать ее застой из мышц и снабдить ею внутренние органы. 
+Подойдут: 
+•Легкий бег, плавно переходящий в ходьбу (можно на месте). 
+•Легкая работа на вело- или эллиптическом тренажере
+•Прыжки на скакалке в небыстром темпе. 
+•Спарринг с грушей. 3 раунда по 2 минуты.</value>
+  </data>
+  <data name="AdviceBeforeTrainingMessage" xml:space="preserve">
+    <value>Разминка.
+Комплекс упражнений для подготовки тела к физической нагрузке, который поможет вам: 
+• избежать травм и провести занятие максимально эффективно.
+• ускоряет метаболические процессы
+• улучшает кровообращение, что насытит ваши мышцы кислородом и питательными веществами
+• повысит выносливость во время занятий
+Разогретые мышцы лучше сжимаются и расслабляются во время тренировки, значит ваша силовые возможности во время выполнения упражнений будут выше. Подойдут базовые упражнения вроде махов руками, прыжков, отжиманий и приседаний на протяжении как минимум пяти минут.</value>
+  </data>
+  <data name="AdviceString" xml:space="preserve">
+    <value>Совет</value>
+  </data>
+  <data name="AlreadyHaveAccountQuestion" xml:space="preserve">
+    <value>Уже есть аккаунт?</value>
+  </data>
+  <data name="AuthorString" xml:space="preserve">
+    <value>Автор: {0}</value>
+  </data>
+  <data name="BeginsAt" xml:space="preserve">
+    <value>начинается с</value>
+  </data>
+  <data name="BuyString" xml:space="preserve">
+    <value>Купить</value>
+  </data>
+  <data name="CancelString" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="CancelTrainingQuestion" xml:space="preserve">
+    <value>Отменить выполнение тренировки?</value>
+  </data>
+  <data name="ChangesAcceptAfterReboot" xml:space="preserve">
+    <value>Изменения вступят в силу после перезапуска приложения</value>
+  </data>
+  <data name="ChooseGroupOrNewString" xml:space="preserve">
+    <value>Группа:</value>
+  </data>
+  <data name="ChooseLanguage" xml:space="preserve">
+    <value>Язык:</value>
+  </data>
+  <data name="ChoseAction" xml:space="preserve">
+    <value>Выберите действие</value>
+  </data>
+  <data name="ContinueLastTrainingQuestion" xml:space="preserve">
+    <value>Продолжить последнюю тренировку?</value>
+  </data>
+  <data name="CopiedString" xml:space="preserve">
+    <value>_Копия</value>
+  </data>
+  <data name="CopyExercisesFinishedMessage" xml:space="preserve">
+    <value>Копирование упражнений завершено</value>
+  </data>
+  <data name="CopyString" xml:space="preserve">
+    <value>Копировать</value>
+  </data>
+  <data name="CreateNewString" xml:space="preserve">
+    <value>Создать новую</value>
+  </data>
+  <data name="CreateSuperSetString" xml:space="preserve">
+    <value>Создать суперсет</value>
+  </data>
+  <data name="CurrentString" xml:space="preserve">
+    <value>Текущий</value>
+  </data>
+  <data name="CurrentTimeString" xml:space="preserve">
+    <value>Время: {0}</value>
+  </data>
+  <data name="DateTimeFormat" xml:space="preserve">
+    <value>{0:dd.MM.yyyy HH:mm:ss}</value>
+  </data>
+  <data name="DayFreqString" xml:space="preserve">
+    <value>Повторять каждые (дней)</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>Дней</value>
+  </data>
+  <data name="DayTextEveryDay" xml:space="preserve">
+    <value>Каждый день</value>
+  </data>
+  <data name="DayTextFriday" xml:space="preserve">
+    <value>Пт</value>
+  </data>
+  <data name="DayTextMonday" xml:space="preserve">
+    <value>Пн</value>
+  </data>
+  <data name="DayTextSaturday" xml:space="preserve">
+    <value>Сб</value>
+  </data>
+  <data name="DayTextSunday" xml:space="preserve">
+    <value>Вс</value>
+  </data>
+  <data name="DayTextThursday" xml:space="preserve">
+    <value>Чт</value>
+  </data>
+  <data name="DayTextThusday" xml:space="preserve">
+    <value>Вт</value>
+  </data>
+  <data name="DayTextWensdey" xml:space="preserve">
+    <value>Ср</value>
+  </data>
+  <data name="DeleteAlarmQuestion" xml:space="preserve">
+    <value>Удалить напоминание о тренировке?</value>
+  </data>
+  <data name="DeletedString" xml:space="preserve">
+    <value>Удалено</value>
+  </data>
+  <data name="DeleteExercise" xml:space="preserve">
+    <value>Удалить упражнение?</value>
+  </data>
+  <data name="DeleteExerciseFromSuperSetQuestion" xml:space="preserve">
+    <value>Удалить упражнение из суперсета?</value>
+  </data>
+  <data name="DeleteTraining" xml:space="preserve">
+    <value>Удалить эту тренировку?</value>
+  </data>
+  <data name="Denied" xml:space="preserve">
+    <value>Отказано</value>
+  </data>
+  <data name="DistanceString" xml:space="preserve">
+    <value>Расстояние</value>
+  </data>
+  <data name="DistinctExercisesPercentFormat" xml:space="preserve">
+    <value>Процент различных упражнений: {0:0.0}%</value>
+  </data>
+  <data name="DownloadingString" xml:space="preserve">
+    <value>Загрузка</value>
+  </data>
+  <data name="Duplicate" xml:space="preserve">
+    <value>Дублировать</value>
+  </data>
+  <data name="ElapsedTimeString" xml:space="preserve">
+    <value>Время: {0:hh\:mm\:ss}</value>
+  </data>
+  <data name="EnterEmail" xml:space="preserve">
+    <value>Введите email</value>
+  </data>
+  <data name="EnterNick" xml:space="preserve">
+    <value>Введите ник</value>
+  </data>
+  <data name="EnterPassword" xml:space="preserve">
+    <value>Введите пароль</value>
+  </data>
+  <data name="EnterTrainingName" xml:space="preserve">
+    <value>Введите название тренировки и нажмите OK</value>
+  </data>
+  <data name="Execution" xml:space="preserve">
+    <value>Выполнение</value>
+  </data>
+  <data name="ExerciseForTypeString" xml:space="preserve">
+    <value>Упражнение на </value>
+  </data>
+  <data name="ExerciseInTrainings" xml:space="preserve">
+    <value>Упражнение есть в тренировках:</value>
+  </data>
+  <data name="ExercisesString" xml:space="preserve">
+    <value>Упражнения</value>
+  </data>
+  <data name="FilterString" xml:space="preserve">
+    <value>Фильтр по мышцам</value>
+  </data>
+  <data name="For" xml:space="preserve">
+    <value>Для</value>
+  </data>
+  <data name="ForgotPasswordAction" xml:space="preserve">
+    <value>Забыл пароль?</value>
+  </data>
+  <data name="GoalString" xml:space="preserve">
+    <value>Цель</value>
+  </data>
+  <data name="GotItString" xml:space="preserve">
+    <value>Понятно</value>
+  </data>
+  <data name="GroupingDefaultName" xml:space="preserve">
+    <value>Без Группы</value>
+  </data>
+  <data name="GroupingEnterNameofGroup" xml:space="preserve">
+    <value>Введите название группы</value>
+  </data>
+  <data name="GroupingTrainingNotInGroup" xml:space="preserve">
+    <value>Тренировка уже в основной группе. </value>
+  </data>
+  <data name="HalfYearString" xml:space="preserve">
+    <value>Полгода</value>
+  </data>
+  <data name="Hello" xml:space="preserve">
+    <value>Привет, </value>
+  </data>
+  <data name="HelperString" xml:space="preserve">
+    <value>ПОМОЩНИК</value>
+  </data>
+  <data name="HipsString" xml:space="preserve">
+    <value>Бедра</value>
+  </data>
+  <data name="HistoryTrainings" xml:space="preserve">
+    <value>Выполненные тренировки</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Часов</value>
+  </data>
+  <data name="HourString" xml:space="preserve">
+    <value>ч</value>
+  </data>
+  <data name="InAppPurchase" xml:space="preserve">
+    <value>Покупки в приложении</value>
+  </data>
+  <data name="KilogramsString" xml:space="preserve">
+    <value>  кг  </value>
+  </data>
+  <data name="LanguageString" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+  <data name="LastImplementedFormatString" xml:space="preserve">
+    <value>Последнее выполнение: {0}</value>
+  </data>
+  <data name="LoginAction" xml:space="preserve">
+    <value>Войти</value>
+  </data>
+  <data name="LoginWithGoogle" xml:space="preserve">
+    <value>Войти с Google</value>
+  </data>
+  <data name="LogoutAction" xml:space="preserve">
+    <value>Выйти</value>
+  </data>
+  <data name="MakeTrainingString" xml:space="preserve">
+    <value>СТАРТ</value>
+  </data>
+  <data name="MarkTheRequiredExercisesAndPressFormat" xml:space="preserve">
+    <value>Отметьте необходимые упражнения и нажмите кнопку {0}</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Минут</value>
+  </data>
+  <data name="MinuteString" xml:space="preserve">
+    <value>мин</value>
+  </data>
+  <data name="MoreThanYearString" xml:space="preserve">
+    <value>Больше года</value>
+  </data>
+  <data name="MostOftenDayFormat" xml:space="preserve">
+    <value>Самый частый день: {0:0}</value>
+  </data>
+  <data name="MostPopularExercises" xml:space="preserve">
+    <value>ТОП упражнений</value>
+  </data>
+  <data name="MoveExercisesFinishedMessage" xml:space="preserve">
+    <value>Перемещение тренировок завершено</value>
+  </data>
+  <data name="MoveString" xml:space="preserve">
+    <value>Переместить</value>
+  </data>
+  <data name="NameFormatString" xml:space="preserve">
+    <value>Название: {0}</value>
+  </data>
+  <data name="NameString" xml:space="preserve">
+    <value>Название:</value>
+  </data>
+  <data name="NewsString" xml:space="preserve">
+    <value>Новости</value>
+  </data>
+  <data name="NoAdsString" xml:space="preserve">
+    <value>Убрать рекламу</value>
+  </data>
+  <data name="NoExercisesFilterString" xml:space="preserve">
+    <value>Нет упражнений по заданному фильтру.</value>
+  </data>
+  <data name="NoExercisesNeedAddNewString" xml:space="preserve">
+    <value>Нет упражнений. Добавьте упражнение.</value>
+  </data>
+  <data name="NoLastTrainings" xml:space="preserve">
+    <value>Еще нет выполненных тренировок</value>
+  </data>
+  <data name="NoNotificationsString" xml:space="preserve">
+    <value>Нет напоминаний. Добавьте напоминание.</value>
+  </data>
+  <data name="NoString" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="NotAllFieldsEntered" xml:space="preserve">
+    <value>Введены не все поля</value>
+  </data>
+  <data name="NotExecutedYet" xml:space="preserve">
+    <value>Еще не выполнялась</value>
+  </data>
+  <data name="Notification" xml:space="preserve">
+    <value>Напоминание</value>
+  </data>
+  <data name="NoTrainingsNeedAddNewString" xml:space="preserve">
+    <value>Нет тренировок. Добавьте тренировку.</value>
+  </data>
+  <data name="NoWorkoutLimit" xml:space="preserve">
+    <value>Убрать ограничение по тренировкам   </value>
+  </data>
+  <data name="OkString" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="OneMounthString" xml:space="preserve">
+    <value>Месяц</value>
+  </data>
+  <data name="OneTrainingPerWeekCountFormat" xml:space="preserve">
+    <value>Максимум подрят недель с тренировками: {0:0}</value>
+  </data>
+  <data name="OnTheseDays" xml:space="preserve">
+    <value>Для дней</value>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>Или</value>
+  </data>
+  <data name="PleaseEnterYourNewWeight" xml:space="preserve">
+    <value>Введите свой новый вес. Возможно что-то изменилось.</value>
+  </data>
+  <data name="PreparedAbdominalString" xml:space="preserve">
+    <value>Мышцы пресса</value>
+  </data>
+  <data name="PreparedArmsStrength" xml:space="preserve">
+    <value>Сильные руки</value>
+  </data>
+  <data name="PreparedBackReady" xml:space="preserve">
+    <value>Крепкая и рельефная спина</value>
+  </data>
+  <data name="PreparedCardioString" xml:space="preserve">
+    <value>Кардио</value>
+  </data>
+  <data name="PreparedFitnessString" xml:space="preserve">
+    <value>Фитнес</value>
+  </data>
+  <data name="PreparedHomeString" xml:space="preserve">
+    <value>Без инвентаря</value>
+  </data>
+  <data name="PreparedMaximumUpperBody" xml:space="preserve">
+    <value>Максимальная верхняя часть тела</value>
+  </data>
+  <data name="PreparedNiceStomach" xml:space="preserve">
+    <value>Плоский живот</value>
+  </data>
+  <data name="PreparedTrainingForBeginners" xml:space="preserve">
+    <value>Для начинающих</value>
+  </data>
+  <data name="PreparedWideShoulders" xml:space="preserve">
+    <value>Широкие плечи</value>
+  </data>
+  <data name="RateAppString" xml:space="preserve">
+    <value>Оценить приложение</value>
+  </data>
+  <data name="RegisterAction" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
+  <data name="RemoveString" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="RepeatEvery" xml:space="preserve">
+    <value>Повторить каждые</value>
+  </data>
+  <data name="RepeatString" xml:space="preserve">
+    <value>Повторить</value>
+  </data>
+  <data name="RepsAndWeightString" xml:space="preserve">
+    <value>Повторения | Вес</value>
+  </data>
+  <data name="RepsString" xml:space="preserve">
+    <value>Повторения</value>
+  </data>
+  <data name="RestorePurchase" xml:space="preserve">
+    <value>Восстановить покупки</value>
+  </data>
+  <data name="ReturnToTrainingMessage" xml:space="preserve">
+    <value>Вы давно не выполняли тренировку. Может сегодня тот день?</value>
+  </data>
+  <data name="SavedString" xml:space="preserve">
+    <value>Сохранено</value>
+  </data>
+  <data name="SaveTrainingString" xml:space="preserve">
+    <value>Сохранить тренировку</value>
+  </data>
+  <data name="ScreenOnWhenImplementing" xml:space="preserve">
+    <value>Экран должен быть включен при выполнении тренировки</value>
+  </data>
+  <data name="ScreenOnWhenImplementingTip" xml:space="preserve">
+    <value>Выключить для экономии батареи</value>
+  </data>
+  <data name="SearchByNameString" xml:space="preserve">
+    <value>Поиск по названию</value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+    <value>Секунды</value>
+  </data>
+  <data name="SecondString" xml:space="preserve">
+    <value>с</value>
+  </data>
+  <data name="SelectAllString" xml:space="preserve">
+    <value>Выбрать все</value>
+  </data>
+  <data name="SelectMusclesString" xml:space="preserve">
+    <value>Выбрать мышцы</value>
+  </data>
+  <data name="SelectPeriodString" xml:space="preserve">
+    <value>Период:</value>
+  </data>
+  <data name="SelectString" xml:space="preserve">
+    <value>Выбрать</value>
+  </data>
+  <data name="SelectTraining" xml:space="preserve">
+    <value>Тренировка:</value>
+  </data>
+  <data name="SendPassword" xml:space="preserve">
+    <value>Отправить пароль</value>
+  </data>
+  <data name="SetFrequency" xml:space="preserve">
+    <value>Задать частоту</value>
+  </data>
+  <data name="SettingsString" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="SettingsTrainingString" xml:space="preserve">
+    <value>Настройки тренировки</value>
+  </data>
+  <data name="SharedString" xml:space="preserve">
+    <value>Отправлено</value>
+  </data>
+  <data name="ShareTrainingString" xml:space="preserve">
+    <value>Поделиться тренировкой</value>
+  </data>
+  <data name="ShortDescriptionString1" xml:space="preserve">
+    <value>Описание:</value>
+  </data>
+  <data name="ShowAdvicesOnImplementing" xml:space="preserve">
+    <value>Показывать советы по разминке и заминке во время выполнения тренировки</value>
+  </data>
+  <data name="ShowToolTipsString" xml:space="preserve">
+    <value>Показывать подсказки</value>
+  </data>
+  <data name="SkipString" xml:space="preserve">
+    <value>Пропустить</value>
+  </data>
+  <data name="StartPosition" xml:space="preserve">
+    <value>Начальная позиция</value>
+  </data>
+  <data name="StopString" xml:space="preserve">
+    <value>Стоп</value>
+  </data>
+  <data name="SuperSetControl" xml:space="preserve">
+    <value>Управление суперсетами</value>
+  </data>
+  <data name="SuperSetCreatedMessage" xml:space="preserve">
+    <value>Суперсет создан</value>
+  </data>
+  <data name="SupersetInvalidMessage" xml:space="preserve">
+    <value>Для создания Суперсета необходимо больше 2ух упражнений</value>
+  </data>
+  <data name="SuperSetString" xml:space="preserve">
+    <value>Суперсет</value>
+  </data>
+  <data name="Synchronization" xml:space="preserve">
+    <value>Синхронизация</value>
+  </data>
+  <data name="SynchronizationDownloadingQuestion" xml:space="preserve">
+    <value>Вы уверены? Ваши несинхронизированные данные удалятся.</value>
+  </data>
+  <data name="SynchronizationFinishedFailed" xml:space="preserve">
+    <value>Синхронизация завершена с ошибкой</value>
+  </data>
+  <data name="SynchronizationFinishedSuccessful" xml:space="preserve">
+    <value>Синхронизация завершена успешно</value>
+  </data>
+  <data name="ThisExerciseAlreadyInWorkoutMessage" xml:space="preserve">
+    <value>Это упражнение уже есть в тренировке</value>
+  </data>
+  <data name="ThreeMounthString" xml:space="preserve">
+    <value>3 месяца</value>
+  </data>
+  <data name="TimeString" xml:space="preserve">
+    <value>Время</value>
+  </data>
+  <data name="ToolTipAddTrainingButton" xml:space="preserve">
+    <value>Нажмите на эту кнопку, чтобы добавить новую тренировку</value>
+  </data>
+  <data name="ToolTipAddWeightAndRepsString" xml:space="preserve">
+    <value>Эта кнопка добавит подход для упражнения (Подход означает, сколько повторений вы будете делать упражнение с заданным весом)</value>
+  </data>
+  <data name="ToolTipCancelImplementingTraining" xml:space="preserve">
+    <value>Эта кнопка для отмены выполнения тренировки</value>
+  </data>
+  <data name="ToolTipFilterMuscle" xml:space="preserve">
+    <value>Нажмите на нужные мышцы, чтобы отобразить упражнения для этих мышц</value>
+  </data>
+  <data name="ToolTipFinishExercise" xml:space="preserve">
+    <value>Эта кнопка завершает выполнение упражнения</value>
+  </data>
+  <data name="ToolTipGoogleSync" xml:space="preserve">
+    <value>Авторизуйтесь, чтобы была возможность синхронизироваться между устройствами.</value>
+  </data>
+  <data name="ToolTipHoldImageExercises" xml:space="preserve">
+    <value>Чтобы изменить порядок упражнений необходимо зажать изображение упражнение и тянуть до необходимой позиции.</value>
+  </data>
+  <data name="ToolTipSelectExercisesToTrainingButton" xml:space="preserve">
+    <value>Нажмите на кнопку, чтобы выбрать упражнения для тренировки</value>
+  </data>
+  <data name="ToolTipSkipExercise" xml:space="preserve">
+    <value>Эта кнопка пропускает упражнение, это упражнение не будет отображаться в выполненных</value>
+  </data>
+  <data name="ToolTipStartWorkout" xml:space="preserve">
+    <value>Нажмите на эту кнопку, чтобы начать выполнение тренировки</value>
+  </data>
+  <data name="ToolTipSuperSet" xml:space="preserve">
+    <value>Суперсет – это сочетание двухи более упражнений, рассчитанных на работу одной и той же мышцы либо мышц антагонистов. Наиболее распространенный способ применения суперсетов – это тренировка как раз разных по функциям мышечных групп. Например: бицепс/трицепс</value>
+  </data>
+  <data name="ToolTipTapHoldTraining" xml:space="preserve">
+    <value>Нажмите и удерживайте на тренировке, чтобы увидеть настройки.</value>
+  </data>
+  <data name="TotalExercisesFormat" xml:space="preserve">
+    <value>Выполненных упражнений: {0:0}</value>
+  </data>
+  <data name="TotalTimeSpent" xml:space="preserve">
+    <value>Затраченное время:</value>
+  </data>
+  <data name="TotalTrainingsFormat" xml:space="preserve">
+    <value>Выполненных тренировок: {0:0}</value>
+  </data>
+  <data name="TrainingFinishedString" xml:space="preserve">
+    <value>Тренировка завершена</value>
+  </data>
+  <data name="TrainingNotifications" xml:space="preserve">
+    <value>Напоминания</value>
+  </data>
+  <data name="TrainingsBaseString" xml:space="preserve">
+    <value>Тренировки</value>
+  </data>
+  <data name="TrainingString" xml:space="preserve">
+    <value>Тренировка</value>
+  </data>
+  <data name="TrainingToGroupString" xml:space="preserve">
+    <value>Добавить в группу</value>
+  </data>
+  <data name="TrainingUnGroupString" xml:space="preserve">
+    <value>Удалить из группы "{0}"</value>
+  </data>
+  <data name="TwoMonthString" xml:space="preserve">
+    <value>2 месяца</value>
+  </data>
+  <data name="TwoWeeksString" xml:space="preserve">
+    <value>2 недели</value>
+  </data>
+  <data name="UploadingString" xml:space="preserve">
+    <value>Отправка</value>
+  </data>
+  <data name="VideoString" xml:space="preserve">
+    <value>Видео</value>
+  </data>
+  <data name="WaistHipMessage" xml:space="preserve">
+    <value>Значение индекса = {0:0.00}._Хотите узнать больше?</value>
+  </data>
+  <data name="WaistHipTitle" xml:space="preserve">
+    <value>Индекс талия-бедра</value>
+  </data>
+  <data name="WaistString" xml:space="preserve">
+    <value>Талия</value>
+  </data>
+  <data name="WeekString" xml:space="preserve">
+    <value>Неделя</value>
+  </data>
+  <data name="WeightControlString" xml:space="preserve">
+    <value>Фигура</value>
+  </data>
+  <data name="WeightLabel" xml:space="preserve">
+    <value>Вес:</value>
+  </data>
+  <data name="WeightNotifyString" xml:space="preserve">
+    <value>Уведомления о вводе веса</value>
+  </data>
+  <data name="WeightString" xml:space="preserve">
+    <value>Вес</value>
+  </data>
+  <data name="WorkoutAddedErrorString" xml:space="preserve">
+    <value>Тренировка не добавлена. Возможно неправильный формат файла.</value>
+  </data>
+  <data name="WorkoutAddedString" xml:space="preserve">
+    <value>Тренировка добавлена</value>
+  </data>
+  <data name="WorkoutLimitMessage" xml:space="preserve">
+    <value>В приложении ограничение на создание 3ех тренировок. Хотите снять ограничение за $2.99?</value>
+  </data>
+  <data name="YearString" xml:space="preserve">
+    <value>Год</value>
+  </data>
+  <data name="YesString" xml:space="preserve">
+    <value>Да</value>
+  </data>
+  <data name="YouDontHaveAccountQuestion" xml:space="preserve">
+    <value>У вас нет аккаунта?</value>
+  </data>
+</root>
