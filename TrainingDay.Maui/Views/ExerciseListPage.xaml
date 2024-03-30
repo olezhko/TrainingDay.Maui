@@ -6,11 +6,11 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
-             Shell.NavBarIsVisible="False" Shell.PresentationMode="ModalAnimated"
              x:Class="TrainingDay.Maui.Views.ExerciseListPage"
+             Shell.TabBarIsVisible="False"
              Title="{x:Static resx:AppResources.ExercisesString}" Padding="5">
     <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="AddToolbarItem" IconImageSource="add" Clicked="AddExercisesButton_Clicked"/>
+        <ToolbarItem x:Name="AddToolbarItem" IconImageSource="add_empty" Clicked="AddExercisesButton_Clicked"/>
     </ContentPage.ToolbarItems>
     <ContentPage.BindingContext>
         <viewModels:ExerciseListPageViewModel />
@@ -26,7 +26,7 @@
             <ImageButton Grid.Column="1" WidthRequest="40" HeightRequest="40" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="filter.png"
                     Command="{Binding ViewFilterWindowCommand}" BackgroundColor="Transparent">
                 <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Gray, Dark=White}" />
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>
             </ImageButton>
         </Grid>
@@ -71,8 +71,8 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
-                                <Frame Grid.Column="0" Padding="0" BackgroundColor="Green" CornerRadius="5" HorizontalOptions="Start" IsVisible="{Binding IsExerciseExistsInWorkout}"
-                        VerticalOptions="Start" WidthRequest="30" BorderColor="Transparent" HeightRequest="20">
+                                <Frame Grid.Column="0" Padding="0" BackgroundColor="Green" CornerRadius="10" HorizontalOptions="Center" IsVisible="{Binding IsExerciseExistsInWorkout}"
+                        VerticalOptions="Start" WidthRequest="20" BorderColor="Transparent" HeightRequest="20" >
                                     <Image HeightRequest="20" Source="save" WidthRequest="20" >
                                         <Image.Behaviors>
                                             <toolkit:IconTintColorBehavior TintColor="White" />

@@ -21,11 +21,11 @@ public class Repository
         try
         {
 #if ANDROID
-            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             var path = Path.Combine(documentsPath, filename);
             database = new SQLiteConnection(path);
 #elif IOS
-            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             string libraryPath = Path.Combine(documentsPath, "..", "Library"); // папка библиотеки
             var path = Path.Combine(libraryPath, filename);
             database = new SQLiteConnection(path);

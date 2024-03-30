@@ -13,17 +13,17 @@
 
             <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="alarm.png" Clicked="ShowAlarms_Click">
                 <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Gray, Dark=White}" />
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>
             </ImageButton>
             <ImageButton Grid.Column="2" WidthRequest="30" HeightRequest="30" Source="train_hist.png" Clicked="ShowHistory_Click">
                 <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Gray, Dark=White}" />
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>
             </ImageButton>
             <ImageButton Grid.Column="3" WidthRequest="30" HeightRequest="30" Source="add_empty.png" Command="{Binding AddNewTrainingCommand}">
                 <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Gray, Dark=White}" />
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>
             </ImageButton>
         </Grid>

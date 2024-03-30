@@ -12,7 +12,7 @@
     </ContentPage.BindingContext>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="add" Command="{Binding AddExercisesCommand}" Order="Primary" />
+        <ToolbarItem IconImageSource="add_empty" Command="{Binding AddExercisesCommand}" Order="Primary" />
         <ToolbarItem IconImageSource="settings" Command="{Binding ShowTrainingSettingsPageCommand}" Order="Primary" />
     </ContentPage.ToolbarItems>
 
@@ -67,7 +67,7 @@
 
                                         <Grid VerticalOptions="End" HeightRequest="15" IsVisible="{Binding SuperSetId,Converter={StaticResource SuperSetMenuConverter}}">
                                             <RoundRectangle Stroke="RoyalBlue" CornerRadius="0,0,5,5" Fill="RoyalBlue" />
-                                            <Label HorizontalOptions="Fill" FontSize="11" VerticalOptions="End">
+                                            <Label HorizontalOptions="Center" FontSize="11" VerticalOptions="End" >
                                                 <Label.FormattedText>
                                                     <FormattedString>
                                                         <Span Text="{x:Static resx:AppResources.SuperSetString}" TextColor="White"/>
@@ -106,7 +106,7 @@
                                              Command="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.DeleteExerciseCommand}" CommandParameter="{Binding }" BackgroundColor="Transparent" 
                                              IsVisible="{Binding IsCheckBoxVisible,Converter={StaticResource InverseBooleanConverter}}">
                                     <ImageButton.Behaviors>
-                                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Gray, Dark=White}" />
+                                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                                     </ImageButton.Behaviors>
                                 </ImageButton>
                             </Grid>
