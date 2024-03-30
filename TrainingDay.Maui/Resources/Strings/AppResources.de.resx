@@ -252,6 +252,9 @@
   <data name="Duplicate" xml:space="preserve">
     <value>Duplikat</value>
   </data>
+  <data name="Editing" xml:space="preserve">
+    <value>Bearbeiten</value>
+  </data>
   <data name="ElapsedTimeString" xml:space="preserve">
     <value>Zeit: {0:hh\:mm\:ss}</value>
   </data>

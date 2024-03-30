@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Shell.NavBarIsVisible="False" Shell.PresentationMode="ModalAnimated"
              x:Class="TrainingDay.Maui.Views.TrainingExercisesMoveOrCopy"
              Title="{Binding CurrentAction}">
     <ContentPage.BindingContext>
@@ -12,8 +14,12 @@
         <StackLayout Orientation="Horizontal" VerticalOptions="Start">
             <Picker SelectedItem="{Binding SelectedTrainingForCopyOrMove, Mode=TwoWay}" Title="{x:Static resx:AppResources.SelectTraining}"
                 ItemsSource="{Binding TrainingItems}" ItemDisplayBinding="{Binding Title}" FontSize="Large" Margin="5" HorizontalOptions="FillAndExpand"/>
-            <ImageButton Source="accept" Command="{Binding AcceptTrainingForMoveOrCopyCommand}" HorizontalOptions="End" 
-                     WidthRequest="50" HeightRequest="50" BackgroundColor="Transparent"/>
+            <ImageButton Source="save" Command="{Binding AcceptTrainingForMoveOrCopyCommand}" HorizontalOptions="End" 
+                     WidthRequest="50" HeightRequest="50" BackgroundColor="Transparent">
+                <ImageButton.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Gray, Dark=White}" />
+                </ImageButton.Behaviors>
+            </ImageButton>
         </StackLayout>
 
         <Label Text="{x:Static resx:AppResources.Or}" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalOptions="Start" FontSize="Medium"/>

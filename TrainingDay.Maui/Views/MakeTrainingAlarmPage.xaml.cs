@@ -1,3 +1,4 @@
+using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.ViewModels.Pages;
 
 namespace TrainingDay.Maui.Views;
@@ -20,7 +21,12 @@ public partial class MakeTrainingAlarmPage : ContentPage
 
             if (vm.Alarm.AlarmItem.Id == 0)
             {
+                Titlelabel.Text = AppResources.CreateNewString;
                 RemoveToolbarItem.IsVisible = false;
+            }
+            else
+            {
+                Titlelabel.Text = AppResources.Editing;
             }
 
             if (vm.TrainingItems != null && vm.Alarm.TrainingId != 0)

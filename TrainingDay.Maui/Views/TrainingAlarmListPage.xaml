@@ -11,7 +11,7 @@
         <viewModels:TrainingAlarmListPageViewModel />
     </ContentPage.BindingContext>
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="add" Command="{Binding NewAlarmCommand}"/>
+        <ToolbarItem IconImageSource="add_empty" Command="{Binding NewAlarmCommand}"/>
     </ContentPage.ToolbarItems>
     <CollectionView x:Name="listView" ItemsSource="{Binding Alarms}" >
         <CollectionView.EmptyView>

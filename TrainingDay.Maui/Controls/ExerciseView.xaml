@@ -6,8 +6,9 @@
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:data="clr-namespace:TrainingDay.Common;assembly=TrainingDay.Common"
-             x:Class="TrainingDay.Maui.Controls.ExerciseView">
-    <ScrollView Margin="0" Orientation="Vertical" VerticalOptions="FillAndExpand">
+             x:Class="TrainingDay.Maui.Controls.ExerciseView"
+             x:Name="View">
+    <ScrollView Margin="5" Orientation="Vertical" VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
         <Grid x:Name="MainGrid" RowSpacing="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -31,52 +32,54 @@
             <StackLayout Grid.Row="2" Spacing="0">
                 <StackLayout Grid.Row="2" Padding="0" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByReps}}"
                          Orientation="Vertical">
-                    <StackLayout Orientation="Horizontal" VerticalOptions="Start">
+                    <StackLayout Orientation="Horizontal" VerticalOptions="Start" Spacing="10">
                         <Label FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Start" Text="{x:Static resx:AppResources.RepsString}" VerticalTextAlignment="Center" />
 
-                        <ImageButton WidthRequest="40" HeightRequest="40" Padding="0" Source="add_empty" Clicked="AddWeightAndRepsItem_Clicked" BackgroundColor="Transparent">
+                        <ImageButton WidthRequest="40" HeightRequest="40" Padding="0" Source="add" Clicked="AddWeightAndRepsItem_Clicked" BackgroundColor="Transparent">
                             <ImageButton.Behaviors>
                                 <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Gray, Dark=White}" />
                             </ImageButton.Behaviors>
                         </ImageButton>
                     </StackLayout>
 
-                    <controls:WrapPanel x:Name="CollectionView" ItemsSource="{Binding WeightAndRepsItems}" VerticalOptions="StartAndExpand" 
-                                 Margin="0" Orientation="Horizontal" Spacing="0">
-                        <controls:WrapPanel.ItemTemplate>
+                    <FlexLayout Grid.Row="3" AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}"
+                        Direction="Row" JustifyContent="Start" VerticalOptions="Start" Wrap="Wrap">
+                        <BindableLayout.ItemTemplate>
                             <DataTemplate>
-                                <controls:RepsAndWeightControl Value="{Binding }" Margin="0" Padding="0" HorizontalOptions="Start" VerticalOptions="Start" 
-                                                        DeleteRequestCommand="{Binding Source={x:Reference View}, Path=DeleteRequestCommand}" IsOnlyReps="True"
-                                                        WidthRequest="{Binding Source={x:Static Application.Current}, Path=FullWidth, Converter={StaticResource HalfValueConverter},ConverterParameter=3}"/>
+                                <controls:RepsAndWeightControl Margin="0" IsOnlyReps="True" Padding="0"
+                                    DeleteRequestCommand="{Binding Source={x:Reference View}, Path=DeleteRequestCommand}"
+                                    HorizontalOptions="Start" VerticalOptions="Start" Value="{Binding}" 
+                                    WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type FlexLayout}}, Path=Width, Converter={StaticResource HalfValueConverter}, ConverterParameter=3}"/>
                             </DataTemplate>
-                        </controls:WrapPanel.ItemTemplate>
-                    </controls:WrapPanel>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
                 </StackLayout>
 
                 <StackLayout Padding="0" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByRepsAndWeight}}"
             Orientation="Vertical">
-                    <StackLayout Orientation="Horizontal" VerticalOptions="Start">
+                    <StackLayout Orientation="Horizontal" VerticalOptions="Start" Spacing="10">
                         <Label FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Start" Text="{x:Static resx:AppResources.RepsAndWeightString}" VerticalTextAlignment="Center" />
-                        <ImageButton WidthRequest="40" HeightRequest="40" Padding="0" Source="add_empty" Clicked="AddWeightAndRepsItem_Clicked" BackgroundColor="Transparent">
+                        <ImageButton WidthRequest="40" HeightRequest="40" Padding="0" Source="add" Clicked="AddWeightAndRepsItem_Clicked" BackgroundColor="Transparent">
                             <ImageButton.Behaviors>
                                 <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Gray, Dark=White}" />
                             </ImageButton.Behaviors>
                         </ImageButton>
                     </StackLayout>
 
-                    <controls:WrapPanel Margin="0" ItemsSource="{Binding WeightAndRepsItems}" Orientation="Horizontal" Spacing="0" VerticalOptions="StartAndExpand">
-                        <controls:WrapPanel.ItemTemplate>
+                    <FlexLayout Grid.Row="3" AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}"
+                        Direction="Row" JustifyContent="Start" VerticalOptions="Start" Wrap="Wrap">
+                        <BindableLayout.ItemTemplate>
                             <DataTemplate>
                                 <controls:RepsAndWeightControl Margin="0"
-                                                            Padding="0"
-                                                            DeleteRequestCommand="{Binding Source={x:Reference View}, Path=DeleteRequestCommand}"
-                                                            HorizontalOptions="Start"
-                                                            VerticalOptions="Start"
-                                                            WidthRequest="{Binding Source={x:Static Application.Current}, Path=FullWidth, Converter={StaticResource HalfValueConverter}, ConverterParameter=2}"
-                                                            Value="{Binding}" />
+                                Padding="0"
+                                DeleteRequestCommand="{Binding Source={x:Reference View}, Path=DeleteRequestCommand}"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Start"
+                                WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type FlexLayout}}, Path=Width, Converter={StaticResource HalfValueConverter}, ConverterParameter=2}"
+                                Value="{Binding}" />
                             </DataTemplate>
-                        </controls:WrapPanel.ItemTemplate>
-                    </controls:WrapPanel>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
                 </StackLayout>
 
                 <StackLayout Margin="0" Padding="0" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}"
@@ -199,18 +202,16 @@
                 </StackLayout>
             </StackLayout>
 
-            <StackLayout Grid.Row="3">
-                <FlexLayout AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding Muscles}"
+            <FlexLayout Grid.Row="3" AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding Muscles}"
                         Direction="Row" JustifyContent="Start" VerticalOptions="Start" Wrap="Wrap">
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate>
-                            <Frame Margin="1" Style="{StaticResource MuscleFrameCellStyle}">
-                                <Label FontSize="14" Text="{Binding Name}" TextColor="White" />
-                            </Frame>
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                </FlexLayout>
-            </StackLayout>
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="1" Style="{StaticResource MuscleFrameCellStyle}">
+                            <Label FontSize="14" Text="{Binding Name}" TextColor="White" />
+                        </Frame>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
 
             <Frame Grid.Row="4" Margin="0" Padding="0" Style="{StaticResource FrameCellStyle}" VerticalOptions="FillAndExpand" IsVisible="True">
                 <StackLayout>

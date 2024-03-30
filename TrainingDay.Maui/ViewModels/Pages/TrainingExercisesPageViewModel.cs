@@ -8,11 +8,15 @@ using TrainingDay.Maui.Views;
 using TrainingDay.Maui.Services;
 using CommunityToolkit.Maui.Alerts;
 using TrainingDay.Maui.Resources.Strings;
+using CommunityToolkit.Mvvm.Messaging;
+using TrainingDay.Maui.Models.Messages;
 
 namespace TrainingDay.Maui.ViewModels.Pages;
 
-sealed class TrainingExercisesPageViewModel : BaseViewModel
+[QueryProperty(nameof(ItemId), nameof(ItemId))]
+public sealed class TrainingExercisesPageViewModel : BaseViewModel
 {
+    private int itemId;
     private bool isSelectAllState = true;
     readonly ObservableCollection<TrainingExerciseViewModel> selectedItems = new ObservableCollection<TrainingExerciseViewModel>();
 
@@ -26,13 +30,9 @@ sealed class TrainingExercisesPageViewModel : BaseViewModel
 
     public int TappedExerciseIndex { get; set; } = -1;
 
-    public INavigation Navigation { get; set; }
-
     public TrainingViewModel Training { get; set; }
 
     public ICommand DeleteExerciseCommand => new Command<TrainingExerciseViewModel>(DeleteExercise);
-
-    public ICommand MakeNotifyCommand => new Command(MakeNotify);
 
     public ICommand MakeTrainingCommand => new Command(MakeTraining);
 
@@ -45,12 +45,6 @@ sealed class TrainingExercisesPageViewModel : BaseViewModel
     public ICommand SelectAllCommand => new Command(SelectAllItems);
 
     public ICommand AddExercisesCommand => new Command(AddExercises);
-
-    public ICommand ShareTrainingCommand => new Command(ShareTraining);
-
-    public ICommand SetSuperSetCommand => new Command(InitSuperSetMode);
-
-    public ICommand StartCopyExerciseCommand => new Command(StartCopyExercise);
 
     public ICommand ExercisesCheckedChangedCommand => new Command<TrainingExerciseViewModel>(CollectCheckedExercises);
 
@@ -66,10 +60,71 @@ sealed class TrainingExercisesPageViewModel : BaseViewModel
 
     public ICommand CreateTrainingFromSelectedExercisesCommand => new Command(CreateTrainingFromSelectedExercises);
 
+    public int ItemId
+    {
+        get => itemId;
+        set
+        {
+            if (itemId != value)
+            {
+                itemId = value;
+                LoadItemId(value);
+                OnPropertyChanged();
+            }
+        }
+    }
+
     public TrainingExercisesPageViewModel()
     {
         SaveChangesCommand = new Command(SaveChanges);
         Training = new TrainingViewModel();
+        SubscribeMessages();
+    }
+
+    #region Load
+    private void LoadItemId(int id)
+    {
+        TrainingViewModel trVm = new TrainingViewModel(App.Database.GetTrainingItem(id));
+        PrepareTrainingViewModel(trVm);
+        Load(trVm);
+    }
+
+    private static void PrepareTrainingViewModel(TrainingViewModel vm)
+    {
+        var trainingExerciseItems = App.Database.GetTrainingExerciseItems();
+        var exerciseItems = App.Database.GetExerciseItems();
+        var trainingExercises = trainingExerciseItems.Where(ex => ex.TrainingId == vm.Id);
+        var unOrderedItems = trainingExercises.Where(a => a.OrderNumber < 0);
+
+        trainingExercises = trainingExercises.OrderBy(a => a.OrderNumber).Where(a => a.OrderNumber >= 0).ToList();
+        int index = 0;
+        foreach (var trainingExercise in trainingExercises)
+        {
+            var exercise = exerciseItems.First(ex => ex.Id == trainingExercise.ExerciseId);
+            var trEx = new TrainingExerciseViewModel(exercise, trainingExercise)
+            {
+                TrainingExerciseId = trainingExercise.Id,
+            };
+            index++;
+
+            vm.AddExercise(trEx);
+        }
+
+        foreach (var trainingExercise in unOrderedItems)
+        {
+            if (trainingExercise.OrderNumber == -1)
+            {
+                trainingExercise.OrderNumber = index;
+                App.Database.SaveTrainingExerciseItem(trainingExercise);
+            }
+            var exercise = exerciseItems.First(ex => ex.Id == trainingExercise.ExerciseId);
+            var trEx = new TrainingExerciseViewModel(exercise, trainingExercise)
+            {
+                TrainingExerciseId = trainingExercise.Id,
+            };
+            index++;
+            vm.AddExercise(trEx);
+        }
     }
 
     public void Load(TrainingViewModel trVm)
@@ -91,6 +146,21 @@ sealed class TrainingExercisesPageViewModel : BaseViewModel
 
         OnPropertyChanged(nameof(Training.Exercises));
     }
+    #endregion
+
+    private void SubscribeMessages()
+    {
+        WeakReferenceMessenger.Default.Register<TrainingSettingsActionMessage>(this, (r, m) =>
+        {
+            TrainingSettingsPage_ActionSelected(m.Action);
+        });
+
+        WeakReferenceMessenger.Default.Register<ExercisesSelectFinishedMessage>(this, (r, m) =>
+        {
+            AddSelectedExercises(m.Selected.Select(item => new TrainingExerciseViewModel(item.GetExercise(), new TrainingExerciseComm())));
+            Analytics.TrackEvent($"{GetType().Name}: AddExercises finished");
+        });
+    }
 
     public void StartSelectExercises()
     {
@@ -101,16 +171,9 @@ sealed class TrainingExercisesPageViewModel : BaseViewModel
 
     private async void AddExercises()
     {
-        var vm = new ExerciseListPageViewModel() { Navigation = Navigation };
-        vm.ExistedExercises = Training.Exercises;
-        vm.ExercisesSelectFinished += async (sender, args) =>
-        {
-            AddSelectedExercises(args.Select(item => new TrainingExerciseViewModel(item.GetExercise(), new TrainingExerciseComm())));
-            Analytics.TrackEvent($"{GetType().Name}: AddExercises finished");
-            await Navigation.PopModalAsync(false);
-        };
+        Dictionary<string, object> param = new Dictionary<string, object> { { "ExistedExercises", Training.Exercises } };
 
-        await Navigation.PushModalAsync(new NavigationPage(new ExerciseListPage(vm)));
+        await Shell.Current.GoToAsync(nameof(ExerciseListPage), param);
         Analytics.TrackEvent($"{GetType().Name}: AddExercises started");
     }
 
@@ -166,16 +229,7 @@ sealed class TrainingExercisesPageViewModel : BaseViewModel
 
     private async void MakeNotify()
     {
-        MakeTrainingAlarmPageViewModel vm = new MakeTrainingAlarmPageViewModel
-        {
-            Alarm = new AlarmViewModel
-            {
-                TrainingId = Training.Id,
-            }
-        };
-
-        MakeTrainingAlarmPage page = new MakeTrainingAlarmPage() { BindingContext = vm };
-        await Navigation.PushModalAsync(page, true);
+        await Shell.Current.GoToAsync($"{nameof(MakeTrainingAlarmPage)}?{nameof(MakeTrainingAlarmPageViewModel.TrainingId)}={Training.Id}");
     }
 
     private async void TrainingExerciseTapped(object item)
@@ -195,10 +249,10 @@ sealed class TrainingExercisesPageViewModel : BaseViewModel
             return;
         }
 
-        TrainingExerciseItemPage page = new TrainingExerciseItemPage();
         selectedExercise.IsNotFinished = false;// --> for Time start button, to hide button
-        page.LoadExercise(selectedExercise);
-        await Navigation.PushAsync(page);
+
+        Dictionary<string, object> param = new Dictionary<string, object> { { "Item", selectedExercise } };
+        await Shell.Current.GoToAsync(nameof(TrainingExerciseItemPage), param);
     }
 
     private void CheckSuperSetExist(int supersetId)
@@ -241,7 +295,9 @@ sealed class TrainingExercisesPageViewModel : BaseViewModel
         }
 
         Analytics.TrackEvent($"{GetType().Name}: Training Implementing started");
-        await Navigation.PushAsync(new TrainingImplementPage() { TrainingItem = Training, Title = Training.Title });
+
+        Dictionary<string, object> param = new Dictionary<string, object> { { "TrainingItem", Training } };
+        await Shell.Current.GoToAsync(nameof(TrainingImplementPage), param);
     }
 
     /// <summary>
@@ -448,8 +504,8 @@ sealed class TrainingExercisesPageViewModel : BaseViewModel
             Training.Exercises.ForEach(item => item.IsSelected = false);
             if (CurrentAction == ExerciseCheckBoxAction.Select)
             {
-                Navigation.PopAsync(false);
-                Navigation.PopAsync();
+                //Navigation.PopAsync(false);
+                //Navigation.PopAsync();
                 return;
             }
         }
@@ -462,22 +518,22 @@ sealed class TrainingExercisesPageViewModel : BaseViewModel
         OnPropertyChanged(nameof(IsExercisesCheckBoxVisible));
     }
 
-    private void StartAction()
+    private async void StartAction()
     {
         Analytics.TrackEvent($"{GetType().Name}: StartAction {CurrentAction} Started");
         if (CurrentAction == ExerciseCheckBoxAction.Select)
         {
             SaveTraining();
             StopAction(true);
-            Navigation.PopAsync(false);
-            Navigation.PopAsync();
+            //Navigation.PopAsync(false);
+            //Navigation.PopAsync();
         }
         else if (CurrentAction == ExerciseCheckBoxAction.Copy || CurrentAction == ExerciseCheckBoxAction.Move)
         {
             ReFillTrainingToCopyOrMove();
-            TrainingExercisesMoveOrCopy page = new TrainingExercisesMoveOrCopy();
-            page.BindingContext = this;
-            Navigation.PushAsync(page);
+
+            Dictionary<string, object> param = new Dictionary<string, object> { { "Context", this } };
+            await Shell.Current.GoToAsync(nameof(TrainingExercisesMoveOrCopy), param);
         }
         else
         {
@@ -514,9 +570,9 @@ sealed class TrainingExercisesPageViewModel : BaseViewModel
         OnPropertyChanged(nameof(TrainingItems));
     }
 
-    private void AcceptTrainingForMoveOrCopy()
+    private async void AcceptTrainingForMoveOrCopy()
     {
-        Navigation.PopAsync();
+        await Shell.Current.GoToAsync("..");
 
         if (SelectedTrainingForCopyOrMove != null && SelectedTrainingForCopyOrMove.Id != 0)
         {
@@ -554,7 +610,7 @@ sealed class TrainingExercisesPageViewModel : BaseViewModel
         var result = await MessageManager.DisplayPromptAsync(Resources.Strings.AppResources.CreateNewString, Resources.Strings.AppResources.EnterTrainingName, Resources.Strings.AppResources.OkString, Resources.Strings.AppResources.CancelString, Resources.Strings.AppResources.NameString);
         if (result.IsNotNullOrEmpty())
         {
-            await Navigation.PopAsync();
+            await Shell.Current.GoToAsync("..");
 
             var id = App.Database.SaveTrainingItem(new Training()
             {
@@ -606,12 +662,10 @@ sealed class TrainingExercisesPageViewModel : BaseViewModel
     private async void ShowTrainingSettingsPage()
     {
         Analytics.TrackEvent($"{GetType().Name}: ShowTrainingSettingsPage");
-        var page = new TrainingSettingsPage();
-        page.ActionSelected += Page_ActionSelected;
-        await Navigation.PushAsync(page);
+        await Shell.Current.GoToAsync(nameof(TrainingSettingsPage));
     }
 
-    private void Page_ActionSelected(object sender, TrainingSettingsPage.TrainingSettingsActions e)
+    private void TrainingSettingsPage_ActionSelected(TrainingSettingsPage.TrainingSettingsActions e)
     {
         Analytics.TrackEvent($"{GetType().Name}: ShowTrainingSettingsPage finished with {e}");
         switch (e)

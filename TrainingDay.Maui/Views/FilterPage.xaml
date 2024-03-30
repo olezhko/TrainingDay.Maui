@@ -8,7 +8,7 @@
              x:Class="TrainingDay.Maui.Views.FilterPage"
              Title="{x:Static resx:AppResources.FilterString}">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Clicked="AcceptFilter_Click" IconImageSource="accept" />
+        <ToolbarItem Clicked="AcceptFilter_Click" IconImageSource="save" />
     </ContentPage.ToolbarItems>
     <ScrollView>
         <Grid x:Name="MainGrid">

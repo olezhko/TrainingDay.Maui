@@ -1,3 +1,6 @@
+using CommunityToolkit.Mvvm.Messaging;
+using TrainingDay.Maui.Models.Messages;
+
 namespace TrainingDay.Maui.Views;
 
 public partial class TrainingSettingsPage : ContentPage
@@ -16,34 +19,33 @@ public partial class TrainingSettingsPage : ContentPage
         InitializeComponent();
     }
 
-    public event EventHandler<TrainingSettingsActions> ActionSelected;
     private async void AddAlarmCommand_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PopAsync();
-        ActionSelected?.Invoke(this, TrainingSettingsActions.AddAlarm);
+        await Shell.Current.GoToAsync("..");
+        WeakReferenceMessenger.Default.Send(new TrainingSettingsActionMessage(TrainingSettingsActions.AddAlarm));
     }
 
     private async void ShareTrainingCommand_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PopAsync();
-        ActionSelected?.Invoke(this, TrainingSettingsActions.ShareTraining);
+        await Shell.Current.GoToAsync("..");
+        WeakReferenceMessenger.Default.Send(new TrainingSettingsActionMessage(TrainingSettingsActions.ShareTraining));
     }
 
     private async void SetSuperSetCommand_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PopAsync();
-        ActionSelected?.Invoke(this, TrainingSettingsActions.SuperSetAction);
+        await Shell.Current.GoToAsync("..");
+        WeakReferenceMessenger.Default.Send(new TrainingSettingsActionMessage(TrainingSettingsActions.SuperSetAction));
     }
 
     private async void StartMoveExerciseCommand_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PopAsync();
-        ActionSelected?.Invoke(this, TrainingSettingsActions.MoveExercises);
+        await Shell.Current.GoToAsync("..");
+        WeakReferenceMessenger.Default.Send(new TrainingSettingsActionMessage(TrainingSettingsActions.MoveExercises));
     }
 
     private async void StartCopyExerciseCommand_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PopAsync();
-        ActionSelected?.Invoke(this, TrainingSettingsActions.CopyExercises);
+        await Shell.Current.GoToAsync("..");
+        WeakReferenceMessenger.Default.Send(new TrainingSettingsActionMessage(TrainingSettingsActions.CopyExercises));
     }
 }

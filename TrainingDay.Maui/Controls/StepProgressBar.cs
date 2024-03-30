@@ -313,7 +313,7 @@ public class StepProgressBar : StackLayout
             HeightRequest = 1,
             WidthRequest = 5,
             VerticalOptions = LayoutOptions.Center,
-            HorizontalOptions = LayoutOptions.FillAndExpand,
+            HorizontalOptions = LayoutOptions.Fill,
             Margin = new Thickness(0),
         };
         headersStackLayout.Children.Add(separatorLine);

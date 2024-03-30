@@ -12,35 +12,24 @@
     </ContentPage.BindingContext>
 
     <Grid RowSpacing="0" RowDefinitions="*,Auto">
-
         <CollectionView Margin="5,0" BackgroundColor="Transparent" ItemsSource="{Binding PreparedTrainingsCollection}" SelectionMode="Single">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Style="{StaticResource FrameCellStyle}" VerticalOptions="Fill">
+                    <Frame Style="{StaticResource FrameCellStyle}" VerticalOptions="Fill" CornerRadius="0">
                         <Frame.GestureRecognizers>
-                            <TapGestureRecognizer
-            Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:PreparedTrainingsPageViewModel}}, Path=ItemSelectedCommand}"
-            CommandParameter="{Binding .}" NumberOfTapsRequired="1" />
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:PreparedTrainingsPageViewModel}}, Path=ItemSelectedCommand}"
+                            CommandParameter="{Binding .}" NumberOfTapsRequired="1" />
                         </Frame.GestureRecognizers>
                         <Grid Padding="0" VerticalOptions="Fill">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="80" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="20" />
                             </Grid.ColumnDefinitions>
-                            <Grid
-                            Margin="-5"
-                            HeightRequest="80"
-                            WidthRequest="80">
-                                <Frame BackgroundColor="Transparent" CornerRadius="5" />
-                                <Image
-                                Aspect="AspectFit"
-                                HeightRequest="80"
-                                HorizontalOptions="Start"
-                                Source="{Binding TrainingImageUrl}"
-                                VerticalOptions="Center"
-                                WidthRequest="80" />
+                            <Grid HeightRequest="80" WidthRequest="80" Padding="0" Margin="0">
+                                <Image Aspect="AspectFit" HeightRequest="80" HorizontalOptions="Start" Source="{Binding TrainingImageUrl}" VerticalOptions="Center" WidthRequest="80" />
                             </Grid>
+                            
                             <Label
                             Grid.Column="1"
                             Padding="10,0"
@@ -62,7 +51,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <Button Grid.Row="1" Margin="5" BackgroundColor="RoyalBlue" Command="{Binding CreateNewTrainingCommand}"
+        <Button Grid.Row="1" Margin="5" BackgroundColor="RoyalBlue" Command="{Binding CreateNewTrainingCommand}" CornerRadius="20"
             Style="{DynamicResource ActionButton}" Text="{x:Static resx:AppResources.CreateNewString}" FontSize="Body"/>
     </Grid>
 </ContentPage>

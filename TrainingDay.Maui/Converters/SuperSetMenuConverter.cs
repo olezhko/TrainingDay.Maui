@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 using TrainingDay.Maui.ViewModels;
 
 namespace TrainingDay.Maui.Converters;
@@ -37,6 +32,6 @@ public class SuperSetMenuConverter : IValueConverter
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        throw new InvalidOperationException("IsNullConverter can only be used OneWay.");
+        throw new InvalidOperationException("SuperSetMenuConverter can only be used OneWay.");
     }
 }

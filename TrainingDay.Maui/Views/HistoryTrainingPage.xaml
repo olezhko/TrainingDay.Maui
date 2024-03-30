@@ -5,13 +5,12 @@
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              x:Class="TrainingDay.Maui.Views.HistoryTrainingPage"
-             Title="{x:Static resx:AppResources.HistoryTrainings}">
+             Title="{x:Static resx:AppResources.HistoryTrainings}" Padding="5">
     <ContentPage.BindingContext>
         <viewModels:HistoryTrainingPageViewModel/>
     </ContentPage.BindingContext>
 
     <CollectionView ItemsSource="{Binding LastTrainings}" IsGrouped="true" BackgroundColor="Transparent" SelectionMode="Single" VerticalScrollBarVisibility="Always"
-                    SelectionChangedCommand="{Binding ItemSelectedCommand}" SelectedItem="{Binding SelectedTraining}"
                     RemainingItemsThresholdReachedCommand="{Binding RemainingItemsThresholdReachedCommand}" RemainingItemsThreshold="{Binding ItemTreshold}">
         <CollectionView.EmptyView>
             <Label HorizontalTextAlignment="Center" VerticalOptions="Start" Text="{x:Static resx:AppResources.NoLastTrainings}" FontSize="Medium"/>
@@ -25,6 +24,10 @@
             <DataTemplate>
                 <Grid>
                     <Frame Style="{StaticResource FrameCellStyle}">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HistoryTrainingPageViewModel}}, Path=ItemSelectedCommand}"
+                            CommandParameter="{Binding .}" NumberOfTapsRequired="1" />
+                        </Frame.GestureRecognizers>
                         <StackLayout Orientation="Vertical" VerticalOptions="Center">
                             <Label Text="{Binding Title,StringFormat={x:Static resx:AppResources.NameFormatString}}" FontSize="Medium" FontAttributes="Bold"/>
                             <Label Text="{Binding ElapsedTime,StringFormat={x:Static resx:AppResources.ElapsedTimeString}}" FontSize="Medium"/>

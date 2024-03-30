@@ -33,7 +33,7 @@ namespace TrainingDay.Maui
             }
         }
         public bool IsTrainingNotFinished => Settings.IsTrainingNotFinished;
-
+        public static double FullWidth => DeviceDisplay.Current.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density;
         public static ImageQueueCacheDownloader ImageDownloader
         {
             get

@@ -19,32 +19,56 @@
 
         <StackLayout Spacing="10" IsVisible="{Binding IsLastTrainingsAvailable}">
             <StackLayout Orientation="Horizontal" Spacing="10">
-                <Image Source="medal.png" WidthRequest="30" HeightRequest="30"/>
+                <Image Source="medal.png" WidthRequest="30" HeightRequest="30">
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Silver" />
+                    </Image.Behaviors>
+                </Image>
                 <Label Text="{Binding TotalTrainings,StringFormat={x:Static resx:AppResources.TotalTrainingsFormat}}" VerticalOptions="Center"/>
             </StackLayout>
 
             <StackLayout Orientation="Horizontal" Spacing="10">
-                <Image Source="medal.png" WidthRequest="30" HeightRequest="30"/>
+                <Image Source="medal.png" WidthRequest="30" HeightRequest="30">
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Silver" />
+                    </Image.Behaviors>
+                </Image>
                 <Label Text="{Binding TotalExercises,StringFormat={x:Static resx:AppResources.TotalExercisesFormat}}" VerticalOptions="Center"/>
             </StackLayout>
 
             <StackLayout Orientation="Horizontal" Spacing="10">
-                <Image Source="medal.png" WidthRequest="30" HeightRequest="30"/>
+                <Image Source="medal.png" WidthRequest="30" HeightRequest="30">
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Silver" />
+                    </Image.Behaviors>
+                </Image>
                 <Label Text="{Binding TotalTime}" VerticalOptions="Center"/>
             </StackLayout>
 
             <StackLayout Orientation="Horizontal" Spacing="10">
-                <Image Source="medal.png" WidthRequest="30" HeightRequest="30"/>
+                <Image Source="medal.png" WidthRequest="30" HeightRequest="30">
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Silver" />
+                    </Image.Behaviors>
+                </Image>
                 <Label Text="{Binding DistinctExercisesPercent,StringFormat={x:Static resx:AppResources.DistinctExercisesPercentFormat}}" VerticalOptions="Center"/>
             </StackLayout>
 
             <StackLayout Orientation="Horizontal" Spacing="10">
-                <Image Source="medal.png" WidthRequest="30" HeightRequest="30"/>
+                <Image Source="medal.png" WidthRequest="30" HeightRequest="30">
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Silver" />
+                    </Image.Behaviors>
+                </Image>
                 <Label Text="{Binding OneTrainingPerWeekCount,StringFormat={x:Static resx:AppResources.OneTrainingPerWeekCountFormat}}" VerticalOptions="Center"/>
             </StackLayout>
 
             <StackLayout Orientation="Horizontal" Spacing="10">
-                <Image Source="medal.png" WidthRequest="30" HeightRequest="30"/>
+                <Image Source="medal.png" WidthRequest="30" HeightRequest="30">
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Silver" />
+                    </Image.Behaviors>
+                </Image>
                 <Label Text="{Binding MostOftenDay,StringFormat={x:Static resx:AppResources.MostOftenDayFormat}}" VerticalOptions="Center"/>
             </StackLayout>
 

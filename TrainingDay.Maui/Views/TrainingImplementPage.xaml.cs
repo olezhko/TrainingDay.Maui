@@ -12,6 +12,7 @@ using TrainingDay.Maui.ViewModels.Pages;
 
 namespace TrainingDay.Maui.Views;
 
+[QueryProperty(nameof(TrainingItem), "TrainingItem")]
 public partial class TrainingImplementPage : ContentPage
 {
     private readonly DateTime _startTrainingDateTime;
@@ -20,7 +21,10 @@ public partial class TrainingImplementPage : ContentPage
 
     public ObservableCollection<SuperSetViewModel> Items { get; set; }
 
-    public TrainingViewModel TrainingItem { get; set; }
+    TrainingViewModel trainingItem;
+    public TrainingViewModel TrainingItem { get => trainingItem; set {
+            trainingItem = value;
+        } }
 
     public TrainingImplementPage()
     {
@@ -33,7 +37,7 @@ public partial class TrainingImplementPage : ContentPage
         Settings.IsTrainingNotFinished = true;
 
         _timer = Shell.Current.Dispatcher.CreateTimer();
-        _timer.Tick += OnTimerTick;
+        _timer.Tick += _timer_Tick; ;
         _timer.Interval = TimeSpan.FromSeconds(1);
     }
 
@@ -73,6 +77,7 @@ public partial class TrainingImplementPage : ContentPage
             StepProgressBarControl.NextElement(FirstIndexIsNotFinished());
         }
 
+        _timer.Start();
         ToolTipCancelImplementingTraining.Show();
     }
 
@@ -86,7 +91,7 @@ public partial class TrainingImplementPage : ContentPage
 
     public TimeSpan StartTime { get; set; }
 
-    private void OnTimerTick(object sender, EventArgs e)
+    private void _timer_Tick(object? sender, EventArgs e)
     {
         CurrentTime = (DateTime.Now - _startTrainingDateTime + StartTime).ToString(@"hh\:mm\:ss");
         OnPropertyChanged(nameof(CurrentTime));
@@ -94,10 +99,10 @@ public partial class TrainingImplementPage : ContentPage
         UpdateTime();
 
         // save to restore if not finish
-        SaveNotFinishedTraining(TrainingItem.Title, TrainingItem.Id);
+        //SaveNotFinishedTraining(TrainingItem.Title, TrainingItem.Id);
         UpdateNotifyTimer();
 
-        if (enabledTimer)
+        if (!enabledTimer)
         {
             _timer.Stop();
         }
@@ -157,7 +162,7 @@ public partial class TrainingImplementPage : ContentPage
     #endregion
 
     #region Finish
-    private async void FinishButtonClicked(object sender, EventArgs e)
+    private async void FinishButtonClicked(object sender, TappedEventArgs e)
     {
         try
         {
@@ -311,7 +316,7 @@ public partial class TrainingImplementPage : ContentPage
         OnPropertyChanged(nameof(Items));
     }
 
-    private async void CancelTrainingClicked(object sender, EventArgs e)
+    private async void CancelTrainingClicked(object sender, TappedEventArgs e)
     {
         var result = await MessageManager.DisplayAlert(AppResources.CancelTrainingQuestion, string.Empty, AppResources.YesString, AppResources.NoString);
         if (result)
@@ -324,7 +329,7 @@ public partial class TrainingImplementPage : ContentPage
         }
     }
 
-    private async void SkipButtonClicked(object sender, EventArgs e)
+    private async void SkipButtonClicked(object sender, TappedEventArgs e)
     {
         Items[StepProgressBarControl.StepSelected].ForEach(item => item.IsSkipped = !item.IsSkipped); // reverse skipped in exercise
 

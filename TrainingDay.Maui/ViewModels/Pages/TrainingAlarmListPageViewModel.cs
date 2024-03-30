@@ -41,17 +41,10 @@ public class TrainingAlarmListPageViewModel : BaseViewModel
         {
             return new Command(() =>
             {
-                try
-                {
-                    MakeTrainingAlarmPageViewModel vm = new MakeTrainingAlarmPageViewModel();
-                    MakeTrainingAlarmPage page = new MakeTrainingAlarmPage() { BindingContext = vm };
-                    vm.Alarm = new AlarmViewModel();
-                    Navigation.PushModalAsync(page);
-                }
-                catch (Exception e)
-                {
-
-                }
+                MakeTrainingAlarmPageViewModel vm = new MakeTrainingAlarmPageViewModel();
+                MakeTrainingAlarmPage page = new MakeTrainingAlarmPage() { BindingContext = vm };
+                vm.Alarm = new AlarmViewModel();
+                Navigation.PushModalAsync(page);
             });
         }
     }

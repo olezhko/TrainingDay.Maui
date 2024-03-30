@@ -7,6 +7,7 @@
     xmlns:controls="clr-namespace:TrainingDay.Maui.Controls">
 
     <converters:ExerciseTagExistsConverter x:Key="ExerciseTagExistsConverter"/>
+    <converters:SuperSetMenuConverter x:Key="SuperSetMenuConverter"/>
     <converters:HalfValueConverter x:Key="HalfValueConverter"/>
     <converters:IsNoItemsConverter x:Key="IsNoItemsConverter"/>
     <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
@@ -434,7 +435,7 @@
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}" />
     </Style>
 
-    <Style TargetType="Element" ApplyToDerivedTypes="True" x:Key="BaseStyle">
+    <Style TargetType="Element" x:Key="BaseStyle">
         <Setter Property="Shell.DisabledColor" Value="Gray" />
         <Setter Property="Shell.UnselectedColor" Value="Gray" />
         <Setter Property="Shell.TabBarForegroundColor" Value="Orange"/>
@@ -477,5 +478,4 @@
         <Setter Property="UnselectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />
         <Setter Property="SelectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
     </Style>
-
 </ResourceDictionary>

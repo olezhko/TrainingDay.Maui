@@ -89,16 +89,13 @@ public partial class ExerciseListPage : ContentPage
         _viewModel.UpdateItems();
     }
 
-    private async void ListView_OnItemTapped(object sender, SelectionChangedEventArgs e)
+    private async void ListView_OnItemTapped(object sender, TappedEventArgs e)
     {
-        if (e.CurrentSelection.Count != 0)
-        {
-            var selected = e.CurrentSelection.FirstOrDefault() as ExerciseListItemViewModel;
-            ExerciseItemPage page = new ExerciseItemPage();
-            ExerciseViewModel vM = new ExerciseViewModel(selected.GetExercise());
-            page.BindingContext = vM;
-            page.ExerciseChanged += Page_ExerciseChanged;
-            await Navigation.PushAsync(page);
-        }
+        ExerciseListItemViewModel? selected = (sender as Frame).BindingContext as ExerciseListItemViewModel;
+        ExerciseItemPage page = new ExerciseItemPage();
+        ExerciseViewModel vM = new ExerciseViewModel(selected.GetExercise());
+        page.BindingContext = vM;
+        page.ExerciseChanged += Page_ExerciseChanged;
+        await Navigation.PushAsync(page);
     }
 }

@@ -53,7 +53,7 @@ public partial class FilterPage : ContentPage
         base.OnAppearing();
         SkiaView.InvalidateSurface();
 
-        MuscleImage.WidthRequest = DeviceDisplay.Current.MainDisplayInfo.Width;
+        MuscleImage.WidthRequest = DeviceDisplay.Current.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density;
         MuscleImage.HeightRequest = MuscleImage.WidthRequest / (496.0 / 514.0);
 
         SkiaView.WidthRequest = MuscleImage.WidthRequest;

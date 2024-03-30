@@ -5,16 +5,28 @@ using TrainingDay.Maui.ViewModels;
 
 namespace TrainingDay.Maui.Views;
 
+[QueryProperty(nameof(Item),"Item")]
 public partial class TrainingExerciseItemPage : ContentPage
 {
     private bool isSaved;
+    private TrainingExerciseViewModel item;
+
+    public TrainingExerciseViewModel Item
+    {
+        get => item;
+        set
+        {
+            item = value;
+            LoadExercise(value);
+        }
+    }
 
     public TrainingExerciseItemPage()
     {
         InitializeComponent();
     }
 
-    public void LoadExercise(TrainingExerciseViewModel item)
+    private void LoadExercise(TrainingExerciseViewModel item)
     {
         Title = item.ExerciseItemName;
         ExerciseView.BindingContext = item;

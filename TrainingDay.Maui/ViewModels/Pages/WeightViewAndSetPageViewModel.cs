@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Maui.Alerts;
+using Microcharts;
+using SkiaSharp;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Maui.Models.Database;
@@ -86,11 +88,15 @@ class WeightViewAndSetPageViewModel : BaseViewModel
         App.Database.SaveWeightNotesItem(note);
 
         sender.ChartItems.Add(note);
-        //sender.Chart = PrepareChart(sender.GoalValue, sender.ChartItems);
+        BodyControlItems.Remove(sender);
+        sender.Chart = PrepareChart(sender.GoalValue, sender.ChartItems);
+        BodyControlItems.Insert((int)WeightType.Weight, sender);
 
         await Toast.Make(Resources.Strings.AppResources.SavedString).Show();
         //DependencyService.Get<IMessage>().CancelNotification(PushMessagesManager.WeightNotificationId);
         await SiteService.SendBodyControl(Settings.Token);
+
+        OnPropertyChanged(nameof(BodyControlItems));
     }
 
     private int GetDaysByPeriod(ChartWeightPeriod period)
@@ -167,95 +173,96 @@ class WeightViewAndSetPageViewModel : BaseViewModel
 
         BodyControlItems[0].ChartItems = weightItems;
         BodyControlItems[0].CurrentValue = currentWeightValue;
-        //BodyControlItems[0].Chart = PrepareChart(Settings.WeightGoal, weightItems);
+        BodyControlItems[0].Chart = PrepareChart(Settings.WeightGoal, weightItems);
 
         BodyControlItems[1].ChartItems = waistItems;
         BodyControlItems[1].CurrentValue = currentWaistValue;
-        //BodyControlItems[1].Chart = PrepareChart(Settings.WaistGoal, waistItems);
+        BodyControlItems[1].Chart = PrepareChart(Settings.WaistGoal, waistItems);
 
         BodyControlItems[2].ChartItems = hipsItems;
         BodyControlItems[2].CurrentValue = currentHipsValue;
-        //BodyControlItems[2].Chart = PrepareChart(Settings.HipGoal, hipsItems);
+        BodyControlItems[2].Chart = PrepareChart(Settings.HipGoal, hipsItems);
 
         IsBusy = false;
     }
 
-    //private LineChart PrepareChart(double goal, IEnumerable<WeightNote> items)
-    //{
-    //    if (!items.Any())
-    //    {
-    //        return null;
-    //    }
+    private LineChart PrepareChart(double goal, IEnumerable<WeightNote> items)
+    {
+        if (!items.Any())
+        {
+            return null;
+        }
 
-    //    var dictDate = items.GroupBy(k => k.Date.Date)
-    //        .OrderBy(k => k.Key)
-    //        .ToDictionary(k => k.Key, v => v.OrderBy(x => x.Date).Last());
+        var dictDate = items.GroupBy(k => k.Date.Date)
+            .OrderBy(k => k.Key)
+            .ToDictionary(k => k.Key, v => v.OrderBy(x => x.Date).Last());
 
-    //    var entries = dictDate.Select(item => new ChartEntry((float)item.Value.Weight)
-    //    {
-    //        ValueLabel = item.Value.Weight.ToString(),
-    //        Label = item.Key.ToString(Settings.GetLanguage().DateTimeFormat.ShortDatePattern.Replace("yyyy", "").Trim('.').Trim('/')),
-    //        ValueLabelColor = App.Current.RequestedTheme == AppTheme.Light ? SKColors.Black : SKColors.White,
-    //        TextColor = App.Current.RequestedTheme == AppTheme.Light ? SKColors.Black : SKColors.White,
-    //    }).ToList();
+        var entries = dictDate.Select(item => new ChartEntry((float)item.Value.Weight)
+        {
+            ValueLabel = item.Value.Weight.ToString(),
+            Label = item.Key.ToString(Settings.GetLanguage().DateTimeFormat.ShortDatePattern.Replace("yyyy", "").Trim('.').Trim('/')),
+            ValueLabelColor = App.Current.RequestedTheme == AppTheme.Light ? SKColors.Black : SKColors.White,
+            TextColor = App.Current.RequestedTheme == AppTheme.Light ? SKColors.Black : SKColors.White,
+        }).ToList();
 
-    //    var goalEntries = entries.Select(item => new ChartEntry((float)goal)
-    //    {
-    //        ValueLabel = goal.ToString(),
-    //        Label = item.Label,
-    //        ValueLabelColor = App.Current.RequestedTheme == AppTheme.Light ? SKColors.Black : SKColors.White,
-    //        TextColor = App.Current.RequestedTheme == AppTheme.Light ? SKColors.Black : SKColors.White,
-    //    }).ToList();
+        var goalEntries = entries.Select(item => new ChartEntry((float)goal)
+        {
+            ValueLabel = goal.ToString(),
+            Label = item.Label,
+            ValueLabelColor = App.Current.RequestedTheme == AppTheme.Light ? SKColors.Black : SKColors.White,
+            TextColor = App.Current.RequestedTheme == AppTheme.Light ? SKColors.Black : SKColors.White,
+        }).ToList();
 
-    //    var minValueEntries = entries.Select(item => item.Value).Min() - 1;
-    //    var minValueGoals = goalEntries.Select(item => item.Value).Min() - 1;
-    //    var minValue = Math.Min(minValueEntries, minValueGoals);
-    //    return new LineChart
-    //    {
-    //        Margin = 30,
-    //        LabelOrientation = Orientation.Horizontal,
-    //        ValueLabelOrientation = Orientation.Horizontal,
-    //        ValueLabelOption = ValueLabelOption.TopOfPoint,
-    //        LabelTextSize = 42,
-    //        ValueLabelTextSize = 42,
-    //        SerieLabelTextSize = 42,
-    //        LineSize = 5,
-    //        PointSize = 20,
-    //        PointMode = PointMode.Circle,
-    //        LineMode = LineMode.Spline,
-    //        ShowYAxisLines = true,
-    //        ShowYAxisText = true,
-    //        MinValue = (float)minValue,
-    //        BackgroundColor = SKColors.Transparent,
-    //        YAxisPosition = Position.Left,
-    //        YAxisTextPaint = new SKPaint
-    //        {
-    //            Color = App.Current.RequestedTheme == AppTheme.Light ? SKColors.Black : SKColors.White,
-    //            IsAntialias = true,
-    //            Style = SKPaintStyle.StrokeAndFill,
-    //            TextSize = 42,
-    //        },
-    //        YAxisLinesPaint = new SKPaint
-    //        {
-    //            Color = App.Current.RequestedTheme == AppTheme.Light ? SKColors.Black : SKColors.White,
-    //            IsAntialias = true,
-    //            Style = SKPaintStyle.Stroke,
-    //        },
-    //        LabelColor = App.Current.RequestedTheme == AppTheme.Light ? SKColors.Black : SKColors.White,
-    //        Series = new List<ChartSerie>()
-    //            {
-    //                new ChartSerie()
-    //                {
-    //                    Color = SKColors.Green,
-    //                    Entries = entries,
-    //                },
-    //                new ChartSerie()
-    //                {
-    //                    Color = SKColors.Gold,
-    //                    Entries = goalEntries,
-    //                    IsFullLine = true,
-    //                },
-    //            },
-    //    };
-    //}
+        var minValueEntries = entries.Select(item => item.Value).Min() - 1;
+        var minValueGoals = goalEntries.Select(item => item.Value).Min() - 1;
+        var minValue = Math.Min(minValueEntries.Value, minValueGoals.Value);
+        return new LineChart
+        {
+            IsAnimated = false,
+            Margin = 30,
+            LabelOrientation = Orientation.Horizontal,
+            ValueLabelOrientation = Orientation.Horizontal,
+            ValueLabelOption = ValueLabelOption.TopOfElement,
+            LabelTextSize = 42,
+            ValueLabelTextSize = 42,
+            SerieLabelTextSize = 42,
+            LineSize = 5,
+            PointSize = 20,
+            PointMode = PointMode.Circle,
+            LineMode = LineMode.Spline,
+            ShowYAxisLines = true,
+            ShowYAxisText = true,
+            MinValue = (float)minValue,
+            BackgroundColor = SKColors.Transparent,
+            YAxisPosition = Position.Left,
+            YAxisTextPaint = new SKPaint
+            {
+                Color = App.Current.RequestedTheme == AppTheme.Light ? SKColors.Black : SKColors.White,
+                IsAntialias = true,
+                Style = SKPaintStyle.StrokeAndFill,
+                TextSize = 42,
+            },
+            YAxisLinesPaint = new SKPaint
+            {
+                Color = App.Current.RequestedTheme == AppTheme.Light ? SKColors.Black : SKColors.White,
+                IsAntialias = true,
+                Style = SKPaintStyle.Stroke,
+            },
+            LabelColor = App.Current.RequestedTheme == AppTheme.Light ? SKColors.Black : SKColors.White,
+            Series = new List<ChartSerie>()
+                {
+                    new ChartSerie()
+                    {
+                        Color = SKColors.Green,
+                        Entries = entries,
+                    },
+                    new ChartSerie()
+                    {
+                        Color = SKColors.Gold,
+                        Entries = goalEntries,
+                        //IsFullLine = true,
+                    },
+                },
+        };
+    }
 }

@@ -6,21 +6,16 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+             Shell.NavBarIsVisible="False" Shell.PresentationMode="ModalAnimated"
              x:Class="TrainingDay.Maui.Views.ExerciseListPage"
-             Title="{x:Static resx:AppResources.ExercisesString}">
+             Title="{x:Static resx:AppResources.ExercisesString}" Padding="5">
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="AddToolbarItem" IconImageSource="add" Clicked="AddExercisesButton_Clicked"/>
     </ContentPage.ToolbarItems>
     <ContentPage.BindingContext>
         <viewModels:ExerciseListPageViewModel />
     </ContentPage.BindingContext>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <Grid RowDefinitions="50,*,auto,auto">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -37,7 +32,7 @@
         </Grid>
 
         <CollectionView x:Name="ExercisesListView" Grid.Row="1" BackgroundColor="Transparent" android:ListView.IsFastScrollEnabled="true"
-        ItemsSource="{Binding Items}" ItemsUpdatingScrollMode="KeepScrollOffset" SelectionChanged="ListView_OnItemTapped" SelectionMode="Single" VerticalScrollBarVisibility="Always">
+            ItemsSource="{Binding Items}" ItemsUpdatingScrollMode="KeepScrollOffset" SelectionMode="Single" VerticalScrollBarVisibility="Always">
             <CollectionView.EmptyView>
                 <ContentView>
                     <ContentView.Style>
@@ -54,7 +49,7 @@
                         <Label FontSize="20" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.NoExercisesNeedAddNewString}" VerticalOptions="FillAndExpand" />
 
                         <ImageButton Grid.Column="1" WidthRequest="60" HeightRequest="60" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="add_empty"
-Clicked="AddExercisesButton_Clicked" BackgroundColor="Transparent">
+                            Clicked="AddExercisesButton_Clicked" BackgroundColor="Transparent">
                             <ImageButton.Behaviors>
                                 <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Gray, Dark=White}" />
                             </ImageButton.Behaviors>
@@ -66,6 +61,9 @@ Clicked="AddExercisesButton_Clicked" BackgroundColor="Transparent">
                 <DataTemplate>
                     <Grid>
                         <Frame Style="{StaticResource FrameCellStyle}" BackgroundColor="Transparent">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ListView_OnItemTapped"/>
+                            </Frame.GestureRecognizers>
                             <Grid Margin="0" Padding="0" ColumnSpacing="2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="30" />
@@ -74,14 +72,15 @@ Clicked="AddExercisesButton_Clicked" BackgroundColor="Transparent">
                                 </Grid.ColumnDefinitions>
 
                                 <Frame Grid.Column="0" Padding="0" BackgroundColor="Green" CornerRadius="5" HorizontalOptions="Start" IsVisible="{Binding IsExerciseExistsInWorkout}"
-                        VerticalOptions="Start" WidthRequest="30">
-                                    <Image HeightRequest="20" Source="accept" WidthRequest="20" />
+                        VerticalOptions="Start" WidthRequest="30" BorderColor="Transparent" HeightRequest="20">
+                                    <Image HeightRequest="20" Source="save" WidthRequest="20" >
+                                        <Image.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="White" />
+                                        </Image.Behaviors>
+                                    </Image>
                                 </Frame>
 
-                                <CheckBox
-                    x:Name="SelectCheckBox"
-                    IsChecked="{Binding IsSelected}"
-                    VerticalOptions="Center" />
+                                <CheckBox x:Name="SelectCheckBox" IsChecked="{Binding IsSelected}" VerticalOptions="Center" />
                                 <Frame
                     Grid.Row="0"
                     Grid.Column="1"
@@ -132,8 +131,9 @@ Clicked="AddExercisesButton_Clicked" BackgroundColor="Transparent">
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <Grid Grid.Row="2" ColumnSpacing="10" ColumnDefinitions="*,*">
-            <Button Grid.Column="0" Command="{Binding CancelCommand}" CornerRadius="20" Text="{x:Static resx:AppResources.CancelString}" />
+        <Grid Grid.Row="2" ColumnSpacing="10" ColumnDefinitions="*,*" Padding="0,5">
+            <Button Grid.Column="0" Command="{Binding CancelCommand}" CornerRadius="20" Text="{x:Static resx:AppResources.CancelString}" 
+                    BackgroundColor="Transparent" BorderColor="RoyalBlue" TextColor="RoyalBlue" BorderWidth="1"/>
 
             <Button CornerRadius="20" Grid.Column="1" BackgroundColor="RoyalBlue" Command="{Binding ChoseExercisesCommand}"
             CommandParameter="{Binding}" Text="{x:Static resx:AppResources.SelectString}" />

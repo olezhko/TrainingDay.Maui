@@ -267,6 +267,9 @@
   <data name="Duplicate" xml:space="preserve">
     <value>Дублировать</value>
   </data>
+  <data name="Editing" xml:space="preserve">
+    <value>Изменение</value>
+  </data>
   <data name="ElapsedTimeString" xml:space="preserve">
     <value>Время: {0:hh\:mm\:ss}</value>
   </data>

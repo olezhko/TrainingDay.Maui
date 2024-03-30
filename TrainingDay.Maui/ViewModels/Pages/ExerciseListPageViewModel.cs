@@ -1,13 +1,15 @@
-﻿using Microsoft.AppCenter.Crashes;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.AppCenter.Crashes;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Common;
 using TrainingDay.Maui.Models;
+using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Views;
 
 namespace TrainingDay.Maui.ViewModels.Pages;
 
-public class ExerciseListPageViewModel : BaseViewModel
+public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
 {
     List<int> selectedIndexes = new List<int>();
     public FilterModel Filter { get; set; }
@@ -145,9 +147,10 @@ public class ExerciseListPageViewModel : BaseViewModel
         await Navigation.PushModalAsync(new NavigationPage(page));
     }
 
-    private void ChoseExercises()
+    private async void ChoseExercises()
     {
-        ExercisesSelectFinished?.Invoke(this, GetSelectedItems());
+        await Shell.Current.GoToAsync("..");
+        WeakReferenceMessenger.Default.Send(new ExercisesSelectFinishedMessage(GetSelectedItems()));
     }
 
     private async void LoadItemsAsync()
@@ -172,5 +175,10 @@ public class ExerciseListPageViewModel : BaseViewModel
                 selectedIndexes.Remove(trainingExerciseViewModel.Id);
             }
         }
+    }
+
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        ExistedExercises = query["ExistedExercises"] as ObservableCollection<TrainingExerciseViewModel>;
     }
 }

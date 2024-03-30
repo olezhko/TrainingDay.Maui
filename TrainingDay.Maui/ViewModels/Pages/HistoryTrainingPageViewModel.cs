@@ -19,7 +19,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
     public HistoryTrainingPageViewModel()
     {
         LastTrainings = new ObservableCollection<LastTrainingViewModelList>();
-        ItemSelectedCommand = new Command(SelectionChanged);
+        ItemSelectedCommand = new Command<LastTrainingViewModel>(SelectionChanged);
 
         DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.WeekString, 7));
         DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.OneMounthString, 31));
@@ -90,8 +90,9 @@ public class HistoryTrainingPageViewModel : BaseViewModel
         OnPropertyChanged(nameof(LastTrainings));
     }
 
-    private void SelectionChanged()
+    private void SelectionChanged(LastTrainingViewModel selected)
     {
+        SelectedTraining = selected;
         var trainingExerciseItems = App.Database.GetLastTrainingExerciseItems().Where(item => item.LastTrainingId == SelectedTraining.Id);
         foreach (var trainingExercise in trainingExerciseItems)
         {

@@ -7,7 +7,7 @@ public class DayOfWeekButton : Button
     private static void IsSelectedPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
     {
         var picker = (DayOfWeekButton)bindable;
-        picker.BackgroundColor = ((bool)newvalue) ? Colors.White : Colors.DimGray;
+        picker.BackgroundColor = ((bool)newvalue) ? Colors.Orange : Colors.DimGray;
     }
 
     public bool IsSelected

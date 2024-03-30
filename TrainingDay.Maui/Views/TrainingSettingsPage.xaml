@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              x:Class="TrainingDay.Maui.Views.TrainingSettingsPage"
-             Title="{x:Static resx:AppResources.ChoseAction}">
+             Title="{x:Static resx:AppResources.ChoseAction}"
+             Padding="5">
     <Grid VerticalOptions="Center" RowSpacing="10">
         <Grid.RowDefinitions>
             <RowDefinition/>

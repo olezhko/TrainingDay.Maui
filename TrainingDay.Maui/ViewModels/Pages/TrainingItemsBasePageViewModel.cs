@@ -207,10 +207,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
     {
         Analytics.TrackEvent($"{GetType().Name}: TrainingSelected Clicked");
         var item = (TrainingViewModel)viewCell.BindingContext;
-
-        var page = new TrainingExercisesPage();
-        page.TrainingId = item.Id;
-        await Navigation.PushAsync(page);
+        await Shell.Current.GoToAsync($"{nameof(TrainingExercisesPage)}?{nameof(TrainingExercisesPageViewModel.ItemId)}={item.Id}");
     }
 
     private void DuplicateSelectedTraining(Frame viewCell)

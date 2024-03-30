@@ -5,9 +5,10 @@
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              xmlns:data="clr-namespace:TrainingDay.Common;assembly=TrainingDay.Common"
-             x:Class="TrainingDay.Maui.Views.ExerciseItemPage">
+             x:Class="TrainingDay.Maui.Views.ExerciseItemPage"
+             Title="{x:Static resx:AppResources.CreateNewString}" Padding="5">
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="accept" Clicked="Save_clicked"/>
+        <ToolbarItem IconImageSource="save" Clicked="Save_clicked"/>
         <ToolbarItem x:Name="DeleteExerciseToolbarItem" Clicked="Remove_clicked" IconImageSource="remove" />
     </ContentPage.ToolbarItems>
     <ContentPage.BindingContext>
@@ -15,7 +16,7 @@
     </ContentPage.BindingContext>
     <Grid>
         <ScrollView>
-            <Grid RowSpacing="1" x:Name="ContentGrid" RowDefinitions="auto,auto,auto,auto,auto">
+            <Grid x:Name="ContentGrid" RowDefinitions="auto,auto,auto,auto,auto" RowSpacing="10">
 
                 <Entry
             x:Name="NameEditor"
@@ -77,7 +78,7 @@
                              IsEnabled="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"/>
                 </StackLayout>
 
-                <Grid Grid.Row="4" RowDefinitions="auto,auto,auto">
+                <Grid Grid.Row="4" RowDefinitions="auto,auto,auto" RowSpacing="5">
 
                     <Editor
                 x:Name="StartingDescEditor"
@@ -127,13 +128,12 @@
             </Grid>
         </ScrollView>
 
-
-        <StackLayout x:Name="MuscleSelectorView" IsVisible="False" VerticalOptions="FillAndExpand" Padding="20" HorizontalOptions="FillAndExpand"
+        <Grid x:Name="MuscleSelectorView" IsVisible="False" Padding="20" HorizontalOptions="Fill" VerticalOptions="Fill"
                      BackgroundColor="{AppThemeBinding Light='#77E3E3E3', Dark='#77000000'}">
-            <Grid BackgroundColor="{AppThemeBinding Light=LightGray, Dark=Black}" Padding="20">
+            <Grid BackgroundColor="{AppThemeBinding Light=LightGray, Dark=Black}" Padding="20" RowSpacing="10" VerticalOptions="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="500"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Label TextColor="Orange" FontSize="Large" Text="{x:Static resx:AppResources.SelectMusclesString}"/>
@@ -149,11 +149,11 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
 
-                <Grid Grid.Row="2" VerticalOptions="End" ColumnDefinitions="*,*">
-                    <Button CornerRadius="20" Text="{x:Static resx:AppResources.CancelString}" Clicked="MuscleSelectorViewCancel_OnClicked"/>
+                <Grid Grid.Row="2" VerticalOptions="End" ColumnDefinitions="*,*" ColumnSpacing="10">
+                    <Button CornerRadius="20" Text="{x:Static resx:AppResources.CancelString}" Clicked="MuscleSelectorViewCancel_OnClicked" BackgroundColor="Transparent" BorderColor="RoyalBlue" TextColor="RoyalBlue" BorderWidth="1"/>
                     <Button CornerRadius="20" Grid.Column="1" Text="{x:Static resx:AppResources.SelectString}" Clicked="MuscleSelectorViewApprove_OnClicked" BackgroundColor="RoyalBlue"/>
                 </Grid>
             </Grid>
-        </StackLayout>
+        </Grid>
     </Grid>
 </ContentPage>

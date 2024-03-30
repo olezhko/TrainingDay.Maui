@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 using TrainingDay.Maui.Controls;
 
 namespace TrainingDay.Maui
@@ -12,14 +13,18 @@ namespace TrainingDay.Maui
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .UseSkiaSharp()
                 .ConfigureFonts(fonts =>
                 {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("Inter-Regular.ttf", "OpenSansRegular");
+                    fonts.AddFont("Inter-Semibold.ttf", "OpenSansSemibold");
                 })
                 .ConfigureEffects(effects =>
                 {
                     effects.Add<LongPressedEffect, LongPressedPlatformEffect>();
+                })
+                .ConfigureMauiHandlers(handlers =>
+                {
                 });
 
 #if DEBUG

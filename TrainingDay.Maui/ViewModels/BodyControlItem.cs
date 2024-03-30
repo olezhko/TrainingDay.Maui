@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using Microcharts;
+using System.Globalization;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.ViewModels.Pages;
 
@@ -87,16 +88,16 @@ public class BodyControlItem : BaseViewModel
         }
     }
 
-    //private LineChart chart;
-    //public LineChart Chart
-    //{
-    //    get => chart;
-    //    set
-    //    {
-    //        chart = value;
-    //        OnPropertyChanged();
-    //    }
-    //}
+    private LineChart chart;
+    public LineChart Chart
+    {
+        get => chart;
+        set
+        {
+            chart = value;
+            OnPropertyChanged();
+        }
+    }
 
     public List<WeightNote> ChartItems { get; set; }
 
