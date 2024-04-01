@@ -25,15 +25,17 @@ public class Repository
             var path = Path.Combine(documentsPath, filename);
             database = new SQLiteConnection(path);
 #elif IOS
-            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             string libraryPath = Path.Combine(documentsPath, "..", "Library"); // папка библиотеки
             var path = Path.Combine(libraryPath, filename);
+            Console.WriteLine("SQL lib path: " + path);
             database = new SQLiteConnection(path);
 #endif
 
         }
         catch (Exception e)
         {
+            Console.WriteLine($"Database Error: {e}");
             return;
         }
 

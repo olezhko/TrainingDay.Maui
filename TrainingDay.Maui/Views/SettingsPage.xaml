@@ -193,7 +193,7 @@
             <Frame Style="{StaticResource FrameCellStyle}" CornerRadius="20" BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight},Dark={StaticResource ListItemBackgroundColor}}" Padding="5">
                 <StackLayout>
                     <Label Text="{x:Static resx:AppResources.SettingsString}" FontSize="Title" HorizontalOptions="Center"/>
-                    <Picker x:Name="LanguagePicker" BackgroundColor="Transparent" HorizontalOptions="FillAndExpand" ItemDisplayBinding="{Binding NativeName}" Title="{x:Static resx:AppResources.ChooseLanguage}"/>
+                    <Picker x:Name="LanguagePicker" BackgroundColor="Transparent" HorizontalOptions="Fill" ItemDisplayBinding="{Binding NativeName}" Title="{x:Static resx:AppResources.ChooseLanguage}"/>
                     <StackLayout Margin="5">
                         <StackLayout Orientation="Horizontal">
                             <Label Text="{x:Static resx:AppResources.ScreenOnWhenImplementing}" FontSize="Medium" HorizontalOptions="StartAndExpand"/>

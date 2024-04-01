@@ -45,7 +45,7 @@
             </CollectionView.ItemsLayout>
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate>
-                    <StackLayout VerticalOptions="FillAndExpand" Padding="5" Orientation="Horizontal" Margin="0" BackgroundColor="LightGray">
+                    <StackLayout VerticalOptions="Fill" Padding="5" Orientation="Horizontal" Margin="0" BackgroundColor="LightGray">
                         <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={x:Reference Page}, Path=BindingContext.ToggleExpandGroupCommand}"  NumberOfTapsRequired="1" CommandParameter="{Binding .}"/>
                         </StackLayout.GestureRecognizers>
@@ -105,7 +105,7 @@
                         <ImageButton WidthRequest="60" HeightRequest="60" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="add_empty"
                                      Command="{Binding AddNewTrainingCommand}" BackgroundColor="Transparent">
                             <ImageButton.Behaviors>
-                                <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Gray, Dark=White}" />
+                                <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                             </ImageButton.Behaviors>
                         </ImageButton>
                     </StackLayout>

@@ -48,7 +48,7 @@
 
                 <StackLayout Grid.Row="2">
                     <Button CornerRadius="20" Text="{x:Static resx:AppResources.SelectMusclesString}" IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}" 
-                        HorizontalOptions="FillAndExpand" Clicked="ShowMusclesLookup_Click"/>
+                        HorizontalOptions="Fill" Clicked="ShowMusclesLookup_Click"/>
                     <StackLayout>
                         <FlexLayout AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding Muscles}"
                             Direction="Row" JustifyContent="Start" VerticalOptions="Start" Wrap="Wrap">
@@ -138,7 +138,7 @@
                 </Grid.RowDefinitions>
                 <Label TextColor="Orange" FontSize="Large" Text="{x:Static resx:AppResources.SelectMusclesString}"/>
 
-                <CollectionView Grid.Row="1" x:Name="MuscleSelectorList" VerticalOptions="FillAndExpand">
+                <CollectionView Grid.Row="1" x:Name="MuscleSelectorList" VerticalOptions="Fill">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Orientation="Horizontal">

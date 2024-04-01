@@ -34,7 +34,7 @@
             Grid.Row="1"
             Aspect="AspectFit"
             HeightRequest="514"
-            HorizontalOptions="FillAndExpand"
+            HorizontalOptions="Fill"
             Source="muscle.png"
             VerticalOptions="Start"
             WidthRequest="496" />

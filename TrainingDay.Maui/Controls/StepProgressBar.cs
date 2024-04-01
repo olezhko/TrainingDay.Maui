@@ -68,7 +68,7 @@ public class StepProgressBar : StackLayout
     {
         _collectionChanged += OnCollectionChanged;
         Orientation = StackOrientation.Vertical;
-        HorizontalOptions = LayoutOptions.FillAndExpand;
+        HorizontalOptions = LayoutOptions.Fill;
         Spacing = 0;
         AddStyles();
         headersStackLayout = new StackLayout();
@@ -78,7 +78,7 @@ public class StepProgressBar : StackLayout
 
         var scroll = new ScrollView();
         scroll.Orientation = ScrollOrientation.Horizontal;
-        scroll.HorizontalOptions = LayoutOptions.FillAndExpand;
+        scroll.HorizontalOptions = LayoutOptions.Fill;
         scroll.Content = headersStackLayout;
         scroll.HorizontalScrollBarVisibility = ScrollBarVisibility.Always;
         Children.Add(scroll);
@@ -160,7 +160,7 @@ public class StepProgressBar : StackLayout
                         HeightRequest = 1,
                         WidthRequest = 15,
                         VerticalOptions = LayoutOptions.Center,
-                        HorizontalOptions = LayoutOptions.FillAndExpand,
+                        HorizontalOptions = LayoutOptions.Fill,
                         Margin = new Thickness(0),
                     };
                     headersStackLayout.Children.Add(separatorLine);

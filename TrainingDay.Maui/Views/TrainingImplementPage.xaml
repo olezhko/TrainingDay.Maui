@@ -32,7 +32,7 @@
         <controls:StepProgressBar x:Name="StepProgressBarControl" Grid.Row="1" Grid.ColumnSpan="3" SteppedColor="{DynamicResource ListItemBackgroundColor}" >
             <controls:StepProgressBar.ItemTemplate>
                 <DataTemplate>
-                    <Grid VerticalOptions="FillAndExpand" RowSpacing="5">
+                    <Grid VerticalOptions="Fill" RowSpacing="5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>

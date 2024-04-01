@@ -88,7 +88,7 @@
                                                         <Label Margin="5" FontSize="Medium" HorizontalTextAlignment="Center" Text="{Binding Repetitions}"
                                                     VerticalTextAlignment="Center" />
                                                         <Label Grid.Column="2" Margin="5" FontSize="Medium" HorizontalTextAlignment="Center" Text="{Binding Weight}" VerticalTextAlignment="Center" />
-                                                        <Grid Grid.Column="1" VerticalOptions="FillAndExpand" WidthRequest="2" BackgroundColor="Gray" />
+                                                        <Grid Grid.Column="1" VerticalOptions="Fill" WidthRequest="2" BackgroundColor="Gray" />
                                                     </Grid>
                                                 </Frame>
                                             </DataTemplate>

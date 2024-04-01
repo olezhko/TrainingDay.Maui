@@ -25,7 +25,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Entry Keyboard="Text" Text="{Binding Training.Title}" FontSize="22" HorizontalOptions="FillAndExpand" Placeholder="{x:Static resx:AppResources.NameString}" />
+        <Entry Keyboard="Text" Text="{Binding Training.Title}" FontSize="22" HorizontalOptions="Fill" Placeholder="{x:Static resx:AppResources.NameString}" />
 
         <CollectionView ItemsSource="{Binding Training.Exercises}" Grid.Row="1" x:Name="ItemsListView" SelectionMode="Single" 
                     ItemsUpdatingScrollMode="KeepScrollOffset">
@@ -89,7 +89,7 @@
                                 </CheckBox>
 
                                 <StackLayout Orientation="Vertical" Grid.Column="1" Padding="0" Margin="0" VerticalOptions="Center">
-                                    <Label Text="{Binding ExerciseItemName}" FontSize="17" HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand" VerticalOptions="Start" Margin="0"/>
+                                    <Label Text="{Binding ExerciseItemName}" FontSize="17" HorizontalTextAlignment="Center" HorizontalOptions="Fill" VerticalOptions="Start" Margin="0"/>
                                     <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" HorizontalOptions="Center" Wrap="Wrap" VerticalOptions="Center" Direction="Row"
                                         JustifyContent="Center" AlignItems="Center" AlignContent="Start">
                                         <BindableLayout.ItemTemplate>
@@ -122,14 +122,14 @@
             Grid.Row="2" TextColor="White" BackgroundColor="RoyalBlue" Margin="1" FontSize="Body" CornerRadius="20" controls:TooltipControlContainer.IgnoreVisible="True"
             IsVisible="{Binding IsExercisesCheckBoxVisible,Converter={StaticResource InverseBooleanConverter}}"/>
 
-        <Grid Grid.Row="3" IsVisible="{Binding IsExercisesCheckBoxVisible}" HorizontalOptions="FillAndExpand" ColumnSpacing="10"
+        <Grid Grid.Row="3" IsVisible="{Binding IsExercisesCheckBoxVisible}" HorizontalOptions="Fill" ColumnSpacing="10"
           controls:TooltipControlContainer.IgnoreVisible="True">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" CornerRadius="20" Text="{x:Static resx:AppResources.CancelString}" Command="{Binding CancelActionCommand}" HorizontalOptions="FillAndExpand" Style="{DynamicResource ActionButton}" />
-            <Button Grid.Column="1" CornerRadius="20" Text="{Binding ExerciseActionString}" Command="{Binding StartActionCommand}" HorizontalOptions="FillAndExpand" Style="{DynamicResource ActionButton}" BackgroundColor="RoyalBlue" />
+            <Button Grid.Column="0" CornerRadius="20" Text="{x:Static resx:AppResources.CancelString}" Command="{Binding CancelActionCommand}" HorizontalOptions="Fill" Style="{DynamicResource ActionButton}" />
+            <Button Grid.Column="1" CornerRadius="20" Text="{Binding ExerciseActionString}" Command="{Binding StartActionCommand}" HorizontalOptions="Fill" Style="{DynamicResource ActionButton}" BackgroundColor="RoyalBlue" />
         </Grid>
 
         <controls:ToolTipControl x:Name="ToolTipHoldImageExercises" Grid.Row="1" 

@@ -46,7 +46,7 @@
                         </Style>
                     </ContentView.Style>
                     <StackLayout>
-                        <Label FontSize="20" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.NoExercisesNeedAddNewString}" VerticalOptions="FillAndExpand" />
+                        <Label FontSize="20" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.NoExercisesNeedAddNewString}" VerticalOptions="Fill" />
 
                         <ImageButton Grid.Column="1" WidthRequest="60" HeightRequest="60" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="add_empty"
                             Clicked="AddExercisesButton_Clicked" BackgroundColor="Transparent">

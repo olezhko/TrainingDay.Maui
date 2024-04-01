@@ -22,7 +22,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Entry Keyboard="Text" Text="{Binding Training.Title}" FontSize="Large" HorizontalOptions="FillAndExpand" Placeholder="{x:Static resx:AppResources.NameString}" Grid.Row="0" FontAttributes="Bold" Margin="5,0"/>
+        <Entry Keyboard="Text" Text="{Binding Training.Title}" FontSize="Large" HorizontalOptions="Fill" Placeholder="{x:Static resx:AppResources.NameString}" Grid.Row="0" FontAttributes="Bold" Margin="5,0"/>
 
         <CollectionView ItemsSource="{Binding Training.Exercises}" Grid.Row="1" x:Name="ItemsListView"
                             SelectionChangedCommand="{Binding ItemTappedCommand}" SelectedItem="{Binding SelectedExercise}">
@@ -69,7 +69,7 @@
                                 </Frame>
 
                                 <StackLayout Orientation="Vertical" Grid.Column="1" Padding="0" Margin="0">
-                                    <Label Text="{Binding ExerciseItemName}" FontSize="17" HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Margin="0"/>
+                                    <Label Text="{Binding ExerciseItemName}" FontSize="17" HorizontalTextAlignment="Center" HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" Margin="0"/>
 
                                     <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" HorizontalOptions="Center" Wrap="Wrap" VerticalOptions="Center" Direction="Row"
                                                     JustifyContent="Center" AlignItems="Center" AlignContent="Start">
@@ -89,6 +89,6 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <Button Grid.Row="3" CornerRadius="20" IsVisible="{Binding IsExercisesCheckBoxVisible}" Text="{Binding ExerciseActionString}" Command="{Binding StartActionCommand}" HorizontalOptions="FillAndExpand" Style="{DynamicResource ActionButton}" />
+        <Button Grid.Row="3" CornerRadius="20" IsVisible="{Binding IsExercisesCheckBoxVisible}" Text="{Binding ExerciseActionString}" Command="{Binding StartActionCommand}" HorizontalOptions="Fill" Style="{DynamicResource ActionButton}" />
     </Grid>
 </ContentPage>

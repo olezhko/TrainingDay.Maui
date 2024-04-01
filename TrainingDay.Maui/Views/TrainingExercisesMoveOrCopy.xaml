@@ -13,7 +13,7 @@
     <StackLayout BackgroundColor="Transparent" VerticalOptions="Center" Margin="20,0">
         <StackLayout Orientation="Horizontal" VerticalOptions="Start">
             <Picker SelectedItem="{Binding SelectedTrainingForCopyOrMove, Mode=TwoWay}" Title="{x:Static resx:AppResources.SelectTraining}"
-                ItemsSource="{Binding TrainingItems}" ItemDisplayBinding="{Binding Title}" FontSize="Large" Margin="5" HorizontalOptions="FillAndExpand"/>
+                ItemsSource="{Binding TrainingItems}" ItemDisplayBinding="{Binding Title}" FontSize="Large" Margin="5" HorizontalOptions="Fill"/>
             <ImageButton Source="save" Command="{Binding AcceptTrainingForMoveOrCopyCommand}" HorizontalOptions="End" 
                      WidthRequest="50" HeightRequest="50" BackgroundColor="Transparent">
                 <ImageButton.Behaviors>

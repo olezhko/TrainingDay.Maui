@@ -30,13 +30,13 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Picker x:Name="PeriodPicker" Title="{x:Static resx:AppResources.SelectPeriodString}" HorizontalOptions="FillAndExpand" FontSize="17">
+        <Picker x:Name="PeriodPicker" Title="{x:Static resx:AppResources.SelectPeriodString}" HorizontalOptions="Fill" FontSize="17">
             <Picker.Behaviors>
                 <toolkit:EventToCommandBehavior EventName="SelectedIndexChanged" Command="{Binding WeightPeriodChangedCommand}" CommandParameter="{Binding Source={x:Reference PeriodPicker},Path=SelectedIndex}"/>
             </Picker.Behaviors>
         </Picker>
 
-        <CarouselView Grid.Row="1" IndicatorView="indicatorView" ItemsSource="{Binding BodyControlItems}" VerticalOptions="FillAndExpand" Loop="False">
+        <CarouselView Grid.Row="1" IndicatorView="indicatorView" ItemsSource="{Binding BodyControlItems}" VerticalOptions="Fill" Loop="False">
             <CarouselView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Padding="5">
@@ -48,8 +48,8 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <Entry Grid.Column="0" Placeholder="{x:Static resx:AppResources.CurrentString}" Text="{Binding CurrentValueString, Mode=TwoWay}" HorizontalOptions="FillAndExpand" FontSize="17" VerticalOptions="Center" Keyboard="Numeric"/>
-                            <Entry Grid.Column="1" Placeholder="{x:Static resx:AppResources.GoalString}" Text="{Binding GoalValueString, Mode=TwoWay}" HorizontalOptions="FillAndExpand" FontSize="17" VerticalOptions="Center" Keyboard="Numeric"/>
+                            <Entry Grid.Column="0" Placeholder="{x:Static resx:AppResources.CurrentString}" Text="{Binding CurrentValueString, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="17" VerticalOptions="Center" Keyboard="Numeric"/>
+                            <Entry Grid.Column="1" Placeholder="{x:Static resx:AppResources.GoalString}" Text="{Binding GoalValueString, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="17" VerticalOptions="Center" Keyboard="Numeric"/>
                             <ImageButton Grid.Column="2" Source="save.png" Command="{Binding Source={x:Reference Page}, Path=BindingContext.SaveValueCommand}" CommandParameter="{Binding }" 
                                          BackgroundColor="Transparent" VerticalOptions="Center" WidthRequest="40" HeightRequest="40">
                                 <ImageButton.Behaviors>
@@ -57,12 +57,12 @@
                                 </ImageButton.Behaviors>
                             </ImageButton>
                         </Grid>
-                        <charts:ChartView x:Name="chartView" BackgroundColor="Transparent" Chart="{Binding Chart}" VerticalOptions="FillAndExpand" />
+                        <charts:ChartView x:Name="chartView" BackgroundColor="Transparent" Chart="{Binding Chart}" VerticalOptions="Fill" />
                     </StackLayout>
                 </DataTemplate>
             </CarouselView.ItemTemplate>
         </CarouselView>
         <IndicatorView Grid.Row="2" x:Name="indicatorView" IndicatorSize="{OnPlatform Android='9', iOS='10'}" MaximumVisible="6" HideSingle="True" ItemsSource="{Binding BodyControlItems}" IndicatorColor="DimGray" 
-                       SelectedIndicatorColor="Orange" VerticalOptions="FillAndExpand" HorizontalOptions="Center" />
+                       SelectedIndicatorColor="Orange" VerticalOptions="Fill" HorizontalOptions="Center" />
     </Grid>
 </ContentPage>

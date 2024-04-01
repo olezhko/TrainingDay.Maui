@@ -55,10 +55,16 @@ public partial class ToolTipControl : ContentView
 
     private void ToolTipControl_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == "Width" || e.PropertyName == "Height" || e.PropertyName == "WidthRequest" || e.PropertyName == "HeightRequest"
-            || e.PropertyName == "Y" || e.PropertyName == "X" || e.PropertyName == "EmptyView")
+        try
         {
-            CalculatePosition(innerView);
+            if (e.PropertyName == "Width" || e.PropertyName == "Height" || e.PropertyName == "WidthRequest" || e.PropertyName == "HeightRequest"
+                || e.PropertyName == "Y" || e.PropertyName == "X" || e.PropertyName == "EmptyView")
+            {
+                CalculatePosition(innerView);
+            }
+        }
+        catch (Exception)
+        {
         }
     }
 
@@ -128,7 +134,14 @@ public partial class ToolTipControl : ContentView
             if (e.PropertyName == "Width" || e.PropertyName == "Height" || e.PropertyName == "WidthRequest" || e.PropertyName == "HeightRequest"
                 || e.PropertyName == "Y" || e.PropertyName == "X" || e.PropertyName == "EmptyView")
             {
-                control.CalculatePosition((ContentView)sender);
+                try
+                {
+                    control.CalculatePosition((ContentView)sender);
+                }
+                catch (Exception)
+                {
+
+                }
             }
         };
         view.PropertyChanged += properyChanged;

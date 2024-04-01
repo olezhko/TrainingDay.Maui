@@ -16,7 +16,7 @@
             </Label>
             <StackLayout Orientation="Horizontal" Spacing="0">
                 <Label x:Name="FrequencyLabel" />
-                <controls:DaysOfWeekView x:Name="DaysOfWeekView" HorizontalOptions="FillAndExpand"/>
+                <controls:DaysOfWeekView x:Name="DaysOfWeekView" HorizontalOptions="Fill"/>
             </StackLayout>
         </StackLayout>
         <Switch x:Name="ActiveSwitch" IsToggled="{Binding IsActive}" VerticalOptions="Center" HorizontalOptions="EndAndExpand" Toggled="ActiveSwitch_OnToggled"/>

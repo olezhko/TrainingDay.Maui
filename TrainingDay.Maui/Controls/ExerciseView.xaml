@@ -8,7 +8,7 @@
              xmlns:data="clr-namespace:TrainingDay.Common;assembly=TrainingDay.Common"
              x:Class="TrainingDay.Maui.Controls.ExerciseView"
              x:Name="View">
-    <ScrollView Margin="5" Orientation="Vertical" VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
+    <ScrollView Margin="5" Orientation="Vertical" VerticalOptions="Fill" VerticalScrollBarVisibility="Never">
         <Grid x:Name="MainGrid" RowSpacing="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -109,7 +109,7 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     Padding="0"
-                    HorizontalOptions="FillAndExpand"
+                    HorizontalOptions="Fill"
                     HorizontalTextAlignment="Center"
                     Text="{x:Static resx:AppResources.HourString}"
                     VerticalTextAlignment="Center" />
@@ -143,7 +143,7 @@
                         <Label
                     Grid.Row="1"
                     Padding="0"
-                    HorizontalOptions="FillAndExpand"
+                    HorizontalOptions="Fill"
                     HorizontalTextAlignment="Center"
                     Text="{x:Static resx:AppResources.MinuteString}"
                     VerticalTextAlignment="Center" />
@@ -176,7 +176,7 @@
                         <Label
                     Grid.Row="1"
                     Padding="0"
-                    HorizontalOptions="FillAndExpand"
+                    HorizontalOptions="Fill"
                     HorizontalTextAlignment="Center"
                     Text="{x:Static resx:AppResources.SecondString}"
                     VerticalTextAlignment="Center" />
@@ -213,7 +213,7 @@
                 </BindableLayout.ItemTemplate>
             </FlexLayout>
 
-            <Frame Grid.Row="4" Margin="0" Padding="0" Style="{StaticResource FrameCellStyle}" VerticalOptions="FillAndExpand" IsVisible="True">
+            <Frame Grid.Row="4" Margin="0" Padding="0" Style="{StaticResource FrameCellStyle}" VerticalOptions="Fill" IsVisible="True">
                 <StackLayout>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -261,7 +261,7 @@
                                 <StackLayout Padding="10">
                                     <Label FontSize="Small" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" Text="{Binding VideoTitle}" />
                                     <Label FontSize="Small" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" Text="{Binding VideoAuthor, StringFormat={x:Static resx:AppResources.AuthorString}}" />
-                                    <controls:FullScreenVideoWebView HeightRequest="400" HorizontalOptions="FillAndExpand" Source="{Binding WebViewData}" VerticalOptions="FillAndExpand" WidthRequest="400" />
+                                    <controls:FullScreenVideoWebView HeightRequest="400" HorizontalOptions="Fill" Source="{Binding WebViewData}" VerticalOptions="Fill" WidthRequest="400" />
                                 </StackLayout>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
