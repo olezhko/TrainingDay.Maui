@@ -8,10 +8,19 @@
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
              x:Class="TrainingDay.Maui.Views.ExerciseListPage"
              Shell.TabBarIsVisible="False"
-             Title="{x:Static resx:AppResources.ExercisesString}" Padding="5">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="AddToolbarItem" IconImageSource="add_empty" Clicked="AddExercisesButton_Clicked"/>
-    </ContentPage.ToolbarItems>
+             Padding="5">
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*, auto" Padding="10,0" ColumnSpacing="10">
+            <Label Grid.Column="0" Text="{x:Static resx:AppResources.ExercisesString}" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
+
+            <ImageButton x:Name="AddToolbarItem" Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="add_empty.png" Clicked="AddExercisesButton_Clicked">
+                <ImageButton.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
+                </ImageButton.Behaviors>
+            </ImageButton>
+        </Grid>
+    </Shell.TitleView>
+    
     <ContentPage.BindingContext>
         <viewModels:ExerciseListPageViewModel />
     </ContentPage.BindingContext>
@@ -92,7 +101,7 @@
                     VerticalOptions="Center">
                                     <controls:ImageCache
                         HeightRequest="60"
-                        ImageUrl="{Binding ExerciseImageUrl}"
+                        CodeNum="{Binding CodeNum}"
                         WidthRequest="60" />
                                 </Frame>
 

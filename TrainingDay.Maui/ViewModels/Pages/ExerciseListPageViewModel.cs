@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -36,6 +37,13 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
         Items = new ObservableCollection<ExerciseListItemViewModel>();
         BaseItems = new ObservableCollection<ExerciseListItemViewModel>();
         UpdateItems();
+
+        WeakReferenceMessenger.Default.Register<FilterAcceptedForExercisesMessage>(this, (r, m) =>
+        {
+            Filter = m.Filter;
+            UpdateItems();
+            Analytics.TrackEvent($"{GetType().Name}: FilterAcceptedForExercisesMessage");
+        });
     }
 
     private async void Cancel()
@@ -137,14 +145,8 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
 
     private async void ViewFilterWindow()
     {
-        var page = new FilterPage();
-        page.SetMuscleFilter(Filter, () =>
-        {
-            Filter = page.Filter;
-            UpdateItems();
-        });
-
-        await Navigation.PushModalAsync(new NavigationPage(page));
+        Dictionary<string, object> param = new Dictionary<string, object> { { "Filter", Filter } };
+        await Shell.Current.GoToAsync(nameof(FilterPage), param);
     }
 
     private async void ChoseExercises()

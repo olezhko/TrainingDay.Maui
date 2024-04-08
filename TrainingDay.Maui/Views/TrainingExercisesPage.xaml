@@ -6,17 +6,30 @@
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="TrainingDay.Maui.Views.TrainingExercisesPage"
-             Title="{Binding ExerciseActionString}" x:Name="ContentPage">
+             x:Name="ContentPage" >
     <ContentPage.BindingContext>
         <viewModels:TrainingExercisesPageViewModel/>
     </ContentPage.BindingContext>
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="add_empty" Command="{Binding AddExercisesCommand}" Order="Primary" />
-        <ToolbarItem IconImageSource="settings" Command="{Binding ShowTrainingSettingsPageCommand}" Order="Primary" />
-    </ContentPage.ToolbarItems>
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*,auto, auto" Padding="10,0" ColumnSpacing="10">
+            <Label Grid.Column="0" Text="{x:Static resx:AppResources.TrainingString}" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
 
-    <controls:TooltipControlContainer x:Name="Container" RowSpacing="2">
+            <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="add_empty.png" Command="{Binding AddExercisesCommand}">
+                <ImageButton.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
+                </ImageButton.Behaviors>
+            </ImageButton>
+
+            <ImageButton Grid.Column="2" WidthRequest="30" HeightRequest="30" Source="settings.png" Command="{Binding ShowTrainingSettingsPageCommand}">
+                <ImageButton.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
+                </ImageButton.Behaviors>
+            </ImageButton>
+        </Grid>
+    </Shell.TitleView>
+
+    <controls:TooltipControlContainer x:Name="Container" RowSpacing="2" BackgroundColor="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
@@ -25,7 +38,12 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Entry Keyboard="Text" Text="{Binding Training.Title}" FontSize="22" HorizontalOptions="Fill" Placeholder="{x:Static resx:AppResources.NameString}" />
+        <Frame Style="{StaticResource MaterialFrame}">
+            <Grid>
+                <Label Text="{x:Static resx:AppResources.NameString}" Style="{StaticResource MaterialLabel}"/>
+                <Entry Text="{Binding Training.Title, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="22" VerticalOptions="Center"/>
+            </Grid>
+        </Frame>
 
         <CollectionView ItemsSource="{Binding Training.Exercises}" Grid.Row="1" x:Name="ItemsListView" SelectionMode="Single" 
                     ItemsUpdatingScrollMode="KeepScrollOffset">
@@ -37,14 +55,14 @@
                                 <TapGestureRecognizer Command="{Binding BindingContext.ItemTappedCommand, Source={x:Reference ItemsListView}}"
                                               CommandParameter="{Binding}"/>
                                 <DropGestureRecognizer
-                                AllowDrop="True"
-                                DragLeaveCommand="{Binding BindingContext.ItemDragLeave, Source={x:Reference ItemsListView}}"
-                                DragLeaveCommandParameter="{Binding}"
-                                DragOverCommand="{Binding BindingContext.ItemDraggedOver, Source={x:Reference ItemsListView}}"
-                                DragOverCommandParameter="{Binding}"
-                                Drop="DropGestureRecognizer_Drop_Collection"
-                                DropCommand="{Binding BindingContext.ItemDropped, Source={x:Reference ItemsListView}}"
-                                DropCommandParameter="{Binding}" />
+                                    AllowDrop="True"
+                                    DragLeaveCommand="{Binding BindingContext.ItemDragLeave, Source={x:Reference ItemsListView}}"
+                                    DragLeaveCommandParameter="{Binding}"
+                                    DragOverCommand="{Binding BindingContext.ItemDraggedOver, Source={x:Reference ItemsListView}}"
+                                    DragOverCommandParameter="{Binding}"
+                                    Drop="DropGestureRecognizer_Drop_Collection"
+                                    DropCommand="{Binding BindingContext.ItemDropped, Source={x:Reference ItemsListView}}"
+                                    DropCommandParameter="{Binding}" />
                             </Frame.GestureRecognizers>
                             <Grid Padding="0" Margin="0">
                                 <Grid.ColumnDefinitions>
@@ -53,9 +71,9 @@
                                     <ColumnDefinition Width="30"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Frame Grid.Column="0" Padding="5" VerticalOptions="Center" BackgroundColor="White" CornerRadius="5" BorderColor="Transparent">
-                                    <Grid>
-                                        <controls:ImageCache x:Name="ImageControl" HeightRequest="60" WidthRequest="60" ImageUrl="{Binding ExerciseImageUrl}">
+                                <Frame Grid.Column="0" HeightRequest="70" WidthRequest="70" VerticalOptions="Center" BackgroundColor="White" CornerRadius="5" BorderColor="Transparent">
+                                    <Grid HeightRequest="70" WidthRequest="70">
+                                        <controls:ImageCache x:Name="ImageControl" HeightRequest="70" WidthRequest="70" CodeNum="{Binding CodeNum}">
                                             <controls:ImageCache.GestureRecognizers>
                                                 <DragGestureRecognizer
                                                 CanDrag="True"
@@ -65,7 +83,7 @@
                                             </controls:ImageCache.GestureRecognizers>
                                         </controls:ImageCache>
 
-                                        <Grid VerticalOptions="End" HeightRequest="15" IsVisible="{Binding SuperSetId,Converter={StaticResource SuperSetMenuConverter}}">
+                                        <Grid VerticalOptions="End" HeightRequest="15" IsVisible="{Binding SuperSetId,Converter={StaticResource SuperSetMenuConverter}}" >
                                             <RoundRectangle Stroke="RoyalBlue" CornerRadius="0,0,5,5" Fill="RoyalBlue" />
                                             <Label HorizontalOptions="Center" FontSize="11" VerticalOptions="End" >
                                                 <Label.FormattedText>
@@ -119,11 +137,10 @@
         </CollectionView>
 
         <Button x:Name="MakeTrainingButton" Command="{Binding MakeTrainingCommand}" Text="{x:Static resx:AppResources.MakeTrainingString}" 
-            Grid.Row="2" TextColor="White" BackgroundColor="RoyalBlue" Margin="1" FontSize="Body" CornerRadius="20" controls:TooltipControlContainer.IgnoreVisible="True"
+            Grid.Row="2" TextColor="White" BackgroundColor="RoyalBlue" Margin="5" FontSize="Body" CornerRadius="20" controls:TooltipControlContainer.IgnoreVisible="True"
             IsVisible="{Binding IsExercisesCheckBoxVisible,Converter={StaticResource InverseBooleanConverter}}"/>
 
-        <Grid Grid.Row="3" IsVisible="{Binding IsExercisesCheckBoxVisible}" HorizontalOptions="Fill" ColumnSpacing="10"
-          controls:TooltipControlContainer.IgnoreVisible="True">
+        <Grid Grid.Row="3" IsVisible="{Binding IsExercisesCheckBoxVisible}" HorizontalOptions="Fill" ColumnSpacing="10" controls:TooltipControlContainer.IgnoreVisible="True">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>

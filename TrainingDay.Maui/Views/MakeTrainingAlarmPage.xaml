@@ -12,18 +12,8 @@
         <viewModels:MakeTrainingAlarmPageViewModel />
     </ContentPage.BindingContext>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid Margin="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
+    <Grid RowDefinitions="auto,*,auto">
+        <Grid Margin="5" ColumnDefinitions="auto,*,auto">
 
             <ImageButton WidthRequest="40" HeightRequest="40" Padding="0" Source="close" Command="{Binding CloseCommand}" BackgroundColor="Transparent">
                 <ImageButton.Behaviors>
@@ -41,10 +31,20 @@
         </Grid>
 
         <StackLayout Grid.Row="1" Spacing="0">
-            <Picker x:Name="TrainingsPicker" Title="{x:Static resx:AppResources.SelectTraining}" Margin="5" FontSize="22" ItemDisplayBinding="{Binding Title}"
-                ItemsSource="{Binding TrainingItems}" SelectedItem="{Binding SelectedTrainingItem, Mode=TwoWay}" />
+            <Frame Style="{StaticResource MaterialFrame}">
+                <Grid>
+                    <Label Text="{x:Static resx:AppResources.SelectTraining}" Style="{StaticResource MaterialLabel}" controls:MaterialLabelAttached.MaterialControlType="Picker" />
+                    <Picker x:Name="TrainingsPicker" ItemDisplayBinding="{Binding Title}" ItemsSource="{Binding TrainingItems}" SelectedItem="{Binding SelectedTrainingItem, Mode=TwoWay}" 
+                            VerticalOptions="End"/>
+                </Grid>
+            </Frame>
 
-            <Entry Margin="5" FontSize="22" Placeholder="{x:Static resx:AppResources.NameString}" Text="{Binding Alarm.Name}"/>
+            <Frame Style="{StaticResource MaterialFrame}">
+                <Grid>
+                    <Label Text="{x:Static resx:AppResources.NameString}" Style="{StaticResource MaterialLabel}"/>
+                    <Entry Text="{Binding Alarm.Name, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="22" VerticalOptions="Center"/>
+                </Grid>
+            </Frame>
 
             <TimePicker Margin="5" FontSize="22" HorizontalOptions="Center" Time="{Binding Alarm.Time}" />
 

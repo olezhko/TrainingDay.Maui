@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
+             xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              Shell.NavBarIsVisible="False" Shell.PresentationMode="ModalAnimated"
              x:Class="TrainingDay.Maui.Views.TrainingExercisesMoveOrCopy"
@@ -11,9 +12,15 @@
         <viewModels:TrainingExercisesPageViewModel/>
     </ContentPage.BindingContext>
     <StackLayout BackgroundColor="Transparent" VerticalOptions="Center" Margin="20,0">
-        <StackLayout Orientation="Horizontal" VerticalOptions="Start">
-            <Picker SelectedItem="{Binding SelectedTrainingForCopyOrMove, Mode=TwoWay}" Title="{x:Static resx:AppResources.SelectTraining}"
-                ItemsSource="{Binding TrainingItems}" ItemDisplayBinding="{Binding Title}" FontSize="Large" Margin="5" HorizontalOptions="Fill"/>
+        <StackLayout Orientation="Horizontal" VerticalOptions="Start" Spacing="5">
+            <Frame Style="{StaticResource MaterialFrame}">
+                <Grid>
+                    <Label Text="{x:Static resx:AppResources.SelectTraining}" Style="{StaticResource MaterialLabel}" controls:MaterialLabelAttached.MaterialControlType="Picker"/>
+                    <Picker SelectedItem="{Binding SelectedTrainingForCopyOrMove, Mode=TwoWay}" Title="{x:Static resx:AppResources.SelectTraining}"
+                    ItemsSource="{Binding TrainingItems}" ItemDisplayBinding="{Binding Title}" HorizontalOptions="Fill" VerticalOptions="End"/>
+                </Grid>
+            </Frame>
+
             <ImageButton Source="save" Command="{Binding AcceptTrainingForMoveOrCopyCommand}" HorizontalOptions="End" 
                      WidthRequest="50" HeightRequest="50" BackgroundColor="Transparent">
                 <ImageButton.Behaviors>

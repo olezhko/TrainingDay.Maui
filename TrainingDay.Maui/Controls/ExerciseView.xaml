@@ -22,7 +22,7 @@
                VerticalOptions="Start" IsVisible="{Binding Source={x:Reference View}, Path=IsNameVisible}" />
 
             <Frame Grid.Row="1" Padding="5" BackgroundColor="White" CornerRadius="5" HorizontalOptions="Center" VerticalOptions="Center">
-                <controls:ImageCache x:Name="ImageControl" HeightRequest="100" ImageUrl="{Binding ExerciseImageUrl}" WidthRequest="100">
+                <controls:ImageCache x:Name="ImageControl" HeightRequest="100" CodeNum="{Binding CodeNum}" WidthRequest="100">
                     <controls:ImageCache.GestureRecognizers>
                         <TapGestureRecognizer Tapped="ImageTapped" />
                     </controls:ImageCache.GestureRecognizers>
@@ -221,16 +221,17 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
 
-                        <Label x:Name="DesctiptionLabel" Padding="10" BackgroundColor="Green" Text="{x:Static resx:AppResources.ShortDescriptionString1}">
+                        <Label x:Name="DesctiptionLabel" Padding="10" Grid.ColumnSpan="2" BackgroundColor="Green" Text="{x:Static resx:AppResources.ShortDescriptionString1}"
+                               HorizontalTextAlignment="Center">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="Description_Click" />
                             </Label.GestureRecognizers>
                         </Label>
-                        <Label x:Name="VideoLabel" Grid.Column="1" Padding="10" BackgroundColor="Gray" Text="{x:Static resx:AppResources.VideoString}">
+                        <!--<Label x:Name="VideoLabel" Grid.Column="1" Padding="10" BackgroundColor="Gray" Text="{x:Static resx:AppResources.VideoString}">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="Video_Click" />
                             </Label.GestureRecognizers>
-                        </Label>
+                        </Label>-->
                     </Grid>
 
                     <StackLayout x:Name="DescriptionGrid" Margin="5">

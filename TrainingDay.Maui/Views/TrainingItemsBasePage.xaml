@@ -47,7 +47,7 @@
                 <DataTemplate>
                     <StackLayout VerticalOptions="Fill" Padding="5" Orientation="Horizontal" Margin="0" BackgroundColor="LightGray">
                         <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Source={x:Reference Page}, Path=BindingContext.ToggleExpandGroupCommand}"  NumberOfTapsRequired="1" CommandParameter="{Binding .}"/>
+                            <TapGestureRecognizer Command="{Binding Source={x:Reference Page}, Path=BindingContext.ToggleExpandGroupCommand}" NumberOfTapsRequired="1" CommandParameter="{Binding .}"/>
                         </StackLayout.GestureRecognizers>
                         <Label Text="{Binding Key}" TextColor="Black" VerticalOptions="Center" FontSize="Medium" HorizontalTextAlignment="Center"/>
 

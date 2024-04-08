@@ -19,17 +19,6 @@ public class ExerciseViewModel : BaseViewModel
         }
     }
 
-    private string _imageUrl;
-    public string ExerciseImageUrl
-    {
-        get => _imageUrl;
-        set
-        {
-            _imageUrl = value;
-            OnPropertyChanged();
-        }
-    }
-
     private List<TrainingDay.Common.ExerciseTags> _tags;
     public List<TrainingDay.Common.ExerciseTags> Tags
     {
@@ -85,7 +74,6 @@ public class ExerciseViewModel : BaseViewModel
         Tags = TrainingDay.Common.ExerciseTools.ConvertFromIntToTagList(exercise.TagsValue);
         ExerciseItemName = exercise.ExerciseItemName;
         Id = exercise.Id;
-        ExerciseImageUrl = exercise.ExerciseImageUrl;
         Muscles = new ObservableCollection<MuscleViewModel>(MusclesConverter.ConvertFromStringToList(exercise.MusclesString));
         Description = DescriptionViewModel.ConvertFromJson(exercise.Description);
         CodeNum = exercise.CodeNum;
@@ -97,7 +85,6 @@ public class ExerciseViewModel : BaseViewModel
         {
             Id = Id,
             Description = JsonConvert.SerializeObject(Description?.Model),
-            ExerciseImageUrl = ExerciseImageUrl,
             ExerciseItemName = ExerciseItemName,
             MusclesString = MusclesConverter.ConvertFromListToString(Muscles.ToList()),
             TagsValue = TrainingDay.Common.ExerciseTools.ConvertTagListToInt(Tags),

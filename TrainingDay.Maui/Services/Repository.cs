@@ -127,7 +127,6 @@ public class Repository
             Exercise newExercise = new Exercise();
             newExercise.CodeNum = exercise.CodeNum;
             newExercise.Description = JsonConvert.SerializeObject(exercise.Description);
-            newExercise.ExerciseImageUrl = Common.Consts.ExerciseImageFormat.Fill(exercise.CodeNum);
             newExercise.MusclesString = exercise.MusclesString;
             newExercise.TagsValue = exercise.TagsValue;
             newExercise.ExerciseItemName = exercise.ExerciseItemName;
@@ -144,7 +143,6 @@ public class Repository
     {
         try
         {
-            dbExercise.ExerciseImageUrl = Common.Consts.ExerciseImageFormat.Fill(srcExercise.CodeNum);
             dbExercise.Description = JsonConvert.SerializeObject(srcExercise.Description);
             dbExercise.MusclesString = srcExercise.MusclesString;
             dbExercise.ExerciseItemName = srcExercise.ExerciseItemName;
@@ -440,7 +438,6 @@ public class Repository
     #region Image
     public ImageData GetImage(string imageUrl)
     {
-
         return database.Find<ImageData>(a => a.Url == imageUrl);
     }
 

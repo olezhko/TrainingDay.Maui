@@ -32,7 +32,6 @@ public class TrainingExerciseViewModel : ExerciseViewModel
             ExerciseId = exercise.Id;
             Muscles = new ObservableCollection<MuscleViewModel>(MusclesConverter.ConvertFromStringToList(exercise.MusclesString));
             ExerciseItemName = exercise.ExerciseItemName;
-            ExerciseImageUrl = exercise.ExerciseImageUrl;
             TrainingId = comm.TrainingId;
             OrderNumber = comm.OrderNumber;
             SuperSetId = comm.SuperSetId;
@@ -210,7 +209,6 @@ public class TrainingExerciseViewModel : ExerciseViewModel
         {
             Id = ExerciseId,
             Description = JsonConvert.SerializeObject(Description?.Model),
-            ExerciseImageUrl = ExerciseImageUrl,
             ExerciseItemName = ExerciseItemName,
             MusclesString = MusclesConverter.ConvertFromListToString(Muscles.ToList()),
             TagsValue = TrainingDay.Common.ExerciseTools.ConvertTagListToInt(Tags),

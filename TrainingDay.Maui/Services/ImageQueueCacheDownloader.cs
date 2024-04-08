@@ -1,15 +1,23 @@
-﻿using System.Net;
-using TrainingDay.Maui.Models.Database;
+﻿using TrainingDay.Maui.Models.Database;
 
 namespace TrainingDay.Maui.Services;
 
-public class ImageQueueCacheDownloader
+public interface IImageQueueCacheDownloader
 {
+    void AddUrl(string url);
+    void Start();
+    event EventHandler<ImageData> Downloaded;
+}
+
+public class ImageQueueCacheDownloader : IImageQueueCacheDownloader
+{
+    IFileHelper _fileHelper;
     public event EventHandler<ImageData> Downloaded;
 
     private static readonly Queue<string> Items = new Queue<string>();
-    public ImageQueueCacheDownloader()
+    public ImageQueueCacheDownloader(IFileHelper fileHelper)
     {
+        _fileHelper = fileHelper;
         Start();
     }
 
@@ -23,7 +31,7 @@ public class ImageQueueCacheDownloader
 
     public void Start()
     {
-        Task.Run(() =>
+        Task.Run(async () =>
         {
             while (true)
             {
@@ -31,19 +39,19 @@ public class ImageQueueCacheDownloader
                 {
                     if (Items.Count != 0)
                     {
-                        using (var client = new WebClient())
-                        {
-                            string url = Items.Dequeue();
-                            var data = client.DownloadData(new Uri(url));
+                        string url = Items.Dequeue();
+                        var data = await _fileHelper.GetFile($"{url}.jpg");
 
-                            var item = new ImageData()
-                            {
-                                Data = data,
-                                Url = url,
-                            };
-                            App.Database.SaveImage(item);
-                            OnDownloaded(item);
-                        }
+                        var bytes = File.ReadAllBytes(data);
+
+                        var item = new ImageData()
+                        {
+                            Data = bytes.ToArray(),
+                            Url = url,
+                        };
+
+                        App.Database.SaveImage(item);
+                        OnDownloaded(item);
                     }
                 }
                 catch (Exception e)

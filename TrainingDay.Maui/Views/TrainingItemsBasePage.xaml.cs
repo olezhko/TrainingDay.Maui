@@ -41,13 +41,13 @@ public partial class TrainingItemsBasePage : ContentPage
         if (Settings.IsTrainingNotFinished)
         {
             Settings.IsTrainingNotFinished = false;
+            var fn = "NotFinished.trday";
+            var filename = Path.Combine(FileSystem.CacheDirectory, fn);
+            var trainingSerialize = TrainingSerialize.LoadFromFile(filename);
 
-            var result = await MessageManager.DisplayAlert(AppResources.ContinueLastTrainingQuestion, string.Empty, AppResources.YesString, AppResources.NoString);
+            var result = await MessageManager.DisplayAlert(AppResources.ContinueLastTrainingQuestion, trainingSerialize.Title, AppResources.YesString, AppResources.NoString);
             if (result)
             {
-                var fn = "NotFinished.trday";
-                var filename = Path.Combine(FileSystem.CacheDirectory, fn);
-                var trainingSerialize = TrainingSerialize.LoadFromFile(File.ReadAllBytes(filename));
                 TrainingViewModel training = new TrainingViewModel();
                 training.Title = trainingSerialize.Title;
                 training.Id = trainingSerialize.Id;
@@ -59,7 +59,6 @@ public partial class TrainingItemsBasePage : ContentPage
                         {
                             TrainingExerciseId = trainingExerciseSerialize.TrainingExerciseId,
                             ExerciseId = trainingExerciseSerialize.ExerciseId,
-                            ExerciseImageUrl = trainingExerciseSerialize.ExerciseImageUrl,
                             TrainingId = trainingExerciseSerialize.TrainingId,
                             IsNotFinished = trainingExerciseSerialize.IsNotFinished,
                             Muscles = new ObservableCollection<MuscleViewModel>(MusclesConverter.ConvertFromStringToList(trainingExerciseSerialize.Muscles)),

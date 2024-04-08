@@ -29,23 +29,28 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
-	  <ApplicationVersion>250</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.2.0.2</ApplicationDisplayVersion>
+	  <ApplicationVersion>253</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.2.0.5</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-	  <ApplicationVersion>250</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.2.0.2</ApplicationDisplayVersion>
+	  <ApplicationVersion>253</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.2.0.5</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
-	  <ApplicationVersion>250</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.2.0.2</ApplicationDisplayVersion>
+	  <ApplicationVersion>253</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.2.0.5</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
-	  <ApplicationVersion>250</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.2.0.2</ApplicationDisplayVersion>
+	  <ApplicationVersion>253</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.2.0.5</ApplicationDisplayVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
+	  <CodesignKey>Apple Development: Created via API (9GK3U38622)</CodesignKey>
+	  <CodesignProvision>VS: com.OLASoft.TrainingDay Development</CodesignProvision>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -53,7 +58,7 @@
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Images\main.svg" Color="#000000" BaseSize="256,256" />
+		<MauiSplashScreen Include="Resources\Images\main.png" Color="#000000" BaseSize="256,256" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -66,11 +71,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Remove="Resources\Strings\AppResources.ru.resx" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <None Remove="Platforms\Android\Resources\values\styles.xml" />
+	  <None Remove="Resources\Images\main.png" />
 	  <None Remove="Resources\Images\prepared\arms.png" />
 	  <None Remove="Resources\Images\prepared\back.png" />
 	  <None Remove="Resources\Images\prepared\begin.png" />
@@ -102,7 +104,23 @@
 	  <EmbeddedResource Include="Resources\Images\prepared\wide_shoulders.png" />
 	</ItemGroup>
 
-	<ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.300" />
+    <PackageReference Include="AWSSDK.S3" Version="3.7.307.11" />
+    <PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.3" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.3" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.14" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.14" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+    <PackageReference Include="RestSharp" Version="106.12.0" />
+    <PackageReference Include="SkiaSharp.Views" Version="2.88.7" />
+    <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.7" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.5.231" />
+  </ItemGroup>
+
+  <!--<ItemGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
 		<PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.3" />
@@ -113,15 +131,10 @@
 		<PackageReference Include="RestSharp" Version="106.12.0" />
 		<PackageReference Include="SkiaSharp.Views" Version="2.88.7" />
 		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.7" />
-		<PackageReference Include="sqlite-net-pcl" Version="1.5.231" />
-  </ItemGroup>
-
-	<ItemGroup>
-	  <None Include="Resources\Strings\AppResources.ru.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	    <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
-	  </None>
-	</ItemGroup>
+		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.2" />
+		<PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.2" />
+  </ItemGroup>-->
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\TrainingDay-Core\TrainingDay.Common\TrainingDay.Common.csproj" />
@@ -130,11 +143,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Resources\Strings\AppResources.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>AppResources.resx</DependentUpon>
-	  </Compile>
 	  <Compile Update="Views\ExerciseListPage.xaml.cs">
 	    <DependentUpon>ExerciseListPage.xaml</DependentUpon>
 	  </Compile>
@@ -142,6 +150,10 @@
 
 	<ItemGroup>
 	  <EmbeddedResource Update="Resources\Strings\AppResources.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Strings\AppResources.ru.resx">
 	    <Generator>ResXFileCodeGenerator</Generator>
 	    <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>

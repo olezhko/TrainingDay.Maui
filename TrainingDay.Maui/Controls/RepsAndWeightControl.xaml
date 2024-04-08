@@ -8,8 +8,8 @@
     <ContentView.BindingContext>
         <viewModels:WeightAndRepsViewModel />
     </ContentView.BindingContext>
-    <Frame Margin="2" BackgroundColor="{AppThemeBinding Light=White, Dark=Black}" Padding="10,5">
-        <Grid x:Name="MainGrid" Margin="0" Padding="0" ColumnSpacing="1">
+    <Frame Margin="2" BackgroundColor="{AppThemeBinding Light=White, Dark=Black}" Padding="5">
+        <Grid x:Name="MainGrid" Margin="0" Padding="0" ColumnSpacing="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -45,24 +45,16 @@
             WidthRequest="2"
             Color="{DynamicResource SeparatorColor}" />
 
-            <ImageButton Grid.Column="4" Margin="0" BackgroundColor="Gray" CornerRadius="17" Clicked="DeleteButton_Clicked"
-            HeightRequest="34" WidthRequest="34" HorizontalOptions="Center" Source="close.png" VerticalOptions="Fill">
+            <ImageButton Grid.Column="4" Margin="0" BackgroundColor="red" CornerRadius="17" Clicked="DeleteButton_Clicked"
+            HeightRequest="34" WidthRequest="34" HorizontalOptions="Center" Source="remove.png" VerticalOptions="Fill">
                 <ImageButton.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="White" />
                 </ImageButton.Behaviors>
             </ImageButton>
 
 
-            <ImageButton
-            Grid.Column="3"
-            Margin="0"
-            Command="{Binding ChangeFinishedCommand}"
-            HeightRequest="35"
-            HorizontalOptions="Center"
-            IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}"
-            Source="save"
-            VerticalOptions="Fill"
-            WidthRequest="35">
+            <ImageButton Grid.Column="3" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" HorizontalOptions="Center" CornerRadius="17"
+                         IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}" Source="save" VerticalOptions="Fill" WidthRequest="35">
                 <ImageButton.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="White" />
                 </ImageButton.Behaviors>
@@ -73,13 +65,13 @@
                             Binding="{Binding IsFinished}"
                             TargetType="ImageButton"
                             Value="True">
-                                <Setter Property="BackgroundColor" Value="LightGreen" />
+                                <Setter Property="BackgroundColor" Value="Green" />
                             </DataTrigger>
                             <DataTrigger
                             Binding="{Binding IsFinished}"
                             TargetType="ImageButton"
                             Value="False">
-                                <Setter Property="BackgroundColor" Value="LightGray" />
+                                <Setter Property="BackgroundColor" Value="Transparent" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>

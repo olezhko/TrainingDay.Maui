@@ -1,21 +1,30 @@
 ﻿using TrainingDay.Maui.Models.Database;
+using TrainingDay.Maui.Services;
 
 namespace TrainingDay.Maui.Controls;
 
 public class ImageCache : Image
 {
+    IImageQueueCacheDownloader imageQueueCacheDownloader;
     public ImageCache()
     {
-        App.ImageDownloader.Downloaded += ImageDownloaderOnDownloaded;
+        imageQueueCacheDownloader = Application.Current.MainPage.Handler.MauiContext.Services.GetService<IImageQueueCacheDownloader>();
+        imageQueueCacheDownloader.Downloaded += ImageDownloaderOnDownloaded;
         BackgroundColor = Colors.White;
         Source = "main.png";
+        Loaded += ImageCache_Loaded;
     }
 
-    public static readonly BindableProperty ImageUrlProperty = BindableProperty.Create(nameof(ImageUrl), typeof(string), typeof(ImageCache), null, propertyChanged: (bindable, oldvalue, newvalue) => ((ImageCache)bindable).OnImageUrlChanged(), defaultBindingMode: BindingMode.TwoWay);
-    public string ImageUrl
+    private void ImageCache_Loaded(object? sender, EventArgs e)
     {
-        get => (string)GetValue(ImageUrlProperty);
-        set => SetValue(ImageUrlProperty, value);
+        LoadImage();
+    }
+
+    public static readonly BindableProperty CodeNumProperty = BindableProperty.Create(nameof(CodeNum), typeof(int), typeof(ImageCache), null, propertyChanged: (bindable, oldvalue, newvalue) => ((ImageCache)bindable).OnImageUrlChanged(), defaultBindingMode: BindingMode.TwoWay);
+    public int CodeNum
+    {
+        get => (int)GetValue(CodeNumProperty);
+        set => SetValue(CodeNumProperty, value);
     }
 
     public void OnImageUrlChanged()
@@ -27,20 +36,13 @@ public class ImageCache : Image
     {
         try
         {
-            if (!string.IsNullOrEmpty(ImageUrl))
+            if (CodeNum != 0)
             {
                 BackgroundColor = Colors.Transparent;
-                var imageSource = App.Database.GetImage(ImageUrl);
+                var imageSource = App.Database.GetImage(CodeNum.ToString());
                 if (imageSource == null)
                 {
-                    var uriSource = new UriImageSource()
-                    {
-                        Uri = new Uri(ImageUrl),
-                        CachingEnabled = false,
-                    };
-                    Source = uriSource;
-
-                    //App.ImageDownloader.AddUrl(ImageUrl);
+                    imageQueueCacheDownloader.AddUrl(CodeNum.ToString());
                 }
                 else
                 {
@@ -60,8 +62,8 @@ public class ImageCache : Image
 
     private void ImageDownloaderOnDownloaded(object sender, ImageData e)
     {
-        App.ImageDownloader.Downloaded -= ImageDownloaderOnDownloaded;
-        var item = App.Database.GetImage(ImageUrl);
+        imageQueueCacheDownloader.Downloaded -= ImageDownloaderOnDownloaded;
+        var item = App.Database.GetImage(CodeNum.ToString());
         if (item != null)
         {
             this.Dispatcher.Dispatch(() =>

@@ -19,7 +19,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <StackLayout Orientation="Horizontal" Grid.ColumnSpan="3">
+        <StackLayout Orientation="Horizontal" Grid.ColumnSpan="3" Margin="5,0">
             <Label FontSize="Title" Text="{Binding CurrentTime,StringFormat={x:Static resx:AppResources.CurrentTimeString}}" HorizontalOptions="StartAndExpand" VerticalOptions="Center" HorizontalTextAlignment="End"/>
             <ImageButton WidthRequest="40" HeightRequest="40" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="add"
                                      Command="{Binding AddExercisesCommand}" BackgroundColor="Transparent">
@@ -29,33 +29,37 @@
             </ImageButton>
         </StackLayout>
 
-        <controls:StepProgressBar x:Name="StepProgressBarControl" Grid.Row="1" Grid.ColumnSpan="3" SteppedColor="{DynamicResource ListItemBackgroundColor}" >
-            <controls:StepProgressBar.ItemTemplate>
-                <DataTemplate>
-                    <Grid VerticalOptions="Fill" RowSpacing="5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Label IsVisible="{Binding IsSuperSet}" Text="{x:Static resx:AppResources.SuperSetString}" FontSize="Large" HorizontalTextAlignment="Center" TextColor="Orange"/>
-                        <IndicatorView IsVisible="{Binding IsSuperSet}" Grid.Row="1" x:Name="indicatorView" IndicatorSize="{OnPlatform Android='9', iOS='10'}" MaximumVisible="6" HideSingle="True" 
-                                           IndicatorColor="DimGray" SelectedIndicatorColor="Orange" VerticalOptions="Fill" HorizontalOptions="Center" Padding="10"/>
+        <ScrollView Grid.Row="1" Grid.ColumnSpan="3" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never" Orientation="Vertical">
+            <controls:StepProgressBar x:Name="StepProgressBarControl" SteppedColor="{DynamicResource ListItemBackgroundColor}">
+                <controls:StepProgressBar.ItemTemplate>
+                    <DataTemplate>
+                        <Grid VerticalOptions="Fill" RowSpacing="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label IsVisible="{Binding IsSuperSet}" Text="{x:Static resx:AppResources.SuperSetString}" FontSize="Large" HorizontalTextAlignment="Center" TextColor="Orange"/>
+                            <IndicatorView IsVisible="{Binding IsSuperSet}" Grid.Row="1" x:Name="indicatorView" IndicatorSize="{OnPlatform Android='9', iOS='10'}" MaximumVisible="6" HideSingle="True" 
+                                   IndicatorColor="DimGray" SelectedIndicatorColor="Orange" VerticalOptions="Fill" HorizontalOptions="Center" Padding="10"/>
 
-                        <CarouselView Loop="False" Grid.Row="2" ItemsSource="{Binding SuperSetItems}" HorizontalOptions="Center" IndicatorView="indicatorView">
-                            <CarouselView.ItemsLayout>
-                                <LinearItemsLayout Orientation="Horizontal" />
-                            </CarouselView.ItemsLayout>
-                            <CarouselView.ItemTemplate>
-                                <DataTemplate>
-                                    <controls:ExerciseView Margin="5"/>
-                                </DataTemplate>
-                            </CarouselView.ItemTemplate>
-                        </CarouselView>
-                    </Grid>
-                </DataTemplate>
-            </controls:StepProgressBar.ItemTemplate>
-        </controls:StepProgressBar>
+                            <CarouselView Loop="False" Grid.Row="2" ItemsSource="{Binding SuperSetItems}" HorizontalOptions="Center" IndicatorView="indicatorView">
+                                <CarouselView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Horizontal" />
+                                </CarouselView.ItemsLayout>
+                                <CarouselView.ItemTemplate>
+                                    <DataTemplate>
+                                        <controls:ExerciseView />
+                                    </DataTemplate>
+                                </CarouselView.ItemTemplate>
+                            </CarouselView>
+                        </Grid>
+                    </DataTemplate>
+                </controls:StepProgressBar.ItemTemplate>
+            </controls:StepProgressBar>
+        </ScrollView>
+        
+        <Grid Grid.Row="2" Grid.ColumnSpan="3" BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
 
         <Frame x:Name="CancelButton" Grid.Row="2" Grid.Column="0" CornerRadius="20" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Red" HeightRequest="40" WidthRequest="40"  Padding="0" Margin="0">
             <Frame.GestureRecognizers>
@@ -126,4 +130,6 @@
             </controls:ToolTipControl.EmptyView>
         </controls:ToolTipControl>
     </controls:TooltipControlContainer>
+
+
 </ContentPage>

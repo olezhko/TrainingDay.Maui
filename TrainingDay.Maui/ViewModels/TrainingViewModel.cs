@@ -95,7 +95,6 @@ public class TrainingViewModel : BaseViewModel
                 TrainingId = Id,
                 Muscles = MusclesConverter.ConvertFromListToString(trainingExerciseViewModel.Muscles.ToList()),
                 ExerciseId = trainingExerciseViewModel.ExerciseId,
-                ExerciseImageUrl = trainingExerciseViewModel.ExerciseImageUrl,
                 Description = JsonConvert.SerializeObject(trainingExerciseViewModel.Description.Model),
                 ExerciseItemName = trainingExerciseViewModel.ExerciseItemName,
                 IsNotFinished = trainingExerciseViewModel.IsNotFinished,

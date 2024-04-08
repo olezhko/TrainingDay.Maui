@@ -34,7 +34,7 @@
                         VerticalOptions="Center">
                                 <controls:ImageCache
                             HeightRequest="60"
-                            ImageUrl="{Binding ExerciseImageUrl}"
+                            CodeNum="{Binding CodeNum}"
                             WidthRequest="60" />
                             </Frame>
 

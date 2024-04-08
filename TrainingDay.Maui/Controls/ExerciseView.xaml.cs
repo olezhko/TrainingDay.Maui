@@ -52,7 +52,7 @@ public partial class ExerciseView : ContentView
 
     private void ExerciseView_BindingContextChanged(object sender, EventArgs e)
     {
-        LoadVideoItems();
+        //LoadVideoItems();
     }
 
     private void ImageTapped(object sender, EventArgs e)
@@ -136,7 +136,7 @@ public partial class ExerciseView : ContentView
     private async void Description_Click(object sender, EventArgs e)
     {
         DesctiptionLabel.BackgroundColor = Colors.Green;
-        VideoLabel.BackgroundColor = Colors.DarkGray;
+        //VideoLabel.BackgroundColor = Colors.DarkGray;
 
         VideoCollectionView.IsVisible = false;
         DescriptionGrid.IsVisible = true;
@@ -146,13 +146,13 @@ public partial class ExerciseView : ContentView
     private async void Video_Click(object sender, EventArgs e)
     {
         DesctiptionLabel.BackgroundColor = Colors.DarkGray;
-        VideoLabel.BackgroundColor = Colors.Green;
+        //VideoLabel.BackgroundColor = Colors.Green;
         DescriptionGrid.IsVisible = false;
 
         VideoActivityIndicatorGrid.IsVisible = true;
         VideoActivityIndicator.IsRunning = true;
 
-        await LoadVideoItems();
+        //await LoadVideoItems();
 
         VideoActivityIndicator.IsRunning = false;
         VideoCollectionView.IsVisible = true;

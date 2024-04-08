@@ -5,13 +5,13 @@ using TrainingDay.Maui.ViewModels;
 using TrainingDay.Maui.Services;
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
+using CommunityToolkit.Mvvm.Messaging;
+using TrainingDay.Maui.Models.Messages;
 
 namespace TrainingDay.Maui.Views;
 
-public partial class FilterPage : ContentPage
+public partial class FilterPage : ContentPage, IQueryAttributable
 {
-    private Action _acceptFilter;
-
     public FilterModel Filter { get; set; }
 
     public FilterPage()
@@ -36,10 +36,9 @@ public partial class FilterPage : ContentPage
         BindableLayout.SetItemsSource(MusclesListView, itemsMuscles);
     }
 
-    public void SetMuscleFilter(FilterModel filter, Action acceptFilter)
+    private void SetMuscleFilter(FilterModel filter)
     {
         Filter = filter;
-        _acceptFilter = acceptFilter;
         var itemsSource = BindableLayout.GetItemsSource(MusclesListView);
         NoEquipmentCheckBox.IsChecked = filter.IsNoEquipmentFilter;
         foreach (MuscleCheckItem item in itemsSource)
@@ -670,8 +669,8 @@ public partial class FilterPage : ContentPage
     private async void AcceptFilter_Click(object sender, EventArgs e)
     {
         MusclesListView.IsVisible = false;
-        _acceptFilter?.Invoke();
-        await Navigation.PopModalAsync();
+        await Shell.Current.GoToAsync("..");
+        WeakReferenceMessenger.Default.Send(new FilterAcceptedForExercisesMessage(Filter));
     }
 
     private void MusclesListView_OnItemTapped(object sender, object e)
@@ -679,5 +678,10 @@ public partial class FilterPage : ContentPage
         var item = sender as Frame;
         MuscleCheckItem send = item.BindingContext as MuscleCheckItem;
         send.IsChecked = !send.IsChecked;
+    }
+
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        SetMuscleFilter(query["Filter"] as FilterModel);
     }
 }

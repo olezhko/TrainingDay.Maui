@@ -5,6 +5,7 @@
              xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
              xmlns:charts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
+             xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              x:Class="TrainingDay.Maui.Views.WeightViewAndSetPage" Padding="5"
              x:Name="Page">
     <Shell.TitleView>
@@ -30,26 +31,39 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Picker x:Name="PeriodPicker" Title="{x:Static resx:AppResources.SelectPeriodString}" HorizontalOptions="Fill" FontSize="17">
-            <Picker.Behaviors>
-                <toolkit:EventToCommandBehavior EventName="SelectedIndexChanged" Command="{Binding WeightPeriodChangedCommand}" CommandParameter="{Binding Source={x:Reference PeriodPicker},Path=SelectedIndex}"/>
-            </Picker.Behaviors>
-        </Picker>
+        <Frame Style="{StaticResource MaterialFrame}">
+            <Grid>
+                <Label Text="{x:Static resx:AppResources.SelectPeriodString}" Style="{StaticResource MaterialLabel}" controls:MaterialLabelAttached.MaterialControlType="Picker"/>
+                <Picker x:Name="PeriodPicker" Title="{x:Static resx:AppResources.SelectPeriodString}" HorizontalOptions="Fill" VerticalOptions="End">
+                    <Picker.Behaviors>
+                        <toolkit:EventToCommandBehavior EventName="SelectedIndexChanged" Command="{Binding WeightPeriodChangedCommand}" CommandParameter="{Binding Source={x:Reference PeriodPicker},Path=SelectedIndex}"/>
+                    </Picker.Behaviors>
+                </Picker>
+            </Grid>
+        </Frame>
 
         <CarouselView Grid.Row="1" IndicatorView="indicatorView" ItemsSource="{Binding BodyControlItems}" VerticalOptions="Fill" Loop="False">
             <CarouselView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Padding="5">
                         <Label HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="{Binding Name}" FontSize="Large"/>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
+                        <Grid ColumnDefinitions="*,*,auto" ColumnSpacing="5">
+                            <Frame Grid.Column="0" Style="{StaticResource MaterialFrame}">
+                                <Grid>
+                                    <Label Text="{x:Static resx:AppResources.CurrentString}" Style="{StaticResource MaterialLabel}"/>
+                                    <Entry Text="{Binding CurrentValueString, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="17" VerticalOptions="Center" Keyboard="Numeric"
+                                           HorizontalTextAlignment="Start"/>
+                                </Grid>
+                            </Frame>
 
-                            <Entry Grid.Column="0" Placeholder="{x:Static resx:AppResources.CurrentString}" Text="{Binding CurrentValueString, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="17" VerticalOptions="Center" Keyboard="Numeric"/>
-                            <Entry Grid.Column="1" Placeholder="{x:Static resx:AppResources.GoalString}" Text="{Binding GoalValueString, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="17" VerticalOptions="Center" Keyboard="Numeric"/>
+                            <Frame Grid.Column="1" Style="{StaticResource MaterialFrame}">
+                                <Grid>
+                                    <Label Text="{x:Static resx:AppResources.GoalString}" Style="{StaticResource MaterialLabel}" />
+                                    <Entry Text="{Binding GoalValueString, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="17" VerticalOptions="Center" Keyboard="Numeric"
+                                           HorizontalTextAlignment="Start"/>
+                                </Grid>
+                            </Frame>
+                            
                             <ImageButton Grid.Column="2" Source="save.png" Command="{Binding Source={x:Reference Page}, Path=BindingContext.SaveValueCommand}" CommandParameter="{Binding }" 
                                          BackgroundColor="Transparent" VerticalOptions="Center" WidthRequest="40" HeightRequest="40">
                                 <ImageButton.Behaviors>

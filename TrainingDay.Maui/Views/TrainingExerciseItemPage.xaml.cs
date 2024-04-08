@@ -28,7 +28,7 @@ public partial class TrainingExerciseItemPage : ContentPage
 
     private void LoadExercise(TrainingExerciseViewModel item)
     {
-        Title = item.ExerciseItemName;
+        TitleLabel.Text = item.ExerciseItemName;
         ExerciseView.BindingContext = item;
     }
 

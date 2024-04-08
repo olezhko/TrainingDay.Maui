@@ -5,6 +5,7 @@ using System.Text;
 using TrainingDay.Common;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models;
+using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels;
 using LanguageResource = TrainingDay.Maui.Resources.Strings.AppResources;
@@ -32,11 +33,12 @@ public partial class ExerciseItemPage : ContentPage
 
         if (item.Id == 0)
         {
-            ToolbarItems.Remove(DeleteExerciseToolbarItem);
+            TitleLabel.Text = LanguageResource.CreateNewString;
+            DeleteExerciseToolbarItem.IsVisible = false;
         }
         else
         {
-            Title = item.ExerciseItemName;
+            TitleLabel.Text = item.ExerciseItemName;
             NameLabel.IsVisible = false;
         }
     }

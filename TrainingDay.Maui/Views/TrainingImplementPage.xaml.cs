@@ -99,7 +99,7 @@ public partial class TrainingImplementPage : ContentPage
         UpdateTime();
 
         // save to restore if not finish
-        //SaveNotFinishedTraining(TrainingItem.Title, TrainingItem.Id);
+        SaveNotFinishedTraining(TrainingItem.Title, TrainingItem.Id);
         UpdateNotifyTimer();
 
         if (!enabledTimer)
@@ -253,7 +253,6 @@ public partial class TrainingImplementPage : ContentPage
                     ExerciseName = item.ExerciseItemName,
                     MusclesString = MusclesConverter.ConvertFromListToString(item.Muscles.ToList()),
                     Description = item.GetExercise().Description,
-                    ExerciseImageUrl = item.ExerciseImageUrl,
                     SuperSetId = item.SuperSetId,
                     TagsValue = TrainingDay.Common.ExerciseTools.ConvertTagListToInt(item.Tags),
                     WeightAndRepsString = ExerciseManager.ConvertJson(item.Tags, item),

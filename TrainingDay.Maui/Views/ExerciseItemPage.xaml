@@ -5,12 +5,27 @@
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              xmlns:data="clr-namespace:TrainingDay.Common;assembly=TrainingDay.Common"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="TrainingDay.Maui.Views.ExerciseItemPage"
-             Title="{x:Static resx:AppResources.CreateNewString}" Padding="5">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="save" Clicked="Save_clicked"/>
-        <ToolbarItem x:Name="DeleteExerciseToolbarItem" Clicked="Remove_clicked" IconImageSource="remove" />
-    </ContentPage.ToolbarItems>
+             Padding="5">
+
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*,auto, auto" Padding="10,0" ColumnSpacing="10">
+            <Label x:Name="TitleLabel" Grid.Column="0" Text="{x:Static resx:AppResources.CreateNewString}" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
+
+            <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="save.png" Clicked="Save_clicked">
+                <ImageButton.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
+                </ImageButton.Behaviors>
+            </ImageButton>
+
+            <ImageButton x:Name="DeleteExerciseToolbarItem" Grid.Column="2" WidthRequest="30" HeightRequest="30" Source="remove.png" Clicked="Remove_clicked">
+                <ImageButton.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
+                </ImageButton.Behaviors>
+            </ImageButton>
+        </Grid>
+    </Shell.TitleView>
     <ContentPage.BindingContext>
         <viewModels:ExerciseViewModel />
     </ContentPage.BindingContext>
@@ -43,7 +58,7 @@
             HeightRequest="120"
             HorizontalOptions="Center"
             WidthRequest="120">
-                    <controls:ImageCache ImageUrl="{Binding ExerciseImageUrl, Mode=TwoWay}" />
+                    <controls:ImageCache CodeNum="{Binding CodeNum, Mode=TwoWay}" />
                 </Frame>
 
                 <StackLayout Grid.Row="2">

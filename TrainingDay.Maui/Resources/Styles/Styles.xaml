@@ -13,6 +13,24 @@
     <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
     <converters:IsEmptyStringConverter x:Key="IsEmptyStringConverter"/>
 
+
+    <Style TargetType="Frame" x:Key="MaterialFrame">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=White,Dark=Black}" />
+        <Setter Property="BorderColor" Value="Transparent" />
+        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="HeightRequest" Value="70"/>
+    </Style>
+
+    <Style TargetType="Label" x:Key="MaterialLabel">
+        <Setter Property="AnchorX" Value="0"/>
+        <Setter Property="TextColor" Value="Orange"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="HorizontalOptions" Value="Start"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="controls:MaterialLabelAttached.IsMaterialBehavior" Value="True"/>
+    </Style>
+
     <Style TargetType="CollectionView" ApplyToDerivedTypes="True">
         <Setter Property="ItemsLayout">
             <Setter.Value>
@@ -245,7 +263,7 @@
         <Setter Property="TitleColor" Value="Orange" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontFamily" Value="OpenSansRegular"/>
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontSize" Value="20"/>
         <Setter Property="MinimumHeightRequest" Value="44"/>
         <Setter Property="MinimumWidthRequest" Value="44"/>
         <Setter Property="VisualStateManager.VisualStateGroups">

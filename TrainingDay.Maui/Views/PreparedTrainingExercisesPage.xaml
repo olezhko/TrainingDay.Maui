@@ -65,7 +65,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Frame Grid.Column="0" Padding="5" BackgroundColor="White" CornerRadius="10" VerticalOptions="Center">
-                                    <controls:ImageCache HeightRequest="60" WidthRequest="60" x:Name="ImageControl" ImageUrl="{Binding ExerciseImageUrl}"/>
+                                    <controls:ImageCache HeightRequest="60" WidthRequest="60" x:Name="ImageControl" CodeNum="{Binding CodeNum}"/>
                                 </Frame>
 
                                 <StackLayout Orientation="Vertical" Grid.Column="1" Padding="0" Margin="0">
