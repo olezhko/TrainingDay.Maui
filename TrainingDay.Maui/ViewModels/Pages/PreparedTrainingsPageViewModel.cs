@@ -1,9 +1,11 @@
-﻿using Microsoft.AppCenter.Analytics;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.AppCenter.Analytics;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Database;
+using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.Views;
@@ -17,8 +19,6 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
 
     public ObservableCollection<PreparedTrainingViewModel> PreparedTrainingsCollection { get; set; }
 
-    public INavigation Navigation { get; set; }
-
     public PreparedTrainingsPageViewModel()
     {
         FillTrainings();
@@ -26,37 +26,52 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
         ItemSelectedCommand = new Command<PreparedTrainingViewModel>(ItemSelected);
     }
 
-    private void ItemSelected(PreparedTrainingViewModel selectedTraining)
+    private void SubscribeMessages()
+    {
+        UnsubscribeMessages();
+        WeakReferenceMessenger.Default.Register<ExercisesSelectFinishedMessage>(this, async (r, args) =>
+        {
+            var training = new TrainingViewModel();
+            training.Title = newTrainingName;
+
+            foreach (var exerciseItem in args.Selected)
+            {
+                training.Exercises.Add(new TrainingExerciseViewModel(exerciseItem.GetExercise(),
+                    new TrainingExerciseComm()));
+            }
+
+            SaveNewTrainingViewModelToDatabase(training, null);
+
+            await Shell.Current.GoToAsync("..", false);
+            await Shell.Current.GoToAsync("..", false);
+            UnsubscribeMessages();
+            Analytics.TrackEvent($"PreparedTrainingsPageViewModel: AddExercises finished");
+        });
+    }
+
+    private void UnsubscribeMessages()
+    {
+        WeakReferenceMessenger.Default.Unregister<ExercisesSelectFinishedMessage>(this);
+    }
+
+    private async void ItemSelected(PreparedTrainingViewModel selectedTraining)
     {
         selectedTraining.CreateTraining.Invoke();
         SaveNewTrainingViewModelToDatabase(selectedTraining.Training, selectedTraining.SuperSets);
-        Navigation.PopAsync();
+        await Shell.Current.GoToAsync("..");
     }
 
+    string newTrainingName;
     private async void AddNewTraining()
     {
         var result = await MessageManager.DisplayPromptAsync(AppResources.CreateNewString, AppResources.EnterTrainingName,
             AppResources.OkString, AppResources.CancelString, AppResources.NameString);
         if (result.IsNotNullOrEmpty())
         {
-            var training = new TrainingViewModel();
-            training.Title = result;
-            var vm = new ExerciseListPageViewModel()
-            {
-                Navigation = Navigation,
-            };
-            vm.ExercisesSelectFinished += async (sender, args) =>
-            {
-                foreach (var exerciseItem in args)
-                {
-                    training.Exercises.Add(new TrainingExerciseViewModel(exerciseItem.GetExercise(),
-                        new TrainingExerciseComm()));
-                }
+            newTrainingName = result;
+            SubscribeMessages();
+            await Shell.Current.GoToAsync(nameof(ExerciseListPage));
 
-                SaveNewTrainingViewModelToDatabase(training, null);
-                await Navigation.PopToRootAsync();
-            };
-            await Navigation.PushModalAsync(new NavigationPage(new ExerciseListPage(vm)));
             await MessageManager.DisplayAlert(AppResources.AdviceString,
                 AppResources.MarkTheRequiredExercisesAndPressFormat.Fill(AppResources.SelectString), AppResources.OkString);
             Analytics.TrackEvent($"{GetType().Name}: Training Created");

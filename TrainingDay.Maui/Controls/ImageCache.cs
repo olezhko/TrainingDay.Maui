@@ -5,11 +5,8 @@ namespace TrainingDay.Maui.Controls;
 
 public class ImageCache : Image
 {
-    IImageQueueCacheDownloader imageQueueCacheDownloader;
     public ImageCache()
     {
-        imageQueueCacheDownloader = Application.Current.MainPage.Handler.MauiContext.Services.GetService<IImageQueueCacheDownloader>();
-        imageQueueCacheDownloader.Downloaded += ImageDownloaderOnDownloaded;
         BackgroundColor = Colors.White;
         Source = "main.png";
         Loaded += ImageCache_Loaded;
@@ -40,11 +37,7 @@ public class ImageCache : Image
             {
                 BackgroundColor = Colors.Transparent;
                 var imageSource = App.Database.GetImage(CodeNum.ToString());
-                if (imageSource == null)
-                {
-                    imageQueueCacheDownloader.AddUrl(CodeNum.ToString());
-                }
-                else
+                if (imageSource != null)
                 {
                     Source = ImageSource.FromStream(() => Stream(imageSource));
                 }
@@ -62,7 +55,6 @@ public class ImageCache : Image
 
     private void ImageDownloaderOnDownloaded(object sender, ImageData e)
     {
-        imageQueueCacheDownloader.Downloaded -= ImageDownloaderOnDownloaded;
         var item = App.Database.GetImage(CodeNum.ToString());
         if (item != null)
         {

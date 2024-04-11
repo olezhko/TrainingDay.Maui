@@ -78,7 +78,6 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
     {
         SaveChangesCommand = new Command(SaveChanges);
         Training = new TrainingViewModel();
-        SubscribeMessages();
     }
 
     #region Load
@@ -148,20 +147,6 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
     }
     #endregion
 
-    private void SubscribeMessages()
-    {
-        WeakReferenceMessenger.Default.Register<TrainingSettingsActionMessage>(this, (r, m) =>
-        {
-            TrainingSettingsPage_ActionSelected(m.Action);
-        });
-
-        WeakReferenceMessenger.Default.Register<ExercisesSelectFinishedMessage>(this, (r, m) =>
-        {
-            AddSelectedExercises(m.Selected.Select(item => new TrainingExerciseViewModel(item.GetExercise(), new TrainingExerciseComm())));
-            Analytics.TrackEvent($"{GetType().Name}: AddExercises finished");
-        });
-    }
-
     public void StartSelectExercises()
     {
         CurrentAction = ExerciseCheckBoxAction.Select;
@@ -171,6 +156,14 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
     private async void AddExercises()
     {
+        WeakReferenceMessenger.Default.Unregister<ExercisesSelectFinishedMessage>(this);
+        WeakReferenceMessenger.Default.Register<ExercisesSelectFinishedMessage>(this, (r, m) =>
+        {
+            AddSelectedExercises(m.Selected.Select(item => new TrainingExerciseViewModel(item.GetExercise(), new TrainingExerciseComm())));
+            WeakReferenceMessenger.Default.Unregister<ExercisesSelectFinishedMessage>(this);
+            Analytics.TrackEvent($"{GetType().Name}: AddExercises finished");
+        });
+
         Dictionary<string, object> param = new Dictionary<string, object> { { "ExistedExercises", Training.Exercises } };
 
         await Shell.Current.GoToAsync(nameof(ExerciseListPage), param);
@@ -662,6 +655,12 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
     private async void ShowTrainingSettingsPage()
     {
         Analytics.TrackEvent($"{GetType().Name}: ShowTrainingSettingsPage");
+        WeakReferenceMessenger.Default.Unregister<TrainingSettingsActionMessage>(this);
+        WeakReferenceMessenger.Default.Register<TrainingSettingsActionMessage>(this, (r, m) =>
+        {
+            TrainingSettingsPage_ActionSelected(m.Action);
+            WeakReferenceMessenger.Default.Unregister<TrainingSettingsActionMessage>(this);
+        });
         await Shell.Current.GoToAsync(nameof(TrainingSettingsPage));
     }
 

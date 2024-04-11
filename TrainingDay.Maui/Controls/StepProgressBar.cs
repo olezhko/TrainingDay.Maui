@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 
 namespace TrainingDay.Maui.Controls;
 
-public class StepProgressBar : StackLayout
+public class StepProgressBar : Grid
 {
     Button _lastStepSelected;
 
@@ -67,30 +67,37 @@ public class StepProgressBar : StackLayout
     public StepProgressBar()
     {
         _collectionChanged += OnCollectionChanged;
-        Orientation = StackOrientation.Vertical;
         HorizontalOptions = LayoutOptions.Fill;
-        Spacing = 0;
         AddStyles();
-        headersStackLayout = new StackLayout();
-        headersStackLayout.Orientation = StackOrientation.Horizontal;
+        RowDefinitions = new RowDefinitionCollection
+        {
+            new RowDefinition() { Height = GridLength.Auto },
+            new RowDefinition() { Height = GridLength.Star },
+        };
+
+        headersStackLayout = new HorizontalStackLayout();
         headersStackLayout.VerticalOptions = LayoutOptions.Start;
+        headersStackLayout.HorizontalOptions = LayoutOptions.Fill;
         headersStackLayout.Padding = new Thickness(0);
 
-        var scroll = new ScrollView();
-        scroll.Orientation = ScrollOrientation.Horizontal;
-        scroll.HorizontalOptions = LayoutOptions.Fill;
-        scroll.Content = headersStackLayout;
-        scroll.HorizontalScrollBarVisibility = ScrollBarVisibility.Always;
-        Children.Add(scroll);
+        var headerScroll = new ScrollView();
+        headerScroll.Orientation = ScrollOrientation.Horizontal;
+        headerScroll.HorizontalOptions = LayoutOptions.Fill;
+        headerScroll.Content = headersStackLayout;
+        headerScroll.HorizontalScrollBarVisibility = ScrollBarVisibility.Always;
+
+        Children.Add(headerScroll);
+        Grid.SetRow(headerScroll, 0);
     }
 
     #region Draw
-    private StackLayout headersStackLayout;
+    private HorizontalStackLayout headersStackLayout;
     private View element;
     private void SetTemplateElement()
     {
         element = ItemTemplate.CreateContent() as View;
         Children.Add(element);
+        Grid.SetRow(element, 1);
     }
 
     private void AddStyles()

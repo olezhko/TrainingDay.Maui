@@ -12,5 +12,10 @@ namespace TrainingDay.Maui
             Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+
+        protected override void OnPostCreate(Bundle? savedInstanceState)
+        {
+            base.OnPostCreate(savedInstanceState);
+        }
     }
 }

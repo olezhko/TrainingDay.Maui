@@ -1,11 +1,6 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using Microsoft.AppCenter.Analytics;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models;
@@ -70,7 +65,8 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
 
         foreach (var group in ItemsGrouped)
         {
-            group.Expanded = group.Expanded;
+            //group.Expanded = group.Expanded;
+            group.Expanded = true;
         }
     }
 
@@ -147,8 +143,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
     private async void AddNewTraining()
     {
         Analytics.TrackEvent($"{GetType().Name}: AddNewTraining Button Clicked");
-        PreparedTrainingsPageViewModel vm = new PreparedTrainingsPageViewModel() { Navigation = Navigation };
-        await Navigation.PushAsync(new PreparedTrainingsPage() { BindingContext = vm });
+        await Shell.Current.GoToAsync(nameof(PreparedTrainingsPage));
     }
 
     private async void DeleteSelectedTraining(Frame viewCell)
@@ -289,6 +284,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
     {
         var group = item as Grouping<string, TrainingViewModel>;
         group.Expanded = !group.Expanded;
+
         var groups = App.Database.GetTrainingsGroups();
         if (group.Key == AppResources.GroupingDefaultName)
         {

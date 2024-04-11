@@ -24,10 +24,6 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
 
     public ICommand CancelCommand { get; protected set; }
 
-    public INavigation Navigation { get; set; }
-
-    public event EventHandler<List<ExerciseListItemViewModel>> ExercisesSelectFinished;
-
     public ExerciseListPageViewModel()
     {
         Filter = new FilterModel();
@@ -37,18 +33,29 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
         Items = new ObservableCollection<ExerciseListItemViewModel>();
         BaseItems = new ObservableCollection<ExerciseListItemViewModel>();
         UpdateItems();
+    }
 
+    private void SubscribeMessages()
+    {
+        UnsubscribeMessages();
         WeakReferenceMessenger.Default.Register<FilterAcceptedForExercisesMessage>(this, (r, m) =>
         {
             Filter = m.Filter;
             UpdateItems();
+
+            UnsubscribeMessages();
             Analytics.TrackEvent($"{GetType().Name}: FilterAcceptedForExercisesMessage");
         });
     }
 
+    private void UnsubscribeMessages()
+    {
+        WeakReferenceMessenger.Default.Unregister<FilterAcceptedForExercisesMessage>(this);
+    }
+
     private async void Cancel()
     {
-        await Navigation.PopModalAsync();
+        await Shell.Current.GoToAsync("..");
     }
 
     /// <summary>
@@ -145,6 +152,7 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
 
     private async void ViewFilterWindow()
     {
+        SubscribeMessages();
         Dictionary<string, object> param = new Dictionary<string, object> { { "Filter", Filter } };
         await Shell.Current.GoToAsync(nameof(FilterPage), param);
     }
@@ -181,6 +189,13 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        ExistedExercises = query["ExistedExercises"] as ObservableCollection<TrainingExerciseViewModel>;
+        if (query.ContainsKey("ExistedExercises"))
+        {
+            ExistedExercises = query["ExistedExercises"] as ObservableCollection<TrainingExerciseViewModel>;
+        }
+        else
+        {
+            ExistedExercises = new ObservableCollection<TrainingExerciseViewModel> { };
+        }
     }
 }

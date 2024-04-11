@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using System.Collections.ObjectModel;
@@ -5,10 +6,10 @@ using System.Windows.Input;
 using TrainingDay.Maui.Controls;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models.Database;
+using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels;
-using TrainingDay.Maui.ViewModels.Pages;
 
 namespace TrainingDay.Maui.Views;
 
@@ -22,9 +23,14 @@ public partial class TrainingImplementPage : ContentPage
     public ObservableCollection<SuperSetViewModel> Items { get; set; }
 
     TrainingViewModel trainingItem;
-    public TrainingViewModel TrainingItem { get => trainingItem; set {
+    public TrainingViewModel TrainingItem
+    {
+        get => trainingItem; 
+        set
+        {
             trainingItem = value;
-        } }
+        }
+    }
 
     public TrainingImplementPage()
     {
@@ -37,7 +43,7 @@ public partial class TrainingImplementPage : ContentPage
         Settings.IsTrainingNotFinished = true;
 
         _timer = Shell.Current.Dispatcher.CreateTimer();
-        _timer.Tick += _timer_Tick; ;
+        _timer.Tick += _timer_Tick;
         _timer.Interval = TimeSpan.FromSeconds(1);
     }
 
@@ -287,15 +293,29 @@ public partial class TrainingImplementPage : ContentPage
     public ICommand AddExercisesCommand => new Command(AddExercisesRequest);
     private async void AddExercisesRequest()
     {
-        var vm = new ExerciseListPageViewModel() { Navigation = Navigation };
-        vm.ExercisesSelectFinished += async (sender, args) =>
-        {
-            await Navigation.PopModalAsync(false);
-            AddExercises(args.Select(item => new TrainingExerciseViewModel(item.GetExercise(), new TrainingExerciseComm())));
-        };
+        SubscribeMessages();
+        Dictionary<string, object> param = new Dictionary<string, object> { { "ExistedExercises", TrainingItem.Exercises } };
 
-        vm.ExistedExercises = TrainingItem.Exercises;
-        await Navigation.PushModalAsync(new NavigationPage(new ExerciseListPage(vm)));
+        await Shell.Current.GoToAsync(nameof(ExerciseListPage), param);
+    }
+
+    private void SubscribeMessages()
+    {
+        UnsubscribeMessages();
+        WeakReferenceMessenger.Default.Register<ExercisesSelectFinishedMessage>(this, async (r, args) =>
+        {
+            await Shell.Current.GoToAsync("..");
+            AddExercises(args.Selected.Select(item => new TrainingExerciseViewModel(item.GetExercise(), new TrainingExerciseComm())));
+
+            await Shell.Current.GoToAsync("..");
+            UnsubscribeMessages();
+            Analytics.TrackEvent($"TrainingImplementPage: AddExercises finished");
+        });
+    }
+
+    private void UnsubscribeMessages()
+    {
+        WeakReferenceMessenger.Default.Unregister<ExercisesSelectFinishedMessage>(this);
     }
 
     private void AddExercises(IEnumerable<TrainingExerciseViewModel> selectedItems)
@@ -317,7 +337,7 @@ public partial class TrainingImplementPage : ContentPage
 
     private async void CancelTrainingClicked(object sender, TappedEventArgs e)
     {
-        var result = await MessageManager.DisplayAlert(AppResources.CancelTrainingQuestion, string.Empty, AppResources.YesString, AppResources.NoString);
+        var result = await MessageManager.DisplayAlert(AppResources.CancelTrainingQuestion, trainingItem.Title, AppResources.YesString, AppResources.NoString);
         if (result)
         {
             enabledTimer = false;

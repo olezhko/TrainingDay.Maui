@@ -14,7 +14,7 @@ public partial class ExerciseListPage : ContentPage
     public ExerciseListPage()
     {
         InitializeComponent();
-        Init(new ExerciseListPageViewModel() { Navigation = this.Navigation });
+        Init(new ExerciseListPageViewModel());
     }
 
     public ExerciseListPage(ExerciseListPageViewModel viewmodel)

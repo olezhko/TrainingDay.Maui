@@ -29,23 +29,23 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
-	  <ApplicationVersion>253</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.2.0.5</ApplicationDisplayVersion>
+	  <ApplicationVersion>258</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.2.0.10</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-	  <ApplicationVersion>253</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.2.0.5</ApplicationDisplayVersion>
+	  <ApplicationVersion>258</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.2.0.10</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
-	  <ApplicationVersion>253</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.2.0.5</ApplicationDisplayVersion>
+	  <ApplicationVersion>258</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.2.0.10</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
-	  <ApplicationVersion>253</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.2.0.5</ApplicationDisplayVersion>
+	  <ApplicationVersion>258</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.2.0.10</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
