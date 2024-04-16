@@ -17,15 +17,17 @@
         </Grid>
     </Shell.TitleView>
 
-    <Grid>
-        <controls:ExerciseView x:Name="ExerciseView" ImageTappedEvent="ExerciseView_OnImageTappedEvent" IsNameVisible="False"/>
+    <ScrollView Orientation="Vertical">
+        <Grid>
+            <controls:ExerciseView x:Name="ExerciseView" ImageTappedEvent="ExerciseView_OnImageTappedEvent" IsNameVisible="False"/>
 
-        <Frame HeightRequest="250" WidthRequest="250" IsVisible="False" x:Name="ImageFrame" VerticalOptions="Center" HorizontalOptions="Center">
-            <Image x:Name="FullscreenImage">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="FullscreenImageTapped"/>
-                </Image.GestureRecognizers>
-            </Image>
-        </Frame>
-    </Grid>
+            <Frame HeightRequest="250" WidthRequest="250" IsVisible="False" x:Name="ImageFrame" VerticalOptions="Center" HorizontalOptions="Center">
+                <Image x:Name="FullscreenImage">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="FullscreenImageTapped"/>
+                    </Image.GestureRecognizers>
+                </Image>
+            </Frame>
+        </Grid>
+    </ScrollView>
 </ContentPage>

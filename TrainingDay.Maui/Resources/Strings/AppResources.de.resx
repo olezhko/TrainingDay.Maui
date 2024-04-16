@@ -517,7 +517,7 @@
     <value>Training teilen</value>
   </data>
   <data name="ShortDescriptionString1" xml:space="preserve">
-    <value>Beschreibung:</value>
+    <value>Beschreibung</value>
   </data>
   <data name="ShowAdvicesOnImplementing" xml:space="preserve">
     <value>Zeige während des Trainings Tipps zum Aufwärmen und Abkühlen</value>

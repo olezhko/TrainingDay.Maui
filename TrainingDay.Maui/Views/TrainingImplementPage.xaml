@@ -30,26 +30,17 @@
             </ImageButton>
         </StackLayout>
 
-        <controls:StepProgressBar x:Name="StepProgressBarControl" Grid.Row="1" Grid.ColumnSpan="3" SteppedColor="{DynamicResource ListItemBackgroundColor}">
+        <controls:StepProgressBar x:Name="StepProgressBarControl" Grid.Row="1" Grid.ColumnSpan="3" SteppedColor="{DynamicResource ListItemBackgroundColor}" Margin="5">
             <controls:StepProgressBar.ItemTemplate>
                 <DataTemplate>
-                    <Grid VerticalOptions="Fill" RowSpacing="5">
+                    <Grid VerticalOptions="Fill" RowSpacing="0">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Label IsVisible="{Binding IsSuperSet}" Text="{x:Static resx:AppResources.SuperSetString}" FontSize="Large" HorizontalTextAlignment="Center" TextColor="Orange"/>
 
-                        <FlexLayout Grid.Row="2" AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding SuperSetItems}"
-                                Direction="Row" JustifyContent="Start" VerticalOptions="Fill" Wrap="NoWrap">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate>
-                                    <controls:ExerciseView WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type controls:StepProgressBar}}, Path=Width}"
-                                                               VerticalOptions="Fill"/>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </FlexLayout>
+                        <controls:SuperSetControl Grid.Row="1" SuperSetItems="{Binding SuperSetItems}"/>
                     </Grid>
                 </DataTemplate>
             </controls:StepProgressBar.ItemTemplate>

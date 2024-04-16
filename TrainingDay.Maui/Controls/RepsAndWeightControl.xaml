@@ -22,7 +22,6 @@
             <Entry
             Margin="0"
             FontSize="Medium"
-            HorizontalTextAlignment="Start"
             Keyboard="Numeric"
             MaxLength="3"
             Text="{Binding Repetitions, Mode=TwoWay}"
@@ -31,7 +30,6 @@
             Grid.Column="2"
             Margin="0"
             FontSize="Medium"
-            HorizontalTextAlignment="Start"
             IsVisible="{Binding Source={x:Reference Self}, Path=IsOnlyReps, Converter={StaticResource InverseBooleanConverter}}"
             MaxLength="4"
             Text="{Binding WeightString, Mode=TwoWay}"

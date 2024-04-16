@@ -105,6 +105,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
                 Description = DescriptionViewModel.ConvertFromJson(trainingExercise.Description),
                 TrainingExerciseId = trainingExercise.Id,
                 SuperSetId = trainingExercise.SuperSetId,
+                CodeNum = trainingExercise.CodeNum,
             };
 
             ex.Tags = Common.ExerciseTools.ConvertFromIntToTagList(trainingExercise.TagsValue);

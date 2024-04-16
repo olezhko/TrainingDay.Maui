@@ -12,11 +12,11 @@
         <Grid ColumnDefinitions="*,auto" ColumnSpacing="10" Margin="10,0">
             <Label Grid.Column="0" Text="{x:Static resx:AppResources.WeightControlString}" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
 
-            <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="info.png" Clicked="ShowInfo_Click">
+            <!--<ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="info.png" Clicked="ShowInfo_Click">
                 <ImageButton.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>
-            </ImageButton>
+            </ImageButton>-->
         </Grid>
     </Shell.TitleView>
 
@@ -42,12 +42,12 @@
             </Grid>
         </Frame>
 
-        <CarouselView Grid.Row="1" IndicatorView="indicatorView" ItemsSource="{Binding BodyControlItems}" VerticalOptions="Fill" Loop="False">
+        <CarouselView x:Name="BodyControlView" Grid.Row="1" IndicatorView="indicatorView" ItemsSource="{Binding BodyControlItems}" VerticalOptions="Fill" Loop="False">
             <CarouselView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Padding="5">
-                        <Label HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="{Binding Name}" FontSize="Large"/>
-                        <Grid ColumnDefinitions="*,*,auto" ColumnSpacing="5">
+                    <Grid Padding="5" RowDefinitions="auto,auto,*">
+                        <Label Grid.Row="0" HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="{Binding Name}" FontSize="Large"/>
+                        <Grid Grid.Row="1" ColumnDefinitions="*,*,auto" ColumnSpacing="5">
                             <Frame Grid.Column="0" Style="{StaticResource MaterialFrame}">
                                 <Grid>
                                     <Label Text="{x:Static resx:AppResources.CurrentString}" Style="{StaticResource MaterialLabel}"/>
@@ -71,8 +71,8 @@
                                 </ImageButton.Behaviors>
                             </ImageButton>
                         </Grid>
-                        <charts:ChartView x:Name="chartView" BackgroundColor="Transparent" Chart="{Binding Chart}" VerticalOptions="Fill" />
-                    </StackLayout>
+                        <charts:ChartView Grid.Row="2" Chart="{Binding Chart, Mode=TwoWay}" VerticalOptions="Fill" />
+                    </Grid>
                 </DataTemplate>
             </CarouselView.ItemTemplate>
         </CarouselView>

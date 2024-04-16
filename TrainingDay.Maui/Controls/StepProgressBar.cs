@@ -75,6 +75,8 @@ public class StepProgressBar : Grid
             new RowDefinition() { Height = GridLength.Star },
         };
 
+        RowSpacing = 10;
+
         headersStackLayout = new HorizontalStackLayout();
         headersStackLayout.VerticalOptions = LayoutOptions.Start;
         headersStackLayout.HorizontalOptions = LayoutOptions.Fill;

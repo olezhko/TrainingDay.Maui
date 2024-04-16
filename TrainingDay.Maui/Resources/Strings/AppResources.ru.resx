@@ -562,7 +562,7 @@
     <value>Поделиться тренировкой</value>
   </data>
   <data name="ShortDescriptionString1" xml:space="preserve">
-    <value>Описание:</value>
+    <value>Описание</value>
   </data>
   <data name="ShowAdvicesOnImplementing" xml:space="preserve">
     <value>Показывать советы по разминке и заминке во время выполнения тренировки</value>

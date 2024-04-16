@@ -75,6 +75,25 @@ public partial class ExerciseView : ContentView
         }
     }
 
+    private void DeleteRequestWeightAndReps(WeightAndRepsViewModel sender)
+    {
+        var item = (TrainingExerciseViewModel)BindingContext;
+        item.WeightAndRepsItems.Remove(sender);
+    }
+
+    private void StartCalculateTime_Clicked(object sender, EventArgs e)
+    {
+        var item = (TrainingExerciseViewModel)BindingContext;
+        if (item.IsTimeCalculating)
+        {
+            item.IsTimeCalculating = false; // stop calculating time
+            return;
+        }
+
+        item.StartCalculateDateTime = DateTime.Now;
+        item.IsTimeCalculating = true;
+    }
+
     private void DataPickerOnSelectedIndexChanged(object sender, EventArgs e)
     {
         if (!dataPicker.IsVisible)
@@ -187,22 +206,5 @@ public partial class ExerciseView : ContentView
         }
     }
 
-    private void DeleteRequestWeightAndReps(WeightAndRepsViewModel sender)
-    {
-        var item = (TrainingExerciseViewModel)BindingContext;
-        item.WeightAndRepsItems.Remove(sender);
-    }
-
-    private void StartCalculateTime_Clicked(object sender, EventArgs e)
-    {
-        var item = (TrainingExerciseViewModel)BindingContext;
-        if (item.IsTimeCalculating)
-        {
-            item.IsTimeCalculating = false; // stop calculating time
-            return;
-        }
-
-        item.StartCalculateDateTime = DateTime.Now;
-        item.IsTimeCalculating = true;
-    }
+    
 }

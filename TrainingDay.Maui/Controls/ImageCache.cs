@@ -1,5 +1,4 @@
 ﻿using TrainingDay.Maui.Models.Database;
-using TrainingDay.Maui.Services;
 
 namespace TrainingDay.Maui.Controls;
 
@@ -50,18 +49,6 @@ public class ImageCache : Image
         catch (Exception e)
         {
             Console.WriteLine(e);
-        }
-    }
-
-    private void ImageDownloaderOnDownloaded(object sender, ImageData e)
-    {
-        var item = App.Database.GetImage(CodeNum.ToString());
-        if (item != null)
-        {
-            this.Dispatcher.Dispatch(() =>
-            {
-                Source = ImageSource.FromStream(() => Stream(item));
-            });
         }
     }
 

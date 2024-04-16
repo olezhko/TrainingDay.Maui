@@ -261,6 +261,7 @@ public partial class TrainingImplementPage : ContentPage
                     Description = item.GetExercise().Description,
                     SuperSetId = item.SuperSetId,
                     TagsValue = TrainingDay.Common.ExerciseTools.ConvertTagListToInt(item.Tags),
+                    CodeNum = item.CodeNum,
                     WeightAndRepsString = ExerciseManager.ConvertJson(item.Tags, item),
                 });
             }

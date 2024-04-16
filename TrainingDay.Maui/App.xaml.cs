@@ -1,9 +1,14 @@
-﻿using Microsoft.AppCenter;
+﻿using Amazon;
+using Amazon.S3;
+using Amazon.S3.Model;
+using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using System.Globalization;
+using System.Net;
 using TrainingDay.Common;
 using TrainingDay.Maui.Extensions;
+using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Services;
 
 namespace TrainingDay.Maui

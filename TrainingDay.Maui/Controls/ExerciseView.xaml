@@ -8,90 +8,89 @@
              xmlns:data="clr-namespace:TrainingDay.Common;assembly=TrainingDay.Common"
              x:Class="TrainingDay.Maui.Controls.ExerciseView"
              x:Name="View">
-    <ScrollView Margin="5" Orientation="Vertical" VerticalOptions="Fill" VerticalScrollBarVisibility="Never">
-        <Grid x:Name="MainGrid" RowSpacing="3">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+    <Grid x:Name="MainGrid" RowSpacing="3">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" x:Name="NameLabel" FontSize="Large" HorizontalTextAlignment="Center" Text="{Binding ExerciseItemName}" 
+        <Label Grid.Row="0" x:Name="NameLabel" FontSize="Large" HorizontalTextAlignment="Center" Text="{Binding ExerciseItemName}" 
                VerticalOptions="Start" IsVisible="{Binding Source={x:Reference View}, Path=IsNameVisible}" />
 
-            <Frame Grid.Row="1" Padding="5" BackgroundColor="White" CornerRadius="5" HorizontalOptions="Center" VerticalOptions="Center" BorderColor="Transparent">
-                <controls:ImageCache x:Name="ImageControl" HeightRequest="100" CodeNum="{Binding CodeNum}" WidthRequest="100">
-                    <controls:ImageCache.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="ImageTapped" />
-                    </controls:ImageCache.GestureRecognizers>
-                </controls:ImageCache>
-            </Frame>
+        <Frame Grid.Row="1" Padding="5" BackgroundColor="White" CornerRadius="5" HorizontalOptions="Center" VerticalOptions="Center" BorderColor="Transparent">
+            <controls:ImageCache x:Name="ImageControl" HeightRequest="100" CodeNum="{Binding CodeNum}" WidthRequest="100">
+                <controls:ImageCache.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ImageTapped" />
+                </controls:ImageCache.GestureRecognizers>
+            </controls:ImageCache>
+        </Frame>
 
-            <StackLayout Grid.Row="2" Spacing="0">
-                <StackLayout Padding="0" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByReps}}"
+        <StackLayout Grid.Row="2" Spacing="0">
+            <StackLayout Padding="0" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByReps}}"
                          Orientation="Vertical">
-                    <StackLayout Orientation="Horizontal" VerticalOptions="Start" Spacing="10">
-                        <Label FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Start" Text="{x:Static resx:AppResources.RepsString}" VerticalTextAlignment="Center" />
+                <StackLayout Orientation="Horizontal" VerticalOptions="Start" Spacing="10">
+                    <Label FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Start" Text="{x:Static resx:AppResources.RepsString}" VerticalTextAlignment="Center" />
 
-                        <ImageButton WidthRequest="40" HeightRequest="40" Padding="0" Source="add" Clicked="AddWeightAndRepsItem_Clicked" BackgroundColor="Transparent">
-                            <ImageButton.Behaviors>
-                                <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Gray, Dark=White}" />
-                            </ImageButton.Behaviors>
-                        </ImageButton>
-                    </StackLayout>
-
-                    <FlexLayout x:Name="RepsItemsFlexLayout" AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}"
-                        Direction="Row" JustifyContent="Start" VerticalOptions="Start" Wrap="Wrap">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate>
-                                <controls:RepsAndWeightControl Margin="0" IsOnlyReps="True" Padding="0"
-                                    DeleteRequestCommand="{Binding Source={x:Reference View}, Path=DeleteRequestCommand}"
-                                    HorizontalOptions="Start" VerticalOptions="Start" Value="{Binding}" 
-                                    WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type FlexLayout}}, Path=Width, Converter={StaticResource HalfValueConverter}, ConverterParameter=3}"/>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </FlexLayout>
+                    <ImageButton WidthRequest="40" HeightRequest="40" Padding="0" Source="add" Clicked="AddWeightAndRepsItem_Clicked" BackgroundColor="Transparent">
+                        <ImageButton.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Gray, Dark=White}" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
                 </StackLayout>
 
-                <StackLayout Padding="0" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByRepsAndWeight}}"
-            Orientation="Vertical">
-                    <StackLayout Orientation="Horizontal" VerticalOptions="Start" Spacing="10">
-                        <Label FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Start" Text="{x:Static resx:AppResources.RepsAndWeightString}" VerticalTextAlignment="Center" />
-                        <ImageButton WidthRequest="40" HeightRequest="40" Padding="0" Source="add" Clicked="AddWeightAndRepsItem_Clicked" BackgroundColor="Transparent">
-                            <ImageButton.Behaviors>
-                                <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Gray, Dark=White}" />
-                            </ImageButton.Behaviors>
-                        </ImageButton>
-                    </StackLayout>
-
-                    <FlexLayout x:Name="WeightAndRepsItemsFlexLayout" AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}"
+                <FlexLayout x:Name="RepsItemsFlexLayout" AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}"
                         Direction="Row" JustifyContent="Start" VerticalOptions="Start" Wrap="Wrap">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate>
-                                <controls:RepsAndWeightControl Margin="0"
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <controls:RepsAndWeightControl Margin="0" IsOnlyReps="True" Padding="0"
+                                    DeleteRequestCommand="{Binding Source={x:Reference View}, Path=DeleteRequestCommand}"
+                                    HorizontalOptions="Start" VerticalOptions="Start" Value="{Binding}" 
+                                    WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type FlexLayout}}, Path=Width, Converter={StaticResource HalfValueConverter}, ConverterParameter=2}"/>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+            </StackLayout>
+
+            <StackLayout Padding="0" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByRepsAndWeight}}"
+            Orientation="Vertical">
+                <StackLayout Orientation="Horizontal" VerticalOptions="Start" Spacing="10">
+                    <Label FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Start" Text="{x:Static resx:AppResources.RepsAndWeightString}" VerticalTextAlignment="Center" />
+                    <ImageButton WidthRequest="40" HeightRequest="40" Padding="0" Source="add" Clicked="AddWeightAndRepsItem_Clicked" BackgroundColor="Transparent">
+                        <ImageButton.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Gray, Dark=White}" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
+                </StackLayout>
+
+                <FlexLayout x:Name="WeightAndRepsItemsFlexLayout" AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}"
+                        Direction="Row" JustifyContent="Start" VerticalOptions="Start" Wrap="Wrap">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <controls:RepsAndWeightControl Margin="0"
                                 Padding="0"
                                 DeleteRequestCommand="{Binding Source={x:Reference View}, Path=DeleteRequestCommand}"
                                 HorizontalOptions="Start"
                                 VerticalOptions="Start"
                                 WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type FlexLayout}}, Path=Width, Converter={StaticResource HalfValueConverter}, ConverterParameter=2}"
                                 Value="{Binding}" />
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </FlexLayout>
-                </StackLayout>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+            </StackLayout>
 
-                <StackLayout Margin="0" Padding="0" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}"
+            <StackLayout Margin="0" Padding="0" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}"
                      Orientation="Horizontal" Spacing="0">
-                    <Label Margin="0" FontAttributes="Bold" FontSize="Medium" HorizontalOptions="StartAndExpand" Text="{x:Static resx:AppResources.TimeString}" VerticalOptions="Center" />
-                    <Grid HorizontalOptions="Start">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
+                <Label Margin="0" FontAttributes="Bold" FontSize="Medium" HorizontalOptions="StartAndExpand" Text="{x:Static resx:AppResources.TimeString}" VerticalOptions="Center" />
+                <Grid HorizontalOptions="Start">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
-                        <Label
+                    <Label
                     x:Name="HourPicker"
                     Grid.Row="0"
                     Grid.Column="0"
@@ -100,12 +99,12 @@
                     HorizontalTextAlignment="Center"
                     Text="{Binding TimeHours, StringFormat='{0:D2}'}"
                     WidthRequest="50">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="HourGestureRecognizer_OnTapped" />
-                            </Label.GestureRecognizers>
-                        </Label>
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="HourGestureRecognizer_OnTapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
 
-                        <Label
+                    <Label
                     Grid.Row="1"
                     Grid.Column="0"
                     Padding="0"
@@ -113,21 +112,21 @@
                     HorizontalTextAlignment="Center"
                     Text="{x:Static resx:AppResources.HourString}"
                     VerticalTextAlignment="Center" />
-                    </Grid>
+                </Grid>
 
-                    <Label
+                <Label
                 Padding="0"
                 FontSize="Medium"
                 HorizontalOptions="Start"
                 HorizontalTextAlignment="Center"
                 Text=":"
                 VerticalTextAlignment="Center" />
-                    <Grid HorizontalOptions="Start">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Label
+                <Grid HorizontalOptions="Start">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Label
                     x:Name="MinutesPicker"
                     Grid.Row="0"
                     FontSize="Medium"
@@ -135,33 +134,33 @@
                     HorizontalTextAlignment="Center"
                     Text="{Binding TimeMinutes, StringFormat='{0:D2}'}"
                     WidthRequest="50">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="MinuteGestureRecognizer_OnTapped" />
-                            </Label.GestureRecognizers>
-                        </Label>
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="MinuteGestureRecognizer_OnTapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
 
-                        <Label
+                    <Label
                     Grid.Row="1"
                     Padding="0"
                     HorizontalOptions="Fill"
                     HorizontalTextAlignment="Center"
                     Text="{x:Static resx:AppResources.MinuteString}"
                     VerticalTextAlignment="Center" />
-                    </Grid>
+                </Grid>
 
-                    <Label
+                <Label
                 Padding="0"
                 FontSize="Medium"
                 HorizontalOptions="Start"
                 HorizontalTextAlignment="Center"
                 Text=":"
                 VerticalTextAlignment="Center" />
-                    <Grid HorizontalOptions="Start">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Label
+                <Grid HorizontalOptions="Start">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Label
                     x:Name="SecondsPicker"
                     Grid.Row="0"
                     FontSize="Medium"
@@ -169,106 +168,100 @@
                     HorizontalTextAlignment="Center"
                     Text="{Binding TimeSeconds, StringFormat='{0:D2}'}"
                     WidthRequest="50">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="SecondGestureRecognizer_OnTapped" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                        <Label
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="SecondGestureRecognizer_OnTapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label
                     Grid.Row="1"
                     Padding="0"
                     HorizontalOptions="Fill"
                     HorizontalTextAlignment="Center"
                     Text="{x:Static resx:AppResources.SecondString}"
                     VerticalTextAlignment="Center" />
-                    </Grid>
-                    <Button Clicked="StartCalculateTime_Clicked" IsVisible="{Binding IsNotFinished}" CornerRadius="20">
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Text" Value="{x:Static resx:AppResources.MakeTrainingString}" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsTimeCalculating}" TargetType="Button" Value="True">
-                                        <Setter Property="Text" Value="{x:Static resx:AppResources.StopString}" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                </StackLayout>
-
-                <StackLayout Margin="0" Padding="0" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByDistance}}"
-            Orientation="Horizontal">
-                    <Label Margin="0" FontAttributes="Bold" FontSize="Medium" Text="{x:Static resx:AppResources.DistanceString}" VerticalOptions="Center" />
-                    <Entry HorizontalOptions="Start" HorizontalTextAlignment="Center" Text="{Binding DistanceString}" WidthRequest="50" />
-                </StackLayout>
+                </Grid>
+                <Button Clicked="StartCalculateTime_Clicked" IsVisible="{Binding IsNotFinished}" CornerRadius="20">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Text" Value="{x:Static resx:AppResources.MakeTrainingString}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsTimeCalculating}" TargetType="Button" Value="True">
+                                    <Setter Property="Text" Value="{x:Static resx:AppResources.StopString}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
             </StackLayout>
 
-            <FlexLayout Grid.Row="3" AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding Muscles}"
+            <StackLayout Margin="0" Padding="0" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByDistance}}"
+            Orientation="Horizontal">
+                <Label Margin="0" FontAttributes="Bold" FontSize="Medium" Text="{x:Static resx:AppResources.DistanceString}" VerticalOptions="Center" />
+                <Entry HorizontalOptions="Start" HorizontalTextAlignment="Center" Text="{Binding DistanceString}" WidthRequest="50" />
+            </StackLayout>
+        </StackLayout>
+
+        <FlexLayout Grid.Row="3" AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding Muscles}"
                         Direction="Row" JustifyContent="Start" VerticalOptions="Start" Wrap="Wrap">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate>
-                        <Frame Margin="1" Style="{StaticResource MuscleFrameCellStyle}">
-                            <Label FontSize="14" Text="{Binding Name}" TextColor="White" />
-                        </Frame>
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </FlexLayout>
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="1" Style="{StaticResource MuscleFrameCellStyle}">
+                        <Label FontSize="14" Text="{Binding Name}" TextColor="White" />
+                    </Frame>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </FlexLayout>
 
-            <Frame Grid.Row="4" Margin="0" Padding="0" Style="{StaticResource FrameCellStyle}" VerticalOptions="Fill" IsVisible="True">
-                <StackLayout>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-
-                        <Label x:Name="DesctiptionLabel" Padding="10" Grid.ColumnSpan="2" BackgroundColor="Green" Text="{x:Static resx:AppResources.ShortDescriptionString1}"
+        <Frame Grid.Row="4" Margin="0" Padding="0" Style="{StaticResource FrameCellStyle}" VerticalOptions="Fill" IsVisible="True">
+            <StackLayout>
+                <Grid ColumnDefinitions="*,*">
+                    <Label x:Name="DesctiptionLabel" Padding="10" Grid.ColumnSpan="2" BackgroundColor="Green" Text="{x:Static resx:AppResources.ShortDescriptionString1}"
                                HorizontalTextAlignment="Center">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="Description_Click" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                        <!--<Label x:Name="VideoLabel" Grid.Column="1" Padding="10" BackgroundColor="Gray" Text="{x:Static resx:AppResources.VideoString}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Description_Click" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <!--<Label x:Name="VideoLabel" Grid.Column="1" Padding="10" BackgroundColor="Gray" Text="{x:Static resx:AppResources.VideoString}">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="Video_Click" />
                             </Label.GestureRecognizers>
                         </Label>-->
-                    </Grid>
+                </Grid>
 
-                    <StackLayout x:Name="DescriptionGrid" Margin="5">
-                        <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.StartPosition}" TextColor="DodgerBlue" VerticalTextAlignment="Center" 
+                <StackLayout x:Name="DescriptionGrid" Margin="5">
+                    <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.StartPosition}" TextColor="DodgerBlue" VerticalTextAlignment="Center" 
                            IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
-                        <Label FontSize="Small" Text="{Binding Description.StartPosition}" 
+                    <Label FontSize="Small" Text="{Binding Description.StartPosition}" 
                            IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
 
-                        <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Execution}" TextColor="LimeGreen" VerticalTextAlignment="Center" 
+                    <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Execution}" TextColor="LimeGreen" VerticalTextAlignment="Center" 
                            IsVisible="{Binding Description.Execution, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
-                        <Label FontSize="Small" Text="{Binding Description.Execution}" 
+                    <Label FontSize="Small" Text="{Binding Description.Execution}" 
                            IsVisible="{Binding Description.Execution, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
 
-                        <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Advice}" TextColor="Orange" VerticalTextAlignment="Center" 
+                    <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Advice}" TextColor="Orange" VerticalTextAlignment="Center" 
                            IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
 
-                        <Label FontSize="Small" Text="{Binding Description.Advice}" 
+                    <Label FontSize="Small" Text="{Binding Description.Advice}" 
                            IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
-                    </StackLayout>
-
-                    <Grid x:Name="VideoActivityIndicatorGrid" HeightRequest="300" IsVisible="False" WidthRequest="300">
-                        <ActivityIndicator x:Name="VideoActivityIndicator" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="40" />
-                    </Grid>
-
-                    <CollectionView x:Name="VideoCollectionView" IsVisible="False">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <StackLayout Padding="10">
-                                    <Label FontSize="Small" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" Text="{Binding VideoTitle}" />
-                                    <Label FontSize="Small" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" Text="{Binding VideoAuthor, StringFormat={x:Static resx:AppResources.AuthorString}}" />
-                                    <controls:FullScreenVideoWebView HeightRequest="400" HorizontalOptions="Fill" Source="{Binding WebViewData}" VerticalOptions="Fill" WidthRequest="400" />
-                                </StackLayout>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
                 </StackLayout>
-            </Frame>
-        </Grid>
-    </ScrollView>
+
+                <Grid x:Name="VideoActivityIndicatorGrid" HeightRequest="300" IsVisible="False" WidthRequest="300">
+                    <ActivityIndicator x:Name="VideoActivityIndicator" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="40" />
+                </Grid>
+
+                <CollectionView x:Name="VideoCollectionView" IsVisible="False">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="10">
+                                <Label FontSize="Small" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" Text="{Binding VideoTitle}" />
+                                <Label FontSize="Small" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" Text="{Binding VideoAuthor, StringFormat={x:Static resx:AppResources.AuthorString}}" />
+                                <controls:FullScreenVideoWebView HeightRequest="400" HorizontalOptions="Fill" Source="{Binding WebViewData}" VerticalOptions="Fill" WidthRequest="400" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </Frame>
+    </Grid>
 </ContentView>

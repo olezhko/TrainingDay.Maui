@@ -89,7 +89,6 @@ class WeightViewAndSetPageViewModel : BaseViewModel
 
         sender.ChartItems.Add(note);
         sender.Chart = PrepareChart(sender.GoalValue, sender.ChartItems);
-
         await Toast.Make(Resources.Strings.AppResources.SavedString).Show();
         //DependencyService.Get<IMessage>().CancelNotification(PushMessagesManager.WeightNotificationId);
         await SiteService.SendBodyControl(Settings.Token);

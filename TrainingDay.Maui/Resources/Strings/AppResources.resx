@@ -550,7 +550,7 @@
     <value>Share workout</value>
   </data>
   <data name="ShortDescriptionString1" xml:space="preserve">
-    <value>Description:</value>
+    <value>Description</value>
   </data>
   <data name="ShowAdvicesOnImplementing" xml:space="preserve">
     <value>Show warm-up and cool-down tips while doing a workout</value>
