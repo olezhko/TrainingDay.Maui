@@ -4,9 +4,9 @@
     <item name="windowNoTitle">true</item>
     <item name="windowActionBar">false</item>
 
-    <item name="colorPrimary">#1b1b1b</item>
+    <item name="colorPrimary">#FFA500</item>
     <item name="colorPrimaryDark">#1b1b1b</item>
-    <item name="colorAccent">#FF4081</item>
+    <item name="colorAccent">#0000FF</item>
     <item name="android:textAllCaps">false</item>
     <item name="android:actionModeBackground">@android:color/transparent</item>
     <item name="windowActionModeOverlay">true</item>

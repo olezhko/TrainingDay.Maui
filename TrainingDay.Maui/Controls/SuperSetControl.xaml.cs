@@ -12,7 +12,14 @@ public partial class SuperSetControl : ContentView
     public SuperSetControl()
 	{
 		InitializeComponent();
-	}
+        dataPicker = new Picker();
+        dataPicker.ItemsSource = Enumerable.Range(0, 60).Select(min => min.ToString("D2")).ToList();
+        dataPicker.SelectedIndexChanged += DataPickerOnSelectedIndexChanged;
+        dataPicker.IsVisible = false;
+        dataPicker.Unfocused += DataPicker_Unfocused;
+        dataPicker.TitleColor = Colors.Orange;
+        mainGrid.Children.Add(dataPicker);
+    }
 
     public static readonly BindableProperty SuperSetItemsProperty =
         BindableProperty.Create("SuperSetItems", typeof(ObservableCollection<TrainingExerciseViewModel>), typeof(SuperSetControl), null, propertyChanged: SourcePropertyChanged);

@@ -18,7 +18,6 @@ namespace TrainingDay.Maui
         private const string DatabaseName = "exercise.db";
         private static Repository database;
         private static object lockBase = new object();
-        private static ImageQueueCacheDownloader imageCache;
         #region To Remove
         public static CultureInfo CurrentCultureForEntryDot => DeviceInfo.Platform == DevicePlatform.Android ? CultureInfo.InvariantCulture : CultureInfo.CurrentCulture;
         #endregion
@@ -64,6 +63,8 @@ namespace TrainingDay.Maui
             Settings.LastDatabaseSyncDateTime = Settings.LastDatabaseSyncDateTime.IsNotNullOrEmpty() ? Settings.LastDatabaseSyncDateTime : DateTime.Now.ToString(Settings.GetLanguage());
 
             Analytics.TrackEvent("Application Started");
+
+            //DownloadImages();
         }
 
         public static void SyncAlarms()

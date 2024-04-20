@@ -7,7 +7,7 @@
             xmlns:data="clr-namespace:TrainingDay.Common;assembly=TrainingDay.Common"
              x:Class="TrainingDay.Maui.Controls.SuperSetControl"
              x:Name="Self">
-    <Grid RowDefinitions="auto,*">
+    <Grid x:Name="mainGrid" RowDefinitions="auto,*">
         <CollectionView ItemsSource="{Binding Source={x:Reference Self}, Path=SuperSetItems}" Margin="5,0" SelectionMode="Single"
                         SelectedItem="{Binding Source={x:Reference Self}, Path=CurrentItem,Mode=TwoWay}">
             <CollectionView.ItemTemplate>

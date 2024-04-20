@@ -12,7 +12,7 @@ public static class MessageManager
         return await Shell.Current.DisplayAlert(title, message, okString, cancelString);
     }
 
-    public static async Task<string> DisplayActionSheet(string title, string message, string cancelString, params string[] buttons)
+    public static async Task<string> DisplayActionSheet(string title, string cancelString, params string[] buttons)
     {
         return await Shell.Current.DisplayActionSheet(title, cancelString, null, buttons);
     }

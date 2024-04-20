@@ -62,12 +62,6 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         {
             ItemsGrouped.Add(tempGroup);
         }
-
-        foreach (var group in ItemsGrouped)
-        {
-            //group.Expanded = group.Expanded;
-            group.Expanded = true;
-        }
     }
 
     private void FillGroupedTraining(Training training, IEnumerable<TrainingUnion> unions, IEnumerable<LastTraining> lastTrainings,
@@ -309,7 +303,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         var item = (TrainingViewModel)sender.BindingContext;
 
         isLongPressPopupOpened = true;
-        var action = await MessageManager.DisplayActionSheet(AppResources.ChoseAction, AppResources.CancelString, AppResources.CancelString, AppResources.RemoveString, AppResources.Duplicate, item.GroupName == null ? AppResources.TrainingToGroupString : AppResources.TrainingUnGroupString.Fill(item.GroupName.Name));
+        var action = await MessageManager.DisplayActionSheet(AppResources.ChoseAction, AppResources.CancelString, AppResources.RemoveString, AppResources.Duplicate, item.GroupName == null ? AppResources.TrainingToGroupString : AppResources.TrainingUnGroupString.Fill(item.GroupName.Name));
         isLongPressPopupOpened = false;
         Analytics.TrackEvent($"{GetType().Name}: LongPressed finished with {action}");
         if (action == AppResources.CancelString)

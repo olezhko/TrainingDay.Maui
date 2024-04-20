@@ -110,7 +110,7 @@ public class StepProgressBar : Grid
                 {
                     new Setter { Property = BackgroundColorProperty,   Value = Colors.Transparent },
                     new Setter { Property = Button.BorderColorProperty,   Value = StepColor },
-                    new Setter { Property = Button.TextColorProperty,   Value = StepColor },
+                    new Setter { Property = Button.TextColorProperty,   Value = Colors.White },
                     new Setter { Property = Button.BorderWidthProperty,   Value = 0.5 },
                     new Setter { Property = HeightRequestProperty,   Value = 45 },
                     new Setter { Property = WidthRequestProperty,   Value = 45 },
@@ -124,7 +124,6 @@ public class StepProgressBar : Grid
                 {
                     new Setter { Property = BackgroundColorProperty, Value = SteppedColor },
                     new Setter { Property = Button.FontAttributesProperty, Value = FontAttributes.Bold },
-
                     new Setter { Property = Button.TextColorProperty, Value = Colors.White },
                     new Setter { Property = Button.BorderColorProperty, Value = StepColor },
                     new Setter { Property = Button.BorderWidthProperty,   Value = 0.5 },
@@ -134,9 +133,11 @@ public class StepProgressBar : Grid
                 },
         };
 
-        Resources = new ResourceDictionary();
-        Resources.Add("unselectedCircleStyle", unselectedCircleStyle);
-        Resources.Add("selectedCircleStyle", selectedCircleStyle);
+        Resources = new ResourceDictionary
+        {
+            { "unselectedCircleStyle", unselectedCircleStyle },
+            { "selectedCircleStyle", selectedCircleStyle }
+        };
     }
 
     protected override void OnPropertyChanged(string propertyName = null)
