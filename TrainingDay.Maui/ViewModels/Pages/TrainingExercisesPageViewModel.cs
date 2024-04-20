@@ -782,7 +782,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         Training.Exercises.ForEach(i => i.IsBeingDraggedOver = false);
     }
 
-    private async Task OnItemDropped(TrainingExerciseViewModel item)
+    private void OnItemDropped(TrainingExerciseViewModel item)
     {
         var itemToMove = Training.Exercises.First(i => i.IsBeingDragged);
         var oldIndex = Training.Exercises.IndexOf(itemToMove);

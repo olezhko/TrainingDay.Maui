@@ -1,6 +1,8 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using Plugin.AdMob;
+using Plugin.AdMob.Services;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Maui.Controls;
@@ -45,6 +47,8 @@ public partial class TrainingImplementPage : ContentPage
         _timer = Shell.Current.Dispatcher.CreateTimer();
         _timer.Tick += _timer_Tick;
         _timer.Interval = TimeSpan.FromSeconds(1);
+
+        AdMob.AdUnitId = DeviceInfo.Platform == DevicePlatform.Android ? ConstantKeys.ImplementAndroidAds : ConstantKeys.ImplementiOSAds;
     }
 
     private void StepProgressBarControl_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -189,7 +193,7 @@ public partial class TrainingImplementPage : ContentPage
         catch (Exception ex)
         {
             Crashes.TrackError(ex);
-            await Navigation.PopAsync();
+            await Shell.Current.GoToAsync("..");
         }
     }
 
@@ -222,14 +226,29 @@ public partial class TrainingImplementPage : ContentPage
             await MessageManager.DisplayAlert(AppResources.AdviceString, AppResources.AdviceAfterTrainingMessage, AppResources.OkString);
         }
 
-        //DependencyService.Get<IAdInterstitial>().ShowAd(Device.RuntimePlatform == Device.Android
-        //    ? "ca-app-pub-8728883017081055/7837401616"
-        //    : "ca-app-pub-8728883017081055/1550276858");
+        ShowAd(DeviceInfo.Platform == DevicePlatform.Android
+            ? "ca-app-pub-8728883017081055/7837401616"
+            : "ca-app-pub-8728883017081055/1550276858");
 
         //DependencyService.Get<IMessage>().CancelNotification(PushMessagesManager.TrainingNotificationId);
 
         await Shell.Current.GoToAsync("..");
         await SiteService.SendFinishedWorkout(Settings.Token);
+    }
+
+    private IInterstitialAdService _interstitialAdService;
+    private void ShowAd(string ads)
+    {
+        _interstitialAdService = Handler.MauiContext.Services.GetService<IInterstitialAdService>();
+        _interstitialAdService.PrepareAd(ads);
+        var interstitialAd = _interstitialAdService.CreateAd(ads);
+        interstitialAd.OnAdLoaded += InterstitialAd_OnAdLoaded;
+        interstitialAd.Load();
+    }
+
+    private void InterstitialAd_OnAdLoaded(object sender, EventArgs e)
+    {
+        (sender as IInterstitialAd).Show();
     }
 
     private void SaveLastTraining()

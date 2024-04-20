@@ -11,6 +11,7 @@ public partial class TrainingExercisesPage : ContentPage
     public TrainingExercisesPage()
     {
         InitializeComponent();
+        AdMob.AdUnitId = DeviceInfo.Platform == DevicePlatform.Android ? ConstantKeys.WorkoutAndroidAds : ConstantKeys.WorkoutiOSAds;
         NavigationPage.SetBackButtonTitle(this, AppResources.TrainingString);
     }
 

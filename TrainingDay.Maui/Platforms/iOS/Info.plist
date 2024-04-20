@@ -40,5 +40,7 @@
 	</array>
   <key>LSSupportsOpeningDocumentsInPlace</key>
   <true/>
+  <key>GADApplicationIdentifier</key>
+  <string>ca-app-pub-8728883017081055~4279403048</string>
 </dict>
 </plist>

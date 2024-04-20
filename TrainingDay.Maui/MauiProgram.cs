@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using Plugin.AdMob;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using TrainingDay.Maui.Controls;
 
@@ -14,6 +15,7 @@ namespace TrainingDay.Maui
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
                 .UseSkiaSharp()
+                .UseAdMob()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("Inter-Regular.ttf", "OpenSansRegular");

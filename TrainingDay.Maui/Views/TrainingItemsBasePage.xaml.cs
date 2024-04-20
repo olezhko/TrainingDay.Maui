@@ -21,6 +21,8 @@ public partial class TrainingItemsBasePage : ContentPage
         {
             Navigation = Navigation,
         };
+
+        AdMob.AdUnitId = DeviceInfo.Platform == DevicePlatform.Android ? ConstantKeys.WorkoutsAndroidAds : ConstantKeys.WorkoutsiOSAds;
         NavigationPage.SetBackButtonTitle(this, AppResources.TrainingsBaseString);
     }
 

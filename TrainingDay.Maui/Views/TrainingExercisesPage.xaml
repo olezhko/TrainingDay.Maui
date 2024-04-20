@@ -5,6 +5,7 @@
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:admob="clr-namespace:Plugin.AdMob;assembly=Plugin.AdMob"
              x:Class="TrainingDay.Maui.Views.TrainingExercisesPage"
              x:Name="ContentPage" >
     <ContentPage.BindingContext>
@@ -162,5 +163,7 @@
                               AttachedControl="MakeTrainingButton" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}" Position="Center"
                               ParentHeight="{Binding Source={x:Reference Container},Path=Height}"
                               ParentWidth="{Binding Source={x:Reference Container},Path=Width}"/>
+
+        <admob:BannerAd x:Name="AdMob" Grid.Row="4" AdSize="Banner" />
     </controls:TooltipControlContainer>
 </ContentPage>

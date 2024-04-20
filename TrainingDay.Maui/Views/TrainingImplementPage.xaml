@@ -4,6 +4,7 @@
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
+             xmlns:admob="clr-namespace:Plugin.AdMob;assembly=Plugin.AdMob"
              x:Class="TrainingDay.Maui.Views.TrainingImplementPage"
              x:Name="Page"
              Shell.PresentationMode="ModalAnimated">
@@ -116,5 +117,7 @@
                 </Frame>
             </controls:ToolTipControl.EmptyView>
         </controls:ToolTipControl>
+
+        <admob:BannerAd x:Name="AdMob" Grid.Row="3" AdSize="Banner" Grid.ColumnSpan="3"/>
     </controls:TooltipControlContainer>
 </ContentPage>
