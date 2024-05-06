@@ -29,23 +29,23 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
-	  <ApplicationVersion>262</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.2.0.14</ApplicationDisplayVersion>
+	  <ApplicationVersion>263</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.2.0.15</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-	  <ApplicationVersion>262</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.2.0.14</ApplicationDisplayVersion>
+	  <ApplicationVersion>263</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.2.0.15</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
-	  <ApplicationVersion>262</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.2.0.14</ApplicationDisplayVersion>
+	  <ApplicationVersion>263</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.2.0.15</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
-	  <ApplicationVersion>262</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.2.0.14</ApplicationDisplayVersion>
+	  <ApplicationVersion>263</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.2.0.15</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
@@ -71,6 +71,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Platforms\Android\google-services.json" />
 	  <None Remove="Platforms\Android\Resources\values\styles.xml" />
 	  <None Remove="Resources\Images\main.png" />
 	  <None Remove="Resources\Images\prepared\arms.png" />
@@ -102,6 +103,10 @@
 	  <EmbeddedResource Include="Resources\Images\prepared\shoulders.png" />
 	  <EmbeddedResource Include="Resources\Images\prepared\up.png" />
 	  <EmbeddedResource Include="Resources\Images\prepared\wide_shoulders.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <GoogleServicesJson Include="Platforms\Android\google-services.json" />
 	</ItemGroup>
 
   <ItemGroup>

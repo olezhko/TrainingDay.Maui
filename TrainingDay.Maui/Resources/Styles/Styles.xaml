@@ -13,24 +13,6 @@
     <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
     <converters:IsEmptyStringConverter x:Key="IsEmptyStringConverter"/>
 
-
-    <Style TargetType="Frame" x:Key="MaterialFrame">
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=White,Dark=Black}" />
-        <Setter Property="BorderColor" Value="Transparent" />
-        <Setter Property="CornerRadius" Value="5"/>
-        <Setter Property="Padding" Value="5"/>
-        <Setter Property="HeightRequest" Value="70"/>
-    </Style>
-
-    <Style TargetType="Label" x:Key="MaterialLabel">
-        <Setter Property="AnchorX" Value="0"/>
-        <Setter Property="TextColor" Value="Orange"/>
-        <Setter Property="FontSize" Value="18"/>
-        <Setter Property="HorizontalOptions" Value="Start"/>
-        <Setter Property="VerticalOptions" Value="Center"/>
-        <Setter Property="controls:MaterialLabelAttached.IsMaterialBehavior" Value="True"/>
-    </Style>
-
     <Style TargetType="CollectionView" ApplyToDerivedTypes="True">
         <Setter Property="ItemsLayout">
             <Setter.Value>
@@ -42,12 +24,7 @@
     <Style TargetType="ActivityIndicator">
         <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
     </Style>
-
-    <Style TargetType="IndicatorView">
-        <Setter Property="IndicatorColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}"/>
-        <Setter Property="SelectedIndicatorColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray100}}"/>
-    </Style>
-
+    
     <Style TargetType="Border">
         <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />
         <Setter Property="StrokeShape" Value="Rectangle"/>
@@ -193,6 +170,13 @@
         <Setter Property="Padding" Value="0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
+    <Style TargetType="Frame" x:Key="MaterialFrame">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight},Dark=Black}" />
+        <Setter Property="BorderColor" Value="Transparent" />
+        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="HeightRequest" Value="70"/>
+    </Style>
 
     <Style TargetType="ImageButton">
         <Setter Property="Opacity" Value="1" />
@@ -214,6 +198,11 @@
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
+    </Style>
+
+    <Style TargetType="IndicatorView">
+        <Setter Property="IndicatorColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}"/>
+        <Setter Property="SelectedIndicatorColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray100}}"/>
     </Style>
 
     <Style TargetType="Label">
@@ -239,18 +228,13 @@
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
     </Style>
 
-    <Style TargetType="Label" x:Key="Headline">
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark={StaticResource White}}" />
-        <Setter Property="FontSize" Value="32" />
-        <Setter Property="HorizontalOptions" Value="Center" />
-        <Setter Property="HorizontalTextAlignment" Value="Center" />
-    </Style>
-
-    <Style TargetType="Label" x:Key="SubHeadline">
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark={StaticResource White}}" />
-        <Setter Property="FontSize" Value="24" />
-        <Setter Property="HorizontalOptions" Value="Center" />
-        <Setter Property="HorizontalTextAlignment" Value="Center" />
+    <Style TargetType="Label" x:Key="MaterialLabel">
+        <Setter Property="AnchorX" Value="0"/>
+        <Setter Property="TextColor" Value="Orange"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="HorizontalOptions" Value="Start"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="controls:MaterialLabelAttached.IsMaterialBehavior" Value="True"/>
     </Style>
 
     <Style TargetType="ListView">
@@ -448,11 +432,6 @@
         </Setter>
     </Style>
 
-    <Style TargetType="Page" ApplyToDerivedTypes="True">
-        <Setter Property="Padding" Value="0"/>
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}" />
-    </Style>
-
     <Style TargetType="Element" x:Key="BaseStyle">
         <Setter Property="Shell.DisabledColor" Value="Gray" />
         <Setter Property="Shell.UnselectedColor" Value="Gray" />
@@ -469,31 +448,16 @@
     <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
     <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
 
-    <Style TargetType="ContentPage">
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}" />
-        <Setter Property="Padding" Value="10"/>
-    </Style>
 
+    <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}" />
+    </Style>
+    
     <Style TargetType="controls:StepProgressBar" ApplyToDerivedTypes="True">
         <Setter Property="StepColor" Value="{AppThemeBinding Light=Black, Dark=Gray}" />
     </Style>
 
     <Style TargetType="controls:ToolTipControl" ApplyToDerivedTypes="True">
         <Setter Property="FrameBackground" Value="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark=Gray}" />
-    </Style>
-
-    <Style TargetType="NavigationPage">
-        <Setter Property="BarBackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}" />
-        <Setter Property="BarTextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}" />
-        <Setter Property="IconColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource White}}" />
-        <Setter Property="Padding" Value="3"/>
-    </Style>
-
-    <Style TargetType="TabbedPage">
-        <Setter Property="BarBackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray950}}" />
-        <Setter Property="BarTextColor" Value="{AppThemeBinding Light={StaticResource Magenta}, Dark={StaticResource White}}" />
-        <Setter Property="UnselectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />
-        <Setter Property="SelectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
     </Style>
 </ResourceDictionary>

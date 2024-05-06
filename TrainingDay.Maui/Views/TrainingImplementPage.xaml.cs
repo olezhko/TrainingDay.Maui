@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Maui.Controls;
 using TrainingDay.Maui.Extensions;
+using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Resources.Strings;
@@ -21,7 +22,7 @@ public partial class TrainingImplementPage : ContentPage
     private readonly DateTime _startTrainingDateTime;
     private bool enabledTimer;
     private IDispatcherTimer _timer;
-
+    private IPushNotification notificator;
     public ObservableCollection<SuperSetViewModel> Items { get; set; }
 
     TrainingViewModel trainingItem;
@@ -89,6 +90,13 @@ public partial class TrainingImplementPage : ContentPage
 
         _timer.Start();
         ToolTipCancelImplementingTraining.Show();
+
+        HandlerChanged += OnHandlerChanged;
+    }
+
+    void OnHandlerChanged(object sender, EventArgs e)
+    {
+        notificator = Handler.MauiContext.Services.GetRequiredService<IPushNotification>();
     }
 
     protected override bool OnBackButtonPressed()
@@ -121,8 +129,7 @@ public partial class TrainingImplementPage : ContentPage
     private void SaveNotFinishedTraining(string title, int id)
     {
         Settings.IsTrainingNotFinishedTime = CurrentTime;
-        var fn = "NotFinished.trday";
-        var filename = Path.Combine(FileSystem.CacheDirectory, fn);
+        var filename = Path.Combine(FileSystem.CacheDirectory, ConstantKeys.NotFinishedTrainingName);
 
         TrainingViewModel training = new TrainingViewModel();
         training.Id = id;
@@ -146,7 +153,16 @@ public partial class TrainingImplementPage : ContentPage
             if (Items.Count > 0)
             {
                 var name = string.Join(" - ", Items[StepProgressBarControl.StepSelected].Select(a => a.ExerciseItemName));
-                //DependencyService.Get<IMessage>().ShowNotification(PushMessagesManager.TrainingImplementTimeId, name, CurrentTime, true, true, false, null);
+                notificator.Show(new PushMessage()
+                {
+                    Id = PushMessagesExtensions.TrainingImplementTimeId,
+                    Title = name,
+                    Message = CurrentTime,
+                    IsDisableSwipe = false,
+                    IsSilent = true,
+                    IsUpdateCurrent = true,
+                    Data = null
+                });
             }
         }
     }

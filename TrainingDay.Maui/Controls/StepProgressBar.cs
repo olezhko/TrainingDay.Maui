@@ -110,7 +110,7 @@ public class StepProgressBar : Grid
                 {
                     new Setter { Property = BackgroundColorProperty,   Value = Colors.Transparent },
                     new Setter { Property = Button.BorderColorProperty,   Value = StepColor },
-                    new Setter { Property = Button.TextColorProperty,   Value = Colors.White },
+                    new Setter { Property = Button.TextColorProperty,   Value = App.Current.RequestedTheme == AppTheme.Light? Colors.Black : Colors.White },
                     new Setter { Property = Button.BorderWidthProperty,   Value = 0.5 },
                     new Setter { Property = HeightRequestProperty,   Value = 45 },
                     new Setter { Property = WidthRequestProperty,   Value = 45 },

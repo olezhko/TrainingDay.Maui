@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Plugin.AdMob;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using TrainingDay.Maui.Controls;
+using TrainingDay.Maui.Services;
 
 namespace TrainingDay.Maui
 {
@@ -31,6 +32,10 @@ namespace TrainingDay.Maui
 
 #if DEBUG
     		builder.Logging.AddDebug();
+#endif
+
+#if ANDROID
+            builder.Services.AddTransient<IPushNotification, Platforms.Android.PushNotificationService>();
 #endif
 
             return builder.Build();

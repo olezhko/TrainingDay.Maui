@@ -8,7 +8,7 @@
     <ContentView.BindingContext>
         <viewModels:WeightAndRepsViewModel />
     </ContentView.BindingContext>
-    <Frame Margin="2" BackgroundColor="{AppThemeBinding Light=White, Dark=Black}" Padding="5">
+    <Frame Margin="2" BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}" Padding="5">
         <Grid x:Name="MainGrid" Margin="0" Padding="0" ColumnSpacing="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />

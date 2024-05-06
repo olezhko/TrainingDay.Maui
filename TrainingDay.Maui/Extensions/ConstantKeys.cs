@@ -15,4 +15,6 @@ public class ConstantKeys
 
     public const string FinishWorkoutAndroidAds = "ca-app-pub-8728883017081055/7837401616";
     public const string FinishWorkoutiOSAds = "ca-app-pub-8728883017081055/1550276858";
+
+    public const string NotFinishedTrainingName = "NotFinished.trday";
 }

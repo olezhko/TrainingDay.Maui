@@ -7,6 +7,7 @@ using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Models.Serialize;
 using TrainingDay.Maui.ViewModels;
 using TrainingDay.Maui.Extensions;
+using Amazon.Runtime.Internal.Endpoints.StandardLibrary;
 
 namespace TrainingDay.Maui.Views;
 
@@ -40,11 +41,12 @@ public partial class TrainingItemsBasePage : ContentPage
 
     private async void IsStartNotFinishedTraining()
     {
-        if (Settings.IsTrainingNotFinished)
+        var filename = Path.Combine(FileSystem.CacheDirectory, ConstantKeys.NotFinishedTrainingName);
+
+        if (Settings.IsTrainingNotFinished && File.Exists(filename))
         {
             Settings.IsTrainingNotFinished = false;
-            var fn = "NotFinished.trday";
-            var filename = Path.Combine(FileSystem.CacheDirectory, fn);
+
             var trainingSerialize = TrainingSerialize.LoadFromFile(filename);
 
             var result = await MessageManager.DisplayAlert(AppResources.ContinueLastTrainingQuestion, trainingSerialize.Title, AppResources.YesString, AppResources.NoString);
