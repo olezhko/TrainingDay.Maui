@@ -2,7 +2,7 @@
 
 namespace TrainingDay.Maui.Extensions;
 
-internal class PushMessagesExtensions
+public class PushMessagesExtensions
 {
     public static bool IsShowNewWorkoutNotify()
     {

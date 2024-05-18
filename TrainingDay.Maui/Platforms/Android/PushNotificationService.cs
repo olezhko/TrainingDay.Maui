@@ -49,8 +49,8 @@ internal class PushNotificationService : IPushNotification
             .SetContentIntent(pendingIntent)
             .SetContentTitle(message.Title)
             .SetContentText(message.Message)
-            .SetLargeIcon(BitmapFactory.DecodeResource(Application.Context.Resources, Resource.Drawable.main))
-            .SetSmallIcon(Resource.Drawable.main)
+            .SetLargeIcon(BitmapFactory.DecodeResource(Application.Context.Resources, Resource.Drawable.icon))
+            .SetSmallIcon(Resource.Drawable.icon)
             .SetPriority((int)NotificationPriority.Low)
             .SetVisibility((int)NotificationVisibility.Public)
             .SetOngoing(message.IsDisableSwipe); // disable swipe

@@ -10,7 +10,6 @@ namespace TrainingDay.Maui
 
             Routing.RegisterRoute(nameof(TrainingExercisesPage), typeof(TrainingExercisesPage));
             Routing.RegisterRoute(nameof(TrainingItemsBasePage), typeof(TrainingItemsBasePage));
-            Routing.RegisterRoute(nameof(TrainingSettingsPage), typeof(TrainingSettingsPage));
             Routing.RegisterRoute(nameof(TrainingExerciseItemPage), typeof(TrainingExerciseItemPage));
             Routing.RegisterRoute(nameof(TrainingImplementPage), typeof(TrainingImplementPage));
             Routing.RegisterRoute(nameof(TrainingExercisesMoveOrCopy), typeof(TrainingExercisesMoveOrCopy));

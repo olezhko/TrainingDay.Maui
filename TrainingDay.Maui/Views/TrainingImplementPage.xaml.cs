@@ -96,7 +96,10 @@ public partial class TrainingImplementPage : ContentPage
 
     void OnHandlerChanged(object sender, EventArgs e)
     {
-        notificator = Handler.MauiContext.Services.GetRequiredService<IPushNotification>();
+        if (Handler != null)
+        {
+            notificator = Handler.MauiContext.Services.GetRequiredService<IPushNotification>();
+        }
     }
 
     protected override bool OnBackButtonPressed()

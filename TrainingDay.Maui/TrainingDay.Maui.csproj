@@ -29,23 +29,23 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
-	  <ApplicationVersion>263</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.2.0.15</ApplicationDisplayVersion>
+	  <ApplicationVersion>265</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.2.0.16</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-	  <ApplicationVersion>263</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.2.0.15</ApplicationDisplayVersion>
+	  <ApplicationVersion>265</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.2.0.16</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
-	  <ApplicationVersion>263</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.2.0.15</ApplicationDisplayVersion>
+	  <ApplicationVersion>265</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.2.0.16</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
-	  <ApplicationVersion>263</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.2.0.15</ApplicationDisplayVersion>
+	  <ApplicationVersion>265</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.2.0.16</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
@@ -105,8 +105,17 @@
 	  <EmbeddedResource Include="Resources\Images\prepared\wide_shoulders.png" />
 	</ItemGroup>
 
-	<ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
 	  <GoogleServicesJson Include="Platforms\Android\google-services.json" />
+	  <PackageReference Include="Xamarin.Firebase.Iid">
+	    <Version>121.1.0.14</Version>
+	  </PackageReference>
+	  <PackageReference Include="Xamarin.Firebase.Messaging">
+	    <Version>123.4.1</Version>
+	  </PackageReference>
+	  <PackageReference Include="Xamarin.GooglePlayServices.Base">
+	    <Version>118.3.0</Version>
+	  </PackageReference>
 	</ItemGroup>
 
   <ItemGroup>
@@ -244,9 +253,6 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\TrainingItemsBasePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\TrainingSettingsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\TrainingsSetGroupPage.xaml">

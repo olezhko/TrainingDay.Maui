@@ -655,35 +655,34 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
     private async void ShowTrainingSettingsPage()
     {
         Analytics.TrackEvent($"{GetType().Name}: ShowTrainingSettingsPage");
-        WeakReferenceMessenger.Default.Unregister<TrainingSettingsActionMessage>(this);
-        WeakReferenceMessenger.Default.Register<TrainingSettingsActionMessage>(this, (r, m) =>
-        {
-            TrainingSettingsPage_ActionSelected(m.Action);
-            WeakReferenceMessenger.Default.Unregister<TrainingSettingsActionMessage>(this);
-        });
-        await Shell.Current.GoToAsync(nameof(TrainingSettingsPage));
-    }
 
-    private void TrainingSettingsPage_ActionSelected(TrainingSettingsPage.TrainingSettingsActions e)
-    {
-        Analytics.TrackEvent($"{GetType().Name}: ShowTrainingSettingsPage finished with {e}");
-        switch (e)
+        var action = await Shell.Current.DisplayActionSheet(AppResources.ChoseAction, AppResources.CancelString, null, 
+            AppResources.Notification, 
+            AppResources.ShareTrainingString, 
+            AppResources.SuperSetControl, 
+            AppResources.MoveString, 
+            AppResources.CopyString);
+
+        Analytics.TrackEvent($"{GetType().Name}: ShowTrainingSettingsPage finished with {action}");
+        if (action == AppResources.Notification)
         {
-            case TrainingSettingsPage.TrainingSettingsActions.AddAlarm:
-                MakeNotify();
-                break;
-            case TrainingSettingsPage.TrainingSettingsActions.ShareTraining:
-                ShareTraining();
-                break;
-            case TrainingSettingsPage.TrainingSettingsActions.SuperSetAction:
-                InitSuperSetMode();
-                break;
-            case TrainingSettingsPage.TrainingSettingsActions.MoveExercises:
-                StartMoveExercises();
-                break;
-            case TrainingSettingsPage.TrainingSettingsActions.CopyExercises:
-                StartCopyExercise();
-                break;
+            MakeNotify();
+        }
+        else if(action == AppResources.ShareTrainingString)
+        {
+            ShareTraining();
+        }
+        else if (action == AppResources.SuperSetControl)
+        {
+            InitSuperSetMode();
+        }
+        else if (action == AppResources.MoveString)
+        {
+            StartMoveExercises();
+        }
+        else if (action == AppResources.CopyString)
+        {
+            StartCopyExercise();
         }
     }
 
