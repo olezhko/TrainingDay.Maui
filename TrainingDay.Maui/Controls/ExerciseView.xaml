@@ -41,14 +41,14 @@
                     </ImageButton>
                 </StackLayout>
 
-                <FlexLayout x:Name="RepsItemsFlexLayout" AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}"
+                <FlexLayout AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}"
                         Direction="Row" JustifyContent="Start" VerticalOptions="Start" Wrap="Wrap">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
                             <controls:RepsAndWeightControl Margin="0" IsOnlyReps="True" Padding="0"
                                     DeleteRequestCommand="{Binding Source={x:Reference View}, Path=DeleteRequestCommand}"
                                     HorizontalOptions="Start" VerticalOptions="Start" Value="{Binding}" 
-                                    WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type FlexLayout}}, Path=Width, Converter={StaticResource HalfValueConverter}, ConverterParameter=2}"/>
+                                    WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type FlexLayout}}, Path=Width, Converter={StaticResource HalfValueConverter}, ConverterParameter=3}"/>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </FlexLayout>
@@ -65,7 +65,7 @@
                     </ImageButton>
                 </StackLayout>
 
-                <FlexLayout x:Name="WeightAndRepsItemsFlexLayout" AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}"
+                <FlexLayout AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}"
                         Direction="Row" JustifyContent="Start" VerticalOptions="Start" Wrap="Wrap">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>

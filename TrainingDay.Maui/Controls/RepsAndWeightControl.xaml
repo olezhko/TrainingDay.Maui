@@ -59,16 +59,10 @@
                 <ImageButton.Style>
                     <Style TargetType="ImageButton">
                         <Style.Triggers>
-                            <DataTrigger
-                            Binding="{Binding IsFinished}"
-                            TargetType="ImageButton"
-                            Value="True">
+                            <DataTrigger Binding="{Binding IsFinished}" TargetType="ImageButton" Value="True">
                                 <Setter Property="BackgroundColor" Value="Green" />
                             </DataTrigger>
-                            <DataTrigger
-                            Binding="{Binding IsFinished}"
-                            TargetType="ImageButton"
-                            Value="False">
+                            <DataTrigger Binding="{Binding IsFinished}" TargetType="ImageButton" Value="False">
                                 <Setter Property="BackgroundColor" Value="Transparent" />
                             </DataTrigger>
                         </Style.Triggers>

@@ -235,7 +235,7 @@ public partial class TrainingImplementPage : ContentPage
     private async Task FinishAndSave()
     {
         enabledTimer = false;
-        //DependencyService.Get<IMessage>().CancelNotification(PushMessagesManager.TrainingImplementTimeId);
+        notificator.Cancel(PushMessagesExtensions.TrainingImplementTimeId);
         Settings.IsTrainingNotFinished = false;
         SaveLastTraining();
         SaveChangedExercises();
@@ -249,7 +249,7 @@ public partial class TrainingImplementPage : ContentPage
             ? "ca-app-pub-8728883017081055/7837401616"
             : "ca-app-pub-8728883017081055/1550276858");
 
-        //DependencyService.Get<IMessage>().CancelNotification(PushMessagesManager.TrainingNotificationId);
+        notificator.Cancel(PushMessagesExtensions.TrainingNotificationId);
 
         await Shell.Current.GoToAsync("..");
         await SiteService.SendFinishedWorkout(Settings.Token);
@@ -380,7 +380,7 @@ public partial class TrainingImplementPage : ContentPage
         if (result)
         {
             enabledTimer = false;
-            //DependencyService.Get<IMessage>().CancelNotification(PushMessagesManager.TrainingImplementTimeId);
+            notificator.Cancel(PushMessagesExtensions.TrainingImplementTimeId);
             Settings.IsTrainingNotFinished = false;
 
             await Shell.Current.GoToAsync("..");

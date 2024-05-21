@@ -54,20 +54,6 @@ public partial class SuperSetControl : ContentView
         CurrentItem = newValue.First();
     }
 
-    private void AddWeightAndRepsItem_Clicked(object sender, EventArgs e)
-    {
-        var item = CurrentItem;
-        if (item.WeightAndRepsItems.Count == 0)
-        {
-            item.WeightAndRepsItems.Add(new WeightAndRepsViewModel(0, 15));
-        }
-        else
-        {
-            var last = item.WeightAndRepsItems.Last();
-            item.WeightAndRepsItems.Add(new WeightAndRepsViewModel(last.Weight, last.Repetitions));
-        }
-    }
-
     private void DeleteRequestWeightAndReps(WeightAndRepsViewModel sender)
     {
         var item = CurrentItem;

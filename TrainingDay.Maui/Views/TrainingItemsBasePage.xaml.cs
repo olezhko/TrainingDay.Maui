@@ -48,48 +48,50 @@ public partial class TrainingItemsBasePage : ContentPage
             Settings.IsTrainingNotFinished = false;
 
             var trainingSerialize = TrainingSerialize.LoadFromFile(filename);
-
-            var result = await MessageManager.DisplayAlert(AppResources.ContinueLastTrainingQuestion, trainingSerialize.Title, AppResources.YesString, AppResources.NoString);
-            if (result)
+            if (trainingSerialize != null)
             {
-                TrainingViewModel training = new TrainingViewModel();
-                training.Title = trainingSerialize.Title;
-                training.Id = trainingSerialize.Id;
-                foreach (var trainingExerciseSerialize in trainingSerialize.Items)
+                var result = await MessageManager.DisplayAlert(AppResources.ContinueLastTrainingQuestion, trainingSerialize.Title, AppResources.YesString, AppResources.NoString);
+                if (result)
                 {
-                    try
+                    TrainingViewModel training = new TrainingViewModel();
+                    training.Title = trainingSerialize.Title;
+                    training.Id = trainingSerialize.Id;
+                    foreach (var trainingExerciseSerialize in trainingSerialize.Items)
                     {
-                        var item = new TrainingExerciseViewModel()
+                        try
                         {
-                            TrainingExerciseId = trainingExerciseSerialize.TrainingExerciseId,
-                            ExerciseId = trainingExerciseSerialize.ExerciseId,
-                            TrainingId = trainingExerciseSerialize.TrainingId,
-                            IsNotFinished = trainingExerciseSerialize.IsNotFinished,
-                            Muscles = new ObservableCollection<MuscleViewModel>(MusclesConverter.ConvertFromStringToList(trainingExerciseSerialize.Muscles)),
-                            OrderNumber = trainingExerciseSerialize.OrderNumber,
-                            ExerciseItemName = trainingExerciseSerialize.ExerciseItemName,
-                            SuperSetId = trainingExerciseSerialize.SuperSetId,
-                            SuperSetNum = trainingExerciseSerialize.SuperSetNum,
-                            Tags = ExerciseTools.ConvertFromIntToTagList(trainingExerciseSerialize.TagsValue),
-                            Description = DescriptionViewModel.ConvertFromJson(trainingExerciseSerialize.Description),
-                            CodeNum = trainingExerciseSerialize.CodeNum,
-                        };
+                            var item = new TrainingExerciseViewModel()
+                            {
+                                TrainingExerciseId = trainingExerciseSerialize.TrainingExerciseId,
+                                ExerciseId = trainingExerciseSerialize.ExerciseId,
+                                TrainingId = trainingExerciseSerialize.TrainingId,
+                                IsNotFinished = trainingExerciseSerialize.IsNotFinished,
+                                Muscles = new ObservableCollection<MuscleViewModel>(MusclesConverter.ConvertFromStringToList(trainingExerciseSerialize.Muscles)),
+                                OrderNumber = trainingExerciseSerialize.OrderNumber,
+                                ExerciseItemName = trainingExerciseSerialize.ExerciseItemName,
+                                SuperSetId = trainingExerciseSerialize.SuperSetId,
+                                SuperSetNum = trainingExerciseSerialize.SuperSetNum,
+                                Tags = ExerciseTools.ConvertFromIntToTagList(trainingExerciseSerialize.TagsValue),
+                                Description = DescriptionViewModel.ConvertFromJson(trainingExerciseSerialize.Description),
+                                CodeNum = trainingExerciseSerialize.CodeNum,
+                            };
 
-                        ExerciseManager.ConvertJsonBack(item, trainingExerciseSerialize.WeightAndRepsString);
-                        training.AddExercise(item);
+                            ExerciseManager.ConvertJsonBack(item, trainingExerciseSerialize.WeightAndRepsString);
+                            training.AddExercise(item);
+                        }
+                        catch (Exception e)
+                        {
+                            Crashes.TrackError(e);
+                        }
                     }
-                    catch (Exception e)
+
+                    await Navigation.PushAsync(new TrainingImplementPage()
                     {
-                        Crashes.TrackError(e);
-                    }
+                        TrainingItem = training,
+                        Title = training.Title,
+                        StartTime = TimeSpan.Parse(Settings.IsTrainingNotFinishedTime),
+                    });
                 }
-
-                await Navigation.PushAsync(new TrainingImplementPage()
-                {
-                    TrainingItem = training,
-                    Title = training.Title,
-                    StartTime = TimeSpan.Parse(Settings.IsTrainingNotFinishedTime),
-                });
             }
         }
     }

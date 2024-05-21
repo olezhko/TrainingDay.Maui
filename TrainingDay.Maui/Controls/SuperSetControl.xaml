@@ -7,7 +7,7 @@
             xmlns:data="clr-namespace:TrainingDay.Common;assembly=TrainingDay.Common"
              x:Class="TrainingDay.Maui.Controls.SuperSetControl"
              x:Name="Self">
-    <Grid x:Name="mainGrid" RowDefinitions="auto,*">
+    <Grid x:Name="mainGrid" RowDefinitions="auto,*" RowSpacing="5">
         <CollectionView ItemsSource="{Binding Source={x:Reference Self}, Path=SuperSetItems}" Margin="5,0" SelectionMode="Single"
                         SelectedItem="{Binding Source={x:Reference Self}, Path=CurrentItem,Mode=TwoWay}">
             <CollectionView.ItemTemplate>
@@ -21,7 +21,7 @@
                             <controls:ImageCache x:Name="ImageControl" HeightRequest="60" CodeNum="{Binding CodeNum}" WidthRequest="60"/>
                         </Frame>
 
-                        <Label Grid.Column="1" Text="{Binding ExerciseItemName}" VerticalOptions="Center" HorizontalOptions="Start"/>
+                        <Label Grid.Column="1" Text="{Binding ExerciseItemName}" VerticalOptions="Center" HorizontalOptions="Start" FontSize="20"/>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
@@ -30,58 +30,79 @@
         <ScrollView Grid.Row="1" Orientation="Vertical">
             <VerticalStackLayout BindingContext="{Binding Source={x:Reference Self}, Path=CurrentItem}" Spacing="5">
                 <StackLayout Spacing="0">
-                    <StackLayout Padding="0" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByReps}}"
-                 Orientation="Vertical">
-                        <StackLayout Orientation="Horizontal" VerticalOptions="Start" Spacing="10">
-                            <Label FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Start" Text="{x:Static resx:AppResources.RepsString}" VerticalTextAlignment="Center" />
-
-                            <ImageButton WidthRequest="40" HeightRequest="40" Padding="0" Source="add" Clicked="AddWeightAndRepsItem_Clicked" BackgroundColor="Transparent">
-                                <ImageButton.Behaviors>
-                                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Gray, Dark=White}" />
-                                </ImageButton.Behaviors>
-                            </ImageButton>
-                        </StackLayout>
-
-                        <FlexLayout x:Name="RepsItemsFlexLayout" AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}"
-                Direction="Row" JustifyContent="Start" VerticalOptions="Start" Wrap="Wrap">
-                            <BindableLayout.ItemTemplate>
+                    <Frame CornerRadius="20" Padding="10" HorizontalOptions="Center" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByReps}}"
+                           BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}">
+                        <CollectionView HorizontalOptions="Center" ItemsSource="{Binding WeightAndRepsItems}" >
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5"/>
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <controls:RepsAndWeightControl Margin="0" IsOnlyReps="True" Padding="0"
-                            DeleteRequestCommand="{Binding Source={x:Reference Self}, Path=DeleteRequestCommand}"
-                            HorizontalOptions="Start" VerticalOptions="Start" Value="{Binding}" 
-                            WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type FlexLayout}}, Path=Width, Converter={StaticResource HalfValueConverter}, ConverterParameter=2}"/>
+                                    <Grid RowDefinitions="auto,*" RowSpacing="2">
+                                        <Frame BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
+                                        <Entry Margin="0" FontSize="Medium" Keyboard="Numeric" MaxLength="3" Text="{Binding Repetitions, Mode=TwoWay}" MinimumWidthRequest="50" HorizontalTextAlignment="Center" />
+                                        <ImageButton Grid.Row="1" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" HorizontalOptions="Center" CornerRadius="17"
+                                            IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}" Source="save" VerticalOptions="Fill" WidthRequest="35">
+                                            <ImageButton.Behaviors>
+                                                <toolkit:IconTintColorBehavior TintColor="White" />
+                                            </ImageButton.Behaviors>
+                                            <ImageButton.Style>
+                                                <Style TargetType="ImageButton">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsFinished}" TargetType="ImageButton" Value="True">
+                                                            <Setter Property="BackgroundColor" Value="Green" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsFinished}" TargetType="ImageButton" Value="False">
+                                                            <Setter Property="BackgroundColor" Value="Transparent" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ImageButton.Style>
+                                        </ImageButton>
+                                    </Grid>
                                 </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </FlexLayout>
-                    </StackLayout>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </Frame>
 
-                    <StackLayout Padding="0" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByRepsAndWeight}}"
-    Orientation="Vertical">
-                        <StackLayout Orientation="Horizontal" VerticalOptions="Start" Spacing="10">
-                            <Label FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Start" Text="{x:Static resx:AppResources.RepsAndWeightString}" VerticalTextAlignment="Center" />
-                            <ImageButton WidthRequest="40" HeightRequest="40" Padding="0" Source="add" Clicked="AddWeightAndRepsItem_Clicked" BackgroundColor="Transparent">
-                                <ImageButton.Behaviors>
-                                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Gray, Dark=White}" />
-                                </ImageButton.Behaviors>
-                            </ImageButton>
-                        </StackLayout>
-
-                        <FlexLayout x:Name="WeightAndRepsItemsFlexLayout" AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}"
-                Direction="Row" JustifyContent="Start" VerticalOptions="Start" Wrap="Wrap">
-                            <BindableLayout.ItemTemplate>
+                    <Frame CornerRadius="20" Padding="10" HorizontalOptions="Center" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByRepsAndWeight}}"
+                           BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}">
+                        <CollectionView HorizontalOptions="Center" ItemsSource="{Binding WeightAndRepsItems}">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5"/>
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <controls:RepsAndWeightControl Margin="0"
-                        Padding="0"
-                        DeleteRequestCommand="{Binding Source={x:Reference Self}, Path=DeleteRequestCommand}"
-                        HorizontalOptions="Start"
-                        VerticalOptions="Start"
-                        WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type FlexLayout}}, Path=Width, Converter={StaticResource HalfValueConverter}, ConverterParameter=2}"
-                        Value="{Binding}" />
+                                    <Grid RowDefinitions="auto,*, auto" RowSpacing="2">
+                                        <Frame BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
+                                        <Frame Grid.Row="2" BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
+                                        <Entry Margin="0" FontSize="Medium" Keyboard="Numeric" MaxLength="3" Text="{Binding Repetitions, Mode=TwoWay}" HorizontalTextAlignment="Center" MinimumWidthRequest="50"/>
+                                        <ImageButton Grid.Row="1" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" HorizontalOptions="Center" CornerRadius="17"
+                                            IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}" Source="save" VerticalOptions="Fill" WidthRequest="35">
+                                            <ImageButton.Behaviors>
+                                                <toolkit:IconTintColorBehavior TintColor="White" />
+                                            </ImageButton.Behaviors>
+                                            <ImageButton.Style>
+                                                <Style TargetType="ImageButton">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsFinished}" TargetType="ImageButton" Value="True">
+                                                            <Setter Property="BackgroundColor" Value="Green" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsFinished}" TargetType="ImageButton" Value="False">
+                                                            <Setter Property="BackgroundColor" Value="Transparent" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ImageButton.Style>
+                                        </ImageButton>
+                                        <Entry Grid.Row="2" Margin="0" FontSize="Medium" IsVisible="{Binding Source={x:Reference Self}, Path=IsOnlyReps, Converter={StaticResource InverseBooleanConverter}}"
+                                        MaxLength="4" Text="{Binding WeightString, Mode=TwoWay}" MinimumWidthRequest="50" HorizontalTextAlignment="Center" />
+                                    </Grid>
                                 </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </FlexLayout>
-                    </StackLayout>
-
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </Frame>
+                    
                     <StackLayout Margin="0" Padding="0" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}"
              Orientation="Horizontal" Spacing="0">
                         <Label Margin="0" FontAttributes="Bold" FontSize="Medium" HorizontalOptions="StartAndExpand" Text="{x:Static resx:AppResources.TimeString}" VerticalOptions="Center" />
@@ -202,31 +223,23 @@
                     </StackLayout>
                 </StackLayout>
 
-                <VerticalStackLayout>
-                    <Grid ColumnDefinitions="*,*">
-                        <Label x:Name="DesctiptionLabel" Padding="10" Grid.ColumnSpan="2" BackgroundColor="Green" Text="{x:Static resx:AppResources.ShortDescriptionString1}"
-               HorizontalTextAlignment="Center"/>
+                <StackLayout x:Name="DescriptionGrid" Margin="0">
+                    <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.StartPosition}" TextColor="DodgerBlue" VerticalTextAlignment="Center" 
+IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
+                    <Label FontSize="Small" Text="{Binding Description.StartPosition}" 
+IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
 
-                    </Grid>
+                    <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Execution}" TextColor="LimeGreen" VerticalTextAlignment="Center" 
+IsVisible="{Binding Description.Execution, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
+                    <Label FontSize="Small" Text="{Binding Description.Execution}" 
+IsVisible="{Binding Description.Execution, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
 
-                    <StackLayout x:Name="DescriptionGrid" Margin="5">
-                        <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.StartPosition}" TextColor="DodgerBlue" VerticalTextAlignment="Center" 
-           IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
-                        <Label FontSize="Small" Text="{Binding Description.StartPosition}" 
-           IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
+                    <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Advice}" TextColor="Orange" VerticalTextAlignment="Center" 
+IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
 
-                        <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Execution}" TextColor="LimeGreen" VerticalTextAlignment="Center" 
-           IsVisible="{Binding Description.Execution, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
-                        <Label FontSize="Small" Text="{Binding Description.Execution}" 
-           IsVisible="{Binding Description.Execution, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
-
-                        <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Advice}" TextColor="Orange" VerticalTextAlignment="Center" 
-           IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
-
-                        <Label FontSize="Small" Text="{Binding Description.Advice}" 
-           IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
-                    </StackLayout>
-                </VerticalStackLayout>
+                    <Label FontSize="Small" Text="{Binding Description.Advice}" 
+IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
+                </StackLayout>
             </VerticalStackLayout>
 
         </ScrollView>
