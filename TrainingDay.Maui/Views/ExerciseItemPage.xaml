@@ -33,15 +33,14 @@
         <ScrollView>
             <Grid x:Name="ContentGrid" RowDefinitions="auto,auto,auto,auto,auto" RowSpacing="10">
 
-                <Entry
-            x:Name="NameEditor"
-            Grid.Row="0"
-            FontSize="22"
-            IsReadOnly="{Binding IsBase}"
-            IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"
-            Keyboard="Text"
-            Placeholder="{x:Static resx:AppResources.NameString}"
-            Text="{Binding ExerciseItemName}" />
+                <Frame Grid.Row="0" Style="{StaticResource MaterialFrame}">
+                    <Grid>
+                        <Label Text="{x:Static resx:AppResources.NameString}" Style="{StaticResource MaterialLabel}"/>
+                        <Entry x:Name="NameEditor" FontSize="22" IsReadOnly="{Binding IsBase}" IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"
+                            Keyboard="Text" Text="{Binding ExerciseItemName}" />
+                    </Grid>
+                </Frame>
+
                 <Label
             x:Name="NameLabel"
             Grid.Row="0"
@@ -80,21 +79,25 @@
 
                 <StackLayout Grid.Row="3" IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}">
                     <RadioButton x:Name="ExerciseByRepsCheckBox" GroupName="ExerciseType" BackgroundColor="Transparent"
-                             IsChecked="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByReps}, Mode=OneWay}"
-                             IsEnabled="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"/>
+                             IsChecked="{Binding Tags,Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByReps}, Mode=OneWay}"
+                             IsEnabled="{Binding IsBase,Converter={StaticResource InverseBooleanConverter}}"/>
                     <RadioButton x:Name="ExerciseByRepsAndWeightCheckBox" GroupName="ExerciseType" BackgroundColor="Transparent"
-                             IsChecked="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByRepsAndWeight}, Mode=OneWay}"
-                             IsEnabled="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"/>
+                             IsChecked="{Binding Tags,Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByRepsAndWeight}, Mode=OneWay}"
+                             IsEnabled="{Binding IsBase,Converter={StaticResource InverseBooleanConverter}}"/>
                     <RadioButton x:Name="ExerciseByTimeCheckBox" GroupName="ExerciseType" BackgroundColor="Transparent"
-                             IsChecked="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}, Mode=OneWay}"
-                             IsEnabled="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"/>
+                             IsChecked="{Binding Tags,Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}, Mode=OneWay}"
+                             IsEnabled="{Binding IsBase,Converter={StaticResource InverseBooleanConverter}}"/>
                     <RadioButton x:Name="ExerciseByDistanceCheckBox" GroupName="ExerciseType" BackgroundColor="Transparent"
-                             IsChecked="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByDistance}, Mode=OneWay}"
-                             IsEnabled="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"/>
+                             IsChecked="{Binding Tags,Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByDistance}, Mode=OneWay}"
+                             IsEnabled="{Binding IsBase,Converter={StaticResource InverseBooleanConverter}}"/>
                 </StackLayout>
 
                 <Grid Grid.Row="4" RowDefinitions="auto,auto,auto" RowSpacing="5">
 
+                    
+                    
+                    
+                    
                     <Editor
                 x:Name="StartingDescEditor"
                 Grid.Row="0"

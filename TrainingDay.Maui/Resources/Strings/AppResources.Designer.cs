@@ -853,7 +853,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name:.
+        ///   Looks up a localized string similar to Name.
         /// </summary>
         internal static string NameString {
             get {

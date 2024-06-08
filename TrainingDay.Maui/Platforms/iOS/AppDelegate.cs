@@ -7,9 +7,13 @@ namespace TrainingDay.Maui
     {
         protected override MauiApp CreateMauiApp() 
         {
-            //SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlite3());
+            var app = MauiProgram.CreateMauiApp();
+            
+            SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlite3());
             Google.MobileAds.MobileAds.SharedInstance.Start(completionHandler: null);
-            return MauiProgram.CreateMauiApp();
+            ObjCRuntime.Class.ThrowOnInitFailure = false;
+
+            return app;
         } 
     }
 }

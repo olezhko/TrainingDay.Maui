@@ -20,10 +20,10 @@ public partial class ExerciseItemPage : ContentPage
     {
         InitializeComponent();
         FillMuscleLookup();
-        ExerciseByRepsCheckBox.Content = $"{LanguageResource.ExerciseForTypeString} {LanguageResource.RepsString}";
-        ExerciseByDistanceCheckBox.Content = $"{LanguageResource.ExerciseForTypeString} {LanguageResource.DistanceString}";
-        ExerciseByRepsAndWeightCheckBox.Content = $"{LanguageResource.ExerciseForTypeString} {LanguageResource.RepsAndWeightString}";
-        ExerciseByTimeCheckBox.Content = $"{LanguageResource.ExerciseForTypeString} {LanguageResource.TimeString}";
+        ExerciseByRepsCheckBox.Content = $"{LanguageResource.ExerciseForTypeString}{LanguageResource.RepsString}";
+        ExerciseByDistanceCheckBox.Content = $"{LanguageResource.ExerciseForTypeString}{LanguageResource.DistanceString}";
+        ExerciseByRepsAndWeightCheckBox.Content = $"{LanguageResource.ExerciseForTypeString}{LanguageResource.RepsAndWeightString}";
+        ExerciseByTimeCheckBox.Content = $"{LanguageResource.ExerciseForTypeString}{LanguageResource.TimeString}";
     }
 
     protected override void OnAppearing()

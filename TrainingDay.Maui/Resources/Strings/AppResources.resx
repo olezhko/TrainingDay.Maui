@@ -382,7 +382,7 @@
     <value>Name: {0}</value>
   </data>
   <data name="NameString" xml:space="preserve">
-    <value>Name:</value>
+    <value>Name</value>
   </data>
   <data name="NewsString" xml:space="preserve">
     <value>News</value>

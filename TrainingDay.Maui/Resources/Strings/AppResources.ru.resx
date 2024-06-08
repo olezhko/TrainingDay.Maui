@@ -394,7 +394,7 @@
     <value>Название: {0}</value>
   </data>
   <data name="NameString" xml:space="preserve">
-    <value>Название:</value>
+    <value>Название</value>
   </data>
   <data name="NewsString" xml:space="preserve">
     <value>Новости</value>
