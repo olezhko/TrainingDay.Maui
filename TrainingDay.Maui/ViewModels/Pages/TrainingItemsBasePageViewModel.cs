@@ -286,6 +286,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
             return;
         }
 
+        // save to DB
         var gr = groups.First(a => a.Name == group.Key);
         gr.IsExpanded = group.Expanded;
         App.Database.SaveTrainingGroup(gr);

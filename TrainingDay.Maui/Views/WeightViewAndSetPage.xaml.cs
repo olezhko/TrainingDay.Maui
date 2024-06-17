@@ -1,3 +1,4 @@
+using Microcharts;
 using System.Text;
 using TrainingDay.Common;
 using TrainingDay.Maui.Resources.Strings;

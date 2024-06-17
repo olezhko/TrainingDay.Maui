@@ -46,12 +46,12 @@
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate>
                     <StackLayout VerticalOptions="Fill" Padding="5" Orientation="Horizontal" Margin="0" BackgroundColor="LightGray">
-                        <!--<StackLayout.GestureRecognizers>
+                        <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={x:Reference Page}, Path=BindingContext.ToggleExpandGroupCommand}" NumberOfTapsRequired="1" CommandParameter="{Binding .}"/>
-                        </StackLayout.GestureRecognizers>-->
+                        </StackLayout.GestureRecognizers>
                         <Label Text="{Binding Key}" TextColor="Black" VerticalOptions="Center" FontSize="Medium" HorizontalTextAlignment="Center"/>
 
-                        <!--<Label TextColor="Black" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" FontSize="Medium" Margin="0,0,10,0">
+                        <Label TextColor="Black" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" FontSize="Medium" Margin="0,0,10,0">
                             <Label.Style>
                                 <Style TargetType="Label">
                                     <Style.Triggers>
@@ -64,7 +64,7 @@
                                     </Style.Triggers>
                                 </Style>
                             </Label.Style>
-                        </Label>-->
+                        </Label>
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.GroupHeaderTemplate>

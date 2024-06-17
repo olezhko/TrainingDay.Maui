@@ -51,7 +51,7 @@
                             <Frame Grid.Column="0" Style="{StaticResource MaterialFrame}">
                                 <Grid>
                                     <Label Text="{x:Static resx:AppResources.CurrentString}" Style="{StaticResource MaterialLabel}"/>
-                                    <Entry Text="{Binding CurrentValueString, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="17" VerticalOptions="Center" Keyboard="Numeric"
+                                    <Entry Text="{Binding CurrentValueString, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="17" VerticalOptions="End" Keyboard="Numeric"
                                            HorizontalTextAlignment="Start"/>
                                 </Grid>
                             </Frame>
@@ -59,7 +59,7 @@
                             <Frame Grid.Column="1" Style="{StaticResource MaterialFrame}">
                                 <Grid>
                                     <Label Text="{x:Static resx:AppResources.GoalString}" Style="{StaticResource MaterialLabel}" />
-                                    <Entry Text="{Binding GoalValueString, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="17" VerticalOptions="Center" Keyboard="Numeric"
+                                    <Entry Text="{Binding GoalValueString, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="17" VerticalOptions="End" Keyboard="Numeric"
                                            HorizontalTextAlignment="Start"/>
                                 </Grid>
                             </Frame>

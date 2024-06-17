@@ -42,7 +42,7 @@
         <Frame Style="{StaticResource MaterialFrame}">
             <Grid>
                 <Label Text="{x:Static resx:AppResources.NameString}" Style="{StaticResource MaterialLabel}"/>
-                <Entry Text="{Binding Training.Title, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="22" VerticalOptions="Center"/>
+                <Entry Text="{Binding Training.Title, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="22" VerticalOptions="End"/>
             </Grid>
         </Frame>
 

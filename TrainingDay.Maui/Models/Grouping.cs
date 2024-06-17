@@ -18,7 +18,7 @@ public class Grouping<K, T> : ObservableCollection<T>
             {
                 foreach (var item in itemsMain)
                 {
-                    this.Add(item);
+                    Add(item);
                 }
                 itemsMain.Clear();
             }
@@ -28,7 +28,11 @@ public class Grouping<K, T> : ObservableCollection<T>
                 {
                     itemsMain.Add(item);
                 }
-                this.Clear();
+
+                foreach (var item in itemsMain)
+                {
+                    RemoveAt(0);
+                }
             }
 
             OnPropertyChanged(new PropertyChangedEventArgs("Expanded"));

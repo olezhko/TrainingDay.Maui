@@ -67,6 +67,7 @@ namespace Microcharts.Maui
         {
             if (this.chart != null)
             {
+                e.Surface.Canvas.Clear(SKColors.Transparent);
                 this.chart.Draw(e.Surface.Canvas, e.Info.Width, e.Info.Height);
             }
             else
