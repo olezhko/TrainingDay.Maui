@@ -60,6 +60,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
 
         foreach (var tempGroup in tempGroups)
         {
+            tempGroup.Expanded = tempGroup.Expanded;
             ItemsGrouped.Add(tempGroup);
         }
     }
