@@ -2,8 +2,8 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net8.0-android;net8.0-ios</TargetFrameworks>
-    <UseMaui>True</UseMaui>
-    <MauiVersion>8.0.14</MauiVersion>
+		<UseMaui>True</UseMaui>
+		<MauiVersion>8.0.14</MauiVersion>
 		<OutputType>Exe</OutputType>
 		<RootNamespace>TrainingDay.Maui</RootNamespace>
 		<UseMaui>true</UseMaui>
@@ -23,9 +23,9 @@
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
-    <Company>LATec</Company>
-    <Product>TrainingDay</Product>
-    <PackageId>TrainingDay</PackageId>
+		<Company>LATec</Company>
+		<Product>TrainingDay</Product>
+		<PackageId>TrainingDay</PackageId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
@@ -36,6 +36,7 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
 	  <ApplicationVersion>267</ApplicationVersion>
 	  <ApplicationDisplayVersion>1.2.0.19</ApplicationDisplayVersion>
+	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
@@ -44,18 +45,14 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
-	  <ApplicationVersion>267</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.2.0.19</ApplicationDisplayVersion>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
-	  <CodesignKey>Apple Development: Created via API (9GK3U38622)</CodesignKey>
-	  <CodesignProvision>VS: com.OLASoft.TrainingDay Development</CodesignProvision>
+	  <ApplicationVersion>1.2.0.19</ApplicationVersion>
+	  <ApplicationDisplayVersion>267</ApplicationDisplayVersion>
+	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" />
+		<MauiIcon Include="Resources\AppIcon\appicon.png" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Images\main.png" Color="#000000" BaseSize="256,256" />
@@ -105,31 +102,24 @@
 	  <EmbeddedResource Include="Resources\Images\prepared\wide_shoulders.png" />
 	</ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
+	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
 	  <GoogleServicesJson Include="Platforms\Android\google-services.json" />
-	  <PackageReference Include="Xamarin.Firebase.Iid">
-	    <Version>121.1.0.14</Version>
+	  <PackageReference Include="Xamarin.Firebase.Iid" Version="121.1.0.14">
 	  </PackageReference>
-	  <PackageReference Include="Xamarin.Firebase.Messaging">
-	    <Version>123.4.1</Version>
+	  <PackageReference Include="Xamarin.Firebase.Messaging" Version="123.4.1">
 	  </PackageReference>
-	  <PackageReference Include="Xamarin.GooglePlayServices.Base">
-	    <Version>118.3.0</Version>
+	  <PackageReference Include="Xamarin.GooglePlayServices.Base" Version="118.3.0">
 	  </PackageReference>
-    <PackageReference Include="sqlite-net-pcl">
-      <Version>1.5.231</Version>
-    </PackageReference>
+      <PackageReference Include="sqlite-net-pcl" Version="1.5.231">
+      </PackageReference>
 	</ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-ios'">
-    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3">
-      <Version>2.1.2</Version>
+    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.2">
     </PackageReference>
-    <PackageReference Include="SQLitePCLRaw.bundle_green">
-      <Version>2.1.2</Version>
+    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.2">
     </PackageReference>
-    <PackageReference Include="sqlite-net-pcl">
-      <Version>1.9.172</Version>
+    <PackageReference Include="sqlite-net-pcl" Version="1.9.172">
     </PackageReference>
   </ItemGroup>
   
