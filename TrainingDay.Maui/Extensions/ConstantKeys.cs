@@ -17,4 +17,12 @@ public class ConstantKeys
     public const string FinishWorkoutiOSAds = "ca-app-pub-8728883017081055/1550276858";
 
     public const string NotFinishedTrainingName = "NotFinished.trday";
+
+    public class AwsS3
+    {
+        internal static string accessKey = "";
+        internal static string secretKey = "";
+
+        public static string BucketName = "trainingday-exercise-images";
+    }
 }

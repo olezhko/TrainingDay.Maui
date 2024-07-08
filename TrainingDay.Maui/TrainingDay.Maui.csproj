@@ -29,24 +29,24 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
-	  <ApplicationVersion>267</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.2.0.19</ApplicationDisplayVersion>
+	  <ApplicationVersion>268</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.2.0.20</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-	  <ApplicationVersion>267</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.2.0.19</ApplicationDisplayVersion>
+	  <ApplicationVersion>268</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.2.0.20</ApplicationDisplayVersion>
 	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
-	  <ApplicationVersion>267</ApplicationVersion>
-	  <ApplicationDisplayVersion>1.2.0.19</ApplicationDisplayVersion>
+	  <ApplicationVersion>268</ApplicationVersion>
+	  <ApplicationDisplayVersion>1.2.0.20</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
-	  <ApplicationVersion>1.2.0.19</ApplicationVersion>
-	  <ApplicationDisplayVersion>267</ApplicationDisplayVersion>
+	  <ApplicationVersion>1.2.0.20</ApplicationVersion>
+	  <ApplicationDisplayVersion>268</ApplicationDisplayVersion>
 	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
 
@@ -84,6 +84,7 @@
 	  <None Remove="Resources\Images\prepared\shoulders.png" />
 	  <None Remove="Resources\Images\prepared\up.png" />
 	  <None Remove="Resources\Images\prepared\wide_shoulders.png" />
+	  <None Remove="Platforms\iOS\GoogleService-Info.plist" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -251,4 +252,7 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <BundleResource Include="Platforms\iOS\GoogleService-Info.plist" />
+	</ItemGroup>
 </Project>

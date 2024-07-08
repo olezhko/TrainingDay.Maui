@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using Microsoft.Maui.Controls;
 
 namespace TrainingDay.Maui.Controls;
 
@@ -16,7 +17,7 @@ public enum ToolTipPosition
 
 public partial class ToolTipControl : ContentView
 {
-    private ContentView innerView;
+    private View innerView;
 
     public ToolTipControl()
     {
@@ -79,7 +80,7 @@ public partial class ToolTipControl : ContentView
         NeverShow = true;
     }
 
-    private void CalculatePosition(ContentView control)
+    private void CalculatePosition(View control)
     {
         if (control == null || Width == -1 || Height == -1)
         {
@@ -123,7 +124,7 @@ public partial class ToolTipControl : ContentView
         }
     }
 
-    private static void LinkToLinksPreviewControl(ToolTipControl control, ContentView view)
+    private static void LinkToLinksPreviewControl(ToolTipControl control, View view)
     {
         if (view == null)
             return;
@@ -223,7 +224,7 @@ public partial class ToolTipControl : ContentView
     }
 
     [TypeConverter(typeof(ReferenceTypeConverter))]
-    public ContentView AttachedControl
+    public View AttachedControl
     {
         get => innerView;
         set => LinkToLinksPreviewControl(this, value);

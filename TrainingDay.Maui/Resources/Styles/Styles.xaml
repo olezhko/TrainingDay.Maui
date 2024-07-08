@@ -235,6 +235,9 @@
         <Setter Property="HorizontalOptions" Value="Start"/>
         <Setter Property="VerticalOptions" Value="Center"/>
         <Setter Property="Margin" Value="5,0"/>
+
+        <Setter Property="ZIndex" Value="2"/>
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
         <Setter Property="controls:MaterialLabelAttached.IsMaterialBehavior" Value="True"/>
     </Style>
 

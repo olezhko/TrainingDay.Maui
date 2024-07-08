@@ -7,7 +7,6 @@ using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Models.Serialize;
 using TrainingDay.Maui.ViewModels;
 using TrainingDay.Maui.Extensions;
-using Amazon.Runtime.Internal.Endpoints.StandardLibrary;
 
 namespace TrainingDay.Maui.Views;
 

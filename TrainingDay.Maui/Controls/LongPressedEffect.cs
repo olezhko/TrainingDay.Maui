@@ -1,5 +1,6 @@
 ﻿using Microsoft.Maui.Controls.Platform;
 using System.Windows.Input;
+using UIKit;
 
 namespace TrainingDay.Maui.Controls;
 
@@ -44,12 +45,20 @@ public class LongPressedEffect : RoutingEffect
 
 public class LongPressedPlatformEffect : PlatformEffect
 {
+#if __IOS__
+    private readonly UILongPressGestureRecognizer _longPressRecognizer;
+    private readonly UITapGestureRecognizer gestureRecognizer;
+#endif
     private bool _attached;
 
     public static void Initialize() { }
 
     public LongPressedPlatformEffect()
     {
+#if __IOS__
+        _longPressRecognizer = new UILongPressGestureRecognizer(HandleLongClick);
+        gestureRecognizer = new UITapGestureRecognizer(HandleTapClick);
+#endif
     }
 
     protected override void OnAttached()
@@ -71,6 +80,11 @@ public class LongPressedPlatformEffect : PlatformEffect
                 Container.Click += Control_Click;
             }
 #endif
+
+#if __IOS__
+            Container.AddGestureRecognizer(_longPressRecognizer);
+            Container.AddGestureRecognizer(gestureRecognizer);
+#endif
             _attached = true;
         }
     }
@@ -86,6 +100,25 @@ public class LongPressedPlatformEffect : PlatformEffect
     private void Control_LongClick(object sender, Android.Views.View.LongClickEventArgs e)
     {
         Console.WriteLine("Invoking long click command");
+        var command = LongPressedEffect.GetCommand(Element);
+        command?.Execute(LongPressedEffect.GetCommandParameter(Element));
+    }
+#endif
+
+#if __IOS__
+    /// <summary>
+    /// Invoke the command if there is one
+    /// </summary>
+    private void HandleTapClick()
+    {
+        var command = LongPressedEffect.GetClickCommand(Element);
+        command?.Execute(LongPressedEffect.GetCommandParameter(Element));
+    }
+    /// <summary>
+    /// Invoke the command if there is one
+    /// </summary>
+    private void HandleLongClick()
+    {
         var command = LongPressedEffect.GetCommand(Element);
         command?.Execute(LongPressedEffect.GetCommandParameter(Element));
     }
@@ -109,62 +142,13 @@ public class LongPressedPlatformEffect : PlatformEffect
                 Container.Click -= Control_Click;
             }
 #endif
+
+#if __IOS__
+                Container.RemoveGestureRecognizer(_longPressRecognizer);
+                Container.RemoveGestureRecognizer(gestureRecognizer);
+                _attached = false;
+#endif
             _attached = false;
         }
     }
 }
-//#elif __IOS__
-//internal class LongPressedPlatformEffect : PlatformEffect
-//{
-//        private bool _attached;
-//        private readonly UILongPressGestureRecognizer _longPressRecognizer;
-//        private readonly UITapGestureRecognizer gestureRecognizer;
-//        public LongPressedPlatformEffect()
-//        {
-//            _longPressRecognizer = new UILongPressGestureRecognizer(HandleLongClick);
-//            gestureRecognizer = new UITapGestureRecognizer(HandleTapClick);
-//        }
-
-//        /// <summary>
-//        /// Apply the handler
-//        /// </summary>
-//        protected override void OnAttached()
-//        {
-//            //because an effect can be detached immediately after attached (happens in listview), only attach the handler one time
-//            if (!_attached)
-//            {
-//                Container.AddGestureRecognizer(_longPressRecognizer);
-//                Container.AddGestureRecognizer(gestureRecognizer);
-//                _attached = true;
-//            }
-//        }
-//        /// <summary>
-//        /// Invoke the command if there is one
-//        /// </summary>
-//        private void HandleTapClick()
-//        {
-//            var command = LongPressedEffect.GetClickCommand(Element);
-//            command?.Execute(LongPressedEffect.GetCommandParameter(Element));
-//        }
-//        /// <summary>
-//        /// Invoke the command if there is one
-//        /// </summary>
-//        private void HandleLongClick()
-//        {
-//            var command = LongPressedEffect.GetCommand(Element);
-//            command?.Execute(LongPressedEffect.GetCommandParameter(Element));
-//        }
-
-//        /// <summary>
-//        /// Clean the event handler on detach
-//        /// </summary>
-//        protected override void OnDetached()
-//        {
-//            if (_attached)
-//            {
-//                Container.RemoveGestureRecognizer(_longPressRecognizer);
-//                Container.RemoveGestureRecognizer(gestureRecognizer);
-//                _attached = false;
-//            }
-//        }
-//}
