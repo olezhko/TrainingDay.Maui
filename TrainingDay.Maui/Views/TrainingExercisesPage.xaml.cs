@@ -38,18 +38,4 @@ public partial class TrainingExercisesPage : ContentPage
             ItemsListView.ScrollTo(index);
         }
     }
-
-    #region Drag & Drop
-    private void DragGestureRecognizer_DragStarting_Collection(System.Object sender, DragStartingEventArgs e)
-    {
-
-    }
-
-    private void DropGestureRecognizer_Drop_Collection(System.Object sender, DropEventArgs e)
-    {
-        // We handle reordering login in our view model
-        e.Handled = true;
-    }
-
-    #endregion
 }

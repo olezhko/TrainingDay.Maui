@@ -4,6 +4,7 @@ using TrainingDay.Common;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels.Pages;
+using CommunityToolkit.Maui.Core.Platform;
 
 namespace TrainingDay.Maui.Views;
 
@@ -22,6 +23,8 @@ public partial class WeightViewAndSetPage : ContentPage
         PeriodPicker.Items.Add(AppResources.YearString);
         vm = new WeightViewAndSetPageViewModel();
         BindingContext = vm;
+        BodyControlView.ChildAdded += ChilderAdded;
+        vm.PropertyChanged += ViewModelPropertyChanged;
     }
 
     protected override void OnAppearing()
@@ -29,6 +32,25 @@ public partial class WeightViewAndSetPage : ContentPage
         base.OnAppearing();
         PeriodPicker.SelectedIndex = 0;
         vm?.OnAppearing();
+    }
+
+    private void ViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs args)
+    {
+        if (args.PropertyName == nameof(WeightViewAndSetPageViewModel.BodyControlItems))
+        {
+            foreach (var entry in weightEntryList)
+            {
+                entry.HideKeyboardAsync(CancellationToken.None);
+            }
+        }
+    }
+
+    List<Entry> weightEntryList = new List<Entry>();
+    private void ChilderAdded(object sender, ElementEventArgs args)
+    {
+        Grid element = args.Element as Grid;
+        var entries = TrainingDay.Maui.Extensions.UIHelper.FindVisualChildren<Entry>(element);
+        weightEntryList.AddRange(entries);
     }
 
     private async void ShowInfo_Click(object sender, EventArgs e)

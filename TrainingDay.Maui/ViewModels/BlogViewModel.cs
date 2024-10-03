@@ -5,7 +5,6 @@ namespace TrainingDay.Maui.ViewModels;
 public class BlogViewModel : BaseViewModel
 {
     private string title;
-    private string shortText;
     private string text;
     private DateTime dateTime;
 
@@ -17,7 +16,6 @@ public class BlogViewModel : BaseViewModel
     {
         Title = item.Title;
         Text = item.Text;
-        ShortText = item.ShortText;
         DateTime = item.DateTime;
     }
 
@@ -27,16 +25,6 @@ public class BlogViewModel : BaseViewModel
         set
         {
             title = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public string ShortText
-    {
-        get => shortText;
-        set
-        {
-            shortText = value;
             OnPropertyChanged();
         }
     }

@@ -77,6 +77,6 @@
             </CarouselView.ItemTemplate>
         </CarouselView>
         <IndicatorView Grid.Row="2" x:Name="indicatorView" IndicatorSize="{OnPlatform Android='9', iOS='10'}" MaximumVisible="6" HideSingle="True" ItemsSource="{Binding BodyControlItems}" IndicatorColor="DimGray" 
-                       SelectedIndicatorColor="Orange" VerticalOptions="Fill" HorizontalOptions="Center" />
+                       SelectedIndicatorColor="Orange" VerticalOptions="Fill" HorizontalOptions="Center" Margin="0,0,0,5"/>
     </Grid>
 </ContentPage>

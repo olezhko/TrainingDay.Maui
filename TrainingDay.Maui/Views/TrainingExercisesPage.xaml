@@ -7,7 +7,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:admob="clr-namespace:Plugin.AdMob;assembly=Plugin.AdMob"
              x:Class="TrainingDay.Maui.Views.TrainingExercisesPage"
-             x:Name="ContentPage" >
+             x:Name="ContentPage">
     <ContentPage.BindingContext>
         <viewModels:TrainingExercisesPageViewModel/>
     </ContentPage.BindingContext>
@@ -46,11 +46,11 @@
             </Grid>
         </Frame>
 
-        <CollectionView ItemsSource="{Binding Training.Exercises}" Grid.Row="1" x:Name="ItemsListView" SelectionMode="Single" 
+        <CollectionView ItemsSource="{Binding Training.Exercises}" Grid.Row="1" x:Name="ItemsListView" SelectionMode="Single"
                     ItemsUpdatingScrollMode="KeepScrollOffset" VerticalScrollBarVisibility="Never">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid RowDefinitions="auto,*" RowSpacing="0" Margin="0" Padding="0" >
+                    <Grid RowDefinitions="auto,*" RowSpacing="0" Padding="0" >
                         <Frame Grid.Row="0" MinimumHeightRequest="80" x:Name="viewCell" Style="{StaticResource FrameCellStyle}" Margin="5,4,5,5">
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding BindingContext.ItemTappedCommand, Source={x:Reference ItemsListView}}"
@@ -61,11 +61,10 @@
                                     DragLeaveCommandParameter="{Binding}"
                                     DragOverCommand="{Binding BindingContext.ItemDraggedOver, Source={x:Reference ItemsListView}}"
                                     DragOverCommandParameter="{Binding}"
-                                    Drop="DropGestureRecognizer_Drop_Collection"
                                     DropCommand="{Binding BindingContext.ItemDropped, Source={x:Reference ItemsListView}}"
                                     DropCommandParameter="{Binding}" />
                             </Frame.GestureRecognizers>
-                            <Grid Padding="0" Margin="0">
+                            <Grid Padding="0" Margin="5">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="70"/>
                                     <ColumnDefinition Width="*"/>
@@ -78,7 +77,6 @@
                                             <controls:ImageCache.GestureRecognizers>
                                                 <DragGestureRecognizer
                                                 CanDrag="True"
-                                                DragStarting="DragGestureRecognizer_DragStarting_Collection"
                                                 DragStartingCommand="{Binding BindingContext.ItemDragged, Source={x:Reference ItemsListView}}"
                                                 DragStartingCommandParameter="{Binding}" />
                                             </controls:ImageCache.GestureRecognizers>

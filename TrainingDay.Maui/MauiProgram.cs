@@ -40,6 +40,10 @@ namespace TrainingDay.Maui
             builder.Services.AddTransient<IPushNotification, Platforms.Android.PushNotificationService>();
 #endif
 
+#if IOS
+            builder.Services.AddTransient<IPushNotification, Platforms.iOS.PushNotificationService>();
+#endif
+
             Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("NoUnderLine", (handler, entry) =>
             {
 #if ANDROID
@@ -49,7 +53,7 @@ namespace TrainingDay.Maui
 #endif
 
 #if IOS
-                MapFormatting(handler, entry);
+            MapFormatting(handler, entry);
 #endif
 
             });

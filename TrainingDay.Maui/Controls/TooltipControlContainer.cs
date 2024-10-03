@@ -65,12 +65,15 @@ public class TooltipControlContainer : Grid
 
     private void VisibleAllChild(bool isVisible)
     {
-        foreach (var child in Children)
+        foreach (Element child in Children)
         {
-            //if (child.GetType() != typeof(ToolTipControl) && !GetIgnoreVisible(child))
-            //{
-            //    child.Visibility = isVisible ? Visibility.Visible:Visibility.Collapsed;
-            //}
+            if (child is VisualElement visualElement)
+            {
+                if (child.GetType() != typeof(ToolTipControl) && !GetIgnoreVisible(child))
+                {
+                    child.SetValue(VisualElement.IsVisibleProperty, isVisible ? true : false);
+                }
+            }
         }
     }
 

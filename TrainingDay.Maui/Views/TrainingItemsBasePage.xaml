@@ -12,7 +12,7 @@
         <Grid ColumnDefinitions="*,auto, auto, auto" ColumnSpacing="10" Margin="10,0">
             <Label Grid.Column="0" Text="{x:Static resx:AppResources.TrainingsBaseString}" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
 
-            <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="alarm.png" Clicked="ShowAlarms_Click">
+            <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="alarm.png" Clicked="ShowAlarms_Click" IsVisible="Hidden">
                 <ImageButton.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>

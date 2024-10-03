@@ -8,5 +8,4 @@ public class LastTrainingExercise : TrainingDay.Common.LastTrainingExercise, ISe
     public new int Id { get; set; }
 
     public int ServerId { get; set; }
-    public int CodeNum { get; internal set; }
 }

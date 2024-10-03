@@ -1,5 +1,8 @@
+using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
+using Microsoft.Maui.Controls;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.ViewModels;
 using static TrainingDay.Maui.Controls.ExerciseView;
@@ -8,7 +11,11 @@ namespace TrainingDay.Maui.Controls;
 
 public partial class SuperSetControl : ContentView
 {
+    private Picker dataPicker;
+    private PickerMode mode;
+
     public ICommand DeleteRequestCommand => new Command<WeightAndRepsViewModel>(DeleteRequestWeightAndReps);
+
     public SuperSetControl()
 	{
 		InitializeComponent();
@@ -23,6 +30,7 @@ public partial class SuperSetControl : ContentView
 
     public static readonly BindableProperty SuperSetItemsProperty =
         BindableProperty.Create("SuperSetItems", typeof(ObservableCollection<TrainingExerciseViewModel>), typeof(SuperSetControl), null, propertyChanged: SourcePropertyChanged);
+
     public ObservableCollection<TrainingExerciseViewModel> SuperSetItems
     {
         get { return (ObservableCollection<TrainingExerciseViewModel>)GetValue(SuperSetItemsProperty); }
@@ -31,6 +39,7 @@ public partial class SuperSetControl : ContentView
 
     public static readonly BindableProperty CurrentItemProperty =
         BindableProperty.Create("CurrentItem", typeof(TrainingExerciseViewModel), typeof(SuperSetControl), null);
+
     public TrainingExerciseViewModel CurrentItem
     {
         get { return (TrainingExerciseViewModel)GetValue(CurrentItemProperty); }
@@ -46,7 +55,8 @@ public partial class SuperSetControl : ContentView
     private static void SourcePropertyChanged(BindableObject bindable, object oldValue, object newValue)
     {
         var control = bindable as SuperSetControl;
-        control.SourceChanged((ObservableCollection<TrainingExerciseViewModel>)newValue);
+        var items = (ObservableCollection<TrainingExerciseViewModel>)newValue;
+        control.SourceChanged(items);
     }
 
     private void SourceChanged(ObservableCollection<TrainingExerciseViewModel> newValue)
@@ -73,9 +83,6 @@ public partial class SuperSetControl : ContentView
         item.IsTimeCalculating = true;
     }
 
-
-    private Picker dataPicker;
-    private PickerMode mode;
     private void DataPickerOnSelectedIndexChanged(object sender, EventArgs e)
     {
         if (!dataPicker.IsVisible)

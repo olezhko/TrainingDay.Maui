@@ -38,11 +38,17 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
 
     public ICommand LongPressedEffectCommand => new Command<Frame>(LongPressed);
 
-    public void LoadItems()
+    public void LoadItems(bool isOverride = false)
     {
-        ItemsGrouped.Clear();
-
         var trainingsItems = App.Database.GetTrainingItems();
+
+        var existCount = ItemsGrouped.Count;
+        if (isOverride && ItemsGrouped.Any() && existCount == trainingsItems.Count())
+        {
+            return;
+        }
+
+        ItemsGrouped.Clear();
 
         IsGrouped = trainingsItems.Any();
         OnPropertyChanged(nameof(IsGrouped));

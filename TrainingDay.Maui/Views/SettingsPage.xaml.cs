@@ -1,7 +1,7 @@
+using System.Globalization;
 using CommunityToolkit.Maui.Alerts;
 using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
-using System.Globalization;
 using TrainingDay.Common;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Resources.Strings;
@@ -43,8 +43,8 @@ public partial class SettingsPage : ContentPage
     {
         try
         {
-            var selected = _availableLanguages[LanguagePicker.SelectedItem as string];
-            var updateExercise = selected.Name != Settings.CultureName;
+            CultureInfo selected = _availableLanguages[LanguagePicker.SelectedItem as string];
+            bool updateExercise = selected.Name != Settings.CultureName;
             Settings.CultureName = selected.Name;
             if (updateExercise)
             {
@@ -68,9 +68,9 @@ public partial class SettingsPage : ContentPage
         var ru = new CultureInfo("ru-RU");
         var en = new CultureInfo("en-US");
         var de = new CultureInfo("de-DE");
-        _availableLanguages.Add(ru.NativeName.Split(' ')[0].FirstCharToUpper(), ru);
-        _availableLanguages.Add(en.NativeName.Split(' ')[0].FirstCharToUpper(), en);
-        _availableLanguages.Add(de.NativeName.Split(' ')[0].FirstCharToUpper(), de);
+        _availableLanguages.Add("Русский", ru);
+        _availableLanguages.Add("English", en);
+        _availableLanguages.Add("Deutsch", de);
 
         foreach (var language in _availableLanguages)
         {

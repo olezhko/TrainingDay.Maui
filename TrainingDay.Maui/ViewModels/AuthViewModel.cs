@@ -234,7 +234,7 @@ internal class AuthViewModel : BaseViewModel
                     OnPropertyChanged(nameof(GoogleEmail));
                     await SiteService.TokenUser(new MobileUserToken()
                     {
-                        GoogleEmail = Settings.Email,
+                        //sUserId = Settings.,
                         Token = Settings.Token,
                     });
                 }

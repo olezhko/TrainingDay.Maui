@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+.DS_Store
+TrainingDay.Maui/.DS_Store
+TrainingDay.Maui/Platforms/.DS_Store

@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
-            xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
-            xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-            xmlns:data="clr-namespace:TrainingDay.Common;assembly=TrainingDay.Common"
+             xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:data="clr-namespace:TrainingDay.Common;assembly=TrainingDay.Common"
              x:Class="TrainingDay.Maui.Controls.SuperSetControl"
              x:Name="Self">
     <Grid x:Name="mainGrid" RowDefinitions="auto,*" RowSpacing="5">
         <CollectionView ItemsSource="{Binding Source={x:Reference Self}, Path=SuperSetItems}" Margin="5,0" SelectionMode="Single"
-                        SelectedItem="{Binding Source={x:Reference Self}, Path=CurrentItem,Mode=TwoWay}">
+                        SelectedItem="{Binding Source={x:Reference Self}, Path=CurrentItem, Mode=TwoWay}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid ColumnDefinitions="70,*" ColumnSpacing="10" Margin="5">
@@ -21,7 +21,8 @@
                             <controls:ImageCache x:Name="ImageControl" HeightRequest="60" CodeNum="{Binding CodeNum}" WidthRequest="60"/>
                         </Frame>
 
-                        <Label Grid.Column="1" Text="{Binding ExerciseItemName}" VerticalOptions="Center" HorizontalOptions="Start" FontSize="20"/>
+                        <Label Grid.Column="1" Text="{Binding ExerciseItemName}" VerticalOptions="Center" HorizontalOptions="Start" FontSize="20"
+                               TextColor="{AppThemeBinding Light=White,Dark=White}"/>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
@@ -32,13 +33,13 @@
                 <StackLayout Spacing="0">
                     <Frame CornerRadius="20" Padding="10" HorizontalOptions="Center" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByReps}}"
                            BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}">
-                        <CollectionView HorizontalOptions="Center" ItemsSource="{Binding WeightAndRepsItems}" >
+                        <CollectionView HorizontalOptions="Center" ItemsSource="{Binding WeightAndRepsItems}" HeightRequest="90" VerticalOptions="Center">
                             <CollectionView.ItemsLayout>
                                 <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5"/>
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid RowDefinitions="auto,*" RowSpacing="2">
+                                    <Grid RowDefinitions="auto,45" RowSpacing="2">
                                         <Frame BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
                                         <Entry Margin="0" FontSize="Medium" Keyboard="Numeric" MaxLength="3" Text="{Binding Repetitions, Mode=TwoWay}" MinimumWidthRequest="50" HorizontalTextAlignment="Center" />
                                         <ImageButton Grid.Row="1" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" HorizontalOptions="Center" CornerRadius="17"
@@ -67,13 +68,13 @@
 
                     <Frame CornerRadius="20" Padding="10" HorizontalOptions="Center" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByRepsAndWeight}}"
                            BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}">
-                        <CollectionView HorizontalOptions="Center" ItemsSource="{Binding WeightAndRepsItems}">
+                        <CollectionView HorizontalOptions="Center" ItemsSource="{Binding WeightAndRepsItems}" HeightRequest="140" VerticalOptions="Center">
                             <CollectionView.ItemsLayout>
                                 <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5"/>
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid RowDefinitions="auto,*, auto" RowSpacing="2">
+                                    <Grid RowDefinitions="auto,45,auto" RowSpacing="2" VerticalOptions="Center">
                                         <Frame BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
                                         <Frame Grid.Row="2" BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
                                         <Entry Margin="0" FontSize="Medium" Keyboard="Numeric" MaxLength="3" Text="{Binding Repetitions, Mode=TwoWay}" HorizontalTextAlignment="Center" MinimumWidthRequest="50"/>

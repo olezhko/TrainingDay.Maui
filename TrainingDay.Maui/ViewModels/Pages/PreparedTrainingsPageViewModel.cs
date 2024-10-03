@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.AppCenter.Analytics;
+using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Maui.Extensions;
@@ -37,7 +38,10 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
             foreach (var exerciseItem in args.Selected)
             {
                 training.Exercises.Add(new TrainingExerciseViewModel(exerciseItem.GetExercise(),
-                    new TrainingExerciseComm()));
+                    new TrainingExerciseComm()
+                    {
+                        WeightAndRepsString = GetDefualtWeightAndRepsString(exerciseItem.Tags)
+                    }));
             }
 
             SaveNewTrainingViewModelToDatabase(training, null);
@@ -47,6 +51,19 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
             UnsubscribeMessages();
             Analytics.TrackEvent($"PreparedTrainingsPageViewModel: AddExercises finished");
         });
+    }
+
+    private string GetDefualtWeightAndRepsString(List<Common.ExerciseTags> tagsList)
+    {
+        string weightAndReps = string.Empty;
+        if (tagsList.Contains(Common.ExerciseTags.ExerciseByRepsAndWeight) || tagsList.Contains(Common.ExerciseTags.ExerciseByReps))
+        {
+            weightAndReps = JsonConvert.SerializeObject(new List<WeightAndRepsViewModel>{
+                new WeightAndRepsViewModel(0,15),new WeightAndRepsViewModel(0,15),new WeightAndRepsViewModel(0,15),
+            });
+        }
+
+        return weightAndReps;
     }
 
     private void UnsubscribeMessages()
@@ -109,7 +126,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
             preparedFitnessString.Training = new TrainingViewModel()
             {
                 Exercises = new ObservableCollection<TrainingExerciseViewModel>(GetExercisesByCodeNum(exerciseBase,
-                    113, 109, 114, 115, 116, 117, 118, 119, 108, 111, 84, 103, 102, 110)),
+                    113, 109, 115, 116, 117, 118, 119, 108, 111, 84, 103, 102, 110)),
                 Title = AppResources.PreparedFitnessString,
             };
         };

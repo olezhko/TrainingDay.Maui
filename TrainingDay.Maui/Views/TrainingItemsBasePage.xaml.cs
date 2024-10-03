@@ -30,7 +30,7 @@ public partial class TrainingItemsBasePage : ContentPage
     {
         base.OnAppearing();
         _vm = BindingContext as TrainingItemsBasePageViewModel;
-        _vm.LoadItems();
+        _vm.LoadItems(true);
         IsStartNotFinishedTraining();
         if (!_vm.IsGrouped)
         {
