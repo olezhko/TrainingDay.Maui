@@ -1,6 +1,5 @@
 ﻿using Microsoft.Maui.Controls.Platform;
 using System.Windows.Input;
-using UIKit;
 
 namespace TrainingDay.Maui.Controls;
 
@@ -46,8 +45,8 @@ public class LongPressedEffect : RoutingEffect
 public class LongPressedPlatformEffect : PlatformEffect
 {
 #if __IOS__
-    private readonly UILongPressGestureRecognizer _longPressRecognizer;
-    private readonly UITapGestureRecognizer gestureRecognizer;
+    private readonly UIKit.UILongPressGestureRecognizer _longPressRecognizer;
+    private readonly UIKit.UITapGestureRecognizer gestureRecognizer;
 #endif
     private bool _attached;
 
@@ -56,8 +55,8 @@ public class LongPressedPlatformEffect : PlatformEffect
     public LongPressedPlatformEffect()
     {
 #if __IOS__
-        _longPressRecognizer = new UILongPressGestureRecognizer(HandleLongClick);
-        gestureRecognizer = new UITapGestureRecognizer(HandleTapClick);
+        _longPressRecognizer = new UIKit.UILongPressGestureRecognizer(HandleLongClick);
+        gestureRecognizer = new UIKit.UITapGestureRecognizer(HandleTapClick);
 #endif
     }
 
