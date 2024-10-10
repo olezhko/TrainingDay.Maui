@@ -97,43 +97,49 @@ namespace TrainingDay.Maui
 
         private async void DownloadImages()
         {
-            string accessKey = ConstantKeys.AwsS3.accessKey;
-            string secretKey = ConstantKeys.AwsS3.secretKey;
-
-            AmazonS3Client s3Client = new AmazonS3Client(
-                    accessKey,
-                    secretKey,
-                    RegionEndpoint.GetBySystemName("us-east-1")
-                    );
-
-            var request = new ListObjectsV2Request()
+            try
             {
-                BucketName = ConstantKeys.AwsS3.BucketName,
-            };
+                string accessKey = ConstantKeys.AwsS3.accessKey;
+                string secretKey = ConstantKeys.AwsS3.secretKey;
 
-            var result = await s3Client.ListObjectsV2Async(request);
-            foreach (var b in result.S3Objects)
-            {
-                try
+                AmazonS3Client s3Client = new AmazonS3Client(
+                        accessKey,
+                        secretKey,
+                        RegionEndpoint.GetBySystemName("us-east-1")
+                        );
+
+                var request = new ListObjectsV2Request()
                 {
-                    var url = b.Key.Replace(".jpg", string.Empty);
-                    ImageData image = App.Database.GetImage(url);
-                    if (image == null)
-                    {
-                        var path = await GetFile(s3Client, b.Key);
-                        var bytes = File.ReadAllBytes(path);
-                        var item = new ImageData()
-                        {
-                            Data = bytes.ToArray(),
-                            Url = url,
-                        };
+                    BucketName = ConstantKeys.AwsS3.BucketName,
+                };
 
-                        App.Database.SaveImage(item);
+                var result = await s3Client.ListObjectsV2Async(request);
+                foreach (var b in result.S3Objects)
+                {
+                    try
+                    {
+                        var url = b.Key.Replace(".jpg", string.Empty);
+                        ImageData image = App.Database.GetImage(url);
+                        if (image == null)
+                        {
+                            var path = await GetFile(s3Client, b.Key);
+                            var bytes = File.ReadAllBytes(path);
+                            var item = new ImageData()
+                            {
+                                Data = bytes.ToArray(),
+                                Url = url,
+                            };
+
+                            App.Database.SaveImage(item);
+                        }
+                    }
+                    catch (Exception)
+                    {
                     }
                 }
-                catch (Exception)
-                {
-                }
+            }
+            catch (System.Exception ex)
+            {
             }
         }
 

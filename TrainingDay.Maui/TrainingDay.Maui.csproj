@@ -28,20 +28,26 @@
 		<PackageId>TrainingDay</PackageId>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="$(TargetFramework.Contains('-ios'))">
+		<UseInterpreter>True</UseInterpreter>
+	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
 	  <ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
-	  <ApplicationVersion>1.2.0.24</ApplicationVersion>
+	  <ApplicationVersion>1.2.0.28</ApplicationVersion>
 	  <ApplicationDisplayVersion>1.2</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
-	  <ApplicationVersion>1.2.0.24</ApplicationVersion>
-	  <ApplicationDisplayVersion>272</ApplicationDisplayVersion>
+	  <ApplicationVersion>1.2.0.28</ApplicationVersion>
+	  <ApplicationDisplayVersion>275</ApplicationDisplayVersion>
 	  <CreatePackage>false</CreatePackage>
+	  <CodesignProvision>TrainingDayPublish</CodesignProvision>
+	  <CodesignKey>Apple Distribution: Oleg Ladyka (36WMJT4QLC)</CodesignKey>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -110,23 +116,23 @@
 	</ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-ios'">
-    <PackageReference Include="sqlite-net-pcl" Version="1.9.172"/>
+    <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 	<PackageReference Include="SQLitePCLRaw.core" Version="2.1.9" />
     <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.9" />
-    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.2"/>
+    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.2" />
     <PackageReference Include="SQLitePCLRaw.provider.dynamic_cdecl" Version="2.1.9" />
     <PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="2.1.9" />
   </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.301" />
-    <PackageReference Include="AWSSDK.S3" Version="3.7.309.1" />
-    <PackageReference Include="CommunityToolkit.Maui" Version="8.0.1" />
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="AWSSDK.S3" Version="3.7.404.2" />
+    <PackageReference Include="CommunityToolkit.Maui" Version="9.1.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.5" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.5" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.20" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.20" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.91" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.91" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
     <PackageReference Include="Plugin.AdMob" Version="1.1.0" />
     <PackageReference Include="RestSharp" Version="106.12.0" />
