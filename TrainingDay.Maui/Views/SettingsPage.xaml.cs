@@ -65,9 +65,9 @@ public partial class SettingsPage : ContentPage
 
     private void FillAvailableLanguage()
     {
-        var ru = new CultureInfo("ru-RU");
-        var en = new CultureInfo("en-US");
-        var de = new CultureInfo("de-DE");
+        var ru = new CultureInfo("ru");
+        var en = new CultureInfo("en");
+        var de = new CultureInfo("de");
         _availableLanguages.Add("Русский", ru);
         _availableLanguages.Add("English", en);
         _availableLanguages.Add("Deutsch", de);
@@ -78,7 +78,7 @@ public partial class SettingsPage : ContentPage
         }
 
         var current = Settings.GetLanguage();
-        var selected = _availableLanguages.FirstOrDefault(item => item.Key == current.NativeName.Split(' ')[0].FirstCharToUpper());
+        var selected = _availableLanguages.FirstOrDefault(item => item.Value.TwoLetterISOLanguageName == current.TwoLetterISOLanguageName);
         if (selected.Key == null)
         {
             LanguagePicker.SelectedIndex = 1;

@@ -38,13 +38,13 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
-	  <ApplicationVersion>1.2.0.28</ApplicationVersion>
+	  <ApplicationVersion>1.2.0.29</ApplicationVersion>
 	  <ApplicationDisplayVersion>1.2</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
-	  <ApplicationVersion>1.2.0.28</ApplicationVersion>
-	  <ApplicationDisplayVersion>275</ApplicationDisplayVersion>
+	  <ApplicationVersion>1.2.0.29</ApplicationVersion>
+	  <ApplicationDisplayVersion>276</ApplicationDisplayVersion>
 	  <CreatePackage>false</CreatePackage>
 	  <CodesignProvision>TrainingDayPublish</CodesignProvision>
 	  <CodesignKey>Apple Distribution: Oleg Ladyka (36WMJT4QLC)</CodesignKey>
