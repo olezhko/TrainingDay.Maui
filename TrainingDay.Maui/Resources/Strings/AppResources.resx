@@ -717,4 +717,7 @@
   <data name="YouDontHaveAccountQuestion" xml:space="preserve">
     <value>You don't have an account?</value>
   </data>
+  <data name="Rest" xml:space="preserve">
+    <value>Rest</value>
+  </data>
 </root>

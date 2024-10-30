@@ -1,7 +1,6 @@
 ﻿using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using SQLite;
-using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.ViewModels;
 
@@ -128,7 +127,7 @@ public class Repository
             newExercise.CodeNum = exercise.CodeNum;
             newExercise.Description = JsonConvert.SerializeObject(exercise.Description);
             newExercise.MusclesString = exercise.MusclesString;
-            newExercise.TagsValue = exercise.TagsValue;
+            newExercise.TagsValue = Common.ExerciseTools.ConvertTagListToInt(Common.ExerciseTools.ConvertTagFromStringToList(exercise.Tags));
             newExercise.ExerciseItemName = exercise.ExerciseItemName;
             SaveExerciseItem(newExercise);
         }
@@ -146,7 +145,7 @@ public class Repository
             dbExercise.Description = JsonConvert.SerializeObject(srcExercise.Description);
             dbExercise.MusclesString = srcExercise.MusclesString;
             dbExercise.ExerciseItemName = srcExercise.ExerciseItemName;
-            dbExercise.TagsValue = srcExercise.TagsValue;
+            dbExercise.TagsValue = Common.ExerciseTools.ConvertTagListToInt(Common.ExerciseTools.ConvertTagFromStringToList(srcExercise.Tags));
             SaveExerciseItem(dbExercise);
         }
         catch (Exception ex)

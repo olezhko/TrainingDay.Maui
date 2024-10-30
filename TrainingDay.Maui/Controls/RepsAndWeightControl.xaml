@@ -8,7 +8,7 @@
     <ContentView.BindingContext>
         <viewModels:WeightAndRepsViewModel />
     </ContentView.BindingContext>
-    <Frame Margin="2" BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}" Padding="5">
+    <Frame Margin="2" BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Black}}" Padding="5">
         <Grid x:Name="MainGrid" Margin="0" Padding="0" ColumnSpacing="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -43,13 +43,11 @@
             WidthRequest="2"
             Color="{DynamicResource SeparatorColor}" />
 
-            <ImageButton Grid.Column="4" Margin="0" BackgroundColor="red" CornerRadius="17" Clicked="DeleteButton_Clicked"
-            HeightRequest="34" WidthRequest="34" HorizontalOptions="Center" Source="remove.png" VerticalOptions="Fill">
+            <ImageButton Grid.Column="4" Margin="0" CornerRadius="17" Clicked="DeleteButton_Clicked" HeightRequest="34" WidthRequest="34" HorizontalOptions="Center" Source="remove.png" VerticalOptions="Fill">
                 <ImageButton.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="White" />
                 </ImageButton.Behaviors>
             </ImageButton>
-
 
             <ImageButton Grid.Column="3" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" HorizontalOptions="Center" CornerRadius="17"
                          IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}" Source="save" VerticalOptions="Fill" WidthRequest="35">

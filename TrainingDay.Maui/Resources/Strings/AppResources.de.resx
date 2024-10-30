@@ -138,6 +138,9 @@
   <data name="AdviceString" xml:space="preserve">
     <value>Rat</value>
   </data>
+  <data name="AlreadyHaveAccountQuestion" xml:space="preserve">
+    <value>Sie haben bereits ein Konto?</value>
+  </data>
   <data name="AuthorString" xml:space="preserve">
     <value>Autor: {0}</value>
   </data>
@@ -279,6 +282,9 @@
   <data name="For" xml:space="preserve">
     <value>Zum</value>
   </data>
+  <data name="ForgotPasswordAction" xml:space="preserve">
+    <value>Passwort vergessen?</value>
+  </data>
   <data name="GoalString" xml:space="preserve">
     <value>Tor</value>
   </data>
@@ -296,6 +302,9 @@
   </data>
   <data name="HalfYearString" xml:space="preserve">
     <value>Halbes Jahr</value>
+  </data>
+  <data name="Hello" xml:space="preserve">
+    <value>Hallo,</value>
   </data>
   <data name="HelperString" xml:space="preserve">
     <value>Helfer</value>
@@ -323,6 +332,15 @@
   </data>
   <data name="LastImplementedFormatString" xml:space="preserve">
     <value>Letzte: {0}</value>
+  </data>
+  <data name="LoginAction" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="LoginWithGoogle" xml:space="preserve">
+    <value>Login Google</value>
+  </data>
+  <data name="LogoutAction" xml:space="preserve">
+    <value>Abmelden</value>
   </data>
   <data name="MakeTrainingString" xml:space="preserve">
     <value>ANFANG</value>
@@ -444,6 +462,9 @@
   <data name="RateAppString" xml:space="preserve">
     <value>Bewertungs App</value>
   </data>
+  <data name="RegisterAction" xml:space="preserve">
+    <value>Anmeldung</value>
+  </data>
   <data name="RemoveString" xml:space="preserve">
     <value>Entfernen</value>
   </data>
@@ -500,6 +521,9 @@
   </data>
   <data name="SelectTraining" xml:space="preserve">
     <value>Training:</value>
+  </data>
+  <data name="SendPassword" xml:space="preserve">
+    <value>Passwort senden</value>
   </data>
   <data name="SetFrequency" xml:space="preserve">
     <value>Frequenz einstellen</value>
@@ -680,5 +704,11 @@
   </data>
   <data name="YesString" xml:space="preserve">
     <value>Ja</value>
+  </data>
+  <data name="YouDontHaveAccountQuestion" xml:space="preserve">
+    <value>Sie haben noch kein Konto?</value>
+  </data>
+  <data name="Rest" xml:space="preserve">
+    <value>Brechen</value>
   </data>
 </root>

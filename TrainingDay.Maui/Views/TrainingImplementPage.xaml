@@ -21,15 +21,28 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <StackLayout Orientation="Horizontal" Grid.ColumnSpan="3" Margin="5,0">
-            <Label FontSize="Title" Text="{Binding CurrentTime,StringFormat={x:Static resx:AppResources.CurrentTimeString}}" HorizontalOptions="StartAndExpand" VerticalOptions="Center" HorizontalTextAlignment="End"/>
-            <ImageButton WidthRequest="40" HeightRequest="40" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="add"
+        <VerticalStackLayout Grid.ColumnSpan="3" Margin="5,0">
+            <Grid ColumnDefinitions="*,auto">
+                <Label FontSize="Title" Text="{Binding CurrentTime,StringFormat={x:Static resx:AppResources.CurrentTimeString}}" HorizontalOptions="Start" VerticalOptions="Center" HorizontalTextAlignment="End"/>
+                <ImageButton Grid.Column="1" WidthRequest="40" HeightRequest="40" Padding="0" HorizontalOptions="End" VerticalOptions="Center" Source="add"
                                      Command="{Binding AddExercisesCommand}" BackgroundColor="Transparent">
-                <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Gray, Dark=White}" />
-                </ImageButton.Behaviors>
-            </ImageButton>
-        </StackLayout>
+                    <ImageButton.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Gray, Dark=White}" />
+                    </ImageButton.Behaviors>
+                </ImageButton>
+            </Grid>
+
+            <Frame BorderColor="Transparent" Style="{StaticResource MaterialFrame}" Padding="0" >
+                <Grid ColumnDefinitions="*,auto,*">
+                    <Label x:Name="DoLabel" Text="{x:Static resx:AppResources.Execution}" HorizontalOptions="End" TextColor="Orange" VerticalOptions="Center"/>
+                    <Switch x:Name="RestOrDoSwitch" Grid.Column="1" Toggled="RestOrDoSwitch_Toggled" VerticalOptions="Center"/>
+                    <Label x:Name="RestLabel" Grid.Column="2" Text="{x:Static resx:AppResources.Rest}" VerticalOptions="Center" TextColor="Gray"/>
+                    <controls:TimerPicker x:Name="RestPicker" Grid.Column="3" HorizontalOptions="End" Margin="0,5,10,5" VerticalOptions="Fill"
+                                Value="00:02:00" ValueType="MinSec"/>
+                </Grid>
+            </Frame>
+        </VerticalStackLayout>
+
 
         <controls:StepProgressBar x:Name="StepProgressBarControl" Grid.Row="1" Grid.ColumnSpan="3" SteppedColor="{DynamicResource ListItemBackgroundColor}" Margin="5">
             <controls:StepProgressBar.ItemTemplate>

@@ -729,4 +729,7 @@
   <data name="YouDontHaveAccountQuestion" xml:space="preserve">
     <value>У вас нет аккаунта?</value>
   </data>
+  <data name="Rest" xml:space="preserve">
+    <value>Перерыв</value>
+  </data>
 </root>

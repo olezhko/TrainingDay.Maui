@@ -171,11 +171,23 @@
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style TargetType="Frame" x:Key="MaterialFrame">
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight},Dark=Black}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray100},Dark=Black}" />
         <Setter Property="BorderColor" Value="Transparent" />
         <Setter Property="CornerRadius" Value="5"/>
         <Setter Property="Padding" Value="5"/>
         <Setter Property="HeightRequest" Value="70"/>
+    </Style>
+    <Style TargetType="Label" x:Key="MaterialLabel">
+        <Setter Property="AnchorX" Value="0"/>
+        <Setter Property="TextColor" Value="Orange"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="HorizontalOptions" Value="Start"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="Margin" Value="5,0"/>
+
+        <Setter Property="ZIndex" Value="2"/>
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+        <Setter Property="controls:MaterialLabelAttached.IsMaterialBehavior" Value="True"/>
     </Style>
 
     <Style TargetType="ImageButton">
@@ -226,19 +238,6 @@
 
     <Style TargetType="Span">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
-    </Style>
-
-    <Style TargetType="Label" x:Key="MaterialLabel">
-        <Setter Property="AnchorX" Value="0"/>
-        <Setter Property="TextColor" Value="Orange"/>
-        <Setter Property="FontSize" Value="18"/>
-        <Setter Property="HorizontalOptions" Value="Start"/>
-        <Setter Property="VerticalOptions" Value="Center"/>
-        <Setter Property="Margin" Value="5,0"/>
-
-        <Setter Property="ZIndex" Value="2"/>
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
-        <Setter Property="controls:MaterialLabelAttached.IsMaterialBehavior" Value="True"/>
     </Style>
 
     <Style TargetType="ListView">

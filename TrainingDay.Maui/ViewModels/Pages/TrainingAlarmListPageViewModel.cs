@@ -31,7 +31,7 @@ public class TrainingAlarmListPageViewModel : BaseViewModel
     {
         if (e.PropertyName == nameof(AlarmViewModel.IsActive) && sender is AlarmViewModel item)
         {
-            App.SyncAlarms();
+            //App.SyncAlarms();
         }
     }
 

@@ -174,7 +174,7 @@ public static class SiteService
     }
 
     private static string _requestRepoUrl = Consts.SiteApi + @"/MobileTokens/repo_sync?mail={0}&token={1}";
-    public static async Task<RepoMobileSite> RequestRepo()
+    public static async Task<RepoMobileSite?> RequestRepo()
     {
         try
         {
@@ -197,12 +197,11 @@ public static class SiteService
     }
 
     private static string _uploadRepoUrl = Consts.SiteApi + @"/MobileTokens/repo_sync";
-    public static async Task<int> UploadRepoItem(object item, SyncItemType itemType)
+    public static async Task<int> UploadRepoItem(string dataJson)
     {
         var repoSer = new RepoMobileItem
         {
-            itemString = JsonConvert.SerializeObject(item),
-            type = itemType,
+            data = dataJson,
             mail = Email,
             token = Token,
         };
@@ -228,29 +227,6 @@ public static class SiteService
         catch (Exception e)
         {
             return 0;
-        }
-    }
-
-    private static string _deleteRepoUnitUrl = Consts.SiteApi + "/MobileTokens/repo_delete?type={0}&mail={1}&token={2}";
-    public static async Task<bool> DeleteRepoItems(SyncItemType itemType)
-    {
-        try
-        {
-            var client = new RestClient(string.Format(_deleteRepoUnitUrl, (int)itemType, Email, Token));
-            client.Timeout = -1;
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("Content-Type", "application/json");
-            IRestResponse response = await client.ExecuteAsync(request);
-            if (response.StatusCode == HttpStatusCode.ServiceUnavailable)
-            {
-                return false;
-            }
-
-            return true;
-        }
-        catch (Exception e)
-        {
-            return false;
         }
     }
 

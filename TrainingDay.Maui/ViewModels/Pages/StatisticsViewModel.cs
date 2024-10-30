@@ -2,7 +2,6 @@
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Services;
-using AppResources = TrainingDay.Maui.Resources.Strings;
 
 namespace TrainingDay.Maui.ViewModels.Pages;
 

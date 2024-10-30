@@ -17,7 +17,7 @@
         </CollectionView.EmptyView>
         <CollectionView.GroupHeaderTemplate>
             <DataTemplate>
-                <Label Text="{Binding Heading}" TextColor="Orange" FontSize="Large" FontAttributes="Bold" />
+                <Label Text="{Binding Heading}" TextColor="Orange" FontSize="Large" FontAttributes="Bold" BackgroundColor="{StaticResource Gray100}" Padding="2"/>
             </DataTemplate>
         </CollectionView.GroupHeaderTemplate>
         <CollectionView.ItemTemplate>

@@ -1,8 +1,6 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using TrainingDay.Common;
-using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 
@@ -92,7 +90,7 @@ public class MakeTrainingAlarmPageViewModel : BaseViewModel
         var id = App.Database.SaveAlarmItem(newItem);
         Alarm.AlarmItem.Id = id;
         await Toast.Make(Resources.Strings.AppResources.SavedString).Show();
-        App.SyncAlarms();
+        //App.SyncAlarms();
         await Shell.Current.GoToAsync("..");
     }
 
@@ -127,7 +125,7 @@ public class MakeTrainingAlarmPageViewModel : BaseViewModel
         {
             App.Database.DeleteAlarmItem(Alarm.AlarmItem.Id);
             await Toast.Make(Resources.Strings.AppResources.DeletedString).Show();
-            App.SyncAlarms();
+            //App.SyncAlarms();
             await Shell.Current.GoToAsync("..");
         }
     }

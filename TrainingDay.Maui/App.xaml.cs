@@ -69,32 +69,6 @@ namespace TrainingDay.Maui
             DownloadImages();
         }
 
-        public static void SyncAlarms()
-        {
-            Task.Run(async () =>
-            {
-                var result = await SiteService.DeleteRepoItems(SyncItemType.Alarm);
-                if (result)
-                {
-                    var alarms = Database.GetAlarmItems();
-                    foreach (var alarm in alarms)
-                    {
-                        if (!alarm.IsActive)
-                        {
-                            continue;
-                        }
-
-                        var serverId = await SiteService.UploadRepoItem(alarm, SyncItemType.Alarm);
-                        alarm.ServerId = serverId;
-                        if (serverId != 0)
-                        {
-                            Database.SaveAlarmItem(alarm);
-                        }
-                    }
-                }
-            });
-        }
-
         private async void DownloadImages()
         {
             try

@@ -3,6 +3,7 @@ using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Plugin.AdMob;
 using Plugin.AdMob.Services;
+using SkiaSharp;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Maui.Controls;
@@ -23,18 +24,7 @@ public partial class TrainingImplementPage : ContentPage
     private bool enabledTimer;
     private IDispatcherTimer _timer;
     private IPushNotification notificator;
-    public ObservableCollection<SuperSetViewModel> Items { get; set; }
-
-    TrainingViewModel trainingItem;
-    public TrainingViewModel TrainingItem
-    {
-        get => trainingItem; 
-        set
-        {
-            trainingItem = value;
-        }
-    }
-
+    private TrainingViewModel trainingItem;
     public TrainingImplementPage()
     {
         InitializeComponent();
@@ -50,14 +40,14 @@ public partial class TrainingImplementPage : ContentPage
         _timer.Interval = TimeSpan.FromSeconds(1);
 
         AdMob.AdUnitId = DeviceInfo.Platform == DevicePlatform.Android ? ConstantKeys.ImplementAndroidAds : ConstantKeys.ImplementiOSAds;
+        RestPicker.TextColor = App.Current.RequestedTheme == AppTheme.Light ? Colors.Black : Colors.White;
     }
 
     private void StepProgressBarControl_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(StepProgressBar.StepSelected))
         {
-            FinishButton.IsVisible = Items[StepProgressBarControl.StepSelected].First().IsNotFinished;
-            SkipButton.IsVisible = Items[StepProgressBarControl.StepSelected].First().IsNotFinished;
+            SkipButton.IsVisible = FinishButton.IsVisible = Items[StepProgressBarControl.StepSelected].First().IsNotFinished;
         }
     }
 
@@ -94,7 +84,7 @@ public partial class TrainingImplementPage : ContentPage
         HandlerChanged += OnHandlerChanged;
     }
 
-    void OnHandlerChanged(object sender, EventArgs e)
+    private void OnHandlerChanged(object sender, EventArgs e)
     {
         if (Handler != null)
         {
@@ -108,17 +98,26 @@ public partial class TrainingImplementPage : ContentPage
     }
 
     #region Timer
-    public string CurrentTime { get; set; }
-
-    public TimeSpan StartTime { get; set; }
-
     private void _timer_Tick(object? sender, EventArgs e)
     {
         CurrentTime = (DateTime.Now - _startTrainingDateTime + StartTime).ToString(@"hh\:mm\:ss");
         OnPropertyChanged(nameof(CurrentTime));
 
-        UpdateTime();
+        if (isStartRest && RestPicker.Value > TimeSpan.FromSeconds(0))
+        {
+            RestPicker.Value = RestPicker.Value - TimeSpan.FromSeconds(1);
+            if (RestPicker.Value < TimeSpan.FromSeconds(10))
+            {
+                RestPicker.TextColor = Colors.Red;
+                PlaySound();
+            }
+            else
+            {
+                RestPicker.TextColor = App.Current.RequestedTheme == AppTheme.Light ? Colors.Black : Colors.White;
+            }
+        }
 
+        UpdateTime();
         // save to restore if not finish
         SaveNotFinishedTraining(TrainingItem.Title, TrainingItem.Id);
         UpdateNotifyTimer();
@@ -127,6 +126,17 @@ public partial class TrainingImplementPage : ContentPage
         {
             _timer.Stop();
         }
+    }
+
+    private void PlaySound()
+    {
+#if ANDROID
+            var instance = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity;
+            Android.Net.Uri uri = Android.Media.RingtoneManager.GetDefaultUri(Android.Media.RingtoneType.Notification);
+            Android.Media.Ringtone rt = Android.Media.RingtoneManager.GetRingtone(instance.ApplicationContext, uri);
+            rt.Play();
+#endif
+
     }
 
     private void SaveNotFinishedTraining(string title, int id)
@@ -329,7 +339,6 @@ public partial class TrainingImplementPage : ContentPage
     }
     #endregion
 
-    public ICommand AddExercisesCommand => new Command(AddExercisesRequest);
     private async void AddExercisesRequest()
     {
         SubscribeMessages();
@@ -406,4 +415,46 @@ public partial class TrainingImplementPage : ContentPage
             StepProgressBarControl.SkipElement(false);
         }
     }
+
+    double restSeconds = 120;
+    bool isStartRest = false;
+    private void RestOrDoSwitch_Toggled(object sender, ToggledEventArgs e)
+    {
+        if (e.Value)
+        {
+            RestLabel.TextColor = Colors.Orange;
+            DoLabel.TextColor = Colors.Gray;
+            RestPicker.IsTimerDisabled = true;
+            restSeconds = RestPicker.Value.TotalSeconds;
+            isStartRest = true;
+        }
+        else
+        {
+            RestLabel.TextColor = Colors.Gray;
+            DoLabel.TextColor = Colors.Orange;
+            RestPicker.IsTimerDisabled = false;
+            RestPicker.Value = TimeSpan.FromSeconds(restSeconds);
+            isStartRest = false;
+        }
+    }
+
+    #region Properties
+    public ICommand AddExercisesCommand => new Command(AddExercisesRequest);
+
+    public string CurrentTime { get; set; }
+
+    public TimeSpan StartTime { get; set; }
+
+    public ObservableCollection<SuperSetViewModel> Items { get; set; }
+
+    public TrainingViewModel TrainingItem
+    {
+        get => trainingItem;
+        set
+        {
+            trainingItem = value;
+        }
+    }
+
+    #endregion
 }
