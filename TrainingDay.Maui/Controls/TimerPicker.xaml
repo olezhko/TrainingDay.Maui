@@ -5,45 +5,43 @@
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              x:Class="TrainingDay.Maui.Controls.TimerPicker"
              x:Name="Self">
-    <Grid x:Name="Container" VerticalOptions="Fill">
+    <Grid x:Name="Container" VerticalOptions="Start">
         <HorizontalStackLayout Spacing="0">
-            <Grid x:Name="HourPart" HorizontalOptions="Start" IsVisible="False">
-                <Entry x:Name="HourPicker" FontSize="Medium" VerticalOptions="End" HorizontalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="50" Text="00" Keyboard="Numeric">
-                    <Entry.GestureRecognizers>
+            <Grid x:Name="HourPart" HorizontalOptions="Start" IsVisible="False" RowDefinitions="auto,auto">
+                <Label x:Name="HourPicker" Grid.Row="1" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center" FontSize="Medium"
+                       TextColor="{Binding Source={x:Reference Self}, Path=TextColor}" Text="00">
+                    <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="HourGestureRecognizer_OnTapped" />
-                    </Entry.GestureRecognizers>
-                </Entry>
+                    </Label.GestureRecognizers>
+                </Label>
 
-                <Label Text="{x:Static resx:AppResources.HourString}" Style="{StaticResource MaterialLabel}" controls:MaterialLabelAttached.MaterialControlType="Entry"
-                   VerticalOptions="Start" HorizontalOptions="Center"/>
+                <Label Text="{x:Static resx:AppResources.HourString}" TextColor="Orange" HorizontalOptions="Center" FontSize="Small" VerticalOptions="Start"/>
             </Grid>
 
-            <Label Padding="0" FontSize="Medium" HorizontalOptions="Start" HorizontalTextAlignment="Center" Text=":" VerticalTextAlignment="Center" IsVisible="False"/>
+            <Label Padding="0" FontSize="Medium" HorizontalOptions="Start" HorizontalTextAlignment="Center" Text=":" VerticalOptions="Start" IsVisible="False"/>
 
-            <Grid HorizontalOptions="Start" VerticalOptions="Fill">
-                <Label x:Name="MinutesPicker" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center" FontSize="Medium"
+            <Grid HorizontalOptions="Start" VerticalOptions="Fill" RowDefinitions="auto,auto">
+                <Label x:Name="MinutesPicker" Grid.Row="1" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center" FontSize="Medium"
                        TextColor="{Binding Source={x:Reference Self}, Path=TextColor}" Text="02">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="MinutesGestureRecognizer_OnTapped" />
                     </Label.GestureRecognizers>
                 </Label>
 
-                <Label Text="{x:Static resx:AppResources.MinuteString}" TextColor="Orange" HorizontalOptions="Center" FontSize="Small" VerticalOptions="Start"
-                       />
+                <Label Text="{x:Static resx:AppResources.MinuteString}" TextColor="Orange" HorizontalOptions="Center" FontSize="Small" VerticalOptions="Start"/>
             </Grid>
 
-            <Label Padding="0" FontSize="Medium" HorizontalOptions="Start" HorizontalTextAlignment="Center" Text=":" VerticalTextAlignment="Center" />
+            <Label Padding="0" FontSize="Medium" HorizontalOptions="Start" HorizontalTextAlignment="Center" Text=":" VerticalTextAlignment="End" />
 
-            <Grid HorizontalOptions="Start" >
-                <Label x:Name="SecondsPicker" FontAttributes="Bold" TextColor="{Binding Source={x:Reference Self}, Path=TextColor}" Text="00"
+            <Grid HorizontalOptions="Start" RowDefinitions="auto,auto">
+                <Label x:Name="SecondsPicker" Grid.Row="1" FontAttributes="Bold" TextColor="{Binding Source={x:Reference Self}, Path=TextColor}" Text="00"
                        VerticalOptions="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center" FontSize="Medium">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="SecondsGestureRecognizer_OnTapped" />
                     </Label.GestureRecognizers>
                 </Label>
 
-                <Label Text="{x:Static resx:AppResources.SecondString}" TextColor="Orange" HorizontalOptions="Center" FontSize="Small" VerticalOptions="Start"
-                       />
+                <Label Text="{x:Static resx:AppResources.SecondString}" TextColor="Orange" HorizontalOptions="Center" FontSize="Small" VerticalOptions="Start"/>
             </Grid>
         </HorizontalStackLayout>
     </Grid>

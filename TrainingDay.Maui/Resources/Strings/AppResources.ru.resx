@@ -526,7 +526,7 @@
     <value>Секунды</value>
   </data>
   <data name="SecondString" xml:space="preserve">
-    <value>с</value>
+    <value>сек</value>
   </data>
   <data name="SelectAllString" xml:space="preserve">
     <value>Выбрать все</value>

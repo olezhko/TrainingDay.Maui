@@ -37,8 +37,7 @@
                     <Label x:Name="DoLabel" Text="{x:Static resx:AppResources.Execution}" HorizontalOptions="End" TextColor="Orange" VerticalOptions="Center"/>
                     <Switch x:Name="RestOrDoSwitch" Grid.Column="1" Toggled="RestOrDoSwitch_Toggled" VerticalOptions="Center"/>
                     <Label x:Name="RestLabel" Grid.Column="2" Text="{x:Static resx:AppResources.Rest}" VerticalOptions="Center" TextColor="Gray"/>
-                    <controls:TimerPicker x:Name="RestPicker" Grid.Column="3" HorizontalOptions="End" Margin="0,5,10,5" VerticalOptions="Fill"
-                                Value="00:02:00" ValueType="MinSec"/>
+                    <controls:TimerPicker x:Name="RestPicker" Grid.Column="2" HorizontalOptions="End" Margin="0,5,10,5" VerticalOptions="Center" Value="00:02:00" ValueType="MinSec"/>
                 </Grid>
             </Frame>
         </VerticalStackLayout>

@@ -426,7 +426,6 @@ public partial class TrainingImplementPage : ContentPage
             DoLabel.TextColor = Colors.Gray;
             RestPicker.IsTimerDisabled = true;
             restSeconds = RestPicker.Value.TotalSeconds;
-            isStartRest = true;
         }
         else
         {
@@ -434,8 +433,10 @@ public partial class TrainingImplementPage : ContentPage
             DoLabel.TextColor = Colors.Orange;
             RestPicker.IsTimerDisabled = false;
             RestPicker.Value = TimeSpan.FromSeconds(restSeconds);
-            isStartRest = false;
         }
+
+        isStartRest = e.Value;
+        RestPicker.TextColor = App.Current.RequestedTheme == AppTheme.Light ? Colors.Black : Colors.White;
     }
 
     #region Properties
