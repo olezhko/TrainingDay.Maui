@@ -1,5 +1,6 @@
 ﻿using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using TrainingDay.Maui.Extensions;
@@ -241,5 +242,19 @@ public class TrainingExerciseViewModel : ExerciseViewModel
     {
         get => isCheckBoxVisible;
         set => SetProperty(ref isCheckBoxVisible, value);
+    }
+
+
+    public static string GetDefualtWeightAndRepsString(List<Common.ExerciseTags> tagsList)
+    {
+        string weightAndReps = string.Empty;
+        if (tagsList.Contains(Common.ExerciseTags.ExerciseByRepsAndWeight) || tagsList.Contains(Common.ExerciseTags.ExerciseByReps))
+        {
+            weightAndReps = JsonConvert.SerializeObject(new List<WeightAndRepsViewModel>{
+                new WeightAndRepsViewModel(0,15),new WeightAndRepsViewModel(0,15),new WeightAndRepsViewModel(0,15),
+            });
+        }
+
+        return weightAndReps;
     }
 }

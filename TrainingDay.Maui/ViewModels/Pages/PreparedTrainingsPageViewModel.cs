@@ -40,7 +40,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
                 training.Exercises.Add(new TrainingExerciseViewModel(exerciseItem.GetExercise(),
                     new TrainingExerciseComm()
                     {
-                        WeightAndRepsString = GetDefualtWeightAndRepsString(exerciseItem.Tags)
+                        WeightAndRepsString = TrainingExerciseViewModel.GetDefualtWeightAndRepsString(exerciseItem.Tags)
                     }));
             }
 
@@ -51,19 +51,6 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
             UnsubscribeMessages();
             Analytics.TrackEvent($"PreparedTrainingsPageViewModel: AddExercises finished");
         });
-    }
-
-    private string GetDefualtWeightAndRepsString(List<Common.ExerciseTags> tagsList)
-    {
-        string weightAndReps = string.Empty;
-        if (tagsList.Contains(Common.ExerciseTags.ExerciseByRepsAndWeight) || tagsList.Contains(Common.ExerciseTags.ExerciseByReps))
-        {
-            weightAndReps = JsonConvert.SerializeObject(new List<WeightAndRepsViewModel>{
-                new WeightAndRepsViewModel(0,15),new WeightAndRepsViewModel(0,15),new WeightAndRepsViewModel(0,15),
-            });
-        }
-
-        return weightAndReps;
     }
 
     private void UnsubscribeMessages()

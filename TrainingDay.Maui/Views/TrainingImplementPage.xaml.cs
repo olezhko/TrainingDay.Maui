@@ -3,7 +3,6 @@ using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Plugin.AdMob;
 using Plugin.AdMob.Services;
-using SkiaSharp;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Maui.Controls;
@@ -115,6 +114,10 @@ public partial class TrainingImplementPage : ContentPage
             {
                 RestPicker.TextColor = App.Current.RequestedTheme == AppTheme.Light ? Colors.Black : Colors.White;
             }
+        }
+        else {
+            RestOrDoSwitch.IsToggled = false;
+            isStartRest = false;
         }
 
         UpdateTime();
@@ -352,10 +355,11 @@ public partial class TrainingImplementPage : ContentPage
         UnsubscribeMessages();
         WeakReferenceMessenger.Default.Register<ExercisesSelectFinishedMessage>(this, async (r, args) =>
         {
-            await Shell.Current.GoToAsync("..");
-            AddExercises(args.Selected.Select(item => new TrainingExerciseViewModel(item.GetExercise(), new TrainingExerciseComm())));
+            AddExercises(args.Selected.Select(item => new TrainingExerciseViewModel(item.GetExercise(), new TrainingExerciseComm()
+            {
+                WeightAndRepsString = TrainingExerciseViewModel.GetDefualtWeightAndRepsString(item.Tags)
+            })));
 
-            await Shell.Current.GoToAsync("..");
             UnsubscribeMessages();
             Analytics.TrackEvent($"TrainingImplementPage: AddExercises finished");
         });
