@@ -1,15 +1,15 @@
-﻿using Microsoft.AppCenter.Analytics;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.AppCenter.Analytics;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Input;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models.Database;
-using TrainingDay.Maui.Views;
-using TrainingDay.Maui.Services;
-using CommunityToolkit.Maui.Alerts;
-using TrainingDay.Maui.Resources.Strings;
-using CommunityToolkit.Mvvm.Messaging;
 using TrainingDay.Maui.Models.Messages;
+using TrainingDay.Maui.Resources.Strings;
+using TrainingDay.Maui.Services;
+using TrainingDay.Maui.Views;
 
 namespace TrainingDay.Maui.ViewModels.Pages;
 
@@ -37,8 +37,6 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
     public ICommand MakeTrainingCommand => new Command(MakeTraining);
 
     public ICommand ItemTappedCommand => new Command<object>(TrainingExerciseTapped);
-
-    public ICommand SaveChangesCommand { get; set; }
 
     public ICommand ShowTrainingSettingsPageCommand => new Command(ShowTrainingSettingsPage);
 
@@ -76,7 +74,6 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
     public TrainingExercisesPageViewModel()
     {
-        SaveChangesCommand = new Command(SaveChanges);
         Training = new TrainingViewModel();
     }
 
@@ -170,16 +167,19 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         Analytics.TrackEvent($"{GetType().Name}: AddExercises started");
     }
 
-    private void AddSelectedExercises(IEnumerable<TrainingExerciseViewModel> obj)
+    private void AddSelectedExercises(IEnumerable<TrainingExerciseViewModel> args)
     {
-        obj.ForEach(a => a.IsSelected = false);
-        foreach (var exerciseItem in obj)
+        args.ForEach(a => a.IsSelected = false);
+        var count = Training.Exercises.Count - 1;
+        foreach (var exerciseItem in args)
         {
             exerciseItem.TrainingId = Training.Id;
-            exerciseItem.OrderNumber = Training.Exercises.Count;
-            App.Database.SaveTrainingExerciseItem(exerciseItem.GetTrainingExerciseComm());
+            exerciseItem.OrderNumber = count;
+            var id = App.Database.SaveTrainingExerciseItem(exerciseItem.GetTrainingExerciseComm());
+            exerciseItem.TrainingExerciseId = id;
             Training.AddExercise(exerciseItem);
             OnPropertyChanged(nameof(Training.Exercises));
+            count += 1;
         }
 
         Analytics.TrackEvent($"{GetType().Name}: AddExercises finished");
@@ -291,52 +291,6 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
         Dictionary<string, object> param = new Dictionary<string, object> { { "TrainingItem", Training } };
         await Shell.Current.GoToAsync(nameof(TrainingImplementPage), param);
-    }
-
-    /// <summary>
-    /// clear all trainingExercises communication with selected training id
-    /// </summary>
-    private void ClearTrExUnused()
-    {
-        var trExercises = Training.Exercises;
-        var trainingExerciseItems = App.Database.GetTrainingExerciseItems(); // get all tr-exercises comm
-
-        // delete all exercises, that user delete by "cross" button
-        foreach (var trainingExerciseItem in trainingExerciseItems)
-        {
-            if (trainingExerciseItem.TrainingId == Training.Id && trExercises.All(model => trainingExerciseItem.Id != model.TrainingExerciseId))
-            {
-                App.Database.DeleteTrainingExerciseItem(trainingExerciseItem.Id);
-            }
-        }
-
-        var superSets = App.Database.GetSuperSetItems();
-        foreach (var superSet in superSets)
-        {
-            if (superSet.TrainingId == Training.Id)
-            {
-                bool res = false;
-                foreach (var trainingExerciseViewModel in trExercises)
-                {
-                    if (trainingExerciseViewModel.SuperSetId == superSet.Id) //if training have exercises with this superset id
-                    {
-                        res = true;
-                    }
-                }
-
-                if (!res)
-                {
-                    App.Database.DeleteSuperSetItem(superSet.Id);
-                }
-            }
-        }
-    }
-
-    private void SaveChanges()
-    {
-        ClearTrExUnused();
-
-        SaveTraining();
     }
 
     private void SaveTraining()

@@ -43,7 +43,8 @@
         </VerticalStackLayout>
 
 
-        <controls:StepProgressBar x:Name="StepProgressBarControl" Grid.Row="1" Grid.ColumnSpan="3" SteppedColor="{DynamicResource ListItemBackgroundColor}" Margin="5">
+        <controls:StepProgressBar x:Name="StepProgressBarControl" Grid.Row="1" Grid.ColumnSpan="3" Margin="5"
+                                  SteppedColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}">
             <controls:StepProgressBar.ItemTemplate>
                 <DataTemplate>
                     <Grid VerticalOptions="Fill" RowSpacing="0">

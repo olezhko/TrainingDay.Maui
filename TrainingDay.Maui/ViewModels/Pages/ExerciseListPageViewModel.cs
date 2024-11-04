@@ -12,7 +12,7 @@ namespace TrainingDay.Maui.ViewModels.Pages;
 
 public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
 {
-    List<int> selectedIndexes = new List<int>();
+    private List<int> selectedIndexes = new List<int>();
     public FilterModel Filter { get; set; }
     public ObservableCollection<ExerciseListItemViewModel> BaseItems { get; set; } // все упражнения из базы
     public ObservableCollection<ExerciseListItemViewModel> Items { get; set; } // элементы, отображенные на экране в списке
@@ -34,6 +34,19 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
         BaseItems = new ObservableCollection<ExerciseListItemViewModel>();
         UpdateItems();
     }
+
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        if (query.ContainsKey("ExistedExercises"))
+        {
+            ExistedExercises = query["ExistedExercises"] as ObservableCollection<TrainingExerciseViewModel>;
+        }
+        else
+        {
+            ExistedExercises = new ObservableCollection<TrainingExerciseViewModel> { };
+        }
+    }
+
 
     private void SubscribeMessages()
     {
@@ -64,20 +77,13 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
     /// <returns></returns>
     private List<ExerciseListItemViewModel> GetSelectedItems()
     {
-        var resultItems = new List<ExerciseListItemViewModel>();
-        resultItems.AddRange(BaseItems.Where(a => a.IsSelected).Select(x => x));
-        resultItems.AddRange(Items.Where(a => a.IsSelected).Select(x => x));
+        IEnumerable<int> ids = BaseItems.Where(a => a.IsSelected)
+            .Union(Items.Where(a => a.IsSelected))
+            .Select(x => x.Id)
+            .Union(selectedIndexes)
+            .Distinct();
 
-        var selectedIds = resultItems.GroupBy(item => item.Id).Select(item => item.Key);
-        resultItems = BaseItems.Where(item => selectedIds.Contains(item.Id)).ToList();
-
-        foreach (var selectedIndex in selectedIndexes)
-        {
-            if (resultItems.All(item => item.Id != selectedIndex))
-            {
-                resultItems.Add(new ExerciseListItemViewModel(App.Database.GetExerciseItem(selectedIndex)));
-            }
-        }
+        List<ExerciseListItemViewModel> resultItems = BaseItems.Where(item => ids.Contains(item.Id)).ToList();
 
         return resultItems;
     }
@@ -87,7 +93,15 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
         LoadItemsAsync();
     }
 
-    public ObservableCollection<ExerciseListItemViewModel> LoadItems()
+    private async void LoadItemsAsync()
+    {
+        var res = await Task.Run(LoadItems);
+        Items = res;
+        BaseItems = new ObservableCollection<ExerciseListItemViewModel>(res);
+        OnPropertyChanged(nameof(Items));
+    }
+
+    private ObservableCollection<ExerciseListItemViewModel> LoadItems()
     {
         var newItems = new ObservableCollection<ExerciseListItemViewModel>();
         var baseItems = App.Database.GetExerciseItems();
@@ -163,14 +177,6 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
         WeakReferenceMessenger.Default.Send(new ExercisesSelectFinishedMessage(GetSelectedItems()));
     }
 
-    private async void LoadItemsAsync()
-    {
-        var res = await Task.Run(() => LoadItems());
-        Items = res;
-        BaseItems = new ObservableCollection<ExerciseListItemViewModel>(res);
-        OnPropertyChanged(nameof(Items));
-    }
-
     private void FillSelectedIndexes()
     {
         foreach (var trainingExerciseViewModel in Items)
@@ -184,18 +190,6 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
             {
                 selectedIndexes.Remove(trainingExerciseViewModel.Id);
             }
-        }
-    }
-
-    public void ApplyQueryAttributes(IDictionary<string, object> query)
-    {
-        if (query.ContainsKey("ExistedExercises"))
-        {
-            ExistedExercises = query["ExistedExercises"] as ObservableCollection<TrainingExerciseViewModel>;
-        }
-        else
-        {
-            ExistedExercises = new ObservableCollection<TrainingExerciseViewModel> { };
         }
     }
 }

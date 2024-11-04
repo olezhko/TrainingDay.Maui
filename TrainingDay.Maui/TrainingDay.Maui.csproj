@@ -35,26 +35,26 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
 	  <ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
-    <ApplicationVersion>279</ApplicationVersion>
-    <ApplicationDisplayVersion>1.2.1.3</ApplicationDisplayVersion>
+    <ApplicationVersion>280</ApplicationVersion>
+    <ApplicationDisplayVersion>1.2.1.4</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
-    <ApplicationVersion>279</ApplicationVersion>
-    <ApplicationDisplayVersion>1.2.1.3</ApplicationDisplayVersion>
+    <ApplicationVersion>280</ApplicationVersion>
+    <ApplicationDisplayVersion>1.2.1.4</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
-    <ApplicationVersion>279</ApplicationVersion>
-    <ApplicationDisplayVersion>1.2.1.3</ApplicationDisplayVersion>
+    <ApplicationVersion>280</ApplicationVersion>
+    <ApplicationDisplayVersion>1.2.1.4</ApplicationDisplayVersion>
 	  <CreatePackage>false</CreatePackage>
 	  <CodesignProvision>TrainingDayPublish</CodesignProvision>
 	  <CodesignKey>Apple Distribution: Oleg Ladyka (36WMJT4QLC)</CodesignKey>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
-    <ApplicationVersion>279</ApplicationVersion>
-    <ApplicationDisplayVersion>1.2.1.3</ApplicationDisplayVersion>
+    <ApplicationVersion>280</ApplicationVersion>
+    <ApplicationDisplayVersion>1.2.1.4</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -148,7 +148,7 @@
   </ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="C:\Users\metal\source\repos\olezhko\TrainingDay-Core\TrainingDay.Common\TrainingDay.Common.csproj" />
+	  <ProjectReference Include="..\..\TrainingDay-Core\TrainingDay.Common\TrainingDay.Common.csproj" />
 	  <ProjectReference Include="..\Plugins\Microcharts.Maui\Microcharts.Maui.csproj" />
 	  <ProjectReference Include="..\Plugins\Microcharts\Microcharts.csproj" />
 	</ItemGroup>

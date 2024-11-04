@@ -34,7 +34,7 @@ public class StepProgressBar : Grid
 
     public static readonly BindableProperty StepSelectedProperty = BindableProperty.Create(nameof(StepSelected), typeof(int), typeof(StepProgressBar), 0, defaultBindingMode: BindingMode.TwoWay);
     public static readonly BindableProperty StepColorProperty = BindableProperty.Create(nameof(StepColor), typeof(Color), typeof(StepProgressBar), Colors.Black, defaultBindingMode: BindingMode.TwoWay);
-    public static readonly BindableProperty SteppedColorProperty = BindableProperty.Create(nameof(SteppedColor), typeof(Color), typeof(StepProgressBar), Colors.Black, defaultBindingMode: BindingMode.TwoWay);
+    public static readonly BindableProperty SteppedColorProperty = BindableProperty.Create(nameof(SteppedColor), typeof(Color), typeof(StepProgressBar), Colors.Black, defaultBindingMode: BindingMode.TwoWay, propertyChanged: StepColorPropertyChanged);
     public static readonly BindableProperty StepCanTouchProperty = BindableProperty.Create(nameof(StepCanTouch), typeof(bool), typeof(StepProgressBar), true);
 
     public Color StepColor
@@ -66,7 +66,7 @@ public class StepProgressBar : Grid
 
     public StepProgressBar()
     {
-        _collectionChanged += OnCollectionChanged;
+        CollectionChanged += OnCollectionChanged;
         HorizontalOptions = LayoutOptions.Fill;
         AddStyles();
         RowDefinitions = new RowDefinitionCollection
@@ -108,13 +108,13 @@ public class StepProgressBar : Grid
         {
             Setters =
                 {
-                    new Setter { Property = BackgroundColorProperty,   Value = Colors.Transparent },
-                    new Setter { Property = Button.BorderColorProperty,   Value = StepColor },
-                    new Setter { Property = Button.TextColorProperty,   Value = App.Current.RequestedTheme == AppTheme.Light? Colors.Black : Colors.White },
-                    new Setter { Property = Button.BorderWidthProperty,   Value = 0.5 },
-                    new Setter { Property = HeightRequestProperty,   Value = 45 },
-                    new Setter { Property = WidthRequestProperty,   Value = 45 },
-                    new Setter { Property = PaddingProperty,   Value = new Thickness(0) },
+                    new Setter { Property = Button.BackgroundColorProperty, Value = Colors.Transparent },
+                    new Setter { Property = Button.BorderColorProperty, Value = StepColor },
+                    new Setter { Property = Button.TextColorProperty, Value = App.Current.RequestedTheme == AppTheme.Light? Colors.Black : Colors.White },
+                    new Setter { Property = Button.BorderWidthProperty, Value = 0.5 },
+                    new Setter { Property = HeightRequestProperty, Value = 45 },
+                    new Setter { Property = WidthRequestProperty, Value = 45 },
+                    new Setter { Property = PaddingProperty, Value = new Thickness(0) },
                 },
         };
 
@@ -122,13 +122,13 @@ public class StepProgressBar : Grid
         {
             Setters =
                 {
-                    new Setter { Property = BackgroundColorProperty, Value = SteppedColor },
+                    new Setter { Property = Button.BackgroundColorProperty, Value = SteppedColor },
                     new Setter { Property = Button.FontAttributesProperty, Value = FontAttributes.Bold },
                     new Setter { Property = Button.TextColorProperty, Value = Colors.White },
                     new Setter { Property = Button.BorderColorProperty, Value = StepColor },
-                    new Setter { Property = Button.BorderWidthProperty,   Value = 0.5 },
-                    new Setter { Property = HeightRequestProperty,   Value = 45 },
-                    new Setter { Property = WidthRequestProperty,   Value = 45 },
+                    new Setter { Property = Button.BorderWidthProperty, Value = 0.5 },
+                    new Setter { Property = HeightRequestProperty, Value = 45 },
+                    new Setter { Property = WidthRequestProperty, Value = 45 },
                     new Setter { Property = PaddingProperty, Value = new Thickness(0) },
                 },
         };
@@ -164,16 +164,7 @@ public class StepProgressBar : Grid
 
                 if (i < list.Count - 1)
                 {
-                    var separatorLine = new BoxView()
-                    {
-                        BackgroundColor = Colors.Silver,
-                        HeightRequest = 1,
-                        WidthRequest = 15,
-                        VerticalOptions = LayoutOptions.Center,
-                        HorizontalOptions = LayoutOptions.Fill,
-                        Margin = new Thickness(0),
-                    };
-                    headersStackLayout.Children.Add(separatorLine);
+                    AddSeparatorLine();
                 }
             }
         }
@@ -188,6 +179,50 @@ public class StepProgressBar : Grid
         {
             AddStyles();
         }
+    }
+
+    private void AddItems(IList argsNewItems)
+    {
+        var count = (ItemsSource as IList).Count;
+
+        if (count - argsNewItems.Count != 0)
+        {
+            AddSeparatorLine();
+        }
+
+        for (int i = 0; i < argsNewItems.Count; i++)
+        {
+            var button = new Button()
+            {
+                Text = $"{i + count}",
+                ClassId = $"{i + count}",
+                Style = Resources["unselectedCircleStyle"] as Style,
+                CornerRadius = 20,
+            };
+
+            button.Clicked -= Handle_Clicked;
+            button.Clicked += Handle_Clicked;
+
+            headersStackLayout.Children.Add(button);
+            if (i < argsNewItems.Count - 1)
+            {
+                AddSeparatorLine();
+            }
+        }
+    }
+
+    private void AddSeparatorLine()
+    {
+        var separatorLine = new BoxView()
+        {
+            BackgroundColor = Colors.Silver,
+            HeightRequest = 1,
+            WidthRequest = 10,
+            VerticalOptions = LayoutOptions.Center,
+            HorizontalOptions = LayoutOptions.Fill,
+            Margin = new Thickness(0),
+        };
+        headersStackLayout.Children.Add(separatorLine);
     }
 
     #endregion
@@ -276,62 +311,17 @@ public class StepProgressBar : Grid
         //if (args.OldItems != null) RemoveItems(args.OldItems);
     }
 
-    private void AddItems(IList argsNewItems)
-    {
-        var count = (ItemsSource as IList).Count;
-
-        if (count - argsNewItems.Count != 0)
-        {
-            AddSeparatorLine();
-        }
-
-        for (int i = 0; i < argsNewItems.Count; i++)
-        {
-            var button = new Button()
-            {
-                Text = $"{i + count}",
-                ClassId = $"{i + count}",
-                Style = Resources["unselectedCircleStyle"] as Style,
-                CornerRadius = 20,
-            };
-
-            button.Clicked -= Handle_Clicked;
-            button.Clicked += Handle_Clicked;
-
-            headersStackLayout.Children.Add(button);
-            if (i < argsNewItems.Count - 1)
-            {
-                var separatorLine = new BoxView()
-                {
-                    BackgroundColor = Colors.Silver,
-                    HeightRequest = 1,
-                    WidthRequest = 5,
-                    VerticalOptions = LayoutOptions.Center,
-                    HorizontalOptions = LayoutOptions.Fill,
-                    Margin = new Thickness(0),
-                };
-                headersStackLayout.Children.Add(separatorLine);
-            }
-        }
-    }
-
-    private void AddSeparatorLine()
-    {
-        var separatorLine = new BoxView()
-        {
-            BackgroundColor = Colors.Silver,
-            HeightRequest = 1,
-            WidthRequest = 5,
-            VerticalOptions = LayoutOptions.Center,
-            HorizontalOptions = LayoutOptions.Fill,
-            Margin = new Thickness(0),
-        };
-        headersStackLayout.Children.Add(separatorLine);
-    }
-
-    private static event EventHandler<NotifyCollectionChangedEventArgs> _collectionChanged;
+    private static event EventHandler<NotifyCollectionChangedEventArgs> CollectionChanged;
     private static void ItemsSource_OnItemChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
-        _collectionChanged?.Invoke(null, e);
+        CollectionChanged?.Invoke(null, e);
+    }
+
+    private static void StepColorPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        StepProgressBar control = (StepProgressBar)bindable;
+        var style = control.Resources["selectedCircleStyle"] as Style;
+        var setter = style.Setters.First(item => item.Property.PropertyName == BackgroundColorProperty.PropertyName);
+        setter.Value = newValue;
     }
 }
