@@ -156,7 +156,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         WeakReferenceMessenger.Default.Unregister<ExercisesSelectFinishedMessage>(this);
         WeakReferenceMessenger.Default.Register<ExercisesSelectFinishedMessage>(this, (r, m) =>
         {
-            AddSelectedExercises(m.Selected.Select(item => new TrainingExerciseViewModel(item.GetExercise(), new TrainingExerciseComm())));
+            AddSelectedExercises(m.Selected.Select(item => TrainingExerciseViewModel.Create(item.GetExercise())));
             WeakReferenceMessenger.Default.Unregister<ExercisesSelectFinishedMessage>(this);
             Analytics.TrackEvent($"{GetType().Name}: AddExercises finished");
         });

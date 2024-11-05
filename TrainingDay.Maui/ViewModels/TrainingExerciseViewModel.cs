@@ -244,9 +244,17 @@ public class TrainingExerciseViewModel : ExerciseViewModel
         set => SetProperty(ref isCheckBoxVisible, value);
     }
 
-
-    public static string GetDefualtWeightAndRepsString(List<Common.ExerciseTags> tagsList)
+    public static TrainingExerciseViewModel Create(Exercise exercise)
     {
+        return new TrainingExerciseViewModel(exercise, new TrainingExerciseComm()
+        {
+            WeightAndRepsString = GetDefualtWeightAndRepsString(exercise.TagsValue)
+        });
+    }
+
+    private static string GetDefualtWeightAndRepsString(int tagsValue)
+    {
+        List<Common.ExerciseTags> tagsList = Common.ExerciseTools.ConvertFromIntToTagList(tagsValue);
         string weightAndReps = string.Empty;
         if (tagsList.Contains(Common.ExerciseTags.ExerciseByRepsAndWeight) || tagsList.Contains(Common.ExerciseTags.ExerciseByReps))
         {

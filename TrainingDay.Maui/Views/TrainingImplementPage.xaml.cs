@@ -355,10 +355,7 @@ public partial class TrainingImplementPage : ContentPage
         UnsubscribeMessages();
         WeakReferenceMessenger.Default.Register<ExercisesSelectFinishedMessage>(this, async (r, args) =>
         {
-            AddExercises(args.Selected.Select(item => new TrainingExerciseViewModel(item.GetExercise(), new TrainingExerciseComm()
-            {
-                WeightAndRepsString = TrainingExerciseViewModel.GetDefualtWeightAndRepsString(item.Tags)
-            })));
+            AddExercises(args.Selected.Select(item => TrainingExerciseViewModel.Create(item.GetExercise())));
 
             UnsubscribeMessages();
             Analytics.TrackEvent($"TrainingImplementPage: AddExercises finished");

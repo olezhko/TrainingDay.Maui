@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.AppCenter.Analytics;
-using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Maui.Extensions;
@@ -37,11 +36,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
 
             foreach (var exerciseItem in args.Selected)
             {
-                training.Exercises.Add(new TrainingExerciseViewModel(exerciseItem.GetExercise(),
-                    new TrainingExerciseComm()
-                    {
-                        WeightAndRepsString = TrainingExerciseViewModel.GetDefualtWeightAndRepsString(exerciseItem.Tags)
-                    }));
+                training.Exercises.Add(TrainingExerciseViewModel.Create(exerciseItem.GetExercise()));
             }
 
             SaveNewTrainingViewModelToDatabase(training, null);
@@ -164,14 +159,8 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
             preparedHomeString.Training = new TrainingViewModel()
             {
                 Exercises = new ObservableCollection<TrainingExerciseViewModel>(exerciseBase
-                    .Where(ex => TrainingDay.Common.ExerciseTools.ConvertFromIntToTagList(ex.TagsValue).Contains(TrainingDay.Common.ExerciseTags.CanDoAtHome)).Select(item =>
-                        new TrainingExerciseViewModel(item, new TrainingExerciseComm())
-                        {
-                            WeightAndRepsItems = new ObservableCollection<WeightAndRepsViewModel>()
-                            {
-                                    new WeightAndRepsViewModel(0,15),new WeightAndRepsViewModel(0,15),new WeightAndRepsViewModel(0,15)
-                            }
-                        })),
+                    .Where(ex => TrainingDay.Common.ExerciseTools.ConvertFromIntToTagList(ex.TagsValue).Contains(TrainingDay.Common.ExerciseTags.CanDoAtHome))
+                    .Select(item => TrainingExerciseViewModel.Create(item))),
                 Title = AppResources.PreparedHomeString,
             };
         };
@@ -297,7 +286,6 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
         params MuscleViewModel[] muscles)
     {
         var result = new ObservableCollection<TrainingExerciseViewModel>();
-        int order = 0;
         foreach (var baseExercise in baseExercises)
         {
             try
@@ -314,19 +302,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
 
                 if (sub.Any())
                 {
-                    result.Add(new TrainingExerciseViewModel(baseExercise, new TrainingExerciseComm()
-                    {
-                        OrderNumber = order,
-                        ExerciseId = baseExercise.Id,
-                    })
-                    {
-                        WeightAndRepsItems = new ObservableCollection<WeightAndRepsViewModel>(new[]
-                        {
-                                new WeightAndRepsViewModel(0, 15), new WeightAndRepsViewModel(0, 15),
-                                new WeightAndRepsViewModel(0, 15),
-                            }),
-                    });
-                    order++;
+                    result.Add(TrainingExerciseViewModel.Create(baseExercise));
                 }
             }
             catch (Exception e)
@@ -341,7 +317,6 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
     private ObservableCollection<TrainingExerciseViewModel> GetExercisesByCodeNum(List<Exercise> baseExercises, params int[] codeNums)
     {
         var result = new ObservableCollection<TrainingExerciseViewModel>();
-        int i = 0;
         foreach (var codeNum in codeNums)
         {
             try
@@ -349,21 +324,8 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
                 var exercise = baseExercises.FirstOrDefault(item => item.CodeNum == codeNum);
                 if (exercise != null)
                 {
-                    result.Add(new TrainingExerciseViewModel(exercise, new TrainingExerciseComm()
-                    {
-                        OrderNumber = i,
-                        ExerciseId = exercise.Id,
-                    })
-                    {
-                        WeightAndRepsItems = new ObservableCollection<WeightAndRepsViewModel>(new[]
-                        {
-                                new WeightAndRepsViewModel(0, 15), new WeightAndRepsViewModel(0, 15),
-                                new WeightAndRepsViewModel(0, 15),
-                            }),
-                    });
+                    result.Add(TrainingExerciseViewModel.Create(exercise));
                 }
-
-                i++;
             }
             catch (Exception e)
             {
