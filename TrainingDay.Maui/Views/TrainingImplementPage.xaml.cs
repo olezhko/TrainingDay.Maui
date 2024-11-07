@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using Microsoft.Maui.Controls;
 using Plugin.AdMob;
 using Plugin.AdMob.Services;
 using System.Collections.ObjectModel;
@@ -265,6 +266,7 @@ public partial class TrainingImplementPage : ContentPage
         notificator.Cancel(PushMessagesExtensions.TrainingNotificationId);
 
         await Shell.Current.GoToAsync("..");
+        await Shell.Current.GoToAsync("..");
         await SiteService.SendFinishedWorkout(Settings.Token);
     }
 
@@ -377,6 +379,7 @@ public partial class TrainingImplementPage : ContentPage
             Items.Add(newSuperSet);
             exerciseItem.TrainingId = TrainingItem.Id;
             exerciseItem.OrderNumber = Items.Count - 1;
+            TrainingItem.AddExercise(exerciseItem);
             var id = App.Database.SaveTrainingExerciseItem(exerciseItem.GetTrainingExerciseComm());
             exerciseItem.TrainingExerciseId = id;
         }

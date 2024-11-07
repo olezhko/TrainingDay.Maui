@@ -175,7 +175,6 @@
         <Setter Property="BorderColor" Value="Transparent" />
         <Setter Property="CornerRadius" Value="5"/>
         <Setter Property="Padding" Value="5"/>
-        <Setter Property="HeightRequest" Value="70"/>
     </Style>
     <Style TargetType="Label" x:Key="MaterialLabel">
         <Setter Property="AnchorX" Value="0"/>
@@ -186,7 +185,7 @@
         <Setter Property="Margin" Value="5,0"/>
 
         <Setter Property="ZIndex" Value="2"/>
-        <Setter Property="BackgroundColor" Value="Transparent"/>
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource Gray100}}"/>
         <Setter Property="controls:MaterialLabelAttached.IsMaterialBehavior" Value="True"/>
     </Style>
 

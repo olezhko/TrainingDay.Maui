@@ -175,7 +175,7 @@
     <value>Группа:</value>
   </data>
   <data name="ChooseLanguage" xml:space="preserve">
-    <value>Язык:</value>
+    <value>Язык</value>
   </data>
   <data name="ChoseAction" xml:space="preserve">
     <value>Выберите действие</value>
@@ -535,7 +535,7 @@
     <value>Выбрать мышцы</value>
   </data>
   <data name="SelectPeriodString" xml:space="preserve">
-    <value>Период:</value>
+    <value>Период</value>
   </data>
   <data name="SelectString" xml:space="preserve">
     <value>Выбрать</value>

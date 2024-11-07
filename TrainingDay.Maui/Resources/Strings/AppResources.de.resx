@@ -163,7 +163,7 @@
     <value>Gruppe:</value>
   </data>
   <data name="ChooseLanguage" xml:space="preserve">
-    <value>Sprache:</value>
+    <value>Sprache</value>
   </data>
   <data name="ChoseAction" xml:space="preserve">
     <value>Wähle eine Aktion</value>
@@ -514,7 +514,7 @@
     <value>MUSKELN HINZUFÜGEN</value>
   </data>
   <data name="SelectPeriodString" xml:space="preserve">
-    <value>Zeitraum:</value>
+    <value>Zeitraum</value>
   </data>
   <data name="SelectString" xml:space="preserve">
     <value>Wählen</value>

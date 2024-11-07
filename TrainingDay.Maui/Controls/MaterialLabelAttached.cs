@@ -1,4 +1,5 @@
-﻿using TrainingDay.Maui.Extensions;
+﻿using Microsoft.Maui;
+using TrainingDay.Maui.Extensions;
 
 namespace TrainingDay.Maui.Controls
 {
@@ -59,12 +60,16 @@ namespace TrainingDay.Maui.Controls
                 label.VerticalOptions = LayoutOptions.Start;
                 label.ScaleXTo(0.6, 250);
                 label.ScaleYTo(0.6, 250);
+                label.Opacity = 1;
+                label.Margin = new Thickness(5, -10, 5, 0);
             }
             else
             {
                 label.VerticalOptions = LayoutOptions.Center;
                 label.ScaleXTo(1, 250);
                 label.ScaleYTo(1, 250);
+                label.Opacity = 0.5;
+                label.Margin = new Thickness(5, 0, 5, 0);
             }
         }
         

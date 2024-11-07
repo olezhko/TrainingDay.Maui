@@ -32,29 +32,29 @@
 		<UseInterpreter>True</UseInterpreter>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
+		<ApplicationVersion>281</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.1.5</ApplicationDisplayVersion>
+	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-	  <CreatePackage>false</CreatePackage>
-	  <ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
-    <ApplicationVersion>281</ApplicationVersion>
-    <ApplicationDisplayVersion>1.2.1.5</ApplicationDisplayVersion>
+		<CreatePackage>false</CreatePackage>
+		<ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
+		<ApplicationVersion>1.2.1.5</ApplicationVersion>
+		<ApplicationDisplayVersion>277</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
-    <ApplicationVersion>281</ApplicationVersion>
-    <ApplicationDisplayVersion>1.2.1.5</ApplicationDisplayVersion>
+		<ApplicationVersion>281</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.1.5</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
-    <ApplicationVersion>281</ApplicationVersion>
-    <ApplicationDisplayVersion>1.2.1.5</ApplicationDisplayVersion>
-	  <CreatePackage>false</CreatePackage>
-	  <CodesignProvision>TrainingDayPublish</CodesignProvision>
-	  <CodesignKey>Apple Distribution: Oleg Ladyka (36WMJT4QLC)</CodesignKey>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
-    <ApplicationVersion>281</ApplicationVersion>
-    <ApplicationDisplayVersion>1.2.1.5</ApplicationDisplayVersion>
+		<ApplicationVersion>1.2.1.6</ApplicationVersion>
+		<ApplicationDisplayVersion>282</ApplicationDisplayVersion>
+		<CreatePackage>false</CreatePackage>
+		<CodesignProvision>TrainingDayPublish</CodesignProvision>
+		<CodesignKey>Apple Distribution: Oleg Ladyka (36WMJT4QLC)</CodesignKey>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -162,6 +162,9 @@
 	  <Compile Update="Views\ExerciseListPage.xaml.cs">
 	    <DependentUpon>ExerciseListPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Resources\Strings\AppResources.Designer.cs">
+	    <DependentUpon>AppResources.resx</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -171,7 +174,7 @@
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Resources\Strings\AppResources.ru.resx">
 	    <Generator>ResXFileCodeGenerator</Generator>
-	    <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+	    <LastGenOutput>AppResources.ru.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	</ItemGroup>
 

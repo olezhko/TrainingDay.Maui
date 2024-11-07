@@ -12,12 +12,13 @@
                         SelectedItem="{Binding Source={x:Reference Self}, Path=CurrentItem, Mode=TwoWay}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid ColumnDefinitions="70,*" ColumnSpacing="10" Margin="5">
+                    <Grid ColumnDefinitions="80,*" ColumnSpacing="10" Margin="5">
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
                         </Grid.GestureRecognizers>
 
-                        <Frame Grid.Column="0" Padding="5" BackgroundColor="White" CornerRadius="5" HorizontalOptions="Center" VerticalOptions="Center" BorderColor="Transparent">
+                        <Frame Grid.Column="0" Padding="5" BackgroundColor="White" CornerRadius="5" HorizontalOptions="Center" VerticalOptions="Center" BorderColor="Transparent"
+                               Margin="5,0">
                             <controls:ImageCache x:Name="ImageControl" HeightRequest="60" CodeNum="{Binding CodeNum}" WidthRequest="60"/>
                         </Frame>
 

@@ -149,18 +149,7 @@ public class StepProgressBar : Grid
             var list = ItemsSource as IList;
             for (int i = 0; i < list.Count; i++)
             {
-                var button = new Button()
-                {
-                    Text = $"{i + 1}",
-                    AutomationId = $"{i + 1}",
-                    Style = Resources["unselectedCircleStyle"] as Style,
-                    CornerRadius = 20,
-                };
-
-                button.Clicked -= Handle_Clicked;
-                button.Clicked += Handle_Clicked;
-
-                headersStackLayout.Children.Add(button);
+                AddStepButton(i + 1);
 
                 if (i < list.Count - 1)
                 {
@@ -192,23 +181,28 @@ public class StepProgressBar : Grid
 
         for (int i = 0; i < argsNewItems.Count; i++)
         {
-            var button = new Button()
-            {
-                Text = $"{i + count}",
-                ClassId = $"{i + count}",
-                Style = Resources["unselectedCircleStyle"] as Style,
-                CornerRadius = 20,
-            };
+            AddStepButton(i + count);
 
-            button.Clicked -= Handle_Clicked;
-            button.Clicked += Handle_Clicked;
-
-            headersStackLayout.Children.Add(button);
             if (i < argsNewItems.Count - 1)
             {
                 AddSeparatorLine();
             }
         }
+    }
+
+    private void AddStepButton(int index)
+    {
+        var button = new Button()
+        {
+            Text = $"{index}",
+            AutomationId = $"{index}",
+            Style = Resources["unselectedCircleStyle"] as Style,
+            CornerRadius = 20,
+        };
+
+        button.Clicked += Handle_Clicked;
+
+        headersStackLayout.Children.Add(button);
     }
 
     private void AddSeparatorLine()
