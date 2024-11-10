@@ -15,6 +15,10 @@ public partial class TrainingsSetGroupPage : ContentPage
     {
         InitializeComponent();
         var trainingsGroups = new ObservableCollection<TrainingUnion>(App.Database.GetTrainingsGroups());
+        if (!trainingsGroups.Any())
+        {
+            GroupContainer.IsVisible = false;
+        }
         GroupsPicker.ItemsSource = trainingsGroups;
     }
 

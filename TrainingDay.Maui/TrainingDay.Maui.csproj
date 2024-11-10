@@ -33,25 +33,25 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
-		<ApplicationVersion>281</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.1.5</ApplicationDisplayVersion>
+		<ApplicationVersion>283</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.1.7</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
 		<CreatePackage>false</CreatePackage>
 		<ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
-		<ApplicationVersion>1.2.1.5</ApplicationVersion>
-		<ApplicationDisplayVersion>277</ApplicationDisplayVersion>
+    <ApplicationVersion>283</ApplicationVersion>
+    <ApplicationDisplayVersion>1.2.1.7</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
-		<ApplicationVersion>281</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.1.5</ApplicationDisplayVersion>
+    <ApplicationVersion>283</ApplicationVersion>
+    <ApplicationDisplayVersion>1.2.1.7</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
-		<ApplicationVersion>1.2.1.6</ApplicationVersion>
-		<ApplicationDisplayVersion>282</ApplicationDisplayVersion>
+    <ApplicationVersion>283</ApplicationVersion>
+    <ApplicationDisplayVersion>1.2.1.7</ApplicationDisplayVersion>
 		<CreatePackage>false</CreatePackage>
 		<CodesignProvision>TrainingDayPublish</CodesignProvision>
 		<CodesignKey>Apple Distribution: Oleg Ladyka (36WMJT4QLC)</CodesignKey>
@@ -133,13 +133,13 @@
   
   <ItemGroup>
     <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.301" />
-    <PackageReference Include="AWSSDK.S3" Version="3.7.404.2" />
+    <PackageReference Include="AWSSDK.S3" Version="3.7.405.9" />
     <PackageReference Include="CommunityToolkit.Maui" Version="9.1.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
-    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.5" />
-    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.5" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.91" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.91" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.6" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.6" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.93" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.93" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
     <PackageReference Include="Plugin.AdMob" Version="1.1.0" />
     <PackageReference Include="RestSharp" Version="106.12.0" />

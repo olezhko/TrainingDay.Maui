@@ -299,6 +299,16 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         App.Database.SaveTrainingGroup(gr);
     }
 
+    private async Task Get()
+    {
+
+    }
+
+    private async Task<bool>  GetSome()
+    {
+        return false;
+    }
+
     private async void LongPressed(Frame sender)
     {
         if (isLongPressPopupOpened)

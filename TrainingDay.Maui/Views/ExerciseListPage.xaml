@@ -114,19 +114,12 @@
                         HorizontalTextAlignment="Center"
                         Text="{Binding ExerciseItemName}"
                         VerticalTextAlignment="Center" />
-                                    <FlexLayout
-                        AlignContent="Start"
-                        AlignItems="Center"
-                        BindableLayout.ItemsSource="{Binding Muscles}"
-                        Direction="Row"
-                        HorizontalOptions="Center"
-                        JustifyContent="Center"
-                        VerticalOptions="Center"
-                        Wrap="Wrap">
+                                    <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" HorizontalOptions="Center" Wrap="Wrap" VerticalOptions="Center" Direction="Row"
+                                                    JustifyContent="Center" AlignItems="Center" AlignContent="Start">
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate>
                                                 <Frame Margin="1" Style="{StaticResource MuscleFrameCellStyle}">
-                                                    <Label FontSize="10" Text="{Binding Name}" TextColor="White" LineBreakMode="NoWrap"/>
+                                                    <Label FontSize="11" Text="{Binding Name}" TextColor="White" LineBreakMode="NoWrap"/>
                                                 </Frame>
                                             </DataTemplate>
                                         </BindableLayout.ItemTemplate>

@@ -611,7 +611,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         Analytics.TrackEvent($"{GetType().Name}: ShowTrainingSettingsPage");
 
         var action = await Shell.Current.DisplayActionSheet(AppResources.ChoseAction, AppResources.CancelString, null, 
-            AppResources.Notification, 
+            //AppResources.Notification, 
             AppResources.ShareTrainingString, 
             AppResources.SuperSetControl, 
             AppResources.MoveString, 

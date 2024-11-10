@@ -76,7 +76,7 @@
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate>
                                                 <Frame Style="{StaticResource MuscleFrameCellStyle}" Margin="1">
-                                                    <Label Text="{Binding Name}" FontSize="10" TextColor="White"/>
+                                                    <Label Text="{Binding Name}" FontSize="11" TextColor="White"/>
                                                 </Frame>
                                             </DataTemplate>
                                         </BindableLayout.ItemTemplate>

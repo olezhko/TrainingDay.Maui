@@ -4,12 +4,13 @@
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              x:Class="TrainingDay.Maui.Views.TrainingsSetGroupPage"
-             Title="{x:Static resx:AppResources.ChooseGroupOrNewString}">
-    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="10">
-        <Grid Grid.Row="0">
+             Title="{x:Static resx:AppResources.TrainingToGroupString}">
+    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="10" Margin="5,0">
+        <Grid x:Name="GroupContainer" Grid.Row="0">
             <Label Text="{x:Static resx:AppResources.ChooseGroupOrNewString}" FontSize="18" controls:MaterialLabelAttached.IsMaterialBehavior="True" HorizontalOptions="Start"
                                        TextColor="Orange" VerticalOptions="Center" controls:MaterialLabelAttached.MaterialControlType="Picker"/>
-            <Picker x:Name="GroupsPicker" SelectedIndexChanged="GroupsPicker_SelectedIndexChanged" ItemDisplayBinding="{Binding Name}" VerticalOptions="End"/>
+            <Picker x:Name="GroupsPicker" SelectedIndexChanged="GroupsPicker_SelectedIndexChanged" ItemDisplayBinding="{Binding Name}" VerticalOptions="End"
+                    Title="{x:Static resx:AppResources.ChooseGroupOrNewString}"/>
         </Grid>
 
         <Button Grid.Row="1" CornerRadius="20" Clicked="ShowNewGroupWnd_Click" Text="{x:Static resx:AppResources.CreateNewString}" Style="{DynamicResource ActionButton}" BackgroundColor="RoyalBlue"/>

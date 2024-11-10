@@ -15,7 +15,7 @@ namespace TrainingDay.Maui
 
 #if DEBUG
             var configBuilder = new RequestConfiguration.Builder();
-            configBuilder.SetTestDeviceIds(new List<string>() { "558BEEA7EC8B11BD288CD4BC81AACA59", "1AD07ECCFB97DD84BD8554BD4E4349CA" });
+            configBuilder.SetTestDeviceIds(new List<string>() { "FEDBECEF163A5F1950904DE45DEFD8BD" });
             MobileAds.RequestConfiguration = configBuilder.Build();
 #endif
             CreateNotificationChannel();

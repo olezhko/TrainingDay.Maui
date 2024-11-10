@@ -160,7 +160,7 @@
     <value>Changes will be accepted after restart application</value>
   </data>
   <data name="ChooseGroupOrNewString" xml:space="preserve">
-    <value>Group:</value>
+    <value>Group</value>
   </data>
   <data name="ChooseLanguage" xml:space="preserve">
     <value>Language</value>

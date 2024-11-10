@@ -160,7 +160,7 @@
     <value>Änderungen werden nach Neustart der Anwendung übernommen</value>
   </data>
   <data name="ChooseGroupOrNewString" xml:space="preserve">
-    <value>Gruppe:</value>
+    <value>Gruppe</value>
   </data>
   <data name="ChooseLanguage" xml:space="preserve">
     <value>Sprache</value>

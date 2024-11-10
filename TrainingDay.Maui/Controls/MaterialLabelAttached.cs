@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui;
-using TrainingDay.Maui.Extensions;
+﻿using TrainingDay.Maui.Extensions;
 
 namespace TrainingDay.Maui.Controls
 {
@@ -61,7 +60,13 @@ namespace TrainingDay.Maui.Controls
                 label.ScaleXTo(0.6, 250);
                 label.ScaleYTo(0.6, 250);
                 label.Opacity = 1;
+#if IOS
                 label.Margin = new Thickness(5, -10, 5, 0);
+#endif
+
+#if ANDROID
+                label.Margin = new Thickness(5, -5, 5, 0);
+#endif
             }
             else
             {

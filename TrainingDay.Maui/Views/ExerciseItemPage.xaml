@@ -63,8 +63,8 @@
                     <Button CornerRadius="20" Text="{x:Static resx:AppResources.SelectMusclesString}" IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}" 
                         HorizontalOptions="Fill" Clicked="ShowMusclesLookup_Click"/>
                     <StackLayout>
-                        <FlexLayout AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding Muscles}"
-                            Direction="Row" JustifyContent="Start" VerticalOptions="Start" Wrap="Wrap">
+                        <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" HorizontalOptions="Center" Wrap="Wrap" VerticalOptions="Center" Direction="Row"
+                                                    JustifyContent="Center" AlignItems="Center" AlignContent="Start">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate>
                                     <Frame Margin="1" Style="{StaticResource MuscleFrameCellStyle}">

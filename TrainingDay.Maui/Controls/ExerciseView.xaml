@@ -201,8 +201,8 @@
             </StackLayout>
         </StackLayout>
 
-        <FlexLayout Grid.Row="3" AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding Muscles}"
-                        Direction="Row" JustifyContent="Start" VerticalOptions="Start" Wrap="Wrap">
+        <FlexLayout Grid.Row="3" BindableLayout.ItemsSource="{Binding Muscles}" HorizontalOptions="Center" Wrap="Wrap" VerticalOptions="Center" Direction="Row"
+                                                    JustifyContent="Center" AlignItems="Center" AlignContent="Start">
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
                     <Frame Margin="1" Style="{StaticResource MuscleFrameCellStyle}">

@@ -172,7 +172,7 @@
     <value>Изменения вступят в силу после перезапуска приложения</value>
   </data>
   <data name="ChooseGroupOrNewString" xml:space="preserve">
-    <value>Группа:</value>
+    <value>Группа</value>
   </data>
   <data name="ChooseLanguage" xml:space="preserve">
     <value>Язык</value>

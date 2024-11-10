@@ -107,8 +107,8 @@
 
                                 <StackLayout Orientation="Vertical" Grid.Column="1" Padding="0" Margin="0" VerticalOptions="Center">
                                     <Label Text="{Binding ExerciseItemName}" FontSize="17" HorizontalTextAlignment="Center" HorizontalOptions="Fill" VerticalOptions="Start" Margin="0"/>
-                                    <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" HorizontalOptions="Center" Wrap="Wrap" VerticalOptions="Center" Direction="Row"
-                                        JustifyContent="Center" AlignItems="Center" AlignContent="Start">
+                                    <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" HorizontalOptions="Center" Wrap="Wrap" VerticalOptions="Center" 
+                                                Direction="Row" JustifyContent="Center" AlignItems="Center" AlignContent="Start">
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate>
                                                 <Frame Style="{StaticResource MuscleFrameCellStyle}" Margin="1">
