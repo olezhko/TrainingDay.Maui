@@ -16,4 +16,5 @@ public class TrainingExerciseSerialize
     public int TagsValue { get; set; }
     public int TrainingExerciseId { get; set; }
     public int CodeNum { get; set; }
+    public bool IsSkipped { get; set; }
 }

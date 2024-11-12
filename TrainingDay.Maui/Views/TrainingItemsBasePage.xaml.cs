@@ -46,7 +46,7 @@ public partial class TrainingItemsBasePage : ContentPage
         {
             Settings.IsTrainingNotFinished = false;
 
-            var trainingSerialize = TrainingSerialize.LoadFromFile(filename);
+            TrainingSerialize trainingSerialize = TrainingSerialize.LoadFromFile(filename);
             if (trainingSerialize != null)
             {
                 var result = await MessageManager.DisplayAlert(AppResources.ContinueLastTrainingQuestion, trainingSerialize.Title, AppResources.YesString, AppResources.NoString);
@@ -70,6 +70,7 @@ public partial class TrainingItemsBasePage : ContentPage
                                 ExerciseItemName = trainingExerciseSerialize.ExerciseItemName,
                                 SuperSetId = trainingExerciseSerialize.SuperSetId,
                                 SuperSetNum = trainingExerciseSerialize.SuperSetNum,
+                                IsSkipped = trainingExerciseSerialize.IsSkipped,
                                 Tags = ExerciseTools.ConvertFromIntToTagList(trainingExerciseSerialize.TagsValue),
                                 Description = DescriptionViewModel.ConvertFromJson(trainingExerciseSerialize.Description),
                                 CodeNum = trainingExerciseSerialize.CodeNum,

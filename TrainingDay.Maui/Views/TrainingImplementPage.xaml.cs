@@ -25,6 +25,7 @@ public partial class TrainingImplementPage : ContentPage
     private IDispatcherTimer _timer;
     private IPushNotification notificator;
     private TrainingViewModel trainingItem;
+
     public TrainingImplementPage()
     {
         InitializeComponent();
@@ -69,6 +70,11 @@ public partial class TrainingImplementPage : ContentPage
                 if (!item.SuperSetItems.First().IsNotFinished)
                 {
                     StepProgressBarControl.DeselectElement();
+                }
+
+                if (item.SuperSetItems.First().IsSkipped)
+                {
+                    StepProgressBarControl.SkipElement();
                 }
 
                 index++;

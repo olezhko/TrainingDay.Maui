@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using System.Text;
 
 namespace TrainingDay.Maui.Models.Serialize;
 
@@ -17,7 +18,20 @@ public class TrainingSerialize
 
     public int Id { get; set; }
 
-    public static TrainingSerialize LoadFromFile(string filename)
+    public static TrainingSerialize LoadFromData(string data)
+    {
+        try
+        {
+            var training = JsonConvert.DeserializeObject<TrainingSerialize>(data);
+            return training;
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+    }
+
+    internal static TrainingSerialize LoadFromFile(string filename)
     {
         try
         {
@@ -34,6 +48,6 @@ public class TrainingSerialize
     public void SaveToFile(string filename)
     {
         var content = JsonConvert.SerializeObject(this);
-        File.WriteAllText(filename, content);
+        File.WriteAllText(filename, content, Encoding.UTF8);
     }
 }

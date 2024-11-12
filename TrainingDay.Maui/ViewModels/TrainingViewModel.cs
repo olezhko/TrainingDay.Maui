@@ -98,6 +98,7 @@ public class TrainingViewModel : BaseViewModel
                 Description = JsonConvert.SerializeObject(trainingExerciseViewModel.Description.Model),
                 ExerciseItemName = trainingExerciseViewModel.ExerciseItemName,
                 IsNotFinished = trainingExerciseViewModel.IsNotFinished,
+                IsSkipped = trainingExerciseViewModel.IsSkipped,
                 SuperSetNum = trainingExerciseViewModel.SuperSetNum,
 
                 TagsValue = TrainingDay.Common.ExerciseTools.ConvertTagListToInt(trainingExerciseViewModel.Tags),

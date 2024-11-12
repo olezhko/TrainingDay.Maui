@@ -1,10 +1,12 @@
 ﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.AppCenter.Analytics;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Database;
+using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.Views;
@@ -21,22 +23,8 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         ItemsGrouped = new ObservableCollection<Grouping<string, TrainingViewModel>>();
         AddNewTrainingCommand = new Command(AddNewTraining);
         ItemSelectedCommand = new Command<Frame>(TrainingSelected);
-        //(Application.Current as App).IncomingTrainingAdded += App_IncomingTrainingAdded;
+        SubscribeMessages();
     }
-
-    public bool IsGrouped { get; set; }
-
-    public ObservableCollection<Grouping<string, TrainingViewModel>> ItemsGrouped { get => itemsGrouped; set => SetProperty(ref itemsGrouped, value); }
-
-    public INavigation Navigation { get; set; }
-
-    public ICommand AddNewTrainingCommand { get; set; }
-
-    public ICommand ItemSelectedCommand { get; set; }
-
-    public Command<object> ToggleExpandGroupCommand => new Command<object>(ToggleExpandGroup);
-
-    public ICommand LongPressedEffectCommand => new Command<Frame>(LongPressed);
 
     public void LoadItems(bool isOverride = false)
     {
@@ -134,6 +122,21 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
                 defaultGroup.Add(item);
             }
         }
+    }
+
+    private void SubscribeMessages()
+    {
+        UnsubscribeMessages();
+        WeakReferenceMessenger.Default.Register<IncomingTrainingAddedMessage>(this, async (r, args) =>
+        {
+            LoadItems();
+            Analytics.TrackEvent($"TrainingItemsBasePageViewModel: Added Incoming Training");
+        });
+    }
+
+    private void UnsubscribeMessages()
+    {
+        WeakReferenceMessenger.Default.Unregister<IncomingTrainingAddedMessage>(this);
     }
 
     private void App_IncomingTrainingAdded(object sender, EventArgs e)
@@ -299,16 +302,6 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         App.Database.SaveTrainingGroup(gr);
     }
 
-    private async Task Get()
-    {
-
-    }
-
-    private async Task<bool>  GetSome()
-    {
-        return false;
-    }
-
     private async void LongPressed(Frame sender)
     {
         if (isLongPressPopupOpened)
@@ -353,4 +346,20 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
             return;
         }
     }
+
+    #region Properties
+    public bool IsGrouped { get; set; }
+
+    public ObservableCollection<Grouping<string, TrainingViewModel>> ItemsGrouped { get => itemsGrouped; set => SetProperty(ref itemsGrouped, value); }
+
+    public INavigation Navigation { get; set; }
+
+    public ICommand AddNewTrainingCommand { get; set; }
+
+    public ICommand ItemSelectedCommand { get; set; }
+
+    public Command<object> ToggleExpandGroupCommand => new Command<object>(ToggleExpandGroup);
+
+    public ICommand LongPressedEffectCommand => new Command<Frame>(LongPressed);
+    #endregion
 }

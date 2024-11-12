@@ -1,20 +1,25 @@
 ﻿using Amazon;
 using Amazon.S3;
 using Amazon.S3.Model;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using System.Globalization;
 using System.Net;
-using TrainingDay.Common;
 using TrainingDay.Maui.Extensions;
+using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Database;
+using TrainingDay.Maui.Models.Messages;
+using TrainingDay.Maui.Models.Serialize;
+using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 
 namespace TrainingDay.Maui
 {
     public partial class App : Application
     {
+        private IPushNotification notificator;
         private const string DatabaseName = "exercise.db";
         private static Repository database;
         private static object lockBase = new object();
@@ -67,6 +72,8 @@ namespace TrainingDay.Maui
             Analytics.TrackEvent("Application Started");
 
             DownloadImages();
+
+            notificator = Handler.MauiContext.Services.GetRequiredService<IPushNotification>();
         }
 
         private async void DownloadImages()
@@ -96,7 +103,7 @@ namespace TrainingDay.Maui
                         ImageData image = App.Database.GetImage(url);
                         if (image == null)
                         {
-                            var path = await GetFile(s3Client, b.Key);
+                            var path = await App.GetFile(s3Client, b.Key);
                             var bytes = File.ReadAllBytes(path);
                             var item = new ImageData()
                             {
@@ -117,7 +124,7 @@ namespace TrainingDay.Maui
             }
         }
 
-        public async Task<string> GetFile(AmazonS3Client amazonS3Client, string key)
+        public static async Task<string> GetFile(AmazonS3Client amazonS3Client, string key)
         {
             var response = await amazonS3Client.GetObjectAsync(ConstantKeys.AwsS3.BucketName, key);
 
@@ -157,6 +164,114 @@ namespace TrainingDay.Maui
             catch (Exception e)
             {
                 Console.WriteLine(e);
+            }
+        }
+
+        internal void SetIncomingFile(string data)
+        {
+            try
+            {
+                var vm = TrainingSerialize.LoadFromData(data);
+                if (vm != null)
+                {
+                    IncomingTraining(vm);
+                    notificator.Show(new PushMessage()
+                    {
+                        Id = PushMessagesExtensions.WorkoutAddedId,
+                        Title = AppResources.WorkoutAddedString,
+                        Message = vm.Title,
+                        IsDisableSwipe = true,
+                        IsSilent = false,
+                        IsUpdateCurrent = false,
+                        Data = null
+                    });
+                    WeakReferenceMessenger.Default.Send<IncomingTrainingAddedMessage>();
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+
+            notificator.Show(new PushMessage()
+            {
+                Id = PushMessagesExtensions.WorkoutAddedId,
+                Title = AppResources.Denied,
+                Message = AppResources.WorkoutAddedErrorString,
+                IsDisableSwipe = true,
+                IsSilent = false,
+                IsUpdateCurrent = false,
+                Data = null
+            });
+        }
+
+        private void IncomingTraining(TrainingSerialize vm)
+        {
+            var exercises = Database.GetExerciseItems().ToList();
+            var superSets = new List<Models.Database.SuperSet>();
+
+            var id = Database.SaveTrainingItem(new Models.Database.Training() { Title = vm.Title });
+
+            foreach (var item in vm.Items)
+            {
+                var exercise = exercises.FirstOrDefault(a => a.CodeNum == item.CodeNum);
+                int exerciseId;
+                if (exercise != null && item.CodeNum != 0)
+                {
+                    exerciseId = exercise.Id;
+                }
+                else
+                {
+                    var newItem = new Models.Database.Exercise()
+                    {
+                        Description = item.Description,
+                        ExerciseItemName = item.ExerciseItemName,
+                        MusclesString = item.Muscles,
+                        TagsValue = item.TagsValue,
+                        CodeNum = -1,
+                    };
+                    exerciseId = Database.SaveExerciseItem(newItem);
+
+                    newItem.Id = exerciseId;
+                    exercises.Add(newItem);
+                }
+
+                int superSetId;
+                if (item.SuperSetId == 0)
+                {
+                    superSetId = 0;
+                }
+                else
+                {
+                    var superSet = superSets.FirstOrDefault(a => a.Count == item.SuperSetId);
+
+                    if (superSet != null)
+                    {
+                        superSetId = superSet.Id;
+                    }
+                    else
+                    {
+                        var newItem = new Models.Database.SuperSet()
+                        {
+                            TrainingId = id,
+                        };
+                        superSetId = Database.SaveSuperSetItem(newItem);
+
+                        newItem.Count = item.SuperSetId;
+                        newItem.Id = superSetId;
+                        superSets.Add(newItem);
+                    }
+                }
+
+                Database.SaveTrainingExerciseItem(new Models.Database.TrainingExerciseComm()
+                {
+                    OrderNumber = item.OrderNumber,
+                    TrainingId = id,
+                    SuperSetId = superSetId,
+                    ExerciseId = exerciseId,
+                    WeightAndRepsString = item.WeightAndRepsString,
+                });
             }
         }
     }
