@@ -1,4 +1,5 @@
 ﻿using Foundation;
+using UIKit;
 
 namespace TrainingDay.Maui
 {
@@ -14,6 +15,16 @@ namespace TrainingDay.Maui
             ObjCRuntime.Class.ThrowOnInitFailure = false;
 
             return app;
-        } 
+        }
+
+        public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
+        {
+            if (Platform.OpenUrl(app, url, options))
+                return true;
+
+            var fileContent = File.ReadAllText(url.Path);
+            (App.Current as App).SetIncomingFile(fileContent);
+            return true;
+        }
     }
 }
