@@ -7,7 +7,6 @@ public class ImageCache : Image
     public ImageCache()
     {
         BackgroundColor = Colors.White;
-        Source = "main.png";
         Loaded += ImageCache_Loaded;
     }
 
@@ -49,11 +48,9 @@ public class ImageCache : Image
         catch (Exception e)
         {
             Console.WriteLine(e);
+            Source = "main.png";
         }
     }
 
-    private Stream Stream(ImageData data)
-    {
-        return new MemoryStream(data.Data);
-    }
+    private Stream Stream(ImageData data) => new MemoryStream(data.Data);
 }
