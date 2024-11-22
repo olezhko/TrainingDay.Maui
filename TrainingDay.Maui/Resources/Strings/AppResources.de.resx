@@ -325,10 +325,7 @@
     <value>In-App-Kauf</value>
   </data>
   <data name="KilogramsString" xml:space="preserve">
-    <value> kg </value>
-  </data>
-  <data name="LanguageString" xml:space="preserve">
-    <value>Sprache</value>
+    <value>kg </value>
   </data>
   <data name="LastImplementedFormatString" xml:space="preserve">
     <value>Letzte: {0}</value>
@@ -681,9 +678,6 @@
   <data name="WeightControlString" xml:space="preserve">
     <value>Körper</value>
   </data>
-  <data name="WeightLabel" xml:space="preserve">
-    <value>Gewicht:</value>
-  </data>
   <data name="WeightNotifyString" xml:space="preserve">
     <value>Gewichtseingabebenachrichtigungen</value>
   </data>
@@ -710,5 +704,14 @@
   </data>
   <data name="Rest" xml:space="preserve">
     <value>Brechen</value>
+  </data>
+  <data name="RepetitionsShort" xml:space="preserve">
+    <value>reps</value>
+  </data>
+  <data name="MeasureWeight" xml:space="preserve">
+    <value>Gewichtseinheit (kg oder Pfund)</value>
+  </data>
+  <data name="LbsString" xml:space="preserve">
+    <value>pfund</value>
   </data>
 </root>

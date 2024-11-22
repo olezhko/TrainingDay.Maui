@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using TrainingDay.Maui.Models;
 
 namespace TrainingDay.Maui.Services;
 
@@ -107,6 +108,12 @@ public static class Settings
     {
         get => Preferences.Get(nameof(Nick), string.Empty);
         set => Preferences.Set(nameof(Nick), value);
+    }
+
+    public static int WeightMeasureType
+    {
+        get => Preferences.Get(nameof(WeightMeasureType), (int)MeasureWeightTypes.Kilograms);
+        set => Preferences.Set(nameof(WeightMeasureType), value);
     }
 
     public static CultureInfo GetLanguage()

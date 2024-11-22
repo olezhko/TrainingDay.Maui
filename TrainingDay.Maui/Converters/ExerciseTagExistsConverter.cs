@@ -19,6 +19,24 @@ public class ExerciseTagExistsConverter : IValueConverter
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return 0;
+        var tagChecked = (ExerciseTags)parameter;
+        var tags = value as List<ExerciseTags> ?? new List<ExerciseTags>();
+
+        if ((bool)value)
+        {
+            if (!tags.Contains(tagChecked))
+            {
+                tags.Add(tagChecked);
+            }
+        }
+        else
+        {
+            if (tags.Contains(tagChecked))
+            {
+                tags.Remove(tagChecked);
+            }
+        }
+
+        return tags;
     }
 }

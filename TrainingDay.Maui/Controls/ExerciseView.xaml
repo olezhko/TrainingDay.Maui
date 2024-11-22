@@ -202,11 +202,11 @@
         </StackLayout>
 
         <FlexLayout Grid.Row="3" BindableLayout.ItemsSource="{Binding Muscles}" HorizontalOptions="Center" Wrap="Wrap" VerticalOptions="Center" Direction="Row"
-                                                    JustifyContent="Center" AlignItems="Center" AlignContent="Start">
+            JustifyContent="Center" AlignItems="Center" AlignContent="Start">
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
                     <Frame Margin="1" Style="{StaticResource MuscleFrameCellStyle}">
-                        <Label FontSize="14" Text="{Binding Name}" TextColor="White" />
+                        <Label FontSize="14" Text="{Binding Name}" TextColor="White" LineBreakMode="TailTruncation" />
                     </Frame>
                 </DataTemplate>
             </BindableLayout.ItemTemplate>

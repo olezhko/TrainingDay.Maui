@@ -346,10 +346,7 @@
     <value>Покупки в приложении</value>
   </data>
   <data name="KilogramsString" xml:space="preserve">
-    <value>  кг  </value>
-  </data>
-  <data name="LanguageString" xml:space="preserve">
-    <value>Язык</value>
+    <value> кг  </value>
   </data>
   <data name="LastImplementedFormatString" xml:space="preserve">
     <value>Последнее выполнение: {0}</value>
@@ -702,9 +699,6 @@
   <data name="WeightControlString" xml:space="preserve">
     <value>Фигура</value>
   </data>
-  <data name="WeightLabel" xml:space="preserve">
-    <value>Вес:</value>
-  </data>
   <data name="WeightNotifyString" xml:space="preserve">
     <value>Уведомления о вводе веса</value>
   </data>
@@ -731,5 +725,14 @@
   </data>
   <data name="Rest" xml:space="preserve">
     <value>Перерыв</value>
+  </data>
+  <data name="RepetitionsShort" xml:space="preserve">
+    <value>повт</value>
+  </data>
+  <data name="MeasureWeight" xml:space="preserve">
+    <value>Мера веса (кг или фунты)</value>
+  </data>
+  <data name="LbsString" xml:space="preserve">
+    <value>фунты</value>
   </data>
 </root>

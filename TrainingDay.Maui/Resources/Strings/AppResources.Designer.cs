@@ -709,20 +709,11 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  kg .
+        ///   Looks up a localized string similar to kg .
         /// </summary>
         internal static string KilogramsString {
             get {
                 return ResourceManager.GetString("KilogramsString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Language.
-        /// </summary>
-        internal static string LanguageString {
-            get {
-                return ResourceManager.GetString("LanguageString", resourceCulture);
             }
         }
         
@@ -732,6 +723,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string LastImplementedFormatString {
             get {
                 return ResourceManager.GetString("LastImplementedFormatString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to lbs.
+        /// </summary>
+        internal static string LbsString {
+            get {
+                return ResourceManager.GetString("LbsString", resourceCulture);
             }
         }
         
@@ -777,6 +777,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string MarkTheRequiredExercisesAndPressFormat {
             get {
                 return ResourceManager.GetString("MarkTheRequiredExercisesAndPressFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Measure of weight (kg/lbs).
+        /// </summary>
+        internal static string MeasureWeight {
+            get {
+                return ResourceManager.GetString("MeasureWeight", resourceCulture);
             }
         }
         
@@ -979,7 +988,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mounth.
+        ///   Looks up a localized string similar to Month.
         /// </summary>
         internal static string OneMounthString {
             get {
@@ -1155,6 +1164,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string RepeatString {
             get {
                 return ResourceManager.GetString("RepeatString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to reps.
+        /// </summary>
+        internal static string RepetitionsShort {
+            get {
+                return ResourceManager.GetString("RepetitionsShort", resourceCulture);
             }
         }
         
@@ -1785,15 +1803,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string WeightControlString {
             get {
                 return ResourceManager.GetString("WeightControlString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Weight:.
-        /// </summary>
-        internal static string WeightLabel {
-            get {
-                return ResourceManager.GetString("WeightLabel", resourceCulture);
             }
         }
         

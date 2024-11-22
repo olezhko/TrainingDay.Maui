@@ -7,6 +7,7 @@
              xmlns:data="clr-namespace:TrainingDay.Common;assembly=TrainingDay.Common"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="TrainingDay.Maui.Views.ExerciseItemPage"
+             Shell.TabBarIsVisible="False"
              Padding="5">
     <Shell.TitleView>
         <Grid ColumnDefinitions="*,auto, auto" Padding="10,0" ColumnSpacing="10">
@@ -68,7 +69,7 @@
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate>
                                     <Frame Margin="1" Style="{StaticResource MuscleFrameCellStyle}">
-                                        <Label FontSize="14" Text="{Binding Name}" TextColor="White" />
+                                        <Label FontSize="14" Text="{Binding Name}" TextColor="White" LineBreakMode="TailTruncation" />
                                     </Frame>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>

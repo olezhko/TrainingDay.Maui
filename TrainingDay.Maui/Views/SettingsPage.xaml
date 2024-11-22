@@ -202,7 +202,15 @@
                                     VerticalOptions="End"/>
                         </Grid>
                     </Frame>
-                    
+
+                    <Frame Style="{StaticResource MaterialFrame}">
+                        <Grid>
+                            <Label Text="{x:Static resx:AppResources.MeasureWeight}" Style="{StaticResource MaterialLabel}" controls:MaterialLabelAttached.MaterialControlType="Picker" />
+                            <Picker x:Name="MeasureWeightPicker" BackgroundColor="Transparent" HorizontalOptions="Fill" Title="{x:Static resx:AppResources.MeasureWeight}"
+                                    VerticalOptions="End"/>
+                        </Grid>
+                    </Frame>
+
                     <StackLayout Margin="5">
                         <StackLayout Orientation="Horizontal">
                             <Label Text="{x:Static resx:AppResources.ScreenOnWhenImplementing}" FontSize="Medium" HorizontalOptions="StartAndExpand"/>

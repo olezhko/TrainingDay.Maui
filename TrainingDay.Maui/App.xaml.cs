@@ -43,7 +43,7 @@ namespace TrainingDay.Maui
         }
         public bool IsTrainingNotFinished => Settings.IsTrainingNotFinished;
         public static double FullWidth => DeviceDisplay.Current.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density;
-
+        public string MeasureOfWeight { get; set; }
         public ToolTipManager ToolTipManager { get; set; }
 
         public App()
@@ -74,6 +74,7 @@ namespace TrainingDay.Maui
             DownloadImages();
 
             notificator = Handler.MauiContext.Services.GetRequiredService<IPushNotification>();
+            MeasureOfWeight = GetMeasureOfWeight();
         }
 
         private async void DownloadImages()
@@ -273,6 +274,17 @@ namespace TrainingDay.Maui
                     WeightAndRepsString = item.WeightAndRepsString,
                 });
             }
+        }
+
+        private static string GetMeasureOfWeight()
+        {
+            List<Tuple<MeasureWeightTypes, string>> items =
+            [
+                new Tuple<MeasureWeightTypes, string>(MeasureWeightTypes.Kilograms, AppResources.KilogramsString),
+                new Tuple<MeasureWeightTypes, string>(MeasureWeightTypes.Lbs, AppResources.LbsString),
+            ];
+
+            return items.FirstOrDefault(item => (int)item.Item1 == Settings.WeightMeasureType).Item2;
         }
     }
 }

@@ -213,7 +213,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
 
     private async void RemoveLastTraining()
     {
-        var result = await MessageManager.DisplayAlert(AppResources.DeleteTraining, string.Empty, AppResources.OkString, AppResources.CancelString);
+        var result = await MessageManager.DisplayAlert(AppResources.DeleteTraining, SelectedTraining.Title, AppResources.YesString, AppResources.CancelString);
         if (result)
         {
             App.Database.DeleteLastTraining(SelectedTraining.Id);
@@ -228,6 +228,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
             }
 
             await Toast.Make(AppResources.DeletedString).Show();
+            await Shell.Current.GoToAsync("..");
         }
     }
 

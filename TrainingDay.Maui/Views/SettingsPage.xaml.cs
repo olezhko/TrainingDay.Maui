@@ -3,7 +3,7 @@ using CommunityToolkit.Maui.Alerts;
 using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using TrainingDay.Common;
-using TrainingDay.Maui.Extensions;
+using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 
@@ -20,7 +20,9 @@ public partial class SettingsPage : ContentPage
         ScreenOnImplementedSwitch.IsToggled = Settings.IsDisplayOnImplement;
 
         FillAvailableLanguage();
+        FillAvailableMeasureWeight();
         LanguagePicker.SelectedIndexChanged += LanguageSwitch_Changed;
+        MeasureWeightPicker.SelectedIndexChanged += MeasureWeightPicker_Changed;
         if (DeviceInfo.Platform == DevicePlatform.iOS)
         {
             DonateButton.IsVisible = false;
@@ -28,6 +30,8 @@ public partial class SettingsPage : ContentPage
 
         EmailSpan.Text = Settings.Email;
     }
+
+
 
     private void ScreenOnImplementedSwitch_OnToggled(object sender, ToggledEventArgs e)
     {
@@ -63,14 +67,34 @@ public partial class SettingsPage : ContentPage
         }
     }
 
+    private void MeasureWeightPicker_Changed(object? sender, EventArgs e)
+    {
+        Settings.WeightMeasureType = MeasureWeightPicker.SelectedIndex;
+    }
+
+    private void FillAvailableMeasureWeight()
+    {
+        List<Tuple<MeasureWeightTypes, string>> items =
+        [
+            new Tuple<MeasureWeightTypes, string>(MeasureWeightTypes.Kilograms, AppResources.KilogramsString),
+            new Tuple<MeasureWeightTypes, string>(MeasureWeightTypes.Lbs, AppResources.LbsString),
+        ];
+
+        foreach (var measureWeightType in items)
+        {
+            MeasureWeightPicker.Items.Add(measureWeightType.Item2);
+        }
+
+        MeasureWeightTypes current = (MeasureWeightTypes)Settings.WeightMeasureType;
+        int index = items.FindIndex(0, item => item.Item1 == current);
+        MeasureWeightPicker.SelectedIndex = index;
+    }
+
     private void FillAvailableLanguage()
     {
-        var ru = new CultureInfo("ru");
-        var en = new CultureInfo("en");
-        var de = new CultureInfo("de");
-        _availableLanguages.Add("Русский", ru);
-        _availableLanguages.Add("English", en);
-        _availableLanguages.Add("Deutsch", de);
+        _availableLanguages.Add("Русский", new CultureInfo("ru"));
+        _availableLanguages.Add("English", new CultureInfo("en"));
+        _availableLanguages.Add("Deutsch", new CultureInfo("de"));
 
         foreach (var language in _availableLanguages)
         {

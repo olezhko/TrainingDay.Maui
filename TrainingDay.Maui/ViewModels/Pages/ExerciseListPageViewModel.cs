@@ -88,10 +88,7 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
         return resultItems;
     }
 
-    public void UpdateItems()
-    {
-        LoadItemsAsync();
-    }
+    public void UpdateItems() => LoadItemsAsync();
 
     private async void LoadItemsAsync()
     {

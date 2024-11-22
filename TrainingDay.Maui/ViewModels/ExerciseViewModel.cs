@@ -5,63 +5,17 @@ using TrainingDay.Maui.Models.Database;
 
 namespace TrainingDay.Maui.ViewModels;
 
+[QueryProperty(nameof(LoadId), nameof(LoadId))]
 public class ExerciseViewModel : BaseViewModel
 {
-    public int Id { get; set; }
     private string _name;
-    public string ExerciseItemName
-    {
-        get => _name;
-        set
-        {
-            _name = value;
-            OnPropertyChanged();
-        }
-    }
-
+    private int _id;
     private List<TrainingDay.Common.ExerciseTags> _tags;
-    public List<TrainingDay.Common.ExerciseTags> Tags
-    {
-        get => _tags;
-        set
-        {
-            _tags = value;
-            OnPropertyChanged();
-        }
-    }
-
     private DescriptionViewModel _descriptionItem;
-    public DescriptionViewModel Description
-    {
-        get => _descriptionItem;
-        set
-        {
-            _descriptionItem = value;
-            OnPropertyChanged();
-        }
-    }
-
     private int codeNum;
-    public int CodeNum
-    {
-        get => codeNum;
-        set
-        {
-            codeNum = value;
-            OnPropertyChanged();
-        }
-    }
-
     private ObservableCollection<MuscleViewModel> muscles;
-    public ObservableCollection<MuscleViewModel> Muscles
-    {
-        get => muscles;
-        set
-        {
-            muscles = value;
-            OnPropertyChanged();
-        }
-    }
+
+
     public ExerciseViewModel()
     {
         Muscles = new ObservableCollection<MuscleViewModel>();
@@ -71,12 +25,18 @@ public class ExerciseViewModel : BaseViewModel
 
     public ExerciseViewModel(Exercise exercise)
     {
+        LoadExercise(exercise);
+    }
+
+    private void LoadExercise(Exercise exercise)
+    {
+        Id = exercise.Id;
         Tags = TrainingDay.Common.ExerciseTools.ConvertFromIntToTagList(exercise.TagsValue);
         ExerciseItemName = exercise.ExerciseItemName;
-        Id = exercise.Id;
         Muscles = new ObservableCollection<MuscleViewModel>(MusclesConverter.ConvertFromStringToList(exercise.MusclesString));
         Description = DescriptionViewModel.ConvertFromJson(exercise.Description);
         CodeNum = exercise.CodeNum;
+        OnPropertyChanged(nameof(IsBase));
     }
 
     public virtual Exercise GetExercise()
@@ -92,5 +52,68 @@ public class ExerciseViewModel : BaseViewModel
         };
     }
 
+    #region Properties
     public bool IsBase => CodeNum != 0;
+    public int Id { get; set; }
+    public int LoadId
+    {
+        get => _id; 
+        set
+        {
+            _id = value;
+            var exercise = App.Database.GetExerciseItem(_id);
+            LoadExercise(exercise);
+        }
+    }
+
+    public string ExerciseItemName
+    {
+        get => _name;
+        set
+        {
+            _name = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public List<TrainingDay.Common.ExerciseTags> Tags
+    {
+        get => _tags;
+        set
+        {
+            _tags = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public DescriptionViewModel Description
+    {
+        get => _descriptionItem;
+        set
+        {
+            _descriptionItem = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public int CodeNum
+    {
+        get => codeNum;
+        set
+        {
+            codeNum = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public ObservableCollection<MuscleViewModel> Muscles
+    {
+        get => muscles;
+        set
+        {
+            muscles = value;
+            OnPropertyChanged();
+        }
+    }
+    #endregion
 }

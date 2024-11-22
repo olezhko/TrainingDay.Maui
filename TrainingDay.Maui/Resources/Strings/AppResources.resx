@@ -334,10 +334,7 @@
     <value>In-App Purchase</value>
   </data>
   <data name="KilogramsString" xml:space="preserve">
-    <value> kg </value>
-  </data>
-  <data name="LanguageString" xml:space="preserve">
-    <value>Language</value>
+    <value>kg </value>
   </data>
   <data name="LastImplementedFormatString" xml:space="preserve">
     <value>Last: {0}</value>
@@ -424,7 +421,7 @@
     <value>Ok</value>
   </data>
   <data name="OneMounthString" xml:space="preserve">
-    <value>Mounth</value>
+    <value>Month</value>
   </data>
   <data name="OneTrainingPerWeekCountFormat" xml:space="preserve">
     <value>Maximum weeks with workout: {0:0}</value>
@@ -690,9 +687,6 @@
   <data name="WeightControlString" xml:space="preserve">
     <value>Body</value>
   </data>
-  <data name="WeightLabel" xml:space="preserve">
-    <value>Weight:</value>
-  </data>
   <data name="WeightNotifyString" xml:space="preserve">
     <value>Weight entry notifications</value>
   </data>
@@ -719,5 +713,14 @@
   </data>
   <data name="Rest" xml:space="preserve">
     <value>Rest</value>
+  </data>
+  <data name="RepetitionsShort" xml:space="preserve">
+    <value>reps</value>
+  </data>
+  <data name="MeasureWeight" xml:space="preserve">
+    <value>Measure of weight (kg/lbs)</value>
+  </data>
+  <data name="LbsString" xml:space="preserve">
+    <value>lbs</value>
   </data>
 </root>

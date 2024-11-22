@@ -7,7 +7,8 @@
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:data="clr-namespace:TrainingDay.Common;assembly=TrainingDay.Common"
-             Shell.TabBarIsVisible="False">
+             Shell.TabBarIsVisible="False"
+             Padding="5">
     <Shell.TitleView>
         <Grid ColumnDefinitions="*,auto, auto" ColumnSpacing="10" Margin="10,0">
             <Label Grid.Column="0" Text="{Binding SelectedTraining.Title}" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
@@ -31,10 +32,14 @@
     </ContentPage.BindingContext>
 
     <CollectionView ItemsSource="{Binding SelectedTraining.Items}" SelectionMode="None">
+        <CollectionView.ItemsLayout>
+            <LinearItemsLayout ItemSpacing="5" Orientation="Vertical"/>
+        </CollectionView.ItemsLayout>
         <CollectionView.ItemTemplate>
             <DataTemplate>
                 <Grid>
-                    <Frame Style="{StaticResource FrameCellStyle}">
+                    <Frame Style="{StaticResource FrameCellStyle}" Padding="10" Margin="0"
+                           BackgroundColor="{AppThemeBinding Dark={StaticResource ListItemBackgroundColor}, Light={StaticResource ListItemBackgroundColorLight}}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="70" />
@@ -55,31 +60,28 @@
                                         JustifyContent="Center" VerticalOptions="Center" Wrap="Wrap">
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate>
-                                                <Frame Margin="2" Padding="0" BorderColor="Gray" FlexLayout.Basis="33%" Style="{StaticResource FrameCellStyle}">
+                                                <HorizontalStackLayout HorizontalOptions="Center" Spacing="0">
+                                                    <Label Text="•" VerticalTextAlignment="Center" />
                                                     <Label Margin="5" FontSize="Medium" HorizontalTextAlignment="Center" Text="{Binding Repetitions}" VerticalTextAlignment="Center" />
-                                                </Frame>
+                                                    <Label Text="{x:Static resx:AppResources.RepetitionsShort}" VerticalTextAlignment="Center" />
+                                                </HorizontalStackLayout>
                                             </DataTemplate>
                                         </BindableLayout.ItemTemplate>
                                     </FlexLayout>
                                     <FlexLayout AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}"
-                                        Direction="Row" HorizontalOptions="Center" JustifyContent="Center" VerticalOptions="Center" Wrap="Wrap"
+                                        Direction="Row" HorizontalOptions="Center" JustifyContent="SpaceAround" VerticalOptions="Center" Wrap="Wrap"
                                         IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByRepsAndWeight}}">
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate>
-                                                <Frame Margin="2" Padding="0" BorderColor="Gray" FlexLayout.Basis="50%" Style="{StaticResource FrameCellStyle}">
-                                                    <Grid Margin="0" Padding="0">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition />
-                                                            <ColumnDefinition Width="2" />
-                                                            <ColumnDefinition />
-                                                        </Grid.ColumnDefinitions>
-
-                                                        <Label Margin="5" FontSize="Medium" HorizontalTextAlignment="Center" Text="{Binding Repetitions}"
+                                                <HorizontalStackLayout HorizontalOptions="Center" Spacing="0">
+                                                    <Label Text="•" VerticalTextAlignment="Center" />
+                                                    <Label Margin="5" FontSize="Medium" HorizontalTextAlignment="Center" Text="{Binding Weight}" VerticalTextAlignment="Center" />
+                                                    <Label Text="{Binding Source={x:Static Application.Current},Path=MeasureOfWeight}" VerticalTextAlignment="Center" />
+                                                    <Label Text="x" VerticalTextAlignment="Center" />
+                                                    <Label Margin="5" FontSize="Medium" HorizontalTextAlignment="Center" Text="{Binding Repetitions}"
                                                     VerticalTextAlignment="Center" />
-                                                        <Label Grid.Column="2" Margin="5" FontSize="Medium" HorizontalTextAlignment="Center" Text="{Binding Weight}" VerticalTextAlignment="Center" />
-                                                        <Grid Grid.Column="1" VerticalOptions="Fill" WidthRequest="2" BackgroundColor="Gray" />
-                                                    </Grid>
-                                                </Frame>
+                                                    <Label Text="{x:Static resx:AppResources.RepetitionsShort}" VerticalTextAlignment="Center" />
+                                                </HorizontalStackLayout>
                                             </DataTemplate>
                                         </BindableLayout.ItemTemplate>
                                     </FlexLayout>
@@ -101,7 +103,7 @@
                                     <BindableLayout.ItemTemplate>
                                         <DataTemplate>
                                             <Frame Margin="1" Style="{StaticResource MuscleFrameCellStyle}">
-                                                <Label FontSize="11" Text="{Binding Name}" TextColor="White" />
+                                                <Label FontSize="11" Text="{Binding Name}" TextColor="White" LineBreakMode="TailTruncation" />
                                             </Frame>
                                         </DataTemplate>
                                     </BindableLayout.ItemTemplate>
@@ -109,8 +111,6 @@
                             </StackLayout>
                         </Grid>
                     </Frame>
-
-                    <BoxView HeightRequest="1" BackgroundColor="gray" VerticalOptions="End"/>
                 </Grid>
             </DataTemplate>
         </CollectionView.ItemTemplate>

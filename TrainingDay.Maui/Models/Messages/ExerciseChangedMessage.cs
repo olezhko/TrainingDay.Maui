@@ -1,8 +1,8 @@
 ﻿using TrainingDay.Maui.Models.Database;
 
-namespace TrainingDay.Maui.Models;
+namespace TrainingDay.Maui.Models.Messages;
 
-public class ExerciseChangedEventArgs
+public class ExerciseChangedMessage
 {
     public enum ExerciseAction
     {
@@ -15,7 +15,7 @@ public class ExerciseChangedEventArgs
 
     public ExerciseAction Action { get; set; }
 
-    public ExerciseChangedEventArgs(Exercise sender, ExerciseAction action)
+    public ExerciseChangedMessage(Exercise sender, ExerciseAction action)
     {
         Sender = sender;
         Action = action;

@@ -1,21 +1,20 @@
 using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.AppCenter.Crashes;
 using System.Collections.ObjectModel;
 using System.Text;
 using TrainingDay.Common;
 using TrainingDay.Maui.Extensions;
-using TrainingDay.Maui.Models;
-using TrainingDay.Maui.Resources.Strings;
+using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels;
+using static TrainingDay.Maui.Models.Messages.ExerciseChangedMessage;
 using LanguageResource = TrainingDay.Maui.Resources.Strings.AppResources;
 
 namespace TrainingDay.Maui.Views;
 
 public partial class ExerciseItemPage : ContentPage
 {
-    public event EventHandler<ExerciseChangedEventArgs> ExerciseChanged;
-
     public ExerciseItemPage()
     {
         InitializeComponent();
@@ -64,14 +63,14 @@ public partial class ExerciseItemPage : ContentPage
             if (ex.ExerciseItemName.IsNotNullOrEmpty())
             {
                 var exercise = ex.GetExercise();
-                var action = ex.Id == 0 ? ExerciseChangedEventArgs.ExerciseAction.Added : ExerciseChangedEventArgs.ExerciseAction.Changed;
+                var action = ex.Id == 0 ? ExerciseAction.Added : ExerciseAction.Changed;
                 var id = App.Database.SaveExerciseItem(exercise);
                 exercise.Id = id;
 
-                ExerciseChanged?.Invoke(this, new ExerciseChangedEventArgs(exercise, action));
+                WeakReferenceMessenger.Default.Send(new ExerciseChangedMessage(exercise, action));
 
                 await Toast.Make(LanguageResource.SavedString).Show();
-                await Navigation.PopAsync();
+                await Shell.Current.GoToAsync("..");
             }
         }
         catch (Exception ex)
@@ -105,9 +104,10 @@ public partial class ExerciseItemPage : ContentPage
                 App.Database.DeleteExerciseItem(ex.Id);
                 App.Database.DeleteTrainingExerciseItemByExerciseId(ex.Id);
                 await Toast.Make(LanguageResource.DeletedString).Show();
-                ExerciseChanged?.Invoke(this, new ExerciseChangedEventArgs(ex.GetExercise(), ExerciseChangedEventArgs.ExerciseAction.Removed));
 
-                await Navigation.PopAsync();
+                WeakReferenceMessenger.Default.Send(new ExerciseChangedMessage(ex.GetExercise(), ExerciseAction.Removed));
+
+                await Shell.Current.GoToAsync("..");
             }
         }
     }
