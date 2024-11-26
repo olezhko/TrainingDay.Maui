@@ -714,4 +714,7 @@
   <data name="LbsString" xml:space="preserve">
     <value>pfund</value>
   </data>
+  <data name="PreparedFootTraining" xml:space="preserve">
+    <value>Starke Beine und Oberschenkel</value>
+  </data>
 </root>

@@ -12,19 +12,22 @@
                         SelectedItem="{Binding Source={x:Reference Self}, Path=CurrentItem, Mode=TwoWay}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid ColumnDefinitions="80,*" ColumnSpacing="10" Margin="5">
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                        </Grid.GestureRecognizers>
+                    <Frame Margin="2" Padding="0" CornerRadius="10" BackgroundColor="{AppThemeBinding Dark=Black, Light=White}">
+                        <Grid ColumnDefinitions="80,*" ColumnSpacing="10" Margin="5">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                            </Grid.GestureRecognizers>
 
-                        <Frame Grid.Column="0" Padding="5" BackgroundColor="White" CornerRadius="5" HorizontalOptions="Center" VerticalOptions="Center" BorderColor="Transparent"
-                               Margin="5,0">
-                            <controls:ImageCache x:Name="ImageControl" HeightRequest="60" CodeNum="{Binding CodeNum}" WidthRequest="60"/>
-                        </Frame>
+                            <Frame Grid.Column="0" Padding="5" BackgroundColor="White" CornerRadius="5" HorizontalOptions="Center" VerticalOptions="Center" 
+                               BorderColor="Transparent" Margin="5,0">
+                                <controls:ImageCache x:Name="ImageControl" HeightRequest="60" CodeNum="{Binding CodeNum}" WidthRequest="60"/>
+                            </Frame>
 
-                        <Label Grid.Column="1" Text="{Binding ExerciseItemName}" VerticalOptions="Center" HorizontalOptions="Start" FontSize="20"
-                               TextColor="{AppThemeBinding Light=White,Dark=White}"/>
-                    </Grid>
+                            <Label Grid.Column="1" Text="{Binding ExerciseItemName}" VerticalOptions="Center" HorizontalOptions="Start" FontSize="20"
+                               TextColor="{AppThemeBinding Light=Black,Dark=White}"/>
+                        </Grid>
+                    </Frame>
+
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

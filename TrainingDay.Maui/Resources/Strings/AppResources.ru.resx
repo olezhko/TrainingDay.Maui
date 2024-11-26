@@ -735,4 +735,7 @@
   <data name="LbsString" xml:space="preserve">
     <value>фунты</value>
   </data>
+  <data name="PreparedFootTraining" xml:space="preserve">
+    <value>Сильные ноги и бедра</value>
+  </data>
 </root>

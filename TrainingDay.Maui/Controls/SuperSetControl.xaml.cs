@@ -1,8 +1,5 @@
-using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows.Input;
-using Microsoft.Maui.Controls;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.ViewModels;
 using static TrainingDay.Maui.Controls.ExerciseView;
@@ -15,6 +12,7 @@ public partial class SuperSetControl : ContentView
     private PickerMode mode;
 
     public ICommand DeleteRequestCommand => new Command<WeightAndRepsViewModel>(DeleteRequestWeightAndReps);
+    public ICommand AddRequestCommand => new Command(AddRequestWeightAndReps);
 
     public SuperSetControl()
 	{
@@ -68,6 +66,20 @@ public partial class SuperSetControl : ContentView
     {
         var item = CurrentItem;
         item.WeightAndRepsItems.Remove(sender);
+    }
+
+    private void AddRequestWeightAndReps()
+    {
+        var item = CurrentItem;
+        if (item.WeightAndRepsItems.Count == 0)
+        {
+            item.WeightAndRepsItems.Add(new WeightAndRepsViewModel(0, 15));
+        }
+        else
+        {
+            var last = item.WeightAndRepsItems.Last();
+            item.WeightAndRepsItems.Add(new WeightAndRepsViewModel(last.Weight, last.Repetitions));
+        }
     }
 
     private void StartCalculateTime_Clicked(object sender, EventArgs e)

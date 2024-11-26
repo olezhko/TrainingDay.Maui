@@ -723,4 +723,7 @@
   <data name="LbsString" xml:space="preserve">
     <value>lbs</value>
   </data>
+  <data name="PreparedFootTraining" xml:space="preserve">
+    <value>Strong legs and thighs</value>
+  </data>
 </root>

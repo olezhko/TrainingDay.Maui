@@ -1078,6 +1078,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Strong legs and thighs.
+        /// </summary>
+        internal static string PreparedFootTraining {
+            get {
+                return ResourceManager.GetString("PreparedFootTraining", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Without Inventory.
         /// </summary>
         internal static string PreparedHomeString {

@@ -279,6 +279,24 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
         };
         PreparedTrainingsCollection.Add(preparedArmsStrength);
 
+
+        var preparedFootReady = new PreparedTrainingViewModel()
+        {
+            Name = AppResources.PreparedFootTraining,
+            TrainingImageUrl = ImageSource.FromResource("TrainingDay.Maui.Resources.Images.prepared.legs_and_glutes.png"),
+            MainMuscles = new ObservableCollection<MuscleViewModel>(MusclesConverter.SetMuscles(
+                TrainingDay.Common.MusclesEnum.Buttocks, TrainingDay.Common.MusclesEnum.Thighs,TrainingDay.Common.MusclesEnum.Quadriceps)),
+        };
+        preparedFootReady.CreateTraining = () =>
+        {
+            preparedFootReady.Training = new TrainingViewModel()
+            {
+                Exercises = GetExercisesByCodeNum(exerciseBase, new[] { 64, 67, 66, 60, 69, 62, 73, 76, 124, 125, 74, 65}),
+                Title = AppResources.PreparedFootTraining,
+            };
+        };
+        PreparedTrainingsCollection.Add(preparedFootReady);
+
         OnPropertyChanged(nameof(PreparedTrainingsCollection));
     }
 
