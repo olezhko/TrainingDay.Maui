@@ -1,334 +1,122 @@
 ﻿using Newtonsoft.Json;
 using RestSharp;
-using System.Diagnostics;
-using System.Net;
-using TrainingDay.Common;
-using TrainingDay.Maui.Models;
+using TrainingDay.Maui.Extensions;
 
 namespace TrainingDay.Maui.Services;
 
 public static class SiteService
 {
-    public static string Email { get; set; }
-    public static string Token { get; set; }
+    const string blogId = "5827172986409389203";
+    const string getBlogsUrl = $"https://www.googleapis.com/blogger/v3/blogs/{blogId}/posts?key={ConstantKeys.BlogKey}";
+    const string getBlogUrlFormat = "https://www.googleapis.com/blogger/v3/blogs/{0}/posts/{2}?key={1}";
 
-    private static string _sendTokenUrl = Consts.SiteApi + @"/MobileTokens";
-    public static async Task<bool> SendTokenToServer(string tokenString, string language, TimeSpan zone, int freq)
+    private static RestClient InitApiClient(string url)
     {
-        try
+        var options = new RestClientOptions(url)
         {
-            MobileToken token = new MobileToken();
-            token.Frequency = freq;
-            token.Language = language;
-            token.Token = tokenString;
-            token.Zone = zone.ToString();
-            var client = new RestClient(_sendTokenUrl);
-            client.Timeout = -1;
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("Content-Type", "application/json");
-            request.AddParameter("application/json", JsonConvert.SerializeObject(token), ParameterType.RequestBody);
-            try
-            {
-                var result = await client.ExecuteAsync(request);
-                Debug.WriteLine($"Result Status Code: {result.StatusCode} - {result.Content}");
-            }
-            catch (Exception e)
-            {
-            }
-            return true;
-        }
-        catch (Exception e)
-        {
-            return false;
-        }
+        };
+
+        var client = new RestClient(options);
+        return client;
     }
 
-    private static string _sendFinishedWorkoutUrl = Consts.SiteApi + @"/MobileTokens/workout";
-    public static async Task<bool> SendFinishedWorkout(string tokenString)
+    private static void Dispose(RestClient client)
     {
-        try
-        {
-            var client = new RestClient(_sendFinishedWorkoutUrl);
-            client.Timeout = -1;
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("Content-Type", "application/json");
-
-            var payload = new
-            {
-                token = tokenString,
-            };
-            var stringData = JsonConvert.SerializeObject(payload);
-            request.AddParameter("application/json", stringData, ParameterType.RequestBody);
-            try
-            {
-                var result = await client.ExecuteAsync(request);
-                Debug.WriteLine($"Result Status Code: {result.StatusCode} - {result.Content}");
-            }
-            catch (Exception e)
-            {
-            }
-            return true;
-        }
-        catch (Exception e)
-        {
-            return false;
-        }
+        client.Dispose();
+        client = null;
     }
 
-    private static string _sendBodyControlUrl = Consts.SiteApi + @"/MobileTokens/bodycontrol";
-    public static async Task<bool> SendBodyControl(string tokenString)
+    private static RestRequest InitRequest(Method method = Method.Get, object body = null)
+    {
+        var request = new RestRequest();
+        request.Method = method;
+        if (body != null)
+        {
+            request.AddParameter("application/json", body, ParameterType.RequestBody);
+        }
+        return request;
+    }
+
+    public static async Task<BlogsResponse> GetBlogsAsync(string nextPageToken = null)
     {
         try
         {
-            var client = new RestClient(_sendBodyControlUrl);
-            client.Timeout = -1;
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("Content-Type", "application/json");
-
-            var payload = new
+            string url = getBlogsUrl;
+            if (nextPageToken is not null)
             {
-                token = tokenString,
-            };
-            request.AddParameter("application/json", JsonConvert.SerializeObject(payload), ParameterType.RequestBody);
-            try
-            {
-                var result = await client.ExecuteAsync(request);
-                Debug.WriteLine($"Result Status Code: {result.StatusCode} - {result.Content}");
+                url = $"{url}&pageToken={nextPageToken}";
             }
-            catch (Exception e)
+
+            var response = await InitApiClient(url)
+                .ExecuteAsync(InitRequest());
+
+            if (response.IsSuccessful)
             {
+                var result = JsonConvert.DeserializeObject<BlogsResponse>(response.Content);
+                return result;
             }
-            return true;
+
+            return null;
+        }
+        catch (HttpRequestException)
+        {
+            throw;
         }
         catch (Exception e)
         {
-            return false;
-        }
-    }
-
-    private static string _getBlogsUrl = Consts.SiteApi + @"/MobileBlogs/details?culture={0}&page={1}";
-    public static async Task<IEnumerable<MobileBlog>> GetBlogsFromServer(string cu, int page = 1)
-    {
-        var client = new RestClient(string.Format(_getBlogsUrl, cu, page));
-        client.Timeout = -1;
-        var request = new RestRequest(Method.GET);
-        request.AddHeader("Content-Type", "application/json");
-        request.AddParameter("application/json", "", ParameterType.RequestBody);
-        try
-        {
-            var result = await client.ExecuteAsync(request);
-            Debug.WriteLine($"Result Status Code: {result.StatusCode} - {result.Content}");
-            return JsonConvert.DeserializeObject<IEnumerable<MobileBlog>>(result.Content);
-        }
-        catch (Exception e)
-        {
-            return new List<MobileBlog>();
-        }
-    }
-
-    private static string _getVideosUrl = Consts.SiteApi + @"/YouTubeVideos/{0}";
-    public static async Task<List<Models.YoutubeVideoItem>> GetVideosFromServer(string keyword)
-    {
-        keyword = keyword.Replace(" ", "+");
-        var client = new RestClient(string.Format(_getVideosUrl, keyword));
-        client.Timeout = -1;
-        var request = new RestRequest(Method.GET);
-        request.AddHeader("Content-Type", "application/json");
-        request.AddParameter("application/json", "", ParameterType.RequestBody);
-        try
-        {
-            var result = await client.ExecuteAsync(request);
-            Debug.WriteLine($"Result Status Code: {result.StatusCode} - {result.Content}");
-
-            return JsonConvert.DeserializeObject<List<Models.YoutubeVideoItem>>(result.Content);
-        }
-        catch (Exception e)
-        {
-            //Crashes.TrackError(e);
-            Debug.WriteLine($"Error: {e.Message}");
-            return new List<Models.YoutubeVideoItem>();
-        }
-    }
-
-    private static string _getExercisesUrl = Consts.SiteApi + @"/exercises/get={0}";
-    public static async Task<List<BaseExercise>> GetExercises(string culture)
-    {
-        var client = new RestClient(string.Format(_getExercisesUrl, culture));
-        client.Timeout = -1;
-        var request = new RestRequest(Method.GET);
-        request.AddHeader("Content-Type", "application/json");
-        request.AddParameter("application/json", "", ParameterType.RequestBody);
-        try
-        {
-            var result = await client.ExecuteAsync(request);
-            Debug.WriteLine($"Result Status Code: {result.StatusCode} - {result.Content}");
-
-            return JsonConvert.DeserializeObject<List<BaseExercise>>(result.Content);
-        }
-        catch (Exception e)
-        {
-            //Crashes.TrackError(e);
-            Debug.WriteLine($"Error: {e.Message}");
-            return new List<BaseExercise>();
-        }
-    }
-
-    private static string _requestRepoUrl = Consts.SiteApi + @"/MobileTokens/repo_sync?mail={0}&token={1}";
-    public static async Task<RepoMobileSite?> RequestRepo()
-    {
-        try
-        {
-            var client = new RestClient(string.Format(_requestRepoUrl, Email, Token));
-            client.Timeout = -1;
-            var request = new RestRequest(Method.GET);
-            request.AddHeader("Content-Type", "application/json");
-            request.AddParameter("application/json", "", ParameterType.RequestBody);
-            IRestResponse response = await client.ExecuteAsync(request);
-            if (response.StatusCode == HttpStatusCode.ServiceUnavailable)
-            {
-                return null;
-            }
-            return JsonConvert.DeserializeObject<RepoMobileSite>(response.Content);
-        }
-        catch (Exception e)
-        {
+            Console.WriteLine(e);
             return null;
         }
     }
 
-    private static string _uploadRepoUrl = Consts.SiteApi + @"/MobileTokens/repo_sync";
-    public static async Task<int> UploadRepoItem(string dataJson)
+    public static async Task<BlogResponse> GetBlogAsync(string id)
     {
-        var repoSer = new RepoMobileItem
-        {
-            data = dataJson,
-            mail = Email,
-            token = Token,
-        };
-
         try
         {
-            var client = new RestClient(_uploadRepoUrl);
-            client.Timeout = -1;
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("Content-Type", "application/json");
-            String content = JsonConvert.SerializeObject(repoSer);
-            Console.WriteLine($"UploadRepoItem Request Content {content}");
-            request.AddParameter("application/json", content, ParameterType.RequestBody);
-            IRestResponse response = await client.ExecuteAsync(request);
+            string url = string.Format(getBlogUrlFormat, blogId, ConstantKeys.BlogKey, id);
 
-            if (response.StatusCode == HttpStatusCode.OK)
+            var response = await InitApiClient(url)
+                .ExecuteAsync(InitRequest());
+
+            if (response.IsSuccessful)
             {
-                return Convert.ToInt32(response.Content);
+                var result = JsonConvert.DeserializeObject<BlogResponse>(response.Content);
+                return result;
             }
 
-            return 0;
+            return null;
+        }
+        catch (HttpRequestException)
+        {
+            throw;
         }
         catch (Exception e)
         {
-            return 0;
+            Console.WriteLine(e);
+            return null;
         }
     }
+}
 
-    private static string _tokenUserUrl = Consts.SiteApi + @"/MobileTokens/token_user";
-    public static async Task<bool> TokenUser(MobileUserToken tokenUser)
-    {
-        try
-        {
-            var client = new RestClient(_tokenUserUrl);
-            client.Timeout = -1;
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("Content-Type", "application/json");
-            String content = JsonConvert.SerializeObject(tokenUser);
-            request.AddParameter("application/json", content, ParameterType.RequestBody);
-            IRestResponse response = await client.ExecuteAsync(request);
-            if (response.StatusCode == HttpStatusCode.ServiceUnavailable)
-            {
-                return false;
-            }
-            return true;
-        }
-        catch (Exception e)
-        {
-            return false;
-        }
-    }
+public class BlogsResponse
+{
+    public string NextPageToken { get; set; }
+    public IEnumerable<BlogResponse> Items { get; set; }
+}
 
-    private static string _authLoginUrl = Consts.Site + @"/mobileauth/login";
-    public static async Task<bool> AuthLogin(string email, string password)
-    {
-        var obj = new
-        {
-            email,
-            password
-        };
+public class BlogResponse
+{
+    /// <summary>
+    /// DateTime
+    /// </summary>
+    public string Published { get; set; }
+    public string Title { get; set; }
 
-        try
-        {
-            var client = new RestClient(_authLoginUrl);
-            client.Timeout = -1;
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("Content-Type", "application/json");
-            String content = JsonConvert.SerializeObject(obj);
-            request.AddParameter("application/json", content, ParameterType.RequestBody);
-            IRestResponse response = await client.ExecuteAsync(request);
-            return response.StatusCode == HttpStatusCode.OK;
-        }
-        catch (Exception e)
-        {
-            return false;
-        }
-    }
+    public string Id { get; set; }
+    /// <summary>
+    /// http-content needed to decode
+    /// </summary>
+    public string Content { get; set; }
 
-    private static string _authRegisterUrl = Consts.Site + @"/mobileauth/register";
-    public static async Task<bool> AuthRegister(string email, string password, string nick)
-    {
-        var obj = new
-        {
-            email,
-            password,
-            nick
-        };
-
-        try
-        {
-            var client = new RestClient(_authRegisterUrl);
-            client.Timeout = -1;
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("Content-Type", "application/json");
-            String content = JsonConvert.SerializeObject(obj);
-            request.AddParameter("application/json", content, ParameterType.RequestBody);
-            IRestResponse response = await client.ExecuteAsync(request);
-            return response.StatusCode == HttpStatusCode.OK;
-        }
-        catch (Exception e)
-        {
-            return false;
-        }
-    }
-
-    private static string _authForgotUrl = Consts.Site + @"/mobileauth/forgot";
-    public static async Task<bool> AuthForgotPassword(string email)
-    {
-        var obj = new
-        {
-            email,
-        };
-
-        try
-        {
-            var client = new RestClient(_authForgotUrl);
-            client.Timeout = -1;
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("Content-Type", "application/json");
-            String content = JsonConvert.SerializeObject(obj);
-            request.AddParameter("application/json", content, ParameterType.RequestBody);
-            IRestResponse response = await client.ExecuteAsync(request);
-            return response.StatusCode == HttpStatusCode.OK;
-        }
-        catch (Exception e)
-        {
-            return false;
-        }
-    }
+    public IReadOnlyCollection<string> Labels { get; set; }
 }

@@ -56,7 +56,7 @@ internal class AuthViewModel : BaseViewModel
             return;
         }
 
-        IsLogin = await SiteService.AuthLogin(Email, Password);
+        //IsLogin = await SiteService.AuthLogin(Email, Password);
         if (!IsLogin)
             return;
 
@@ -75,24 +75,24 @@ internal class AuthViewModel : BaseViewModel
             return;
         }
 
-        var result = await SiteService.AuthRegister(Email, Password, Nick);
+        //var result = await SiteService.AuthRegister(Email, Password, Nick);
         CurrentAction = AuthActions.Login;
     }
 
     private async void Forgot()
     {
-        var result = await SiteService.AuthForgotPassword(Email);
-        IsForgotPasswordAction = false;
-        IsLoginAction = result;
-        if (result)
-        {
-            //DependencyService.Get<IMessage>().ShortAlert("To your Email sent generated password. Enter this value into password field.");
-        }
-        else
-        {
-            //DependencyService.Get<IMessage>().ShortAlert("Email not found. You can register new account.");
-            IsRegisterAction = true;
-        }
+        //var result = await SiteService.AuthForgotPassword(Email);
+        //IsForgotPasswordAction = false;
+        //IsLoginAction = result;
+        //if (result)
+        //{
+        //    //DependencyService.Get<IMessage>().ShortAlert("To your Email sent generated password. Enter this value into password field.");
+        //}
+        //else
+        //{
+        //    //DependencyService.Get<IMessage>().ShortAlert("Email not found. You can register new account.");
+        //    IsRegisterAction = true;
+        //}
     }
 
     private void StartAction(AuthActions requiredAction)
@@ -227,16 +227,16 @@ internal class AuthViewModel : BaseViewModel
                 if (webAuthenticatorResult.Properties.TryGetValue("email", out var email) && !string.IsNullOrEmpty(email))
                 {
                     Settings.Email = Uri.UnescapeDataString(email);
-                    SiteService.Email = Settings.Email;
+                    //SiteService.Email = Settings.Email;
                     GoogleEmail = Settings.Email;
                     IsGoogleLogin = !string.IsNullOrWhiteSpace(GoogleEmail);
                     OnPropertyChanged(nameof(IsGoogleLogin));
                     OnPropertyChanged(nameof(GoogleEmail));
-                    await SiteService.TokenUser(new MobileUserToken()
-                    {
-                        //sUserId = Settings.,
-                        Token = Settings.Token,
-                    });
+                    //await SiteService.TokenUser(new MobileUserToken()
+                    //{
+                    //    //sUserId = Settings.,
+                    //    Token = Settings.Token,
+                    //});
                 }
                 else
                 {

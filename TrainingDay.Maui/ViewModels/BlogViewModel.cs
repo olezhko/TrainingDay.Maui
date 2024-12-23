@@ -1,4 +1,5 @@
-﻿using TrainingDay.Common;
+﻿using System.Globalization;
+using TrainingDay.Maui.Services;
 
 namespace TrainingDay.Maui.ViewModels;
 
@@ -12,11 +13,11 @@ public class BlogViewModel : BaseViewModel
     {
     }
 
-    public BlogViewModel(MobileBlog item)
+    public BlogViewModel(BlogResponse item)
     {
         Title = item.Title;
-        Text = item.Text;
-        DateTime = item.DateTime;
+        Text = System.Text.RegularExpressions.Regex.Unescape(item.Content);
+        DateTime = DateTime.Parse(item.Published, CultureInfo.InvariantCulture);
     }
 
     public string Title
@@ -53,11 +54,11 @@ public class BlogViewModel : BaseViewModel
     {
         get
         {
-            var body = Text != null ? Text.Replace("img src=\"/img", $"img src=\"{Consts.Site}/img") : Text;
+            //var body = Text != null ? Text.Replace("img src=\"/img", $"img src=\"{Consts.Site}/img") : Text;
             var textColorString = App.Current.RequestedTheme == AppTheme.Light ? "<head><style>body { background-color:#f0f0f0;color: #1b1b1b;}</style></head>" : "<head><style>body { background-color:#1b1b1b;color: #FFFFFF;}</style></head>";
             var htmlSource = new HtmlWebViewSource
             {
-                Html = $@"<html>{textColorString}<body>{body}</body></html>",
+                Html = $@"<html>{textColorString}<body>{Text}</body></html>",
             };
             return htmlSource;
         }

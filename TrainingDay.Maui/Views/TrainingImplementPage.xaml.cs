@@ -274,7 +274,7 @@ public partial class TrainingImplementPage : ContentPage
 
         await Shell.Current.GoToAsync("..");
         await Shell.Current.GoToAsync("..");
-        await SiteService.SendFinishedWorkout(Settings.Token);
+        //await SiteService.SendFinishedWorkout(Settings.Token);
     }
 
     private IInterstitialAdService _interstitialAdService;

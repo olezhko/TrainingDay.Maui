@@ -183,22 +183,22 @@ public partial class ExerciseView : ContentView
     {
         try
         {
-            VideoItems.Clear();
-            if (CurrentExercise != null)
-            {
-                var items = await SiteService.GetVideosFromServer(CurrentExercise.ExerciseItemName);
-                foreach (var item in items)
-                {
-                    VideoItems.Add(new YoutubeVideoItem()
-                    {
-                        VideoAuthor = item.VideoAuthor,
-                        VideoTitle = item.VideoTitle,
-                        VideoUrl = item.VideoUrl,
-                    });
-                }
-            }
+            //VideoItems.Clear();
+            //if (CurrentExercise != null)
+            //{
+            //    var items = await SiteService.GetVideosFromServer(CurrentExercise.ExerciseItemName);
+            //    foreach (var item in items)
+            //    {
+            //        VideoItems.Add(new YoutubeVideoItem()
+            //        {
+            //            VideoAuthor = item.VideoAuthor,
+            //            VideoTitle = item.VideoTitle,
+            //            VideoUrl = item.VideoUrl,
+            //        });
+            //    }
+            //}
 
-            VideoCollectionView.ItemsSource = VideoItems;
+            //VideoCollectionView.ItemsSource = VideoItems;
         }
         catch (Exception ex)
         {

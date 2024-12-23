@@ -10,15 +10,81 @@ public class BlogsPageViewModel : BaseViewModel
     private Command newBlogLoadCommand;
     private Command refreshCommand;
     private Command openBlogCommand;
+    private string? nextPageToken = null;
+    int page = 0;
 
     public BlogsPageViewModel()
     {
         BlogsCollection = new ObservableCollection<BlogViewModel>();
     }
 
-    public bool IsLoadingItems { get; set; }
+    public async void LoadItems()
+    {
+        Page = 0;
+        if (IsBusy)
+        {
+            return;
+        }
 
-    public int Page { get; set; } = 1;
+        if (BlogsCollection.Count != 0)
+        {
+            BlogsCollection.Clear();
+        }
+
+        IsBusy = true;
+
+        var res = await SiteService.GetBlogsAsync();
+        if (res != null)
+        {
+            nextPageToken = res.NextPageToken;
+
+            BlogsCollection = new ObservableCollection<BlogViewModel>(res.Items.Where(CheckLanguage).Select(item => new BlogViewModel(item)).OrderByDescending(item => item.DateTime));
+            OnPropertyChanged(nameof(BlogsCollection));
+
+            IsBusy = false;
+        }
+    }
+
+    private bool CheckLanguage(BlogResponse response)
+    {
+        if (Settings.GetLanguage().TwoLetterISOLanguageName.ToLower() is "en" or "de")
+            return response.Labels.Contains("en");
+
+        return true;
+    }
+
+    private async void OpenBlog(BlogViewModel obj)
+    {
+        await Navigation.PushAsync(new BlogItemPage() { BindingContext = obj });
+    }
+
+    private async void NewBlogsRequest()
+    {
+        if (IsBusy || nextPageToken is null)
+        {
+            return;
+        }
+
+        IsBusy = true;
+        Page++;
+
+        var res = await SiteService.GetBlogsAsync(nextPageToken);
+        if (res != null)
+        {
+            nextPageToken = res.NextPageToken;
+            foreach (var item in res.Items)
+            {
+                BlogsCollection.Add(new BlogViewModel(item));
+            }
+
+            OnPropertyChanged(nameof(BlogsCollection));
+        }
+        IsBusy = false;
+    }
+
+    #region Properties
+
+    public int Page { get => page; set => SetProperty(ref page, value); }
 
     public INavigation Navigation { get; set; }
 
@@ -28,56 +94,7 @@ public class BlogsPageViewModel : BaseViewModel
 
     public ICommand OpenBlogCommand => openBlogCommand ?? (openBlogCommand = new Command<BlogViewModel>(OpenBlog));
 
-    public ICommand NewBlogLoadCommand => newBlogLoadCommand ?? (newBlogLoadCommand = new Command(NewBlogLoad));
+    public ICommand NewBlogLoadCommand => newBlogLoadCommand ?? (newBlogLoadCommand = new Command(NewBlogsRequest));
 
-    public async void LoadItems()
-    {
-        Page = 1;
-        OnPropertyChanged(nameof(Page));
-        if (BlogsCollection.Count != 0)
-        {
-            BlogsCollection.Clear();
-        }
-
-        IsLoadingItems = true;
-        OnPropertyChanged(nameof(IsLoadingItems));
-
-        var res = await SiteService.GetBlogsFromServer(Settings.GetLanguage().TwoLetterISOLanguageName, Page);
-        if (res != null)
-        {
-            BlogsCollection = new ObservableCollection<BlogViewModel>(res.Select(item => new BlogViewModel(item)).OrderByDescending(item => item.DateTime));
-            OnPropertyChanged(nameof(BlogsCollection));
-
-            IsLoadingItems = false;
-            OnPropertyChanged(nameof(IsLoadingItems));
-        }
-    }
-
-    private async void OpenBlog(BlogViewModel obj)
-    {
-        await Navigation.PushAsync(new BlogItemPage() { BindingContext = obj });
-    }
-
-    private async void NewBlogLoad()
-    {
-        if (IsBusy || IsLoadingItems)
-        {
-            return;
-        }
-
-        IsBusy = true;
-        Page++;
-        OnPropertyChanged(nameof(Page));
-        var res = await SiteService.GetBlogsFromServer(Settings.GetLanguage().TwoLetterISOLanguageName, Page);
-        if (res != null)
-        {
-            foreach (var item in res)
-            {
-                BlogsCollection.Add(new BlogViewModel(item));
-            }
-
-            OnPropertyChanged(nameof(BlogsCollection));
-        }
-        IsBusy = false;
-    }
+    #endregion
 }

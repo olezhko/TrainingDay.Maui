@@ -147,25 +147,25 @@ namespace TrainingDay.Maui
                 return;
             }
 
-            try
-            {
-                SiteService.Token = token;
-                if (string.IsNullOrEmpty(token))
-                {
-                    return;
-                }
+            //try
+            //{
+            //    SiteService.Token = token;
+            //    if (string.IsNullOrEmpty(token))
+            //    {
+            //        return;
+            //    }
 
-                Settings.IsTokenSavedOnServer = false;
+            //    Settings.IsTokenSavedOnServer = false;
 
-                var language = Settings.GetLanguage();
-                var zone = TimeZoneInfo.Local.BaseUtcOffset;
-                var res = await SiteService.SendTokenToServer(token, language.Name, zone, 7);
-                Settings.IsTokenSavedOnServer = res;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
+            //    var language = Settings.GetLanguage();
+            //    var zone = TimeZoneInfo.Local.BaseUtcOffset;
+            //    var res = await SiteService.SendTokenToServer(token, language.Name, zone, 7);
+            //    Settings.IsTokenSavedOnServer = res;
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e);
+            //}
         }
 
         internal void SetIncomingFile(string data)

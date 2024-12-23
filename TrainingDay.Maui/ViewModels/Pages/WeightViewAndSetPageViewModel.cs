@@ -90,7 +90,7 @@ class WeightViewAndSetPageViewModel : BaseViewModel
         sender.ChartItems.Add(note);
         sender.Chart = PrepareChart(sender.GoalValue, sender.ChartItems);
         await Toast.Make(Resources.Strings.AppResources.SavedString).Show();
-        await SiteService.SendBodyControl(Settings.Token);
+        //await SiteService.SendBodyControl(Settings.Token);
 
         OnPropertyChanged(nameof(BodyControlItems));
     }
