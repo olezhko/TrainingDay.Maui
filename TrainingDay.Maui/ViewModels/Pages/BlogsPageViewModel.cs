@@ -47,8 +47,11 @@ public class BlogsPageViewModel : BaseViewModel
 
     private bool CheckLanguage(BlogResponse response)
     {
-        if (Settings.GetLanguage().TwoLetterISOLanguageName.ToLower() is "en" or "de")
-            return response.Labels.Contains("en");
+        if (response.Labels is not null)
+        {
+            if (Settings.GetLanguage().TwoLetterISOLanguageName.ToLower() is "en" or "de")
+                return response.Labels.Contains("en");
+        }
 
         return true;
     }
