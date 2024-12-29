@@ -17,19 +17,14 @@ public partial class TrainingExerciseItemPage : ContentPage
         set
         {
             item = value;
-            LoadExercise(value);
+            ExerciseView.BindingContext = value;
         }
     }
 
     public TrainingExerciseItemPage()
     {
         InitializeComponent();
-    }
-
-    private void LoadExercise(TrainingExerciseViewModel item)
-    {
-        TitleLabel.Text = item.ExerciseItemName;
-        ExerciseView.BindingContext = item;
+        TitleLabel.Text = AppResources.Editing;
     }
 
     // if we make changes, but after press back, changes is saved

@@ -148,7 +148,7 @@
   </ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="C:\Users\metal\source\repos\olezhko\TrainingDay-Core\TrainingDay.Common\TrainingDay.Common.csproj" />
+	  <ProjectReference Include="..\..\TrainingDay-Core\TrainingDay.Common\TrainingDay.Common.csproj" />
 	  <ProjectReference Include="..\Plugins\Microcharts.Maui\Microcharts.Maui.csproj" />
 	  <ProjectReference Include="..\Plugins\Microcharts\Microcharts.csproj" />
 	</ItemGroup>

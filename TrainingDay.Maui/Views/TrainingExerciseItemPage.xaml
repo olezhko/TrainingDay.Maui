@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
@@ -19,7 +19,7 @@
 
     <ScrollView Orientation="Vertical">
         <Grid>
-            <controls:ExerciseView x:Name="ExerciseView" ImageTappedEvent="ExerciseView_OnImageTappedEvent" IsNameVisible="False"/>
+            <controls:ExerciseView x:Name="ExerciseView" ImageTappedEvent="ExerciseView_OnImageTappedEvent" />
 
             <Frame HeightRequest="250" WidthRequest="250" IsVisible="False" x:Name="ImageFrame" VerticalOptions="Center" HorizontalOptions="Center">
                 <Image x:Name="FullscreenImage">

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
@@ -12,11 +12,11 @@
         <Grid ColumnDefinitions="*,auto" ColumnSpacing="10" Margin="10,0">
             <Label Grid.Column="0" Text="{x:Static resx:AppResources.WeightControlString}" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
 
-            <!--<ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="info.png" Clicked="ShowInfo_Click">
+            <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="info.png" Clicked="ShowInfo_Click">
                 <ImageButton.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>
-            </ImageButton>-->
+            </ImageButton>
         </Grid>
     </Shell.TitleView>
 

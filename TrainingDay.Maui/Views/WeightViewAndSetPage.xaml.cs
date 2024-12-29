@@ -67,10 +67,10 @@ public partial class WeightViewAndSetPage : ContentPage
 
             StringBuilder sb = new StringBuilder();
             sb.Append(string.Format(AppResources.WaistHipMessage.Replace("_", "\n"), coef));
-            var result = await MessageManager.DisplayAlert(AppResources.WaistHipTitle, sb.ToString(), AppResources.OkString, AppResources.CancelString);
+            var result = await MessageManager.DisplayAlert(AppResources.WaistHipTitle, sb.ToString(), AppResources.YesString, AppResources.CancelString);
             if (result)
             {
-                await Browser.OpenAsync(Consts.Site + @"/waist-hip?year=2020&Month=10", BrowserLaunchMode.SystemPreferred);
+                await Browser.OpenAsync("https://tday-app.blogspot.com/2024/12/blog-post_19.html", BrowserLaunchMode.SystemPreferred);
             }
         }
         catch (Exception exception)

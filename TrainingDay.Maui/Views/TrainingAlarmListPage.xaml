@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
@@ -26,7 +26,7 @@
             <ContentView>
                 <StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center">
                     <Label Text="{x:Static resx:AppResources.NoNotificationsString}" HorizontalTextAlignment="Center" FontSize="20"/>
-                    <ImageButton WidthRequest="60" HeightRequest="60" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="add_empty"
+                    <ImageButton WidthRequest="60" HeightRequest="60" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="add_empty.png"
                                      Command="{Binding NewAlarmCommand}" BackgroundColor="Transparent">
                         <ImageButton.Behaviors>
                             <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />

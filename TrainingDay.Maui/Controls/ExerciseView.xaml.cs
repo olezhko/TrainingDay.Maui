@@ -30,14 +30,6 @@ public partial class ExerciseView : ContentView
 
     public event EventHandler<ImageSource> ImageTappedEvent;
 
-    public static readonly BindableProperty IsNameVisibleProperty = BindableProperty.Create(nameof(IsNameVisible), typeof(bool), typeof(ExerciseView), true);
-
-    public bool IsNameVisible
-    {
-        get => (bool)GetValue(IsNameVisibleProperty);
-        set => SetValue(IsNameVisibleProperty, value);
-    }
-
     public ExerciseView()
     {
         InitializeComponent();
