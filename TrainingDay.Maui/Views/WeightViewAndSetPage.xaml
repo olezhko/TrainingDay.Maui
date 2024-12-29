@@ -48,28 +48,31 @@
                     <Grid Padding="5" RowDefinitions="auto,auto,*">
                         <Label Grid.Row="0" HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="{Binding Name}" FontSize="Large"/>
                         <Grid Grid.Row="1" ColumnDefinitions="*,*,auto" ColumnSpacing="5">
-                            <Frame Grid.Column="0" Style="{StaticResource MaterialFrame}">
-                                <Grid>
-                                    <Label Text="{x:Static resx:AppResources.CurrentString}" Style="{StaticResource MaterialLabel}"/>
+                            <Frame Grid.Column="0" Style="{StaticResource MaterialFrame}" CornerRadius="20" Padding="10" BackgroundColor="White">
+                                <VerticalStackLayout>
+                                    <Label Text="{x:Static resx:AppResources.CurrentString}" TextColor="Gold"/>
                                     <Entry Text="{Binding CurrentValueString, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="17" VerticalOptions="End" Keyboard="Numeric"
-                                           HorizontalTextAlignment="Start"/>
-                                </Grid>
+                                           HorizontalTextAlignment="Start">
+                                        <Entry.Behaviors>
+                                            <toolkit:EventToCommandBehavior EventName="Unfocus" Command="{Binding Source={x:Reference Page}, 
+                                            Path=BindingContext.SaveValueCommand}" CommandParameter="{Binding }"/>
+                                        </Entry.Behaviors>
+                                    </Entry>
+                                </VerticalStackLayout>
                             </Frame>
 
-                            <Frame Grid.Column="1" Style="{StaticResource MaterialFrame}">
-                                <Grid>
-                                    <Label Text="{x:Static resx:AppResources.GoalString}" Style="{StaticResource MaterialLabel}" />
+                            <Frame Grid.Column="1" Style="{StaticResource MaterialFrame}" CornerRadius="20" Padding="10" BackgroundColor="White">
+                                <VerticalStackLayout>
+                                    <Label Text="{x:Static resx:AppResources.GoalString}" TextColor="Gold"/>
                                     <Entry Text="{Binding GoalValueString, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="17" VerticalOptions="End" Keyboard="Numeric"
-                                           HorizontalTextAlignment="Start"/>
-                                </Grid>
+                                           HorizontalTextAlignment="Start">
+                                        <Entry.Behaviors>
+                                            <toolkit:EventToCommandBehavior EventName="Unfocus" Command="{Binding Source={x:Reference Page}, 
+                                            Path=BindingContext.SaveValueCommand}" CommandParameter="{Binding }"/>
+                                        </Entry.Behaviors>
+                                    </Entry>
+                                </VerticalStackLayout>
                             </Frame>
-                            
-                            <ImageButton Grid.Column="2" Source="save.png" Command="{Binding Source={x:Reference Page}, Path=BindingContext.SaveValueCommand}" CommandParameter="{Binding }" 
-                                         BackgroundColor="Transparent" VerticalOptions="Center" WidthRequest="40" HeightRequest="40">
-                                <ImageButton.Behaviors>
-                                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
-                                </ImageButton.Behaviors>
-                            </ImageButton>
                         </Grid>
                         <charts:ChartView Grid.Row="2" Chart="{Binding Chart, Mode=TwoWay}" VerticalOptions="Fill" />
                     </Grid>

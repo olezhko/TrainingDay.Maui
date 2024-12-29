@@ -61,8 +61,11 @@ namespace TrainingDay.Maui
             return builder.Build();
         }
 
+#if IOS
         private static void MapFormatting(IEntryHandler handler, IEntry entry)
         {
+            handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
+
             handler.PlatformView?.UpdateMaxLength(entry);
 
             // Update all of the attributed text formatting properties
@@ -72,5 +75,7 @@ namespace TrainingDay.Maui
             // so we need to make sure those are applied, too
             handler.PlatformView?.UpdateHorizontalTextAlignment(entry);
         }
+#endif
+
     }
 }

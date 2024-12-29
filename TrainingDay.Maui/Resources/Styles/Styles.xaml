@@ -171,7 +171,7 @@
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style TargetType="Frame" x:Key="MaterialFrame">
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray100},Dark=Black}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White},Dark=Black}" />
         <Setter Property="BorderColor" Value="Transparent" />
         <Setter Property="CornerRadius" Value="5"/>
         <Setter Property="Padding" Value="5"/>
@@ -185,7 +185,7 @@
         <Setter Property="Margin" Value="5,0"/>
 
         <Setter Property="ZIndex" Value="2"/>
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource Gray100}}"/>
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}"/>
         <Setter Property="controls:MaterialLabelAttached.IsMaterialBehavior" Value="True"/>
     </Style>
 

@@ -26,7 +26,7 @@
 
 
     <Color x:Key="ListItemBackgroundColor">#44abb4da</Color>
-    <Color x:Key="ListItemBackgroundColorLight">#e7e7e7</Color>
+    <Color x:Key="ListItemBackgroundColorLight">#ffffff</Color>
     <Color x:Key="PrimaryDarkColor">#1b1b1b</Color>
     <Color x:Key="SeparatorColor">#abb4da</Color>
 

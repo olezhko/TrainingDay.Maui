@@ -191,40 +191,38 @@
                 </StackLayout>
             </Frame>
 
-            <Frame Style="{StaticResource FrameCellStyle}" CornerRadius="20" BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight},Dark={StaticResource ListItemBackgroundColor}}" Padding="5">
-                <StackLayout>
-                    <Label Text="{x:Static resx:AppResources.SettingsString}" FontSize="Title" HorizontalOptions="Center"/>
+            <StackLayout Spacing="10">
+                <Label Text="{x:Static resx:AppResources.SettingsString}" FontSize="Title" HorizontalOptions="Center"/>
 
-                    <Frame Style="{StaticResource MaterialFrame}">
-                        <Grid>
-                            <Label Text="{x:Static resx:AppResources.ChooseLanguage}" Style="{StaticResource MaterialLabel}" controls:MaterialLabelAttached.MaterialControlType="Picker" />
-                            <Picker x:Name="LanguagePicker" BackgroundColor="Transparent" HorizontalOptions="Fill" ItemDisplayBinding="{Binding NativeName}" Title="{x:Static resx:AppResources.ChooseLanguage}"
+                <Frame Style="{StaticResource MaterialFrame}">
+                    <Grid>
+                        <Label Text="{x:Static resx:AppResources.ChooseLanguage}" Style="{StaticResource MaterialLabel}" controls:MaterialLabelAttached.MaterialControlType="Picker" />
+                        <Picker x:Name="LanguagePicker" BackgroundColor="Transparent" HorizontalOptions="Fill" ItemDisplayBinding="{Binding NativeName}" Title="{x:Static resx:AppResources.ChooseLanguage}"
                                     VerticalOptions="End"/>
-                        </Grid>
-                    </Frame>
+                    </Grid>
+                </Frame>
 
-                    <Frame Style="{StaticResource MaterialFrame}">
-                        <Grid>
-                            <Label Text="{x:Static resx:AppResources.MeasureWeight}" Style="{StaticResource MaterialLabel}" controls:MaterialLabelAttached.MaterialControlType="Picker" />
-                            <Picker x:Name="MeasureWeightPicker" BackgroundColor="Transparent" HorizontalOptions="Fill" Title="{x:Static resx:AppResources.MeasureWeight}"
+                <Frame Style="{StaticResource MaterialFrame}">
+                    <Grid>
+                        <Label Text="{x:Static resx:AppResources.MeasureWeight}" Style="{StaticResource MaterialLabel}" controls:MaterialLabelAttached.MaterialControlType="Picker" />
+                        <Picker x:Name="MeasureWeightPicker" BackgroundColor="Transparent" HorizontalOptions="Fill" Title="{x:Static resx:AppResources.MeasureWeight}"
                                     VerticalOptions="End"/>
-                        </Grid>
-                    </Frame>
+                    </Grid>
+                </Frame>
 
-                    <StackLayout Margin="5">
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="{x:Static resx:AppResources.ScreenOnWhenImplementing}" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
-                            <Switch Toggled="ScreenOnImplementedSwitch_OnToggled" x:Name="ScreenOnImplementedSwitch" />
-                        </StackLayout>
-                        <Label Text="{x:Static resx:AppResources.ScreenOnWhenImplementingTip}" FontSize="Small" TextColor="Gray" />
+                <StackLayout Margin="5">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{x:Static resx:AppResources.ScreenOnWhenImplementing}" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
+                        <Switch Toggled="ScreenOnImplementedSwitch_OnToggled" x:Name="ScreenOnImplementedSwitch" />
                     </StackLayout>
-
-                    <StackLayout Orientation="Horizontal" Margin="5">
-                        <Label Text="{x:Static resx:AppResources.ShowAdvicesOnImplementing}" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
-                        <Switch x:Name="ShowAdvicesOnImplementingSwitch" Toggled="ShowAdvicesOnImplementingSwitch_OnToggled" />
-                    </StackLayout>
+                    <Label Text="{x:Static resx:AppResources.ScreenOnWhenImplementingTip}" FontSize="Small" TextColor="Gray" />
                 </StackLayout>
-            </Frame>
+
+                <StackLayout Orientation="Horizontal" Margin="5">
+                    <Label Text="{x:Static resx:AppResources.ShowAdvicesOnImplementing}" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
+                    <Switch x:Name="ShowAdvicesOnImplementingSwitch" Toggled="ShowAdvicesOnImplementingSwitch_OnToggled" />
+                </StackLayout>
+            </StackLayout>
 
             <Button x:Name="DonateButton" Style="{StaticResource ActionButton}" Text="Donate" Clicked="Donate_Click" BackgroundColor="Orange" TextColor="Black" CornerRadius="20">
                 <Button.IsVisible>
