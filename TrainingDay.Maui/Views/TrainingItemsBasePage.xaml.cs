@@ -23,7 +23,6 @@ public partial class TrainingItemsBasePage : ContentPage
         };
 
         AdMob.AdUnitId = DeviceInfo.Platform == DevicePlatform.Android ? ConstantKeys.WorkoutsAndroidAds : ConstantKeys.WorkoutsiOSAds;
-        AdMob.IsVisible = false;
         NavigationPage.SetBackButtonTitle(this, AppResources.TrainingsBaseString);
     }
 

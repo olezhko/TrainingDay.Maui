@@ -1,3 +1,4 @@
+using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.ViewModels.Pages;
 
 namespace TrainingDay.Maui.Views;
@@ -8,6 +9,7 @@ public partial class BlogsPage : ContentPage
 	{
 		InitializeComponent();
         BindingContext = new BlogsPageViewModel() { Navigation = Navigation };
+        AdMob.AdUnitId = DeviceInfo.Platform == DevicePlatform.Android ? ConstantKeys.WorkoutsAndroidAds : ConstantKeys.WorkoutsiOSAds;
     }
 
     protected override void OnAppearing()

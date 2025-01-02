@@ -50,11 +50,11 @@
                         <Grid Grid.Row="1" ColumnDefinitions="*,*,auto" ColumnSpacing="5">
                             <Frame Grid.Column="0" Style="{StaticResource MaterialFrame}" CornerRadius="20" Padding="10" BackgroundColor="White">
                                 <VerticalStackLayout>
-                                    <Label Text="{x:Static resx:AppResources.CurrentString}" TextColor="Gold"/>
+                                    <Label Text="{x:Static resx:AppResources.CurrentString}" TextColor="Orange"/>
                                     <Entry Text="{Binding CurrentValueString, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="17" VerticalOptions="End" Keyboard="Numeric"
                                            HorizontalTextAlignment="Start">
                                         <Entry.Behaviors>
-                                            <toolkit:EventToCommandBehavior EventName="Unfocus" Command="{Binding Source={x:Reference Page}, 
+                                            <toolkit:EventToCommandBehavior EventName="Unfocused" Command="{Binding Source={x:Reference Page}, 
                                             Path=BindingContext.SaveValueCommand}" CommandParameter="{Binding }"/>
                                         </Entry.Behaviors>
                                     </Entry>
@@ -63,11 +63,11 @@
 
                             <Frame Grid.Column="1" Style="{StaticResource MaterialFrame}" CornerRadius="20" Padding="10" BackgroundColor="White">
                                 <VerticalStackLayout>
-                                    <Label Text="{x:Static resx:AppResources.GoalString}" TextColor="Gold"/>
+                                    <Label Text="{x:Static resx:AppResources.GoalString}" TextColor="Orange"/>
                                     <Entry Text="{Binding GoalValueString, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="17" VerticalOptions="End" Keyboard="Numeric"
                                            HorizontalTextAlignment="Start">
                                         <Entry.Behaviors>
-                                            <toolkit:EventToCommandBehavior EventName="Unfocus" Command="{Binding Source={x:Reference Page}, 
+                                            <toolkit:EventToCommandBehavior EventName="Unfocused" Command="{Binding Source={x:Reference Page}, 
                                             Path=BindingContext.SaveValueCommand}" CommandParameter="{Binding }"/>
                                         </Entry.Behaviors>
                                     </Entry>

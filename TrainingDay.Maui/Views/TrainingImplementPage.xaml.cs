@@ -41,7 +41,6 @@ public partial class TrainingImplementPage : ContentPage
         _timer.Interval = TimeSpan.FromSeconds(1);
 
         AdMob.AdUnitId = DeviceInfo.Platform == DevicePlatform.Android ? ConstantKeys.ImplementAndroidAds : ConstantKeys.ImplementiOSAds;
-        AdMob.IsVisible = false;
         RestPicker.TextColor = App.Current.RequestedTheme == AppTheme.Light ? Colors.Black : Colors.White;
     }
 
