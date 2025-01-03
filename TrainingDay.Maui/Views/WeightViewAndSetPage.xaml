@@ -7,6 +7,7 @@
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              x:Class="TrainingDay.Maui.Views.WeightViewAndSetPage" Padding="5"
+             HideSoftInputOnTapped="True"
              x:Name="Page">
     <Shell.TitleView>
         <Grid ColumnDefinitions="*,auto" ColumnSpacing="10" Margin="10,0">
@@ -14,7 +15,7 @@
 
             <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="info.png" Clicked="ShowInfo_Click">
                 <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
                 </ImageButton.Behaviors>
             </ImageButton>
         </Grid>
@@ -69,7 +70,7 @@
                                 </VerticalStackLayout>
                             </Frame>
 
-                            <Frame Grid.Column="1" Style="{StaticResource MaterialFrame}" CornerRadius="20" Padding="10" BackgroundColor="White">
+                            <Frame Grid.Column="1" Style="{StaticResource MaterialFrame}" CornerRadius="20" Padding="10" BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}">
                                 <VerticalStackLayout>
                                     <Label Text="{x:Static resx:AppResources.GoalString}" TextColor="Orange"/>
                                     <Entry Text="{Binding GoalValueString, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="17" VerticalOptions="End" Keyboard="Numeric"

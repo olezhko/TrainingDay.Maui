@@ -1,15 +1,18 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              xmlns:admob="clr-namespace:Plugin.AdMob;assembly=Plugin.AdMob"
              xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
              x:Class="TrainingDay.Maui.Views.BlogsPage"
-             Title="{x:Static resx:AppResources.NewsString}"
              x:Name="Page">
     <ContentPage.BindingContext>
         <viewModels:BlogsPageViewModel/>
     </ContentPage.BindingContext>
+
+    <Shell.TitleView>
+        <Label Text="{x:Static resx:AppResources.NewsString}" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
+    </Shell.TitleView>
 
     <Grid RowDefinitions="*,auto">
         <CollectionView ItemsSource="{Binding BlogsCollection}" RemainingItemsThresholdReachedCommand="{Binding NewBlogLoadCommand}" 

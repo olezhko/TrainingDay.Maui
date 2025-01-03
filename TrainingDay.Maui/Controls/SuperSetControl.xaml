@@ -49,7 +49,7 @@
                                         <ImageButton Grid.Row="1" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" HorizontalOptions="Center" CornerRadius="17"
                                             IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}" Source="save" VerticalOptions="Fill" WidthRequest="35">
                                             <ImageButton.Behaviors>
-                                                <toolkit:IconTintColorBehavior TintColor="White" />
+                                                <toolkit:IconTintColorBehavior TintColor="LightGray" />
                                             </ImageButton.Behaviors>
                                             <ImageButton.Style>
                                                 <Style TargetType="ImageButton">
@@ -85,7 +85,7 @@
                                         <ImageButton Grid.Row="1" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" HorizontalOptions="Center" CornerRadius="17"
                                             IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}" Source="save" VerticalOptions="Fill" WidthRequest="35">
                                             <ImageButton.Behaviors>
-                                                <toolkit:IconTintColorBehavior TintColor="White" />
+                                                <toolkit:IconTintColorBehavior TintColor="LightGray" />
                                             </ImageButton.Behaviors>
                                             <ImageButton.Style>
                                                 <Style TargetType="ImageButton">

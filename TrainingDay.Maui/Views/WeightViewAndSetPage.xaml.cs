@@ -1,12 +1,12 @@
+using System;
 using System.Text;
+using CommunityToolkit.Maui.Core.Platform;
+using Microsoft.Maui.ApplicationModel;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels.Pages;
-using CommunityToolkit.Maui.Core.Platform;
-using Microsoft.Maui.Controls;
-using System;
-using Microsoft.Maui.ApplicationModel;
-using Microsoft.Maui.Graphics;
 
 namespace TrainingDay.Maui.Views;
 
@@ -51,9 +51,13 @@ public partial class WeightViewAndSetPage : ContentPage
     {
         if (args.PropertyName == nameof(WeightViewAndSetPageViewModel.BodyControlItems))
         {
-            foreach (var entry in weightEntryList)
+            var isAnyEntryFocused = weightEntryList.Any(item => item.IsFocused);
+            if (!isAnyEntryFocused)
             {
-                entry.HideKeyboardAsync(CancellationToken.None);
+                foreach (var entry in weightEntryList)
+                {
+                    //entry.HideKeyboardAsync(CancellationToken.None);
+                }
             }
         }
     }

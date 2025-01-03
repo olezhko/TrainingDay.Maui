@@ -27,7 +27,7 @@
                 <ImageButton Grid.Column="1" WidthRequest="40" HeightRequest="40" Padding="0" HorizontalOptions="End" VerticalOptions="Center" Source="add"
                                      Command="{Binding AddExercisesCommand}" BackgroundColor="Transparent">
                     <ImageButton.Behaviors>
-                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Gray, Dark=White}" />
+                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
                     </ImageButton.Behaviors>
                 </ImageButton>
             </Grid>

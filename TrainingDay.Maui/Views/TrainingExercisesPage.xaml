@@ -18,13 +18,13 @@
 
             <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="add_empty.png" Command="{Binding AddExercisesCommand}">
                 <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
                 </ImageButton.Behaviors>
             </ImageButton>
 
             <ImageButton Grid.Column="2" WidthRequest="30" HeightRequest="30" Source="settings.png" Command="{Binding ShowTrainingSettingsPageCommand}">
                 <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
                 </ImageButton.Behaviors>
             </ImageButton>
         </Grid>
@@ -64,7 +64,7 @@
                                     DropCommand="{Binding BindingContext.ItemDropped, Source={x:Reference ItemsListView}}"
                                     DropCommandParameter="{Binding}" />
                             </Frame.GestureRecognizers>
-                            <Grid Padding="0" Margin="5">
+                            <Grid Padding="0" Margin="5" ColumnSpacing="3">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="70"/>
                                     <ColumnDefinition Width="*"/>
@@ -123,7 +123,7 @@
                                              Command="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.DeleteExerciseCommand}" CommandParameter="{Binding }" BackgroundColor="Transparent" 
                                              IsVisible="{Binding IsCheckBoxVisible,Converter={StaticResource InverseBooleanConverter}}">
                                     <ImageButton.Behaviors>
-                                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
+                                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
                                     </ImageButton.Behaviors>
                                 </ImageButton>
                             </Grid>

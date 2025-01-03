@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Specialized;
+using Microsoft.Maui.ApplicationModel;
 
 namespace TrainingDay.Maui.Controls;
 
@@ -124,7 +125,7 @@ public class StepProgressBar : Grid
                 {
                     new Setter { Property = Button.BackgroundColorProperty, Value = SteppedColor },
                     new Setter { Property = Button.FontAttributesProperty, Value = FontAttributes.Bold },
-                    new Setter { Property = Button.TextColorProperty, Value = Colors.White },
+                    new Setter { Property = Button.TextColorProperty, Value = App.Current.RequestedTheme == AppTheme.Light? Colors.Black : Colors.White },
                     new Setter { Property = Button.BorderColorProperty, Value = StepColor },
                     new Setter { Property = Button.BorderWidthProperty, Value = 0.5 },
                     new Setter { Property = HeightRequestProperty, Value = 45 },

@@ -4,6 +4,7 @@
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              Shell.TabBarIsVisible="False"
+             HideSoftInputOnTapped="True"
              x:Class="TrainingDay.Maui.Views.TrainingExerciseItemPage">
     <Shell.TitleView>
         <Grid ColumnDefinitions="*,auto" ColumnSpacing="10" Margin="10,0">
@@ -11,7 +12,7 @@
 
             <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="save.png" Clicked="Save_clicked">
                 <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
                 </ImageButton.Behaviors>
             </ImageButton>
         </Grid>
