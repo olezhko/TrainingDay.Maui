@@ -1,10 +1,12 @@
-using Microcharts;
 using System.Text;
-using TrainingDay.Common;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels.Pages;
 using CommunityToolkit.Maui.Core.Platform;
+using Microsoft.Maui.Controls;
+using System;
+using Microsoft.Maui.ApplicationModel;
+using Microsoft.Maui.Graphics;
 
 namespace TrainingDay.Maui.Views;
 
@@ -14,24 +16,35 @@ public partial class WeightViewAndSetPage : ContentPage
     public WeightViewAndSetPage()
     {
         InitializeComponent();
-        PeriodPicker.Items.Add(AppResources.WeekString);
-        PeriodPicker.Items.Add(AppResources.TwoWeeksString);
-        PeriodPicker.Items.Add(AppResources.OneMounthString);
-        PeriodPicker.Items.Add(AppResources.TwoMonthString);
-        PeriodPicker.Items.Add(AppResources.ThreeMounthString);
-        PeriodPicker.Items.Add(AppResources.HalfYearString);
-        PeriodPicker.Items.Add(AppResources.YearString);
         vm = new WeightViewAndSetPageViewModel();
         BindingContext = vm;
         BodyControlView.ChildAdded += ChilderAdded;
         vm.PropertyChanged += ViewModelPropertyChanged;
+
+        var md = App.Current.Resources.MergedDictionaries.First();
+        inactiveColor = App.Current.RequestedTheme == AppTheme.Dark ? (Color)md["ContentPageBackgroundColor"] : (Color)md["ContentPageBackgroundColorLight"];
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        PeriodPicker.SelectedIndex = 0;
         vm?.OnAppearing();
+    }
+
+    Color inactiveColor;
+    Button lastPeriodButton;
+    private void SetPeriod_Click(object sender, EventArgs args)
+    {
+        if (lastPeriodButton is not null)
+        {
+            lastPeriodButton.BackgroundColor = inactiveColor;
+        }
+
+        lastPeriodButton = sender as Button;
+
+        ChartWeightPeriod period = (ChartWeightPeriod)Enum.Parse(typeof(ChartWeightPeriod), lastPeriodButton.AutomationId);
+        vm.WeightPeriodChangedCommand.Execute(period);
+        lastPeriodButton.BackgroundColor = Colors.Orange;
     }
 
     private void ViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs args)

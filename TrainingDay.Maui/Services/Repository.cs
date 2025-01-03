@@ -27,7 +27,6 @@ public class Repository
             string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             string libraryPath = Path.Combine(documentsPath, "..", "Library"); // папка библиотеки
             var path = Path.Combine(libraryPath, filename);
-            Console.WriteLine("SQL lib path: " + path);
             database = new SQLiteConnection(path);
 #endif
 

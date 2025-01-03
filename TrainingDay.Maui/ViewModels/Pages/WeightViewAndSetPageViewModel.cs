@@ -19,9 +19,7 @@ public enum WeightType
 public enum ChartWeightPeriod
 {
     Week,
-    TwoWeeks,
     Month,
-    TwoMonth,
     ThreeMonth,
     HalfYear,
     Year,
@@ -104,20 +102,14 @@ class WeightViewAndSetPageViewModel : BaseViewModel
             case ChartWeightPeriod.Week:
                 countDaysPeriod = 7;
                 break;
-            case ChartWeightPeriod.TwoWeeks:
-                countDaysPeriod = 14;
-                break;
             case ChartWeightPeriod.Month:
                 countDaysPeriod = 31;
                 break;
-            case ChartWeightPeriod.TwoMonth:
-                countDaysPeriod = 62;
-                break;
             case ChartWeightPeriod.ThreeMonth:
-                countDaysPeriod = 3 * 31;
+                countDaysPeriod = 91;
                 break;
             case ChartWeightPeriod.HalfYear:
-                countDaysPeriod = 6 * 31;
+                countDaysPeriod = 183;
                 break;
             case ChartWeightPeriod.Year:
                 countDaysPeriod = 365;

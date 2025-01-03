@@ -51,6 +51,9 @@ public class BlogsPageViewModel : BaseViewModel
         {
             if (Settings.GetLanguage().TwoLetterISOLanguageName.ToLower() is "en" or "de")
                 return response.Labels.Contains("en");
+
+            if (Settings.GetLanguage().TwoLetterISOLanguageName.ToLower() is "ru")
+                return response.Labels.Contains("ru");
         }
 
         return true;

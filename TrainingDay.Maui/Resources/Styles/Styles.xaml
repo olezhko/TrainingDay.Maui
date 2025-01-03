@@ -133,6 +133,7 @@
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontFamily" Value="OpenSansRegular"/>
         <Setter Property="FontSize" Value="14" />
+        <Setter Property="ClearButtonVisibility" Value="WhileEditing" />
         <Setter Property="PlaceholderColor" Value="Orange" />
         <Setter Property="MinimumHeightRequest" Value="44"/>
         <Setter Property="MinimumWidthRequest" Value="44"/>
@@ -171,7 +172,7 @@
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
     <Style TargetType="Frame" x:Key="MaterialFrame">
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White},Dark=Black}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}" />
         <Setter Property="BorderColor" Value="Transparent" />
         <Setter Property="CornerRadius" Value="5"/>
         <Setter Property="Padding" Value="5"/>

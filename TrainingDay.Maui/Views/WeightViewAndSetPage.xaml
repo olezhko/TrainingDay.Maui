@@ -32,23 +32,31 @@
         </Grid.RowDefinitions>
 
         <Frame Style="{StaticResource MaterialFrame}">
-            <Grid>
-                <Label Text="{x:Static resx:AppResources.SelectPeriodString}" Style="{StaticResource MaterialLabel}" controls:MaterialLabelAttached.MaterialControlType="Picker"/>
-                <Picker x:Name="PeriodPicker" Title="{x:Static resx:AppResources.SelectPeriodString}" HorizontalOptions="Fill" VerticalOptions="End">
-                    <Picker.Behaviors>
-                        <toolkit:EventToCommandBehavior EventName="SelectedIndexChanged" Command="{Binding WeightPeriodChangedCommand}" CommandParameter="{Binding Source={x:Reference PeriodPicker},Path=SelectedIndex}"/>
-                    </Picker.Behaviors>
-                </Picker>
+            <Grid ColumnDefinitions="*,*,*,*,*" ColumnSpacing="5">
+                <Button Grid.Column="0" CornerRadius="5" Padding="0" LineBreakMode="TailTruncation"
+                        TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"
+                        BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}"
+                        Clicked="SetPeriod_Click" AutomationId="0" Text="{x:Static resx:AppResources.WeekString}"/>
+
+                <Button Padding="0" Grid.Column="1" CornerRadius="5" BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}" LineBreakMode="TailTruncation"
+                            Clicked="SetPeriod_Click" AutomationId="1" Text="{x:Static resx:AppResources.OneMounthString}" TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"/>
+                <Button Padding="0" Grid.Column="2" CornerRadius="5" BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}" LineBreakMode="TailTruncation"
+                            Clicked="SetPeriod_Click" AutomationId="2" Text="{x:Static resx:AppResources.ThreeMounthString}" TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"/>
+                <Button Padding="0" Grid.Column="3" CornerRadius="5" BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}" LineBreakMode="TailTruncation"
+                            Clicked="SetPeriod_Click" AutomationId="3" Text="{x:Static resx:AppResources.HalfYearString}" TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"/>
+                <Button Padding="0" Grid.Column="4" CornerRadius="5" BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}" LineBreakMode="TailTruncation"
+                            Clicked="SetPeriod_Click" AutomationId="4" Text="{x:Static resx:AppResources.YearString}" TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"/>
             </Grid>
         </Frame>
 
-        <CarouselView x:Name="BodyControlView" Grid.Row="1" IndicatorView="indicatorView" ItemsSource="{Binding BodyControlItems}" VerticalOptions="Fill" Loop="False">
+        <CarouselView x:Name="BodyControlView" Grid.Row="1" IndicatorView="indicatorView" ItemsSource="{Binding BodyControlItems}"
+                      VerticalOptions="Fill" Loop="False" IsVisible="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}">
             <CarouselView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="5" RowDefinitions="auto,auto,*">
                         <Label Grid.Row="0" HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="{Binding Name}" FontSize="Large"/>
                         <Grid Grid.Row="1" ColumnDefinitions="*,*,auto" ColumnSpacing="5">
-                            <Frame Grid.Column="0" Style="{StaticResource MaterialFrame}" CornerRadius="20" Padding="10" BackgroundColor="White">
+                            <Frame Grid.Column="0" Style="{StaticResource MaterialFrame}" CornerRadius="20" Padding="10" BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}">
                                 <VerticalStackLayout>
                                     <Label Text="{x:Static resx:AppResources.CurrentString}" TextColor="Orange"/>
                                     <Entry Text="{Binding CurrentValueString, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="17" VerticalOptions="End" Keyboard="Numeric"
@@ -79,6 +87,9 @@
                 </DataTemplate>
             </CarouselView.ItemTemplate>
         </CarouselView>
+
+        <ActivityIndicator Grid.Row="1" IsRunning="True" IsVisible="{Binding IsBusy}"/>
+
         <IndicatorView Grid.Row="2" x:Name="indicatorView" IndicatorSize="{OnPlatform Android='9', iOS='10'}" MaximumVisible="6" HideSingle="True" ItemsSource="{Binding BodyControlItems}" IndicatorColor="DimGray" 
                        SelectedIndicatorColor="Orange" VerticalOptions="Fill" HorizontalOptions="Center" Margin="0,0,0,5"/>
     </Grid>

@@ -196,7 +196,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Группа:.
+        ///   Looks up a localized string similar to Группа.
         /// </summary>
         internal static string ChooseGroupOrNewString {
             get {
@@ -718,20 +718,11 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to   кг  .
+        ///   Looks up a localized string similar to  кг  .
         /// </summary>
         internal static string KilogramsString {
             get {
                 return ResourceManager.GetString("KilogramsString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Язык.
-        /// </summary>
-        internal static string LanguageString {
-            get {
-                return ResourceManager.GetString("LanguageString", resourceCulture);
             }
         }
         
@@ -741,6 +732,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string LastImplementedFormatString {
             get {
                 return ResourceManager.GetString("LastImplementedFormatString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to фунты.
+        /// </summary>
+        internal static string LbsString {
+            get {
+                return ResourceManager.GetString("LbsString", resourceCulture);
             }
         }
         
@@ -786,6 +786,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string MarkTheRequiredExercisesAndPressFormat {
             get {
                 return ResourceManager.GetString("MarkTheRequiredExercisesAndPressFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Мера веса (кг или фунты).
+        /// </summary>
+        internal static string MeasureWeight {
+            get {
+                return ResourceManager.GetString("MeasureWeight", resourceCulture);
             }
         }
         
@@ -1078,6 +1087,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Сильные ноги и бедра.
+        /// </summary>
+        internal static string PreparedFootTraining {
+            get {
+                return ResourceManager.GetString("PreparedFootTraining", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Без инвентаря.
         /// </summary>
         internal static string PreparedHomeString {
@@ -1164,6 +1182,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string RepeatString {
             get {
                 return ResourceManager.GetString("RepeatString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to повт.
+        /// </summary>
+        internal static string RepetitionsShort {
+            get {
+                return ResourceManager.GetString("RepetitionsShort", resourceCulture);
             }
         }
         
@@ -1510,7 +1537,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 3 месяца.
+        ///   Looks up a localized string similar to 3 Месяца.
         /// </summary>
         internal static string ThreeMounthString {
             get {
@@ -1794,15 +1821,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string WeightControlString {
             get {
                 return ResourceManager.GetString("WeightControlString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Вес:.
-        /// </summary>
-        internal static string WeightLabel {
-            get {
-                return ResourceManager.GetString("WeightLabel", resourceCulture);
             }
         }
         
