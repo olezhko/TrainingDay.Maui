@@ -92,6 +92,7 @@
 	  <None Remove="Resources\Images\prepared\up.png" />
 	  <None Remove="Resources\Images\prepared\wide_shoulders.png" />
 	  <None Remove="Platforms\iOS\GoogleService-Info.plist" />
+	  <None Remove="Platforms\iOS\PrivacyInfo.xcprivacy" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -267,5 +268,6 @@
 
 	<ItemGroup>
 	  <BundleResource Include="Platforms\iOS\GoogleService-Info.plist" />
+	  <BundleResource Include="Platforms\iOS\PrivacyInfo.xcprivacy" />
 	</ItemGroup>
 </Project>

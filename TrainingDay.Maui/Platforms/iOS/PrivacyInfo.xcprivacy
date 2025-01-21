@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+   PrivacyInfo.xcprivacy
+   
+
+   Created by Oleg Ladyko on 1/21/25.
+   Copyright (c) 2025 ___ORGANIZATIONNAME___. All rights reserved.
+-->
+<plist version="1.0">
+<dict>
+    <!-- Version of the privacy manifest -->
+    <key>PrivacyManifestVersion</key>
+    <string>1.0</string>
+    
+    <!-- Data collection details -->
+    <key>DataCollections</key>
+    <array>
+        <!-- Example data collection entry -->
+        <dict>
+            <key>DataType</key>
+            <string>ContactInfo</string> <!-- e.g., email address -->
+            <key>Purpose</key>
+            <array>
+                <string>Analytics</string>
+                <string>App Functionality</string>
+            </array>
+            <key>Description</key>
+            <string>Collects user email addresses for authentication and analytics purposes.</string>
+        </dict>
+        <dict>
+            <key>DataType</key>
+            <string>DeviceIdentifiers</string> <!-- e.g., IDFA -->
+            <key>Purpose</key>
+            <array>
+                <string>Crash Reporting</string>
+                <string>Analytics</string>
+            </array>
+            <key>Description</key>
+            <string>Collects device identifiers to diagnose crashes and improve app performance.</string>
+        </dict>
+    </array>
+
+    <!-- Third-party SDKs -->
+    <key>ThirdPartySDKs</key>
+    <array>
+        <dict>
+            <key>SDKName</key>
+            <string>FirebaseCore</string>
+            <key>SDKVersion</key>
+            <string>X.X.X</string>
+            <key>DataCollections</key>
+            <array>
+                <string>DeviceIdentifiers</string>
+                <string>UsageData</string>
+            </array>
+            <key>Description</key>
+            <string>Provides core Firebase services for the app.</string>
+        </dict>
+        <dict>
+            <key>SDKName</key>
+            <string>FirebaseCoreDiagnostics</string>
+            <key>SDKVersion</key>
+            <string>X.X.X</string>
+            <key>DataCollections</key>
+            <array>
+                <string>CrashReporting</string>
+                <string>DeviceIdentifiers</string>
+            </array>
+            <key>Description</key>
+            <string>Used for diagnostics and error reporting.</string>
+        </dict>
+        <dict>
+            <key>SDKName</key>
+            <string>GoogleDataTransport</string>
+            <key>SDKVersion</key>
+            <string>X.X.X</string>
+            <key>DataCollections</key>
+            <array>
+                <string>UsageData</string>
+            </array>
+            <key>Description</key>
+            <string>Handles transport of analytics data to Google services.</string>
+        </dict>
+    </array>
+</dict>
+</plist>
