@@ -119,7 +119,7 @@ public partial class ToolTipControl : ContentView
                 Margin = new Thickness(control.X, control.Y, 0, 0);
                 break;
             case ToolTipPosition.Center:
-                Margin = new Thickness(0, ParentHeight / 2 - control.Height / 2, 0, 0);
+                Margin = new Thickness(50, ParentHeight / 2 - control.Height / 2, 50, 0);
                 break;
         }
     }

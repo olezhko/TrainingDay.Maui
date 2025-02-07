@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using SkiaSharp;
@@ -103,6 +104,7 @@ namespace Microcharts
 
                 yAxisIntervalLabels = Enumerable.Range(0, ticks)
                     .Select(i => (float)(niceMax - (i * tickSpacing)))
+                    .Select(i => (float)Math.Round((double)i,1))
                     .ToList();
 
                 var longestYAxisLabel = yAxisIntervalLabels.Aggregate(string.Empty, (max, cur) => max.Length > cur.ToString().Length ? max : cur.ToString());

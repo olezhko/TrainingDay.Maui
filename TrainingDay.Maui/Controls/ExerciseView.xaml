@@ -28,7 +28,7 @@
             </controls:ImageCache>
         </Frame>
 
-        <StackLayout Grid.Row="2" Spacing="0">
+        <StackLayout Grid.Row="2" Spacing="0" Margin="5,0">
             <StackLayout Padding="0" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByReps}}"
                          Orientation="Vertical">
                 <StackLayout Orientation="Horizontal" VerticalOptions="Start" Spacing="10">
@@ -54,7 +54,8 @@
                 </FlexLayout>
             </StackLayout>
 
-            <StackLayout Padding="0" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByRepsAndWeight}}"
+            <StackLayout Padding="0" Margin="0"
+                         IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByRepsAndWeight}}"
             Orientation="Vertical">
                 <StackLayout Orientation="Horizontal" VerticalOptions="Start" Spacing="10">
                     <Label FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Start" Text="{x:Static resx:AppResources.RepsAndWeightString}" VerticalTextAlignment="Center" />

@@ -33,25 +33,25 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
-		<ApplicationVersion>290</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.3.3</ApplicationDisplayVersion>
+		<ApplicationVersion>292</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.4.2</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
 		<CreatePackage>false</CreatePackage>
 		<ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
-    <ApplicationVersion>290</ApplicationVersion>
-    <ApplicationDisplayVersion>1.2.3.3</ApplicationDisplayVersion>
+    <ApplicationVersion>292</ApplicationVersion>
+    <ApplicationDisplayVersion>1.2.4.2</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
-    <ApplicationVersion>290</ApplicationVersion>
-    <ApplicationDisplayVersion>1.2.3.3</ApplicationDisplayVersion>
+    <ApplicationVersion>292</ApplicationVersion>
+    <ApplicationDisplayVersion>1.2.4.2</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
-    <ApplicationVersion>290</ApplicationVersion>
-    <ApplicationDisplayVersion>1.2.3.3</ApplicationDisplayVersion>
+    <ApplicationVersion>292</ApplicationVersion>
+    <ApplicationDisplayVersion>1.2.4.2</ApplicationDisplayVersion>
 		<CreatePackage>false</CreatePackage>
 		<CodesignProvision>TrainingDayPublish</CodesignProvision>
 		<CodesignKey>Apple Distribution: Oleg Ladyka (36WMJT4QLC)</CodesignKey>
