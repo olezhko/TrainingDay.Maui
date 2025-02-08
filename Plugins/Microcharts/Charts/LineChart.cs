@@ -199,7 +199,9 @@ namespace Microcharts
                         var last = (lineMode == LineMode.Spline) ? points.Length - 1 : points.Length;
                         for (int i = 0; i < last; i++)
                         {
-                            if (!entries.ElementAt(i).Value.HasValue) continue;
+                            if (!entries.ElementAt(i).Value.HasValue) 
+                                continue;
+
                             if (isFirst)
                             {
                                 path.MoveTo(points[i]);
@@ -262,7 +264,7 @@ namespace Microcharts
                         {
                             if (!entries.ElementAt(i).Value.HasValue) continue;
 
-                            if( isFirst )
+                            if(isFirst)
                             {
                                 path.MoveTo(points[i].X, origin);
                                 path.LineTo(points[i]);

@@ -19,7 +19,7 @@
                         <TapGestureRecognizer Tapped="Skip_Tapped"/>
                     </Label.GestureRecognizers>
                 </Label>
-                <Frame CornerRadius="5" Padding="5" Margin="0" BackgroundColor="DeepSkyBlue" HorizontalOptions="End">
+                <Frame CornerRadius="5" Padding="5" Margin="0" BackgroundColor="DeepSkyBlue" HorizontalOptions="End" BorderColor="Transparent">
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Tapped="NeverShow_Tapped"/>
                     </Frame.GestureRecognizers>

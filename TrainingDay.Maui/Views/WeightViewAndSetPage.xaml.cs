@@ -1,9 +1,4 @@
-using System;
 using System.Text;
-using CommunityToolkit.Maui.Core.Platform;
-using Microsoft.Maui.ApplicationModel;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels.Pages;
@@ -66,7 +61,7 @@ public partial class WeightViewAndSetPage : ContentPage
     private void ChilderAdded(object sender, ElementEventArgs args)
     {
         Grid element = args.Element as Grid;
-        var entries = TrainingDay.Maui.Extensions.UIHelper.FindVisualChildren<Entry>(element);
+        var entries = Extensions.UIHelper.FindVisualChildren<Entry>(element);
         weightEntryList.AddRange(entries);
     }
 

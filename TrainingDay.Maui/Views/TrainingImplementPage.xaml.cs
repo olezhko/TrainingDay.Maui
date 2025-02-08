@@ -1,7 +1,6 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
-using Microsoft.Maui.Controls;
 using Plugin.AdMob;
 using Plugin.AdMob.Services;
 using System.Collections.ObjectModel;
