@@ -6,8 +6,9 @@
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              xmlns:admob="clr-namespace:Plugin.AdMob;assembly=Plugin.AdMob"
              x:Class="TrainingDay.Maui.Views.TrainingImplementPage"
-             x:Name="Page"
-             Shell.PresentationMode="ModalAnimated">
+             Shell.TabBarIsVisible="False"
+             Shell.NavBarIsVisible="False"
+             x:Name="Page">
     <controls:TooltipControlContainer x:Name="MainGrid" BackgroundColor="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

@@ -1,4 +1,6 @@
-﻿namespace TrainingDay.Maui.Controls;
+﻿using Microsoft.Maui.Graphics;
+
+namespace TrainingDay.Maui.Controls;
 
 public class TooltipControlContainer : Grid
 {
@@ -8,7 +10,7 @@ public class TooltipControlContainer : Grid
 
     public TooltipControlContainer()
     {
-        BackgroundColor = Color.FromHex("#CC000000");
+        BackgroundColor = Color.FromArgb("#CC000000");
     }
 
     protected override void OnChildAdded(Element child)
