@@ -220,11 +220,6 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         }
     }
 
-    private async void MakeNotify()
-    {
-        await Shell.Current.GoToAsync($"{nameof(MakeTrainingAlarmPage)}?{nameof(MakeTrainingAlarmPageViewModel.TrainingId)}={Training.Id}");
-    }
-
     private async void TrainingExerciseTapped(object item)
     {
         var selectedExercise = item as TrainingExerciseViewModel;
@@ -611,18 +606,13 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         Analytics.TrackEvent($"{GetType().Name}: ShowTrainingSettingsPage");
 
         var action = await Shell.Current.DisplayActionSheet(AppResources.ChoseAction, AppResources.CancelString, null, 
-            //AppResources.Notification, 
             AppResources.ShareTrainingString, 
             AppResources.SuperSetControl, 
             AppResources.MoveString, 
             AppResources.CopyString);
 
         Analytics.TrackEvent($"{GetType().Name}: ShowTrainingSettingsPage finished with {action}");
-        if (action == AppResources.Notification)
-        {
-            MakeNotify();
-        }
-        else if(action == AppResources.ShareTrainingString)
+        if(action == AppResources.ShareTrainingString)
         {
             ShareTraining();
         }

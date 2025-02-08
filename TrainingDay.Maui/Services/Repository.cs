@@ -50,7 +50,6 @@ public class Repository
             database.CreateTable<LastTraining>();
             database.CreateTable<WeightNote>();
             database.CreateTable<LastTrainingExercise>();
-            database.CreateTable<Alarm>();
             database.CreateTable<SuperSet>();
             database.CreateTable<TrainingUnion>();
             database.CreateTable<ImageData>();
@@ -343,36 +342,6 @@ public class Repository
         database.Insert(item);
         return GetLastInsertId();
     }
-    #endregion
-
-    #region Alarm
-
-    public IEnumerable<Alarm> GetAlarmItems()
-    {
-        return (from i in database.Table<Alarm>() select i).ToList();
-    }
-
-    public Alarm GetAlarmItem(int id)
-    {
-        return database.Get<Alarm>(id);
-    }
-
-    public int DeleteAlarmItem(int id)
-    {
-        return database.Delete<Alarm>(id);
-    }
-
-    public int SaveAlarmItem(Alarm item)
-    {
-        if (item.Id != 0)
-        {
-            database.Update(item);
-            return item.Id;
-        }
-        database.Insert(item);
-        return GetLastInsertId();
-    }
-
     #endregion
 
     #region SuperSet

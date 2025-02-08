@@ -21,9 +21,6 @@ namespace TrainingDay.Maui
             Routing.RegisterRoute(nameof(ExerciseItemPage), typeof(ExerciseItemPage));
             Routing.RegisterRoute(nameof(FilterPage), typeof(FilterPage));
 
-            Routing.RegisterRoute(nameof(TrainingAlarmListPage), typeof(TrainingAlarmListPage));
-            Routing.RegisterRoute(nameof(MakeTrainingAlarmPage), typeof(MakeTrainingAlarmPage));
-
             Routing.RegisterRoute(nameof(BlogsPage), typeof(BlogsPage));
 
             Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));

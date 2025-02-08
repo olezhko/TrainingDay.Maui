@@ -163,8 +163,6 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
                 App.Database.DeleteTrainingItem(item.Id);
                 item.DeleteTrainingsItemsFromBase();
 
-                DeleteTrainingAlarms(item);
-
                 var group = ItemsGrouped.FirstOrDefault(gr => gr.Contains(item));
                 group.Remove(item);
                 if (group.Count == 0)
@@ -187,18 +185,6 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         catch (Exception e)
         {
             Console.WriteLine(e);
-        }
-    }
-
-    private static void DeleteTrainingAlarms(TrainingViewModel item)
-    {
-        var alarms = App.Database.GetAlarmItems();
-        foreach (var alarm in alarms)
-        {
-            if (alarm.TrainingId == item.Id)
-            {
-                App.Database.DeleteAlarmItem(alarm.Id);
-            }
         }
     }
 

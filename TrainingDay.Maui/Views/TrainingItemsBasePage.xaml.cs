@@ -100,9 +100,4 @@ public partial class TrainingItemsBasePage : ContentPage
     {
         await Shell.Current.GoToAsync(nameof(HistoryTrainingPage));
     }
-
-    private async void ShowAlarms_Click(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync(nameof(TrainingAlarmListPage));
-    }
 }
