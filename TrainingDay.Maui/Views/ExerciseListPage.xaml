@@ -41,8 +41,10 @@
             </ImageButton>
         </Grid>
 
-        <CollectionView x:Name="ExercisesListView" Grid.Row="1" BackgroundColor="Transparent" android:ListView.IsFastScrollEnabled="true"
-            ItemsSource="{Binding Items}" ItemsUpdatingScrollMode="KeepScrollOffset" SelectionMode="Single" VerticalScrollBarVisibility="Always">
+        <ActivityIndicator Grid.Row="1" IsVisible="{Binding IsBusy}" IsRunning="True"/>
+        <CollectionView x:Name="ExercisesListView" Grid.Row="1" BackgroundColor="Transparent" IsVisible="{Binding IsBusy,Converter={StaticResource InverseBooleanConverter}}"
+                        android:ListView.IsFastScrollEnabled="true"
+                        ItemsSource="{Binding Items}" ItemsUpdatingScrollMode="KeepScrollOffset" SelectionMode="Single" VerticalScrollBarVisibility="Always">
             <CollectionView.EmptyView>
                 <ContentView>
                     <ContentView.Style>

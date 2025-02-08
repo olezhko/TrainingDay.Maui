@@ -92,10 +92,12 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
 
     private async void LoadItemsAsync()
     {
+        IsBusy = true;
         var res = await Task.Run(LoadItems);
         Items = res;
         BaseItems = new ObservableCollection<ExerciseListItemViewModel>(res);
         OnPropertyChanged(nameof(Items));
+        IsBusy = false;
     }
 
     private ObservableCollection<ExerciseListItemViewModel> LoadItems()

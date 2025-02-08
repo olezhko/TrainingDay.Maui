@@ -93,20 +93,16 @@
                 </StackLayout>
 
                 <Grid Grid.Row="4" RowDefinitions="auto,auto,auto" RowSpacing="5">
-
-                    
-                    
-                    
-                    
                     <Editor
-                x:Name="StartingDescEditor"
-                Grid.Row="0"
-                AutoSize="TextChanges"
-                FontSize="Small"
-                IsReadOnly="{Binding IsBase}"
-                IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"
-                Placeholder="{x:Static resx:AppResources.StartPosition}"
-                Text="{Binding Description.StartPosition}" />
+                        x:Name="StartingDescEditor"
+                        Grid.Row="0"
+                        AutoSize="TextChanges"
+                        FontSize="Small"
+                        IsReadOnly="{Binding IsBase}"
+                        IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"
+                        Placeholder="{x:Static resx:AppResources.StartPosition}"
+                        BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}"
+                        Text="{Binding Description.StartPosition}" />
                     <Label
                 Grid.Row="0"
                 FontSize="Small"
@@ -121,6 +117,7 @@
                 IsReadOnly="{Binding IsBase}"
                 IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"
                 Placeholder="{x:Static resx:AppResources.Execution}"
+                        BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}"
                 Text="{Binding Description.Execution}" />
                     <Label
                 Grid.Row="1"
@@ -129,6 +126,7 @@
                 Text="{Binding Description.Execution}" />
 
                     <Editor
+                        
                 x:Name="AdviceDescEditor"
                 Grid.Row="2"
                 AutoSize="TextChanges"
@@ -136,6 +134,7 @@
                 IsReadOnly="{Binding IsBase}"
                 IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"
                 Placeholder="{x:Static resx:AppResources.Advice}"
+                        BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}"
                 Text="{Binding Description.Advice}" />
                     <Label
                 Grid.Row="2"

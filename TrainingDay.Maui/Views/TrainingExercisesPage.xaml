@@ -39,7 +39,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Frame Style="{StaticResource MaterialFrame}" Margin="5,0">
+        <Frame Style="{StaticResource MaterialFrame}" Margin="5">
             <Grid>
                 <Label Text="{x:Static resx:AppResources.NameString}" Style="{StaticResource MaterialLabel}"/>
                 <Entry Text="{Binding Training.Title, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="22" VerticalOptions="End"/>

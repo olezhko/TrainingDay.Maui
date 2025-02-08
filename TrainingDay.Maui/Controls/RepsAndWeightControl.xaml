@@ -46,14 +46,14 @@
 
             <ImageButton Grid.Column="4" Margin="0" CornerRadius="17" Clicked="DeleteButton_Clicked" HeightRequest="34" WidthRequest="34" HorizontalOptions="Center" Source="remove.png" VerticalOptions="Fill">
                 <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="White" />
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Dark=White,Light=Black}" />
                 </ImageButton.Behaviors>
             </ImageButton>
 
             <ImageButton Grid.Column="3" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" HorizontalOptions="Center" CornerRadius="17"
                          IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}" Source="save" VerticalOptions="Fill" WidthRequest="35">
                 <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="White" />
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Dark=White,Light=Black}" />
                 </ImageButton.Behaviors>
                 <ImageButton.Style>
                     <Style TargetType="ImageButton">
