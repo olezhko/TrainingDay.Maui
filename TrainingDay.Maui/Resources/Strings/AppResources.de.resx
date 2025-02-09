@@ -138,9 +138,6 @@
   <data name="AdviceString" xml:space="preserve">
     <value>Rat</value>
   </data>
-  <data name="AlreadyHaveAccountQuestion" xml:space="preserve">
-    <value>Sie haben bereits ein Konto?</value>
-  </data>
   <data name="AuthorString" xml:space="preserve">
     <value>Autor: {0}</value>
   </data>
@@ -225,9 +222,6 @@
   <data name="DayTextWensdey" xml:space="preserve">
     <value>MI</value>
   </data>
-  <data name="DeleteAlarmQuestion" xml:space="preserve">
-    <value>Are you really want to delete alarm?</value>
-  </data>
   <data name="DeletedString" xml:space="preserve">
     <value>Gelöscht</value>
   </data>
@@ -248,9 +242,6 @@
   </data>
   <data name="DistinctExercisesPercentFormat" xml:space="preserve">
     <value>Prozentsatz verschiedener Übungen: {0:0.0}%</value>
-  </data>
-  <data name="DownloadingString" xml:space="preserve">
-    <value>Wird heruntergeladen</value>
   </data>
   <data name="Duplicate" xml:space="preserve">
     <value>Duplikat</value>
@@ -277,13 +268,10 @@
     <value>Übungen</value>
   </data>
   <data name="FilterString" xml:space="preserve">
-    <value>Muskelfilter</value>
+    <value>Filter</value>
   </data>
   <data name="For" xml:space="preserve">
     <value>Zum</value>
-  </data>
-  <data name="ForgotPasswordAction" xml:space="preserve">
-    <value>Passwort vergessen?</value>
   </data>
   <data name="GoalString" xml:space="preserve">
     <value>Tor</value>
@@ -330,15 +318,6 @@
   <data name="LastImplementedFormatString" xml:space="preserve">
     <value>Letzte: {0}</value>
   </data>
-  <data name="LoginAction" xml:space="preserve">
-    <value>Login</value>
-  </data>
-  <data name="LoginWithGoogle" xml:space="preserve">
-    <value>Login Google</value>
-  </data>
-  <data name="LogoutAction" xml:space="preserve">
-    <value>Abmelden</value>
-  </data>
   <data name="MakeTrainingString" xml:space="preserve">
     <value>ANFANG</value>
   </data>
@@ -375,9 +354,6 @@
   <data name="NewsString" xml:space="preserve">
     <value>Nachrichten</value>
   </data>
-  <data name="NoAdsString" xml:space="preserve">
-    <value>Keine Werbung</value>
-  </data>
   <data name="NoExercisesFilterString" xml:space="preserve">
     <value>Ihr Filterbegriff von stimmte mit keiner Übung überein</value>
   </data>
@@ -404,9 +380,6 @@
   </data>
   <data name="NoTrainingsNeedAddNewString" xml:space="preserve">
     <value>Noch keine Workouts abgeschlossen</value>
-  </data>
-  <data name="NoWorkoutLimit" xml:space="preserve">
-    <value>Kein Trainingslimit</value>
   </data>
   <data name="OkString" xml:space="preserve">
     <value>Ok</value>
@@ -519,9 +492,6 @@
   <data name="SelectTraining" xml:space="preserve">
     <value>Training:</value>
   </data>
-  <data name="SendPassword" xml:space="preserve">
-    <value>Passwort senden</value>
-  </data>
   <data name="SetFrequency" xml:space="preserve">
     <value>Frequenz einstellen</value>
   </data>
@@ -603,9 +573,6 @@
   <data name="ToolTipFinishExercise" xml:space="preserve">
     <value>Diese Taste beendet die Übung.</value>
   </data>
-  <data name="ToolTipGoogleSync" xml:space="preserve">
-    <value>Melden Sie sich an, um zwischen Geräten synchronisieren zu können.</value>
-  </data>
   <data name="ToolTipHoldImageExercises" xml:space="preserve">
     <value>Um die Reihenfolge der Übungen zu ändern, müssen Sie das Bild der Übung halten und es an die gewünschte Position ziehen.</value>
   </data>
@@ -657,9 +624,6 @@
   <data name="TwoWeeksString" xml:space="preserve">
     <value>2 Wochen</value>
   </data>
-  <data name="UploadingString" xml:space="preserve">
-    <value>Hochladen</value>
-  </data>
   <data name="VideoString" xml:space="preserve">
     <value>Video</value>
   </data>
@@ -698,9 +662,6 @@
   </data>
   <data name="YesString" xml:space="preserve">
     <value>Ja</value>
-  </data>
-  <data name="YouDontHaveAccountQuestion" xml:space="preserve">
-    <value>Sie haben noch kein Konto?</value>
   </data>
   <data name="Rest" xml:space="preserve">
     <value>Brechen</value>

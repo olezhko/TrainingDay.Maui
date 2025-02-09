@@ -138,9 +138,6 @@
   <data name="AdviceString" xml:space="preserve">
     <value>Advice</value>
   </data>
-  <data name="AlreadyHaveAccountQuestion" xml:space="preserve">
-    <value>Already have an account?</value>
-  </data>
   <data name="AuthorString" xml:space="preserve">
     <value>Author: {0}</value>
   </data>
@@ -225,9 +222,6 @@
   <data name="DayTextWensdey" xml:space="preserve">
     <value>Wed</value>
   </data>
-  <data name="DeleteAlarmQuestion" xml:space="preserve">
-    <value>Delete this alarm?</value>
-  </data>
   <data name="DeletedString" xml:space="preserve">
     <value>Deleted</value>
   </data>
@@ -249,9 +243,6 @@
   <data name="DistinctExercisesPercentFormat" xml:space="preserve">
     <value>Different finished exercises: {0:0.0}%</value>
   </data>
-  <data name="DownloadingString" xml:space="preserve">
-    <value>Downloading</value>
-  </data>
   <data name="Duplicate" xml:space="preserve">
     <value>Duplicate</value>
   </data>
@@ -260,15 +251,6 @@
   </data>
   <data name="ElapsedTimeString" xml:space="preserve">
     <value>Time: {0:hh\:mm\:ss}</value>
-  </data>
-  <data name="EnterEmail" xml:space="preserve">
-    <value>Enter email</value>
-  </data>
-  <data name="EnterNick" xml:space="preserve">
-    <value>Enter nick</value>
-  </data>
-  <data name="EnterPassword" xml:space="preserve">
-    <value>Enter password</value>
   </data>
   <data name="EnterTrainingName" xml:space="preserve">
     <value>Enter workout name and press OK</value>
@@ -286,13 +268,10 @@
     <value>Exercises</value>
   </data>
   <data name="FilterString" xml:space="preserve">
-    <value>Muscle`s filter</value>
+    <value>Filter</value>
   </data>
   <data name="For" xml:space="preserve">
     <value>For</value>
-  </data>
-  <data name="ForgotPasswordAction" xml:space="preserve">
-    <value>Forgot Password?</value>
   </data>
   <data name="GoalString" xml:space="preserve">
     <value>Goal</value>
@@ -339,15 +318,6 @@
   <data name="LastImplementedFormatString" xml:space="preserve">
     <value>Last: {0}</value>
   </data>
-  <data name="LoginAction" xml:space="preserve">
-    <value>Login</value>
-  </data>
-  <data name="LoginWithGoogle" xml:space="preserve">
-    <value>Login with Google</value>
-  </data>
-  <data name="LogoutAction" xml:space="preserve">
-    <value>Logout</value>
-  </data>
   <data name="MakeTrainingString" xml:space="preserve">
     <value>START</value>
   </data>
@@ -384,9 +354,6 @@
   <data name="NewsString" xml:space="preserve">
     <value>News</value>
   </data>
-  <data name="NoAdsString" xml:space="preserve">
-    <value>No Ads</value>
-  </data>
   <data name="NoExercisesFilterString" xml:space="preserve">
     <value>Your filter term of did not match any exercises</value>
   </data>
@@ -413,9 +380,6 @@
   </data>
   <data name="NoTrainingsNeedAddNewString" xml:space="preserve">
     <value>No workouts. You should add workout.</value>
-  </data>
-  <data name="NoWorkoutLimit" xml:space="preserve">
-    <value>No Workout Limit</value>
   </data>
   <data name="OkString" xml:space="preserve">
     <value>Ok</value>
@@ -528,9 +492,6 @@
   <data name="SelectTraining" xml:space="preserve">
     <value>Workout:</value>
   </data>
-  <data name="SendPassword" xml:space="preserve">
-    <value>Send Password</value>
-  </data>
   <data name="SetFrequency" xml:space="preserve">
     <value>Set frequency</value>
   </data>
@@ -612,9 +573,6 @@
   <data name="ToolTipFinishExercise" xml:space="preserve">
     <value>This button ends the exercise.</value>
   </data>
-  <data name="ToolTipGoogleSync" xml:space="preserve">
-    <value>Log in to be able to sync between devices.</value>
-  </data>
   <data name="ToolTipHoldImageExercises" xml:space="preserve">
     <value>To change the order of the exercises, you need to hold the image of the exercise and drag it to the desired position.</value>
   </data>
@@ -666,9 +624,6 @@
   <data name="TwoWeeksString" xml:space="preserve">
     <value>2 weeks</value>
   </data>
-  <data name="UploadingString" xml:space="preserve">
-    <value>Uploading</value>
-  </data>
   <data name="VideoString" xml:space="preserve">
     <value>Video</value>
   </data>
@@ -707,9 +662,6 @@
   </data>
   <data name="YesString" xml:space="preserve">
     <value>Yes</value>
-  </data>
-  <data name="YouDontHaveAccountQuestion" xml:space="preserve">
-    <value>You don't have an account?</value>
   </data>
   <data name="Rest" xml:space="preserve">
     <value>Rest</value>

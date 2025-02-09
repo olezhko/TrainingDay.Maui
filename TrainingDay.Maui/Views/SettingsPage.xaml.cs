@@ -27,11 +27,7 @@ public partial class SettingsPage : ContentPage
         {
             DonateButton.IsVisible = false;
         }
-
-        EmailSpan.Text = Settings.Email;
     }
-
-
 
     private void ScreenOnImplementedSwitch_OnToggled(object sender, ToggledEventArgs e)
     {
@@ -151,11 +147,5 @@ public partial class SettingsPage : ContentPage
     private async void OpenStatistics_Click(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync(nameof(StatisticsPage));
-    }
-
-    private void PassShowButton_OnClicked(object sender, EventArgs e)
-    {
-        PasswordEntry.IsPassword = !PasswordEntry.IsPassword;
-        PassShowButton.Source = !PasswordEntry.IsPassword ? ImageSource.FromFile("pass_hide.png") : ImageSource.FromFile("pass_show.png");
     }
 }

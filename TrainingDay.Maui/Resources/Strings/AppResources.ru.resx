@@ -150,9 +150,6 @@
   <data name="AdviceString" xml:space="preserve">
     <value>Совет</value>
   </data>
-  <data name="AlreadyHaveAccountQuestion" xml:space="preserve">
-    <value>Уже есть аккаунт?</value>
-  </data>
   <data name="AuthorString" xml:space="preserve">
     <value>Автор: {0}</value>
   </data>
@@ -237,9 +234,6 @@
   <data name="DayTextWensdey" xml:space="preserve">
     <value>Ср</value>
   </data>
-  <data name="DeleteAlarmQuestion" xml:space="preserve">
-    <value>Удалить напоминание о тренировке?</value>
-  </data>
   <data name="DeletedString" xml:space="preserve">
     <value>Удалено</value>
   </data>
@@ -261,9 +255,6 @@
   <data name="DistinctExercisesPercentFormat" xml:space="preserve">
     <value>Процент различных упражнений: {0:0.0}%</value>
   </data>
-  <data name="DownloadingString" xml:space="preserve">
-    <value>Загрузка</value>
-  </data>
   <data name="Duplicate" xml:space="preserve">
     <value>Дублировать</value>
   </data>
@@ -272,15 +263,6 @@
   </data>
   <data name="ElapsedTimeString" xml:space="preserve">
     <value>Время: {0:hh\:mm\:ss}</value>
-  </data>
-  <data name="EnterEmail" xml:space="preserve">
-    <value>Введите email</value>
-  </data>
-  <data name="EnterNick" xml:space="preserve">
-    <value>Введите ник</value>
-  </data>
-  <data name="EnterPassword" xml:space="preserve">
-    <value>Введите пароль</value>
   </data>
   <data name="EnterTrainingName" xml:space="preserve">
     <value>Введите название тренировки и нажмите OK</value>
@@ -298,13 +280,10 @@
     <value>Упражнения</value>
   </data>
   <data name="FilterString" xml:space="preserve">
-    <value>Фильтр по мышцам</value>
+    <value>Фильтр</value>
   </data>
   <data name="For" xml:space="preserve">
     <value>Для</value>
-  </data>
-  <data name="ForgotPasswordAction" xml:space="preserve">
-    <value>Забыл пароль?</value>
   </data>
   <data name="GoalString" xml:space="preserve">
     <value>Цель</value>
@@ -351,15 +330,6 @@
   <data name="LastImplementedFormatString" xml:space="preserve">
     <value>Последнее выполнение: {0}</value>
   </data>
-  <data name="LoginAction" xml:space="preserve">
-    <value>Войти</value>
-  </data>
-  <data name="LoginWithGoogle" xml:space="preserve">
-    <value>Войти с Google</value>
-  </data>
-  <data name="LogoutAction" xml:space="preserve">
-    <value>Выйти</value>
-  </data>
   <data name="MakeTrainingString" xml:space="preserve">
     <value>СТАРТ</value>
   </data>
@@ -396,9 +366,6 @@
   <data name="NewsString" xml:space="preserve">
     <value>Новости</value>
   </data>
-  <data name="NoAdsString" xml:space="preserve">
-    <value>Убрать рекламу</value>
-  </data>
   <data name="NoExercisesFilterString" xml:space="preserve">
     <value>Нет упражнений по заданному фильтру.</value>
   </data>
@@ -425,9 +392,6 @@
   </data>
   <data name="NoTrainingsNeedAddNewString" xml:space="preserve">
     <value>Нет тренировок. Добавьте тренировку.</value>
-  </data>
-  <data name="NoWorkoutLimit" xml:space="preserve">
-    <value>Убрать ограничение по тренировкам   </value>
   </data>
   <data name="OkString" xml:space="preserve">
     <value>OK</value>
@@ -540,9 +504,6 @@
   <data name="SelectTraining" xml:space="preserve">
     <value>Тренировка:</value>
   </data>
-  <data name="SendPassword" xml:space="preserve">
-    <value>Отправить пароль</value>
-  </data>
   <data name="SetFrequency" xml:space="preserve">
     <value>Задать частоту</value>
   </data>
@@ -624,9 +585,6 @@
   <data name="ToolTipFinishExercise" xml:space="preserve">
     <value>Эта кнопка завершает выполнение упражнения</value>
   </data>
-  <data name="ToolTipGoogleSync" xml:space="preserve">
-    <value>Авторизуйтесь, чтобы была возможность синхронизироваться между устройствами.</value>
-  </data>
   <data name="ToolTipHoldImageExercises" xml:space="preserve">
     <value>Чтобы изменить порядок упражнений необходимо зажать изображение упражнение и тянуть до необходимой позиции.</value>
   </data>
@@ -678,9 +636,6 @@
   <data name="TwoWeeksString" xml:space="preserve">
     <value>2 недели</value>
   </data>
-  <data name="UploadingString" xml:space="preserve">
-    <value>Отправка</value>
-  </data>
   <data name="VideoString" xml:space="preserve">
     <value>Видео</value>
   </data>
@@ -719,9 +674,6 @@
   </data>
   <data name="YesString" xml:space="preserve">
     <value>Да</value>
-  </data>
-  <data name="YouDontHaveAccountQuestion" xml:space="preserve">
-    <value>У вас нет аккаунта?</value>
   </data>
   <data name="Rest" xml:space="preserve">
     <value>Перерыв</value>
