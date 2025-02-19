@@ -52,10 +52,10 @@ public class WeightAndRepsViewModel : BaseViewModel
     [JsonIgnore]
     public string WeightString
     {
-        get => Weight.ToString(App.CurrentCultureForEntryDot);
+        get => Weight.ToString(CultureInfo.CurrentCulture);
         set
         {
-            var res = double.TryParse(value, NumberStyles.Any, App.CurrentCultureForEntryDot, out var weight);
+            var res = double.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out var weight);
             if (res)
             {
                 Weight = weight;

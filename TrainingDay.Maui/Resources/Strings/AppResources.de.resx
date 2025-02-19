@@ -192,35 +192,8 @@
   <data name="DateTimeFormat" xml:space="preserve">
     <value>{0}</value>
   </data>
-  <data name="DayFreqString" xml:space="preserve">
-    <value>Wiederhole jeden (Tage)</value>
-  </data>
   <data name="Days" xml:space="preserve">
     <value>Tage</value>
-  </data>
-  <data name="DayTextEveryDay" xml:space="preserve">
-    <value>Jeden Tag</value>
-  </data>
-  <data name="DayTextFriday" xml:space="preserve">
-    <value>FR</value>
-  </data>
-  <data name="DayTextMonday" xml:space="preserve">
-    <value>MO</value>
-  </data>
-  <data name="DayTextSaturday" xml:space="preserve">
-    <value>SA</value>
-  </data>
-  <data name="DayTextSunday" xml:space="preserve">
-    <value>SO</value>
-  </data>
-  <data name="DayTextThursday" xml:space="preserve">
-    <value>DO</value>
-  </data>
-  <data name="DayTextThusday" xml:space="preserve">
-    <value>DI</value>
-  </data>
-  <data name="DayTextWensdey" xml:space="preserve">
-    <value>MI</value>
   </data>
   <data name="DeletedString" xml:space="preserve">
     <value>Gelöscht</value>
@@ -290,9 +263,6 @@
   </data>
   <data name="HalfYearString" xml:space="preserve">
     <value>Halbes Jahr</value>
-  </data>
-  <data name="Hello" xml:space="preserve">
-    <value>Hallo,</value>
   </data>
   <data name="HelperString" xml:space="preserve">
     <value>Helfer</value>
@@ -438,12 +408,6 @@
   <data name="RemoveString" xml:space="preserve">
     <value>Entfernen</value>
   </data>
-  <data name="RepeatEvery" xml:space="preserve">
-    <value>Wiederhole jeden</value>
-  </data>
-  <data name="RepeatString" xml:space="preserve">
-    <value>Wiederholen</value>
-  </data>
   <data name="RepsAndWeightString" xml:space="preserve">
     <value>Wiederholungen | Gewicht</value>
   </data>
@@ -537,17 +501,8 @@
   <data name="SuperSetString" xml:space="preserve">
     <value>SuperSet</value>
   </data>
-  <data name="Synchronization" xml:space="preserve">
-    <value>Synchronisation</value>
-  </data>
   <data name="SynchronizationDownloadingQuestion" xml:space="preserve">
     <value>Bist du dir sicher? Ihre nicht synchronisierten Daten werden gelöscht.</value>
-  </data>
-  <data name="SynchronizationFinishedFailed" xml:space="preserve">
-    <value>Synchronisierung beendet Fehlgeschlagen</value>
-  </data>
-  <data name="SynchronizationFinishedSuccessful" xml:space="preserve">
-    <value>Synchronisation erfolgreich beendet</value>
   </data>
   <data name="ThisExerciseAlreadyInWorkoutMessage" xml:space="preserve">
     <value>Diese Übung ist bereits im Training vorhanden</value>

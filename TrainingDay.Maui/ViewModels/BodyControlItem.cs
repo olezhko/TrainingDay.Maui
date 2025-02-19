@@ -12,10 +12,10 @@ public class BodyControlItem : BaseViewModel
 
     public string GoalValueString
     {
-        get => GoalValue.ToString(App.CurrentCultureForEntryDot);
+        get => GoalValue.ToString(CultureInfo.CurrentCulture);
         set
         {
-            var res = double.TryParse(value, NumberStyles.Any, App.CurrentCultureForEntryDot, out var weight);
+            var res = double.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out var weight);
             if (res && weight != GoalValue)
             {
                 GoalValue = weight;
@@ -26,10 +26,10 @@ public class BodyControlItem : BaseViewModel
 
     public string CurrentValueString
     {
-        get => CurrentValue.ToString(App.CurrentCultureForEntryDot);
+        get => CurrentValue.ToString(CultureInfo.CurrentCulture);
         set
         {
-            var res = double.TryParse(value, NumberStyles.Any, App.CurrentCultureForEntryDot, out var weight);
+            var res = double.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out var weight);
             if (res && weight != CurrentValue)
             {
                 CurrentValue = weight;

@@ -590,13 +590,13 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
     {
         Analytics.TrackEvent($"{GetType().Name}: ShareTraining");
 
-        var fn = $"{Resources.Strings.AppResources.TrainingString}_{Training.Title}.bin";
-        var filename = Path.Combine(FileSystem.CacheDirectory, fn);
+        string filename = Path.Combine(FileSystem.CacheDirectory, $"{AppResources.TrainingString}_{Training.Title}.trday");
 
         Training.SaveToFile(filename);
+
         await Share.RequestAsync(new ShareFileRequest()
         {
-            Title = Resources.Strings.AppResources.ShareTrainingString,
+            Title = AppResources.ShareTrainingString,
             File = new ShareFile(filename, "application/trday"),
         });
     }

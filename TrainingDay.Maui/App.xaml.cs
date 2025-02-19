@@ -5,7 +5,6 @@ using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
-using System.Globalization;
 using System.Net;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models;
@@ -14,18 +13,17 @@ using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Models.Serialize;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
+using TrainingDay.Maui.ViewModels;
 
 namespace TrainingDay.Maui
 {
     public partial class App : Application
     {
         private IPushNotification notificator;
-        private const string DatabaseName = "exercise.db";
+        
         private static Repository database;
         private static object lockBase = new object();
-        #region To Remove
-        public static CultureInfo CurrentCultureForEntryDot => DeviceInfo.Platform == DevicePlatform.Android ? CultureInfo.InvariantCulture : CultureInfo.CurrentCulture;
-        #endregion
+
         public static Repository Database
         {
             get
@@ -34,7 +32,7 @@ namespace TrainingDay.Maui
                 {
                     if (database == null)
                     {
-                        database = new Repository(DatabaseName);
+                        database = new Repository(ConstantKeys.DatabaseName);
                     }
 
                     return database;
@@ -172,7 +170,7 @@ namespace TrainingDay.Maui
         {
             try
             {
-                var vm = TrainingSerialize.LoadFromData(data);
+                var vm = DataManageViewModel.LoadFromData(data);
                 if (vm != null)
                 {
                     IncomingTraining(vm);

@@ -286,92 +286,11 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Repeat every (days).
-        /// </summary>
-        internal static string DayFreqString {
-            get {
-                return ResourceManager.GetString("DayFreqString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Days.
         /// </summary>
         internal static string Days {
             get {
                 return ResourceManager.GetString("Days", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Every day.
-        /// </summary>
-        internal static string DayTextEveryDay {
-            get {
-                return ResourceManager.GetString("DayTextEveryDay", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Fri.
-        /// </summary>
-        internal static string DayTextFriday {
-            get {
-                return ResourceManager.GetString("DayTextFriday", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Mon.
-        /// </summary>
-        internal static string DayTextMonday {
-            get {
-                return ResourceManager.GetString("DayTextMonday", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sat.
-        /// </summary>
-        internal static string DayTextSaturday {
-            get {
-                return ResourceManager.GetString("DayTextSaturday", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sun.
-        /// </summary>
-        internal static string DayTextSunday {
-            get {
-                return ResourceManager.GetString("DayTextSunday", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Thu.
-        /// </summary>
-        internal static string DayTextThursday {
-            get {
-                return ResourceManager.GetString("DayTextThursday", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tue.
-        /// </summary>
-        internal static string DayTextThusday {
-            get {
-                return ResourceManager.GetString("DayTextThusday", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Wed.
-        /// </summary>
-        internal static string DayTextWensdey {
-            get {
-                return ResourceManager.GetString("DayTextWensdey", resourceCulture);
             }
         }
         
@@ -579,15 +498,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string HalfYearString {
             get {
                 return ResourceManager.GetString("HalfYearString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Hello, .
-        /// </summary>
-        internal static string Hello {
-            get {
-                return ResourceManager.GetString("Hello", resourceCulture);
             }
         }
         
@@ -1051,24 +961,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Repeat every.
-        /// </summary>
-        internal static string RepeatEvery {
-            get {
-                return ResourceManager.GetString("RepeatEvery", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Repeat.
-        /// </summary>
-        internal static string RepeatString {
-            get {
-                return ResourceManager.GetString("RepeatString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to reps.
         /// </summary>
         internal static string RepetitionsShort {
@@ -1366,38 +1258,11 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Synchronization.
-        /// </summary>
-        internal static string Synchronization {
-            get {
-                return ResourceManager.GetString("Synchronization", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Are you sure? Your unsynchronized data will be deleted..
         /// </summary>
         internal static string SynchronizationDownloadingQuestion {
             get {
                 return ResourceManager.GetString("SynchronizationDownloadingQuestion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Synchronization Finished Failed.
-        /// </summary>
-        internal static string SynchronizationFinishedFailed {
-            get {
-                return ResourceManager.GetString("SynchronizationFinishedFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Synchronization Finished Successful.
-        /// </summary>
-        internal static string SynchronizationFinishedSuccessful {
-            get {
-                return ResourceManager.GetString("SynchronizationFinishedSuccessful", resourceCulture);
             }
         }
         

@@ -447,7 +447,7 @@ public class Repository
         return database.Delete<TrainingUnion>(id);
     }
 
-    public int SaveItem(object item, int id)
+    public int SaveItem(object item, int id = 0)
     {
         if (id != 0)
         {

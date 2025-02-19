@@ -82,9 +82,11 @@ public class TrainingViewModel : BaseViewModel
 
     public void SaveToFile(string filename)
     {
-        TrainingSerialize serialize = new TrainingSerialize();
-        serialize.Title = Title;
-        serialize.Id = Id;
+        TrainingSerialize serialize = new()
+        {
+            Title = Title,
+            Id = Id
+        };
         foreach (var trainingExerciseViewModel in Exercises)
         {
             serialize.Items.Add(new TrainingExerciseSerialize()
@@ -101,13 +103,13 @@ public class TrainingViewModel : BaseViewModel
                 IsSkipped = trainingExerciseViewModel.IsSkipped,
                 SuperSetNum = trainingExerciseViewModel.SuperSetNum,
 
-                TagsValue = TrainingDay.Common.ExerciseTools.ConvertTagListToInt(trainingExerciseViewModel.Tags),
+                TagsValue = Common.ExerciseTools.ConvertTagListToInt(trainingExerciseViewModel.Tags),
                 WeightAndRepsString = ExerciseManager.ConvertJson(trainingExerciseViewModel.Tags, trainingExerciseViewModel),
                 CodeNum = trainingExerciseViewModel.CodeNum,
             });
         }
 
-        serialize.SaveToFile(filename);
+        DataManageViewModel.SaveToFile(serialize, filename);
     }
 
     public void AddExercise(TrainingExerciseViewModel exercise)

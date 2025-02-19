@@ -46,7 +46,7 @@ public partial class TrainingItemsBasePage : ContentPage
         {
             Settings.IsTrainingNotFinished = false;
 
-            TrainingSerialize trainingSerialize = TrainingSerialize.LoadFromFile(filename);
+            TrainingSerialize trainingSerialize = DataManageViewModel.LoadFromFile(filename);
             if (trainingSerialize != null)
             {
                 var result = await MessageManager.DisplayAlert(AppResources.ContinueLastTrainingQuestion, trainingSerialize.Title, AppResources.YesString, AppResources.NoString);

@@ -83,7 +83,7 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
             .Union(selectedIndexes)
             .Distinct();
 
-        List<ExerciseListItemViewModel> resultItems = BaseItems.Where(item => ids.Contains(item.Id)).ToList();
+        List<ExerciseListItemViewModel> resultItems = [.. BaseItems.Where(item => ids.Contains(item.Id))];
 
         return resultItems;
     }
@@ -95,7 +95,12 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
         IsBusy = true;
         var res = await Task.Run(LoadItems);
         Items = res;
-        BaseItems = new ObservableCollection<ExerciseListItemViewModel>(res);
+
+        if (!BaseItems.Any())
+        {
+            BaseItems = new ObservableCollection<ExerciseListItemViewModel>(res);
+        }
+        
         OnPropertyChanged(nameof(Items));
         IsBusy = false;
     }

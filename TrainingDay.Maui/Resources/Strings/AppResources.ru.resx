@@ -204,35 +204,8 @@
   <data name="DateTimeFormat" xml:space="preserve">
     <value>{0:dd.MM.yyyy HH:mm:ss}</value>
   </data>
-  <data name="DayFreqString" xml:space="preserve">
-    <value>Повторять каждые (дней)</value>
-  </data>
   <data name="Days" xml:space="preserve">
     <value>Дней</value>
-  </data>
-  <data name="DayTextEveryDay" xml:space="preserve">
-    <value>Каждый день</value>
-  </data>
-  <data name="DayTextFriday" xml:space="preserve">
-    <value>Пт</value>
-  </data>
-  <data name="DayTextMonday" xml:space="preserve">
-    <value>Пн</value>
-  </data>
-  <data name="DayTextSaturday" xml:space="preserve">
-    <value>Сб</value>
-  </data>
-  <data name="DayTextSunday" xml:space="preserve">
-    <value>Вс</value>
-  </data>
-  <data name="DayTextThursday" xml:space="preserve">
-    <value>Чт</value>
-  </data>
-  <data name="DayTextThusday" xml:space="preserve">
-    <value>Вт</value>
-  </data>
-  <data name="DayTextWensdey" xml:space="preserve">
-    <value>Ср</value>
   </data>
   <data name="DeletedString" xml:space="preserve">
     <value>Удалено</value>
@@ -302,9 +275,6 @@
   </data>
   <data name="HalfYearString" xml:space="preserve">
     <value>Полгода</value>
-  </data>
-  <data name="Hello" xml:space="preserve">
-    <value>Привет, </value>
   </data>
   <data name="HelperString" xml:space="preserve">
     <value>ПОМОЩНИК</value>
@@ -450,12 +420,6 @@
   <data name="RemoveString" xml:space="preserve">
     <value>Удалить</value>
   </data>
-  <data name="RepeatEvery" xml:space="preserve">
-    <value>Повторить каждые</value>
-  </data>
-  <data name="RepeatString" xml:space="preserve">
-    <value>Повторить</value>
-  </data>
   <data name="RepsAndWeightString" xml:space="preserve">
     <value>Повторения | Вес</value>
   </data>
@@ -475,7 +439,7 @@
     <value>Сохранить тренировку</value>
   </data>
   <data name="ScreenOnWhenImplementing" xml:space="preserve">
-    <value>Экран должен быть включен при выполнении тренировки</value>
+    <value>Оставлять экран включенным при выполнении тренировки</value>
   </data>
   <data name="ScreenOnWhenImplementingTip" xml:space="preserve">
     <value>Выключить для экономии батареи</value>
@@ -549,17 +513,8 @@
   <data name="SuperSetString" xml:space="preserve">
     <value>Суперсет</value>
   </data>
-  <data name="Synchronization" xml:space="preserve">
-    <value>Синхронизация</value>
-  </data>
   <data name="SynchronizationDownloadingQuestion" xml:space="preserve">
     <value>Вы уверены? Ваши несинхронизированные данные удалятся.</value>
-  </data>
-  <data name="SynchronizationFinishedFailed" xml:space="preserve">
-    <value>Синхронизация завершена с ошибкой</value>
-  </data>
-  <data name="SynchronizationFinishedSuccessful" xml:space="preserve">
-    <value>Синхронизация завершена успешно</value>
   </data>
   <data name="ThisExerciseAlreadyInWorkoutMessage" xml:space="preserve">
     <value>Это упражнение уже есть в тренировке</value>
