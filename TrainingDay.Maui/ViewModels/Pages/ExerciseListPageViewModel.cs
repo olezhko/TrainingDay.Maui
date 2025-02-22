@@ -1,11 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.AppCenter.Analytics;
-using Microsoft.AppCenter.Crashes;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Common;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Messages;
+using TrainingDay.Maui.Services;
 using TrainingDay.Maui.Views;
 
 namespace TrainingDay.Maui.ViewModels.Pages;
@@ -57,7 +56,7 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
             UpdateItems();
 
             UnsubscribeMessages();
-            Analytics.TrackEvent($"{GetType().Name}: FilterAcceptedForExercisesMessage");
+            LoggingService.TrackEvent($"{GetType().Name}: FilterAcceptedForExercisesMessage");
         });
     }
 
@@ -150,7 +149,7 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
         catch (Exception e)
         {
             Console.WriteLine(e);
-            Crashes.TrackError(e);
+            LoggingService.TrackError(e);
             try
             {
                 foreach (var exercise in baseItems)
@@ -161,7 +160,7 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
-                Crashes.TrackError(e);
+                LoggingService.TrackError(e);
             }
 
             return newItems;

@@ -1,7 +1,6 @@
-using System.Globalization;
 using CommunityToolkit.Maui.Alerts;
-using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
+using System.Globalization;
 using TrainingDay.Common;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Resources.Strings;
@@ -59,7 +58,7 @@ public partial class SettingsPage : ContentPage
         catch (Exception exception)
         {
             Console.WriteLine(exception);
-            Crashes.TrackError(exception);
+            LoggingService.TrackError(exception);
         }
     }
 

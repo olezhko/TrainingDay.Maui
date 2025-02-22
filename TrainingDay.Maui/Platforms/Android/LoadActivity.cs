@@ -4,7 +4,6 @@ using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using System.Text;
-using TrainingDay.Maui.Models;
 
 namespace TrainingDay.Maui;
 

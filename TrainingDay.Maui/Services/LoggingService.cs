@@ -6,7 +6,7 @@ namespace TrainingDay.Maui.Services
 {
     public static class LoggingService
     {
-        public static void TrackError(Exception ex, IDictionary<string, string> properties)
+        public static void TrackError(Exception ex, IDictionary<string, string> properties = null)
         {
             Crashes.TrackError(ex, properties);
             //var parameters = new Bundle();
@@ -17,7 +17,7 @@ namespace TrainingDay.Maui.Services
             //FirebaseAnalytics.GetInstance(context).LogEvent("app_error", parameters);
         }
 
-        public static void TrackEvent(string text, IDictionary<string, string> properties)
+        public static void TrackEvent(string text, IDictionary<string, string> properties = null)
         {
             Analytics.TrackEvent(text, properties);
         }

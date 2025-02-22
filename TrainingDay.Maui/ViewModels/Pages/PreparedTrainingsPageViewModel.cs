@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.AppCenter.Analytics;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Maui.Extensions;
@@ -44,7 +43,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
             await Shell.Current.GoToAsync("..", false);
             await Shell.Current.GoToAsync("..", false);
             UnsubscribeMessages();
-            Analytics.TrackEvent($"PreparedTrainingsPageViewModel: AddExercises finished");
+            LoggingService.TrackEvent($"PreparedTrainingsPageViewModel: AddExercises finished");
         });
     }
 
@@ -73,7 +72,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
 
             await MessageManager.DisplayAlert(AppResources.AdviceString,
                 AppResources.MarkTheRequiredExercisesAndPressFormat.Fill(AppResources.SelectString), AppResources.OkString);
-            Analytics.TrackEvent($"{GetType().Name}: Training Created");
+            LoggingService.TrackEvent($"{GetType().Name}: Training Created");
         }
     }
 

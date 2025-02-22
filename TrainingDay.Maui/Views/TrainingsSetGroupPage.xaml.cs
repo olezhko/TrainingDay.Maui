@@ -1,10 +1,9 @@
 ﻿using CommunityToolkit.Maui.Alerts;
-using Microsoft.AppCenter.Analytics;
-using Microsoft.AppCenter.Crashes;
 using System.Collections.ObjectModel;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Resources.Strings;
+using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels;
 
 namespace TrainingDay.Maui.Views;
@@ -26,7 +25,7 @@ public partial class TrainingsSetGroupPage : ContentPage
 
     private async void ShowNewGroupWnd_Click(object sender, EventArgs e)
     {
-        Analytics.TrackEvent($"{GetType().Name}: AddToGroup with new group STARTED");
+        LoggingService.TrackEvent($"{GetType().Name}: AddToGroup with new group STARTED");
         string result = await DisplayPromptAsync(string.Empty, AppResources.GroupingEnterNameofGroup, AppResources.OkString, AppResources.CancelString, placeholder: AppResources.NameString);
         if (result != null)
         {
@@ -60,11 +59,11 @@ public partial class TrainingsSetGroupPage : ContentPage
             }
             catch (Exception ex)
             {
-                Crashes.TrackError(ex);
+                LoggingService.TrackError(ex);
             }
         }
 
-        Analytics.TrackEvent($"{GetType().Name}: AddToGroup with new group FINISHED");
+        LoggingService.TrackEvent($"{GetType().Name}: AddToGroup with new group FINISHED");
 
         await Toast.Make(AppResources.SavedString).Show();
 
@@ -87,7 +86,7 @@ public partial class TrainingsSetGroupPage : ContentPage
         }
         catch (Exception e)
         {
-            Crashes.TrackError(e);
+            LoggingService.TrackError(e);
         }
     }
 
@@ -127,12 +126,12 @@ public partial class TrainingsSetGroupPage : ContentPage
                 }
             }
 
-            Analytics.TrackEvent($"{GetType().Name}: AddToGroup finsihed");
+            LoggingService.TrackEvent($"{GetType().Name}: AddToGroup finsihed");
             Toast.Make(AppResources.SavedString).Show();
         }
         catch (Exception e)
         {
-            Crashes.TrackError(e);
+            LoggingService.TrackError(e);
         }
 
         Navigation.PopAsync();

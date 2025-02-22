@@ -1,12 +1,11 @@
-using Microsoft.AppCenter.Crashes;
 using System.Collections.ObjectModel;
 using TrainingDay.Common;
-using TrainingDay.Maui.ViewModels.Pages;
-using TrainingDay.Maui.Services;
-using TrainingDay.Maui.Resources.Strings;
-using TrainingDay.Maui.Models.Serialize;
-using TrainingDay.Maui.ViewModels;
 using TrainingDay.Maui.Extensions;
+using TrainingDay.Maui.Models.Serialize;
+using TrainingDay.Maui.Resources.Strings;
+using TrainingDay.Maui.Services;
+using TrainingDay.Maui.ViewModels;
+using TrainingDay.Maui.ViewModels.Pages;
 
 namespace TrainingDay.Maui.Views;
 
@@ -81,7 +80,7 @@ public partial class TrainingItemsBasePage : ContentPage
                         }
                         catch (Exception e)
                         {
-                            Crashes.TrackError(e);
+                            LoggingService.TrackError(e);
                         }
                     }
 

@@ -1,6 +1,4 @@
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.AppCenter.Analytics;
-using Microsoft.AppCenter.Crashes;
 using Plugin.AdMob;
 using Plugin.AdMob.Services;
 using System.Collections.ObjectModel;
@@ -220,7 +218,7 @@ public partial class TrainingImplementPage : ContentPage
             if (Items.All(a => a.All(item => !item.IsNotFinished || item.IsSkipped)) && enabledTimer)
             {
                 await FinishAndSave();
-                Analytics.TrackEvent($"{GetType().Name}: Training Implementing Finished");
+                LoggingService.TrackEvent($"{GetType().Name}: Training Implementing Finished");
             }
             else
             {
@@ -230,7 +228,7 @@ public partial class TrainingImplementPage : ContentPage
         }
         catch (Exception ex)
         {
-            Crashes.TrackError(ex);
+            LoggingService.TrackError(ex);
             await Shell.Current.GoToAsync("..");
         }
     }
@@ -365,7 +363,7 @@ public partial class TrainingImplementPage : ContentPage
             AddExercises(args.Selected.Select(item => TrainingExerciseViewModel.Create(item.GetExercise())));
 
             UnsubscribeMessages();
-            Analytics.TrackEvent($"TrainingImplementPage: AddExercises finished");
+            LoggingService.TrackEvent($"TrainingImplementPage: AddExercises finished");
         });
     }
 

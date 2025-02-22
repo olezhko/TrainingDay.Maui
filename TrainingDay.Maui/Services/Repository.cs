@@ -67,7 +67,7 @@ public class Repository
         }
         catch (Exception e)
         {
-            Crashes.TrackError(e);
+            LoggingService.TrackError(e);
         }
     }
 
@@ -131,7 +131,7 @@ public class Repository
         }
         catch (Exception e)
         {
-            Crashes.TrackError(e);
+            LoggingService.TrackError(e);
             Console.WriteLine(e);
         }
     }
@@ -148,7 +148,7 @@ public class Repository
         }
         catch (Exception ex)
         {
-            Crashes.TrackError(ex);
+            LoggingService.TrackError(ex);
         }
     }
     #endregion

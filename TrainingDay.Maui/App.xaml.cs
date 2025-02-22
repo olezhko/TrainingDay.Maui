@@ -54,7 +54,7 @@ namespace TrainingDay.Maui
             AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
             {
                 Exception ex = (Exception)args.ExceptionObject;
-                Crashes.TrackError(ex);
+                LoggingService.TrackError(ex);
             };
         }
 
@@ -67,7 +67,7 @@ namespace TrainingDay.Maui
 
             Settings.LastDatabaseSyncDateTime = Settings.LastDatabaseSyncDateTime.IsNotNullOrEmpty() ? Settings.LastDatabaseSyncDateTime : DateTime.Now.ToString(Settings.GetLanguage());
 
-            Analytics.TrackEvent("Application Started");
+            LoggingService.TrackEvent("Application Started");
 
             DownloadImages();
 
@@ -190,7 +190,7 @@ namespace TrainingDay.Maui
             }
             catch (Exception ex)
             {
-                Crashes.TrackError(ex);
+                LoggingService.TrackError(ex);
             }
 
             notificator.Show(new PushMessage()

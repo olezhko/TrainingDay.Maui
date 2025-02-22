@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.AppCenter.Analytics;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Input;
@@ -158,13 +157,13 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         {
             AddSelectedExercises(m.Selected.Select(item => TrainingExerciseViewModel.Create(item.GetExercise())));
             WeakReferenceMessenger.Default.Unregister<ExercisesSelectFinishedMessage>(this);
-            Analytics.TrackEvent($"{GetType().Name}: AddExercises finished");
+            LoggingService.TrackEvent($"{GetType().Name}: AddExercises finished");
         });
 
         Dictionary<string, object> param = new Dictionary<string, object> { { "ExistedExercises", Training.Exercises } };
 
         await Shell.Current.GoToAsync(nameof(ExerciseListPage), param);
-        Analytics.TrackEvent($"{GetType().Name}: AddExercises started");
+        LoggingService.TrackEvent($"{GetType().Name}: AddExercises started");
     }
 
     private void AddSelectedExercises(IEnumerable<TrainingExerciseViewModel> args)
@@ -182,12 +181,12 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
             count += 1;
         }
 
-        Analytics.TrackEvent($"{GetType().Name}: AddExercises finished");
+        LoggingService.TrackEvent($"{GetType().Name}: AddExercises finished");
     }
 
     private async void DeleteExercise(TrainingExerciseViewModel sender)
     {
-        Analytics.TrackEvent($"{GetType().Name}: DeleteExercise {CurrentAction} started");
+        LoggingService.TrackEvent($"{GetType().Name}: DeleteExercise {CurrentAction} started");
         if (CurrentAction == ExerciseCheckBoxAction.SuperSet)
         {
             if (sender.SuperSetId != 0)
@@ -195,7 +194,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
                 var result = await MessageManager.DisplayAlert(Resources.Strings.AppResources.DeleteExerciseFromSuperSetQuestion, string.Empty, Resources.Strings.AppResources.OkString, Resources.Strings.AppResources.CancelString);
                 if (result)
                 {
-                    Analytics.TrackEvent($"{GetType().Name}: DeleteExercise {CurrentAction} finished");
+                    LoggingService.TrackEvent($"{GetType().Name}: DeleteExercise {CurrentAction} finished");
 
                     var id = sender.SuperSetId;
                     sender.SuperSetId = 0;
@@ -210,7 +209,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
             var result = await MessageManager.DisplayAlert(Resources.Strings.AppResources.DeleteExercise, sender.ExerciseItemName, Resources.Strings.AppResources.OkString, Resources.Strings.AppResources.CancelString);
             if (result)
             {
-                Analytics.TrackEvent($"{GetType().Name}: DeleteExercise {CurrentAction} finished");
+                LoggingService.TrackEvent($"{GetType().Name}: DeleteExercise {CurrentAction} finished");
                 Training.DeleteExercise(sender);
                 if (sender.SuperSetId != 0)
                     CheckSuperSetExist(sender.SuperSetId);
@@ -282,7 +281,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
             await MessageManager.DisplayAlert(Resources.Strings.AppResources.AdviceString, Resources.Strings.AppResources.AdviceBeforeTrainingMessage, Resources.Strings.AppResources.OkString);
         }
 
-        Analytics.TrackEvent($"{GetType().Name}: Training Implementing started");
+        LoggingService.TrackEvent($"{GetType().Name}: Training Implementing started");
 
         Dictionary<string, object> param = new Dictionary<string, object> { { "TrainingItem", Training } };
         await Shell.Current.GoToAsync(nameof(TrainingImplementPage), param);
@@ -359,7 +358,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
     private void CreateSuperSet()
     {
-        Analytics.TrackEvent($"{GetType().Name}: CreateSuperSet finished");
+        LoggingService.TrackEvent($"{GetType().Name}: CreateSuperSet finished");
         var id = App.Database.SaveSuperSetItem(new SuperSet()
         {
             Count = selectedItems.Count,
@@ -419,7 +418,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
             item.IsCheckBoxVisible = false;
         });
 
-        Analytics.TrackEvent($"{GetType().Name}: StopAction {CurrentAction} Started");
+        LoggingService.TrackEvent($"{GetType().Name}: StopAction {CurrentAction} Started");
         ExerciseActionString = Resources.Strings.AppResources.TrainingString;
         OnPropertyChanged(nameof(ExerciseActionString));
 
@@ -462,7 +461,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
     private async void StartAction()
     {
-        Analytics.TrackEvent($"{GetType().Name}: StartAction {CurrentAction} Started");
+        LoggingService.TrackEvent($"{GetType().Name}: StartAction {CurrentAction} Started");
         if (CurrentAction == ExerciseCheckBoxAction.Select)
         {
             SaveTraining();
@@ -544,7 +543,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         }
 
         StopAction(true);
-        Analytics.TrackEvent($"{GetType().Name}: AcceptTrainingForMoveOrCopy {CurrentAction} Finished");
+        LoggingService.TrackEvent($"{GetType().Name}: AcceptTrainingForMoveOrCopy {CurrentAction} Finished");
     }
 
     private async void CreateTrainingFromSelectedExercises()
@@ -582,13 +581,13 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
             }
 
             StopAction(true);
-            Analytics.TrackEvent($"{GetType().Name}: CreateTrainingFromSelectedExercises");
+            LoggingService.TrackEvent($"{GetType().Name}: CreateTrainingFromSelectedExercises");
         }
     }
 
     private async void ShareTraining()
     {
-        Analytics.TrackEvent($"{GetType().Name}: ShareTraining");
+        LoggingService.TrackEvent($"{GetType().Name}: ShareTraining");
 
         string filename = Path.Combine(FileSystem.CacheDirectory, $"{AppResources.TrainingString}_{Training.Title}.trday");
 
@@ -603,7 +602,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
     private async void ShowTrainingSettingsPage()
     {
-        Analytics.TrackEvent($"{GetType().Name}: ShowTrainingSettingsPage");
+        LoggingService.TrackEvent($"{GetType().Name}: ShowTrainingSettingsPage");
 
         var action = await Shell.Current.DisplayActionSheet(AppResources.ChoseAction, AppResources.CancelString, null, 
             AppResources.ShareTrainingString, 
@@ -611,7 +610,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
             AppResources.MoveString, 
             AppResources.CopyString);
 
-        Analytics.TrackEvent($"{GetType().Name}: ShowTrainingSettingsPage finished with {action}");
+        LoggingService.TrackEvent($"{GetType().Name}: ShowTrainingSettingsPage finished with {action}");
         if(action == AppResources.ShareTrainingString)
         {
             ShareTraining();

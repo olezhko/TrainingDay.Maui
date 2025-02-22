@@ -1,6 +1,5 @@
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.AppCenter.Crashes;
 using System.Collections.ObjectModel;
 using System.Text;
 using TrainingDay.Common;
@@ -75,7 +74,7 @@ public partial class ExerciseItemPage : ContentPage
         }
         catch (Exception ex)
         {
-            Crashes.TrackError(ex);
+            LoggingService.TrackError(ex);
         }
     }
 

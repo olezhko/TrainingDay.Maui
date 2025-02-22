@@ -1,9 +1,8 @@
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.AppCenter.Analytics;
-using Microsoft.AppCenter.Crashes;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Resources.Strings;
+using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels;
 using TrainingDay.Maui.ViewModels.Pages;
 using static TrainingDay.Maui.Models.Messages.ExerciseChangedMessage;
@@ -66,11 +65,11 @@ public partial class ExerciseListPage : ContentPage
             }
             catch (Exception exception)
             {
-                Crashes.TrackError(exception);
+                LoggingService.TrackError(exception);
             }
 
             UnsubscribeMessages();
-            Analytics.TrackEvent($"{GetType().Name}: ExerciseChangedMessage");
+            LoggingService.TrackEvent($"{GetType().Name}: ExerciseChangedMessage");
         });
     }
 

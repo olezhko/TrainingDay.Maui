@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Maui.Alerts;
-using Microsoft.AppCenter.Crashes;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Maui.Extensions;
@@ -79,7 +78,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
             }
             catch (Exception ex)
             {
-                Crashes.TrackError(ex);
+                LoggingService.TrackError(ex);
             }
         }
 

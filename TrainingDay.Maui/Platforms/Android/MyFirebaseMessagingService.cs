@@ -5,10 +5,10 @@ using Android.OS;
 using Android.Util;
 using AndroidX.Core.App;
 using Firebase.Messaging;
-using Microsoft.AppCenter.Crashes;
 using TrainingDay.Common;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models;
+using TrainingDay.Maui.Services;
 using Application = Android.App.Application;
 
 namespace TrainingDay.Maui.Platforms.Android
@@ -93,7 +93,7 @@ namespace TrainingDay.Maui.Platforms.Android
             }
             catch (Exception e)
             {
-                Crashes.TrackError(e);
+                LoggingService.TrackError(e);
             }
         }
 

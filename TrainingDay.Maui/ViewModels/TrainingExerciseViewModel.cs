@@ -1,10 +1,9 @@
-﻿using Microsoft.AppCenter.Crashes;
-using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models.Database;
+using TrainingDay.Maui.Services;
 
 namespace TrainingDay.Maui.ViewModels;
 
@@ -43,7 +42,7 @@ public class TrainingExerciseViewModel : ExerciseViewModel
         }
         catch (Exception e)
         {
-            Crashes.TrackError(e);
+            LoggingService.TrackError(e);
         }
     }
 
