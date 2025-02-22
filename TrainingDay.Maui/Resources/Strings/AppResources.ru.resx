@@ -645,4 +645,10 @@
   <data name="PreparedFootTraining" xml:space="preserve">
     <value>Сильные ноги и бедра</value>
   </data>
+  <data name="ImportData" xml:space="preserve">
+    <value>Импортировать данные</value>
+  </data>
+  <data name="ExportData" xml:space="preserve">
+    <value>Экспортировать данные</value>
+  </data>
 </root>

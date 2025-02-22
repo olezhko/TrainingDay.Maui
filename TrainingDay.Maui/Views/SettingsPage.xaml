@@ -61,12 +61,12 @@
                 <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="Gold" 
                                    HeightRequest="40" WidthRequest="40" HorizontalOptions="Center"/>
                 
-                <Button Text="Export Data to file" Command="{Binding ExportDataCommand}" ImageSource="data_export.png" CornerRadius="20">
+                <Button Text="{x:Static resx:AppResources.ExportData}" Command="{Binding ExportDataCommand}" ImageSource="data_export.png" CornerRadius="20">
                     <Button.Behaviors>
                         <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=White, Dark={StaticResource PrimaryDarkColor}}" />
                     </Button.Behaviors>
                 </Button>
-                <Button Text="Import Data from file" Command="{Binding ImportDataCommand}" ImageSource="data_import.png" CornerRadius="20">
+                <Button Text="{x:Static resx:AppResources.ImportData}" Command="{Binding ImportDataCommand}" ImageSource="data_import.png" CornerRadius="20">
                     <Button.Behaviors>
                         <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=White, Dark={StaticResource PrimaryDarkColor}}" />
                     </Button.Behaviors>

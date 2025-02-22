@@ -633,4 +633,10 @@
   <data name="PreparedFootTraining" xml:space="preserve">
     <value>Strong legs and thighs</value>
   </data>
+  <data name="ImportData" xml:space="preserve">
+    <value>Import Data from file</value>
+  </data>
+  <data name="ExportData" xml:space="preserve">
+    <value>Export data to file</value>
+  </data>
 </root>

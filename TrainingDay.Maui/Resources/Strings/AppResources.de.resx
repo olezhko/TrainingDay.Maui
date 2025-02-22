@@ -633,4 +633,10 @@
   <data name="PreparedFootTraining" xml:space="preserve">
     <value>Starke Beine und Oberschenkel</value>
   </data>
+  <data name="ImportData" xml:space="preserve">
+    <value>Daten importieren</value>
+  </data>
+  <data name="ExportData" xml:space="preserve">
+    <value>Daten exportieren</value>
+  </data>
 </root>

@@ -430,6 +430,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export data to file.
+        /// </summary>
+        internal static string ExportData {
+            get {
+                return ResourceManager.GetString("ExportData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter.
         /// </summary>
         internal static string FilterString {
@@ -543,6 +552,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string HourString {
             get {
                 return ResourceManager.GetString("HourString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import Data from file.
+        /// </summary>
+        internal static string ImportData {
+            get {
+                return ResourceManager.GetString("ImportData", resourceCulture);
             }
         }
         
