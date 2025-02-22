@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.Messaging;
 using Newtonsoft.Json;
 using System.Text;
 using System.Windows.Input;
@@ -42,11 +43,15 @@ public class DataManageViewModel : BaseViewModel
         RepositoryData data = LoadRepositoryData(content);
         SetRepositoryData(data);
 
+        WeakReferenceMessenger.Default.Send<IncomingTrainingAddedMessage>();
+
+        await Toast.Make(AppResources.SavedString).Show();
         IsBusy = false;
     }
 
     private void SetRepositoryData(RepositoryData data)
     {
+        var baseExercises = App.Database.GetExerciseItems().ToList();
         foreach (var item in data.WeightNotes)
         {
             App.Database.SaveItem(item);
@@ -55,9 +60,18 @@ public class DataManageViewModel : BaseViewModel
         Dictionary<int, int> exercisePairs = new Dictionary<int, int>(); // old, new
         foreach (var exercise in data.Exercises)
         {
+            int newId = 0;
             int oldId = exercise.Id;
             exercise.Id = 0;
-            int newId = App.Database.SaveExerciseItem(exercise);
+            if (exercise.CodeNum == 0)
+            {
+                newId = App.Database.SaveExerciseItem(exercise);
+            }
+            else
+            {
+                newId = baseExercises.FirstOrDefault(be => be.CodeNum == exercise.CodeNum).Id;
+            }
+
             exercisePairs.Add(oldId, newId);
         }
 
@@ -91,12 +105,24 @@ public class DataManageViewModel : BaseViewModel
 
         foreach (var item in data.TrainingExercises)
         {
-            int oldId = item.Id;
-            item.Id = 0;
-            item.ExerciseId = exercisePairs[item.ExerciseId];
-            item.TrainingId = trainingPairs[item.TrainingId];
-            item.SuperSetId = superSetPairs[item.SuperSetId];
-            int newId = App.Database.SaveTrainingExerciseItem(item);
+            try
+            {
+                int oldId = item.Id;
+                item.Id = 0;
+
+                item.ExerciseId = exercisePairs[item.ExerciseId];
+                item.TrainingId = trainingPairs[item.TrainingId];
+                if (item.SuperSetId != 0)
+                {
+                    item.SuperSetId = superSetPairs[item.SuperSetId];
+                }
+
+                int newId = App.Database.SaveTrainingExerciseItem(item);
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         Dictionary<int, int> lastTrainingPairs = new Dictionary<int, int>(); // old, new
@@ -116,8 +142,6 @@ public class DataManageViewModel : BaseViewModel
             item.LastTrainingId = lastTrainingPairs[item.LastTrainingId];
             int newId = App.Database.SaveLastTrainingExerciseItem(item);
         }
-
-        WeakReferenceMessenger.Default.Send<IncomingTrainingAddedMessage>();
     }
 
     private RepositoryData LoadRepositoryData(string content)
@@ -141,7 +165,7 @@ public class DataManageViewModel : BaseViewModel
             Trainings = App.Database.GetTrainingItems(),
             TrainingExercises = App.Database.GetTrainingExerciseItems(),
             Groups = App.Database.GetTrainingsGroups(),
-            Exercises = App.Database.GetExerciseItems().Where(item => item.CodeNum == 0),
+            Exercises = App.Database.GetExerciseItems(),
             WeightNotes = App.Database.GetWeightNotesItems(),
             SuperSets = App.Database.GetSuperSetItems(),
             LastTrainings = App.Database.GetLastTrainingItems(),
@@ -155,6 +179,8 @@ public class DataManageViewModel : BaseViewModel
             Title = AppResources.ShareTrainingString,
             File = new ShareFile(filename, "application/trday"),
         });
+
+        await Toast.Make(AppResources.SavedString).Show();
 
         IsBusy = false;
     }

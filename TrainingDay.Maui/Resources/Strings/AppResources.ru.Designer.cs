@@ -133,15 +133,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Уже есть аккаунт?.
-        /// </summary>
-        internal static string AlreadyHaveAccountQuestion {
-            get {
-                return ResourceManager.GetString("AlreadyHaveAccountQuestion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Автор: {0}.
         /// </summary>
         internal static string AuthorString {
@@ -304,101 +295,11 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Повторять каждые (дней).
-        /// </summary>
-        internal static string DayFreqString {
-            get {
-                return ResourceManager.GetString("DayFreqString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Дней.
         /// </summary>
         internal static string Days {
             get {
                 return ResourceManager.GetString("Days", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Каждый день.
-        /// </summary>
-        internal static string DayTextEveryDay {
-            get {
-                return ResourceManager.GetString("DayTextEveryDay", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Пт.
-        /// </summary>
-        internal static string DayTextFriday {
-            get {
-                return ResourceManager.GetString("DayTextFriday", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Пн.
-        /// </summary>
-        internal static string DayTextMonday {
-            get {
-                return ResourceManager.GetString("DayTextMonday", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Сб.
-        /// </summary>
-        internal static string DayTextSaturday {
-            get {
-                return ResourceManager.GetString("DayTextSaturday", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Вс.
-        /// </summary>
-        internal static string DayTextSunday {
-            get {
-                return ResourceManager.GetString("DayTextSunday", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Чт.
-        /// </summary>
-        internal static string DayTextThursday {
-            get {
-                return ResourceManager.GetString("DayTextThursday", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Вт.
-        /// </summary>
-        internal static string DayTextThusday {
-            get {
-                return ResourceManager.GetString("DayTextThusday", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ср.
-        /// </summary>
-        internal static string DayTextWensdey {
-            get {
-                return ResourceManager.GetString("DayTextWensdey", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Удалить напоминание о тренировке?.
-        /// </summary>
-        internal static string DeleteAlarmQuestion {
-            get {
-                return ResourceManager.GetString("DeleteAlarmQuestion", resourceCulture);
             }
         }
         
@@ -1884,15 +1785,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string YesString {
             get {
                 return ResourceManager.GetString("YesString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to У вас нет аккаунта?.
-        /// </summary>
-        internal static string YouDontHaveAccountQuestion {
-            get {
-                return ResourceManager.GetString("YouDontHaveAccountQuestion", resourceCulture);
             }
         }
     }

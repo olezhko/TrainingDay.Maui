@@ -53,7 +53,6 @@ namespace TrainingDay.Maui.Controls
                 return;
             }
 
-            Console.WriteLine("MaterialLabelAttached: Change state to: " + isCollapse);
             if (isCollapse)
             {
                 label.VerticalOptions = LayoutOptions.Start;
