@@ -129,7 +129,6 @@
     <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.2" />
     <PackageReference Include="SQLitePCLRaw.provider.dynamic_cdecl" Version="2.1.9" />
     <PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="2.1.9" />
-    <BundleResource Include="Platforms\iOS\PrivacyInfo.xcprivacy" />
   </ItemGroup>
   
   <ItemGroup>

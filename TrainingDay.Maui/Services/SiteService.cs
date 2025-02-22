@@ -7,7 +7,7 @@ namespace TrainingDay.Maui.Services;
 public static class SiteService
 {
     const string blogId = "5827172986409389203";
-    const string getBlogsUrl = $"https://www.googleapis.com/blogger/v3/blogs/{blogId}/posts?key={ConstantKeys.BlogKey}";
+    const string getBlogsUrl = $"https://www.googleapis.com/blogger/v3/blogs/{blogId}/posts?key={ConstantKeys.BloggerKey}";
     const string getBlogUrlFormat = "https://www.googleapis.com/blogger/v3/blogs/{0}/posts/{2}?key={1}";
 
     private static RestClient InitApiClient(string url)
@@ -73,7 +73,7 @@ public static class SiteService
     {
         try
         {
-            string url = string.Format(getBlogUrlFormat, blogId, ConstantKeys.BlogKey, id);
+            string url = string.Format(getBlogUrlFormat, blogId, ConstantKeys.BloggerKey, id);
 
             var response = await InitApiClient(url)
                 .ExecuteAsync(InitRequest());

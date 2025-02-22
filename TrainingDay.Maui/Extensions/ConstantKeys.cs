@@ -17,6 +17,7 @@ public class ConstantKeys
     public const string FinishWorkoutiOSAds = "ca-app-pub-5313002236683041/5370584086";
 
     public const string NotFinishedTrainingName = "NotFinished.trday";
+    public const string DatabaseName = "exercise.db";
 
     public class AwsS3
     {

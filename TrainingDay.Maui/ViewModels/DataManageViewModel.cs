@@ -49,6 +49,15 @@ public class DataManageViewModel : BaseViewModel
         {
             App.Database.SaveItem(item);
         }
+
+        Dictionary<int, int> exercisePairs = new Dictionary<int, int>(); // old, new
+        foreach (var exercise in data.Exercises)
+        {
+            int oldId = exercise.Id;
+            exercise.Id = 0;
+            int newId = App.Database.SaveExerciseItem(exercise);
+            exercisePairs.Add(oldId, newId);
+        }
     }
 
     private RepositoryData LoadRepositoryData(string content)
