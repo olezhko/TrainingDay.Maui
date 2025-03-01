@@ -45,8 +45,9 @@ namespace TrainingDay.Maui.Controls
             }
         }
 
-        private static void ChangeActivate(Label label, bool isCollapse)
+        private static void ChangeActivate(Label label, bool isCollapse, bool isVisible = true)
         {
+            label.IsVisible = isVisible;
             bool _isCollapsed = label.VerticalOptions == LayoutOptions.Start;
             if (_isCollapsed && isCollapse || !_isCollapsed && !isCollapse)
             {
@@ -115,11 +116,16 @@ namespace TrainingDay.Maui.Controls
                         {
                             ChangeActivate(label, true);
                         }
+                        else
+                        {
+                            ChangeActivate(label, false, isVisible: false);
+                        }
 
                         picker.Focused += (sender, args) =>
                         {
                             ControlFocusChanged(sender, args, label, () => picker.SelectedIndex == -1);
                         };
+
                         picker.Unfocused += (sender, args) =>
                         {
                             ControlFocusChanged(sender, args, label, () => picker.SelectedIndex == -1);
