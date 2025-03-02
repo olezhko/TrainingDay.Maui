@@ -69,7 +69,7 @@ public partial class ExerciseListPage : ContentPage
             }
 
             UnsubscribeMessages();
-            LoggingService.TrackEvent($"{GetType().Name}: ExerciseChangedMessage");
+            LoggingService.TrackEvent(LoggingService.ExerciseChangedMessage);
         });
     }
 

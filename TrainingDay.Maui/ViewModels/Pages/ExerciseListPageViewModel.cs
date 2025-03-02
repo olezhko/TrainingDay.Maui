@@ -56,7 +56,7 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
             UpdateItems();
 
             UnsubscribeMessages();
-            LoggingService.TrackEvent($"{GetType().Name}: FilterAcceptedForExercisesMessage");
+            LoggingService.TrackEvent(LoggingService.FilterAcceptedForExercisesMessage);
         });
     }
 

@@ -67,7 +67,7 @@ namespace TrainingDay.Maui
 
             Settings.LastDatabaseSyncDateTime = Settings.LastDatabaseSyncDateTime.IsNotNullOrEmpty() ? Settings.LastDatabaseSyncDateTime : DateTime.Now.ToString(Settings.GetLanguage());
 
-            LoggingService.TrackEvent("Application Started");
+            LoggingService.TrackEvent(LoggingService.ApplicationStarted);
 
             DownloadImages();
 

@@ -25,7 +25,7 @@ public partial class TrainingsSetGroupPage : ContentPage
 
     private async void ShowNewGroupWnd_Click(object sender, EventArgs e)
     {
-        LoggingService.TrackEvent($"{GetType().Name}: AddToGroup with new group STARTED");
+        LoggingService.TrackEvent($"{GetType().Name.Replace("PageViewModel", string.Empty)} AddToGroup with new group STARTED");
         string result = await DisplayPromptAsync(string.Empty, AppResources.GroupingEnterNameofGroup, AppResources.OkString, AppResources.CancelString, placeholder: AppResources.NameString);
         if (result != null)
         {
@@ -63,7 +63,7 @@ public partial class TrainingsSetGroupPage : ContentPage
             }
         }
 
-        LoggingService.TrackEvent($"{GetType().Name}: AddToGroup with new group FINISHED");
+        LoggingService.TrackEvent($"{GetType().Name.Replace("PageViewModel", string.Empty)} AddToGroup with new group FINISHED");
 
         await Toast.Make(AppResources.SavedString).Show();
 
@@ -126,7 +126,7 @@ public partial class TrainingsSetGroupPage : ContentPage
                 }
             }
 
-            LoggingService.TrackEvent($"{GetType().Name}: AddToGroup finsihed");
+            LoggingService.TrackEvent($"{GetType().Name.Replace("PageViewModel", string.Empty)} AddToGroup finsihed");
             Toast.Make(AppResources.SavedString).Show();
         }
         catch (Exception e)

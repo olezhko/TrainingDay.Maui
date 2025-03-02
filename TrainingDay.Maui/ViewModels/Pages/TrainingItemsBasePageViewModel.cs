@@ -127,10 +127,10 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
     private void SubscribeMessages()
     {
         UnsubscribeMessages();
-        WeakReferenceMessenger.Default.Register<IncomingTrainingAddedMessage>(this, async (r, args) =>
+        WeakReferenceMessenger.Default.Register<IncomingTrainingAddedMessage>(this, (r, args) =>
         {
             LoadItems();
-            LoggingService.TrackEvent($"TrainingItemsBasePageViewModel: Added Incoming Training");
+            LoggingService.TrackEvent($"TrainingItemsBase Added Incoming Training");
         });
     }
 
@@ -141,7 +141,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
 
     private async void AddNewTraining()
     {
-        LoggingService.TrackEvent($"{GetType().Name}: AddNewTraining Button Clicked");
+        LoggingService.TrackEvent($"{GetType().Name.Replace("PageViewModel", string.Empty)} AddNewTraining Button Clicked");
         await Shell.Current.GoToAsync(nameof(PreparedTrainingsPage));
     }
 
@@ -149,12 +149,12 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
     {
         try
         {
-            LoggingService.TrackEvent($"{GetType().Name}: DeleteSelectedTraining Clicked");
+            LoggingService.TrackEvent($"{GetType().Name.Replace("PageViewModel", string.Empty)} DeleteSelectedTraining Clicked");
             var item = (TrainingViewModel)viewCell.BindingContext;
             var result = await MessageManager.DisplayAlert(AppResources.DeleteTraining, item.Title, AppResources.OkString, AppResources.CancelString);
             if (result)
             {
-                LoggingService.TrackEvent($"{GetType().Name}: DeleteSelectedTraining Clicked Approved");
+                LoggingService.TrackEvent($"{GetType().Name.Replace("PageViewModel", string.Empty)} DeleteSelectedTraining Clicked Approved");
                 App.Database.DeleteTrainingItem(item.Id);
                 item.DeleteTrainingsItemsFromBase();
 
@@ -185,14 +185,14 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
 
     private async void TrainingSelected(Frame viewCell)
     {
-        LoggingService.TrackEvent($"{GetType().Name}: TrainingSelected Clicked");
+        LoggingService.TrackEvent($"{GetType().Name.Replace("PageViewModel", string.Empty)} TrainingSelected Clicked");
         var item = (TrainingViewModel)viewCell.BindingContext;
         await Shell.Current.GoToAsync($"{nameof(TrainingExercisesPage)}?{nameof(TrainingExercisesPageViewModel.ItemId)}={item.Id}");
     }
 
     private void DuplicateSelectedTraining(Frame viewCell)
     {
-        LoggingService.TrackEvent($"{GetType().Name}: DuplicateSelectedTraining Clicked");
+        LoggingService.TrackEvent($"{GetType().Name.Replace("PageViewModel", string.Empty)} DuplicateSelectedTraining Clicked");
         var training = (TrainingViewModel)viewCell.BindingContext;
         int id = App.Database.SaveTrainingItem(new Training()
         {
@@ -223,7 +223,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
 
     private void AddToGroup(Frame viewCell)
     {
-        LoggingService.TrackEvent($"{GetType().Name}: AddToGroup started");
+        LoggingService.TrackEvent($"{GetType().Name.Replace("PageViewModel", string.Empty)} AddToGroup started");
 
         var item = (TrainingViewModel)viewCell.BindingContext;
 
@@ -235,7 +235,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
 
     private void DeleteFromGroup(Frame viewCell)
     {
-        LoggingService.TrackEvent($"{GetType().Name}: Delete From Group");
+        LoggingService.TrackEvent($"{GetType().Name.Replace("PageViewModel", string.Empty)} Delete From Group");
 
         var item = (TrainingViewModel)viewCell.BindingContext;
 
@@ -290,14 +290,14 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
             return;
         }
 
-        LoggingService.TrackEvent($"{GetType().Name}: LongPressed started");
+        LoggingService.TrackEvent($"{GetType().Name.Replace("PageViewModel", string.Empty)} LongPressed started");
 
         var item = (TrainingViewModel)sender.BindingContext;
 
         isLongPressPopupOpened = true;
         var action = await MessageManager.DisplayActionSheet(AppResources.ChoseAction, AppResources.CancelString, AppResources.RemoveString, AppResources.Duplicate, item.GroupName == null ? AppResources.TrainingToGroupString : AppResources.TrainingUnGroupString.Fill(item.GroupName.Name));
         isLongPressPopupOpened = false;
-        LoggingService.TrackEvent($"{GetType().Name}: LongPressed finished with {action}");
+        LoggingService.TrackEvent($"{GetType().Name.Replace("PageViewModel", string.Empty)} LongPressed finished with {action}");
         if (action == AppResources.CancelString)
         {
             return;

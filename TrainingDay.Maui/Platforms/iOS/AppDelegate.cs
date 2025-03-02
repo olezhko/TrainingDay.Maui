@@ -14,6 +14,8 @@ namespace TrainingDay.Maui
             Google.MobileAds.MobileAds.SharedInstance.Start(completionHandler: null);
             ObjCRuntime.Class.ThrowOnInitFailure = false;
 
+            Firebase.Core.App.Configure();
+
             return app;
         }
 

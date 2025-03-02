@@ -218,7 +218,7 @@ public partial class TrainingImplementPage : ContentPage
             if (Items.All(a => a.All(item => !item.IsNotFinished || item.IsSkipped)) && enabledTimer)
             {
                 await FinishAndSave();
-                LoggingService.TrackEvent($"{GetType().Name}: Training Implementing Finished");
+                LoggingService.TrackEvent($"TrainingImplement Finished");
             }
             else
             {
@@ -363,7 +363,7 @@ public partial class TrainingImplementPage : ContentPage
             AddExercises(args.Selected.Select(item => TrainingExerciseViewModel.Create(item.GetExercise())));
 
             UnsubscribeMessages();
-            LoggingService.TrackEvent($"TrainingImplementPage: AddExercises finished");
+            LoggingService.TrackEvent($"TrainingImplement AddExercises finished");
         });
     }
 
