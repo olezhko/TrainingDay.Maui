@@ -30,6 +30,7 @@
 
 	<PropertyGroup Condition="$(TargetFramework.Contains('-ios'))">
 		<UseInterpreter>True</UseInterpreter>
+		<FirebaseCrashlyticsUploadSymbolsEnabled>True</FirebaseCrashlyticsUploadSymbolsEnabled>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
@@ -111,15 +112,16 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
-	  <GoogleServicesJson Include="Platforms\Android\google-services.json" />
-	  <PackageReference Include="Xamarin.Firebase.Iid" Version="121.1.0.14">
-	  </PackageReference>
-	  <PackageReference Include="Xamarin.Firebase.Messaging" Version="123.4.1">
-	  </PackageReference>
-	  <PackageReference Include="Xamarin.GooglePlayServices.Base" Version="118.3.0">
-	  </PackageReference>
-      <PackageReference Include="sqlite-net-pcl" Version="1.5.231">
-      </PackageReference>
+		<GoogleServicesJson Include="Platforms\Android\google-services.json" />
+		<PackageReference Include="Xamarin.Firebase.Iid" Version="121.1.0.14" />
+		<PackageReference Include="Xamarin.Firebase.Messaging" Version="123.4.1" />
+		<PackageReference Include="Xamarin.GooglePlayServices.Base" Version="118.5.0.4" />
+		<PackageReference Include="Xamarin.AndroidX.Collection.Jvm" Version="1.4.5.2" />
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData.Core" Version="2.8.7.2" />
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Runtime" Version="2.8.7.2" />
+		<PackageReference Include="sqlite-net-pcl" Version="1.5.231" />
+		<PackageReference Include="Xamarin.Firebase.Crashlytics" Version="119.4.0" />
+		<PackageReference Include="Xamarin.Firebase.Analytics" Version="122.2.0" />
 	</ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-ios'">
@@ -129,6 +131,8 @@
     <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.2" />
     <PackageReference Include="SQLitePCLRaw.provider.dynamic_cdecl" Version="2.1.9" />
     <PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="2.1.9" />
+    <PackageReference Include="Xamarin.Firebase.iOS.Crashlytics" Version="8.10.0.3" />
+    <PackageReference Include="Xamarin.Firebase.iOS.Analytics" Version="8.10.0.3" />
   </ItemGroup>
   
   <ItemGroup>
