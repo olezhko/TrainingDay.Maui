@@ -91,7 +91,7 @@
 	  <None Remove="Resources\Images\prepared\shoulders.png" />
 	  <None Remove="Resources\Images\prepared\up.png" />
 	  <None Remove="Resources\Images\prepared\wide_shoulders.png" />
-	  <None Remove="Platforms\iOS\GoogleService-Info.plist" />
+	  <None Remove="GoogleService-Info.plist" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -250,4 +250,9 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <BundleResource Include="GoogleService-Info.plist">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </BundleResource>
+	</ItemGroup>
 </Project>

@@ -26,8 +26,6 @@
 	</array>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
-	<key>CFBundleIdentifier</key>
-	<string></string>
 	<key>UIStatusBarHidden</key>
 	<true/>
 	<key>ITSAppUsesNonExemptEncryption</key>

@@ -263,8 +263,8 @@ public partial class TrainingImplementPage : ContentPage
         }
 
         ShowAd(DeviceInfo.Platform == DevicePlatform.Android
-            ? "ca-app-pub-8728883017081055/7837401616"
-            : "ca-app-pub-8728883017081055/1550276858");
+            ? ConstantKeys.FinishWorkoutAndroidAds
+            : ConstantKeys.FinishWorkoutiOSAds);
 
         notificator.Cancel(PushMessagesExtensions.TrainingNotificationId);
 

@@ -136,7 +136,7 @@
         </CollectionView>
 
         <Button x:Name="MakeTrainingButton" Command="{Binding MakeTrainingCommand}" Text="{x:Static resx:AppResources.MakeTrainingString}" 
-            Grid.Row="2" TextColor="White" BackgroundColor="RoyalBlue" Margin="5" FontSize="Body" CornerRadius="20" controls:TooltipControlContainer.IgnoreVisible="True"
+            Grid.Row="2" TextColor="White" Margin="5" FontSize="Body" CornerRadius="20" controls:TooltipControlContainer.IgnoreVisible="True"
             IsVisible="{Binding IsExercisesCheckBoxVisible,Converter={StaticResource InverseBooleanConverter}}"/>
 
         <Grid Grid.Row="3" IsVisible="{Binding IsExercisesCheckBoxVisible}" HorizontalOptions="Fill" ColumnSpacing="10" controls:TooltipControlContainer.IgnoreVisible="True">

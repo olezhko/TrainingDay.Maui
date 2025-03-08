@@ -58,6 +58,10 @@ namespace TrainingDay.Maui
 
             });
 
+            #region IOS
+            Plugin.AdMob.Configuration.AdConfig.DefaultBannerAdUnitId = Extensions.ConstantKeys.WorkoutiOSAds;
+            #endregion
+
             return builder.Build();
         }
 
