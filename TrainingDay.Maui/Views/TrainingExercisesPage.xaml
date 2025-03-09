@@ -145,7 +145,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" CornerRadius="20" Text="{x:Static resx:AppResources.CancelString}" Command="{Binding CancelActionCommand}" HorizontalOptions="Fill" Style="{DynamicResource ActionButton}" />
-            <Button Grid.Column="1" CornerRadius="20" Text="{Binding ExerciseActionString}" Command="{Binding StartActionCommand}" HorizontalOptions="Fill" Style="{DynamicResource ActionButton}" BackgroundColor="RoyalBlue" />
+            <Button Grid.Column="1" CornerRadius="20" Text="{Binding ExerciseActionString}" Command="{Binding StartActionCommand}" HorizontalOptions="Fill" Style="{DynamicResource ActionButton}" />
         </Grid>
 
         <controls:ToolTipControl x:Name="ToolTipHoldImageExercises" Grid.Row="1" 

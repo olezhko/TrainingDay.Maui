@@ -167,8 +167,8 @@
                 </CollectionView>
 
                 <Grid Grid.Row="2" VerticalOptions="End" ColumnDefinitions="*,*" ColumnSpacing="10">
-                    <Button CornerRadius="20" Text="{x:Static resx:AppResources.CancelString}" Clicked="MuscleSelectorViewCancel_OnClicked" BackgroundColor="Transparent" BorderColor="RoyalBlue" TextColor="RoyalBlue" BorderWidth="1"/>
-                    <Button CornerRadius="20" Grid.Column="1" Text="{x:Static resx:AppResources.SelectString}" Clicked="MuscleSelectorViewApprove_OnClicked" BackgroundColor="RoyalBlue"/>
+                    <Button CornerRadius="20" Text="{x:Static resx:AppResources.CancelString}" Clicked="MuscleSelectorViewCancel_OnClicked" BackgroundColor="Transparent" BorderWidth="1"/>
+                    <Button CornerRadius="20" Grid.Column="1" Text="{x:Static resx:AppResources.SelectString}" Clicked="MuscleSelectorViewApprove_OnClicked" />
                 </Grid>
             </Grid>
         </Grid>

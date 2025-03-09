@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
@@ -13,6 +13,6 @@
                     Title="{x:Static resx:AppResources.ChooseGroupOrNewString}"/>
         </Grid>
 
-        <Button Grid.Row="1" CornerRadius="20" Clicked="ShowNewGroupWnd_Click" Text="{x:Static resx:AppResources.CreateNewString}" Style="{DynamicResource ActionButton}" BackgroundColor="RoyalBlue"/>
+        <Button Grid.Row="1" CornerRadius="20" Clicked="ShowNewGroupWnd_Click" Text="{x:Static resx:AppResources.CreateNewString}" Style="{DynamicResource ActionButton}" />
     </Grid>
 </ContentPage>

@@ -138,10 +138,10 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.6" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.6" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.93" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.93" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.100" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.100" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
-    <PackageReference Include="Plugin.AdMob" Version="1.1.0" />
+    <PackageReference Include="Plugin.AdMob" Version="2.0.0" />
     <PackageReference Include="RestSharp" Version="112.1.0" />
     <PackageReference Include="SkiaSharp.Views" Version="2.88.7" />
     <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.7" />
@@ -255,4 +255,20 @@
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </BundleResource>
 	</ItemGroup>
+
+
+	<Target Name="LinkWithSwift" DependsOnTargets="_ParseBundlerArguments;_DetectSdkLocations" BeforeTargets="_LinkNativeExecutable">
+ 		<PropertyGroup>
+ 			<_SwiftPlatform Condition="$(RuntimeIdentifier.StartsWith('iossimulator-'))">iphonesimulator</_SwiftPlatform>
+ 			<_SwiftPlatform Condition="$(RuntimeIdentifier.StartsWith('ios-'))">iphoneos</_SwiftPlatform>
+ 		</PropertyGroup>
+ 		<ItemGroup>
+ 			<_CustomLinkFlags Include="-L" />
+ 			<_CustomLinkFlags Include="/usr/lib/swift" />
+ 			<_CustomLinkFlags Include="-L" />
+ 			<_CustomLinkFlags Include="$(_SdkDevPath)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/$(_SwiftPlatform)" />
+ 			<_CustomLinkFlags Include="-Wl,-rpath" />
+ 			<_CustomLinkFlags Include="-Wl,/usr/lib/swift" />
+ 		</ItemGroup>
+ 	</Target>
 </Project>

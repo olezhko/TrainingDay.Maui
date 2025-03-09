@@ -31,6 +31,6 @@
 
         <Label Text="{x:Static resx:AppResources.Or}" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalOptions="Start" FontSize="Medium"/>
         <Button VerticalOptions="Center" Command="{Binding CreateTrainingFromSelectedExercisesCommand}" Text="{x:Static resx:AppResources.CreateNewString}" 
-            Style="{DynamicResource ActionButton}" BackgroundColor="RoyalBlue" Margin="5"/>
+            Style="{DynamicResource ActionButton}" Margin="5"/>
     </StackLayout>
 </ContentPage>

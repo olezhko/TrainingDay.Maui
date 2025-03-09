@@ -137,10 +137,10 @@
         </CollectionView>
 
         <Grid Grid.Row="2" ColumnSpacing="10" ColumnDefinitions="*,*" Padding="0,5">
-            <Button Grid.Column="0" Command="{Binding CancelCommand}" CornerRadius="20" Text="{x:Static resx:AppResources.CancelString}" 
-                    BackgroundColor="Transparent" BorderColor="RoyalBlue" TextColor="RoyalBlue" BorderWidth="1"/>
+            <Button Grid.Column="0" Command="{Binding CancelCommand}" CornerRadius="20" Text="{x:Static resx:AppResources.CancelString}" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                    BackgroundColor="Transparent" BorderColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" BorderWidth="1"/>
 
-            <Button CornerRadius="20" Grid.Column="1" BackgroundColor="RoyalBlue" Command="{Binding ChoseExercisesCommand}"
+            <Button CornerRadius="20" Grid.Column="1" Command="{Binding ChoseExercisesCommand}"
             CommandParameter="{Binding}" Text="{x:Static resx:AppResources.SelectString}" />
         </Grid>
 

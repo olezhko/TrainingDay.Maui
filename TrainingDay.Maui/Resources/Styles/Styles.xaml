@@ -39,6 +39,8 @@
         <Setter Property="TextColor" Value="White"/>
         <Setter Property="BackgroundColor" Value="Gray"/>
         <Setter Property="CornerRadius" Value="15"/>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
     </Style>
     
     <Style TargetType="Button">
