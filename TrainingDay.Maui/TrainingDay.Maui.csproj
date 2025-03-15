@@ -92,6 +92,7 @@
 	  <None Remove="Resources\Images\prepared\up.png" />
 	  <None Remove="Resources\Images\prepared\wide_shoulders.png" />
 	  <None Remove="GoogleService-Info.plist" />
+	  <None Remove="Models\Questions\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -257,6 +258,9 @@
 	</ItemGroup>
 
 
+	<ItemGroup>
+	  <Folder Include="Models\Questions\" />
+	</ItemGroup>
 	<Target Name="LinkWithSwift" DependsOnTargets="_ParseBundlerArguments;_DetectSdkLocations" BeforeTargets="_LinkNativeExecutable">
  		<PropertyGroup>
  			<_SwiftPlatform Condition="$(RuntimeIdentifier.StartsWith('iossimulator-'))">iphonesimulator</_SwiftPlatform>

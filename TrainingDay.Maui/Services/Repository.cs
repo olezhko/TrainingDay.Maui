@@ -1,6 +1,7 @@
 ﻿using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using SQLite;
+using TrainingDay.Common.Resources;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.ViewModels;
 
@@ -40,7 +41,7 @@ public class Repository
         InitBasic();
     }
 
-    private void InitBasic()
+    private async void InitBasic()
     {
         try
         {
@@ -55,7 +56,7 @@ public class Repository
             database.CreateTable<ImageData>();
             database.CreateTable<Blog>();
 
-            var initExercises = Common.ExerciseTools.InitExercises(Settings.GetLanguage().TwoLetterISOLanguageName);
+            var initExercises = await ResourceExtension.LoadResource<Common.BaseExercise>("exercise", Settings.GetLanguage().TwoLetterISOLanguageName);
             var dbExercises = GetExerciseItems();
 
             foreach (var exercise in initExercises)

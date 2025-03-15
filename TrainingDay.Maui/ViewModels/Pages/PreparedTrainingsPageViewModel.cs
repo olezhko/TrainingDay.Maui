@@ -10,9 +10,11 @@ using TrainingDay.Maui.Services;
 using TrainingDay.Maui.Views;
 
 namespace TrainingDay.Maui.ViewModels.Pages;
+
 public sealed class PreparedTrainingsPageViewModel : BaseViewModel
 {
     public ICommand CreateNewTrainingCommand { get; set; }
+    public ICommand NavigateToQuestionsCommnd { get; set; }
 
     public ICommand ItemSelectedCommand { get; set; }
 
@@ -22,6 +24,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
     {
         FillTrainings();
         CreateNewTrainingCommand = new Command(AddNewTraining);
+        NavigateToQuestionsCommnd = new Command(NavigateToQuestions);
         ItemSelectedCommand = new Command<PreparedTrainingViewModel>(ItemSelected);
     }
 
@@ -50,6 +53,12 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
     private void UnsubscribeMessages()
     {
         WeakReferenceMessenger.Default.Unregister<ExercisesSelectFinishedMessage>(this);
+    }
+
+
+    private async void NavigateToQuestions()
+    {
+        await Shell.Current.GoToAsync(nameof(WorkoutQuestinariumPage));
     }
 
     private async void ItemSelected(PreparedTrainingViewModel selectedTraining)

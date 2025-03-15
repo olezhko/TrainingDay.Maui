@@ -160,7 +160,7 @@
                         <DataTemplate>
                             <StackLayout Orientation="Horizontal">
                                 <CheckBox IsChecked="{Binding IsChecked}" />
-                                <Label Text="{Binding Muscle.Name}" VerticalOptions="Center" VerticalTextAlignment="Center" />
+                                <Label Text="{Binding Text}" VerticalOptions="Center" VerticalTextAlignment="Center" />
                             </StackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

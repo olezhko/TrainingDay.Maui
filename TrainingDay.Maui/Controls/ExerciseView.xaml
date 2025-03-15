@@ -248,7 +248,7 @@
                 </StackLayout>
 
                 <Grid x:Name="VideoActivityIndicatorGrid" HeightRequest="300" IsVisible="False" WidthRequest="300">
-                    <ActivityIndicator x:Name="VideoActivityIndicator" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="40" />
+                    <ActivityIndicator x:Name="VideoActivityIndicator" HorizontalOptions="Center" VerticalOptions="Center" />
                 </Grid>
 
                 <CollectionView x:Name="VideoCollectionView" IsVisible="False">

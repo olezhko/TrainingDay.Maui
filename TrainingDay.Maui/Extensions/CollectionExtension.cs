@@ -1,4 +1,6 @@
-﻿namespace TrainingDay.Maui.Extensions;
+﻿using System.Collections.ObjectModel;
+
+namespace TrainingDay.Maui.Extensions;
 
 public static class CollectionExtensions
 {
@@ -14,6 +16,14 @@ public static class CollectionExtensions
         {
             action(item);
         }
+    }
+
+    public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> collection)
+    {
+        if (collection == null)
+            throw new ArgumentNullException(nameof(collection));
+
+        return new ObservableCollection<T>(collection);
     }
 }
 

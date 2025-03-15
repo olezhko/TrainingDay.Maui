@@ -58,8 +58,7 @@
                 <VerticalStackLayout.BindingContext>
                     <viewModels:DataManageViewModel/>
                 </VerticalStackLayout.BindingContext>
-                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="Gold" 
-                                   HeightRequest="40" WidthRequest="40" HorizontalOptions="Center"/>
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center"/>
                 
                 <Button Text="{x:Static resx:AppResources.ExportData}" Command="{Binding ExportDataCommand}" ImageSource="data_export.png" CornerRadius="20">
                     <Button.Behaviors>

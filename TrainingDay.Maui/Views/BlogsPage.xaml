@@ -28,13 +28,9 @@
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Source={x:Reference Page}, Path=BindingContext.OpenBlogCommand}" CommandParameter="{Binding }"/>
                             </Frame.GestureRecognizers>
-                            <StackLayout>
-                                <Label Text="{Binding Title}" FontSize="Medium" FontAttributes="Bold" TextDecorations="Underline" HorizontalTextAlignment="Center"/>
 
-                                <Label Text="{Binding DateTime}" FontSize="13" HorizontalTextAlignment="End" TextColor="Gray"/>
-                            </StackLayout>
+                            <Label Text="{Binding Title}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
                         </Frame>
-
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

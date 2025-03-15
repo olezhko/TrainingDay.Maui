@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
+             xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
+             xmlns:admob="clr-namespace:Plugin.AdMob;assembly=Plugin.AdMob"
+             x:Class="TrainingDay.Maui.Views.WorkoutQuestinariumPage"
+             Shell.TabBarIsVisible="False"
+             Title="Questions">
+    <ContentPage.BindingContext>
+        <viewModels:WorkoutQuestinariumPageViewModel/>
+    </ContentPage.BindingContext>
+    <Grid RowDefinitions="*,auto,auto">
+
+        <ActivityIndicator IsRunning="True" IsVisible="{Binding IsBusy}"/>
+        <VerticalStackLayout BindingContext="{Binding CurrentStep}" Margin="10"
+                             IsVisible="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}">
+            <Label Text="{Binding Title}" FontSize="Header"/>
+            <CollectionView ItemsSource="{Binding Variants}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="auto, *">
+                            <CheckBox IsVisible="{Binding IsMultiple}" IsChecked="{Binding IsChecked}" VerticalOptions="Center"/>
+                            <RadioButton VerticalOptions="Center" IsVisible="{Binding IsMultiple, Converter={StaticResource InverseBooleanConverter}}" IsChecked="{Binding IsChecked}"/>
+                            <Label Grid.Column="1" Text="{Binding Title}" VerticalTextAlignment="Center"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="10" Padding="10">
+            <Button Grid.Column="0" Text="Back" Command="{Binding BackOrCancelCommand}"/>
+            <Button Grid.Column="1" Text="Next" Command="{Binding NextOrFinishCommand}"/>
+        </Grid>
+
+        <admob:BannerAd x:Name="AdMob" Grid.Row="2" AdSize="Banner" />
+    </Grid>
+</ContentPage>

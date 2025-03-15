@@ -2,6 +2,7 @@ using CommunityToolkit.Maui.Alerts;
 using Newtonsoft.Json;
 using System.Globalization;
 using TrainingDay.Common;
+using TrainingDay.Common.Resources;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
@@ -38,7 +39,7 @@ public partial class SettingsPage : ContentPage
         await Browser.OpenAsync(@"https://www.donationalerts.com/r/trainingday", BrowserLaunchMode.SystemPreferred);
     }
 
-    private void LanguageSwitch_Changed(object sender, EventArgs e)
+    private async void LanguageSwitch_Changed(object sender, EventArgs e)
     {
         try
         {
@@ -47,7 +48,7 @@ public partial class SettingsPage : ContentPage
             Settings.CultureName = selected.Name;
             if (updateExercise)
             {
-                FixExercisesData();
+                await FixExercisesData();
             }
 
             LocalizationResourceManager.Instance.SetCulture(Settings.GetLanguage());
@@ -108,9 +109,9 @@ public partial class SettingsPage : ContentPage
         }
     }
 
-    private void FixExercisesData()
+    private async Task FixExercisesData()
     {
-        var inits = ExerciseTools.InitExercises(Settings.GetLanguage().TwoLetterISOLanguageName);
+        var inits = await ResourceExtension.LoadResource<BaseExercise>("exercise", Settings.GetLanguage().TwoLetterISOLanguageName);
         var exers = App.Database.GetExerciseItems();
         foreach (var exer in exers)
         {

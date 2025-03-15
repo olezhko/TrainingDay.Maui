@@ -119,13 +119,14 @@ public partial class ExerciseItemPage : ContentPage
 
     private void FillMuscleLookup()
     {
-        List<MuscleLookupItem> lookupItems = new List<MuscleLookupItem>();
+        List<MuscleCheckItem> lookupItems = new List<MuscleCheckItem>();
         foreach (MusclesEnum value in Enum.GetValues(typeof(MusclesEnum)))
         {
             var muscle = new MuscleViewModel(value);
-            lookupItems.Add(new MuscleLookupItem()
+            lookupItems.Add(new MuscleCheckItem()
             {
-                Muscle = muscle,
+                Muscle = value,
+                Text = muscle.Name,
             });
         }
 
@@ -136,9 +137,9 @@ public partial class ExerciseItemPage : ContentPage
     {
         ExerciseViewModel item = BindingContext as ExerciseViewModel;
 
-        foreach (MuscleLookupItem muscle in MuscleSelectorList.ItemsSource)
+        foreach (MuscleCheckItem muscle in MuscleSelectorList.ItemsSource)
         {
-            muscle.IsChecked = item.Muscles.Any(model => model.Id == muscle.Muscle.Id);
+            muscle.IsChecked = item.Muscles.Any(model => model.Id == (int)muscle.Muscle);
         }
     }
 
@@ -150,8 +151,10 @@ public partial class ExerciseItemPage : ContentPage
     private void MuscleSelectorViewApprove_OnClicked(object sender, EventArgs e)
     {
         MuscleSelectorView.IsVisible = false;
-        var selected = (MuscleSelectorList.ItemsSource as List<MuscleLookupItem>)
-            .Where(item => item.IsChecked).Select(item => item.Muscle);
+        var selected = (MuscleSelectorList.ItemsSource as List<MuscleCheckItem>)
+            .Where(item => item.IsChecked)
+            .Select(item => new MuscleViewModel(item.Muscle));
+
         ExerciseViewModel exercise = BindingContext as ExerciseViewModel;
         exercise.Muscles = new ObservableCollection<MuscleViewModel>(selected);
     }
