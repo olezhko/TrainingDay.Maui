@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
+             xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="TrainingDay.Maui.Views.PreparedTrainingsPage"
@@ -10,9 +11,9 @@
         <viewModels:PreparedTrainingsPageViewModel />
     </ContentPage.BindingContext>
 
-    <Grid RowSpacing="0" RowDefinitions="auto,*,Auto">
-        <Button Text="Try New" Margin="5,0" Command="{Binding NavigateToQuestionsCommnd}"/>
-
+    <controls:TooltipControlContainer x:Name="Container" RowSpacing="0" RowDefinitions="auto,*,Auto">
+        <Button x:Name="LetsBuildYourWorkoutButton" Text="{x:Static resx:AppResources.LetsBuildYourWorkout}" Margin="5" Command="{Binding NavigateToQuestionsCommnd}"/>
+        
         <CollectionView Grid.Row="1" Margin="5,0" BackgroundColor="Transparent" ItemsSource="{Binding PreparedTrainingsCollection}" SelectionMode="Single">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -54,5 +55,11 @@
 
         <Button Grid.Row="2" Margin="5" Command="{Binding CreateNewTrainingCommand}" CornerRadius="20"
             Style="{DynamicResource ActionButton}" Text="{x:Static resx:AppResources.CreateNewString}" FontSize="Body"/>
-    </Grid>
+
+        <controls:ToolTipControl Text="Click this button to answer some questions and application will create workout for you" Title="{x:Static resx:AppResources.HelperString}" 
+                              NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipLetsBuildYourWorkout,Mode=TwoWay}" 
+                              AttachedControl="LetsBuildYourWorkoutButton" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}" Position="Center"
+                              ParentHeight="{Binding Source={x:Reference Container},Path=Height}" Grid.RowSpan="3"
+                              ParentWidth="{Binding Source={x:Reference Container},Path=Width}"/>
+    </controls:TooltipControlContainer>
 </ContentPage>

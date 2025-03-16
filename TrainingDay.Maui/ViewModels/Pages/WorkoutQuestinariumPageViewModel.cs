@@ -4,14 +4,16 @@ using System.Windows.Input;
 using TrainingDay.Common.Resources;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models.Questions;
+using TrainingDay.Maui.Services;
 
 namespace TrainingDay.Maui.ViewModels.Pages
 {
 	public class WorkoutQuestinariumPageViewModel : BaseViewModel
 	{
 		private WorkoutQuestinariumStepViewModel currentStep;
+        private readonly ChatGptService _chatGptService;
 
-		public WorkoutQuestinariumStepViewModel CurrentStep
+        public WorkoutQuestinariumStepViewModel CurrentStep
 		{
 			get => currentStep;
 			set => SetProperty(ref currentStep, value);
@@ -20,9 +22,9 @@ namespace TrainingDay.Maui.ViewModels.Pages
         public ICommand BackOrCancelCommand { get; set; }
         public ICommand NextOrFinishCommand { get; set; }
 
-
-        public WorkoutQuestinariumPageViewModel()
+        public WorkoutQuestinariumPageViewModel(ChatGptService chatGptService)
 		{
+            _chatGptService = chatGptService;
             BackOrCancelCommand = new Command(Back);
             NextOrFinishCommand = new Command(Next);
 		}
@@ -39,14 +41,14 @@ namespace TrainingDay.Maui.ViewModels.Pages
                     Variants = step.Answers.Select(item => new WorkoutQuestinariumVariantViewModel()
                     {
                         Title = item,
-                        IsMultiple = step.IsMiltiple
+                        IsMultiple = step.IsMiltiple,
+                        QuestionNumber = step.Number.ToString()
                     }).ToObservableCollection(),
                 };
 
-                if (CurrentStep is null)
-                {
-                    CurrentStep = newStep;
-                }
+                newStep.Variants[0].IsChecked = true;
+
+                CurrentStep ??= newStep;
 
                 InsertAfter(previous, newStep);
                 previous = newStep;
@@ -90,11 +92,12 @@ namespace TrainingDay.Maui.ViewModels.Pages
             var exercises = App.Database.GetExerciseItems();
             IEnumerable<string> exerciseNames = exercises.Select(item => $"{item.Id} {item.ExerciseItemName}");
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Exercises: " + string.Join(",",exerciseNames));
+            sb.AppendLine("Exercises: " + string.Join(" ,",exerciseNames));
 
-            while(true)
+            var step = CurrentStep;
+            while (true)
             {
-                var step = CurrentStep.Previous;
+                step = step.Previous;
                 if (step is null)
                 {
                     break;
@@ -104,14 +107,14 @@ namespace TrainingDay.Maui.ViewModels.Pages
                 sb.AppendLine($"Answer(s): {string.Join(',', step.Variants.Where(item => item.IsChecked).Select(item => item.Title))}");
             }
 
-            sb.AppendLine("Get ids of exercises that followed this answers.");
+            sb.AppendLine("Get ids of exercises divided by , that followed this answers.");
 
             await SendRequest(sb.ToString());
         }
 
-        private async Task SendRequest(string data)
+        private async Task SendRequest(string message)
         {
-            
+            var response = await _chatGptService.GetChatGptResponseAsync(message);
         }
 
         public async void Back()
@@ -138,30 +141,29 @@ namespace TrainingDay.Maui.ViewModels.Pages
 	public class WorkoutQuestinariumStepViewModel : BaseViewModel
 	{
         private string title;
-		public string Title { get => title; set => SetProperty(ref title, value); }
+        private WorkoutQuestinariumStepViewModel? next;
+        private WorkoutQuestinariumStepViewModel? previous;
+
+        public string Title { get => title; set => SetProperty(ref title, value); }
 
         public ObservableCollection<WorkoutQuestinariumVariantViewModel> Variants { get; set; }
 
-		public WorkoutQuestinariumStepViewModel? Next { get; set; }
+		public WorkoutQuestinariumStepViewModel? Next { get => next; set => SetProperty(ref next, value); }
 
-		public WorkoutQuestinariumStepViewModel? Previous { get; set; }
+        public WorkoutQuestinariumStepViewModel? Previous { get => previous; set => SetProperty(ref previous, value); }
     }
 
 	public class WorkoutQuestinariumVariantViewModel : BaseViewModel
 	{
         private bool isChecked;
         private string title;
-
-        public bool IsChecked
-        {
-            get => isChecked;
-			set => SetProperty(ref isChecked, value);
-        }
-
         private bool isMultiple;
-        public bool IsMultiple { get => isMultiple; set => SetProperty(ref isMultiple, value); }
+        private string questionNumber;
 
+        public bool IsChecked { get => isChecked; set => SetProperty(ref isChecked, value); }
+        public bool IsMultiple { get => isMultiple; set => SetProperty(ref isMultiple, value); }
         public string Title { get => title; set => SetProperty(ref title, value); }
+        public string QuestionNumber { get => questionNumber; set => SetProperty(ref questionNumber, value); }
     }
 }
 

@@ -15,6 +15,7 @@ public enum Tooltips
     ToolTipWorkingReady,
     ToolTipHoldImageExercises,
     ToolTipStartWorkout,
+    ToolTipLetsBuildYourWorkout
 }
 
 public class ToolTipManager
@@ -77,6 +78,12 @@ public class ToolTipManager
     {
         get => Convert(Tooltips.ToolTipStartWorkout);
         set => ConvertBack(Tooltips.ToolTipStartWorkout, value);
+    }
+
+    public bool ToolTipLetsBuildYourWorkout
+    {
+        get => Convert(Tooltips.ToolTipLetsBuildYourWorkout);
+        set => ConvertBack(Tooltips.ToolTipLetsBuildYourWorkout, value);
     }
 
     public bool Convert(Tooltips parameter)

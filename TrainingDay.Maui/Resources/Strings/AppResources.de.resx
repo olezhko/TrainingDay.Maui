@@ -639,4 +639,7 @@
   <data name="ExportData" xml:space="preserve">
     <value>Daten exportieren</value>
   </data>
+  <data name="LetsBuildYourWorkout" xml:space="preserve">
+    <value>Übungsauswahl starten</value>
+  </data>
 </root>

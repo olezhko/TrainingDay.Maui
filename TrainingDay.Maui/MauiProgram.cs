@@ -32,8 +32,9 @@ namespace TrainingDay.Maui
                 {
                 });
 
+            builder.Services.AddSingleton<ChatGptService>();
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
 #if ANDROID
@@ -58,9 +59,9 @@ namespace TrainingDay.Maui
 
             });
 
-            #region IOS
-            Plugin.AdMob.Configuration.AdConfig.DefaultBannerAdUnitId = Extensions.ConstantKeys.WorkoutiOSAds;
-            #endregion
+#if IOS
+                Plugin.AdMob.Configuration.AdConfig.DefaultBannerAdUnitId = Extensions.ConstantKeys.WorkoutiOSAds;
+#endif
 
             return builder.Build();
         }

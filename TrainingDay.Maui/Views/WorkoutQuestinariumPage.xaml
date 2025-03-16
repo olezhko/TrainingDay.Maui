@@ -8,22 +8,20 @@
              xmlns:admob="clr-namespace:Plugin.AdMob;assembly=Plugin.AdMob"
              x:Class="TrainingDay.Maui.Views.WorkoutQuestinariumPage"
              Shell.TabBarIsVisible="False"
-             Title="Questions">
-    <ContentPage.BindingContext>
-        <viewModels:WorkoutQuestinariumPageViewModel/>
-    </ContentPage.BindingContext>
+             Title="{x:Static resx:AppResources.LetsBuildYourWorkout}">
     <Grid RowDefinitions="*,auto,auto">
 
         <ActivityIndicator IsRunning="True" IsVisible="{Binding IsBusy}"/>
         <VerticalStackLayout BindingContext="{Binding CurrentStep}" Margin="10"
                              IsVisible="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}">
-            <Label Text="{Binding Title}" FontSize="Header"/>
+            <Label Text="{Binding Title}" FontSize="Medium" FontAttributes="Bold"/>
             <CollectionView ItemsSource="{Binding Variants}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid ColumnDefinitions="auto, *">
                             <CheckBox IsVisible="{Binding IsMultiple}" IsChecked="{Binding IsChecked}" VerticalOptions="Center"/>
-                            <RadioButton VerticalOptions="Center" IsVisible="{Binding IsMultiple, Converter={StaticResource InverseBooleanConverter}}" IsChecked="{Binding IsChecked}"/>
+                            <RadioButton VerticalOptions="Center" GroupName="{Binding QuestionNumber}"
+                                         IsVisible="{Binding IsMultiple, Converter={StaticResource InverseBooleanConverter}}" IsChecked="{Binding IsChecked}"/>
                             <Label Grid.Column="1" Text="{Binding Title}" VerticalTextAlignment="Center"/>
                         </Grid>
                     </DataTemplate>
@@ -32,8 +30,30 @@
         </VerticalStackLayout>
 
         <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="10" Padding="10">
-            <Button Grid.Column="0" Text="Back" Command="{Binding BackOrCancelCommand}"/>
-            <Button Grid.Column="1" Text="Next" Command="{Binding NextOrFinishCommand}"/>
+            <Button Grid.Column="0" Command="{Binding BackOrCancelCommand}">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Text" Value="Back" />
+                        <Style.Triggers>
+                            <DataTrigger TargetType="Button" Binding="{Binding CurrentStep.Previous, Converter={StaticResource IsNullConverter}}" Value="True">
+                                <Setter Property="Text" Value="{x:Static resx:AppResources.CancelString}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Grid.Column="1" Command="{Binding NextOrFinishCommand}">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Text" Value="Next" />
+                        <Style.Triggers>
+                            <DataTrigger TargetType="Button" Binding="{Binding CurrentStep.Next, Converter={StaticResource IsNullConverter}}" Value="True">
+                                <Setter Property="Text" Value="Finish" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
         </Grid>
 
         <admob:BannerAd x:Name="AdMob" Grid.Row="2" AdSize="Banner" />

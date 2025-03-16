@@ -651,4 +651,7 @@
   <data name="ExportData" xml:space="preserve">
     <value>Экспортировать данные</value>
   </data>
+  <data name="LetsBuildYourWorkout" xml:space="preserve">
+    <value>Начать подбор упражнений</value>
+  </data>
 </root>

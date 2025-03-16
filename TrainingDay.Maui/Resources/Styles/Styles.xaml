@@ -4,15 +4,17 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:TrainingDay.Maui.Converters"
-    xmlns:controls="clr-namespace:TrainingDay.Maui.Controls">
-
+    xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+    
     <converters:ExerciseTagExistsConverter x:Key="ExerciseTagExistsConverter"/>
     <converters:SuperSetMenuConverter x:Key="SuperSetMenuConverter"/>
     <converters:HalfValueConverter x:Key="HalfValueConverter"/>
     <converters:IsNoItemsConverter x:Key="IsNoItemsConverter"/>
     <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
     <converters:IsEmptyStringConverter x:Key="IsEmptyStringConverter"/>
-
+    <toolkit:IsNullConverter x:Key="IsNullConverter" />
+    
     <Style TargetType="CollectionView" ApplyToDerivedTypes="True">
         <Setter Property="ItemsLayout">
             <Setter.Value>

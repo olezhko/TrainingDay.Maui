@@ -601,6 +601,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Let’s Build Your Workout.
+        /// </summary>
+        internal static string LetsBuildYourWorkout {
+            get {
+                return ResourceManager.GetString("LetsBuildYourWorkout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to START.
         /// </summary>
         internal static string MakeTrainingString {
