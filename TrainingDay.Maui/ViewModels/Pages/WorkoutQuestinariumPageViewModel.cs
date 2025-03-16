@@ -41,7 +41,7 @@ namespace TrainingDay.Maui.ViewModels.Pages
                     Variants = step.Answers.Select(item => new WorkoutQuestinariumVariantViewModel()
                     {
                         Title = item,
-                        IsMultiple = step.IsMiltiple,
+                        IsMultiple = step.IsMultiple,
                         QuestionNumber = step.Number.ToString()
                     }).ToObservableCollection(),
                 };

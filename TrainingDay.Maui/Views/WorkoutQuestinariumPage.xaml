@@ -19,9 +19,22 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid ColumnDefinitions="auto, *">
-                            <CheckBox IsVisible="{Binding IsMultiple}" IsChecked="{Binding IsChecked}" VerticalOptions="Center"/>
-                            <RadioButton VerticalOptions="Center" GroupName="{Binding QuestionNumber}"
-                                         IsVisible="{Binding IsMultiple, Converter={StaticResource InverseBooleanConverter}}" IsChecked="{Binding IsChecked}"/>
+
+                            <CheckBox IsVisible="{Binding IsMultiple}" IsChecked="{Binding IsChecked}" VerticalOptions="Center" />
+                            <RadioButton VerticalOptions="Center"
+                                         IsVisible="{Binding IsMultiple, Converter={StaticResource InverseBooleanConverter}}" IsChecked="{Binding IsChecked}">
+                                <RadioButton.Style>
+                                    <Style TargetType="RadioButton">
+                                        <Style.Triggers>
+                                            <Trigger TargetType="RadioButton" Property="IsVisible" Value="Visible">
+                                                <Setter Property="GroupName" Value="{Binding QuestionNumber}"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+
+                                </RadioButton.Style>
+
+                            </RadioButton>
                             <Label Grid.Column="1" Text="{Binding Title}" VerticalTextAlignment="Center"/>
                         </Grid>
                     </DataTemplate>
