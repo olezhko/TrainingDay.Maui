@@ -111,7 +111,7 @@ public partial class SettingsPage : ContentPage
 
     private async Task FixExercisesData()
     {
-        var inits = await ResourceExtension.LoadResource<BaseExercise>("exercise", Settings.GetLanguage().TwoLetterISOLanguageName);
+        var inits = await ResourceExtension.LoadResource<BaseExercise>("exercises", Settings.GetLanguage().TwoLetterISOLanguageName);
         var exers = App.Database.GetExerciseItems();
         foreach (var exer in exers)
         {

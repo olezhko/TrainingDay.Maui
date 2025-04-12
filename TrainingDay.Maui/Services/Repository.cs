@@ -56,7 +56,7 @@ public class Repository
             database.CreateTable<ImageData>();
             database.CreateTable<Blog>();
 
-            var initExercises = await ResourceExtension.LoadResource<Common.BaseExercise>("exercise", Settings.GetLanguage().TwoLetterISOLanguageName);
+            var initExercises = await ResourceExtension.LoadResource<Common.BaseExercise>("exercises", Settings.GetLanguage().TwoLetterISOLanguageName);
             var dbExercises = GetExerciseItems();
 
             foreach (var exercise in initExercises)
