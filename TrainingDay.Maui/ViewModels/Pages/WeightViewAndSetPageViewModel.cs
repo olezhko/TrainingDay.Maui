@@ -197,7 +197,7 @@ class WeightViewAndSetPageViewModel : BaseViewModel
         {
             ValueLabel = goal.ToString(),
             Label = item.Label,
-            ValueLabelColor = App.Current.RequestedTheme == AppTheme.Light ? SKColors.Black : SKColors.White,
+            ValueLabelColor = SKColors.Gold,
             TextColor = App.Current.RequestedTheme == AppTheme.Light ? SKColors.Black : SKColors.White,
         }).ToList();
 
@@ -248,7 +248,7 @@ class WeightViewAndSetPageViewModel : BaseViewModel
                     {
                         Color = SKColors.Gold,
                         Entries = goalEntries,
-                        //IsFullLine = true,
+                        IsFullLine = true,
                     },
                 },
         };

@@ -24,8 +24,9 @@
 
         <VerticalStackLayout Grid.ColumnSpan="3" Margin="5,0">
             <Grid ColumnDefinitions="*,auto">
-                <Label FontSize="Title" Text="{Binding CurrentTime,StringFormat={x:Static resx:AppResources.CurrentTimeString}}" HorizontalOptions="Start" VerticalOptions="Center" HorizontalTextAlignment="End"/>
-                <ImageButton Grid.Column="1" WidthRequest="40" HeightRequest="40" Padding="0" HorizontalOptions="End" VerticalOptions="Center" Source="add"
+                <Label FontSize="Title" Text="{Binding CurrentTime}" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="End" Grid.ColumnSpan="2"
+					   FontAttributes="Bold"/>
+                <ImageButton Grid.Column="1" WidthRequest="40" HeightRequest="40" Padding="0" HorizontalOptions="End" VerticalOptions="Center" Source="add_empty"
                                      Command="{Binding AddExercisesCommand}" BackgroundColor="Transparent">
                     <ImageButton.Behaviors>
                         <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
@@ -119,7 +120,7 @@
         <controls:ToolTipControl Text="{x:Static resx:AppResources.ToolTipFinishExercise}" Title="{x:Static resx:AppResources.Execution}" Grid.ColumnSpan="3" Grid.RowSpan="3"
                                          NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipWorkingReady,Mode=TwoWay}"
                                          AttachedControl="FinishButton" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}"
-                                         ParentHeight="{Binding Source={x:Reference MainGrid},Path=Height}" Position="TopLeft"
+                                         ParentHeight="{Binding Source={x:Reference MainGrid},Path=Height}" Position="TopRight"
                                          ParentWidth="{Binding Source={x:Reference MainGrid},Path=Width}">
             <controls:ToolTipControl.EmptyView>
                 <Frame CornerRadius="15" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Green" HeightRequest="30" WidthRequest="30" Padding="0" Margin="0">

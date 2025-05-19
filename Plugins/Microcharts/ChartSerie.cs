@@ -30,5 +30,7 @@ namespace Microcharts
         /// Gets or sets the entries value for the serie 
         /// </summary>
         public IEnumerable<ChartEntry> Entries { get; set; }
+
+        public bool IsFullLine { get; set; }
     }
 }

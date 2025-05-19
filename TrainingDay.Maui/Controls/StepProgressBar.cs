@@ -82,6 +82,7 @@ public class StepProgressBar : Grid
         headersStackLayout.VerticalOptions = LayoutOptions.Start;
         headersStackLayout.HorizontalOptions = LayoutOptions.Fill;
         headersStackLayout.Padding = new Thickness(0);
+        headersStackLayout.Spacing = 2;
 
         var headerScroll = new ScrollView();
         headerScroll.Orientation = ScrollOrientation.Horizontal;
@@ -169,7 +170,12 @@ public class StepProgressBar : Grid
         {
             AddStyles();
         }
-    }
+
+		if (propertyName == WidthProperty.PropertyName)
+		{
+			RecalculateSeparatorLineWidth();
+		}
+	}
 
     private void AddItems(IList argsNewItems)
     {
@@ -204,7 +210,8 @@ public class StepProgressBar : Grid
         button.Clicked += Handle_Clicked;
 
         headersStackLayout.Children.Add(button);
-    }
+		RecalculateSeparatorLineWidth();
+	}
 
     private void AddSeparatorLine()
     {
@@ -218,7 +225,19 @@ public class StepProgressBar : Grid
             Margin = new Thickness(0),
         };
         headersStackLayout.Children.Add(separatorLine);
-    }
+
+        RecalculateSeparatorLineWidth();
+	}
+
+    private void RecalculateSeparatorLineWidth()
+    {
+        List<BoxView> lines = headersStackLayout.Children.Where(item => item.GetType() == typeof(BoxView)).Select(item => (BoxView)item).ToList();
+        var newWidth = (Width - (lines.Count + 1) * (45 + 2)) / lines.Count;
+        if(newWidth < 15)
+            newWidth = 15;
+
+        lines.ForEach(item => item.WidthRequest = newWidth - 2);
+	}
 
     #endregion
 

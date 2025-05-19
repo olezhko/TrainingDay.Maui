@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Reflection.Emit;
 using SkiaSharp;
 
 namespace Microcharts
@@ -101,16 +103,17 @@ namespace Microcharts
             {
                 foreach (var pps in pointsPerSerie)
                 {
-                    var entries = pps.Key.Entries.ToArray();
+                    if (pps.Key.IsFullLine)
+						continue;
+
+					var entries = pps.Key.Entries.ToArray();
                     for (int i = 0; i < pps.Value.Count; i++)
                     {
                         var entry = entries[i];
                         if (!entry.Value.HasValue)
-                        {
-                            continue;
-                        }
+							continue;
 
-                        var point = pps.Value.ElementAt(i);
+						var point = pps.Value.ElementAt(i);
                         canvas.DrawPoint(point, pps.Key.Color ?? entry.Color, PointSize, PointMode);
                     }
                 }
@@ -125,10 +128,22 @@ namespace Microcharts
 
             if (valueLabelOption == ValueLabelOption.TopOfElement || valueLabelOption == ValueLabelOption.OverElement)
             {
-                foreach (var pps in pointsPerSerie)
+				foreach (var pps in pointsPerSerie)
                 {
-                    var entries = pps.Key.Entries.ToArray();
-                    for (int i = 0; i < pps.Value.Count; i++)
+					if (pps.Key.IsFullLine)
+					{
+                        var entry = pps.Key.Entries.First();
+						var drawedPoint = pps.Value.ElementAt(0);
+						DrawHelper.DrawLabel(canvas, ValueLabelOrientation, YPositionBehavior.DownToElementMiddle, 
+                            itemSize,
+							new SKPoint(20, drawedPoint.Y),
+							entry.ValueLabelColor.WithAlpha((byte)(255 * AnimationProgress)),
+							valueLabelSizes[entry],
+							entry.ValueLabel, ValueLabelTextSize, Typeface);
+						break;
+					}
+					var entries = pps.Key.Entries.ToArray();
+					for (int i = 0; i < pps.Value.Count; i++)
                     {
                         var entry = entries[i];
                         string label = entry.ValueLabel;
@@ -191,45 +206,51 @@ namespace Microcharts
                                 paint.Shader = shader;
 
                         var path = new SKPath();
-                        //path.MoveTo(points.First());
-
-                        var isFirst = true;
-                        var entries = s.Entries;
-                        var lineMode = LineMode;
-                        var last = (lineMode == LineMode.Spline) ? points.Length - 1 : points.Length;
-                        for (int i = 0; i < last; i++)
+                        if (s.IsFullLine)
                         {
-                            if (!entries.ElementAt(i).Value.HasValue) 
-                                continue;
+                            var y = points[0].Y;
+							path.MoveTo(new SKPoint(50, y));
+							path.LineTo(new SKPoint(canvas.LocalClipBounds.Width, y));
+						}
+                        else
+                        {
+							var isFirst = true;
+							var entries = s.Entries;
+							var lineMode = LineMode;
+							var last = (lineMode == LineMode.Spline) ? points.Length - 1 : points.Length;
+							for (int i = 0; i < last; i++)
+							{
+								if (!entries.ElementAt(i).Value.HasValue)
+									continue;
 
-                            if (isFirst)
-                            {
-                                path.MoveTo(points[i]);
-                                isFirst = false;
-                            }
+								if (isFirst)
+								{
+									path.MoveTo(points[i]);
+									isFirst = false;
+								}
 
+								if (lineMode == LineMode.Spline)
+								{
+									int next = i + 1;
+									while (next < last && !entries.ElementAt(next).Value.HasValue)
+									{
+										next++;
+									}
 
-                            if (lineMode == LineMode.Spline)
-                            {
-                                int next = i + 1;
-                                while (next < last && !entries.ElementAt(next).Value.HasValue)
-                                {
-                                    next++;
-                                }
+									if (next == last && !entries.ElementAt(next).Value.HasValue)
+									{
+										break;
+									}
 
-                                if (next == last && !entries.ElementAt(next).Value.HasValue)
-                                {
-                                    break;
-                                }
-
-                                var cubicInfo = CalculateCubicInfo(points, i, next, itemSize);
-                                path.CubicTo(cubicInfo.control, cubicInfo.nextControl, cubicInfo.nextPoint);
-                            }
-                            else if (lineMode == LineMode.Straight)
-                            {
-                                path.LineTo(points[i]);
-                            }
-                        }
+									var cubicInfo = CalculateCubicInfo(points, i, next, itemSize);
+									path.CubicTo(cubicInfo.control, cubicInfo.nextControl, cubicInfo.nextPoint);
+								}
+								else if (lineMode == LineMode.Straight)
+								{
+									path.LineTo(points[i]);
+								}
+							}
+						}
 
                         canvas.DrawPath(path, paint);
                     }
