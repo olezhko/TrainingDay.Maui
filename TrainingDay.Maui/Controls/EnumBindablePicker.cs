@@ -1,4 +1,4 @@
-using TrainingDay.Common;
+using TrainingDay.Common.Extensions;
 using TrainingDay.Maui.Services;
 
 namespace TrainingDay.Maui.Controls;
@@ -10,7 +10,7 @@ public class EnumBindablePicker<T> : Picker where T : struct
         SelectedIndexChanged += OnSelectedIndexChanged;
         foreach (var value in Enum.GetValues(typeof(T)))
         {
-            Items.Add(ExerciseTools.GetEnumDescription(value, Settings.GetLanguage()));
+            Items.Add(ExerciseExtensions.GetEnumDescription(value, Settings.GetLanguage()));
         }
     }
 
@@ -37,6 +37,6 @@ public class EnumBindablePicker<T> : Picker where T : struct
     private T GetEnumByDescription(string description)
     {
         return Enum.GetValues(typeof(T)).Cast<T>().FirstOrDefault(x =>
-            string.Equals(ExerciseTools.GetEnumDescription(x, Settings.GetLanguage()), description));
+            string.Equals(ExerciseExtensions.GetEnumDescription(x, Settings.GetLanguage()), description));
     }
 }

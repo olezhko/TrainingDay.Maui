@@ -5,7 +5,7 @@ using Android.OS;
 using Android.Util;
 using AndroidX.Core.App;
 using Firebase.Messaging;
-using TrainingDay.Common;
+using TrainingDay.Common.Communication;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Services;
@@ -53,7 +53,7 @@ namespace TrainingDay.Maui.Platforms.Android
                 {
                     switch (type)
                     {
-                        case PushNotificationData.WeightType:
+                        case PushNotificationItem.WeightType:
                             if (PushMessagesExtensions.IsShowWeightNotify())
                             {
                                 ShowPushNotification(new PushMessage()
@@ -66,7 +66,7 @@ namespace TrainingDay.Maui.Platforms.Android
                                 PushMessagesExtensions.WeightNotificationState = true;
                             }
                             break;
-                        case PushNotificationData.WorkoutType:
+                        case PushNotificationItem.WorkoutType:
                             if (true)
                             {
                                 ShowPushNotification(new PushMessage()
@@ -79,7 +79,7 @@ namespace TrainingDay.Maui.Platforms.Android
                                 PushMessagesExtensions.TrainingNotificationState = true;
                             }
                             break;
-                        case PushNotificationData.BlogType:
+                        case PushNotificationItem.BlogType:
                             ShowPushNotification(new PushMessage()
                             {
                                 Title = title,

@@ -5,7 +5,7 @@
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             xmlns:data="clr-namespace:TrainingDay.Common;assembly=TrainingDay.Common"
+             xmlns:data="clr-namespace:TrainingDay.Common.Models;assembly=TrainingDay.Common"
              x:Class="TrainingDay.Maui.Controls.ExerciseView"
              x:Name="View">
     <Grid x:Name="MainGrid" RowSpacing="3">

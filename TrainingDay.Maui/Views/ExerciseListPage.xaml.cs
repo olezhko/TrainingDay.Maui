@@ -21,6 +21,7 @@ public partial class ExerciseListPage : ContentPage
         _viewModel = new ExerciseListPageViewModel();
         BindingContext = _viewModel;
         NavigationPage.SetBackButtonTitle(this, AppResources.ExercisesString);
+        SearchBar.SearchButtonPressed += SearchButtonPressed;
     }
 
     protected override void OnAppearing()
@@ -39,6 +40,13 @@ public partial class ExerciseListPage : ContentPage
 
         ExercisesListView.SelectedItem = null;
         SubscribeMessages();
+    }
+
+    override protected void OnDisappearing()
+    {
+        base.OnDisappearing();
+        SearchBar.SearchButtonPressed -= SearchButtonPressed;
+        UnsubscribeMessages();
     }
 
     private void SubscribeMessages()
@@ -90,5 +98,11 @@ public partial class ExerciseListPage : ContentPage
         ExerciseListItemViewModel? selected = ((Frame)sender).BindingContext as ExerciseListItemViewModel;
 
         await Shell.Current.GoToAsync($"{nameof(ExerciseItemPage)}?{nameof(ExerciseViewModel.LoadId)}={selected.Id}");
+    }
+
+    private void SearchButtonPressed(object sender, EventArgs e)
+    {
+        SearchBar searchBar = (SearchBar)sender;
+        searchBar.HideSoftInputAsync(CancellationToken.None);
     }
 }

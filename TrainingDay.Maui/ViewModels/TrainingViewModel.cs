@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using TrainingDay.Common.Extensions;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Database;
@@ -103,7 +104,7 @@ public class TrainingViewModel : BaseViewModel
                 IsSkipped = trainingExerciseViewModel.IsSkipped,
                 SuperSetNum = trainingExerciseViewModel.SuperSetNum,
 
-                TagsValue = Common.ExerciseTools.ConvertTagListToInt(trainingExerciseViewModel.Tags),
+                TagsValue = ExerciseExtensions.ConvertTagListToInt(trainingExerciseViewModel.Tags),
                 WeightAndRepsString = ExerciseManager.ConvertJson(trainingExerciseViewModel.Tags, trainingExerciseViewModel),
                 CodeNum = trainingExerciseViewModel.CodeNum,
             });

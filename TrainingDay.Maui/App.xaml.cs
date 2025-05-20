@@ -69,13 +69,17 @@ namespace TrainingDay.Maui
 
             LoggingService.TrackEvent("Application Started");
 
-            DownloadImages();
+            
+            Dispatcher.Dispatch(async () =>
+            {
+                await DownloadImages();
+            });
 
             notificator = Handler.MauiContext.Services.GetRequiredService<IPushNotification>();
             MeasureOfWeight = GetMeasureOfWeight();
         }
 
-        private async void DownloadImages()
+        private async Task DownloadImages()
         {
             try
             {
@@ -98,7 +102,7 @@ namespace TrainingDay.Maui
                 {
                     try
                     {
-                        var url = b.Key.Replace(".jpg", string.Empty);
+                        var url = b.Key.Replace(".jpg", string.Empty).Replace(".png", string.Empty);
                         ImageData image = App.Database.GetImage(url);
                         if (image == null)
                         {

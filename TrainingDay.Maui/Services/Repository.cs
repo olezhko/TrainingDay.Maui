@@ -1,7 +1,6 @@
-﻿using Microsoft.AppCenter.Crashes;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using SQLite;
-using TrainingDay.Common.Resources;
+using TrainingDay.Common.Extensions;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.ViewModels;
 
@@ -56,7 +55,7 @@ public class Repository
             database.CreateTable<ImageData>();
             database.CreateTable<Blog>();
 
-            var initExercises = await ResourceExtension.LoadResource<Common.BaseExercise>("exercises", Settings.GetLanguage().TwoLetterISOLanguageName);
+            var initExercises = await ResourceExtension.LoadResource<Common.Models.BaseExercise>("exercises", Settings.GetLanguage().TwoLetterISOLanguageName);
             var dbExercises = GetExerciseItems();
 
             foreach (var exercise in initExercises)
@@ -105,7 +104,7 @@ public class Repository
             }
         }
     }
-    public void AddorUpdateExercise(Common.BaseExercise newExercise, IEnumerable<Exercise> dbExercises)
+    public void AddorUpdateExercise(Common.Models.BaseExercise newExercise, IEnumerable<Exercise> dbExercises)
     {
         var dbExercise = dbExercises.FirstOrDefault(item => item.CodeNum == newExercise.CodeNum);
         if (dbExercise == null)
@@ -118,7 +117,7 @@ public class Repository
         }
     }
 
-    private void SaveBaseExerciseItem(Common.BaseExercise exercise)
+    private void SaveBaseExerciseItem(Common.Models.BaseExercise exercise)
     {
         try
         {
@@ -126,7 +125,7 @@ public class Repository
             newExercise.CodeNum = exercise.CodeNum;
             newExercise.Description = JsonConvert.SerializeObject(exercise.Description);
             newExercise.MusclesString = exercise.MusclesString;
-            newExercise.TagsValue = Common.ExerciseTools.ConvertTagListToInt(Common.ExerciseTools.ConvertTagFromStringToList(exercise.Tags));
+            newExercise.TagsValue = ExerciseExtensions.ConvertTagStringToInt(exercise.Tags);
             newExercise.ExerciseItemName = exercise.ExerciseItemName;
             SaveExerciseItem(newExercise);
         }
@@ -137,14 +136,14 @@ public class Repository
         }
     }
 
-    private void CorrectExercise(Common.BaseExercise srcExercise, Exercise dbExercise)
+    private void CorrectExercise(Common.Models.BaseExercise srcExercise, Exercise dbExercise)
     {
         try
         {
             dbExercise.Description = JsonConvert.SerializeObject(srcExercise.Description);
             dbExercise.MusclesString = srcExercise.MusclesString;
             dbExercise.ExerciseItemName = srcExercise.ExerciseItemName;
-            dbExercise.TagsValue = Common.ExerciseTools.ConvertTagListToInt(Common.ExerciseTools.ConvertTagFromStringToList(srcExercise.Tags));
+            dbExercise.TagsValue = ExerciseExtensions.ConvertTagStringToInt(srcExercise.Tags);
             SaveExerciseItem(dbExercise);
         }
         catch (Exception ex)

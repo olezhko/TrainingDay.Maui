@@ -642,4 +642,7 @@
   <data name="LetsBuildYourWorkout" xml:space="preserve">
     <value>Übungsauswahl starten</value>
   </data>
+  <data name="PreparedMorningWorkout" xml:space="preserve">
+    <value>Утренняя зарядка</value>
+  </data>
 </root>

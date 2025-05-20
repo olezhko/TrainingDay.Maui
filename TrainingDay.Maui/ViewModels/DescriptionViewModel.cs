@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using TrainingDay.Common;
+using TrainingDay.Common.Models;
 using TrainingDay.Maui.Extensions;
 
 namespace TrainingDay.Maui.ViewModels;

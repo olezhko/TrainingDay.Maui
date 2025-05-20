@@ -1,5 +1,5 @@
 ﻿using System.Globalization;
-using TrainingDay.Common;
+using TrainingDay.Common.Models;
 
 namespace TrainingDay.Maui.Converters;
 

@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using TrainingDay.Common.Extensions;
+using TrainingDay.Common.Models;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Database;
@@ -8,6 +10,10 @@ using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.Views;
+using Exercise = TrainingDay.Maui.Models.Database.Exercise;
+using SuperSet = TrainingDay.Maui.Models.Database.SuperSet;
+using Training = TrainingDay.Maui.Models.Database.Training;
+using TrainingExerciseComm = TrainingDay.Maui.Models.Database.TrainingExerciseComm;
 
 namespace TrainingDay.Maui.ViewModels.Pages;
 
@@ -106,6 +112,21 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
         };
         PreparedTrainingsCollection.Add(preparedTrainingForBeginners);
 
+        var preparedTrainingForMorning = new PreparedTrainingViewModel()
+        {
+            Name = AppResources.PreparedMorningWorkout,
+            TrainingImageUrl = ImageSource.FromResource("TrainingDay.Maui.Resources.Images.prepared.morning.png"),
+        };
+        preparedTrainingForMorning.CreateTraining = () =>
+        {
+            preparedTrainingForMorning.Training = new TrainingViewModel()
+            {
+                Exercises = [.. GetExercisesByCodeNum(exerciseBase, 140, 141, 143, 142, 133, 139, 84, 83, 132, 137, 115)],
+                Title = AppResources.PreparedMorningWorkout,
+            };
+        };
+        PreparedTrainingsCollection.Add(preparedTrainingForMorning);
+
         var preparedFitnessString = new PreparedTrainingViewModel()
         {
             Name = AppResources.PreparedFitnessString,
@@ -128,14 +149,14 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
             TrainingImageUrl = ImageSource.FromResource("TrainingDay.Maui.Resources.Images.prepared.cardio.png"),
             MainMuscles =
                 new ObservableCollection<MuscleViewModel>(
-                    MusclesConverter.SetMuscles(TrainingDay.Common.MusclesEnum.Cardio)),
+                    MusclesConverter.SetMuscles(MusclesEnum.Cardio)),
         };
         preparedCardioString.CreateTraining = () =>
         {
             preparedCardioString.Training = new TrainingViewModel()
             {
                 Exercises = GetExerciseByMuscles(exerciseBase,
-                    MusclesConverter.SetMuscles(TrainingDay.Common.MusclesEnum.Cardio).ToArray()),
+                    MusclesConverter.SetMuscles(MusclesEnum.Cardio).ToArray()),
                 Title = AppResources.PreparedCardioString,
             };
         };
@@ -167,7 +188,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
             preparedHomeString.Training = new TrainingViewModel()
             {
                 Exercises = new ObservableCollection<TrainingExerciseViewModel>(exerciseBase
-                    .Where(ex => TrainingDay.Common.ExerciseTools.ConvertFromIntToTagList(ex.TagsValue).Contains(TrainingDay.Common.ExerciseTags.CanDoAtHome))
+                    .Where(ex => ExerciseExtensions.ConvertTagIntToList(ex.TagsValue).Contains(ExerciseTags.CanDoAtHome))
                     .Select(item => TrainingExerciseViewModel.Create(item))),
                 Title = AppResources.PreparedHomeString,
             };
@@ -195,8 +216,8 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
             Name = AppResources.PreparedBackReady,
             TrainingImageUrl = ImageSource.FromResource("TrainingDay.Maui.Resources.Images.prepared.back.png"),
             MainMuscles = new ObservableCollection<MuscleViewModel>(MusclesConverter.SetMuscles(
-                TrainingDay.Common.MusclesEnum.LowerBack, TrainingDay.Common.MusclesEnum.MiddleBack,
-                TrainingDay.Common.MusclesEnum.WidestBack)),
+                MusclesEnum.LowerBack, MusclesEnum.MiddleBack,
+                MusclesEnum.WidestBack)),
         };
         preparedBackReady.CreateTraining = () =>
         {
@@ -213,8 +234,8 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
             Name = AppResources.PreparedMaximumUpperBody,
             TrainingImageUrl = ImageSource.FromResource("TrainingDay.Maui.Resources.Images.prepared.up.png"),
             MainMuscles = new ObservableCollection<MuscleViewModel>(MusclesConverter.SetMuscles(
-                TrainingDay.Common.MusclesEnum.LowerBack, TrainingDay.Common.MusclesEnum.MiddleBack,
-                TrainingDay.Common.MusclesEnum.WidestBack)),
+                MusclesEnum.LowerBack, MusclesEnum.MiddleBack,
+                MusclesEnum.WidestBack)),
             SuperSets = new List<PreparedSuperSet>(new[]
             {
                     new PreparedSuperSet()
@@ -251,8 +272,8 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
             Name = AppResources.PreparedArmsStrength,
             TrainingImageUrl = ImageSource.FromResource("TrainingDay.Maui.Resources.Images.prepared.arms.png"),
             MainMuscles = new ObservableCollection<MuscleViewModel>(MusclesConverter.SetMuscles(
-                TrainingDay.Common.MusclesEnum.LowerBack, TrainingDay.Common.MusclesEnum.MiddleBack,
-                TrainingDay.Common.MusclesEnum.WidestBack)),
+                MusclesEnum.LowerBack, MusclesEnum.MiddleBack,
+                MusclesEnum.WidestBack)),
             SuperSets = new List<PreparedSuperSet>(new[]
             {
                     new PreparedSuperSet()
@@ -293,7 +314,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
             Name = AppResources.PreparedFootTraining,
             TrainingImageUrl = ImageSource.FromResource("TrainingDay.Maui.Resources.Images.prepared.legs_and_glutes.png"),
             MainMuscles = new ObservableCollection<MuscleViewModel>(MusclesConverter.SetMuscles(
-                TrainingDay.Common.MusclesEnum.Buttocks, TrainingDay.Common.MusclesEnum.Thighs,TrainingDay.Common.MusclesEnum.Quadriceps)),
+                MusclesEnum.Buttocks, MusclesEnum.Thighs,MusclesEnum.Quadriceps)),
         };
         preparedFootReady.CreateTraining = () =>
         {

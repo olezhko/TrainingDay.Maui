@@ -1,8 +1,8 @@
 using CommunityToolkit.Maui.Alerts;
 using Newtonsoft.Json;
 using System.Globalization;
-using TrainingDay.Common;
-using TrainingDay.Common.Resources;
+using TrainingDay.Common.Extensions;
+using TrainingDay.Common.Models;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;

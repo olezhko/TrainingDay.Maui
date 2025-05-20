@@ -1,12 +1,13 @@
-using System.Collections.ObjectModel;
-using TrainingDay.Common;
-using TrainingDay.Maui.Models;
-using TrainingDay.Maui.ViewModels;
-using TrainingDay.Maui.Services;
+using CommunityToolkit.Mvvm.Messaging;
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
-using CommunityToolkit.Mvvm.Messaging;
+using System.Collections.ObjectModel;
+using TrainingDay.Common.Extensions;
+using TrainingDay.Common.Models;
+using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Messages;
+using TrainingDay.Maui.Services;
+using TrainingDay.Maui.ViewModels;
 
 namespace TrainingDay.Maui.Views;
 
@@ -25,7 +26,7 @@ public partial class FilterPage : ContentPage, IQueryAttributable
             var type = (MusclesEnum)i;
             var newItem = new MuscleCheckItem()
             {
-                Text = ExerciseTools.GetEnumDescription(type, Settings.GetLanguage()),
+                Text = ExerciseExtensions.GetEnumDescription(type, Settings.GetLanguage()),
                 Muscle = type,
             };
             newItem.PropertyChanged += NewItem_PropertyChanged;

@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using TrainingDay.Common;
+using TrainingDay.Common.Models;
 using TrainingDay.Maui.ViewModels;
 
 namespace TrainingDay.Maui.Extensions;

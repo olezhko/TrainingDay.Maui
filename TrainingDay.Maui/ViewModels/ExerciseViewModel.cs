@@ -1,7 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using TrainingDay.Common.Extensions;
+using TrainingDay.Common.Models;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models.Database;
+using Exercise = TrainingDay.Maui.Models.Database.Exercise;
 
 namespace TrainingDay.Maui.ViewModels;
 
@@ -10,7 +13,7 @@ public class ExerciseViewModel : BaseViewModel
 {
     private string _name;
     private int _id;
-    private List<TrainingDay.Common.ExerciseTags> _tags;
+    private List<ExerciseTags> _tags;
     private DescriptionViewModel _descriptionItem;
     private int codeNum;
     private ObservableCollection<MuscleViewModel> muscles;
@@ -19,19 +22,19 @@ public class ExerciseViewModel : BaseViewModel
     public ExerciseViewModel()
     {
         Muscles = new ObservableCollection<MuscleViewModel>();
-        Tags = new List<TrainingDay.Common.ExerciseTags> { TrainingDay.Common.ExerciseTags.ExerciseByReps };
+        Tags = new List<ExerciseTags> { ExerciseTags.ExerciseByReps };
         Description = new DescriptionViewModel();
     }
 
-    public ExerciseViewModel(Exercise exercise)
+    public ExerciseViewModel(Common.Models.Exercise exercise)
     {
         LoadExercise(exercise);
     }
 
-    private void LoadExercise(Exercise exercise)
+    private void LoadExercise(Common.Models.Exercise exercise)
     {
         Id = exercise.Id;
-        Tags = TrainingDay.Common.ExerciseTools.ConvertFromIntToTagList(exercise.TagsValue);
+        Tags = [.. ExerciseExtensions.ConvertTagIntToList(exercise.TagsValue)];
         ExerciseItemName = exercise.ExerciseItemName;
         Muscles = new ObservableCollection<MuscleViewModel>(MusclesConverter.ConvertFromStringToList(exercise.MusclesString));
         Description = DescriptionViewModel.ConvertFromJson(exercise.Description);
@@ -47,7 +50,7 @@ public class ExerciseViewModel : BaseViewModel
             Description = JsonConvert.SerializeObject(Description?.Model),
             ExerciseItemName = ExerciseItemName,
             MusclesString = MusclesConverter.ConvertFromListToString(Muscles.ToList()),
-            TagsValue = TrainingDay.Common.ExerciseTools.ConvertTagListToInt(Tags),
+            TagsValue = ExerciseExtensions.ConvertTagListToInt(Tags),
             CodeNum = CodeNum,
         };
     }
@@ -76,7 +79,7 @@ public class ExerciseViewModel : BaseViewModel
         }
     }
 
-    public List<TrainingDay.Common.ExerciseTags> Tags
+    public List<ExerciseTags> Tags
     {
         get => _tags;
         set

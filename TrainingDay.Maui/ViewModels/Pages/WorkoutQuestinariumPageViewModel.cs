@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
-using TrainingDay.Common.Resources;
+using TrainingDay.Common.Extensions;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models.Questions;
 using TrainingDay.Maui.Services;
@@ -115,6 +115,10 @@ namespace TrainingDay.Maui.ViewModels.Pages
         private async Task SendRequest(string message)
         {
             var response = await _chatGptService.GetChatGptResponseAsync(message);
+            if (response.IsNotNullOrEmpty())
+            {
+
+            }
         }
 
         public async void Back()

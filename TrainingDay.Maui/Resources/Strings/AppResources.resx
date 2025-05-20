@@ -642,4 +642,7 @@
   <data name="LetsBuildYourWorkout" xml:space="preserve">
     <value>Let’s Build Your Workout</value>
   </data>
+  <data name="PreparedMorningWorkout" xml:space="preserve">
+    <value>Morning Workout</value>
+  </data>
 </root>

@@ -934,6 +934,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Morning Workout.
+        /// </summary>
+        internal static string PreparedMorningWorkout {
+            get {
+                return ResourceManager.GetString("PreparedMorningWorkout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Flat Stomach.
         /// </summary>
         internal static string PreparedNiceStomach {

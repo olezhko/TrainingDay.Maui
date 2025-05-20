@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.ObjectModel;
-using TrainingDay.Common;
+using System.Linq;
+using TrainingDay.Common.Models;
 using TrainingDay.Maui.ViewModels;
 
 namespace TrainingDay.Maui.Extensions;

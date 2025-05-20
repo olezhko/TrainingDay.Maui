@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using TrainingDay.Common;
+using TrainingDay.Common.Extensions;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models.Serialize;
 using TrainingDay.Maui.Resources.Strings;
@@ -70,7 +71,7 @@ public partial class TrainingItemsBasePage : ContentPage
                                 SuperSetId = trainingExerciseSerialize.SuperSetId,
                                 SuperSetNum = trainingExerciseSerialize.SuperSetNum,
                                 IsSkipped = trainingExerciseSerialize.IsSkipped,
-                                Tags = ExerciseTools.ConvertFromIntToTagList(trainingExerciseSerialize.TagsValue),
+                                Tags = ExerciseExtensions.ConvertTagIntToList(trainingExerciseSerialize.TagsValue).ToList(),
                                 Description = DescriptionViewModel.ConvertFromJson(trainingExerciseSerialize.Description),
                                 CodeNum = trainingExerciseSerialize.CodeNum,
                             };

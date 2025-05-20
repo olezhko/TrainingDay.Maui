@@ -1,7 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using TrainingDay.Common;
+using TrainingDay.Common.Extensions;
+using TrainingDay.Common.Models;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Services;
@@ -119,7 +120,7 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
                 newItem.IsSelected = selectedIndexes.Contains(newItem.Id);
                 bool? byname = null, byFilter = null, atHome = null;
 
-                var tags = ExerciseTools.ConvertFromIntToTagList(exercise.TagsValue);
+                var tags = ExerciseExtensions.ConvertTagIntToList(exercise.TagsValue);
 
                 if (Filter.IsNoEquipmentFilter)
                 {

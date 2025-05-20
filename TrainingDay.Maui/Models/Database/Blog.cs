@@ -1,5 +1,5 @@
 ﻿using SQLite;
-using TrainingDay.Common;
+using TrainingDay.Common.Communication;
 
 namespace TrainingDay.Maui.Models.Database;
 

@@ -4,7 +4,7 @@
              xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels"
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
-             xmlns:data="clr-namespace:TrainingDay.Common;assembly=TrainingDay.Common"
+             xmlns:data="clr-namespace:TrainingDay.Common.Models;assembly=TrainingDay.Common"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="TrainingDay.Maui.Views.ExerciseItemPage"
              Shell.TabBarIsVisible="False"

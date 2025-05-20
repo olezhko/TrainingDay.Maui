@@ -87,6 +87,7 @@
 	  <None Remove="Resources\Images\prepared\flat_stomach.png" />
 	  <None Remove="Resources\Images\prepared\home.png" />
 	  <None Remove="Resources\Images\prepared\legs_and_glutes.png" />
+	  <None Remove="Resources\Images\prepared\morning.png" />
 	  <None Remove="Resources\Images\prepared\press.png" />
 	  <None Remove="Resources\Images\prepared\shoulders.png" />
 	  <None Remove="Resources\Images\prepared\up.png" />
@@ -260,6 +261,11 @@
 
 	<ItemGroup>
 	  <Folder Include="Models\Questions\" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Resources\Images\prepared\morning.png" />
 	</ItemGroup>
 	<Target Name="LinkWithSwift" DependsOnTargets="_ParseBundlerArguments;_DetectSdkLocations" BeforeTargets="_LinkNativeExecutable">
  		<PropertyGroup>

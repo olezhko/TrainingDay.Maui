@@ -15,16 +15,17 @@ namespace TrainingDay.Maui.Services
         {
             _httpClient = new HttpClient();
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
+            _httpClient.DefaultRequestHeaders.Add("OpenAI-Organization", "org-BxqusOm83Qb55kCsUtO0Zvcf");
+            _httpClient.DefaultRequestHeaders.Add("OpenAI-Project", "proj_QrYjNHbywkEW6kyUPEtaOwHs");
         }
 
         public async Task<string> GetChatGptResponseAsync(string userMessage)
         {
             var requestBody = new
             {
-                model = "gpt-4o",
+                model = "gpt-4o-mini",
                 messages = new[]
                 {
-                    new { role = "system", content = "You are a helpful assistant." },
                     new { role = "user", content = userMessage }
                 }
             };
@@ -35,7 +36,7 @@ namespace TrainingDay.Maui.Services
             var response = await _httpClient.PostAsync(ApiUrl, content);
             if (!response.IsSuccessStatusCode)
             {
-                return "Error: Unable to get response from ChatGPT.";
+                return string.Empty;
             }
 
             var responseBody = await response.Content.ReadAsStringAsync();

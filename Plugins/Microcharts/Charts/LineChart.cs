@@ -188,74 +188,79 @@ namespace Microcharts
 
         private void DrawSeriesLine(SKCanvas canvas, SKSize itemSize)
         {
-            if (pointsPerSerie.Any() && pointsPerSerie.Values.First().Count > 1 && LineMode != LineMode.None)
+            if (!pointsPerSerie.Any() || LineMode == LineMode.None)
             {
-                foreach (var s in Series)
+                return;
+            }
+            foreach (var s in Series)
+            {
+                var points = pointsPerSerie[s].ToArray();
+                if (points.Count() < 1 && !s.IsFullLine)
+                    return;
+                
+                using (var paint = new SKPaint
                 {
-                    var points = pointsPerSerie[s].ToArray();
-                    using (var paint = new SKPaint
+                    Style = SKPaintStyle.Stroke,
+                    Color = s.Color ?? SKColors.White,
+                    StrokeWidth = LineSize,
+                    IsAntialias = true,
+                })
+                {
+                    if (s.Color == null)
+                        using (var shader = CreateXGradient(points, s.Entries, s.Color))
+                            paint.Shader = shader;
+
+                    var path = new SKPath();
+                    if (s.IsFullLine)
                     {
-                        Style = SKPaintStyle.Stroke,
-                        Color = s.Color ?? SKColors.White,
-                        StrokeWidth = LineSize,
-                        IsAntialias = true,
-                    })
-                    {
-                        if (s.Color == null)
-                            using (var shader = CreateXGradient(points, s.Entries, s.Color))
-                                paint.Shader = shader;
-
-                        var path = new SKPath();
-                        if (s.IsFullLine)
-                        {
-                            var y = points[0].Y;
-							path.MoveTo(new SKPoint(50, y));
-							path.LineTo(new SKPoint(canvas.LocalClipBounds.Width, y));
-						}
-                        else
-                        {
-							var isFirst = true;
-							var entries = s.Entries;
-							var lineMode = LineMode;
-							var last = (lineMode == LineMode.Spline) ? points.Length - 1 : points.Length;
-							for (int i = 0; i < last; i++)
-							{
-								if (!entries.ElementAt(i).Value.HasValue)
-									continue;
-
-								if (isFirst)
-								{
-									path.MoveTo(points[i]);
-									isFirst = false;
-								}
-
-								if (lineMode == LineMode.Spline)
-								{
-									int next = i + 1;
-									while (next < last && !entries.ElementAt(next).Value.HasValue)
-									{
-										next++;
-									}
-
-									if (next == last && !entries.ElementAt(next).Value.HasValue)
-									{
-										break;
-									}
-
-									var cubicInfo = CalculateCubicInfo(points, i, next, itemSize);
-									path.CubicTo(cubicInfo.control, cubicInfo.nextControl, cubicInfo.nextPoint);
-								}
-								else if (lineMode == LineMode.Straight)
-								{
-									path.LineTo(points[i]);
-								}
-							}
-						}
-
-                        canvas.DrawPath(path, paint);
+                        var y = points[0].Y;
+                        path.MoveTo(new SKPoint(50, y));
+                        path.LineTo(new SKPoint(canvas.LocalClipBounds.Width, y));
                     }
+                    else
+                    {
+                        var isFirst = true;
+                        var entries = s.Entries;
+                        var lineMode = LineMode;
+                        var last = (lineMode == LineMode.Spline) ? points.Length - 1 : points.Length;
+                        for (int i = 0; i < last; i++)
+                        {
+                            if (!entries.ElementAt(i).Value.HasValue)
+                                continue;
+
+                            if (isFirst)
+                            {
+                                path.MoveTo(points[i]);
+                                isFirst = false;
+                            }
+
+                            if (lineMode == LineMode.Spline)
+                            {
+                                int next = i + 1;
+                                while (next < last && !entries.ElementAt(next).Value.HasValue)
+                                {
+                                    next++;
+                                }
+
+                                if (next == last && !entries.ElementAt(next).Value.HasValue)
+                                {
+                                    break;
+                                }
+
+                                var cubicInfo = CalculateCubicInfo(points, i, next, itemSize);
+                                path.CubicTo(cubicInfo.control, cubicInfo.nextControl, cubicInfo.nextPoint);
+                            }
+                            else if (lineMode == LineMode.Straight)
+                            {
+                                path.LineTo(points[i]);
+                            }
+                        }
+                    }
+
+                    canvas.DrawPath(path, paint);
                 }
             }
+
         }
 
         private void DrawLineArea(SKCanvas canvas, ChartSerie serie, SKPoint[] points, SKSize itemSize, float origin)

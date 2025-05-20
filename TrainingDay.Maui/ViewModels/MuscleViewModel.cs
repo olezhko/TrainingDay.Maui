@@ -1,4 +1,5 @@
-﻿using TrainingDay.Common;
+﻿using TrainingDay.Common.Extensions;
+using TrainingDay.Common.Models;
 using TrainingDay.Maui.Services;
 
 namespace TrainingDay.Maui.ViewModels;
@@ -22,6 +23,6 @@ public class MuscleViewModel : BaseViewModel
     public MuscleViewModel(MusclesEnum muscle)
     {
         Id = (int)muscle;
-        Name = ExerciseTools.GetEnumDescription(muscle, Settings.GetLanguage());
+        Name = ExerciseExtensions.GetEnumDescription(muscle, Settings.GetLanguage());
     }
 }

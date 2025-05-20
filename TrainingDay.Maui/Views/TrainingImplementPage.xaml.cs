@@ -3,6 +3,8 @@ using Plugin.AdMob;
 using Plugin.AdMob.Services;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using TrainingDay.Common.Extensions;
+using TrainingDay.Common.Models;
 using TrainingDay.Maui.Controls;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models;
@@ -11,6 +13,9 @@ using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels;
+using LastTraining = TrainingDay.Maui.Models.Database.LastTraining;
+using LastTrainingExercise = TrainingDay.Maui.Models.Database.LastTrainingExercise;
+using TrainingExerciseComm = TrainingDay.Maui.Models.Database.TrainingExerciseComm;
 
 namespace TrainingDay.Maui.Views;
 
@@ -194,7 +199,7 @@ public partial class TrainingImplementPage : ContentPage
             var exercises = Items[StepProgressBarControl.StepSelected];
             foreach (var item in exercises)
             {
-                if (item.Tags.Contains(TrainingDay.Common.ExerciseTags.ExerciseByTime) && item.IsTimeCalculating && item.IsNotFinished)
+                if (item.Tags.Contains(ExerciseTags.ExerciseByTime) && item.IsTimeCalculating && item.IsNotFinished)
                 {
                     item.Time = DateTime.Now - item.StartCalculateDateTime;
                 }
@@ -316,7 +321,7 @@ public partial class TrainingImplementPage : ContentPage
                     MusclesString = MusclesConverter.ConvertFromListToString(item.Muscles.ToList()),
                     Description = item.GetExercise().Description,
                     SuperSetId = item.SuperSetId,
-                    TagsValue = TrainingDay.Common.ExerciseTools.ConvertTagListToInt(item.Tags),
+                    TagsValue = ExerciseExtensions.ConvertTagListToInt(item.Tags),
                     CodeNum = item.CodeNum,
                     WeightAndRepsString = ExerciseManager.ConvertJson(item.Tags, item),
                 });

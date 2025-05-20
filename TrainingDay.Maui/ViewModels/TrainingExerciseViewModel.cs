@@ -1,9 +1,12 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using TrainingDay.Common.Extensions;
+using TrainingDay.Common.Models;
 using TrainingDay.Maui.Extensions;
-using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Services;
+using Exercise = TrainingDay.Maui.Models.Database.Exercise;
+using TrainingExerciseComm = TrainingDay.Maui.Models.Database.TrainingExerciseComm;
 
 namespace TrainingDay.Maui.ViewModels;
 
@@ -35,7 +38,7 @@ public class TrainingExerciseViewModel : ExerciseViewModel
             TrainingId = comm.TrainingId;
             OrderNumber = comm.OrderNumber;
             SuperSetId = comm.SuperSetId;
-            Tags = TrainingDay.Common.ExerciseTools.ConvertFromIntToTagList(exercise.TagsValue);
+            Tags = ExerciseExtensions.ConvertTagIntToList(exercise.TagsValue).ToList();
             CodeNum = exercise.CodeNum;
             ExerciseManager.ConvertJsonBack(this, comm.WeightAndRepsString);
             Description = DescriptionViewModel.ConvertFromJson(exercise.Description);
@@ -211,7 +214,7 @@ public class TrainingExerciseViewModel : ExerciseViewModel
             Description = JsonConvert.SerializeObject(Description?.Model),
             ExerciseItemName = ExerciseItemName,
             MusclesString = MusclesConverter.ConvertFromListToString(Muscles.ToList()),
-            TagsValue = TrainingDay.Common.ExerciseTools.ConvertTagListToInt(Tags),
+            TagsValue = ExerciseExtensions.ConvertTagListToInt(Tags),
             CodeNum = CodeNum,
         };
     }
@@ -253,9 +256,9 @@ public class TrainingExerciseViewModel : ExerciseViewModel
 
     private static string GetDefualtWeightAndRepsString(int tagsValue)
     {
-        List<Common.ExerciseTags> tagsList = Common.ExerciseTools.ConvertFromIntToTagList(tagsValue);
+        var tagsList = ExerciseExtensions.ConvertTagIntToList(tagsValue);
         string weightAndReps = string.Empty;
-        if (tagsList.Contains(Common.ExerciseTags.ExerciseByRepsAndWeight) || tagsList.Contains(Common.ExerciseTags.ExerciseByReps))
+        if (tagsList.Contains(ExerciseTags.ExerciseByRepsAndWeight) || tagsList.Contains(ExerciseTags.ExerciseByReps))
         {
             weightAndReps = JsonConvert.SerializeObject(new List<WeightAndRepsViewModel>{
                 new WeightAndRepsViewModel(0,15),new WeightAndRepsViewModel(0,15),new WeightAndRepsViewModel(0,15),

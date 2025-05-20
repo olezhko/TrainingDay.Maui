@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using TrainingDay.Common.Extensions;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Database;
@@ -107,7 +108,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
                 CodeNum = trainingExercise.CodeNum,
             };
 
-            ex.Tags = Common.ExerciseTools.ConvertFromIntToTagList(trainingExercise.TagsValue);
+            ex.Tags = ExerciseExtensions.ConvertTagIntToList(trainingExercise.TagsValue).ToList();
             ExerciseManager.ConvertJsonBack(ex, trainingExercise.WeightAndRepsString);
             SelectedTraining.Items.Add(ex);
         }
