@@ -139,7 +139,8 @@
             Grid.Row="2" TextColor="White" Margin="5" FontSize="Body" CornerRadius="20" controls:TooltipControlContainer.IgnoreVisible="True"
             IsVisible="{Binding IsExercisesCheckBoxVisible,Converter={StaticResource InverseBooleanConverter}}"/>
 
-        <Grid Grid.Row="3" IsVisible="{Binding IsExercisesCheckBoxVisible}" HorizontalOptions="Fill" ColumnSpacing="10" controls:TooltipControlContainer.IgnoreVisible="True">
+        <Grid Grid.Row="3" IsVisible="{Binding IsExercisesCheckBoxVisible}" HorizontalOptions="Fill" ColumnSpacing="5" Margin="5,0"
+              controls:TooltipControlContainer.IgnoreVisible="True">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>

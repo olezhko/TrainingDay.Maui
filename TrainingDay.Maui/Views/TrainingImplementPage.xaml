@@ -21,7 +21,6 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-
         <VerticalStackLayout Grid.ColumnSpan="3" Margin="5,0">
             <Grid ColumnDefinitions="*,auto">
                 <Label FontSize="Title" Text="{Binding CurrentTime}" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="End" Grid.ColumnSpan="2"
@@ -49,15 +48,7 @@
                                   SteppedColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}">
             <controls:StepProgressBar.ItemTemplate>
                 <DataTemplate>
-                    <Grid VerticalOptions="Fill" RowSpacing="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Label IsVisible="{Binding IsSuperSet}" Text="{x:Static resx:AppResources.SuperSetString}" FontSize="Large" HorizontalTextAlignment="Center" TextColor="Orange"/>
-
-                        <controls:SuperSetControl Grid.Row="1" SuperSetItems="{Binding SuperSetItems}"/>
-                    </Grid>
+                    <controls:SuperSetControl Grid.Row="1" SuperSetItems="{Binding SuperSetItems}"/>
                 </DataTemplate>
             </controls:StepProgressBar.ItemTemplate>
         </controls:StepProgressBar>

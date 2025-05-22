@@ -11,9 +11,6 @@ public partial class SuperSetControl : ContentView
     private Picker dataPicker;
     private PickerMode mode;
 
-    public ICommand DeleteRequestCommand => new Command<WeightAndRepsViewModel>(DeleteRequestWeightAndReps);
-    public ICommand AddRequestCommand => new Command(AddRequestWeightAndReps);
-
     public SuperSetControl()
 	{
 		InitializeComponent();
@@ -26,6 +23,8 @@ public partial class SuperSetControl : ContentView
         mainGrid.Children.Add(dataPicker);
     }
 
+    #region Properties
+
     public static readonly BindableProperty SuperSetItemsProperty =
         BindableProperty.Create("SuperSetItems", typeof(ObservableCollection<TrainingExerciseViewModel>), typeof(SuperSetControl), null, propertyChanged: SourcePropertyChanged);
 
@@ -36,7 +35,7 @@ public partial class SuperSetControl : ContentView
     }
 
     public static readonly BindableProperty CurrentItemProperty =
-        BindableProperty.Create("CurrentItem", typeof(TrainingExerciseViewModel), typeof(SuperSetControl), null);
+        BindableProperty.Create("CurrentItem", typeof(TrainingExerciseViewModel), typeof(SuperSetControl), propertyChanged: CurrentItemPropertyChanged);
 
     public TrainingExerciseViewModel CurrentItem
     {
@@ -44,10 +43,60 @@ public partial class SuperSetControl : ContentView
         set { SetValue(CurrentItemProperty, value); }
     }
 
-    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    public static readonly BindableProperty IsNextAvailableProperty =
+        BindableProperty.Create("IsNextAvailable", typeof(bool), typeof(SuperSetControl), false);
+
+    public static readonly BindableProperty IsPrevAvailableProperty =
+        BindableProperty.Create("IsPrevAvailable", typeof(bool), typeof(SuperSetControl), false);
+
+    public bool IsNextAvailable
     {
-        var context = (sender as Grid).BindingContext as TrainingExerciseViewModel;
-        CurrentItem = context;
+        get { return (bool)GetValue(IsNextAvailableProperty); }
+        set { SetValue(IsNextAvailableProperty, value); }
+    }
+
+    public bool IsPrevAvailable
+    {
+        get { return (bool)GetValue(IsPrevAvailableProperty); }
+        set { SetValue(IsPrevAvailableProperty, value); }
+    }
+
+    public ICommand PreviousCommand => new Command(MovePrev);
+    public ICommand NextCommand => new Command(MoveNext);
+    public ICommand DeleteRequestCommand => new Command<WeightAndRepsViewModel>(DeleteRequestWeightAndReps);
+    public ICommand AddRequestCommand => new Command(AddRequestWeightAndReps);
+    #endregion
+
+    private int currentIndex = 0;
+    private void MoveNext()
+    {
+        var index = currentIndex;
+        Move(index + 1);
+    }
+
+    private void MovePrev()
+    {
+        var index = currentIndex;
+        Move(index - 1);
+    }
+
+    private void Move(int index)
+    {
+        currentIndex = index;
+        CurrentItem = SuperSetItems[index];
+        UpdateMoveProps(index);
+    }
+
+    private void UpdateMoveProps(int index)
+    {
+        IsNextAvailable = true;
+        IsPrevAvailable = true;
+
+        if (index <= 0)
+            IsPrevAvailable = false;
+
+        if (index >= SuperSetItems.Count - 1)
+            IsNextAvailable = false;
     }
 
     private static void SourcePropertyChanged(BindableObject bindable, object oldValue, object newValue)
@@ -59,7 +108,15 @@ public partial class SuperSetControl : ContentView
 
     private void SourceChanged(ObservableCollection<TrainingExerciseViewModel> newValue)
     {
-        CurrentItem = newValue.First();
+        Move(0);
+    }
+
+    private static void CurrentItemPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        var control = bindable as SuperSetControl;
+        var index = control.SuperSetItems.IndexOf(control.CurrentItem);
+        control.currentIndex = index;
+        control.UpdateMoveProps(index);
     }
 
     private void DeleteRequestWeightAndReps(WeightAndRepsViewModel sender)

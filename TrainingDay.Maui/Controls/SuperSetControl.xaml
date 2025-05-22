@@ -8,32 +8,31 @@
              x:Class="TrainingDay.Maui.Controls.SuperSetControl"
              x:Name="Self">
     <Grid x:Name="mainGrid" RowDefinitions="auto,*" RowSpacing="5">
-        <CollectionView ItemsSource="{Binding Source={x:Reference Self}, Path=SuperSetItems}" Margin="5,0" SelectionMode="Single"
-                        SelectedItem="{Binding Source={x:Reference Self}, Path=CurrentItem, Mode=TwoWay}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Margin="2" Padding="0" CornerRadius="10" BackgroundColor="{AppThemeBinding Dark=Black, Light=White}">
-                        <Grid ColumnDefinitions="80,*" ColumnSpacing="10" Margin="5">
-                            <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                            </Grid.GestureRecognizers>
 
-                            <Frame Grid.Column="0" Padding="5" BackgroundColor="White" CornerRadius="5" HorizontalOptions="Center" VerticalOptions="Center" 
-                               BorderColor="Transparent" Margin="5,0">
-                                <controls:ImageCache x:Name="ImageControl" HeightRequest="60" CodeNum="{Binding CodeNum}" WidthRequest="60"/>
-                            </Frame>
+        <Grid MinimumHeightRequest="40">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
 
-                            <Label Grid.Column="1" Text="{Binding ExerciseItemName}" VerticalOptions="Center" HorizontalOptions="Start" FontSize="20"
-                               TextColor="{AppThemeBinding Light=Black,Dark=White}"/>
-                        </Grid>
-                    </Frame>
+            <ImageButton Source="arrow_right.png" Grid.Column="0" BackgroundColor="Transparent" Command="{Binding Source={x:Reference Self}, Path=PreviousCommand}"
+                    WidthRequest="20" HeightRequest="20" VerticalOptions="Start" IsEnabled="{Binding Source={x:Reference Self}, Path=IsPrevAvailable}"/>
 
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+            <Label Grid.Column="1" Text="{Binding Source={x:Reference Self}, Path=CurrentItem.ExerciseItemName}" VerticalOptions="Start" HorizontalOptions="Center" FontSize="25"
+                            TextColor="{AppThemeBinding Light=Black,Dark=White}" HorizontalTextAlignment="Center"/>
+
+            <ImageButton Source="arrow_left.png" Grid.Column="2" BackgroundColor="Transparent" Command="{Binding Source={x:Reference Self}, Path=NextCommand}"
+                    WidthRequest="20" HeightRequest="20" VerticalOptions="Start" IsEnabled="{Binding Source={x:Reference Self}, Path=IsNextAvailable}">
+            </ImageButton>
+        </Grid>
 
         <ScrollView Grid.Row="1" Orientation="Vertical">
             <VerticalStackLayout BindingContext="{Binding Source={x:Reference Self}, Path=CurrentItem}" Spacing="5">
+                <Frame Padding="5" BackgroundColor="White" CornerRadius="5" HorizontalOptions="Center" VerticalOptions="Center" 
+                    BorderColor="Transparent" Margin="5,0">
+                    <controls:ImageCache x:Name="ImageControl" HeightRequest="200" CodeNum="{Binding CodeNum}" WidthRequest="200"/>
+                </Frame>
                 <StackLayout Spacing="0">
                     <Frame CornerRadius="20" Padding="10" HorizontalOptions="Center" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByReps}}"
                            BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}">
@@ -246,7 +245,6 @@ IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringC
 IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
                 </StackLayout>
             </VerticalStackLayout>
-
         </ScrollView>
     </Grid>
 </ContentView>

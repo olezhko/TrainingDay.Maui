@@ -367,15 +367,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Загрузка.
-        /// </summary>
-        internal static string DownloadingString {
-            get {
-                return ResourceManager.GetString("DownloadingString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Дублировать.
         /// </summary>
         internal static string Duplicate {
@@ -399,33 +390,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string ElapsedTimeString {
             get {
                 return ResourceManager.GetString("ElapsedTimeString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Введите email.
-        /// </summary>
-        internal static string EnterEmail {
-            get {
-                return ResourceManager.GetString("EnterEmail", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Введите ник.
-        /// </summary>
-        internal static string EnterNick {
-            get {
-                return ResourceManager.GetString("EnterNick", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Введите пароль.
-        /// </summary>
-        internal static string EnterPassword {
-            get {
-                return ResourceManager.GetString("EnterPassword", resourceCulture);
             }
         }
         
@@ -475,7 +439,16 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Фильтр по мышцам.
+        ///   Looks up a localized string similar to Экспортировать данные.
+        /// </summary>
+        internal static string ExportData {
+            get {
+                return ResourceManager.GetString("ExportData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Фильтр.
         /// </summary>
         internal static string FilterString {
             get {
@@ -489,15 +462,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string For {
             get {
                 return ResourceManager.GetString("For", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Забыл пароль?.
-        /// </summary>
-        internal static string ForgotPasswordAction {
-            get {
-                return ResourceManager.GetString("ForgotPasswordAction", resourceCulture);
             }
         }
         
@@ -556,15 +520,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Привет, .
-        /// </summary>
-        internal static string Hello {
-            get {
-                return ResourceManager.GetString("Hello", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to ПОМОЩНИК.
         /// </summary>
         internal static string HelperString {
@@ -610,6 +565,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Импортировать данные.
+        /// </summary>
+        internal static string ImportData {
+            get {
+                return ResourceManager.GetString("ImportData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Покупки в приложении.
         /// </summary>
         internal static string InAppPurchase {
@@ -646,29 +610,11 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Войти.
+        ///   Looks up a localized string similar to Начать подбор упражнений.
         /// </summary>
-        internal static string LoginAction {
+        internal static string LetsBuildYourWorkout {
             get {
-                return ResourceManager.GetString("LoginAction", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Войти с Google.
-        /// </summary>
-        internal static string LoginWithGoogle {
-            get {
-                return ResourceManager.GetString("LoginWithGoogle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Выйти.
-        /// </summary>
-        internal static string LogoutAction {
-            get {
-                return ResourceManager.GetString("LogoutAction", resourceCulture);
+                return ResourceManager.GetString("LetsBuildYourWorkout", resourceCulture);
             }
         }
         
@@ -790,15 +736,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Убрать рекламу.
-        /// </summary>
-        internal static string NoAdsString {
-            get {
-                return ResourceManager.GetString("NoAdsString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Нет упражнений по заданному фильтру..
         /// </summary>
         internal static string NoExercisesFilterString {
@@ -876,15 +813,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string NoTrainingsNeedAddNewString {
             get {
                 return ResourceManager.GetString("NoTrainingsNeedAddNewString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Убрать ограничение по тренировкам   .
-        /// </summary>
-        internal static string NoWorkoutLimit {
-            get {
-                return ResourceManager.GetString("NoWorkoutLimit", resourceCulture);
             }
         }
         
@@ -1015,6 +943,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Утренняя зарядка.
+        /// </summary>
+        internal static string PreparedMorningWorkout {
+            get {
+                return ResourceManager.GetString("PreparedMorningWorkout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Плоский живот.
         /// </summary>
         internal static string PreparedNiceStomach {
@@ -1065,24 +1002,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string RemoveString {
             get {
                 return ResourceManager.GetString("RemoveString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Повторить каждые.
-        /// </summary>
-        internal static string RepeatEvery {
-            get {
-                return ResourceManager.GetString("RepeatEvery", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Повторить.
-        /// </summary>
-        internal static string RepeatString {
-            get {
-                return ResourceManager.GetString("RepeatString", resourceCulture);
             }
         }
         
@@ -1159,7 +1078,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Экран должен быть включен при выполнении тренировки.
+        ///   Looks up a localized string similar to Оставлять экран включенным при выполнении тренировки.
         /// </summary>
         internal static string ScreenOnWhenImplementing {
             get {
@@ -1245,15 +1164,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string SelectTraining {
             get {
                 return ResourceManager.GetString("SelectTraining", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Отправить пароль.
-        /// </summary>
-        internal static string SendPassword {
-            get {
-                return ResourceManager.GetString("SendPassword", resourceCulture);
             }
         }
         
@@ -1393,38 +1303,11 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Синхронизация.
-        /// </summary>
-        internal static string Synchronization {
-            get {
-                return ResourceManager.GetString("Synchronization", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Вы уверены? Ваши несинхронизированные данные удалятся..
         /// </summary>
         internal static string SynchronizationDownloadingQuestion {
             get {
                 return ResourceManager.GetString("SynchronizationDownloadingQuestion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Синхронизация завершена с ошибкой.
-        /// </summary>
-        internal static string SynchronizationFinishedFailed {
-            get {
-                return ResourceManager.GetString("SynchronizationFinishedFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Синхронизация завершена успешно.
-        /// </summary>
-        internal static string SynchronizationFinishedSuccessful {
-            get {
-                return ResourceManager.GetString("SynchronizationFinishedSuccessful", resourceCulture);
             }
         }
         
@@ -1497,15 +1380,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string ToolTipFinishExercise {
             get {
                 return ResourceManager.GetString("ToolTipFinishExercise", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Авторизуйтесь, чтобы была возможность синхронизироваться между устройствами..
-        /// </summary>
-        internal static string ToolTipGoogleSync {
-            get {
-                return ResourceManager.GetString("ToolTipGoogleSync", resourceCulture);
             }
         }
         
@@ -1659,15 +1533,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string TwoWeeksString {
             get {
                 return ResourceManager.GetString("TwoWeeksString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Отправка.
-        /// </summary>
-        internal static string UploadingString {
-            get {
-                return ResourceManager.GetString("UploadingString", resourceCulture);
             }
         }
         
