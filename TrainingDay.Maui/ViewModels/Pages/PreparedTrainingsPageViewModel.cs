@@ -10,10 +10,10 @@ using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.Views;
-using Exercise = TrainingDay.Maui.Models.Database.Exercise;
-using SuperSet = TrainingDay.Maui.Models.Database.SuperSet;
-using Training = TrainingDay.Maui.Models.Database.Training;
-using TrainingExerciseComm = TrainingDay.Maui.Models.Database.TrainingExerciseComm;
+using ExerciseDto = TrainingDay.Maui.Models.Database.ExerciseDto;
+using SuperSet = TrainingDay.Maui.Models.Database.SuperSetDto;
+using Training = TrainingDay.Maui.Models.Database.TrainingDto;
+using TrainingExerciseComm = TrainingDay.Maui.Models.Database.TrainingExerciseDto;
 
 namespace TrainingDay.Maui.ViewModels.Pages;
 
@@ -329,7 +329,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
         OnPropertyChanged(nameof(PreparedTrainingsCollection));
     }
 
-    private ObservableCollection<TrainingExerciseViewModel> GetExerciseByMuscles(List<Exercise> baseExercises,
+    private ObservableCollection<TrainingExerciseViewModel> GetExerciseByMuscles(List<ExerciseDto> baseExercises,
         params MuscleViewModel[] muscles)
     {
         var result = new ObservableCollection<TrainingExerciseViewModel>();
@@ -361,7 +361,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
         return result;
     }
 
-    private ObservableCollection<TrainingExerciseViewModel> GetExercisesByCodeNum(List<Exercise> baseExercises, params int[] codeNums)
+    private ObservableCollection<TrainingExerciseViewModel> GetExercisesByCodeNum(List<ExerciseDto> baseExercises, params int[] codeNums)
     {
         var result = new ObservableCollection<TrainingExerciseViewModel>();
         foreach (var codeNum in codeNums)

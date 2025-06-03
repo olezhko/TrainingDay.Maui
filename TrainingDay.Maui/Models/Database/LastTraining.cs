@@ -3,7 +3,7 @@
 namespace TrainingDay.Maui.Models.Database;
 
 [Table("LastTrainings")]
-public class LastTraining : TrainingDay.Common.Models.LastTraining
+public class LastTrainingDto : TrainingDay.Common.Models.LastTraining
 {
     [PrimaryKey, AutoIncrement, Column("_id")]
     public new int Id { get; set; }

@@ -59,7 +59,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         }
     }
 
-    private void FillGroupedTraining(Training training, IEnumerable<TrainingUnion> unions, IEnumerable<LastTraining> lastTrainings,
+    private void FillGroupedTraining(TrainingDto training, IEnumerable<TrainingUnionDto> unions, IEnumerable<LastTrainingDto> lastTrainings,
         IList<Grouping<string, TrainingViewModel>> tempGroups)
     {
         var lastTraining = lastTrainings
@@ -194,7 +194,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
     {
         LoggingService.TrackEvent($"{GetType().Name}: DuplicateSelectedTraining Clicked");
         var training = (TrainingViewModel)viewCell.BindingContext;
-        int id = App.Database.SaveTrainingItem(new Training()
+        int id = App.Database.SaveTrainingItem(new TrainingDto()
         {
             Title = training.Title + AppResources.CopiedString,
         });
@@ -205,7 +205,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         foreach (var item in exercises)
         {
             // save order numbers
-            App.Database.SaveTrainingExerciseItem(new TrainingExerciseComm()
+            App.Database.SaveTrainingExerciseItem(new TrainingExerciseDto()
             {
                 ExerciseId = item.ExerciseId,
                 TrainingId = id,

@@ -13,7 +13,7 @@ namespace TrainingDay.Maui.ViewModels.Pages;
 
 public class HistoryTrainingPageViewModel : BaseViewModel
 {
-    private IOrderedEnumerable<LastTraining> baseItems;
+    private IOrderedEnumerable<LastTrainingDto> baseItems;
     private static List<Tuple<string, int>> DaysAndTextLimits = new List<Tuple<string, int>>();
 
     public HistoryTrainingPageViewModel()

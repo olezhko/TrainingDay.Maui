@@ -96,6 +96,11 @@ public static class SiteService
             return null;
         }
     }
+
+    public static async Task<IEnumerable<int>> GetExercisesByQuery(string query)
+    {
+        return Enumerable.Empty<int>();
+    }
 }
 
 public class BlogsResponse

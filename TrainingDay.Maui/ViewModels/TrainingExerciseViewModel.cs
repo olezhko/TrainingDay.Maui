@@ -5,8 +5,8 @@ using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Services;
-using Exercise = TrainingDay.Maui.Models.Database.Exercise;
-using TrainingExerciseComm = TrainingDay.Maui.Models.Database.TrainingExerciseComm;
+using ExerciseDto = TrainingDay.Maui.Models.Database.ExerciseDto;
+using TrainingExerciseDto = TrainingDay.Maui.Models.Database.TrainingExerciseDto;
 
 namespace TrainingDay.Maui.ViewModels;
 
@@ -26,7 +26,7 @@ public class TrainingExerciseViewModel : ExerciseViewModel
     {
     }
 
-    public TrainingExerciseViewModel(Exercise exercise, TrainingExerciseComm comm)
+    public TrainingExerciseViewModel(ExerciseDto exercise, TrainingExerciseDto comm)
     {
         try
         {
@@ -191,7 +191,7 @@ public class TrainingExerciseViewModel : ExerciseViewModel
         set => SetProperty(ref distance, value);
     }
 
-    public TrainingExerciseComm GetTrainingExerciseComm()
+    public TrainingExerciseDto GetTrainingExerciseComm()
     {
         string weightAndReps = ExerciseManager.ConvertJson(Tags, this);
 
@@ -206,7 +206,7 @@ public class TrainingExerciseViewModel : ExerciseViewModel
         };
     }
 
-    public override Exercise GetExercise()
+    public override ExerciseDto GetExercise()
     {
         return new Exercise()
         {
@@ -246,7 +246,7 @@ public class TrainingExerciseViewModel : ExerciseViewModel
         set => SetProperty(ref isCheckBoxVisible, value);
     }
 
-    public static TrainingExerciseViewModel Create(Exercise exercise)
+    public static TrainingExerciseViewModel Create(ExerciseDto exercise)
     {
         return new TrainingExerciseViewModel(exercise, new TrainingExerciseComm()
         {

@@ -657,4 +657,13 @@
   <data name="PreparedMorningWorkout" xml:space="preserve">
     <value>Утренняя зарядка</value>
   </data>
+  <data name="Next" xml:space="preserve">
+    <value>Дальше</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Назад</value>
+  </data>
+  <data name="Finish" xml:space="preserve">
+    <value>Закончить</value>
+  </data>
 </root>

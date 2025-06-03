@@ -22,7 +22,7 @@ public class ExerciseListItemViewModel : ExerciseViewModel
         }
     }
 
-    public ExerciseListItemViewModel(Exercise exercise) : base(exercise)
+    public ExerciseListItemViewModel(ExerciseDto exercise) : base(exercise)
     {
     }
 }

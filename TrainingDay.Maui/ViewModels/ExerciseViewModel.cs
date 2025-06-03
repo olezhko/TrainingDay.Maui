@@ -4,7 +4,7 @@ using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models.Database;
-using Exercise = TrainingDay.Maui.Models.Database.Exercise;
+using ExerciseDto = TrainingDay.Maui.Models.Database.ExerciseDto;
 
 namespace TrainingDay.Maui.ViewModels;
 
@@ -42,7 +42,7 @@ public class ExerciseViewModel : BaseViewModel
         OnPropertyChanged(nameof(IsBase));
     }
 
-    public virtual Exercise GetExercise()
+    public virtual ExerciseDto GetExercise()
     {
         return new Exercise()
         {

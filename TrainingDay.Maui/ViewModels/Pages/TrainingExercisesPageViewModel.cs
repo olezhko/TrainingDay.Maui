@@ -289,7 +289,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
     private void SaveTraining()
     {
-        var id = App.Database.SaveTrainingItem(new Training() { Id = Training.Id, Title = Training.Title });
+        var id = App.Database.SaveTrainingItem(new TrainingDto() { Id = Training.Id, Title = Training.Title });
 
         int order = 0;
         foreach (var item in Training.Exercises)
@@ -301,7 +301,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
             var exId = App.Database.SaveExerciseItem(item.GetExercise());
             order++;
-            App.Database.SaveTrainingExerciseItem(new TrainingExerciseComm()
+            App.Database.SaveTrainingExerciseItem(new TrainingExerciseDto()
             {
                 ExerciseId = exId,
                 TrainingId = id,
@@ -359,7 +359,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
     private void CreateSuperSet()
     {
         LoggingService.TrackEvent($"{GetType().Name}: CreateSuperSet finished");
-        var id = App.Database.SaveSuperSetItem(new SuperSet()
+        var id = App.Database.SaveSuperSetItem(new SuperSetDto()
         {
             Count = selectedItems.Count,
             TrainingId = Training.Id,
@@ -553,7 +553,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         {
             await Shell.Current.GoToAsync("..");
 
-            var id = App.Database.SaveTrainingItem(new Training()
+            var id = App.Database.SaveTrainingItem(new TrainingDto()
             {
                 Title = result,
             });
@@ -647,7 +647,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         {
             var exId = App.Database.SaveExerciseItem(item.GetExercise());
             order++;
-            App.Database.SaveTrainingExerciseItem(new TrainingExerciseComm()
+            App.Database.SaveTrainingExerciseItem(new TrainingExerciseDto()
             {
                 ExerciseId = exId,
                 TrainingId = Training.Id,

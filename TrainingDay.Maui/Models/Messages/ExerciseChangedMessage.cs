@@ -11,11 +11,11 @@ public class ExerciseChangedMessage
         Changed,
     }
 
-    public Exercise Sender { get; set; }
+    public ExerciseDto Sender { get; set; }
 
     public ExerciseAction Action { get; set; }
 
-    public ExerciseChangedMessage(Exercise sender, ExerciseAction action)
+    public ExerciseChangedMessage(ExerciseDto sender, ExerciseAction action)
     {
         Sender = sender;
         Action = action;

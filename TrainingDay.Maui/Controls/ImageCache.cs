@@ -52,5 +52,5 @@ public class ImageCache : Image
         }
     }
 
-    private Stream Stream(ImageData data) => new MemoryStream(data.Data);
+    private Stream Stream(ImageDto data) => new MemoryStream(data.Data);
 }

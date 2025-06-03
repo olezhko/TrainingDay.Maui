@@ -13,7 +13,7 @@ public partial class TrainingsSetGroupPage : ContentPage
     public TrainingsSetGroupPage()
     {
         InitializeComponent();
-        var trainingsGroups = new ObservableCollection<TrainingUnion>(App.Database.GetTrainingsGroups());
+        var trainingsGroups = new ObservableCollection<TrainingUnionDto>(App.Database.GetTrainingsGroups());
         if (!trainingsGroups.Any())
         {
             GroupContainer.IsVisible = false;
@@ -35,7 +35,7 @@ public partial class TrainingsSetGroupPage : ContentPage
                 if (!string.IsNullOrEmpty(name))
                 {
                     var unions = App.Database.GetTrainingsGroups();
-                    DeleteGroup(new List<TrainingUnion>(unions));
+                    DeleteGroup(new List<TrainingUnionDto>(unions));
                     var union = unions.FirstOrDefault(un => un.Name == name);
                     if (union != null) // если группа с таким именем уже существует
                     {
@@ -70,7 +70,7 @@ public partial class TrainingsSetGroupPage : ContentPage
         await Navigation.PopAsync();
     }
 
-    private void DeleteGroup(List<TrainingUnion> unions)
+    private void DeleteGroup(List<TrainingUnionDto> unions)
     {
         try
         {
@@ -139,7 +139,7 @@ public partial class TrainingsSetGroupPage : ContentPage
 
     private void GroupsPicker_SelectedIndexChanged(object sender, EventArgs e)
     {
-        var selectedGroupToTraining = GroupsPicker.SelectedItem as TrainingUnion;
+        var selectedGroupToTraining = GroupsPicker.SelectedItem as TrainingUnionDto;
         GroupSelected(selectedGroupToTraining.Id);
     }
 }

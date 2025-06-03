@@ -99,10 +99,10 @@ public class BodyControlItem : BaseViewModel
         }
     }
 
-    public List<WeightNote> ChartItems { get; set; }
+    public List<WeightNoteDto> ChartItems { get; set; }
 
-    public BodyControlItem(List<WeightNote> chartItems)
+    public BodyControlItem(List<WeightNoteDto> chartItems)
     {
-        ChartItems = new List<WeightNote>(chartItems);
+        ChartItems = new List<WeightNoteDto>(chartItems);
     }
 }

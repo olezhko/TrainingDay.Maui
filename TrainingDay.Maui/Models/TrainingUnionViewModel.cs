@@ -10,7 +10,7 @@ public class TrainingUnionViewModel
         TrainingIDs = new List<int>();
     }
 
-    public TrainingUnionViewModel(TrainingUnion union)
+    public TrainingUnionViewModel(TrainingUnionDto union)
     {
         IsExpanded = union.IsExpanded;
         Id = union.Id;
@@ -33,8 +33,8 @@ public class TrainingUnionViewModel
 
     public bool IsExpanded { get; set; } = true;
 
-    public TrainingUnion Model =>
-        new TrainingUnion()
+    public TrainingUnionDto Model =>
+        new TrainingUnionDto()
         {
             Id = Id,
             Name = Name,

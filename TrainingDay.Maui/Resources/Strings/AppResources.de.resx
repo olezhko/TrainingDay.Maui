@@ -645,4 +645,13 @@
   <data name="PreparedMorningWorkout" xml:space="preserve">
     <value>Morgentraining</value>
   </data>
+  <data name="Next" xml:space="preserve">
+    <value>Nächste</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Zurück</value>
+  </data>
+  <data name="Finish" xml:space="preserve">
+    <value>Beenden</value>
+  </data>
 </root>

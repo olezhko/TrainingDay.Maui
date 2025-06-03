@@ -4,7 +4,7 @@ using TrainingDay.Maui.ViewModels;
 
 namespace TrainingDay.Maui.Models;
 
-public class LastTrainingViewModel : Training
+public class LastTrainingViewModel : TrainingDto
 {
     public DateTime ImplementDateTime { get; set; }
     public TimeSpan ElapsedTime { get; set; }

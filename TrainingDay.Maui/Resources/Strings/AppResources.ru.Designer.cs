@@ -142,6 +142,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Назад.
+        /// </summary>
+        internal static string Back {
+            get {
+                return ResourceManager.GetString("Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to начинается с.
         /// </summary>
         internal static string BeginsAt {
@@ -457,6 +466,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Закончить.
+        /// </summary>
+        internal static string Finish {
+            get {
+                return ResourceManager.GetString("Finish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Для.
         /// </summary>
         internal static string For {
@@ -732,6 +750,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string NewsString {
             get {
                 return ResourceManager.GetString("NewsString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Дальше.
+        /// </summary>
+        internal static string Next {
+            get {
+                return ResourceManager.GetString("Next", resourceCulture);
             }
         }
         

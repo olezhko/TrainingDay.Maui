@@ -103,12 +103,12 @@ namespace TrainingDay.Maui
                     try
                     {
                         var url = b.Key.Replace(".jpg", string.Empty).Replace(".png", string.Empty);
-                        ImageData image = App.Database.GetImage(url);
+                        ImageDto image = App.Database.GetImage(url);
                         if (image == null)
                         {
                             var path = await App.GetFile(s3Client, b.Key);
                             var bytes = File.ReadAllBytes(path);
-                            var item = new ImageData()
+                            var item = new ImageDto()
                             {
                                 Data = bytes.ToArray(),
                                 Url = url,
@@ -212,9 +212,9 @@ namespace TrainingDay.Maui
         private void IncomingTraining(TrainingSerialize vm)
         {
             var exercises = Database.GetExerciseItems().ToList();
-            var superSets = new List<Models.Database.SuperSet>();
+            var superSets = new List<Models.Database.SuperSetDto>();
 
-            var id = Database.SaveTrainingItem(new Models.Database.Training() { Title = vm.Title });
+            var id = Database.SaveTrainingItem(new Models.Database.TrainingDto() { Title = vm.Title });
 
             foreach (var item in vm.Items)
             {
@@ -226,7 +226,7 @@ namespace TrainingDay.Maui
                 }
                 else
                 {
-                    var newItem = new Models.Database.Exercise()
+                    var newItem = new Models.Database.ExerciseDto()
                     {
                         Description = item.Description,
                         ExerciseItemName = item.ExerciseItemName,
@@ -255,7 +255,7 @@ namespace TrainingDay.Maui
                     }
                     else
                     {
-                        var newItem = new Models.Database.SuperSet()
+                        var newItem = new Models.Database.SuperSetDto()
                         {
                             TrainingId = id,
                         };
@@ -267,7 +267,7 @@ namespace TrainingDay.Maui
                     }
                 }
 
-                Database.SaveTrainingExerciseItem(new Models.Database.TrainingExerciseComm()
+                Database.SaveTrainingExerciseItem(new Models.Database.TrainingExerciseDto()
                 {
                     OrderNumber = item.OrderNumber,
                     TrainingId = id,

@@ -13,9 +13,9 @@ using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels;
-using LastTraining = TrainingDay.Maui.Models.Database.LastTraining;
-using LastTrainingExercise = TrainingDay.Maui.Models.Database.LastTrainingExercise;
-using TrainingExerciseComm = TrainingDay.Maui.Models.Database.TrainingExerciseComm;
+using LastTraining = TrainingDay.Maui.Models.Database.LastTrainingDto;
+using LastTrainingExercise = TrainingDay.Maui.Models.Database.LastTrainingExerciseDto;
+using TrainingExerciseComm = TrainingDay.Maui.Models.Database.TrainingExerciseDto;
 
 namespace TrainingDay.Maui.Views;
 

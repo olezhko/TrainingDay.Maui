@@ -31,9 +31,7 @@
                                             </Trigger>
                                         </Style.Triggers>
                                     </Style>
-
                                 </RadioButton.Style>
-
                             </RadioButton>
                             <Label Grid.Column="1" Text="{Binding Title}" VerticalTextAlignment="Center"/>
                         </Grid>
@@ -46,7 +44,7 @@
             <Button Grid.Column="0" Command="{Binding BackOrCancelCommand}">
                 <Button.Style>
                     <Style TargetType="Button">
-                        <Setter Property="Text" Value="Back" />
+                        <Setter Property="Text" Value="{x:Static resx:AppResources.Back}" />
                         <Style.Triggers>
                             <DataTrigger TargetType="Button" Binding="{Binding CurrentStep.Previous, Converter={StaticResource IsNullConverter}}" Value="True">
                                 <Setter Property="Text" Value="{x:Static resx:AppResources.CancelString}" />
@@ -58,10 +56,10 @@
             <Button Grid.Column="1" Command="{Binding NextOrFinishCommand}">
                 <Button.Style>
                     <Style TargetType="Button">
-                        <Setter Property="Text" Value="Next" />
+                        <Setter Property="Text" Value="{x:Static resx:AppResources.Next}" />
                         <Style.Triggers>
                             <DataTrigger TargetType="Button" Binding="{Binding CurrentStep.Next, Converter={StaticResource IsNullConverter}}" Value="True">
-                                <Setter Property="Text" Value="Finish" />
+                                <Setter Property="Text" Value="{x:Static resx:AppResources.Finish}" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>

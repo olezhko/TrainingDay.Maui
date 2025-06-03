@@ -27,7 +27,7 @@ public partial class TrainingExercisesPage : ContentPage
         base.OnDisappearing();
         if (viewModel.Training.Title.IsNotNullOrEmpty())
         {
-            App.Database.SaveTrainingItem(new Training() { Id = viewModel.ItemId, Title = viewModel.Training.Title });
+            App.Database.SaveTrainingItem(new TrainingDto() { Id = viewModel.ItemId, Title = viewModel.Training.Title });
         }
     }
 

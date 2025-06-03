@@ -46,7 +46,7 @@ public class TrainingViewModel : BaseViewModel
         Exercises = new ObservableCollection<TrainingExerciseViewModel>();
     }
 
-    public TrainingViewModel(Training tr)
+    public TrainingViewModel(TrainingDto tr)
         : this()
     {
         Title = tr.Title;
