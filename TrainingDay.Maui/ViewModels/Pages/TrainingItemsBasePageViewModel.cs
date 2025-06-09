@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.AppCenter.Analytics;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Maui.Extensions;
@@ -37,7 +36,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         }
 
         ItemsGrouped.Clear();
-
+        SelectedTrainings.Clear();
         IsGrouped = trainingsItems.Any();
         OnPropertyChanged(nameof(IsGrouped));
 
@@ -54,7 +53,6 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
 
         foreach (var tempGroup in tempGroups)
         {
-            tempGroup.Expanded = tempGroup.Expanded;
             ItemsGrouped.Add(tempGroup);
         }
     }
@@ -86,7 +84,6 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
             {
                 tempGroups.Add(new Grouping<string, TrainingViewModel>(trainingUnion.Name, new List<TrainingViewModel>())
                 {
-                    Expanded = trainingUnion.IsExpanded,
                     Id = trainingUnion.Id,
                 });
                 var item = new TrainingViewModel(training);
@@ -103,24 +100,23 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         {
             var item = new TrainingViewModel(training);
             if (lastTraining != null)
-            {
                 item.LastImplementedDateTime = lastTraining.Time.ToString(Settings.GetLanguage());
-            }
 
             Grouping<string, TrainingViewModel> defaultGroup = tempGroups.FirstOrDefault(gp => gp.Key == AppResources.GroupingDefaultName);
             if (defaultGroup == null)
             {
                 var gr = new Grouping<string, TrainingViewModel>(AppResources.GroupingDefaultName, new List<TrainingViewModel>())
                 {
-                    Expanded = Settings.IsExpandedMainGroup,
+                    item
                 };
-                gr.Add(item);
+                gr.IsSelected = true;
                 tempGroups.Insert(0, gr);
             }
             else
-            {
                 defaultGroup.Add(item);
-            }
+
+            SelectedTrainings.Add(item);
+            OnPropertyChanged(nameof(SelectedTrainings));
         }
     }
 
@@ -265,22 +261,17 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         }
     }
 
-    private static void ToggleExpandGroup(object item)
+    public ObservableCollection<TrainingViewModel> SelectedTrainings { get; set; } = new ObservableCollection<TrainingViewModel>();
+    private void SelectGroup(object item)
     {
         var group = item as Grouping<string, TrainingViewModel>;
-        group.Expanded = !group.Expanded;
-
-        var groups = App.Database.GetTrainingsGroups();
-        if (group.Key == AppResources.GroupingDefaultName)
+        SelectedTrainings.Clear();
+        ItemsGrouped.ForEach(item => item.IsSelected = false);
+        foreach (var training in group)
         {
-            Settings.IsExpandedMainGroup = group.Expanded;
-            return;
+            SelectedTrainings.Add(training);
         }
-
-        // save to DB
-        var gr = groups.First(a => a.Name == group.Key);
-        gr.IsExpanded = group.Expanded;
-        App.Database.SaveTrainingGroup(gr);
+        group.IsSelected = true;
     }
 
     private async void LongPressed(Frame sender)
@@ -339,7 +330,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
 
     public ICommand ItemSelectedCommand { get; set; }
 
-    public Command<object> ToggleExpandGroupCommand => new Command<object>(ToggleExpandGroup);
+    public Command<object> SelectGroupCommand => new Command<object>(SelectGroup);
 
     public ICommand LongPressedEffectCommand => new Command<Frame>(LongPressed);
     #endregion

@@ -29,12 +29,6 @@ public static class Settings
         set => Preferences.Set(nameof(IsTrainingNotFinishedTime), value);
     }
 
-    public static bool IsExpandedMainGroup
-    {
-        get => Preferences.Get(nameof(IsExpandedMainGroup), true);
-        set => Preferences.Set(nameof(IsExpandedMainGroup), value);
-    }
-
     public static string Token
     {
         get => Preferences.Get(nameof(Token), string.Empty);

@@ -80,7 +80,7 @@
                     <StackLayout Orientation="Horizontal" Spacing="10">
                         <Image WidthRequest="30" HeightRequest="30" Source="champion" >
                             <Image.Behaviors>
-                                <toolkit:IconTintColorBehavior TintColor="Gold" />
+                                <toolkit:IconTintColorBehavior TintColor="{StaticResource Main}" />
                             </Image.Behaviors>
                         </Image>
                         <Label Text="{Binding Top1ExerciseName}" VerticalOptions="Center"/>

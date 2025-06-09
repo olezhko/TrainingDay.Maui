@@ -568,7 +568,7 @@
     <value>Workout</value>
   </data>
   <data name="TrainingToGroupString" xml:space="preserve">
-    <value>Add to Group</value>
+    <value>Move to group</value>
   </data>
   <data name="TrainingUnGroupString" xml:space="preserve">
     <value>Remove from Group "{0}"</value>

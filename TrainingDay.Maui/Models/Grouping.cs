@@ -7,39 +7,17 @@ public class Grouping<K, T> : ObservableCollection<T>
 {
     public int Id { get; set; }
     public K Key { get; private set; }
-    private bool _isExpanded = true;
-    public bool Expanded
+
+    private bool isSelected = false;
+    public bool IsSelected
     {
-        get => _isExpanded;
-        set
+        get => isSelected; set
         {
-            _isExpanded = value;
-            if (value)
-            {
-                foreach (var item in itemsMain)
-                {
-                    Add(item);
-                }
-                itemsMain.Clear();
-            }
-            else
-            {
-                foreach (var item in Items)
-                {
-                    itemsMain.Add(item);
-                }
-
-                foreach (var item in itemsMain)
-                {
-                    RemoveAt(0);
-                }
-            }
-
-            OnPropertyChanged(new PropertyChangedEventArgs("Expanded"));
+            isSelected = value;
+            OnPropertyChanged(new PropertyChangedEventArgs("IsSelected"));
         }
     }
 
-    private ObservableCollection<T> itemsMain = new ObservableCollection<T>();
     public Grouping(K key, IEnumerable<T> items)
     {
         Key = key;

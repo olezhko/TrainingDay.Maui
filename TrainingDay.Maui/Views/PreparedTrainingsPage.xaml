@@ -12,7 +12,8 @@
     </ContentPage.BindingContext>
 
     <controls:TooltipControlContainer x:Name="Container" RowSpacing="0" RowDefinitions="auto,*,Auto">
-        <Button x:Name="LetsBuildYourWorkoutButton" Text="{x:Static resx:AppResources.LetsBuildYourWorkout}" Margin="5" Command="{Binding NavigateToQuestionsCommnd}"/>
+        <Button x:Name="LetsBuildYourWorkoutButton" Text="{x:Static resx:AppResources.LetsBuildYourWorkout}" Margin="5" Command="{Binding NavigateToQuestionsCommnd}"
+                IsVisible="False"/>
         
         <CollectionView Grid.Row="1" Margin="5,0" BackgroundColor="Transparent" ItemsSource="{Binding PreparedTrainingsCollection}" SelectionMode="Single">
             <CollectionView.ItemTemplate>

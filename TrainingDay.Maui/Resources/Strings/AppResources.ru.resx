@@ -580,7 +580,7 @@
     <value>Тренировка</value>
   </data>
   <data name="TrainingToGroupString" xml:space="preserve">
-    <value>Добавить в группу</value>
+    <value>Назначить группу</value>
   </data>
   <data name="TrainingUnGroupString" xml:space="preserve">
     <value>Удалить из группы "{0}"</value>

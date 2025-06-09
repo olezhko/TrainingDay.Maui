@@ -195,7 +195,7 @@ public class TrainingExerciseViewModel : ExerciseViewModel
     {
         string weightAndReps = ExerciseManager.ConvertJson(Tags, this);
 
-        return new TrainingExerciseComm()
+        return new TrainingExerciseDto()
         {
             ExerciseId = ExerciseId,
             WeightAndRepsString = weightAndReps,
@@ -208,7 +208,7 @@ public class TrainingExerciseViewModel : ExerciseViewModel
 
     public override ExerciseDto GetExercise()
     {
-        return new Exercise()
+        return new ExerciseDto()
         {
             Id = ExerciseId,
             Description = JsonConvert.SerializeObject(Description?.Model),
@@ -248,7 +248,7 @@ public class TrainingExerciseViewModel : ExerciseViewModel
 
     public static TrainingExerciseViewModel Create(ExerciseDto exercise)
     {
-        return new TrainingExerciseViewModel(exercise, new TrainingExerciseComm()
+        return new TrainingExerciseViewModel(exercise, new TrainingExerciseDto()
         {
             WeightAndRepsString = GetDefualtWeightAndRepsString(exercise.TagsValue)
         });

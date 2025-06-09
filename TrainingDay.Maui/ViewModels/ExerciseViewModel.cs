@@ -44,7 +44,7 @@ public class ExerciseViewModel : BaseViewModel
 
     public virtual ExerciseDto GetExercise()
     {
-        return new Exercise()
+        return new ExerciseDto()
         {
             Id = Id,
             Description = JsonConvert.SerializeObject(Description?.Model),

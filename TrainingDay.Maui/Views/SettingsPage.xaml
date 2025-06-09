@@ -72,7 +72,8 @@
                 </Button>
             </VerticalStackLayout>
             
-            <Button x:Name="DonateButton" Style="{StaticResource ActionButton}" Text="Donate" Clicked="Donate_Click" BackgroundColor="Orange" TextColor="Black" CornerRadius="20">
+            <Button x:Name="DonateButton" Style="{StaticResource ActionButton}" Text="Donate" Clicked="Donate_Click" BackgroundColor="Orange" TextColor="White" 
+                    CornerRadius="20">
                 <Button.IsVisible>
                     <OnPlatform x:TypeArguments="x:Boolean">
                         <On Platform="iOS" Value="False" />

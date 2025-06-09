@@ -1516,7 +1516,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add to Group.
+        ///   Looks up a localized string similar to Move to group.
         /// </summary>
         internal static string TrainingToGroupString {
             get {
