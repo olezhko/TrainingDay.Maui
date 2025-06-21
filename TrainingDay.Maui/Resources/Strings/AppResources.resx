@@ -331,7 +331,7 @@
     <value>No exercises. You should add exercise.</value>
   </data>
   <data name="NoLastTrainings" xml:space="preserve">
-    <value>No workouts completed yet</value>
+    <value>You haven’t done any workouts yet. Start your first workout!</value>
   </data>
   <data name="NoNotificationsString" xml:space="preserve">
     <value>No notifications. You should add notification.</value>

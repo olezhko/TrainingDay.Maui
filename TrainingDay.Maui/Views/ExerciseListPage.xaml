@@ -46,28 +46,23 @@
                         android:ListView.IsFastScrollEnabled="true"
                         ItemsSource="{Binding Items}" ItemsUpdatingScrollMode="KeepScrollOffset" SelectionMode="Single" VerticalScrollBarVisibility="Always">
             <CollectionView.EmptyView>
-                <ContentView>
-                    <ContentView.Style>
-                        <Style TargetType="ContentView">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Items.Count, Converter={StaticResource IsNoItemsConverter}}" TargetType="ContentView" Value="True">
-                                    <Setter Property="IsVisible" Value="False" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                            <Setter Property="IsVisible" Value="True" />
-                        </Style>
-                    </ContentView.Style>
-                    <StackLayout>
-                        <Label FontSize="20" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.NoExercisesNeedAddNewString}" VerticalOptions="Fill" />
+                <StackLayout VerticalOptions="Center">
+                    <Border VerticalOptions="Center" HorizontalOptions="Center" Stroke="Transparent">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="40,40,40,40" />
+                        </Border.StrokeShape>
+                        <Image Source="no_exercises.png" />
+                    </Border>
 
-                        <ImageButton Grid.Column="1" WidthRequest="60" HeightRequest="60" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="add_empty.png"
-                            Clicked="AddExercisesButton_Clicked" BackgroundColor="Transparent">
-                            <ImageButton.Behaviors>
-                                <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
-                            </ImageButton.Behaviors>
-                        </ImageButton>
-                    </StackLayout>
-                </ContentView>
+                    <Label FontSize="20" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.NoExercisesNeedAddNewString}" VerticalOptions="Fill" />
+
+                    <ImageButton Grid.Column="1" WidthRequest="60" HeightRequest="60" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="add_empty.png"
+        Clicked="AddExercisesButton_Clicked" BackgroundColor="Transparent">
+                        <ImageButton.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
+                </StackLayout>
             </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
                 <DataTemplate>

@@ -343,7 +343,7 @@
     <value>Нет упражнений. Добавьте упражнение.</value>
   </data>
   <data name="NoLastTrainings" xml:space="preserve">
-    <value>Еще нет выполненных тренировок</value>
+    <value>Вы ещё не выполнили ни одной тренировки. Начните свою первую тренировку!</value>
   </data>
   <data name="NoNotificationsString" xml:space="preserve">
     <value>Нет напоминаний. Добавьте напоминание.</value>

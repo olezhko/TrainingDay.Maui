@@ -32,7 +32,7 @@ namespace TrainingDay.Maui
                 {
                 });
 
-            builder.Services.AddSingleton<ChatGptService>();
+            builder.Services.AddSingleton<DataService>();
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

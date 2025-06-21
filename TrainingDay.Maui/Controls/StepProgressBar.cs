@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Specialized;
-using Microsoft.Maui.ApplicationModel;
 
 namespace TrainingDay.Maui.Controls;
 

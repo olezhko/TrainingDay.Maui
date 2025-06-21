@@ -9,19 +9,32 @@
              x:Class="TrainingDay.Maui.Views.WorkoutQuestinariumPage"
              Shell.TabBarIsVisible="False"
              Title="{x:Static resx:AppResources.LetsBuildYourWorkout}">
-    <Grid RowDefinitions="*,auto,auto">
+    <Grid RowDefinitions="auto,*,auto,auto">
 
-        <ActivityIndicator IsRunning="True" IsVisible="{Binding IsBusy}"/>
-        <VerticalStackLayout BindingContext="{Binding CurrentStep}" Margin="10"
+        <Grid IsVisible="{Binding IsBusy}" Grid.RowSpan="4">
+            <Border x:Name="ActivityBorder" WidthRequest="150" HeightRequest="150" BackgroundColor="White" VerticalOptions="Center">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="75,75,75,75" />
+                </Border.StrokeShape>
+                <Image Source="main.png" WidthRequest="75" HeightRequest="75"/>
+            </Border>
+        </Grid>
+
+        <controls:StepBar x:Name="Steps" Grid.Row="0" StepCount="6" CurrentStep="{Binding CurrentStepIndex}" FinishedColor="{StaticResource Primary}" UnfinishedColor="{StaticResource Gray500}" 
+                          HorizontalOptions="FillAndExpand"/>
+
+        <VerticalStackLayout Grid.Row="1" BindingContext="{Binding CurrentStep}" Margin="10"
                              IsVisible="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}">
             <Label Text="{Binding Title}" FontSize="Medium" FontAttributes="Bold"/>
             <CollectionView ItemsSource="{Binding Variants}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid ColumnDefinitions="auto, *">
-
-                            <CheckBox IsVisible="{Binding IsMultiple}" IsChecked="{Binding IsChecked}" VerticalOptions="Center" />
-                            <RadioButton VerticalOptions="Center"
+                        <Grid>
+                            <Grid IsVisible="{Binding IsMultiple}" >
+                                <Label Text="{Binding Title}" VerticalTextAlignment="Center"/>
+                                <CheckBox IsChecked="{Binding IsChecked}" VerticalOptions="Center" HorizontalOptions="Fill"/>
+                            </Grid>
+                            <RadioButton VerticalOptions="Center" Content="{Binding Title}"
                                          IsVisible="{Binding IsMultiple, Converter={StaticResource InverseBooleanConverter}}" IsChecked="{Binding IsChecked}">
                                 <RadioButton.Style>
                                     <Style TargetType="RadioButton">
@@ -33,15 +46,14 @@
                                     </Style>
                                 </RadioButton.Style>
                             </RadioButton>
-                            <Label Grid.Column="1" Text="{Binding Title}" VerticalTextAlignment="Center"/>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </VerticalStackLayout>
 
-        <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="10" Padding="10">
-            <Button Grid.Column="0" Command="{Binding BackOrCancelCommand}">
+        <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="10" Padding="10">
+            <Button Grid.Column="0" Command="{Binding BackOrCancelCommand}" BackgroundColor="Transparent" TextColor="{StaticResource PrimaryDark}" BorderColor="{StaticResource PrimaryDark}" BorderWidth="1"> 
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Text" Value="{x:Static resx:AppResources.Back}" />

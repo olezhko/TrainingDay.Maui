@@ -4,7 +4,6 @@ using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models.Database;
-using ExerciseDto = TrainingDay.Maui.Models.Database.ExerciseDto;
 
 namespace TrainingDay.Maui.ViewModels;
 

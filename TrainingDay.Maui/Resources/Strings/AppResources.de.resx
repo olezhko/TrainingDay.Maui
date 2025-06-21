@@ -331,7 +331,7 @@
     <value>Keine Übungen. Sie sollten Übung hinzufügen.</value>
   </data>
   <data name="NoLastTrainings" xml:space="preserve">
-    <value>Noch keine Workouts abgeschlossen</value>
+    <value>Du hast noch kein Workout absolviert. Starte dein erstes Workout!</value>
   </data>
   <data name="NoNotificationsString" xml:space="preserve">
     <value>Keine Benachrichtigungen. Sie sollten eine Benachrichtigung hinzufügen.</value>

@@ -11,7 +11,7 @@ namespace TrainingDay.Maui.ViewModels.Pages
 	public class WorkoutQuestinariumPageViewModel : BaseViewModel
 	{
 		private WorkoutQuestinariumStepViewModel currentStep;
-        private readonly ChatGptService _chatGptService;
+        private readonly DataService _dataService;
 
         public WorkoutQuestinariumStepViewModel CurrentStep
 		{
@@ -19,20 +19,23 @@ namespace TrainingDay.Maui.ViewModels.Pages
 			set => SetProperty(ref currentStep, value);
 		}
 
+        public int CurrentStepIndex { get; set; } = 1;
         public ICommand BackOrCancelCommand { get; set; }
         public ICommand NextOrFinishCommand { get; set; }
 
-        public WorkoutQuestinariumPageViewModel(ChatGptService chatGptService)
+        public WorkoutQuestinariumPageViewModel(DataService dataService)
 		{
-            _chatGptService = chatGptService;
+            _dataService = dataService;
             BackOrCancelCommand = new Command(Back);
             NextOrFinishCommand = new Command(Next);
 		}
 
 		public async Task LoadSteps()
 		{
-            var steps = await ResourceExtension.LoadResource<WorkoutQuestinariumStep>("questions", TrainingDay.Maui.Services.Settings.GetLanguage().TwoLetterISOLanguageName);
+            var steps = await ResourceExtension.LoadResource<WorkoutQuestinariumStep>("questions", 
+                Settings.GetLanguage().TwoLetterISOLanguageName);
             WorkoutQuestinariumStepViewModel? previous = null;
+            int index = 0;
             foreach (var step in steps)
             {
                 var newStep = new WorkoutQuestinariumStepViewModel()
@@ -51,6 +54,7 @@ namespace TrainingDay.Maui.ViewModels.Pages
                 CurrentStep ??= newStep;
 
                 InsertAfter(previous, newStep);
+                index++;
                 previous = newStep;
             }
 
@@ -60,21 +64,19 @@ namespace TrainingDay.Maui.ViewModels.Pages
         private void InsertAfter(WorkoutQuestinariumStepViewModel current, WorkoutQuestinariumStepViewModel newStep)
         {
             if (newStep is not null)
-            {
                 newStep.Previous = current;
-            }
 
             if (current is not null)
-            {
                 current.Next = newStep;
-            }
         }
 
         public async void Next()
 		{
             IsBusy = true;
 
-			var next = CurrentStep.Next;
+            CurrentStepIndex++;
+            OnPropertyChanged(nameof(CurrentStepIndex));
+            var next = CurrentStep.Next;
 			if (next is not null)
 			{
 				CurrentStep = next;
@@ -89,33 +91,42 @@ namespace TrainingDay.Maui.ViewModels.Pages
 
         private async Task CreateWorkout()
         {
-            var exercises = App.Database.GetExerciseItems();
-            IEnumerable<string> exerciseNames = exercises.Select(item => $"{item.Id} {item.ExerciseItemName}");
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Exercises: " + string.Join(" ,",exerciseNames));
-
-            var step = CurrentStep;
-            while (true)
+            IsBusy = true;
+            try
             {
-                step = step.Previous;
-                if (step is null)
+                StringBuilder sb = new StringBuilder();
+
+                var step = CurrentStep;
+                while (true)
                 {
-                    break;
+                    step = step.Previous;
+                    if (step is null)
+                    {
+                        break;
+                    }
+
+                    sb.AppendLine($"Question: {step.Title}");
+                    sb.AppendLine($"Answer: {string.Join(',', step.Variants.Where(item => item.IsChecked).Select(item => item.Title))}");
                 }
 
-                sb.AppendLine($"Question: {step.Title}");
-                sb.AppendLine($"Answer(s): {string.Join(',', step.Variants.Where(item => item.IsChecked).Select(item => item.Title))}");
+                sb.AppendLine("Get codes of exercises divided by , that followed this answers.");
+
+                await SendRequest(sb.ToString());
             }
+            catch (Exception)
+            {
 
-            sb.AppendLine("Get ids of exercises divided by , that followed this answers.");
-
-            await SendRequest(sb.ToString());
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         private async Task SendRequest(string message)
         {
-            var response = await _chatGptService.GetChatGptResponseAsync(message);
-            if (response.IsNotNullOrEmpty())
+            var response = await _dataService.GetExerciseCodesByQuery(message);
+            if (response is not null)
             {
 
             }
@@ -125,6 +136,8 @@ namespace TrainingDay.Maui.ViewModels.Pages
 		{
             IsBusy = true;
             var back = CurrentStep.Previous;
+            CurrentStepIndex--;
+            OnPropertyChanged(nameof(CurrentStepIndex));
             if (back is not null)
             {
                 CurrentStep = back;
