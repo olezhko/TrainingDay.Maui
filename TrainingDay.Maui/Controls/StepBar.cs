@@ -34,28 +34,28 @@ public class StepBar : ContentView
     public static readonly BindableProperty FinishedColorProperty =
         BindableProperty.Create(
             nameof(FinishedColor),
-            typeof(Brush),
+            typeof(Color),
             typeof(StepBar),
-            Brush.Purple,
+            Colors.Purple,
             propertyChanged: (_, __, ___) => ((StepBar)_).UpdateColors());
 
-    public Brush FinishedColor
+    public Color FinishedColor
     {
-        get => (Brush)GetValue(FinishedColorProperty);
+        get => (Color)GetValue(FinishedColorProperty);
         set => SetValue(FinishedColorProperty, value);
     }
 
     public static readonly BindableProperty UnfinishedColorProperty =
         BindableProperty.Create(
             nameof(UnfinishedColor),
-            typeof(Brush),
+            typeof(Color),
             typeof(StepBar),
-            Brush.LightGray,
+            Colors.LightGray,
             propertyChanged: (_, __, ___) => ((StepBar)_).UpdateColors());
 
-    public Brush UnfinishedColor
+    public Color UnfinishedColor
     {
-        get => (Brush)GetValue(UnfinishedColorProperty);
+        get => (Color)GetValue(UnfinishedColorProperty);
         set => SetValue(UnfinishedColorProperty, value);
     }
     #endregion
@@ -150,13 +150,13 @@ public class StepBar : ContentView
                 case int circleNumber:
                     stepIndex++;
                     bool finished = circleNumber <= CurrentStep;
-                    ((Frame)child).Background = finished ? FinishedColor : UnfinishedColor;
+                    ((Frame)child).BackgroundColor = finished ? FinishedColor : UnfinishedColor;
                     break;
 
                 case "line":
                     // finished if the *previous* circle is ≤ CurrentStep
                     bool lineFinished = stepIndex < CurrentStep;
-                    ((BoxView)child).Background = lineFinished ? FinishedColor : UnfinishedColor;
+                    ((BoxView)child).BackgroundColor = lineFinished ? FinishedColor : UnfinishedColor;
                     break;
             }
         }

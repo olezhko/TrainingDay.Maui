@@ -61,7 +61,7 @@
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame x:Name="viewCell" Style="{StaticResource FrameCellStyle}" Padding="10" Margin="0"
+                    <Frame x:Name="viewCell" Style="{StaticResource FrameCellStyle}" Padding="15" Margin="0"
                             CornerRadius="25" BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}"
                            controls:LongPressedEffect.Command="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.LongPressedEffectCommand}" 
                            controls:LongPressedEffect.CommandParameter="{Binding Source={x:Reference viewCell}}"

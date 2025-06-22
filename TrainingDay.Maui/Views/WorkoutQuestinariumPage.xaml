@@ -1,15 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              xmlns:admob="clr-namespace:Plugin.AdMob;assembly=Plugin.AdMob"
              x:Class="TrainingDay.Maui.Views.WorkoutQuestinariumPage"
              Shell.TabBarIsVisible="False"
              Title="{x:Static resx:AppResources.LetsBuildYourWorkout}">
-    <Grid RowDefinitions="auto,*,auto,auto">
+    <Grid RowDefinitions="auto,*,auto,auto" RowSpacing="5" Margin="5">
 
         <Grid IsVisible="{Binding IsBusy}" Grid.RowSpan="4">
             <Border x:Name="ActivityBorder" WidthRequest="150" HeightRequest="150" BackgroundColor="White" VerticalOptions="Center">
@@ -21,7 +19,7 @@
         </Grid>
 
         <controls:StepBar x:Name="Steps" Grid.Row="0" StepCount="6" CurrentStep="{Binding CurrentStepIndex}" FinishedColor="{StaticResource Primary}" UnfinishedColor="{StaticResource Gray500}" 
-                          HorizontalOptions="FillAndExpand"/>
+                          HorizontalOptions="FillAndExpand" Margin="5,0"/>
 
         <VerticalStackLayout Grid.Row="1" BindingContext="{Binding CurrentStep}" Margin="10"
                              IsVisible="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}">
@@ -79,6 +77,6 @@
             </Button>
         </Grid>
 
-        <admob:BannerAd x:Name="AdMob" Grid.Row="2" AdSize="Banner" />
+        <admob:BannerAd x:Name="AdMob" Grid.Row="3" AdSize="Banner" />
     </Grid>
 </ContentPage>
