@@ -10,11 +10,11 @@
     <Grid RowDefinitions="auto,*,auto,auto" RowSpacing="5" Margin="5">
 
         <Grid IsVisible="{Binding IsBusy}" Grid.RowSpan="4">
-            <Border x:Name="ActivityBorder" WidthRequest="150" HeightRequest="150" BackgroundColor="White" VerticalOptions="Center">
+            <Border x:Name="ActivityBorder" WidthRequest="150" HeightRequest="150" BackgroundColor="{StaticResource Gray500}" VerticalOptions="Center">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="75,75,75,75" />
                 </Border.StrokeShape>
-                <Image Source="main.png" WidthRequest="75" HeightRequest="75"/>
+                <Image Source="activity.png" WidthRequest="75" HeightRequest="75" BackgroundColor="Transparent" Background="Transparent"/>
             </Border>
         </Grid>
 

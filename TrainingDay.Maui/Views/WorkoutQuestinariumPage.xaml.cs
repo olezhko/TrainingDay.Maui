@@ -20,8 +20,9 @@ public partial class WorkoutQuestinariumPage : ContentPage
         base.OnHandlerChanged();
         if (Handler is not null)
         {
-            var service = Handler.MauiContext.Services.GetRequiredService<DataService>();
-            viewModel = new WorkoutQuestinariumPageViewModel(service);
+            var dataService = Handler.MauiContext.Services.GetRequiredService<DataService>();
+            var workoutService = Handler.MauiContext.Services.GetRequiredService<WorkoutService>();
+            viewModel = new WorkoutQuestinariumPageViewModel(dataService, workoutService);
             viewModel.PropertyChanged += ViewModelPropertyChanged;
             BindingContext = viewModel;
             await viewModel.LoadSteps();

@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.ObjectModel;
-using System.Linq;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.ViewModels;
 
@@ -8,7 +7,7 @@ namespace TrainingDay.Maui.Extensions;
 
 public class ExerciseManager
 {
-    public static string ConvertJson(List<ExerciseTags> tagsList, TrainingExerciseViewModel viewmodel)
+    public static string ConvertJson(IEnumerable<ExerciseTags> tagsList, TrainingExerciseViewModel viewmodel)
     {
         string weightAndReps = default;
         if (tagsList.Contains(ExerciseTags.ExerciseByRepsAndWeight) || tagsList.Contains(ExerciseTags.ExerciseByReps))

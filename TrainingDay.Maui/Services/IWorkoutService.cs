@@ -1,0 +1,74 @@
+﻿using System.Collections.ObjectModel;
+using TrainingDay.Common.Communication;
+using TrainingDay.Common.Extensions;
+using TrainingDay.Common.Models;
+using TrainingDay.Maui.Extensions;
+using TrainingDay.Maui.Models.Database;
+using TrainingDay.Maui.ViewModels;
+
+namespace TrainingDay.Maui.Services
+{
+    public interface IWorkoutService
+    {
+        Task CreateWorkoutAsync(string name, IEnumerable<ExerciseQueryResponse> exercises, CancellationToken token = default);
+    }
+
+    public class WorkoutService : IWorkoutService
+    {
+        public async Task CreateWorkoutAsync(string name, IEnumerable<ExerciseQueryResponse> exercises, CancellationToken token = default)
+        {
+            var id = App.Database.SaveItem(new TrainingDto()
+            {
+                Title = name,
+            });
+
+            var baseExercises = App.Database.GetExerciseItems();
+            int index = 0;
+            foreach (var exercise in exercises)
+            {
+                var exerciseItem = baseExercises.FirstOrDefault(item => item.CodeNum == exercise.Guid);
+                var trainingExercise = new TrainingExerciseDto()
+                {
+                    TrainingId = id,
+                    ExerciseId = exerciseItem.Id,
+                    OrderNumber = index,
+                    WeightAndRepsString = CreateWeightAndReps(exerciseItem.TagsValue, exercise)
+                };
+
+                App.Database.SaveItem(trainingExercise);
+
+                index++;
+            }
+
+            return;
+        }
+
+        private string CreateWeightAndReps(int tagsValue, ExerciseQueryResponse exercise)
+        {
+            var exerciseModel = new TrainingExerciseViewModel();
+            var tags = ExerciseExtensions.ConvertTagIntToList(tagsValue);
+            try
+            {
+                if (tags.Contains(ExerciseTags.ExerciseByReps) || tags.Contains(ExerciseTags.ExerciseByRepsAndWeight))
+                {
+                    exerciseModel.WeightAndRepsItems = new ObservableCollection<WeightAndRepsViewModel>();
+                    for (int i = 0; i < exercise.CountOfSets; i++)
+                    {
+                        exerciseModel.WeightAndRepsItems.Add(new WeightAndRepsViewModel(exercise.WorkingWeight, Convert.ToInt32(exercise.CountOfRepsOrTime)));
+                    }
+                }
+
+                if (tags.Contains(ExerciseTags.ExerciseByTime) || tags.Contains(ExerciseTags.ExerciseByDistance))
+                {
+                    exerciseModel.Time = TimeSpan.Parse(exercise.CountOfRepsOrTime);
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+
+            return ExerciseManager.ConvertJson(tags, exerciseModel);
+        }
+    }
+}

@@ -33,6 +33,7 @@ namespace TrainingDay.Maui
                 });
 
             builder.Services.AddSingleton<DataService>();
+            builder.Services.AddSingleton<WorkoutService>();
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

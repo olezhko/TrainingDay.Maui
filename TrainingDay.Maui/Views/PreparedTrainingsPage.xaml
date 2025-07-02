@@ -14,7 +14,7 @@
     <controls:TooltipControlContainer x:Name="Container" RowSpacing="0" RowDefinitions="auto,*,Auto">
         <Grid>
             <Button x:Name="LetsBuildYourWorkoutButton" Text="{x:Static resx:AppResources.LetsBuildYourWorkout}" Margin="5" Command="{Binding NavigateToQuestionsCommnd}"/>
-            <Image Source="magic.png" HorizontalOptions="Start" Margin="5" />
+            <Image Source="magic.png" HorizontalOptions="Start" Margin="25,0,0,0" HeightRequest="40"/>
         </Grid>
 
         <CollectionView Grid.Row="1" Margin="5,0" BackgroundColor="Transparent" ItemsSource="{Binding PreparedTrainingsCollection}" SelectionMode="Single">

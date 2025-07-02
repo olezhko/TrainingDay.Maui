@@ -23,9 +23,11 @@ namespace TrainingDay.Maui.ViewModels.Pages
         public ICommand BackOrCancelCommand { get; set; }
         public ICommand NextOrFinishCommand { get; set; }
 
-        public WorkoutQuestinariumPageViewModel(DataService dataService)
+        IWorkoutService _workoutService;
+        public WorkoutQuestinariumPageViewModel(DataService dataService, IWorkoutService workoutService)
 		{
             _dataService = dataService;
+            _workoutService = workoutService;
             BackOrCancelCommand = new Command(Back);
             NextOrFinishCommand = new Command(Next);
 		}
@@ -91,7 +93,6 @@ namespace TrainingDay.Maui.ViewModels.Pages
 
         private async Task CreateWorkout()
         {
-            IsBusy = true;
             try
             {
                 StringBuilder sb = new StringBuilder();
@@ -105,11 +106,9 @@ namespace TrainingDay.Maui.ViewModels.Pages
                         break;
                     }
 
-                    sb.AppendLine($"Question: {step.Title}");
-                    sb.AppendLine($"Answer: {string.Join(',', step.Variants.Where(item => item.IsChecked).Select(item => item.Title))}");
+                    sb.Append($"Question: {step.Title}.");
+                    sb.Append($" {string.Join(", ", step.Variants.Where(item => item.IsChecked).Select(item => item.Title))}. "); // answer
                 }
-
-                sb.AppendLine("Get codes of exercises divided by , that followed this answers.");
 
                 await SendRequest(sb.ToString());
             }
@@ -126,9 +125,13 @@ namespace TrainingDay.Maui.ViewModels.Pages
         private async Task SendRequest(string message)
         {
             var response = await _dataService.GetExerciseCodesByQuery(message);
-            if (response is not null)
+            if (response.Any())
             {
-
+                var nameOfWorkout = await Shell.Current.DisplayPromptAsync("Workout Created", "Your workout has been created successfully. You can find it in the workouts section.", "OK", "Cancel", "Enter a name for your workout", maxLength: 50, keyboard: Keyboard.Text);
+                if (nameOfWorkout is not null)
+                {
+                    await _workoutService.CreateWorkoutAsync(nameOfWorkout, response, CancellationToken.None);
+                }
             }
         }
 
