@@ -40,7 +40,7 @@ public partial class TrainingExerciseItemPage : ContentPage
 
     private async void Save_clicked(object sender, EventArgs e)
     {
-        if (!ExerciseView.CurrentExercise.ExerciseItemName.IsNotNullOrEmpty())
+        if (!ExerciseView.CurrentExercise.Name.IsNotNullOrEmpty())
             return;
 
         isSaved = true;

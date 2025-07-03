@@ -67,7 +67,7 @@ public partial class TrainingItemsBasePage : ContentPage
                                 IsNotFinished = trainingExerciseSerialize.IsNotFinished,
                                 Muscles = new ObservableCollection<MuscleViewModel>(MusclesConverter.ConvertFromStringToList(trainingExerciseSerialize.Muscles)),
                                 OrderNumber = trainingExerciseSerialize.OrderNumber,
-                                ExerciseItemName = trainingExerciseSerialize.ExerciseItemName,
+                                Name = trainingExerciseSerialize.Name,
                                 SuperSetId = trainingExerciseSerialize.SuperSetId,
                                 SuperSetNum = trainingExerciseSerialize.SuperSetNum,
                                 IsSkipped = trainingExerciseSerialize.IsSkipped,

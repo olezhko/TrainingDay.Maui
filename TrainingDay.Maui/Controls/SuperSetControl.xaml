@@ -19,7 +19,7 @@
             <ImageButton Source="arrow_right.png" Grid.Column="0" BackgroundColor="Transparent" Command="{Binding Source={x:Reference Self}, Path=PreviousCommand}"
                     WidthRequest="20" HeightRequest="20" VerticalOptions="Start" IsEnabled="{Binding Source={x:Reference Self}, Path=IsPrevAvailable}"/>
 
-            <Label Grid.Column="1" Text="{Binding Source={x:Reference Self}, Path=CurrentItem.ExerciseItemName}" VerticalOptions="Start" HorizontalOptions="Center" FontSize="25"
+            <Label Grid.Column="1" Text="{Binding Source={x:Reference Self}, Path=CurrentItem.Name}" VerticalOptions="Start" HorizontalOptions="Center" FontSize="25"
                             TextColor="{AppThemeBinding Light=Black,Dark=White}" HorizontalTextAlignment="Center"/>
 
             <ImageButton Source="arrow_left.png" Grid.Column="2" BackgroundColor="Transparent" Command="{Binding Source={x:Reference Self}, Path=NextCommand}"

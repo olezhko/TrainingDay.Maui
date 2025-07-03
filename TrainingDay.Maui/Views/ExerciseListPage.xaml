@@ -109,7 +109,7 @@
                         FontSize="17"
                         HorizontalOptions="Center"
                         HorizontalTextAlignment="Center"
-                        Text="{Binding ExerciseItemName}"
+                        Text="{Binding Name}"
                         VerticalTextAlignment="Center" />
                                     <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" HorizontalOptions="Center" Wrap="Wrap" VerticalOptions="Center" Direction="Row"
                                                     JustifyContent="Center" AlignItems="Center" AlignContent="Start">

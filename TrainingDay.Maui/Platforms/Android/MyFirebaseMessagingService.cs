@@ -19,15 +19,21 @@ namespace TrainingDay.Maui.Platforms.Android
     {
         public static string webContentList = "";
         const string TAG = "MyFirebaseMsgService";
-        public override void OnNewToken(string p0)
-        {
-            base.OnNewToken(p0);
-            Log.Debug(TAG, "Refreshed token: " + p0);
-            App.SendRegistrationToServer(p0);
-            TrainingDay.Maui.Services.Settings.Token = p0;
-        }
+        public override async void OnNewToken(string p0)
+		{
+			base.OnNewToken(p0);
+			Log.Debug(TAG, "Refreshed token: " + p0);
+			await SendToken(p0);
+			TrainingDay.Maui.Services.Settings.Token = p0;
+		}
 
-        public override void OnMessageReceived(RemoteMessage message)
+		private static async Task SendToken(string token)
+		{
+			var dataService = IPlatformApplication.Current.Services.GetService<IDataService>();
+            await dataService.PostAction(token, MobileActions.Enter);
+		}
+
+		public override void OnMessageReceived(RemoteMessage message)
         {
             try
             {

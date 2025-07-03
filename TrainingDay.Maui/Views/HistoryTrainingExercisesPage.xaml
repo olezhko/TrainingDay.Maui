@@ -51,7 +51,7 @@
                             </Frame>
 
                             <StackLayout Grid.Column="1">
-                                <Label HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Center" Text="{Binding ExerciseItemName}"
+                                <Label HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Center" Text="{Binding Name}"
                                     VerticalTextAlignment="Center" />
 
                                 <StackLayout Orientation="Vertical">

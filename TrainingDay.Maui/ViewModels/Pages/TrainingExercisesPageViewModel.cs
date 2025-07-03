@@ -206,7 +206,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         }
         else
         {
-            var result = await MessageManager.DisplayAlert(Resources.Strings.AppResources.DeleteExercise, sender.ExerciseItemName, Resources.Strings.AppResources.OkString, Resources.Strings.AppResources.CancelString);
+            var result = await MessageManager.DisplayAlert(Resources.Strings.AppResources.DeleteExercise, sender.Name, Resources.Strings.AppResources.OkString, Resources.Strings.AppResources.CancelString);
             if (result)
             {
                 LoggingService.TrackEvent($"{GetType().Name}: DeleteExercise {CurrentAction} finished");
@@ -656,7 +656,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
                 SuperSetId = item.SuperSetId,
                 WeightAndRepsString = ExerciseManager.ConvertJson(item.Tags, item),
             });
-            Debug.WriteLine($"Exercise {order} {item.ExerciseItemName}");
+            Debug.WriteLine($"Exercise {order} {item.Name}");
         }
     }
 
@@ -707,20 +707,20 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
     public ICommand ItemDropped => new Command<TrainingExerciseViewModel>(i => OnItemDropped(i));
     private void OnItemDragged(TrainingExerciseViewModel item)
     {
-        Debug.WriteLine($"OnItemDragged: {item?.ExerciseItemName}");
+        Debug.WriteLine($"OnItemDragged: {item?.Name}");
         Training.Exercises.ForEach(i => i.IsBeingDragged = item == i);
     }
 
     private void OnItemDraggedOver(TrainingExerciseViewModel item)
     {
-        Debug.WriteLine($"OnItemDraggedOver: {item?.ExerciseItemName}");
+        Debug.WriteLine($"OnItemDraggedOver: {item?.Name}");
         var itemBeingDragged = Training.Exercises.FirstOrDefault(i => i.IsBeingDragged);
         Training.Exercises.ForEach(i => i.IsBeingDraggedOver = item == i && item != itemBeingDragged);
     }
 
     private void OnItemDragLeave(TrainingExerciseViewModel item)
     {
-        Debug.WriteLine($"OnItemDragLeave: {item?.ExerciseItemName}");
+        Debug.WriteLine($"OnItemDragLeave: {item?.Name}");
         Training.Exercises.ForEach(i => i.IsBeingDraggedOver = false);
     }
 
@@ -738,7 +738,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         itemToMove.IsBeingDragged = false;
         itemToInsertBefore.IsBeingDraggedOver = false;
         SaveNewExerciseOrder();
-        Debug.WriteLine($"OnItemDropped: [{itemToMove?.ExerciseItemName}] => [{itemToInsertBefore?.ExerciseItemName}], target index = [{insertAtIndex}]");
+        Debug.WriteLine($"OnItemDropped: [{itemToMove?.Name}] => [{itemToInsertBefore?.Name}], target index = [{insertAtIndex}]");
     }
 
     #endregion

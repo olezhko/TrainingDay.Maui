@@ -6,6 +6,8 @@ using Plugin.AdMob;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using TrainingDay.Maui.Controls;
 using TrainingDay.Maui.Services;
+using TrainingDay.Maui.ViewModels.Pages;
+using TrainingDay.Maui.Views;
 
 namespace TrainingDay.Maui
 {
@@ -32,7 +34,10 @@ namespace TrainingDay.Maui
                 {
                 });
 
-            builder.Services.AddSingleton<DataService>();
+			builder.Services.AddSingleton<BlogsPageViewModel>();
+			builder.Services.AddSingleton<BlogsPage>();
+
+			builder.Services.AddTransient<IDataService, DataService>();
             builder.Services.AddSingleton<WorkoutService>();
 #if DEBUG
             builder.Logging.AddDebug();

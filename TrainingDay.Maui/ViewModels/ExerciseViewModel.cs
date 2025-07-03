@@ -34,7 +34,7 @@ public class ExerciseViewModel : BaseViewModel
     {
         Id = exercise.Id;
         Tags = [.. ExerciseExtensions.ConvertTagIntToList(exercise.TagsValue)];
-        ExerciseItemName = exercise.ExerciseItemName;
+        Name = exercise.Name;
         Muscles = new ObservableCollection<MuscleViewModel>(MusclesConverter.ConvertFromStringToList(exercise.MusclesString));
         Description = DescriptionViewModel.ConvertFromJson(exercise.Description);
         CodeNum = exercise.CodeNum;
@@ -47,7 +47,7 @@ public class ExerciseViewModel : BaseViewModel
         {
             Id = Id,
             Description = JsonConvert.SerializeObject(Description?.Model),
-            ExerciseItemName = ExerciseItemName,
+            Name = Name,
             MusclesString = MusclesConverter.ConvertFromListToString(Muscles.ToList()),
             TagsValue = ExerciseExtensions.ConvertTagListToInt(Tags),
             CodeNum = CodeNum,
@@ -68,7 +68,7 @@ public class ExerciseViewModel : BaseViewModel
         }
     }
 
-    public string ExerciseItemName
+    public string Name
     {
         get => _name;
         set

@@ -1,6 +1,3 @@
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.ViewModels.Pages;
 

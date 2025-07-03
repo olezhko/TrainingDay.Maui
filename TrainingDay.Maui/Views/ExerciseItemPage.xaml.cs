@@ -36,7 +36,7 @@ public partial class ExerciseItemPage : ContentPage
         }
         else
         {
-            TitleLabel.Text = item.ExerciseItemName;
+            TitleLabel.Text = item.Name;
             NameLabel.IsVisible = false;
         }
     }
@@ -59,7 +59,7 @@ public partial class ExerciseItemPage : ContentPage
             if (ExerciseByRepsCheckBox.IsChecked)
                 ex.Tags.Add(ExerciseTags.ExerciseByReps);
 
-            if (ex.ExerciseItemName.IsNotNullOrEmpty())
+            if (ex.Name.IsNotNullOrEmpty())
             {
                 var exercise = ex.GetExercise();
                 var action = ex.Id == 0 ? ExerciseAction.Added : ExerciseAction.Changed;

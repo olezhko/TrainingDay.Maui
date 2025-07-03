@@ -3,7 +3,9 @@ using System.Text;
 using System.Windows.Input;
 using TrainingDay.Common.Extensions;
 using TrainingDay.Maui.Extensions;
+using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Models.Questions;
+using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 
 namespace TrainingDay.Maui.ViewModels.Pages
@@ -11,7 +13,7 @@ namespace TrainingDay.Maui.ViewModels.Pages
 	public class WorkoutQuestinariumPageViewModel : BaseViewModel
 	{
 		private WorkoutQuestinariumStepViewModel currentStep;
-        private readonly DataService _dataService;
+        private readonly IDataService _dataService;
 
         public WorkoutQuestinariumStepViewModel CurrentStep
 		{
@@ -24,7 +26,7 @@ namespace TrainingDay.Maui.ViewModels.Pages
         public ICommand NextOrFinishCommand { get; set; }
 
         IWorkoutService _workoutService;
-        public WorkoutQuestinariumPageViewModel(DataService dataService, IWorkoutService workoutService)
+        public WorkoutQuestinariumPageViewModel(IDataService dataService, IWorkoutService workoutService)
 		{
             _dataService = dataService;
             _workoutService = workoutService;
@@ -124,7 +126,7 @@ namespace TrainingDay.Maui.ViewModels.Pages
 
         private async Task SendRequest(string message)
         {
-            var response = await _dataService.GetExerciseCodesByQuery(message);
+            var response = await _dataService.GetExercisesByQuery(message);
             if (response.Any())
             {
                 var nameOfWorkout = await Shell.Current.DisplayPromptAsync("Workout Created", "Your workout has been created successfully. You can find it in the workouts section.", "OK", "Cancel", "Enter a name for your workout", maxLength: 50, keyboard: Keyboard.Text);

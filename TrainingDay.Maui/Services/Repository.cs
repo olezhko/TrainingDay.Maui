@@ -126,7 +126,7 @@ public class Repository
             newExercise.Description = JsonConvert.SerializeObject(exercise.Description);
             newExercise.MusclesString = exercise.MusclesString;
             newExercise.TagsValue = ExerciseExtensions.ConvertTagStringToInt(exercise.Tags);
-            newExercise.ExerciseItemName = exercise.ExerciseItemName;
+            newExercise.Name = exercise.Name;
             SaveExerciseItem(newExercise);
         }
         catch (Exception e)
@@ -142,7 +142,7 @@ public class Repository
         {
             dbExercise.Description = JsonConvert.SerializeObject(srcExercise.Description);
             dbExercise.MusclesString = srcExercise.MusclesString;
-            dbExercise.ExerciseItemName = srcExercise.ExerciseItemName;
+            dbExercise.Name = srcExercise.Name;
             dbExercise.TagsValue = ExerciseExtensions.ConvertTagStringToInt(srcExercise.Tags);
             SaveExerciseItem(dbExercise);
         }

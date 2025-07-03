@@ -5,7 +5,7 @@ public class TrainingExerciseSerialize
 {
     public int ExerciseId { get; set; }
     public int TrainingId { get; set; }
-    public string ExerciseItemName { get; set; }
+    public string Name { get; set; }
     public string Description { get; set; }
     public int OrderNumber { get; set; }
     public string Muscles { get; set; }

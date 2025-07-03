@@ -37,7 +37,7 @@
                     <Grid>
                         <Label Text="{x:Static resx:AppResources.NameString}" Style="{StaticResource MaterialLabel}"/>
                         <Entry x:Name="NameEditor" FontSize="22" IsReadOnly="{Binding IsBase}" 
-                            Keyboard="Text" Text="{Binding ExerciseItemName}" VerticalOptions="End"/>
+                            Keyboard="Text" Text="{Binding Name}" VerticalOptions="End"/>
                     </Grid>
                 </Frame>
 
@@ -46,7 +46,7 @@
             Grid.Row="0"
             FontSize="Large"
             IsVisible="{Binding IsBase}"
-            Text="{Binding ExerciseItemName}"
+            Text="{Binding Name}"
             VerticalOptions="Start" />
 
                 <Frame

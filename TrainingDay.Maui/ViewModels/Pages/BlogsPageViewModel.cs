@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
+using TrainingDay.Common.Communication;
 using TrainingDay.Maui.Services;
-using TrainingDay.Maui.Views;
 
 namespace TrainingDay.Maui.ViewModels.Pages;
 
@@ -10,12 +10,14 @@ public class BlogsPageViewModel : BaseViewModel
     private Command newBlogLoadCommand;
     private Command refreshCommand;
     private Command openBlogCommand;
-    private string? nextPageToken = null;
     int page = 0;
+    IDataService dataService;
 
-    public BlogsPageViewModel()
+
+	public BlogsPageViewModel(IDataService dataService)
     {
-        BlogsCollection = new ObservableCollection<BlogViewModel>();
+        this.dataService = dataService;
+		BlogsCollection = new ObservableCollection<BlogViewModel>();
     }
 
     public async void LoadItems()
@@ -33,11 +35,9 @@ public class BlogsPageViewModel : BaseViewModel
 
         IsBusy = true;
 
-        var res = await SiteService.GetBlogsAsync();
+        var res = await dataService.GetBlogsAsync(Page);
         if (res != null)
         {
-            nextPageToken = res.NextPageToken;
-
             BlogsCollection = new ObservableCollection<BlogViewModel>(res.Items.Where(CheckLanguage).Select(item => new BlogViewModel(item)).OrderByDescending(item => item.DateTime));
             OnPropertyChanged(nameof(BlogsCollection));
 
@@ -61,12 +61,12 @@ public class BlogsPageViewModel : BaseViewModel
 
     private async void OpenBlog(BlogViewModel obj)
     {
-        await Navigation.PushAsync(new BlogItemPage() { BindingContext = obj });
+        //await Shell.Current.GoToAsync($"{nameof(BlogItemPage)}?{nameof(BlogItemPage.ItemId)}={obj.}");
     }
 
     private async void NewBlogsRequest()
     {
-        if (IsBusy || nextPageToken is null)
+        if (IsBusy)
         {
             return;
         }
@@ -74,10 +74,9 @@ public class BlogsPageViewModel : BaseViewModel
         IsBusy = true;
         Page++;
 
-        var res = await SiteService.GetBlogsAsync(nextPageToken);
+        var res = await dataService.GetBlogsAsync(Page);
         if (res != null)
         {
-            nextPageToken = res.NextPageToken;
             foreach (var item in res.Items)
             {
                 BlogsCollection.Add(new BlogViewModel(item));
@@ -91,8 +90,6 @@ public class BlogsPageViewModel : BaseViewModel
     #region Properties
 
     public int Page { get => page; set => SetProperty(ref page, value); }
-
-    public INavigation Navigation { get; set; }
 
     public ObservableCollection<BlogViewModel> BlogsCollection { get; set; }
 

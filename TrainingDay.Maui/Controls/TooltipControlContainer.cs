@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Graphics;
-
-namespace TrainingDay.Maui.Controls;
+﻿namespace TrainingDay.Maui.Controls;
 
 public class TooltipControlContainer : Grid
 {
@@ -20,7 +18,7 @@ public class TooltipControlContainer : Grid
         {
             VisibleAllChild(false);
 
-            if (nextToolTipControls.Count != 0)
+            if (nextToolTipControls.Count != 0) // if this one not first tool tip
             {
                 childToolTipControl.Hide(false);
             }

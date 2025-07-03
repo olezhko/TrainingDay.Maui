@@ -106,7 +106,7 @@
                                 </CheckBox>
 
                                 <StackLayout Orientation="Vertical" Grid.Column="1" Padding="0" Margin="0" VerticalOptions="Center">
-                                    <Label Text="{Binding ExerciseItemName}" FontSize="17" HorizontalTextAlignment="Center" HorizontalOptions="Fill" VerticalOptions="Start" Margin="0"/>
+                                    <Label Text="{Binding Name}" FontSize="17" HorizontalTextAlignment="Center" HorizontalOptions="Fill" VerticalOptions="Start" Margin="0"/>
                                     <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" HorizontalOptions="Center" Wrap="Wrap" VerticalOptions="Center" 
                                                 Direction="Row" JustifyContent="Center" AlignItems="Center" AlignContent="Start">
                                         <BindableLayout.ItemTemplate>
@@ -136,20 +136,16 @@
         </CollectionView>
 
         <Button x:Name="MakeTrainingButton" Command="{Binding MakeTrainingCommand}" Text="{x:Static resx:AppResources.MakeTrainingString}" 
-            Grid.Row="2" TextColor="White" Margin="5" FontSize="Body" CornerRadius="20" controls:TooltipControlContainer.IgnoreVisible="True"
-            IsVisible="{Binding IsExercisesCheckBoxVisible,Converter={StaticResource InverseBooleanConverter}}"/>
+            Grid.Row="2" TextColor="White" Margin="5" FontSize="Body" CornerRadius="20"
+            IsEnabled="{Binding IsExercisesCheckBoxVisible,Converter={StaticResource InverseBooleanConverter}}"/>
 
-        <Grid Grid.Row="3" IsVisible="{Binding IsExercisesCheckBoxVisible}" HorizontalOptions="Fill" ColumnSpacing="5" Margin="5,0"
+        <Grid Grid.Row="3" IsVisible="{Binding IsExercisesCheckBoxVisible}" HorizontalOptions="Fill" ColumnSpacing="5" Margin="5,0" ColumnDefinitions="*,*"
               controls:TooltipControlContainer.IgnoreVisible="True">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
             <Button Grid.Column="0" CornerRadius="20" Text="{x:Static resx:AppResources.CancelString}" Command="{Binding CancelActionCommand}" HorizontalOptions="Fill" Style="{DynamicResource ActionButton}" />
             <Button Grid.Column="1" CornerRadius="20" Text="{Binding ExerciseActionString}" Command="{Binding StartActionCommand}" HorizontalOptions="Fill" Style="{DynamicResource ActionButton}" />
         </Grid>
 
-        <controls:ToolTipControl x:Name="ToolTipHoldImageExercises" Grid.Row="1" 
+        <controls:ToolTipControl Grid.Row="1" 
                               Text="{x:Static resx:AppResources.ToolTipHoldImageExercises}" Title="{x:Static resx:AppResources.SettingsTrainingString}" 
                               NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipHoldImageExercises,Mode=TwoWay}" 
                               AttachedControl="ItemsListView" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}" Position="Center"

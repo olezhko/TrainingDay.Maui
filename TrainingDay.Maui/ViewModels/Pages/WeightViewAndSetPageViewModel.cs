@@ -3,6 +3,7 @@ using Microcharts;
 using SkiaSharp;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using TrainingDay.Common.Communication;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
@@ -88,9 +89,11 @@ class WeightViewAndSetPageViewModel : BaseViewModel
         sender.ChartItems.Add(note);
         sender.Chart = PrepareChart(sender.GoalValue, sender.ChartItems);
         await Toast.Make(Resources.Strings.AppResources.SavedString).Show();
-        //await SiteService.SendBodyControl(Settings.Token);
 
-        OnPropertyChanged(nameof(BodyControlItems));
+		var dataService = IPlatformApplication.Current.Services.GetService<IDataService>();
+		await dataService.PostAction(Settings.Token, MobileActions.Weight);
+
+		OnPropertyChanged(nameof(BodyControlItems));
     }
 
     private int GetDaysByPeriod(ChartWeightPeriod period)

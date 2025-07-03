@@ -177,7 +177,7 @@ public partial class TrainingImplementPage : ContentPage
         {
             if (Items.Count > 0)
             {
-                var name = string.Join(" - ", Items[StepProgressBarControl.StepSelected].Select(a => a.ExerciseItemName));
+                var name = string.Join(" - ", Items[StepProgressBarControl.StepSelected].Select(a => a.Name));
                 notificator.Show(new PushMessage()
                 {
                     Id = PushMessagesExtensions.TrainingImplementTimeId,
@@ -317,7 +317,7 @@ public partial class TrainingImplementPage : ContentPage
                 {
                     LastTrainingId = id,
                     OrderNumber = item.OrderNumber,
-                    ExerciseName = item.ExerciseItemName,
+                    ExerciseName = item.Name,
                     MusclesString = MusclesConverter.ConvertFromListToString(item.Muscles.ToList()),
                     Description = item.GetExercise().Description,
                     SuperSetId = item.SuperSetId,

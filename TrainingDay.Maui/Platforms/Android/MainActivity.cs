@@ -2,7 +2,7 @@
 using Android.Content.PM;
 using Android.Gms.Ads;
 using Android.OS;
-using Firebase.Iid;
+using Firebase.Messaging;
 
 namespace TrainingDay.Maui
 {
@@ -19,9 +19,6 @@ namespace TrainingDay.Maui
             MobileAds.RequestConfiguration = configBuilder.Build();
 #endif
             CreateNotificationChannel();
-
-            var refreshedToken = FirebaseInstanceId.Instance.Token;
-            App.SendRegistrationToServer(refreshedToken);
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)

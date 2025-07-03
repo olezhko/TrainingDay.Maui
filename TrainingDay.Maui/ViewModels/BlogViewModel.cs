@@ -1,5 +1,5 @@
 ﻿using System.Globalization;
-using TrainingDay.Maui.Services;
+using TrainingDay.Common.Communication;
 
 namespace TrainingDay.Maui.ViewModels;
 

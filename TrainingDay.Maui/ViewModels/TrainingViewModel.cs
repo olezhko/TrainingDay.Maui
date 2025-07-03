@@ -99,7 +99,7 @@ public class TrainingViewModel : BaseViewModel
                 Muscles = MusclesConverter.ConvertFromListToString(trainingExerciseViewModel.Muscles.ToList()),
                 ExerciseId = trainingExerciseViewModel.ExerciseId,
                 Description = JsonConvert.SerializeObject(trainingExerciseViewModel.Description.Model),
-                ExerciseItemName = trainingExerciseViewModel.ExerciseItemName,
+                Name = trainingExerciseViewModel.Name,
                 IsNotFinished = trainingExerciseViewModel.IsNotFinished,
                 IsSkipped = trainingExerciseViewModel.IsSkipped,
                 SuperSetNum = trainingExerciseViewModel.SuperSetNum,

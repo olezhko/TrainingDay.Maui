@@ -98,7 +98,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
         {
             var ex = new TrainingExerciseViewModel()
             {
-                ExerciseItemName = trainingExercise.ExerciseName,
+                Name = trainingExercise.ExerciseName,
                 Muscles = new ObservableCollection<MuscleViewModel>(
                     MusclesConverter.ConvertFromStringToList(trainingExercise.MusclesString)),
                 OrderNumber = trainingExercise.OrderNumber,

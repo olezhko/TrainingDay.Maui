@@ -129,7 +129,7 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
 
                 if (!string.IsNullOrEmpty(Filter.NameFilter))
                 {
-                    byname = newItem.ExerciseItemName.Contains(Filter.NameFilter, StringComparison.OrdinalIgnoreCase);
+                    byname = newItem.Name.Contains(Filter.NameFilter, StringComparison.OrdinalIgnoreCase);
                 }
 
                 if (Filter.CurrentMuscles.Count != 0)

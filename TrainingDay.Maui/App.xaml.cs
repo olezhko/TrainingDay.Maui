@@ -142,34 +142,6 @@ namespace TrainingDay.Maui
             return path;
         }
 
-        public static async void SendRegistrationToServer(string token)
-        {
-            if (DeviceInfo.DeviceType != DeviceType.Physical)
-            {
-                return;
-            }
-
-            //try
-            //{
-            //    SiteService.Token = token;
-            //    if (string.IsNullOrEmpty(token))
-            //    {
-            //        return;
-            //    }
-
-            //    Settings.IsTokenSavedOnServer = false;
-
-            //    var language = Settings.GetLanguage();
-            //    var zone = TimeZoneInfo.Local.BaseUtcOffset;
-            //    var res = await SiteService.SendTokenToServer(token, language.Name, zone, 7);
-            //    Settings.IsTokenSavedOnServer = res;
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine(e);
-            //}
-        }
-
         internal void SetIncomingFile(string data)
         {
             try
@@ -229,7 +201,7 @@ namespace TrainingDay.Maui
                     var newItem = new Models.Database.ExerciseDto()
                     {
                         Description = item.Description,
-                        ExerciseItemName = item.ExerciseItemName,
+                        Name = item.Name,
                         MusclesString = item.Muscles,
                         TagsValue = item.TagsValue,
                         CodeNum = -1,

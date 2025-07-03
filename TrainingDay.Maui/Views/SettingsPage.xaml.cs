@@ -123,12 +123,12 @@ public partial class SettingsPage : ContentPage
                     if (init != null)
                     {
                         exer.Description = JsonConvert.SerializeObject(init.Description);
-                        exer.ExerciseItemName = init.ExerciseItemName;
+                        exer.Name = init.Name;
                         App.Database.SaveExerciseItem(exer);
                     }
                     else
                     {
-                        Console.WriteLine($"NO AVAILABLE {exer.ExerciseItemName}");
+                        Console.WriteLine($"NO AVAILABLE {exer.Name}");
                     }
                 }
                 catch (Exception e)

@@ -104,9 +104,9 @@
         <controls:ToolTipControl x:Name="ToolTipTapHoldTraining" Text="{x:Static resx:AppResources.ToolTipTapHoldTraining}" Title="{x:Static resx:AppResources.SettingsTrainingString}" 
                               NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipTapHoldTraining,Mode=TwoWay}" 
                               AttachedControl="ItemsListView" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}" Position="Center"
-                              ParentHeight="{Binding Source={x:Reference Container},Path=Height}"
+                              ParentHeight="{Binding Source={x:Reference Container},Path=Height}" Grid.Row="1"
                               ParentWidth="{Binding Source={x:Reference Container},Path=Width}"/>
 
-        <admob:BannerAd x:Name="AdMob" Grid.Row="1" AdSize="Banner" />
+        <admob:BannerAd x:Name="AdMob" Grid.Row="2" AdSize="Banner" />
     </controls:TooltipControlContainer>
 </ContentPage>

@@ -6,11 +6,8 @@
              xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
              x:Class="TrainingDay.Maui.Views.BlogsPage"
              x:Name="Page">
-    <ContentPage.BindingContext>
-        <viewModels:BlogsPageViewModel/>
-    </ContentPage.BindingContext>
 
-    <Shell.TitleView>
+	<Shell.TitleView>
         <Label Text="{x:Static resx:AppResources.NewsString}" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
     </Shell.TitleView>
 

@@ -1,14 +1,15 @@
 using TrainingDay.Maui.Extensions;
+using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels.Pages;
 
 namespace TrainingDay.Maui.Views;
 
 public partial class BlogsPage : ContentPage
 {
-	public BlogsPage()
+	public BlogsPage(IDataService service)
 	{
 		InitializeComponent();
-        BindingContext = new BlogsPageViewModel() { Navigation = Navigation };
+        BindingContext = new BlogsPageViewModel(service);
         AdMob.AdUnitId = DeviceInfo.Platform == DevicePlatform.Android ? ConstantKeys.WorkoutsAndroidAds : ConstantKeys.WorkoutsiOSAds;
     }
 
