@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <!-- iOS, Android, MacCatalyst -->
-        <TargetFrameworks>net8.0-ios;net8.0-android;net8.0-maccatalyst</TargetFrameworks>
+        <TargetFrameworks>net9.0-ios;net9.0-android</TargetFrameworks>
         <UseMaui>true</UseMaui>
 
         <Description>Simple, cross-platform chart library for .NET MAUI.</Description>
@@ -18,11 +18,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Update="Microsoft.Maui.Controls" Version="8.0.14" />
+      <PackageReference Update="Microsoft.Maui.Controls" Version="9.0.81" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Update="Microsoft.Maui.Controls.Compatibility" Version="8.0.14" />
+      <PackageReference Update="Microsoft.Maui.Controls.Compatibility" Version="9.0.81" />
     </ItemGroup>
 
 </Project>

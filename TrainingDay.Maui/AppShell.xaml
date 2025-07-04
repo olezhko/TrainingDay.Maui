@@ -11,7 +11,7 @@
     <TabBar>
         <ShellContent Title="{x:Static resx:AppResources.TrainingsBaseString}" Icon="workouts.png" ContentTemplate="{DataTemplate views:TrainingItemsBasePage}" Route="workouts"/>
         <ShellContent Title="{x:Static resx:AppResources.WeightControlString}" Icon="weight.png" ContentTemplate="{DataTemplate views:WeightViewAndSetPage}" Route="body"/>
-        <ShellContent Title="{x:Static resx:AppResources.NewsString}" Icon="notes.png" ContentTemplate="{DataTemplate views:BlogsPage}" Route="blogs"/>
+        <!--<ShellContent Title="{x:Static resx:AppResources.NewsString}" Icon="notes.png" ContentTemplate="{DataTemplate views:BlogsPage}" Route="blogs"/>-->
         <ShellContent Title="{x:Static resx:AppResources.Account}" Icon="account.png" ContentTemplate="{DataTemplate views:SettingsPage}" Route="settings"/>
     </TabBar>
 

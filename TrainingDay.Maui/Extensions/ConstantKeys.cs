@@ -18,8 +18,6 @@ public class ConstantKeys
 
     public const string NotFinishedTrainingName = "NotFinished.trday";
     public const string DatabaseName = "exercise.db";
-    public const string BlogKey = " ";
-    public const string OpenAIKey = " ";
     public class AwsS3
     {
         public const string accessKey = " ";

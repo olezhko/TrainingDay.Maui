@@ -53,7 +53,7 @@ public class Repository
             database.CreateTable<SuperSetDto>();
             database.CreateTable<TrainingUnionDto>();
             database.CreateTable<ImageDto>();
-            database.CreateTable<BlogDto>();
+            //database.CreateTable<BlogDto>();
 
             var initExercises = await ResourceExtension.LoadResource<Common.Models.BaseExercise>("exercises", Settings.GetLanguage().TwoLetterISOLanguageName);
             var dbExercises = GetExerciseItems();

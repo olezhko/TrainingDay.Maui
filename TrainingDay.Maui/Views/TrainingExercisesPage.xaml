@@ -68,7 +68,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="70"/>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="40"/>
                                 </Grid.ColumnDefinitions>
 
                                 <Frame Grid.Column="0" HeightRequest="70" WidthRequest="70" VerticalOptions="Center" BackgroundColor="White" CornerRadius="5" BorderColor="Transparent">
@@ -119,7 +119,7 @@
                                     </FlexLayout>
                                 </StackLayout>
 
-                                <ImageButton Grid.Column="2" WidthRequest="30" HeightRequest="30" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="close"
+                                <ImageButton Grid.Column="2" WidthRequest="25" HeightRequest="25" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="close" 
                                              Command="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.DeleteExerciseCommand}" CommandParameter="{Binding }" BackgroundColor="Transparent" 
                                              IsVisible="{Binding IsCheckBoxVisible,Converter={StaticResource InverseBooleanConverter}}">
                                     <ImageButton.Behaviors>

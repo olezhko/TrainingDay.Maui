@@ -12,7 +12,7 @@
     </ContentPage.BindingContext>
 
     <controls:TooltipControlContainer x:Name="Container" RowSpacing="0" RowDefinitions="auto,*,Auto">
-		<Grid x:Name="LetsBuildYourWorkoutButton">
+		<Grid x:Name="LetsBuildYourWorkoutButton" IsVisible="False">
             <Button Text="{x:Static resx:AppResources.LetsBuildYourWorkout}" Margin="5" Command="{Binding NavigateToQuestionsCommnd}"/>
 			<Image Source="magic.png" HorizontalOptions="Start" Margin="25,0,0,0" HeightRequest="40" />
         </Grid>
@@ -59,10 +59,10 @@
         <Button Grid.Row="2" Margin="5" Command="{Binding CreateNewTrainingCommand}" CornerRadius="20"
             Style="{DynamicResource ActionButton}" Text="{x:Static resx:AppResources.CreateNewString}" FontSize="Body"/>
 
-        <controls:ToolTipControl Text="Click this button to answer some questions and application will create workout for you" Title="{x:Static resx:AppResources.HelperString}" 
+        <!--<controls:ToolTipControl Text="Click this button to answer some questions and application will create workout for you" Title="{x:Static resx:AppResources.HelperString}" 
                               NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipLetsBuildYourWorkout,Mode=TwoWay}" 
                               AttachedControl="LetsBuildYourWorkoutButton" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}" Position="Center"
                               ParentHeight="{Binding Source={x:Reference Container},Path=Height}" Grid.RowSpan="3"
-                              ParentWidth="{Binding Source={x:Reference Container},Path=Width}"/>
+                              ParentWidth="{Binding Source={x:Reference Container},Path=Width}"/>-->
     </controls:TooltipControlContainer>
 </ContentPage>
