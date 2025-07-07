@@ -3,7 +3,6 @@
 	<PropertyGroup>
 		<TargetFrameworks>net9.0-android;net9.0-ios</TargetFrameworks>
 		<UseMaui>True</UseMaui>
-		<MauiVersion>8.0.14</MauiVersion>
 		<OutputType>Exe</OutputType>
 		<RootNamespace>TrainingDay.Maui</RootNamespace>
 		<UseMaui>true</UseMaui>
@@ -21,7 +20,7 @@
 		<ApplicationDisplayVersion>1</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">12.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 		<Company>LATec</Company>
 		<Product>TrainingDay</Product>
@@ -33,25 +32,25 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
-		<ApplicationVersion>299</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.5.2</ApplicationDisplayVersion>
+		<ApplicationVersion>300</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.6.1</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
 		<CreatePackage>false</CreatePackage>
 		<ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
-    <ApplicationVersion>299</ApplicationVersion>
-    <ApplicationDisplayVersion>1.2.5.2</ApplicationDisplayVersion>
+    <ApplicationVersion>300</ApplicationVersion>
+    <ApplicationDisplayVersion>1.2.6.1</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
-    <ApplicationVersion>299</ApplicationVersion>
-    <ApplicationDisplayVersion>1.2.5.2</ApplicationDisplayVersion>
+		<ApplicationVersion>300</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.6.1</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
-    <ApplicationVersion>299</ApplicationVersion>
-    <ApplicationDisplayVersion>1.2.5.2</ApplicationDisplayVersion>
+		<ApplicationVersion>1.2.6.1</ApplicationVersion>
+		<ApplicationDisplayVersion>300</ApplicationDisplayVersion>
 		<CreatePackage>false</CreatePackage>
 		<CodesignProvision>TrainingDayPublish</CodesignProvision>
 		<CodesignKey>Apple Distribution: Oleg Ladyka (36WMJT4QLC)</CodesignKey>

@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using Microsoft.Maui.Controls;
+using TrainingDay.Maui.Services;
 
 namespace TrainingDay.Maui.Controls;
 
@@ -137,11 +138,11 @@ public partial class ToolTipControl : ContentView
             {
                 try
                 {
-                    control.CalculatePosition((ContentView)sender);
+                    control.CalculatePosition((View)sender);
                 }
                 catch (Exception)
                 {
-
+                    LoggingService.TrackError(new Exception($"Error calculating position for ToolTipControl. {sender.GetType().Name}")); 
                 }
             }
         };

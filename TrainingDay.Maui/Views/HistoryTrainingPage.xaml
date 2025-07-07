@@ -21,7 +21,7 @@
                     <Image Source="no_last_trainings.png" />
                 </Border>
                 <Label HorizontalTextAlignment="Center" VerticalOptions="Start" Text="{x:Static resx:AppResources.NoLastTrainings}" FontSize="Medium"/>
-                <Button Text="Back to workouts" WidthRequest="200" CornerRadius="25"/>
+                <Button Text="BackToWorkouts" WidthRequest="200" CornerRadius="25" Clicked="BackToWorkouts_Clicked" HeightRequest="50"/>
             </VerticalStackLayout>
         </CollectionView.EmptyView>
         <CollectionView.GroupHeaderTemplate>

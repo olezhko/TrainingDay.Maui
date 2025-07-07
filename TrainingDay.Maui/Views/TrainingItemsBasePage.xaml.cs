@@ -32,7 +32,8 @@ public partial class TrainingItemsBasePage : ContentPage
         _vm = BindingContext as TrainingItemsBasePageViewModel;
         _vm.LoadItems(true);
         IsStartNotFinishedTraining();
-        if (!_vm.IsGrouped)
+
+        if (!_vm.ItemsGrouped.Any())
         {
             ToolTipTapHoldTraining.Hide();
         }

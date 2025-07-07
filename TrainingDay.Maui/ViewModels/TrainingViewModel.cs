@@ -121,6 +121,7 @@ public class TrainingViewModel : BaseViewModel
 
     public void DeleteTrainingsItemsFromBase()
     {
+        App.Database.DeleteTrainingItem(Id);
         App.Database.DeleteTrainingExerciseItemByTrainingId(Id);
         App.Database.DeleteSuperSetsByTrainingId(Id);
     }

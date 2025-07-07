@@ -18,4 +18,9 @@ public partial class HistoryTrainingPage : ContentPage
         vm.Navigation = Navigation;
         vm.LoadItems();
     }
+
+    private async void BackToWorkouts_Clicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("..");
+    }
 }

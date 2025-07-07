@@ -37,10 +37,8 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
 
         ItemsGrouped.Clear();
         SelectedTrainings.Clear();
-        IsGrouped = trainingsItems.Any();
-        OnPropertyChanged(nameof(IsGrouped));
 
-        if (!IsGrouped)
+        if (!trainingsItems.Any())
             return;
 
         List<Grouping<string, TrainingViewModel>> tempGroups = new List<Grouping<string, TrainingViewModel>>();
@@ -54,6 +52,31 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         foreach (var tempGroup in tempGroups)
         {
             ItemsGrouped.Add(tempGroup);
+        }
+
+        SelectWorkout(tempGroups);
+    }
+
+    private void SelectWorkout(List<Grouping<string, TrainingViewModel>> tempGroups)
+    {
+        try
+        {
+            SelectedTrainings.Clear();
+            Grouping<string, TrainingViewModel> selectedGroup = tempGroups.FirstOrDefault(gp => gp.Key == AppResources.GroupingDefaultName);
+            if (selectedGroup is null)
+            {
+                selectedGroup = tempGroups.FirstOrDefault();
+            }
+            foreach (var item in selectedGroup)
+            {
+                SelectedTrainings.Add(item);
+            }
+
+            OnPropertyChanged(nameof(SelectedTrainings));
+        }
+        catch (Exception e)
+        {
+            LoggingService.TrackError(e);
         }
     }
 
@@ -114,9 +137,6 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
             }
             else
                 defaultGroup.Add(item);
-
-            SelectedTrainings.Add(item);
-            OnPropertyChanged(nameof(SelectedTrainings));
         }
     }
 
@@ -151,31 +171,29 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
             if (result)
             {
                 LoggingService.TrackEvent($"{GetType().Name}: DeleteSelectedTraining Clicked Approved");
-                App.Database.DeleteTrainingItem(item.Id);
+                
                 item.DeleteTrainingsItemsFromBase();
 
                 var group = ItemsGrouped.FirstOrDefault(gr => gr.Contains(item));
                 group.Remove(item);
+
                 if (group.Count == 0)
                 {
                     ItemsGrouped.Remove(group);
                     var groups = App.Database.GetTrainingsGroups();
                     var gr = groups.FirstOrDefault(a => a.Name == group.Key);
                     if (gr != null)
-                    {
                         App.Database.DeleteTrainingGroup(gr.Id);
-                    }
                 }
 
-                IsGrouped = ItemsGrouped.Count > 0;
-                OnPropertyChanged(nameof(IsGrouped));
                 OnPropertyChanged(nameof(ItemsGrouped));
+                SelectWorkout(ItemsGrouped.ToList());
                 await Toast.Make(AppResources.DeletedString).Show();
             }
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            LoggingService.TrackError(e);
         }
     }
 
@@ -320,7 +338,6 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
     }
 
     #region Properties
-    public bool IsGrouped { get; set; }
 
     public ObservableCollection<Grouping<string, TrainingViewModel>> ItemsGrouped { get => itemsGrouped; set => SetProperty(ref itemsGrouped, value); }
 

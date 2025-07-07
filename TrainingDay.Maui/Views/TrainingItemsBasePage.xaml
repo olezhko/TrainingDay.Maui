@@ -28,7 +28,7 @@
         <viewModels:TrainingItemsBasePageViewModel/>
     </ContentPage.BindingContext>
 
-    <controls:TooltipControlContainer x:Name="Container">
+    <controls:TooltipControlContainer x:Name="Container" BackgroundColor="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
