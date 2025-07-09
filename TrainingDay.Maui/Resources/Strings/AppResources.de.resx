@@ -654,4 +654,7 @@
   <data name="Finish" xml:space="preserve">
     <value>Beenden</value>
   </data>
+  <data name="BackToWorkouts" xml:space="preserve">
+    <value>Zurück zu den Workouts</value>
+  </data>
 </root>

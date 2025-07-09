@@ -1670,5 +1670,14 @@ namespace TrainingDay.Maui.Resources.Strings {
                 return ResourceManager.GetString("YesString", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back To Workouts.
+        /// </summary>
+        internal static string BackToWorkouts {
+            get {
+                return ResourceManager.GetString("BackToWorkouts", resourceCulture);
+            }
+        }
     }
 }

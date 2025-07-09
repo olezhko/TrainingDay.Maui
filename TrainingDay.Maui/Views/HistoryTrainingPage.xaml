@@ -21,7 +21,7 @@
                     <Image Source="no_last_trainings.png" />
                 </Border>
                 <Label HorizontalTextAlignment="Center" VerticalOptions="Start" Text="{x:Static resx:AppResources.NoLastTrainings}" FontSize="Medium"/>
-                <Button Text="BackToWorkouts" WidthRequest="200" CornerRadius="25" Clicked="BackToWorkouts_Clicked" HeightRequest="50"/>
+                <Button Text="{x:Static resx:AppResources.BackToWorkouts}" WidthRequest="200" CornerRadius="25" Clicked="BackToWorkouts_Clicked" HeightRequest="50"/>
             </VerticalStackLayout>
         </CollectionView.EmptyView>
         <CollectionView.GroupHeaderTemplate>
@@ -35,7 +35,7 @@
         <CollectionView.ItemTemplate>
             <DataTemplate>
                 <Grid>
-                    <Frame Style="{StaticResource FrameCellStyle}" Padding="10" Margin="0"
+                    <Frame Style="{StaticResource FrameCellStyle}" Padding="10" Margin="0" CornerRadius="25"
                            BackgroundColor="{AppThemeBinding Dark={StaticResource ListItemBackgroundColor}, Light={StaticResource ListItemBackgroundColorLight}}">
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HistoryTrainingPageViewModel}}, Path=ItemSelectedCommand}"
