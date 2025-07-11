@@ -35,18 +35,18 @@
         <CollectionView.ItemTemplate>
             <DataTemplate>
                 <Grid>
-                    <Frame Style="{StaticResource FrameCellStyle}" Padding="10" Margin="0" CornerRadius="25"
+                    <Border Style="{StaticResource FrameCellStyle}" Padding="10" Margin="0" StrokeShape="RoundRectangle 25"
                            BackgroundColor="{AppThemeBinding Dark={StaticResource ListItemBackgroundColor}, Light={StaticResource ListItemBackgroundColorLight}}">
-                        <Frame.GestureRecognizers>
+                        <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HistoryTrainingPageViewModel}}, Path=ItemSelectedCommand}"
                             CommandParameter="{Binding .}" NumberOfTapsRequired="1" />
-                        </Frame.GestureRecognizers>
+                        </Border.GestureRecognizers>
                         <StackLayout Orientation="Vertical" VerticalOptions="Center">
                             <Label Text="{Binding Title,StringFormat={x:Static resx:AppResources.NameFormatString}}" FontSize="Medium" FontAttributes="Bold"/>
                             <Label Text="{Binding ElapsedTime,StringFormat={x:Static resx:AppResources.ElapsedTimeString}}" FontSize="Medium"/>
                             <Label Text="{Binding ImplementDateTime,StringFormat={x:Static resx:AppResources.DateTimeFormat}}" FontSize="13" HorizontalTextAlignment="End" TextColor="Gray"/>
                         </StackLayout>
-                    </Frame>
+                    </Border>
                 </Grid>
             </DataTemplate>
         </CollectionView.ItemTemplate>

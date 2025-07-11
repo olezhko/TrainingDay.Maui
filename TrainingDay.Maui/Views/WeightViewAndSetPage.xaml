@@ -25,18 +25,12 @@
         <viewModels:WeightViewAndSetPageViewModel/>
     </ContentPage.BindingContext>
 
-    <Grid Padding="2">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <Grid Padding="2" RowDefinitions="auto, *, auto">
 
-        <Frame Style="{StaticResource MaterialFrame}">
+        <Border Style="{StaticResource MaterialBorder}">
             <Grid ColumnDefinitions="*,*,*,*,*" ColumnSpacing="5">
-                <Button Grid.Column="0" CornerRadius="5" Padding="0" LineBreakMode="TailTruncation"
+                <Button Grid.Column="0" CornerRadius="5" Padding="0" LineBreakMode="TailTruncation" BackgroundColor="Orange"
                         TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"
-                        BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}"
                         Clicked="SetPeriod_Click" AutomationId="0" Text="{x:Static resx:AppResources.WeekString}"/>
 
                 <Button Padding="0" Grid.Column="1" CornerRadius="5" BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}" LineBreakMode="TailTruncation"
@@ -48,40 +42,42 @@
                 <Button Padding="0" Grid.Column="4" CornerRadius="5" BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}" LineBreakMode="TailTruncation"
                             Clicked="SetPeriod_Click" AutomationId="4" Text="{x:Static resx:AppResources.YearString}" TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"/>
             </Grid>
-        </Frame>
+        </Border>
 
         <CarouselView x:Name="BodyControlView" Grid.Row="1" IndicatorView="indicatorView" ItemsSource="{Binding BodyControlItems}"
-                      VerticalOptions="Fill" Loop="False" IsVisible="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}">
+                      CurrentItem="{Binding CurrentItem}" VerticalOptions="Fill" Loop="False" 
+                      IsVisible="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}">
             <CarouselView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="5" RowDefinitions="auto,auto,*">
                         <Label Grid.Row="0" HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="{Binding Name}" FontSize="Large"/>
                         <Grid Grid.Row="1" ColumnDefinitions="*,*,auto" ColumnSpacing="5">
-                            <Frame Grid.Column="0" Style="{StaticResource MaterialFrame}" CornerRadius="20" Padding="10" BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}">
+                            <Border Grid.Column="0" Style="{StaticResource MaterialBorder}" StrokeShape="RoundRectangle 20"
+                                    Padding="10" BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}">
                                 <VerticalStackLayout>
                                     <Label Text="{x:Static resx:AppResources.CurrentString}" TextColor="Orange"/>
                                     <Entry Text="{Binding CurrentValueString, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="17" VerticalOptions="End" Keyboard="Numeric"
                                            HorizontalTextAlignment="Start">
                                         <Entry.Behaviors>
                                             <toolkit:EventToCommandBehavior EventName="Unfocused" Command="{Binding Source={x:Reference Page}, 
-                                            Path=BindingContext.SaveValueCommand}" CommandParameter="{Binding }"/>
+                                            Path=BindingContext.SaveValueCommand}" />
                                         </Entry.Behaviors>
                                     </Entry>
                                 </VerticalStackLayout>
-                            </Frame>
+                            </Border>
 
-                            <Frame Grid.Column="1" Style="{StaticResource MaterialFrame}" CornerRadius="20" Padding="10" BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}">
+                            <Border Grid.Column="1" Style="{StaticResource MaterialBorder}" StrokeShape="RoundRectangle 20" Padding="10" BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}">
                                 <VerticalStackLayout>
                                     <Label Text="{x:Static resx:AppResources.GoalString}" TextColor="Orange"/>
                                     <Entry Text="{Binding GoalValueString, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="17" VerticalOptions="End" Keyboard="Numeric"
                                            HorizontalTextAlignment="Start">
                                         <Entry.Behaviors>
                                             <toolkit:EventToCommandBehavior EventName="Unfocused" Command="{Binding Source={x:Reference Page}, 
-                                            Path=BindingContext.SaveValueCommand}" CommandParameter="{Binding }"/>
+                                            Path=BindingContext.SaveValueCommand}"/>
                                         </Entry.Behaviors>
                                     </Entry>
                                 </VerticalStackLayout>
-                            </Frame>
+                            </Border>
                         </Grid>
                         <charts:ChartView Grid.Row="2" Chart="{Binding Chart, Mode=TwoWay}" VerticalOptions="Fill" />
                     </Grid>

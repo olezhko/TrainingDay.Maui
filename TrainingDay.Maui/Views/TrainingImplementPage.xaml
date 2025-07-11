@@ -33,14 +33,14 @@
                 </ImageButton>
             </Grid>
 
-            <Frame BorderColor="Transparent" Style="{StaticResource MaterialFrame}" Padding="0" >
+            <Border Stroke="Transparent" Style="{StaticResource MaterialBorder}" Padding="0" >
                 <Grid ColumnDefinitions="*,auto,*" ColumnSpacing="5">
                     <Label x:Name="DoLabel" Text="{x:Static resx:AppResources.Execution}" HorizontalOptions="End" TextColor="Orange" VerticalOptions="Center"/>
                     <Switch x:Name="RestOrDoSwitch" Grid.Column="1" Toggled="RestOrDoSwitch_Toggled" VerticalOptions="Center"/>
                     <Label x:Name="RestLabel" Grid.Column="2" Text="{x:Static resx:AppResources.Rest}" VerticalOptions="Center" TextColor="Gray"/>
                     <controls:TimerPicker x:Name="RestPicker" Grid.Column="2" HorizontalOptions="End" Margin="0,5,10,5" VerticalOptions="Center" Value="00:02:00" ValueType="MinSec"/>
                 </Grid>
-            </Frame>
+            </Border>
         </VerticalStackLayout>
 
 
@@ -55,32 +55,33 @@
 
         <Grid Grid.Row="2" Grid.ColumnSpan="3" BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
 
-        <Frame x:Name="CancelButton" Grid.Row="2" Grid.Column="0" CornerRadius="20" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Red" HeightRequest="40" WidthRequest="40"  Padding="0" Margin="0">
-            <Frame.GestureRecognizers>
+        <Border x:Name="CancelButton" Grid.Row="2" Grid.Column="0" Stroke="Transparent" StrokeShape="RoundRectangle 20" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Red" 
+                HeightRequest="40" WidthRequest="40"  Padding="0" Margin="0">
+            <Border.GestureRecognizers>
                 <TapGestureRecognizer Tapped="CancelTrainingClicked"/>
-            </Frame.GestureRecognizers>
+            </Border.GestureRecognizers>
             <Image Source="close.png" HeightRequest="40" WidthRequest="40" >
                 <Image.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="White" />
                 </Image.Behaviors>
             </Image>
-        </Frame>
-        <Frame x:Name="SkipButton" Grid.Row="2" Grid.Column="1" CornerRadius="20" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="DimGray" HeightRequest="40" WidthRequest="40" Padding="0" Margin="0">
-            <Frame.GestureRecognizers>
+        </Border>
+        <Border x:Name="SkipButton" Grid.Row="2" Grid.Column="1" Stroke="Transparent" StrokeShape="RoundRectangle 20" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="DimGray" HeightRequest="40" WidthRequest="40" Padding="0" Margin="0">
+            <Border.GestureRecognizers>
                 <TapGestureRecognizer Tapped="SkipButtonClicked"/>
-            </Frame.GestureRecognizers>
+            </Border.GestureRecognizers>
             <Image Source="skip.png" HeightRequest="40" WidthRequest="40" />
-        </Frame>
-        <Frame x:Name="FinishButton" Grid.Row="2" Grid.Column="2" CornerRadius="20" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Green" HeightRequest="40" WidthRequest="40" Padding="0" Margin="0">
-            <Frame.GestureRecognizers>
+        </Border>
+        <Border x:Name="FinishButton" Grid.Row="2" Grid.Column="2" Stroke="Transparent" StrokeShape="RoundRectangle 20" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Green" HeightRequest="40" WidthRequest="40" Padding="0" Margin="0">
+            <Border.GestureRecognizers>
                 <TapGestureRecognizer Tapped="FinishButtonClicked"/>
-            </Frame.GestureRecognizers>
+            </Border.GestureRecognizers>
             <Image Source="save" HeightRequest="40" WidthRequest="40" >
                 <Image.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="White" />
                 </Image.Behaviors>
             </Image>
-        </Frame>
+        </Border>
 
         <controls:ToolTipControl x:Name="ToolTipCancelImplementingTraining" Text="{x:Static resx:AppResources.ToolTipCancelImplementingTraining}" Title="{x:Static resx:AppResources.Execution}" Grid.ColumnSpan="3" Grid.RowSpan="3"
                                      NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipWorkingCancel,Mode=TwoWay}"
@@ -88,13 +89,13 @@
                                      ParentHeight="{Binding Source={x:Reference MainGrid},Path=Height}"
                                      ParentWidth="{Binding Source={x:Reference MainGrid},Path=Width}">
             <controls:ToolTipControl.EmptyView>
-                <Frame CornerRadius="15" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Red" HeightRequest="30" WidthRequest="30" Padding="0" Margin="0">
+                <Border Stroke="Transparent" StrokeShape="RoundRectangle" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Red" HeightRequest="30" WidthRequest="30" Padding="0" Margin="0">
                     <Image Source="close.png" >
                         <Image.Behaviors>
                             <toolkit:IconTintColorBehavior TintColor="White" />
                         </Image.Behaviors>
                     </Image>
-                </Frame>
+                </Border>
             </controls:ToolTipControl.EmptyView>
         </controls:ToolTipControl>
         <controls:ToolTipControl Text="{x:Static resx:AppResources.ToolTipSkipExercise}" Title="{x:Static resx:AppResources.Execution}" Grid.ColumnSpan="3" Grid.RowSpan="3"
@@ -103,9 +104,9 @@
                                          ParentHeight="{Binding Source={x:Reference MainGrid},Path=Height}" Position="TopLeft" 
                                          ParentWidth="{Binding Source={x:Reference MainGrid},Path=Width}">
             <controls:ToolTipControl.EmptyView>
-                <Frame CornerRadius="15" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="DimGray" HeightRequest="30" WidthRequest="30" Padding="0" Margin="0">
+                <Border Stroke="Transparent" StrokeShape="RoundRectangle"  VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="DimGray" HeightRequest="30" WidthRequest="30" Padding="0" Margin="0">
                     <Image Source="skip.png" />
-                </Frame>
+                </Border>
             </controls:ToolTipControl.EmptyView>
         </controls:ToolTipControl>
         <controls:ToolTipControl Text="{x:Static resx:AppResources.ToolTipFinishExercise}" Title="{x:Static resx:AppResources.Execution}" Grid.ColumnSpan="3" Grid.RowSpan="3"
@@ -114,13 +115,13 @@
                                          ParentHeight="{Binding Source={x:Reference MainGrid},Path=Height}" Position="TopRight"
                                          ParentWidth="{Binding Source={x:Reference MainGrid},Path=Width}">
             <controls:ToolTipControl.EmptyView>
-                <Frame CornerRadius="15" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Green" HeightRequest="30" WidthRequest="30" Padding="0" Margin="0">
+                <Border Stroke="Transparent" StrokeShape="RoundRectangle" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Green" HeightRequest="30" WidthRequest="30" Padding="0" Margin="0">
                     <Image Source="save" >
                         <Image.Behaviors>
                             <toolkit:IconTintColorBehavior TintColor="White" />
                         </Image.Behaviors>
                     </Image>
-                </Frame>
+                </Border>
             </controls:ToolTipControl.EmptyView>
         </controls:ToolTipControl>
 

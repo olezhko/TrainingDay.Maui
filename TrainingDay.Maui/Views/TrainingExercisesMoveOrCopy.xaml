@@ -13,13 +13,13 @@
     </ContentPage.BindingContext>
     <StackLayout BackgroundColor="Transparent" VerticalOptions="Center" Margin="20,0">
         <StackLayout Orientation="Horizontal" VerticalOptions="Start" Spacing="5">
-            <Frame Style="{StaticResource MaterialFrame}">
+            <Border Style="{StaticResource MaterialBorder}">
                 <Grid>
                     <Label Text="{x:Static resx:AppResources.SelectTraining}" Style="{StaticResource MaterialLabel}" controls:MaterialLabelAttached.MaterialControlType="Picker"/>
                     <Picker SelectedItem="{Binding SelectedTrainingForCopyOrMove, Mode=TwoWay}" Title="{x:Static resx:AppResources.SelectTraining}"
                     ItemsSource="{Binding TrainingItems}" ItemDisplayBinding="{Binding Title}" HorizontalOptions="Fill" VerticalOptions="End"/>
                 </Grid>
-            </Frame>
+            </Border>
 
             <ImageButton Source="save" Command="{Binding AcceptTrainingForMoveOrCopyCommand}" HorizontalOptions="End" 
                      WidthRequest="50" HeightRequest="50" BackgroundColor="Transparent">

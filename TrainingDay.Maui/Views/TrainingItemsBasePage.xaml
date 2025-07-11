@@ -61,19 +61,19 @@
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame x:Name="viewCell" Style="{StaticResource FrameCellStyle}" Padding="15" Margin="0"
-                            CornerRadius="25" BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}"
+                    <Border x:Name="viewCell" Style="{StaticResource FrameCellStyle}" Padding="15" Margin="0" StrokeShape="RoundRectangle 25"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}"
                            controls:LongPressedEffect.Command="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.LongPressedEffectCommand}" 
                            controls:LongPressedEffect.CommandParameter="{Binding Source={x:Reference viewCell}}"
                            controls:LongPressedEffect.ClickCommand="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.ItemSelectedCommand}">
-                        <Frame.Effects>
+                        <Border.Effects>
                             <controls:LongPressedEffect />
-                        </Frame.Effects>
+                        </Border.Effects>
                         <StackLayout>
                             <Label Text="{Binding Title}" FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="Center"/>
                             <Label Text="{Binding LastImplementedDateTime,StringFormat={x:Static resx:AppResources.LastImplementedFormatString}}" FontSize="13" VerticalOptions="Center" HorizontalTextAlignment="Center" TextColor="Gray"/>
                         </StackLayout>
-                    </Frame>
+                    </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
             <CollectionView.EmptyView>

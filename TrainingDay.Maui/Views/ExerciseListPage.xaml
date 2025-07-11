@@ -67,10 +67,10 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
-                        <Frame Style="{StaticResource FrameCellStyle}" BackgroundColor="Transparent">
-                            <Frame.GestureRecognizers>
+                        <Border Style="{StaticResource FrameCellStyle}" BackgroundColor="Transparent">
+                            <Border.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="ListView_OnItemTapped"/>
-                            </Frame.GestureRecognizers>
+                            </Border.GestureRecognizers>
                             <Grid Margin="0" Padding="0" ColumnSpacing="2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="30" />
@@ -115,15 +115,15 @@
                                                     JustifyContent="Center" AlignItems="Center" AlignContent="Start">
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate>
-                                                <Frame Margin="1" Style="{StaticResource MuscleFrameCellStyle}">
+                                                <Border Margin="1" Style="{StaticResource MuscleFrameCellStyle}">
                                                     <Label FontSize="11" Text="{Binding Name}" TextColor="White" LineBreakMode="TailTruncation"/>
-                                                </Frame>
+                                                </Border>
                                             </DataTemplate>
                                         </BindableLayout.ItemTemplate>
                                     </FlexLayout>
                                 </StackLayout>
                             </Grid>
-                        </Frame>
+                        </Border>
 
                         <BoxView HeightRequest="1" BackgroundColor="gray" VerticalOptions="End"/>
                     </Grid>

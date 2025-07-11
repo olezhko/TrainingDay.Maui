@@ -28,7 +28,7 @@
                             SelectionChangedCommand="{Binding ItemTappedCommand}" SelectedItem="{Binding SelectedExercise}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Style="{StaticResource FrameCellStyle}">
+                    <Border Style="{StaticResource FrameCellStyle}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -75,16 +75,16 @@
                                                     JustifyContent="Center" AlignItems="Center" AlignContent="Start">
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate>
-                                                <Frame Style="{StaticResource MuscleFrameCellStyle}" Margin="1">
+                                                <Border Style="{StaticResource MuscleFrameCellStyle}" Margin="1">
                                                     <Label Text="{Binding Name}" FontSize="11" TextColor="White" LineBreakMode="TailTruncation"/>
-                                                </Frame>
+                                                </Border>
                                             </DataTemplate>
                                         </BindableLayout.ItemTemplate>
                                     </FlexLayout>
                                 </StackLayout>
                             </Grid>
                         </Grid>
-                    </Frame>
+                    </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

@@ -38,7 +38,7 @@
         <CollectionView.ItemTemplate>
             <DataTemplate>
                 <Grid>
-                    <Frame Style="{StaticResource FrameCellStyle}" Padding="10" Margin="0"
+                    <Border Style="{StaticResource FrameCellStyle}" Padding="10" Margin="0"
                            BackgroundColor="{AppThemeBinding Dark={StaticResource ListItemBackgroundColor}, Light={StaticResource ListItemBackgroundColorLight}}">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -102,15 +102,15 @@
                                                 Direction="Row" JustifyContent="Center" AlignItems="Center" AlignContent="Start">
                                     <BindableLayout.ItemTemplate>
                                         <DataTemplate>
-                                            <Frame Margin="1" Style="{StaticResource MuscleFrameCellStyle}">
+                                            <Border Margin="1" Style="{StaticResource MuscleFrameCellStyle}">
                                                 <Label FontSize="11" Text="{Binding Name}" TextColor="White" LineBreakMode="TailTruncation" />
-                                            </Frame>
+                                            </Border>
                                         </DataTemplate>
                                     </BindableLayout.ItemTemplate>
                                 </FlexLayout>
                             </StackLayout>
                         </Grid>
-                    </Frame>
+                    </Border>
                 </Grid>
             </DataTemplate>
         </CollectionView.ItemTemplate>

@@ -39,20 +39,20 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Frame Style="{StaticResource MaterialFrame}" Margin="5">
+        <Border Style="{StaticResource MaterialBorder}" Margin="5">
             <Grid>
                 <Label Text="{x:Static resx:AppResources.NameString}" Style="{StaticResource MaterialLabel}"/>
                 <Entry Text="{Binding Training.Title, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="22" VerticalOptions="End"/>
             </Grid>
-        </Frame>
+        </Border>
 
         <CollectionView ItemsSource="{Binding Training.Exercises}" Grid.Row="1" x:Name="ItemsListView" SelectionMode="Single"
                     ItemsUpdatingScrollMode="KeepScrollOffset" VerticalScrollBarVisibility="Never">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid RowDefinitions="auto,*" RowSpacing="0" Padding="0" >
-                        <Frame Grid.Row="0" MinimumHeightRequest="80" x:Name="viewCell" Style="{StaticResource FrameCellStyle}" Margin="5,4,5,5">
-                            <Frame.GestureRecognizers>
+                        <Border Grid.Row="0" MinimumHeightRequest="80" x:Name="viewCell" Style="{StaticResource FrameCellStyle}" Margin="5,4,5,5">
+                            <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding BindingContext.ItemTappedCommand, Source={x:Reference ItemsListView}}"
                                               CommandParameter="{Binding}"/>
                                 <DropGestureRecognizer
@@ -63,7 +63,7 @@
                                     DragOverCommandParameter="{Binding}"
                                     DropCommand="{Binding BindingContext.ItemDropped, Source={x:Reference ItemsListView}}"
                                     DropCommandParameter="{Binding}" />
-                            </Frame.GestureRecognizers>
+                            </Border.GestureRecognizers>
                             <Grid Padding="0" Margin="5" ColumnSpacing="3">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="70"/>
@@ -71,7 +71,7 @@
                                     <ColumnDefinition Width="40"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Frame Grid.Column="0" HeightRequest="70" WidthRequest="70" VerticalOptions="Center" BackgroundColor="White" CornerRadius="5" BorderColor="Transparent">
+                                <Border Grid.Column="0" HeightRequest="70" WidthRequest="70" VerticalOptions="Center" BackgroundColor="White" Stroke="Transparent">
                                     <Grid HeightRequest="70" WidthRequest="70">
                                         <controls:ImageCache x:Name="ImageControl" HeightRequest="70" WidthRequest="70" CodeNum="{Binding CodeNum}">
                                             <controls:ImageCache.GestureRecognizers>
@@ -95,7 +95,7 @@
                                             </Label>
                                         </Grid>
                                     </Grid>
-                                </Frame>
+                                </Border>
 
                                 <CheckBox Grid.Column="2" VerticalOptions="Center" IsChecked="{Binding IsSelected, Mode=TwoWay}" HorizontalOptions="CenterAndExpand"
                                   IsVisible="{Binding IsCheckBoxVisible}">
@@ -111,9 +111,9 @@
                                                 Direction="Row" JustifyContent="Center" AlignItems="Center" AlignContent="Start">
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate>
-                                                <Frame Style="{StaticResource MuscleFrameCellStyle}" Margin="1">
+                                                <Border Style="{StaticResource MuscleFrameCellStyle}" Margin="1">
                                                     <Label Text="{Binding Name}" FontSize="11" TextColor="White" LineBreakMode="TailTruncation"/>
-                                                </Frame>
+                                                </Border>
                                             </DataTemplate>
                                         </BindableLayout.ItemTemplate>
                                     </FlexLayout>
@@ -127,7 +127,7 @@
                                     </ImageButton.Behaviors>
                                 </ImageButton>
                             </Grid>
-                        </Frame>
+                        </Border>
 
                         <BoxView Grid.Row="1" HeightRequest="1" BackgroundColor="gray" VerticalOptions="End"/>
                     </Grid>

@@ -24,21 +24,21 @@
             <StackLayout Spacing="10">
                 <Label Text="{x:Static resx:AppResources.SettingsString}" FontSize="Title" HorizontalOptions="Center"/>
 
-                <Frame Style="{StaticResource MaterialFrame}">
+                <Border Style="{StaticResource MaterialBorder}">
                     <Grid>
                         <Label Text="{x:Static resx:AppResources.ChooseLanguage}" Style="{StaticResource MaterialLabel}" controls:MaterialLabelAttached.MaterialControlType="Picker" />
                         <Picker x:Name="LanguagePicker" BackgroundColor="Transparent" HorizontalOptions="Fill" ItemDisplayBinding="{Binding NativeName}" Title="{x:Static resx:AppResources.ChooseLanguage}"
                                     VerticalOptions="End"/>
                     </Grid>
-                </Frame>
+                </Border>
 
-                <Frame Style="{StaticResource MaterialFrame}">
+                <Border Style="{StaticResource MaterialBorder}">
                     <Grid>
                         <Label Text="{x:Static resx:AppResources.MeasureWeight}" Style="{StaticResource MaterialLabel}" controls:MaterialLabelAttached.MaterialControlType="Picker" />
                         <Picker x:Name="MeasureWeightPicker" BackgroundColor="Transparent" HorizontalOptions="Fill" Title="{x:Static resx:AppResources.MeasureWeight}"
                                     VerticalOptions="End"/>
                     </Grid>
-                </Frame>
+                </Border>
 
                 <StackLayout Margin="5">
                     <StackLayout Orientation="Horizontal">

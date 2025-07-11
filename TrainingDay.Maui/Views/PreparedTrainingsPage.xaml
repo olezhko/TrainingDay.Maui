@@ -20,11 +20,11 @@
         <CollectionView Grid.Row="1" Margin="5,0" BackgroundColor="Transparent" ItemsSource="{Binding PreparedTrainingsCollection}" SelectionMode="Single">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Style="{StaticResource FrameCellStyle}" VerticalOptions="Fill" CornerRadius="0">
-                        <Frame.GestureRecognizers>
+                    <Border Style="{StaticResource FrameCellStyle}" VerticalOptions="Fill" Stroke="Transparent">
+                        <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:PreparedTrainingsPageViewModel}}, Path=ItemSelectedCommand}"
                             CommandParameter="{Binding .}" NumberOfTapsRequired="1" />
-                        </Frame.GestureRecognizers>
+                        </Border.GestureRecognizers>
                         <Grid Padding="0" VerticalOptions="Fill">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="80" />
@@ -51,7 +51,7 @@
                                 </Image.Behaviors>
                             </Image>
                         </Grid>
-                    </Frame>
+                    </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

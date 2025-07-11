@@ -30,7 +30,9 @@ class WeightViewAndSetPageViewModel : BaseViewModel
 {
     public ObservableCollection<BodyControlItem> BodyControlItems { get; set; } = new ObservableCollection<BodyControlItem>();
     public ICommand WeightPeriodChangedCommand { get; set; }
-    public ICommand SaveValueCommand => new Command<BodyControlItem>(SaveCurrentValue);
+    public ICommand SaveValueCommand => new Command(SaveCurrentValue);
+
+    public BodyControlItem CurrentItem { get; set; }
 
     public WeightViewAndSetPageViewModel()
     {
@@ -62,8 +64,9 @@ class WeightViewAndSetPageViewModel : BaseViewModel
         PrepareBodyControlItems(ChartWeightPeriod.Week);
     }
 
-    private async void SaveCurrentValue(BodyControlItem sender)
+    private async void SaveCurrentValue()
     {
+        var sender = CurrentItem;
         var type = sender.Type;
         switch (type)
         {
@@ -90,8 +93,8 @@ class WeightViewAndSetPageViewModel : BaseViewModel
         sender.Chart = PrepareChart(sender.GoalValue, sender.ChartItems);
         await Toast.Make(Resources.Strings.AppResources.SavedString).Show();
 
-		var dataService = IPlatformApplication.Current.Services.GetService<IDataService>();
-		await dataService.PostAction(Settings.Token, MobileActions.Weight);
+		//var dataService = IPlatformApplication.Current.Services.GetService<IDataService>();
+		//await dataService.PostAction(Settings.Token, MobileActions.Weight);
 
 		OnPropertyChanged(nameof(BodyControlItems));
     }

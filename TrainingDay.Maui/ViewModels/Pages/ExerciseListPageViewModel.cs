@@ -83,7 +83,25 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
             .Union(selectedIndexes)
             .Distinct();
 
-        List<ExerciseListItemViewModel> resultItems = [.. BaseItems.Where(item => ids.Contains(item.Id))];
+        
+        List<ExerciseListItemViewModel> resultItems = new List<ExerciseListItemViewModel>();
+
+        foreach (var id in ids)
+        {
+            var item = BaseItems.FirstOrDefault(x => x.Id == id);
+            if (item != null)
+            {
+                resultItems.Add(item);
+            }
+            else
+            {
+                item = Items.FirstOrDefault(x => x.Id == id);
+                if (item != null)
+                {
+                    resultItems.Add(item);
+                }
+            }
+        }
 
         return resultItems;
     }

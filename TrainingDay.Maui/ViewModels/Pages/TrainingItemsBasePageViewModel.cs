@@ -21,7 +21,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
     {
         ItemsGrouped = new ObservableCollection<Grouping<string, TrainingViewModel>>();
         AddNewTrainingCommand = new Command(AddNewTraining);
-        ItemSelectedCommand = new Command<Frame>(TrainingSelected);
+        ItemSelectedCommand = new Command<Border>(TrainingSelected);
         SubscribeMessages();
     }
 
@@ -161,7 +161,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         await Shell.Current.GoToAsync(nameof(PreparedTrainingsPage));
     }
 
-    private async void DeleteSelectedTraining(Frame viewCell)
+    private async void DeleteSelectedTraining(Border viewCell)
     {
         try
         {
@@ -197,14 +197,14 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         }
     }
 
-    private async void TrainingSelected(Frame viewCell)
+    private async void TrainingSelected(Border viewCell)
     {
         LoggingService.TrackEvent($"{GetType().Name}: TrainingSelected Clicked");
         var item = (TrainingViewModel)viewCell.BindingContext;
         await Shell.Current.GoToAsync($"{nameof(TrainingExercisesPage)}?{nameof(TrainingExercisesPageViewModel.ItemId)}={item.Id}");
     }
 
-    private void DuplicateSelectedTraining(Frame viewCell)
+    private void DuplicateSelectedTraining(Border viewCell)
     {
         LoggingService.TrackEvent($"{GetType().Name}: DuplicateSelectedTraining Clicked");
         var training = (TrainingViewModel)viewCell.BindingContext;
@@ -235,7 +235,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         LoadItems();
     }
 
-    private void AddToGroup(Frame viewCell)
+    private void AddToGroup(Border viewCell)
     {
         LoggingService.TrackEvent($"{GetType().Name}: AddToGroup started");
 
@@ -247,7 +247,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         });
     }
 
-    private void DeleteFromGroup(Frame viewCell)
+    private void DeleteFromGroup(Border viewCell)
     {
         LoggingService.TrackEvent($"{GetType().Name}: Delete From Group");
 
@@ -292,7 +292,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         group.IsSelected = true;
     }
 
-    private async void LongPressed(Frame sender)
+    private async void LongPressed(Border sender)
     {
         if (isLongPressPopupOpened)
         {
@@ -349,6 +349,6 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
 
     public Command<object> SelectGroupCommand => new Command<object>(SelectGroup);
 
-    public ICommand LongPressedEffectCommand => new Command<Frame>(LongPressed);
+    public ICommand LongPressedEffectCommand => new Command<Border>(LongPressed);
     #endregion
 }

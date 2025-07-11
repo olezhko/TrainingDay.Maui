@@ -206,14 +206,14 @@
             JustifyContent="Center" AlignItems="Center" AlignContent="Start">
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
-                    <Frame Margin="1" Style="{StaticResource MuscleFrameCellStyle}">
+                    <Border Margin="1" Style="{StaticResource MuscleFrameCellStyle}">
                         <Label FontSize="14" Text="{Binding Name}" TextColor="White" LineBreakMode="TailTruncation" />
-                    </Frame>
+                    </Border>
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </FlexLayout>
 
-        <Frame Grid.Row="4" Margin="0" Padding="0" Style="{StaticResource FrameCellStyle}" VerticalOptions="Fill" IsVisible="True">
+        <Border Grid.Row="4" Margin="0" Padding="0" Style="{StaticResource FrameCellStyle}" VerticalOptions="Fill" IsVisible="True">
             <StackLayout>
                 <Grid ColumnDefinitions="*,*">
                     <Label x:Name="DesctiptionLabel" Padding="10" Grid.ColumnSpan="2" BackgroundColor="Green" Text="{x:Static resx:AppResources.ShortDescriptionString1}"
@@ -263,6 +263,6 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </StackLayout>
-        </Frame>
+        </Border>
     </Grid>
 </ContentView>

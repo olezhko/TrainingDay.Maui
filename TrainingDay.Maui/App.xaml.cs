@@ -48,7 +48,6 @@ namespace TrainingDay.Maui
         {
             InitializeComponent();
             LocalizationResourceManager.Instance.SetCulture(Settings.GetLanguage());
-            MainPage = new AppShell();
             ToolTipManager = new ToolTipManager();
 
             AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
@@ -56,6 +55,11 @@ namespace TrainingDay.Maui
                 Exception ex = (Exception)args.ExceptionObject;
                 LoggingService.TrackError(ex);
             };
+        }
+
+        protected override Window CreateWindow(IActivationState? activationState)
+        {
+            return new Window(new AppShell());
         }
 
         protected override void OnStart()

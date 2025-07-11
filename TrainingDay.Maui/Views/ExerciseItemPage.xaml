@@ -33,13 +33,13 @@
         <ScrollView>
             <Grid x:Name="ContentGrid" RowDefinitions="auto,auto,auto,auto,auto" RowSpacing="10">
 
-                <Frame Grid.Row="0" Style="{StaticResource MaterialFrame}" IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}">
+                <Border Grid.Row="0" Style="{StaticResource MaterialBorder}" IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}">
                     <Grid>
                         <Label Text="{x:Static resx:AppResources.NameString}" Style="{StaticResource MaterialLabel}"/>
                         <Entry x:Name="NameEditor" FontSize="22" IsReadOnly="{Binding IsBase}" 
                             Keyboard="Text" Text="{Binding Name}" VerticalOptions="End"/>
                     </Grid>
-                </Frame>
+                </Border>
 
                 <Label
             x:Name="NameLabel"
@@ -49,16 +49,14 @@
             Text="{Binding Name}"
             VerticalOptions="Start" />
 
-                <Frame
+                <Border
             Grid.Row="1"
             Padding="0"
-            BorderColor="Black"
-            CornerRadius="2"
             HeightRequest="120"
             HorizontalOptions="Center"
             WidthRequest="120">
                     <controls:ImageCache CodeNum="{Binding CodeNum, Mode=TwoWay}" />
-                </Frame>
+                </Border>
 
                 <StackLayout Grid.Row="2">
                     <Button CornerRadius="20" Text="{x:Static resx:AppResources.SelectMusclesString}" IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}" 
@@ -68,9 +66,9 @@
                                                     JustifyContent="Center" AlignItems="Center" AlignContent="Start">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate>
-                                    <Frame Margin="1" Style="{StaticResource MuscleFrameCellStyle}">
+                                    <Border Margin="1" Style="{StaticResource MuscleFrameCellStyle}">
                                         <Label FontSize="14" Text="{Binding Name}" TextColor="White" LineBreakMode="TailTruncation" />
-                                    </Frame>
+                                    </Border>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </FlexLayout>

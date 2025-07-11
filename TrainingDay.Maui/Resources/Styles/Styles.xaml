@@ -157,30 +157,29 @@
         </Setter>
     </Style>
 
-    <Style TargetType="Frame">
-        <Setter Property="HasShadow" Value="False" />
-        <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />
-        <Setter Property="CornerRadius" Value="8" />
+    <Style TargetType="Border">
+        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 10"/>
     </Style>
 
-    <Style TargetType="Frame" ApplyToDerivedTypes="True" x:Key="MuscleFrameCellStyle">
+    <Style TargetType="Border" ApplyToDerivedTypes="True" x:Key="MuscleFrameCellStyle">
         <Setter Property="Margin" Value="1"/>
         <Setter Property="Padding" Value="7,3"/>
-        <Setter Property="BorderColor" Value="Transparent"/>
-        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="Stroke" Value="Transparent"/>
+        <Setter Property="StrokeShape" Value="RoundRectangle 10"/>
         <Setter Property="BackgroundColor" Value="Gray"/>
     </Style>
-    <Style TargetType="Frame" ApplyToDerivedTypes="True" x:Key="FrameCellStyle">
-        <Setter Property="BorderColor" Value="Transparent"/>
-        <Setter Property="CornerRadius" Value="5"/>
+    <Style TargetType="Border" ApplyToDerivedTypes="True" x:Key="BorderCellStyle">
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 5"/>
         <Setter Property="Margin" Value="10"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
-    <Style TargetType="Frame" x:Key="MaterialFrame">
+    <Style TargetType="Border" x:Key="MaterialBorder">
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}" />
-        <Setter Property="BorderColor" Value="Transparent" />
-        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 5"/>
         <Setter Property="Padding" Value="5"/>
     </Style>
     <Style TargetType="Label" x:Key="MaterialLabel">
