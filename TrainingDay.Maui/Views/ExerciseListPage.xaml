@@ -67,7 +67,7 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
-                        <Border Style="{StaticResource FrameCellStyle}" BackgroundColor="Transparent">
+						<Border Style="{StaticResource BorderCellStyle}" BackgroundColor="Transparent">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="ListView_OnItemTapped"/>
                             </Border.GestureRecognizers>
@@ -78,30 +78,29 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
-                                <Frame Grid.Column="0" Padding="0" BackgroundColor="Green" CornerRadius="10" HorizontalOptions="Center" IsVisible="{Binding IsExerciseExistsInWorkout}"
-                        VerticalOptions="Start" WidthRequest="20" BorderColor="Transparent" HeightRequest="20" >
+								<Border StrokeShape="RoundRectangle 10" Grid.Column="0" Padding="0" BackgroundColor="Green" HorizontalOptions="Center" IsVisible="{Binding IsExerciseExistsInWorkout}"
+                        VerticalOptions="Start" WidthRequest="20" Stroke="Transparent" HeightRequest="20" >
                                     <Image HeightRequest="20" Source="save" WidthRequest="20" >
                                         <Image.Behaviors>
                                             <toolkit:IconTintColorBehavior TintColor="White" />
                                         </Image.Behaviors>
                                     </Image>
-                                </Frame>
+                                </Border>
 
                                 <CheckBox x:Name="SelectCheckBox" IsChecked="{Binding IsSelected}" VerticalOptions="Center" />
-                                <Frame
+								<Border StrokeShape="RoundRectangle 5"
                     Grid.Row="0"
                     Grid.Column="1"
                     Margin="0"
                     Padding="5"
                     BackgroundColor="White"
-                    CornerRadius="5"
                     HorizontalOptions="Center"
                     VerticalOptions="Center">
                                     <controls:ImageCache
                         HeightRequest="60"
                         CodeNum="{Binding CodeNum}"
                         WidthRequest="60" />
-                                </Frame>
+                                </Border>
 
                                 <StackLayout Grid.Column="2" VerticalOptions="Center">
                                     <Label
@@ -115,7 +114,7 @@
                                                     JustifyContent="Center" AlignItems="Center" AlignContent="Start">
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate>
-                                                <Border Margin="1" Style="{StaticResource MuscleFrameCellStyle}">
+                                                <Border Margin="1" Style="{StaticResource MuscleBorderCellStyle}">
                                                     <Label FontSize="11" Text="{Binding Name}" TextColor="White" LineBreakMode="TailTruncation"/>
                                                 </Border>
                                             </DataTemplate>

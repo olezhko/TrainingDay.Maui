@@ -22,13 +22,13 @@
         <Grid>
             <controls:ExerciseView x:Name="ExerciseView" ImageTappedEvent="ExerciseView_OnImageTappedEvent" />
 
-            <Frame HeightRequest="250" WidthRequest="250" IsVisible="False" x:Name="ImageFrame" VerticalOptions="Center" HorizontalOptions="Center">
+            <Border HeightRequest="250" WidthRequest="250" IsVisible="False" x:Name="ImageFrame" VerticalOptions="Center" HorizontalOptions="Center">
                 <Image x:Name="FullscreenImage">
                     <Image.GestureRecognizers>
                         <TapGestureRecognizer Tapped="FullscreenImageTapped"/>
                     </Image.GestureRecognizers>
                 </Image>
-            </Frame>
+            </Border>
         </Grid>
     </ScrollView>
 </ContentPage>

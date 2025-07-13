@@ -51,7 +51,7 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid RowDefinitions="auto,*" RowSpacing="0" Padding="0" >
-                        <Border Grid.Row="0" MinimumHeightRequest="80" x:Name="viewCell" Style="{StaticResource FrameCellStyle}" Margin="5,4,5,5">
+                        <Border Grid.Row="0" MinimumHeightRequest="80" x:Name="viewCell" Style="{StaticResource BorderCellStyle}" Margin="5,4,5,5">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding BindingContext.ItemTappedCommand, Source={x:Reference ItemsListView}}"
                                               CommandParameter="{Binding}"/>
@@ -111,7 +111,7 @@
                                                 Direction="Row" JustifyContent="Center" AlignItems="Center" AlignContent="Start">
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate>
-                                                <Border Style="{StaticResource MuscleFrameCellStyle}" Margin="1">
+                                                <Border Style="{StaticResource MuscleBorderCellStyle}" Margin="1">
                                                     <Label Text="{Binding Name}" FontSize="11" TextColor="White" LineBreakMode="TailTruncation"/>
                                                 </Border>
                                             </DataTemplate>

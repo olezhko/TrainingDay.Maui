@@ -20,14 +20,14 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="0" Padding="0">
-                        <Frame Style="{DynamicResource FrameCellStyle}" CornerRadius="20" Padding="10" Margin="0"
+						<Border StrokeShape="RoundRectangle 20" Style="{DynamicResource BorderCellStyle}" Padding="10" Margin="0"
                            BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight},Dark={StaticResource ListItemBackgroundColor}}" >
-                            <Frame.GestureRecognizers>
+                            <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Source={x:Reference Page}, Path=BindingContext.OpenBlogCommand}" CommandParameter="{Binding }"/>
-                            </Frame.GestureRecognizers>
+                            </Border.GestureRecognizers>
 
                             <Label Text="{Binding Title}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                        </Frame>
+                        </Border>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

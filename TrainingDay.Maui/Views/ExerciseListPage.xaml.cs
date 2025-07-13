@@ -95,7 +95,7 @@ public partial class ExerciseListPage : ContentPage
 
     private async void ListView_OnItemTapped(object sender, TappedEventArgs e)
     {
-        ExerciseListItemViewModel? selected = ((Frame)sender).BindingContext as ExerciseListItemViewModel;
+        ExerciseListItemViewModel? selected = ((Border)sender).BindingContext as ExerciseListItemViewModel;
 
         await Shell.Current.GoToAsync($"{nameof(ExerciseItemPage)}?{nameof(ExerciseViewModel.LoadId)}={selected.Id}");
     }

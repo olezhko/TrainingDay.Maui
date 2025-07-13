@@ -29,12 +29,12 @@
 
         <ScrollView Grid.Row="1" Orientation="Vertical">
             <VerticalStackLayout BindingContext="{Binding Source={x:Reference Self}, Path=CurrentItem}" Spacing="5">
-                <Frame Padding="5" BackgroundColor="White" CornerRadius="5" HorizontalOptions="Center" VerticalOptions="Center" 
-                    BorderColor="Transparent" Margin="5,0">
+                <Border Padding="5" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" 
+                    Stroke="Transparent" Margin="5,0">
                     <controls:ImageCache x:Name="ImageControl" HeightRequest="200" CodeNum="{Binding CodeNum}" WidthRequest="200"/>
-                </Frame>
+                </Border>
                 <StackLayout Spacing="0">
-                    <Frame CornerRadius="20" Padding="10" HorizontalOptions="Center" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByReps}}"
+                    <Border StrokeShape="RoundRectangle 20" Padding="10" HorizontalOptions="Center" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByReps}}"
                            BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}">
                         <CollectionView HorizontalOptions="Center" ItemsSource="{Binding WeightAndRepsItems}" HeightRequest="90" VerticalOptions="Center">
                             <CollectionView.ItemsLayout>
@@ -43,7 +43,7 @@
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid RowDefinitions="auto,45" RowSpacing="2">
-                                        <Frame BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
+                                        <Border BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
                                         <Entry Margin="0" FontSize="Medium" Keyboard="Numeric" MaxLength="3" Text="{Binding Repetitions, Mode=TwoWay}" MinimumWidthRequest="50" HorizontalTextAlignment="Center" />
                                         <ImageButton Grid.Row="1" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" HorizontalOptions="Center" CornerRadius="17"
                                             IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}" Source="save" VerticalOptions="Fill" WidthRequest="35">
@@ -67,9 +67,9 @@
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
-                    </Frame>
+                    </Border>
 
-                    <Frame CornerRadius="20" Padding="10" HorizontalOptions="Center" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByRepsAndWeight}}"
+					<Border StrokeShape="RoundRectangle 20" Padding="10" HorizontalOptions="Center" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByRepsAndWeight}}"
                            BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}">
                         <CollectionView HorizontalOptions="Center" ItemsSource="{Binding WeightAndRepsItems}" HeightRequest="140" VerticalOptions="Center">
                             <CollectionView.ItemsLayout>
@@ -78,8 +78,8 @@
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid RowDefinitions="auto,auto,auto" RowSpacing="2" VerticalOptions="Center">
-                                        <Frame BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
-                                        <Frame Grid.Row="2" BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
+                                        <Border BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
+                                        <Border Grid.Row="2" BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
                                         <Entry Margin="0" FontSize="Medium" Keyboard="Numeric" MaxLength="3" Text="{Binding Repetitions, Mode=TwoWay}" HorizontalTextAlignment="Center" MinimumWidthRequest="50"/>
                                         <ImageButton Grid.Row="1" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" HorizontalOptions="Center" CornerRadius="17"
                                             IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}" Source="save" VerticalOptions="Fill" WidthRequest="35">
@@ -105,7 +105,7 @@
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
-                    </Frame>
+                    </Border>
                     
                     <StackLayout Margin="0" Padding="0" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}"
              Orientation="Horizontal" Spacing="0">

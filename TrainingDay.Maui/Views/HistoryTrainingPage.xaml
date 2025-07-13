@@ -35,7 +35,7 @@
         <CollectionView.ItemTemplate>
             <DataTemplate>
                 <Grid>
-                    <Border Style="{StaticResource FrameCellStyle}" Padding="10" Margin="0" StrokeShape="RoundRectangle 25"
+                    <Border Style="{StaticResource BorderCellStyle}" Padding="10" Margin="0" StrokeShape="RoundRectangle 25"
                            BackgroundColor="{AppThemeBinding Dark={StaticResource ListItemBackgroundColor}, Light={StaticResource ListItemBackgroundColorLight}}">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HistoryTrainingPageViewModel}}, Path=ItemSelectedCommand}"

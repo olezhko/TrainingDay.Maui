@@ -39,6 +39,10 @@ public class ImageCache : Image
                 {
                     Source = ImageSource.FromStream(() => Stream(imageSource));
                 }
+                else
+                {
+					Source = "main.png";
+				}
             }
             else
             {

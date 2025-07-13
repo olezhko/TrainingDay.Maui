@@ -39,8 +39,6 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
     public ICommand ShowTrainingSettingsPageCommand => new Command(ShowTrainingSettingsPage);
 
-    public ICommand SelectAllCommand => new Command(SelectAllItems);
-
     public ICommand AddExercisesCommand => new Command(AddExercises);
 
     public ICommand ExercisesCheckedChangedCommand => new Command<TrainingExerciseViewModel>(CollectCheckedExercises);
@@ -142,13 +140,6 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         OnPropertyChanged(nameof(Training.Exercises));
     }
     #endregion
-
-    public void StartSelectExercises()
-    {
-        CurrentAction = ExerciseCheckBoxAction.Select;
-        OnPropertyChanged(nameof(CurrentAction));
-        PrepareAction(Resources.Strings.AppResources.SaveTrainingString);
-    }
 
     private async void AddExercises()
     {
@@ -294,7 +285,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         int order = 0;
         foreach (var item in Training.Exercises)
         {
-            if (!item.IsSelected && CurrentAction == ExerciseCheckBoxAction.Select)
+            if (!item.IsSelected)
             {
                 continue;
             }
@@ -329,11 +320,6 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
     private void CollectCheckedExercises(TrainingExerciseViewModel item)
     {
-        if (CurrentAction == ExerciseCheckBoxAction.Select)
-        {
-            return;
-        }
-
         if (item.IsSelected)
         {
             if (selectedItems.All(sel => sel.Id != item.Id))
@@ -435,20 +421,11 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
                 case ExerciseCheckBoxAction.Copy:
                     Toast.Make(Resources.Strings.AppResources.CopyExercisesFinishedMessage).Show();
                     break;
-                case ExerciseCheckBoxAction.Select:
-                    //DependencyService.Get<IMessage>().ShortAlert("Select Items");
-                    break;
             }
         }
         else
         {
             Training.Exercises.ForEach(item => item.IsSelected = false);
-            if (CurrentAction == ExerciseCheckBoxAction.Select)
-            {
-                //Navigation.PopAsync(false);
-                //Navigation.PopAsync();
-                return;
-            }
         }
 
         selectedItems.Clear();
@@ -462,14 +439,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
     private async void StartAction()
     {
         LoggingService.TrackEvent($"{GetType().Name}: StartAction {CurrentAction} Started");
-        if (CurrentAction == ExerciseCheckBoxAction.Select)
-        {
-            SaveTraining();
-            StopAction(true);
-            //Navigation.PopAsync(false);
-            //Navigation.PopAsync();
-        }
-        else if (CurrentAction == ExerciseCheckBoxAction.Copy || CurrentAction == ExerciseCheckBoxAction.Move)
+        if (CurrentAction == ExerciseCheckBoxAction.Copy || CurrentAction == ExerciseCheckBoxAction.Move)
         {
             ReFillTrainingToCopyOrMove();
 
@@ -485,7 +455,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
             }
             else
             {
-                MessageManager.DisplayAlert(Resources.Strings.AppResources.Denied, Resources.Strings.AppResources.SupersetInvalidMessage, Resources.Strings.AppResources.OkString);
+                await MessageManager.DisplayAlert(Resources.Strings.AppResources.Denied, Resources.Strings.AppResources.SupersetInvalidMessage, Resources.Strings.AppResources.OkString);
             }
         }
     }
@@ -629,17 +599,6 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         }
     }
 
-    private void SelectAllItems()
-    {
-        Training.Exercises.ForEach(item =>
-        {
-            item.IsSelected = isSelectAllState;
-            selectedItems.Add(item.Clone());
-        });
-
-        isSelectAllState = !isSelectAllState;
-    }
-
     private void SaveNewExerciseOrder()
     {
         int order = 0;
@@ -750,5 +709,4 @@ public enum ExerciseCheckBoxAction
     SuperSet,
     Move,
     Copy,
-    Select,
 }

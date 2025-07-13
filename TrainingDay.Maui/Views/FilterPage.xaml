@@ -66,32 +66,28 @@
             Wrap="Wrap">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
-                        <Frame
-                        Margin="1"
-                        Padding="10,5"
-                        BorderColor="White"
-                        CornerRadius="5">
-                            <Frame.GestureRecognizers>
+                        <Border Stroke="White" StrokeShape="RoundRectangle 5" Margin="1" Padding="10,5">
+                            <Border.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="MusclesListView_OnItemTapped" />
-                            </Frame.GestureRecognizers>
-                            <Frame.Style>
-                                <Style TargetType="Frame">
+                            </Border.GestureRecognizers>
+                            <Border.Style>
+                                <Style TargetType="Border">
                                     <Style.Triggers>
                                         <DataTrigger
                                         Binding="{Binding IsChecked}"
-                                        TargetType="Frame"
+                                        TargetType="Border"
                                         Value="True">
                                             <Setter Property="BackgroundColor" Value="White" />
                                         </DataTrigger>
                                         <DataTrigger
                                         Binding="{Binding IsChecked}"
-                                        TargetType="Frame"
+                                        TargetType="Border"
                                         Value="False">
                                             <Setter Property="BackgroundColor" Value="DimGray" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
-                            </Frame.Style>
+                            </Border.Style>
                             <Label FontSize="Default" Text="{Binding Text}">
                                 <Label.Style>
                                     <Style TargetType="Label">
@@ -112,7 +108,7 @@
                                     </Style>
                                 </Label.Style>
                             </Label>
-                        </Frame>
+                        </Border>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </FlexLayout>

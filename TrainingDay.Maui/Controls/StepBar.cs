@@ -1,4 +1,6 @@
-﻿namespace TrainingDay.Maui.Controls;
+﻿using Microsoft.Maui.Controls.Shapes;
+
+namespace TrainingDay.Maui.Controls;
 
 public class StepBar : ContentView
 {
@@ -124,14 +126,16 @@ public class StepBar : ContentView
             TextColor = Colors.White
         };
 
-        var frame = new Frame
+        var frame = new Border
         {
             Content = label,
             WidthRequest = 40,
             HeightRequest = 40,
-            CornerRadius = 20,
+            StrokeShape = new RoundRectangle()
+            {
+                CornerRadius = 20
+            },
             Padding = 0,
-            HasShadow = false
         };
 
         // Tag the index for easy lookup in UpdateColors()
@@ -150,7 +154,7 @@ public class StepBar : ContentView
                 case int circleNumber:
                     stepIndex++;
                     bool finished = circleNumber <= CurrentStep;
-                    ((Frame)child).BackgroundColor = finished ? FinishedColor : UnfinishedColor;
+                    ((Border)child).BackgroundColor = finished ? FinishedColor : UnfinishedColor;
                     break;
 
                 case "line":

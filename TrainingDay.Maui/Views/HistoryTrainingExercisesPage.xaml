@@ -38,7 +38,7 @@
         <CollectionView.ItemTemplate>
             <DataTemplate>
                 <Grid>
-                    <Border Style="{StaticResource FrameCellStyle}" Padding="10" Margin="0"
+                    <Border Style="{StaticResource BorderCellStyle}" Padding="10" Margin="0"
                            BackgroundColor="{AppThemeBinding Dark={StaticResource ListItemBackgroundColor}, Light={StaticResource ListItemBackgroundColorLight}}">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -46,9 +46,9 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <Frame Padding="5" BackgroundColor="White" CornerRadius="5" HorizontalOptions="Center" VerticalOptions="Center" BorderColor="Transparent">
+                            <Border Padding="5" BackgroundColor="White" StrokeShape="RoundRectangle 5" HorizontalOptions="Center" VerticalOptions="Center" Stroke="Transparent">
                                 <controls:ImageCache HeightRequest="60" CodeNum="{Binding CodeNum}" WidthRequest="60" BackgroundColor="Transparent"/>
-                            </Frame>
+                            </Border>
 
                             <StackLayout Grid.Column="1">
                                 <Label HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Center" Text="{Binding Name}"
@@ -102,7 +102,7 @@
                                                 Direction="Row" JustifyContent="Center" AlignItems="Center" AlignContent="Start">
                                     <BindableLayout.ItemTemplate>
                                         <DataTemplate>
-                                            <Border Margin="1" Style="{StaticResource MuscleFrameCellStyle}">
+                                            <Border Margin="1" Style="{StaticResource MuscleBorderCellStyle}">
                                                 <Label FontSize="11" Text="{Binding Name}" TextColor="White" LineBreakMode="TailTruncation" />
                                             </Border>
                                         </DataTemplate>

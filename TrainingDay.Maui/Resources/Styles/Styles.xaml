@@ -28,14 +28,38 @@
         <Setter Property="WidthRequest" Value="40"/>
         <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
     </Style>
-    
-    <Style TargetType="Border">
-        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />
-        <Setter Property="StrokeShape" Value="Rectangle"/>
-        <Setter Property="StrokeThickness" Value="1"/>
-    </Style>
 
-    <Style TargetType="BoxView">
+	<Style TargetType="Border">
+		<Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />
+		<Setter Property="StrokeShape" Value="RoundRectangle 5"/>
+		<Setter Property="StrokeThickness" Value="1"/>
+	</Style>
+
+	<Style TargetType="Border"
+		   x:Key="MuscleBorderCellStyle">
+		<Setter Property="Margin" Value="1"/>
+		<Setter Property="Padding" Value="7,3"/>
+		<Setter Property="Stroke" Value="Transparent"/>
+		<Setter Property="StrokeShape" Value="RoundRectangle 10"/>
+		<Setter Property="BackgroundColor" Value="Gray"/>
+	</Style>
+	<Style TargetType="Border"
+		   x:Key="BorderCellStyle">
+		<Setter Property="Stroke" Value="Transparent" />
+		<Setter Property="StrokeShape" Value="RoundRectangle 5"/>
+		<Setter Property="Margin" Value="10"/>
+		<Setter Property="Padding" Value="0"/>
+		<Setter Property="BackgroundColor" Value="Transparent"/>
+	</Style>
+	<Style TargetType="Border" 
+		   x:Key="MaterialBorder">
+		<Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}" />
+		<Setter Property="Stroke" Value="Transparent" />
+		<Setter Property="StrokeShape" Value="RoundRectangle 5"/>
+		<Setter Property="Padding" Value="5"/>
+	</Style>
+
+	<Style TargetType="BoxView">
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
     </Style>
 
@@ -157,31 +181,6 @@
         </Setter>
     </Style>
 
-    <Style TargetType="Border">
-        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />
-        <Setter Property="StrokeShape" Value="RoundRectangle 10"/>
-    </Style>
-
-    <Style TargetType="Border" ApplyToDerivedTypes="True" x:Key="MuscleFrameCellStyle">
-        <Setter Property="Margin" Value="1"/>
-        <Setter Property="Padding" Value="7,3"/>
-        <Setter Property="Stroke" Value="Transparent"/>
-        <Setter Property="StrokeShape" Value="RoundRectangle 10"/>
-        <Setter Property="BackgroundColor" Value="Gray"/>
-    </Style>
-    <Style TargetType="Border" ApplyToDerivedTypes="True" x:Key="BorderCellStyle">
-        <Setter Property="Stroke" Value="Transparent" />
-        <Setter Property="StrokeShape" Value="RoundRectangle 5"/>
-        <Setter Property="Margin" Value="10"/>
-        <Setter Property="Padding" Value="0"/>
-        <Setter Property="BackgroundColor" Value="Transparent"/>
-    </Style>
-    <Style TargetType="Border" x:Key="MaterialBorder">
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}" />
-        <Setter Property="Stroke" Value="Transparent" />
-        <Setter Property="StrokeShape" Value="RoundRectangle 5"/>
-        <Setter Property="Padding" Value="5"/>
-    </Style>
     <Style TargetType="Label" x:Key="MaterialLabel">
         <Setter Property="AnchorX" Value="0"/>
         <Setter Property="TextColor" Value="Orange"/>

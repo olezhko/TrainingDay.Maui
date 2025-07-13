@@ -1,10 +1,8 @@
-using Microsoft.Maui.Layouts;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Input;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Resources.Strings;
-using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels;
 
 namespace TrainingDay.Maui.Controls;
@@ -197,6 +195,4 @@ public partial class ExerciseView : ContentView
             Debug.WriteLine(ex);
         }
     }
-
-    
 }

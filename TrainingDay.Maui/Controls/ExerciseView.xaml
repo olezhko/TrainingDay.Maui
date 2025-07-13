@@ -20,13 +20,13 @@
         <Label Grid.Row="0" x:Name="NameLabel" FontSize="Large" HorizontalTextAlignment="Center" Text="{Binding Name}" 
                VerticalOptions="Start" />
 
-        <Frame Grid.Row="1" Padding="5" BackgroundColor="White" CornerRadius="5" HorizontalOptions="Center" VerticalOptions="Center" BorderColor="Transparent">
+        <Border Grid.Row="1" Padding="5" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" Stroke="Transparent">
             <controls:ImageCache x:Name="ImageControl" HeightRequest="100" CodeNum="{Binding CodeNum}" WidthRequest="100">
                 <controls:ImageCache.GestureRecognizers>
                     <TapGestureRecognizer Tapped="ImageTapped" />
                 </controls:ImageCache.GestureRecognizers>
             </controls:ImageCache>
-        </Frame>
+        </Border>
 
         <StackLayout Grid.Row="2" Spacing="0" Margin="5,0">
             <StackLayout Padding="0" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByReps}}"
@@ -206,18 +206,18 @@
             JustifyContent="Center" AlignItems="Center" AlignContent="Start">
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
-                    <Border Margin="1" Style="{StaticResource MuscleFrameCellStyle}">
+                    <Border Margin="1" Style="{StaticResource MuscleBorderCellStyle}">
                         <Label FontSize="14" Text="{Binding Name}" TextColor="White" LineBreakMode="TailTruncation" />
                     </Border>
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </FlexLayout>
 
-        <Border Grid.Row="4" Margin="0" Padding="0" Style="{StaticResource FrameCellStyle}" VerticalOptions="Fill" IsVisible="True">
+		<Border Grid.Row="4" Margin="0" Padding="0" Style="{StaticResource BorderCellStyle}" VerticalOptions="Fill" IsVisible="True">
             <StackLayout>
                 <Grid ColumnDefinitions="*,*">
                     <Label x:Name="DesctiptionLabel" Padding="10" Grid.ColumnSpan="2" BackgroundColor="Green" Text="{x:Static resx:AppResources.ShortDescriptionString1}"
-                               HorizontalTextAlignment="Center">
+                               HorizontalTextAlignment="Center" FontSize="Medium" TextColor="White" FontAttributes="Bold">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="Description_Click" />
                         </Label.GestureRecognizers>

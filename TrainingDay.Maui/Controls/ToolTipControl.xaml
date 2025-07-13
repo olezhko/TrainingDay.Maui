@@ -2,7 +2,7 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TrainingDay.Maui.Controls.ToolTipControl" x:Name="Self" HorizontalOptions="Start" VerticalOptions="Start">
-    <Frame x:Name="frame" CornerRadius="10" Padding="10" Margin="0" BackgroundColor="{Binding Source={x:Reference Self}, Path=FrameBackground}">
+	<Border x:Name="frame" StrokeShape="RoundRectangle 10" Padding="10" Margin="0" BackgroundColor="{Binding Source={x:Reference Self}, Path=FrameBackground}">
         <StackLayout Spacing="0">
             <Label Text="{Binding Source={x:Reference Self}, Path=Title, Mode=TwoWay}" FontSize="Medium" FontAttributes="Bold" VerticalTextAlignment="Center"/>
             <Grid x:Name="StackLayout" Margin="0" Padding="0">
@@ -19,13 +19,13 @@
                         <TapGestureRecognizer Tapped="Skip_Tapped"/>
                     </Label.GestureRecognizers>
                 </Label>
-                <Frame CornerRadius="5" Padding="5" Margin="0" BackgroundColor="DeepSkyBlue" HorizontalOptions="End" BorderColor="Transparent">
-                    <Frame.GestureRecognizers>
+				<Border StrokeShape="RoundRectangle 5" Padding="5" Margin="0" BackgroundColor="DeepSkyBlue" HorizontalOptions="End" Stroke="Transparent">
+                    <Border.GestureRecognizers>
                         <TapGestureRecognizer Tapped="NeverShow_Tapped"/>
-                    </Frame.GestureRecognizers>
+                    </Border.GestureRecognizers>
                     <Label Text="{Binding Source={x:Reference Self}, Path=NeverShowText, Mode=TwoWay}" FontSize="Small"/>
-                </Frame>
+                </Border>
             </StackLayout>
         </StackLayout>
-    </Frame>
+    </Border>
 </ContentView>

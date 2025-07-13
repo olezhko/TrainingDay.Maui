@@ -676,7 +676,7 @@ public partial class FilterPage : ContentPage, IQueryAttributable
 
     private void MusclesListView_OnItemTapped(object sender, object e)
     {
-        var item = sender as Frame;
+        var item = sender as Border;
         MuscleCheckItem send = item.BindingContext as MuscleCheckItem;
         send.IsChecked = !send.IsChecked;
     }

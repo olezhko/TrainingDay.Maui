@@ -61,7 +61,7 @@
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Border x:Name="viewCell" Style="{StaticResource FrameCellStyle}" Padding="15" Margin="0" StrokeShape="RoundRectangle 25"
+                    <Border x:Name="viewCell" Style="{StaticResource BorderCellStyle}" Padding="15" Margin="0" StrokeShape="RoundRectangle 25"
                             BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}"
                            controls:LongPressedEffect.Command="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.LongPressedEffectCommand}" 
                            controls:LongPressedEffect.CommandParameter="{Binding Source={x:Reference viewCell}}"

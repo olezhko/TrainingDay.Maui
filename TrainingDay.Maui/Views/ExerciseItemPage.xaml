@@ -66,7 +66,7 @@
                                                     JustifyContent="Center" AlignItems="Center" AlignContent="Start">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Margin="1" Style="{StaticResource MuscleFrameCellStyle}">
+                                    <Border Margin="1" Style="{StaticResource MuscleBorderCellStyle}">
                                         <Label FontSize="14" Text="{Binding Name}" TextColor="White" LineBreakMode="TailTruncation" />
                                     </Border>
                                 </DataTemplate>

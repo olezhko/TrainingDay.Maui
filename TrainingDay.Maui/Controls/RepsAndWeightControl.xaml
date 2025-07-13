@@ -8,7 +8,7 @@
     <ContentView.BindingContext>
         <viewModels:WeightAndRepsViewModel />
     </ContentView.BindingContext>
-    <Frame Margin="2" BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Black}}" Padding="5">
+    <Border Margin="2" BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Black}}" Padding="5">
         <Grid x:Name="MainGrid" Margin="0" Padding="0" ColumnSpacing="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -69,5 +69,5 @@
                 </ImageButton.Style>
             </ImageButton>
         </Grid>
-    </Frame>
+    </Border>
 </ContentView>
