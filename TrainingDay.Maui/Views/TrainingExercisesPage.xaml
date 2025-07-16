@@ -31,13 +31,17 @@
     </Shell.TitleView>
 
     <controls:TooltipControlContainer x:Name="Container" RowSpacing="2" BackgroundColor="Transparent">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        <controls:TooltipControlContainer.Style>
+            <Style TargetType="controls:TooltipControlContainer" >
+                <Setter Property="RowDefinitions" Value="auto,*,auto,auto,0"/>
+                <Style.Triggers>
+                    <DataTrigger TargetType="controls:TooltipControlContainer" Binding="{Binding IsExercisesCheckBoxVisible}" Value="True">
+                        <Setter Property="RowDefinitions" Value="auto,*,0,auto,auto"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </controls:TooltipControlContainer.Style>
+
 
         <Border Style="{StaticResource MaterialBorder}" Margin="5">
             <Grid>
@@ -136,11 +140,9 @@
         </CollectionView>
 
         <Button x:Name="MakeTrainingButton" Command="{Binding MakeTrainingCommand}" Text="{x:Static resx:AppResources.MakeTrainingString}" 
-            Grid.Row="2" TextColor="White" Margin="5" FontSize="Body" CornerRadius="20"
-            IsEnabled="{Binding IsExercisesCheckBoxVisible,Converter={StaticResource InverseBooleanConverter}}"/>
+            Grid.Row="2" TextColor="White" Margin="5" FontSize="Body" CornerRadius="20"/>
 
-        <Grid Grid.Row="3" IsVisible="{Binding IsExercisesCheckBoxVisible}" HorizontalOptions="Fill" ColumnSpacing="5" Margin="5,0" ColumnDefinitions="*,*"
-              controls:TooltipControlContainer.IgnoreVisible="True">
+        <Grid Grid.Row="3" HorizontalOptions="Fill" ColumnSpacing="5" Margin="5,0" ColumnDefinitions="*,*">
             <Button Grid.Column="0" CornerRadius="20" Text="{x:Static resx:AppResources.CancelString}" Command="{Binding CancelActionCommand}" HorizontalOptions="Fill" Style="{DynamicResource ActionButton}" />
             <Button Grid.Column="1" CornerRadius="20" Text="{Binding ExerciseActionString}" Command="{Binding StartActionCommand}" HorizontalOptions="Fill" Style="{DynamicResource ActionButton}" />
         </Grid>
