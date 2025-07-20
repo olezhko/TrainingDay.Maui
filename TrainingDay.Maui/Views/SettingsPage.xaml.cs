@@ -1,8 +1,5 @@
 using CommunityToolkit.Maui.Alerts;
-using Newtonsoft.Json;
 using System.Globalization;
-using TrainingDay.Common.Extensions;
-using TrainingDay.Common.Models;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
@@ -12,10 +9,13 @@ namespace TrainingDay.Maui.Views;
 public partial class SettingsPage : ContentPage
 {
     private readonly Dictionary<string, CultureInfo> _availableLanguages = new Dictionary<string, CultureInfo>();
+    private WorkoutService workoutService;
 
-    public SettingsPage()
+    public SettingsPage(WorkoutService workoutService)
     {
         InitializeComponent();
+        this.workoutService = workoutService;
+
         ShowAdvicesOnImplementingSwitch.IsToggled = Settings.IsShowAdvicesOnImplementing;
         ScreenOnImplementedSwitch.IsToggled = Settings.IsDisplayOnImplement;
 
@@ -23,13 +23,10 @@ public partial class SettingsPage : ContentPage
         FillAvailableMeasureWeight();
         LanguagePicker.SelectedIndexChanged += LanguageSwitch_Changed;
         MeasureWeightPicker.SelectedIndexChanged += MeasureWeightPicker_Changed;
-        if (DeviceInfo.Platform == DevicePlatform.iOS)
-        {
-            DonateButton.IsVisible = false;
-        }
-    }
+		DonateButton.IsVisible = DeviceInfo.Platform != DevicePlatform.iOS;
+	}
 
-    private void ScreenOnImplementedSwitch_OnToggled(object sender, ToggledEventArgs e)
+	private void ScreenOnImplementedSwitch_OnToggled(object sender, ToggledEventArgs e)
     {
         Settings.IsDisplayOnImplement = ScreenOnImplementedSwitch.IsToggled;
     }
@@ -48,12 +45,12 @@ public partial class SettingsPage : ContentPage
             Settings.CultureName = selected.Name;
             if (updateExercise)
             {
-                await FixExercisesData();
+                await workoutService.UpdateExerciseNameAndDescription();
             }
 
             LocalizationResourceManager.Instance.SetCulture(Settings.GetLanguage());
 
-            Toast.Make(AppResources.ChangesAcceptAfterReboot).Show();
+            await Toast.Make(AppResources.ChangesAcceptAfterReboot).Show();
             LanguagePicker.Unfocus();
         }
         catch (Exception exception)
@@ -106,36 +103,6 @@ public partial class SettingsPage : ContentPage
         else
         {
             LanguagePicker.SelectedItem = selected.Key; // need to change by find index in dictionary
-        }
-    }
-
-    private async Task FixExercisesData()
-    {
-        var inits = await ResourceExtension.LoadResource<BaseExercise>("exercises", Settings.GetLanguage().TwoLetterISOLanguageName);
-        var exers = App.Database.GetExerciseItems();
-        foreach (var exer in exers)
-        {
-            if (exer.CodeNum != 0)
-            {
-                try
-                {
-                    var init = inits.FirstOrDefault(item => item.CodeNum == exer.CodeNum);
-                    if (init != null)
-                    {
-                        exer.Description = JsonConvert.SerializeObject(init.Description);
-                        exer.Name = init.Name;
-                        App.Database.SaveExerciseItem(exer);
-                    }
-                    else
-                    {
-                        Console.WriteLine($"NO AVAILABLE {exer.Name}");
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-            }
         }
     }
 

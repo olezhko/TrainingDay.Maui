@@ -336,11 +336,10 @@ public partial class TrainingImplementPage : ContentPage
         {
             foreach (var trainingExerciseViewModel in superSet)
             {
-                var exId = App.Database.SaveExerciseItem(trainingExerciseViewModel.GetExercise());
                 order++;
                 App.Database.SaveTrainingExerciseItem(new TrainingExerciseComm()
                 {
-                    ExerciseId = exId,
+                    ExerciseId = trainingExerciseViewModel.ExerciseId,
                     TrainingId = TrainingItem.Id,
                     OrderNumber = order,
                     Id = trainingExerciseViewModel.TrainingExerciseId,

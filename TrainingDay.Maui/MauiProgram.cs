@@ -34,13 +34,16 @@ namespace TrainingDay.Maui
                 {
                 });
 
+			builder.Services.AddSingleton<SettingsPage>();
+
 			builder.Services.AddSingleton<BlogsPageViewModel>();
 			builder.Services.AddSingleton<BlogsPage>();
 
 			builder.Services.AddTransient<IDataService, DataService>();
             builder.Services.AddSingleton<WorkoutService>();
+
 #if DEBUG
-            builder.Logging.AddDebug();
+			builder.Logging.AddDebug();
 #endif
 
 #if ANDROID

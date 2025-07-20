@@ -40,8 +40,8 @@ public class DataManageViewModel : BaseViewModel
 
         var content = File.ReadAllText(file.FullPath);
 
-        RepositoryData data = LoadRepositoryData(content);
-        SetRepositoryData(data);
+        RepositoryData data = JsonConvert.DeserializeObject<RepositoryData>(content);
+		SetRepositoryData(data);
 
         WeakReferenceMessenger.Default.Send<IncomingTrainingAddedMessage>();
 
@@ -141,19 +141,6 @@ public class DataManageViewModel : BaseViewModel
             item.Id = 0;
             item.LastTrainingId = lastTrainingPairs[item.LastTrainingId];
             int newId = App.Database.SaveLastTrainingExerciseItem(item);
-        }
-    }
-
-    private RepositoryData LoadRepositoryData(string content)
-    {
-        try
-        {
-            var data = JsonConvert.DeserializeObject<RepositoryData>(content);
-            return data;
-        }
-        catch (Exception)
-        {
-            return null;
         }
     }
 

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using SQLite;
 using TrainingDay.Common.Extensions;
+using TrainingDay.Common.Models;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.ViewModels;
 
@@ -106,51 +107,27 @@ public class Repository
     }
     public void AddorUpdateExercise(Common.Models.BaseExercise newExercise, IEnumerable<ExerciseDto> dbExercises)
     {
-        var dbExercise = dbExercises.FirstOrDefault(item => item.CodeNum == newExercise.CodeNum);
-        if (dbExercise == null)
-        {
-            SaveBaseExerciseItem(newExercise);
-        }
-        else
-        {
-            CorrectExercise(newExercise, dbExercise);
-        }
-    }
-
-    private void SaveBaseExerciseItem(Common.Models.BaseExercise exercise)
-    {
         try
         {
-            ExerciseDto newExercise = new ExerciseDto();
-            newExercise.CodeNum = exercise.CodeNum;
-            newExercise.Description = JsonConvert.SerializeObject(exercise.Description);
-            newExercise.MusclesString = exercise.MusclesString;
-            newExercise.TagsValue = ExerciseExtensions.ConvertTagStringToInt(exercise.Tags);
-            newExercise.Name = exercise.Name;
-            SaveExerciseItem(newExercise);
-        }
-        catch (Exception e)
+			var dbExercise = dbExercises.FirstOrDefault(item => item.CodeNum == newExercise.CodeNum);
+			if (dbExercise == null)
+			{
+				dbExercise = new ExerciseDto();
+				dbExercise.CodeNum = newExercise.CodeNum;
+			}
+
+			dbExercise.Description = JsonConvert.SerializeObject(newExercise.Description);
+			dbExercise.MusclesString = newExercise.MusclesString;
+			dbExercise.Name = newExercise.Name;
+			dbExercise.TagsValue = ExerciseExtensions.ConvertTagStringToInt(newExercise.Tags);
+			SaveExerciseItem(dbExercise);
+		}
+		catch (Exception e)
         {
-            LoggingService.TrackError(e);
-            Console.WriteLine(e);
-        }
+			LoggingService.TrackError(e);
+		}
     }
 
-    private void CorrectExercise(Common.Models.BaseExercise srcExercise, ExerciseDto dbExercise)
-    {
-        try
-        {
-            dbExercise.Description = JsonConvert.SerializeObject(srcExercise.Description);
-            dbExercise.MusclesString = srcExercise.MusclesString;
-            dbExercise.Name = srcExercise.Name;
-            dbExercise.TagsValue = ExerciseExtensions.ConvertTagStringToInt(srcExercise.Tags);
-            SaveExerciseItem(dbExercise);
-        }
-        catch (Exception ex)
-        {
-            LoggingService.TrackError(ex);
-        }
-    }
     #endregion
 
     public int GetLastInsertId() => (int)SQLite3.LastInsertRowid(database.Handle);

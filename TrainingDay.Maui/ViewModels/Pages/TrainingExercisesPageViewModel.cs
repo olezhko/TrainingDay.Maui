@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows.Input;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models.Database;
@@ -16,7 +15,6 @@ namespace TrainingDay.Maui.ViewModels.Pages;
 public sealed class TrainingExercisesPageViewModel : BaseViewModel
 {
     private int itemId;
-    private bool isSelectAllState = true;
     readonly ObservableCollection<TrainingExerciseViewModel> selectedItems = new ObservableCollection<TrainingExerciseViewModel>();
 
     public ObservableCollection<TrainingViewModel> TrainingItems { get; set; } = new ObservableCollection<TrainingViewModel>();
@@ -51,7 +49,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
     public ICommand AcceptTrainingForMoveOrCopyCommand => new Command(AcceptTrainingForMoveOrCopy);
 
-    public TrainingViewModel SelectedTrainingForCopyOrMove { get; set; }
+	public TrainingViewModel? SelectedTrainingForCopyOrMove { get; set; } = null;
 
     public ICommand CreateTrainingFromSelectedExercisesCommand => new Command(CreateTrainingFromSelectedExercises);
 
@@ -276,34 +274,6 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
         Dictionary<string, object> param = new Dictionary<string, object> { { "TrainingItem", Training } };
         await Shell.Current.GoToAsync(nameof(TrainingImplementPage), param);
-    }
-
-    private void SaveTraining()
-    {
-        var id = App.Database.SaveTrainingItem(new TrainingDto() { Id = Training.Id, Title = Training.Title });
-
-        int order = 0;
-        foreach (var item in Training.Exercises)
-        {
-            if (!item.IsSelected)
-            {
-                continue;
-            }
-
-            var exId = App.Database.SaveExerciseItem(item.GetExercise());
-            order++;
-            App.Database.SaveTrainingExerciseItem(new TrainingExerciseDto()
-            {
-                ExerciseId = exId,
-                TrainingId = id,
-                OrderNumber = order,
-                Id = item.TrainingExerciseId,
-                SuperSetId = item.SuperSetId,
-                WeightAndRepsString = ExerciseManager.ConvertJson(item.Tags, item),
-            });
-        }
-
-        Toast.Make(Resources.Strings.AppResources.SavedString).Show();
     }
 
     private void InitSuperSetMode()
@@ -604,59 +574,17 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         int order = 0;
         foreach (var item in Training.Exercises)
         {
-            var exId = App.Database.SaveExerciseItem(item.GetExercise());
             order++;
             App.Database.SaveTrainingExerciseItem(new TrainingExerciseDto()
             {
-                ExerciseId = exId,
+                ExerciseId = item.ExerciseId,
                 TrainingId = Training.Id,
                 OrderNumber = order,
                 Id = item.TrainingExerciseId,
                 SuperSetId = item.SuperSetId,
                 WeightAndRepsString = ExerciseManager.ConvertJson(item.Tags, item),
             });
-            Debug.WriteLine($"Exercise {order} {item.Name}");
         }
-    }
-
-    private void DragSuperSet(int supersetId, int newIndex)
-    {
-        var needToDrag = Training.Exercises.Where(item => item.SuperSetId == supersetId).ToList();
-        foreach (var model in needToDrag)
-        {
-            Training.Exercises.Remove(model);
-        }
-
-        if (newIndex > Training.Exercises.Count)
-        {
-            newIndex = Training.Exercises.Count;
-        }
-
-        foreach (var model in needToDrag)
-        {
-            Training.Exercises.Insert(newIndex, model);
-            newIndex++;
-        }
-
-        SaveNewExerciseOrder();
-    }
-
-    private int FixIndexIfInsertInSuperSet(int insertAtIndex)
-    {
-        int maxCount = Training.Exercises.Count;
-        int superSetId = Training.Exercises[insertAtIndex].SuperSetId;
-        if (superSetId != 0)
-        {
-            while (insertAtIndex < Training.Exercises.Count - 1 && maxCount-- > 0)
-            {
-                if (Training.Exercises[insertAtIndex].SuperSetId == superSetId && insertAtIndex - 1 >= 0 && Training.Exercises[insertAtIndex - 1].SuperSetId == superSetId)
-                {
-                    insertAtIndex++;
-                }
-            }
-        }
-
-        return insertAtIndex;
     }
 
     #region Drag & Drop
@@ -666,20 +594,17 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
     public ICommand ItemDropped => new Command<TrainingExerciseViewModel>(i => OnItemDropped(i));
     private void OnItemDragged(TrainingExerciseViewModel item)
     {
-        Debug.WriteLine($"OnItemDragged: {item?.Name}");
         Training.Exercises.ForEach(i => i.IsBeingDragged = item == i);
     }
 
     private void OnItemDraggedOver(TrainingExerciseViewModel item)
     {
-        Debug.WriteLine($"OnItemDraggedOver: {item?.Name}");
         var itemBeingDragged = Training.Exercises.FirstOrDefault(i => i.IsBeingDragged);
         Training.Exercises.ForEach(i => i.IsBeingDraggedOver = item == i && item != itemBeingDragged);
     }
 
     private void OnItemDragLeave(TrainingExerciseViewModel item)
     {
-        Debug.WriteLine($"OnItemDragLeave: {item?.Name}");
         Training.Exercises.ForEach(i => i.IsBeingDraggedOver = false);
     }
 
@@ -697,7 +622,6 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         itemToMove.IsBeingDragged = false;
         itemToInsertBefore.IsBeingDraggedOver = false;
         SaveNewExerciseOrder();
-        Debug.WriteLine($"OnItemDropped: [{itemToMove?.Name}] => [{itemToInsertBefore?.Name}], target index = [{insertAtIndex}]");
     }
 
     #endregion

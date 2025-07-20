@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using Newtonsoft.Json;
+using System.Collections.ObjectModel;
 using TrainingDay.Common.Communication;
 using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
@@ -11,11 +12,36 @@ namespace TrainingDay.Maui.Services
     public interface IWorkoutService
     {
         Task CreateWorkoutAsync(string name, IEnumerable<ExerciseQueryResponse> exercises, CancellationToken token = default);
-    }
+        Task UpdateExerciseNameAndDescription();
+
+	}
 
     public class WorkoutService : IWorkoutService
     {
-        public async Task CreateWorkoutAsync(string name, IEnumerable<ExerciseQueryResponse> exercises, CancellationToken token = default)
+		public async Task UpdateExerciseNameAndDescription()
+		{
+			var inits = await ResourceExtension.LoadResource<BaseExercise>("exercises", Settings.GetLanguage().TwoLetterISOLanguageName);
+			var exers = App.Database.GetExerciseItems();
+			exers.Where(item => item.CodeNum != 0).ForEach(exer =>
+			{
+				try
+				{
+					var init = inits.FirstOrDefault(item => item.CodeNum == exer.CodeNum);
+					if (init != null)
+					{
+						exer.Description = JsonConvert.SerializeObject(init.Description);
+						exer.Name = init.Name;
+						App.Database.SaveExerciseItem(exer);
+					}
+				}
+				catch (Exception e)
+				{
+					Console.WriteLine(e);
+				}
+			});
+		}
+
+		public async Task CreateWorkoutAsync(string name, IEnumerable<ExerciseQueryResponse> exercises, CancellationToken token = default)
         {
             var id = App.Database.SaveItem(new TrainingDto()
             {

@@ -44,11 +44,10 @@ public partial class TrainingExerciseItemPage : ContentPage
             return;
 
         isSaved = true;
-        await Toast.Make(AppResources.SavedString).Show();
-        App.Database.SaveExerciseItem(ExerciseView.CurrentExercise.GetExercise());
         App.Database.SaveTrainingExerciseItem(ExerciseView.CurrentExercise.GetTrainingExerciseComm());
 
-        await Shell.Current.GoToAsync("..");
+		await Toast.Make(AppResources.SavedString).Show();
+		await Shell.Current.GoToAsync("..");
     }
 
     private void ExerciseView_OnImageTappedEvent(object sender, ImageSource e)
