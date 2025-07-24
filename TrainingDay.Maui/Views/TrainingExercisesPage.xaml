@@ -33,7 +33,7 @@
     <controls:TooltipControlContainer x:Name="Container" RowSpacing="2" BackgroundColor="Transparent">
         <controls:TooltipControlContainer.Style>
             <Style TargetType="controls:TooltipControlContainer" >
-                <Setter Property="RowDefinitions" Value="auto,*,auto,auto,0"/>
+                <Setter Property="RowDefinitions" Value="auto,*,auto,0,auto"/>
                 <Style.Triggers>
                     <DataTrigger TargetType="controls:TooltipControlContainer" Binding="{Binding IsExercisesCheckBoxVisible}" Value="True">
                         <Setter Property="RowDefinitions" Value="auto,*,0,auto,auto"/>
@@ -143,8 +143,8 @@
             Grid.Row="2" TextColor="White" Margin="5" FontSize="Body" CornerRadius="20"/>
 
         <Grid Grid.Row="3" HorizontalOptions="Fill" ColumnSpacing="5" Margin="5,0" ColumnDefinitions="*,*">
-            <Button Grid.Column="0" CornerRadius="20" Text="{x:Static resx:AppResources.CancelString}" Command="{Binding CancelActionCommand}" HorizontalOptions="Fill" Style="{DynamicResource ActionButton}" />
-            <Button Grid.Column="1" CornerRadius="20" Text="{Binding ExerciseActionString}" Command="{Binding StartActionCommand}" HorizontalOptions="Fill" Style="{DynamicResource ActionButton}" />
+            <Button Grid.Column="0" CornerRadius="20" Text="{x:Static resx:AppResources.CancelString}" Command="{Binding CancelActionCommand}" HorizontalOptions="Fill" Style="{StaticResource ActionButton}" />
+            <Button Grid.Column="1" CornerRadius="20" Text="{Binding ExerciseActionString}" Command="{Binding StartActionCommand}" HorizontalOptions="Fill" Style="{StaticResource ActionButton}" />
         </Grid>
 
         <controls:ToolTipControl Grid.Row="1" 

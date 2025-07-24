@@ -64,10 +64,8 @@
     </Style>
 
     <Style TargetType="Button" x:Key="ActionButton" ApplyToDerivedTypes="True">
-        <Setter Property="TextColor" Value="White"/>
-        <Setter Property="BackgroundColor" Value="Gray"/>
         <Setter Property="CornerRadius" Value="15"/>
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
     </Style>
     
