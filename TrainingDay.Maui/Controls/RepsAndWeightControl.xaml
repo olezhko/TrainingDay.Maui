@@ -20,7 +20,7 @@
 
             <!--  dont fix HorizontalTextAlignment it broke entry with in carousel view  -->
             <Entry
-            Margin="0"
+            Margin="5,0,0,0"
             FontSize="Medium"
             Keyboard="Numeric"
             MaxLength="3"
@@ -28,7 +28,7 @@
             MinimumWidthRequest="50" />
             <Entry
             Grid.Column="2"
-            Margin="0"
+            Margin="5,0,0,0"
             FontSize="Medium"
             Keyboard="Numeric"
             IsVisible="{Binding Source={x:Reference Self}, Path=IsOnlyReps, Converter={StaticResource InverseBooleanConverter}}"

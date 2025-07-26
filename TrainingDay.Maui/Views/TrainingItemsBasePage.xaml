@@ -35,8 +35,11 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <HorizontalStackLayout BindableLayout.ItemsSource="{Binding ItemsGrouped}" VerticalOptions="Start" Margin="5,0">
-            <BindableLayout.ItemTemplate>
+        <CollectionView ItemsSource="{Binding ItemsGrouped}" VerticalOptions="Start" Margin="5" HeightRequest="50">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Button Text="{Binding Key}" CornerRadius="25" HeightRequest="50" FontSize="Medium" Command="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.SelectGroupCommand}"
                             CommandParameter="{Binding }" Margin="5" Padding="30,0">
@@ -52,8 +55,8 @@
                         </Button.Style>
                     </Button>
                 </DataTemplate>
-            </BindableLayout.ItemTemplate>
-        </HorizontalStackLayout>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
         <CollectionView x:Name="ItemsListView" Grid.Row="1" ItemsSource="{Binding SelectedTrainings}" BackgroundColor="Transparent" Margin="5,0">
             <CollectionView.ItemsLayout>

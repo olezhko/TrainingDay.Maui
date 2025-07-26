@@ -29,7 +29,7 @@
 
         <Border Style="{StaticResource MaterialBorder}">
             <Grid ColumnDefinitions="*,*,*,*,*" ColumnSpacing="5">
-                <Button Grid.Column="0" CornerRadius="5" Padding="0" LineBreakMode="TailTruncation" BackgroundColor="Orange"
+                <Button x:Name="WeekPeriodButton" Grid.Column="0" CornerRadius="5" Padding="0" LineBreakMode="TailTruncation" BackgroundColor="Orange"
                         TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"
                         Clicked="SetPeriod_Click" AutomationId="0" Text="{x:Static resx:AppResources.WeekString}"/>
 

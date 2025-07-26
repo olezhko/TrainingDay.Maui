@@ -11,13 +11,14 @@
         <viewModels:PreparedTrainingsPageViewModel />
     </ContentPage.BindingContext>
 
-    <controls:TooltipControlContainer x:Name="Container" RowSpacing="0" RowDefinitions="auto,*,Auto">
+    <controls:TooltipControlContainer x:Name="Container" RowSpacing="0" RowDefinitions="auto,*,Auto"
+                                      BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}">
 		<Grid x:Name="LetsBuildYourWorkoutButton" IsVisible="False">
             <Button Text="{x:Static resx:AppResources.LetsBuildYourWorkout}" Margin="5" Command="{Binding NavigateToQuestionsCommnd}"/>
 			<Image Source="magic.png" HorizontalOptions="Start" Margin="25,0,0,0" HeightRequest="40" />
         </Grid>
 
-        <CollectionView Grid.Row="1" Margin="5,0" BackgroundColor="Transparent" ItemsSource="{Binding PreparedTrainingsCollection}" SelectionMode="Single">
+        <CollectionView Grid.Row="1" Margin="5,0"  ItemsSource="{Binding PreparedTrainingsCollection}" SelectionMode="Single">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Border Style="{StaticResource BorderCellStyle}" VerticalOptions="Fill" Stroke="Transparent">
@@ -57,7 +58,7 @@
         </CollectionView>
 
         <Button Grid.Row="2" Margin="5" Command="{Binding CreateNewTrainingCommand}" CornerRadius="20"
-            Style="{DynamicResource ActionButton}" Text="{x:Static resx:AppResources.CreateNewString}" FontSize="Body"/>
+            Style="{DynamicResource ActionButton}" Text="{x:Static resx:AppResources.CreateNewString}" TextColor="White" FontSize="Body"/>
 
         <!--<controls:ToolTipControl Text="Click this button to answer some questions and application will create workout for you" Title="{x:Static resx:AppResources.HelperString}" 
                               NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipLetsBuildYourWorkout,Mode=TwoWay}" 

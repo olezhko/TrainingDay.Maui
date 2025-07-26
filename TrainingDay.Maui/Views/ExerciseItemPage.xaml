@@ -46,7 +46,7 @@
             Grid.Row="0"
             FontSize="Large"
             IsVisible="{Binding IsBase}"
-            Text="{Binding Name}"
+            Text="{Binding Name}" HorizontalTextAlignment="Center"
             VerticalOptions="Start" />
 
                 <Border
@@ -91,54 +91,38 @@
                 </StackLayout>
 
                 <Grid Grid.Row="4" RowDefinitions="auto,auto,auto" RowSpacing="5">
-                    <Editor
-                        x:Name="StartingDescEditor"
-                        Grid.Row="0"
-                        AutoSize="TextChanges"
-                        FontSize="Small"
-                        IsReadOnly="{Binding IsBase}"
-                        IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"
-                        Placeholder="{x:Static resx:AppResources.StartPosition}"
-                        BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}"
-                        Text="{Binding Description.StartPosition}" />
-                    <Label
-                Grid.Row="0"
-                FontSize="Small"
-                IsVisible="{Binding Source={x:Reference StartingDescEditor}, Path=IsReadOnly}"
-                Text="{Binding Description.StartPosition}" />
 
-                    <Editor
-                x:Name="ExecDescEditor"
-                Grid.Row="1"
-                AutoSize="TextChanges"
-                FontSize="Small"
-                IsReadOnly="{Binding IsBase}"
-                IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"
-                Placeholder="{x:Static resx:AppResources.Execution}"
-                        BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}"
-                Text="{Binding Description.Execution}" />
-                    <Label
-                Grid.Row="1"
-                FontSize="Small"
-                IsVisible="{Binding Source={x:Reference ExecDescEditor}, Path=IsReadOnly}"
-                Text="{Binding Description.Execution}" />
+                    <VerticalStackLayout Grid.Row="0">
 
-                    <Editor
-                        
-                x:Name="AdviceDescEditor"
-                Grid.Row="2"
-                AutoSize="TextChanges"
-                FontSize="Small"
-                IsReadOnly="{Binding IsBase}"
-                IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"
-                Placeholder="{x:Static resx:AppResources.Advice}"
-                        BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}"
-                Text="{Binding Description.Advice}" />
-                    <Label
-                Grid.Row="2"
-                FontSize="Small"
-                IsVisible="{Binding Source={x:Reference AdviceDescEditor}, Path=IsReadOnly}"
-                Text="{Binding Description.Advice}" />
+                        <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.StartPosition}" TextColor="DodgerBlue" VerticalTextAlignment="Center" 
+                           IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
+                        <Editor
+                            x:Name="StartingDescEditor"
+                            AutoSize="TextChanges"
+                            FontSize="Small"
+                            IsReadOnly="{Binding IsBase}"
+                            IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"
+                            Placeholder="{x:Static resx:AppResources.StartPosition}"
+                            BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}"
+                            Text="{Binding Description.StartPosition}" />
+                        <Label FontSize="Small" IsVisible="{Binding Source={x:Reference StartingDescEditor}, Path=IsReadOnly}" Text="{Binding Description.StartPosition}" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Row="1">
+                        <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Execution}" TextColor="LimeGreen" VerticalTextAlignment="Center" 
+                           IsVisible="{Binding Description.Execution, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
+                        <Editor x:Name="ExecDescEditor" AutoSize="TextChanges" FontSize="Small" IsReadOnly="{Binding IsBase}" IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}" Placeholder="{x:Static resx:AppResources.Execution}"
+                            BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}" Text="{Binding Description.Execution}" />
+                        <Label FontSize="Small" IsVisible="{Binding Source={x:Reference ExecDescEditor}, Path=IsReadOnly}" Text="{Binding Description.Execution}" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Row="2">
+                        <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Advice}" TextColor="Orange" VerticalTextAlignment="Center" 
+                           IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
+                        <Editor x:Name="AdviceDescEditor" AutoSize="TextChanges" FontSize="Small" IsReadOnly="{Binding IsBase}" IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"
+                            Placeholder="{x:Static resx:AppResources.Advice}" BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}" Text="{Binding Description.Advice}" />
+                        <Label FontSize="Small" IsVisible="{Binding Source={x:Reference AdviceDescEditor}, Path=IsReadOnly}" Text="{Binding Description.Advice}" />
+                    </VerticalStackLayout>
                 </Grid>
             </Grid>
         </ScrollView>

@@ -217,7 +217,7 @@
             <StackLayout>
                 <Grid ColumnDefinitions="*,*">
                     <Label x:Name="DesctiptionLabel" Padding="10" Grid.ColumnSpan="2" BackgroundColor="Green" Text="{x:Static resx:AppResources.ShortDescriptionString1}"
-                               HorizontalTextAlignment="Center" FontSize="Medium" TextColor="White" FontAttributes="Bold">
+                               HorizontalTextAlignment="Center" FontSize="Medium" TextColor="White" FontAttributes="Bold" VerticalTextAlignment="Center">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="Description_Click" />
                         </Label.GestureRecognizers>

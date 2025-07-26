@@ -25,6 +25,31 @@ public static class CollectionExtensions
 
         return new ObservableCollection<T>(collection);
     }
+
+    public static IEnumerable<KeyValuePair<DateTime, T>> TakeEvenlyDistributed<T>(
+        this IEnumerable<KeyValuePair<DateTime, T>> source,
+        int count = 5)
+    {
+        if (source == null) throw new ArgumentNullException(nameof(source));
+
+        var orderedList = source.OrderBy(kv => kv.Key).ToList();
+
+        if (orderedList.Count <= count)
+        {
+            return orderedList;
+        }
+
+        var result = new List<KeyValuePair<DateTime, T>>();
+        double step = (orderedList.Count - 1) / (double)(count - 1);
+
+        for (int i = 0; i < count; i++)
+        {
+            int index = (int)Math.Round(i * step);
+            result.Add(orderedList[index]);
+        }
+
+        return result;
+    }
 }
 
 public static class UIHelper

@@ -16,9 +16,9 @@ public partial class TrainingsSetGroupPage : ContentPage
         var trainingsGroups = new ObservableCollection<TrainingUnionDto>(App.Database.GetTrainingsGroups());
         if (!trainingsGroups.Any())
         {
-            GroupContainer.IsVisible = false;
+            GroupCollection.IsVisible = false;
         }
-        GroupsPicker.ItemsSource = trainingsGroups;
+        GroupCollection.ItemsSource = trainingsGroups;
     }
 
     public TrainingViewModel TrainingMoveToGroup { get; set; }
@@ -137,9 +137,9 @@ public partial class TrainingsSetGroupPage : ContentPage
         Navigation.PopAsync();
     }
 
-    private void GroupsPicker_SelectedIndexChanged(object sender, EventArgs e)
+    void GroupCollection_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
     {
-        var selectedGroupToTraining = GroupsPicker.SelectedItem as TrainingUnionDto;
+        var selectedGroupToTraining = GroupCollection.SelectedItem as TrainingUnionDto;
         GroupSelected(selectedGroupToTraining.Id);
     }
 }

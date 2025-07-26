@@ -33,15 +33,14 @@
     <controls:TooltipControlContainer x:Name="Container" RowSpacing="2" BackgroundColor="Transparent">
         <controls:TooltipControlContainer.Style>
             <Style TargetType="controls:TooltipControlContainer" >
-                <Setter Property="RowDefinitions" Value="auto,*,auto,0,auto"/>
+                <Setter Property="RowDefinitions" Value="auto,*,auto,auto,auto"/>
                 <Style.Triggers>
                     <DataTrigger TargetType="controls:TooltipControlContainer" Binding="{Binding IsExercisesCheckBoxVisible}" Value="True">
-                        <Setter Property="RowDefinitions" Value="auto,*,0,auto,auto"/>
+                        <Setter Property="RowDefinitions" Value="auto,*,auto,auto,auto"/>
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
         </controls:TooltipControlContainer.Style>
-
 
         <Border Style="{StaticResource MaterialBorder}" Margin="5">
             <Grid>
@@ -139,13 +138,43 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <Button x:Name="MakeTrainingButton" Command="{Binding MakeTrainingCommand}" Text="{x:Static resx:AppResources.MakeTrainingString}" 
-            Grid.Row="2" TextColor="White" Margin="5" FontSize="Body" CornerRadius="20"/>
+        <Grid Grid.Row="2">
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup Name="CommonStates">
+                    <VisualState Name="StateA">
+                        <VisualState.Setters>
+                            <Setter TargetName="MakeTrainingButton" Property="IsVisible" Value="True"/>
+                            <Setter TargetName="ExerciseActionGrid" Property="IsVisible" Value="False"/>
+                        </VisualState.Setters>
+                        <VisualState.StateTriggers>
+                            <StateTrigger IsActive="{Binding IsExercisesCheckBoxVisible, Converter={StaticResource InverseBooleanConverter}}"/>
+                        </VisualState.StateTriggers>
+                    </VisualState>
+                    <VisualState Name="StateB">
+                        <VisualState.Setters>
+                            <Setter TargetName="MakeTrainingButton" Property="IsVisible" Value="False"/>
+                            <Setter TargetName="ExerciseActionGrid" Property="IsVisible" Value="True"/>
+                        </VisualState.Setters>
+                        <VisualState.StateTriggers>
+                            <StateTrigger IsActive="{Binding IsExercisesCheckBoxVisible}"/>
+                        </VisualState.StateTriggers>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
 
-        <Grid Grid.Row="3" HorizontalOptions="Fill" ColumnSpacing="5" Margin="5,0" ColumnDefinitions="*,*">
-            <Button Grid.Column="0" CornerRadius="20" Text="{x:Static resx:AppResources.CancelString}" Command="{Binding CancelActionCommand}" HorizontalOptions="Fill" Style="{StaticResource ActionButton}" />
-            <Button Grid.Column="1" CornerRadius="20" Text="{Binding ExerciseActionString}" Command="{Binding StartActionCommand}" HorizontalOptions="Fill" Style="{StaticResource ActionButton}" />
+            <Button x:Name="MakeTrainingButton" Margin="5" CornerRadius="20" Text="{x:Static resx:AppResources.MakeTrainingString}"
+                Command="{Binding MakeTrainingCommand}" TextColor="White" FontSize="Body" />
+
+            <Grid x:Name="ExerciseActionGrid" HorizontalOptions="Fill" ColumnSpacing="5" Margin="5,0" ColumnDefinitions="*,*">
+                <Button Grid.Column="0" CornerRadius="20" Text="{x:Static resx:AppResources.CancelString}" Command="{Binding CancelActionCommand}" HorizontalOptions="Fill"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                        BackgroundColor="Transparent" BorderColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" BorderWidth="1"/>
+                <Button Grid.Column="1" CornerRadius="20" Text="{Binding ExerciseActionString}" Command="{Binding StartActionCommand}" HorizontalOptions="Fill" Style="{StaticResource ActionButton}"
+                        TextColor="White"/>
+            </Grid>
         </Grid>
+        
+        <admob:BannerAd x:Name="AdMob" Grid.Row="4" AdSize="Banner" />
 
         <controls:ToolTipControl Grid.Row="1" 
                               Text="{x:Static resx:AppResources.ToolTipHoldImageExercises}" Title="{x:Static resx:AppResources.SettingsTrainingString}" 
@@ -161,6 +190,5 @@
                               ParentHeight="{Binding Source={x:Reference Container},Path=Height}"
                               ParentWidth="{Binding Source={x:Reference Container},Path=Width}"/>
 
-        <admob:BannerAd x:Name="AdMob" Grid.Row="4" AdSize="Banner" />
     </controls:TooltipControlContainer>
 </ContentPage>

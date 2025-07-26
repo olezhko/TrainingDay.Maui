@@ -179,10 +179,10 @@ public partial class ToolTipControl : ContentView
 
     private static void EmptyViewPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
     {
-        if (newvalue != null)
+        if (newvalue is not null && bindable is ToolTipControl)
         {
-            (bindable as ToolTipControl).StackLayout.Children.Insert(0, (ContentView)newvalue);
-            Grid.SetColumn((ContentView)newvalue, 0);
+            ((ToolTipControl)bindable).StackLayout.Children.Insert(0, (IView)newvalue);
+            Grid.SetColumn((BindableObject)newvalue, 0);
         }
     }
 

@@ -67,7 +67,7 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
-						<Border Style="{StaticResource BorderCellStyle}" BackgroundColor="Transparent">
+						<Border Style="{StaticResource BorderCellStyle}" >
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="ListView_OnItemTapped"/>
                             </Border.GestureRecognizers>

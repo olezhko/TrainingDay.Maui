@@ -2,17 +2,24 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
-             xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              x:Class="TrainingDay.Maui.Views.TrainingsSetGroupPage"
              Title="{x:Static resx:AppResources.TrainingToGroupString}">
-    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="10" Margin="5,0">
-        <Grid x:Name="GroupContainer" Grid.Row="0">
-            <Label Text="{x:Static resx:AppResources.ChooseGroupOrNewString}" FontSize="18" controls:MaterialLabelAttached.IsMaterialBehavior="True" HorizontalOptions="Start"
-                                       TextColor="Orange" VerticalOptions="Center" controls:MaterialLabelAttached.MaterialControlType="Picker"/>
-            <Picker x:Name="GroupsPicker" SelectedIndexChanged="GroupsPicker_SelectedIndexChanged" ItemDisplayBinding="{Binding Name}" VerticalOptions="End"
-                    Title="{x:Static resx:AppResources.ChooseGroupOrNewString}"/>
-        </Grid>
+    <VerticalStackLayout VerticalOptions="Center" Margin="5">
+        <CollectionView x:Name="GroupCollection" SelectionChanged="GroupCollection_SelectionChanged" SelectionMode="Single">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border StrokeShape="RoundRectangle 25" HeightRequest="50" Stroke="Transparent"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}">
+                        <Label Text="{Binding Name}" VerticalOptions="Center" FontSize="Body" HorizontalOptions="Center"/>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
+            </CollectionView.ItemsLayout>
+        </CollectionView>
 
-        <Button Grid.Row="1" CornerRadius="20" Clicked="ShowNewGroupWnd_Click" Text="{x:Static resx:AppResources.CreateNewString}" Style="{DynamicResource ActionButton}" />
-    </Grid>
+        <Button CornerRadius="20" Clicked="ShowNewGroupWnd_Click" Text="{x:Static resx:AppResources.CreateNewString}" Style="{DynamicResource ActionButton}"
+                FontSize="Body" TextColor="White"/>
+    </VerticalStackLayout>
 </ContentPage>

@@ -3,34 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
-             xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             Shell.NavBarIsVisible="False" Shell.PresentationMode="ModalAnimated"
              x:Class="TrainingDay.Maui.Views.TrainingExercisesMoveOrCopy"
              Title="{Binding CurrentAction}">
     <ContentPage.BindingContext>
         <viewModels:TrainingExercisesPageViewModel/>
     </ContentPage.BindingContext>
-    <StackLayout BackgroundColor="Transparent" VerticalOptions="Center" Margin="20,0">
-        <StackLayout Orientation="Horizontal" VerticalOptions="Start" Spacing="5">
-            <Border Style="{StaticResource MaterialBorder}">
-                <Grid>
-                    <Label Text="{x:Static resx:AppResources.SelectTraining}" Style="{StaticResource MaterialLabel}" controls:MaterialLabelAttached.MaterialControlType="Picker"/>
-                    <Picker SelectedItem="{Binding SelectedTrainingForCopyOrMove, Mode=TwoWay}" Title="{x:Static resx:AppResources.SelectTraining}"
-                    ItemsSource="{Binding TrainingItems}" ItemDisplayBinding="{Binding Title}" HorizontalOptions="Fill" VerticalOptions="End"/>
-                </Grid>
-            </Border>
+    <VerticalStackLayout BackgroundColor="Transparent" VerticalOptions="Center" Margin="5">
+        <CollectionView x:Name="GroupCollection" ItemsSource="{Binding TrainingItems}" Grid.Row="0" SelectionChanged="GroupCollection_SelectionChanged" SelectionMode="Single">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border StrokeShape="RoundRectangle 25" HeightRequest="50" Stroke="Transparent"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}">
+                        <Label Text="{Binding Title}" VerticalOptions="Center" FontSize="Body" HorizontalOptions="Center"/>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
+            </CollectionView.ItemsLayout>
+        </CollectionView>
 
-            <ImageButton Source="save" Command="{Binding AcceptTrainingForMoveOrCopyCommand}" HorizontalOptions="End" 
-                     WidthRequest="50" HeightRequest="50" BackgroundColor="Transparent">
-                <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
-                </ImageButton.Behaviors>
-            </ImageButton>
-        </StackLayout>
-
-        <Label Text="{x:Static resx:AppResources.Or}" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalOptions="Start" FontSize="Medium"/>
         <Button VerticalOptions="Center" Command="{Binding CreateTrainingFromSelectedExercisesCommand}" Text="{x:Static resx:AppResources.CreateNewString}" 
-            Style="{DynamicResource ActionButton}" Margin="5"/>
-    </StackLayout>
+            Style="{DynamicResource ActionButton}" Margin="5" TextColor="White" FontSize="Body"/>
+    </VerticalStackLayout>
 </ContentPage>

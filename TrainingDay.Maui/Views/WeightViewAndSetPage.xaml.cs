@@ -24,6 +24,7 @@ public partial class WeightViewAndSetPage : ContentPage
     {
         base.OnAppearing();
         vm?.OnAppearing();
+        lastPeriodButton = WeekPeriodButton;
     }
 
     Color inactiveColor;

@@ -89,7 +89,7 @@
                                      ParentHeight="{Binding Source={x:Reference MainGrid},Path=Height}"
                                      ParentWidth="{Binding Source={x:Reference MainGrid},Path=Width}">
             <controls:ToolTipControl.EmptyView>
-                <Border Stroke="Transparent" StrokeShape="RoundRectangle" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Red" HeightRequest="30" WidthRequest="30" Padding="0" Margin="0">
+                <Border Stroke="Transparent" StrokeShape="RoundRectangle 15" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Red" HeightRequest="30" WidthRequest="30" Padding="0" Margin="0">
                     <Image Source="close.png" >
                         <Image.Behaviors>
                             <toolkit:IconTintColorBehavior TintColor="White" />
@@ -104,7 +104,7 @@
                                          ParentHeight="{Binding Source={x:Reference MainGrid},Path=Height}" Position="TopLeft" 
                                          ParentWidth="{Binding Source={x:Reference MainGrid},Path=Width}">
             <controls:ToolTipControl.EmptyView>
-                <Border Stroke="Transparent" StrokeShape="RoundRectangle"  VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="DimGray" HeightRequest="30" WidthRequest="30" Padding="0" Margin="0">
+                <Border Stroke="Transparent" StrokeShape="RoundRectangle 15"  VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="DimGray" HeightRequest="30" WidthRequest="30" Padding="0" Margin="0">
                     <Image Source="skip.png" />
                 </Border>
             </controls:ToolTipControl.EmptyView>
@@ -112,10 +112,10 @@
         <controls:ToolTipControl Text="{x:Static resx:AppResources.ToolTipFinishExercise}" Title="{x:Static resx:AppResources.Execution}" Grid.ColumnSpan="3" Grid.RowSpan="3"
                                          NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipWorkingReady,Mode=TwoWay}"
                                          AttachedControl="FinishButton" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}"
-                                         ParentHeight="{Binding Source={x:Reference MainGrid},Path=Height}" Position="TopRight"
+                                         ParentHeight="{Binding Source={x:Reference MainGrid},Path=Height}" Position="TopLeft"
                                          ParentWidth="{Binding Source={x:Reference MainGrid},Path=Width}">
             <controls:ToolTipControl.EmptyView>
-                <Border Stroke="Transparent" StrokeShape="RoundRectangle" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Green" HeightRequest="30" WidthRequest="30" Padding="0" Margin="0">
+                <Border Stroke="Transparent" StrokeShape="RoundRectangle 15" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Green" HeightRequest="30" WidthRequest="30" Padding="0" Margin="0">
                     <Image Source="save" >
                         <Image.Behaviors>
                             <toolkit:IconTintColorBehavior TintColor="White" />
@@ -125,6 +125,6 @@
             </controls:ToolTipControl.EmptyView>
         </controls:ToolTipControl>
 
-        <admob:BannerAd x:Name="AdMob" Grid.Row="3" AdSize="Banner" Grid.ColumnSpan="3"/>
+        <admob:BannerAd x:Name="AdMob" Grid.Row="3" AdSize="Banner" Grid.ColumnSpan="3" />
     </controls:TooltipControlContainer>
 </ContentPage>

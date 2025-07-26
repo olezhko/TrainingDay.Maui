@@ -3,7 +3,7 @@ using Microcharts;
 using SkiaSharp;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using TrainingDay.Common.Communication;
+using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
@@ -187,11 +187,13 @@ class WeightViewAndSetPageViewModel : BaseViewModel
             return null;
         }
 
-        var dictDate = items.GroupBy(k => k.Date.Date)
+        var valueAndDateDictionary = items
+            .GroupBy(k => k.Date.Date)
             .OrderBy(k => k.Key)
-            .ToDictionary(k => k.Key, v => v.OrderBy(x => x.Date).Last());
+            .ToDictionary(k => k.Key, v => v.OrderBy(x => x.Date).Last())
+            .TakeEvenlyDistributed(5);
 
-        var entries = dictDate.Select(item => new ChartEntry((float)item.Value.Weight)
+        var entries = valueAndDateDictionary.Select(item => new ChartEntry((float)item.Value.Weight)
         {
             ValueLabel = item.Value.Weight.ToString(),
             Label = item.Key.ToString(Settings.GetLanguage().DateTimeFormat.ShortDatePattern.Replace("yyyy", "").Trim('.').Trim('/')),
@@ -217,8 +219,8 @@ class WeightViewAndSetPageViewModel : BaseViewModel
             LabelOrientation = Orientation.Horizontal,
             ValueLabelOrientation = Orientation.Horizontal,
             ValueLabelOption = ValueLabelOption.TopOfElement,
+            ValueLabelTextSize = 0,
             LabelTextSize = 42,
-            ValueLabelTextSize = 42,
             SerieLabelTextSize = 42,
             LineSize = 5,
             PointSize = 20,
