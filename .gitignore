@@ -364,3 +364,5 @@ FodyWeavers.xsd
 .DS_Store
 TrainingDay.Maui/.DS_Store
 TrainingDay.Maui/Platforms/.DS_Store
+TrainingDay.Maui/GoogleService-Info.plist
+TrainingDay.Maui/Platforms/Android/google-services.json

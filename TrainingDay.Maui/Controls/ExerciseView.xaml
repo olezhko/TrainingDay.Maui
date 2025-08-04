@@ -45,7 +45,7 @@
                 <FlexLayout AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}"
                         Direction="Row" JustifyContent="Start" VerticalOptions="Start" Wrap="Wrap">
                     <BindableLayout.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="viewModels:WeightAndRepsViewModel">
                             <controls:RepsAndWeightControl Margin="0" IsOnlyReps="True" Padding="0"
                                     DeleteRequestCommand="{Binding Source={x:Reference View}, Path=DeleteRequestCommand}"
                                     HorizontalOptions="Start" VerticalOptions="Start" Value="{Binding}" 
@@ -70,7 +70,7 @@
                 <FlexLayout AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}"
                         Direction="Row" JustifyContent="Start" VerticalOptions="Start" Wrap="Wrap">
                     <BindableLayout.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="viewModels:WeightAndRepsViewModel">
                             <controls:RepsAndWeightControl Margin="0"
                                 Padding="0"
                                 DeleteRequestCommand="{Binding Source={x:Reference View}, Path=DeleteRequestCommand}"

@@ -292,8 +292,12 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         PrepareAction(Resources.Strings.AppResources.CreateSuperSetString);
     }
 
-    private void CollectCheckedExercises(TrainingExerciseViewModel item)
+    private void CollectCheckedExercises(object sender)
     {
+        if (sender is null)
+            return;
+
+        TrainingExerciseViewModel item = sender as TrainingExerciseViewModel;
         if (item.IsSelected)
         {
             if (selectedItems.All(sel => sel.Id != item.Id))
@@ -316,8 +320,14 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         }
     }
 
-    private void CreateSuperSet()
+    private async Task CreateSuperSet()
     {
+        var countSelected = Training.Exercises.Count(item => item.IsSelected);
+        if (countSelected < 2)
+        {
+            await MessageManager.DisplayAlert(Resources.Strings.AppResources.Denied, Resources.Strings.AppResources.SupersetInvalidMessage, Resources.Strings.AppResources.OkString);
+        }
+
         LoggingService.TrackEvent($"{GetType().Name}: CreateSuperSet finished");
         var id = App.Database.SaveSuperSetItem(new SuperSetDto()
         {
@@ -422,15 +432,8 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         }
         else
         {
-            if (selectedItems.Count > 1)
-            {
-                CreateSuperSet();
-                StopAction(true);
-            }
-            else
-            {
-                await MessageManager.DisplayAlert(Resources.Strings.AppResources.Denied, Resources.Strings.AppResources.SupersetInvalidMessage, Resources.Strings.AppResources.OkString);
-            }
+            await CreateSuperSet();
+            StopAction(true);
         }
     }
 

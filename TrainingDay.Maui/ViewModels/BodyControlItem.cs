@@ -105,4 +105,11 @@ public class BodyControlItem : BaseViewModel
     {
         ChartItems = new List<WeightNoteDto>(chartItems);
     }
+
+    public BodyControlItem(List<WeightNoteDto> chartItems, string name, LineChart chart)
+    {
+        ChartItems = new List<WeightNoteDto>(chartItems);
+        _name = name;
+        this.chart = chart;
+    }
 }

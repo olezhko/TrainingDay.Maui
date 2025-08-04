@@ -2,12 +2,12 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
+             xmlns:models="clr-namespace:TrainingDay.Maui.ViewModels"
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:admob="clr-namespace:Plugin.AdMob;assembly=Plugin.AdMob"
-             x:Class="TrainingDay.Maui.Views.TrainingExercisesPage"
-             x:Name="ContentPage">
+             x:Class="TrainingDay.Maui.Views.TrainingExercisesPage">
     <ContentPage.BindingContext>
         <viewModels:TrainingExercisesPageViewModel/>
     </ContentPage.BindingContext>
@@ -52,7 +52,7 @@
         <CollectionView ItemsSource="{Binding Training.Exercises}" Grid.Row="1" x:Name="ItemsListView" SelectionMode="Single"
                     ItemsUpdatingScrollMode="KeepScrollOffset" VerticalScrollBarVisibility="Never">
             <CollectionView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="models:TrainingExerciseViewModel">
                     <Grid RowDefinitions="auto,*" RowSpacing="0" Padding="0" >
                         <Border Grid.Row="0" MinimumHeightRequest="80" x:Name="viewCell" Style="{StaticResource BorderCellStyle}" Margin="5,4,5,5">
                             <Border.GestureRecognizers>
@@ -100,10 +100,10 @@
                                     </Grid>
                                 </Border>
 
-                                <CheckBox Grid.Column="2" VerticalOptions="Center" IsChecked="{Binding IsSelected, Mode=TwoWay}" HorizontalOptions="CenterAndExpand"
+                                <CheckBox Grid.Column="2" VerticalOptions="Center" IsChecked="{Binding IsSelected, Mode=TwoWay}" HorizontalOptions="End"
                                   IsVisible="{Binding IsCheckBoxVisible}">
                                     <CheckBox.Behaviors>
-                                        <toolkit:EventToCommandBehavior EventName="CheckedChanged" Command="{Binding Source={x:Reference ContentPage}, 
+                                        <toolkit:EventToCommandBehavior EventName="CheckedChanged" Command="{Binding Source={x:Reference ItemsListView}, 
                                             Path=BindingContext.ExercisesCheckedChangedCommand}" CommandParameter="{Binding }"/>
                                     </CheckBox.Behaviors>
                                 </CheckBox>
@@ -113,7 +113,7 @@
                                     <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" HorizontalOptions="Center" Wrap="Wrap" VerticalOptions="Center" 
                                                 Direction="Row" JustifyContent="Center" AlignItems="Center" AlignContent="Start">
                                         <BindableLayout.ItemTemplate>
-                                            <DataTemplate>
+                                            <DataTemplate x:DataType="models:MuscleViewModel">
                                                 <Border Style="{StaticResource MuscleBorderCellStyle}" Margin="1">
                                                     <Label Text="{Binding Name}" FontSize="11" TextColor="White" LineBreakMode="TailTruncation"/>
                                                 </Border>

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models;
@@ -55,6 +56,8 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         }
 
         SelectWorkout(tempGroups);
+
+        Debug.WriteLine("Training Items loaded");
     }
 
     private void SelectWorkout(List<Grouping<string, TrainingViewModel>> tempGroups)
