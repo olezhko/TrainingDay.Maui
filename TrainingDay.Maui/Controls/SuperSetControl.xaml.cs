@@ -1,26 +1,15 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.ViewModels;
-using static TrainingDay.Maui.Controls.ExerciseView;
 
 namespace TrainingDay.Maui.Controls;
 
 public partial class SuperSetControl : ContentView
 {
-    private Picker dataPicker;
-    private PickerMode mode;
 
     public SuperSetControl()
 	{
 		InitializeComponent();
-        dataPicker = new Picker();
-        dataPicker.ItemsSource = Enumerable.Range(0, 60).Select(min => min.ToString("D2")).ToList();
-        dataPicker.SelectedIndexChanged += DataPickerOnSelectedIndexChanged;
-        dataPicker.IsVisible = false;
-        dataPicker.Unfocused += DataPicker_Unfocused;
-        dataPicker.TitleColor = Colors.Orange;
-        mainGrid.Children.Add(dataPicker);
     }
 
     #region Properties
@@ -144,62 +133,11 @@ public partial class SuperSetControl : ContentView
         var item = CurrentItem;
         if (item.IsTimeCalculating)
         {
-            item.IsTimeCalculating = false; // stop calculating time
+            item.IsTimeCalculating = false;
             return;
         }
 
         item.StartCalculateDateTime = DateTime.Now;
         item.IsTimeCalculating = true;
-    }
-
-    private void DataPickerOnSelectedIndexChanged(object sender, EventArgs e)
-    {
-        if (!dataPicker.IsVisible)
-        {
-            return;
-        }
-
-        var item = CurrentItem;
-        switch (mode)
-        {
-            case PickerMode.Hour:
-                item.TimeHours = dataPicker.SelectedIndex;
-                break;
-            case PickerMode.Minute:
-                item.TimeMinutes = dataPicker.SelectedIndex;
-                break;
-            case PickerMode.Second:
-                item.TimeSeconds = dataPicker.SelectedIndex;
-                break;
-        }
-    }
-
-    private void DataPicker_Unfocused(object sender, FocusEventArgs e)
-    {
-        dataPicker.IsVisible = false;
-    }
-
-    private void DatePicker(string title, PickerMode newMode)
-    {
-        dataPicker.Title = title;
-        dataPicker.SelectedIndex = -1;
-        dataPicker.IsVisible = true;
-        dataPicker.Focus();
-        mode = newMode;
-    }
-
-    private void HourGestureRecognizer_OnTapped(object sender, EventArgs e)
-    {
-        DatePicker(AppResources.Hours, PickerMode.Hour);
-    }
-
-    private void SecondGestureRecognizer_OnTapped(object sender, EventArgs e)
-    {
-        DatePicker(AppResources.Seconds, PickerMode.Second);
-    }
-
-    private void MinuteGestureRecognizer_OnTapped(object sender, EventArgs e)
-    {
-        DatePicker(AppResources.Minutes, PickerMode.Minute);
     }
 }

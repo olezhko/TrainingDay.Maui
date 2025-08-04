@@ -4,11 +4,12 @@
              xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels"
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Toolkit.Picker;assembly=Syncfusion.Maui.Toolkit"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             xmlns:data="clr-namespace:TrainingDay.Common.Models;assembly=TrainingDay.Common"
+             xmlns:data="clr-namespace:TrainingDay.Common.Models;assembly=TrainingDay.Common" xmlns:models="clr-namespace:TrainingDay.Maui.Models"
              x:Class="TrainingDay.Maui.Controls.ExerciseView"
              x:Name="View">
-    <Grid x:Name="MainGrid" RowSpacing="3">
+    <Grid x:Name="MainGrid" RowSpacing="3" x:DataType="viewModels:TrainingExerciseViewModel">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -82,124 +83,25 @@
                 </FlexLayout>
             </StackLayout>
 
-            <StackLayout Margin="0" Padding="0" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}"
-                     Orientation="Horizontal" Spacing="0">
-                <Label Margin="0" FontAttributes="Bold" FontSize="Medium" HorizontalOptions="StartAndExpand" Text="{x:Static resx:AppResources.TimeString}" VerticalOptions="Center" />
-                <Grid HorizontalOptions="Start">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-
-                    <Label
-                    x:Name="HourPicker"
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    FontSize="Medium"
-                    HorizontalOptions="Center"
-                    HorizontalTextAlignment="Center"
-                    Text="{Binding TimeHours, StringFormat='{0:D2}'}"
-                    WidthRequest="50">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="HourGestureRecognizer_OnTapped" />
-                        </Label.GestureRecognizers>
-                    </Label>
-
-                    <Label
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Padding="0"
-                    HorizontalOptions="Fill"
-                    HorizontalTextAlignment="Center"
-                    Text="{x:Static resx:AppResources.HourString}"
-                    VerticalTextAlignment="Center" />
+            <Border Style="{StaticResource MaterialBorder}" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}">
+                <Grid>
+                    <Label Text="{x:Static resx:AppResources.TimeString}" Style="{StaticResource MaterialLabel}" controls:MaterialLabelAttached.MaterialControlType="None"/>
+                    <syncfusion:SfTimePicker SelectedTime="{Binding Time, Mode=TwoWay}" Format="HH_mm_ss" Grid.Row="1" HeightRequest="120" BackgroundColor="Transparent" HorizontalOptions="Center">
+                            <syncfusion:SfTimePicker.ColumnHeaderTemplate>
+                                <DataTemplate>
+                                    <Grid BackgroundColor="Transparent" ColumnDefinitions="*,*,*">
+                                        <Label Text="{x:Static resx:AppResources.Hours}" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                        <Label Text="{x:Static resx:AppResources.Minutes}" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                        <Label Text="{x:Static resx:AppResources.Seconds}" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </syncfusion:SfTimePicker.ColumnHeaderTemplate>
+                            <syncfusion:SfTimePicker.ColumnHeaderView >
+                                <syncfusion:TimePickerColumnHeaderView DividerColor="Transparent" />
+                            </syncfusion:SfTimePicker.ColumnHeaderView> 
+                    </syncfusion:SfTimePicker>
                 </Grid>
-
-                <Label
-                Padding="0"
-                FontSize="Medium"
-                HorizontalOptions="Start"
-                HorizontalTextAlignment="Center"
-                Text=":"
-                VerticalTextAlignment="Center" />
-                <Grid HorizontalOptions="Start">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Label
-                    x:Name="MinutesPicker"
-                    Grid.Row="0"
-                    FontSize="Medium"
-                    HorizontalOptions="Center"
-                    HorizontalTextAlignment="Center"
-                    Text="{Binding TimeMinutes, StringFormat='{0:D2}'}"
-                    WidthRequest="50">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="MinuteGestureRecognizer_OnTapped" />
-                        </Label.GestureRecognizers>
-                    </Label>
-
-                    <Label
-                    Grid.Row="1"
-                    Padding="0"
-                    HorizontalOptions="Fill"
-                    HorizontalTextAlignment="Center"
-                    Text="{x:Static resx:AppResources.MinuteString}"
-                    VerticalTextAlignment="Center" />
-                </Grid>
-
-                <Label
-                Padding="0"
-                FontSize="Medium"
-                HorizontalOptions="Start"
-                HorizontalTextAlignment="Center"
-                Text=":"
-                VerticalTextAlignment="Center" />
-                <Grid HorizontalOptions="Start">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Label
-                    x:Name="SecondsPicker"
-                    Grid.Row="0"
-                    FontSize="Medium"
-                    HorizontalOptions="Center"
-                    HorizontalTextAlignment="Center"
-                    Text="{Binding TimeSeconds, StringFormat='{0:D2}'}"
-                    WidthRequest="50">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="SecondGestureRecognizer_OnTapped" />
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label
-                    Grid.Row="1"
-                    Padding="0"
-                    HorizontalOptions="Fill"
-                    HorizontalTextAlignment="Center"
-                    Text="{x:Static resx:AppResources.SecondString}"
-                    VerticalTextAlignment="Center" />
-                </Grid>
-                <Button Clicked="StartCalculateTime_Clicked" IsVisible="{Binding IsNotFinished}" CornerRadius="20">
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <Setter Property="Text" Value="{x:Static resx:AppResources.MakeTrainingString}" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsTimeCalculating}" TargetType="Button" Value="True">
-                                    <Setter Property="Text" Value="{x:Static resx:AppResources.StopString}" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button>
-            </StackLayout>
-
-            <StackLayout Margin="0" Padding="0" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByDistance}}"
-            Orientation="Horizontal">
-                <Label Margin="0" FontAttributes="Bold" FontSize="Medium" Text="{x:Static resx:AppResources.DistanceString}" VerticalOptions="Center" />
-                <Entry HorizontalOptions="Start" HorizontalTextAlignment="Center" Text="{Binding DistanceString}" WidthRequest="50" />
-            </StackLayout>
+            </Border>
         </StackLayout>
 
         <FlexLayout Grid.Row="3" BindableLayout.ItemsSource="{Binding Muscles}" HorizontalOptions="Center" Wrap="Wrap" VerticalOptions="Center" Direction="Row"
@@ -253,7 +155,7 @@
 
                 <CollectionView x:Name="VideoCollectionView" IsVisible="False">
                     <CollectionView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="models:YoutubeVideoItem">
                             <StackLayout Padding="10">
                                 <Label FontSize="Small" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" Text="{Binding VideoTitle}" />
                                 <Label FontSize="Small" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" Text="{Binding VideoAuthor, StringFormat={x:Static resx:AppResources.AuthorString}}" />

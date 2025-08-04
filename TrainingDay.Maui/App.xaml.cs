@@ -107,7 +107,7 @@ namespace TrainingDay.Maui
                         ImageDto image = App.Database.GetImage(url);
                         if (image == null)
                         {
-                            var path = await App.GetFile(s3Client, b.Key);
+                            var path = await GetFile(s3Client, b.Key);
                             var bytes = File.ReadAllBytes(path);
                             var item = new ImageDto()
                             {
@@ -118,13 +118,15 @@ namespace TrainingDay.Maui
                             App.Database.SaveImage(item);
                         }
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
+                        LoggingService.TrackError(ex);
                     }
                 }
             }
             catch (System.Exception ex)
             {
+                LoggingService.TrackError(ex);
             }
         }
 

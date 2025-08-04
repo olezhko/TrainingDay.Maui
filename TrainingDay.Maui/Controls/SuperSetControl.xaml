@@ -5,9 +5,10 @@
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:data="clr-namespace:TrainingDay.Common.Models;assembly=TrainingDay.Common"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Toolkit.Picker;assembly=Syncfusion.Maui.Toolkit"
              x:Class="TrainingDay.Maui.Controls.SuperSetControl"
              x:Name="Self">
-    <Grid x:Name="mainGrid" RowDefinitions="auto,*" RowSpacing="5">
+    <Grid RowDefinitions="auto,*" RowSpacing="5">
 
         <Grid MinimumHeightRequest="40">
             <Grid.ColumnDefinitions>
@@ -17,13 +18,13 @@
             </Grid.ColumnDefinitions>
 
             <ImageButton Source="arrow_right.png" Grid.Column="0" BackgroundColor="Transparent" Command="{Binding Source={x:Reference Self}, Path=PreviousCommand}"
-                    WidthRequest="20" HeightRequest="20" VerticalOptions="Start" IsEnabled="{Binding Source={x:Reference Self}, Path=IsPrevAvailable}"/>
+                    WidthRequest="20" HeightRequest="20" VerticalOptions="Start" IsVisible="{Binding Source={x:Reference Self}, Path=IsPrevAvailable}"/>
 
             <Label Grid.Column="1" Text="{Binding Source={x:Reference Self}, Path=CurrentItem.Name}" VerticalOptions="Start" HorizontalOptions="Center" FontSize="25"
                             TextColor="{AppThemeBinding Light=Black,Dark=White}" HorizontalTextAlignment="Center"/>
 
             <ImageButton Source="arrow_left.png" Grid.Column="2" BackgroundColor="Transparent" Command="{Binding Source={x:Reference Self}, Path=NextCommand}"
-                    WidthRequest="20" HeightRequest="20" VerticalOptions="Start" IsEnabled="{Binding Source={x:Reference Self}, Path=IsNextAvailable}">
+                    WidthRequest="20" HeightRequest="20" VerticalOptions="Start" IsVisible="{Binding Source={x:Reference Self}, Path=IsNextAvailable}">
             </ImageButton>
         </Grid>
 
@@ -44,24 +45,29 @@
                                 <DataTemplate>
                                     <Grid RowDefinitions="auto,45" RowSpacing="2">
                                         <Border BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
-                                        <Entry Margin="0" FontSize="Medium" Keyboard="Numeric" MaxLength="3" Text="{Binding Repetitions, Mode=TwoWay}" MinimumWidthRequest="50" HorizontalTextAlignment="Center" />
-                                        <ImageButton Grid.Row="1" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" HorizontalOptions="Center" CornerRadius="17"
-                                            IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}" Source="save" VerticalOptions="Fill" WidthRequest="35">
-                                            <ImageButton.Behaviors>
-                                                <toolkit:IconTintColorBehavior TintColor="LightGray" />
-                                            </ImageButton.Behaviors>
-                                            <ImageButton.Style>
-                                                <Style TargetType="ImageButton">
+                                        <Entry Margin="0" FontSize="Medium" Keyboard="Numeric" MaxLength="3" Text="{Binding Repetitions, Mode=TwoWay}" MinimumWidthRequest="70" HorizontalTextAlignment="Center" />
+
+                                        <Border Grid.Row="1" Stroke="Transparent" StrokeShape="RoundRectangle 20" HeightRequest="40" WidthRequest="40"
+                                                VerticalOptions="Center" HorizontalOptions="Center" >
+                                            <Border.Style>
+                                                <Style TargetType="Border">
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding IsFinished}" TargetType="ImageButton" Value="True">
-                                                            <Setter Property="BackgroundColor" Value="Green" />
+                                                        <DataTrigger Binding="{Binding IsFinished}" TargetType="Border" Value="True">
+                                                            <Setter Property="Background" Value="Green" />
                                                         </DataTrigger>
-                                                        <DataTrigger Binding="{Binding IsFinished}" TargetType="ImageButton" Value="False">
-                                                            <Setter Property="BackgroundColor" Value="Transparent" />
+                                                        <DataTrigger Binding="{Binding IsFinished}" TargetType="Border" Value="False">
+                                                            <Setter Property="Background" Value="Transparent" />
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
-                                            </ImageButton.Style>
+                                            </Border.Style>
+                                        </Border>
+
+                                        <ImageButton Grid.Row="1" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" HorizontalOptions="Center" CornerRadius="17" Background="Transparent"
+                                            IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}" Source="save" VerticalOptions="Center" WidthRequest="35">
+                                            <ImageButton.Behaviors>
+                                                <toolkit:IconTintColorBehavior TintColor="LightGray" />
+                                            </ImageButton.Behaviors>
                                         </ImageButton>
                                     </Grid>
                                 </DataTemplate>
@@ -80,7 +86,7 @@
                                     <Grid RowDefinitions="auto,auto,auto" RowSpacing="2" VerticalOptions="Center">
                                         <Border BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
                                         <Border Grid.Row="2" BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
-                                        <Entry Margin="0" FontSize="Medium" Keyboard="Numeric" MaxLength="3" Text="{Binding Repetitions, Mode=TwoWay}" HorizontalTextAlignment="Center" MinimumWidthRequest="50"/>
+                                        <Entry Margin="0" FontSize="Medium" Keyboard="Numeric" MaxLength="3" Text="{Binding Repetitions, Mode=TwoWay}" HorizontalTextAlignment="Center" MinimumWidthRequest="70"/>
                                         <ImageButton Grid.Row="1" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" HorizontalOptions="Center" CornerRadius="17"
                                             IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}" Source="save" VerticalOptions="Fill" WidthRequest="35">
                                             <ImageButton.Behaviors>
@@ -100,131 +106,46 @@
                                             </ImageButton.Style>
                                         </ImageButton>
                                         <Entry Grid.Row="2" Margin="0" FontSize="Medium" IsVisible="{Binding Source={x:Reference Self}, Path=IsOnlyReps, Converter={StaticResource InverseBooleanConverter}}"
-                                        MaxLength="4" Text="{Binding WeightString, Mode=TwoWay}" MinimumWidthRequest="50" HorizontalTextAlignment="Center" />
+                                        MaxLength="4" Text="{Binding WeightString, Mode=TwoWay}" MinimumWidthRequest="70" HorizontalTextAlignment="Center" />
                                     </Grid>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
                     </Border>
                     
-                    <StackLayout Margin="0" Padding="0" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}"
-             Orientation="Horizontal" Spacing="0">
-                        <Label Margin="0" FontAttributes="Bold" FontSize="Medium" HorizontalOptions="StartAndExpand" Text="{x:Static resx:AppResources.TimeString}" VerticalOptions="Center" />
-                        <Grid HorizontalOptions="Start">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-
-                            <Label
-            x:Name="HourPicker"
-            Grid.Row="0"
-            Grid.Column="0"
-            FontSize="Medium"
-            HorizontalOptions="Center"
-            HorizontalTextAlignment="Center"
-            Text="{Binding TimeHours, StringFormat='{0:D2}'}"
-            WidthRequest="50">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="HourGestureRecognizer_OnTapped" />
-                                </Label.GestureRecognizers>
-                            </Label>
-
-                            <Label
-            Grid.Row="1"
-            Grid.Column="0"
-            Padding="0"
-            HorizontalOptions="Fill"
-            HorizontalTextAlignment="Center"
-            Text="{x:Static resx:AppResources.HourString}"
-            VerticalTextAlignment="Center" />
+                    <Border Style="{StaticResource MaterialBorder}" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}" Margin="0,5">
+                        <Grid RowDefinitions="auto,*">
+                            <Grid ColumnDefinitions="*,auto">
+                                <Label Text="{x:Static resx:AppResources.TimeString}" TextColor="{StaticResource Main}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                <Button Grid.Column="1" Clicked="StartCalculateTime_Clicked" CornerRadius="20" VerticalOptions="Start" BackgroundColor="Transparent" TextColor="{AppThemeBinding Dark=White, Light=Black}" FontAttributes="Bold">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Text" Value="{x:Static resx:AppResources.MakeTrainingString}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsTimeCalculating}" TargetType="Button" Value="True">
+                                                    <Setter Property="Text" Value="{x:Static resx:AppResources.StopString}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </Grid>
+                            <syncfusion:SfTimePicker SelectedTime="{Binding Time, Mode=TwoWay}" Format="HH_mm_ss" Grid.Row="1" HeightRequest="120" BackgroundColor="Transparent" HorizontalOptions="Center">
+                                <syncfusion:SfTimePicker.ColumnHeaderTemplate>
+                                    <DataTemplate>
+                                        <Grid BackgroundColor="Transparent" ColumnDefinitions="*,*,*">
+                                            <Label Text="{x:Static resx:AppResources.Hours}" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                            <Label Text="{x:Static resx:AppResources.Minutes}" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                            <Label Text="{x:Static resx:AppResources.Seconds}" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </syncfusion:SfTimePicker.ColumnHeaderTemplate>
+                                <syncfusion:SfTimePicker.ColumnHeaderView >
+                                    <syncfusion:TimePickerColumnHeaderView DividerColor="Transparent" />
+                                </syncfusion:SfTimePicker.ColumnHeaderView> 
+                            </syncfusion:SfTimePicker>
                         </Grid>
-
-                        <Label
-        Padding="0"
-        FontSize="Medium"
-        HorizontalOptions="Start"
-        HorizontalTextAlignment="Center"
-        Text=":"
-        VerticalTextAlignment="Center" />
-                        <Grid HorizontalOptions="Start">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Label
-            x:Name="MinutesPicker"
-            Grid.Row="0"
-            FontSize="Medium"
-            HorizontalOptions="Center"
-            HorizontalTextAlignment="Center"
-            Text="{Binding TimeMinutes, StringFormat='{0:D2}'}"
-            WidthRequest="50">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="MinuteGestureRecognizer_OnTapped" />
-                                </Label.GestureRecognizers>
-                            </Label>
-
-                            <Label
-            Grid.Row="1"
-            Padding="0"
-            HorizontalOptions="Fill"
-            HorizontalTextAlignment="Center"
-            Text="{x:Static resx:AppResources.MinuteString}"
-            VerticalTextAlignment="Center" />
-                        </Grid>
-
-                        <Label
-        Padding="0"
-        FontSize="Medium"
-        HorizontalOptions="Start"
-        HorizontalTextAlignment="Center"
-        Text=":"
-        VerticalTextAlignment="Center" />
-                        <Grid HorizontalOptions="Start">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Label
-            x:Name="SecondsPicker"
-            Grid.Row="0"
-            FontSize="Medium"
-            HorizontalOptions="Center"
-            HorizontalTextAlignment="Center"
-            Text="{Binding TimeSeconds, StringFormat='{0:D2}'}"
-            WidthRequest="50">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="SecondGestureRecognizer_OnTapped" />
-                                </Label.GestureRecognizers>
-                            </Label>
-                            <Label
-            Grid.Row="1"
-            Padding="0"
-            HorizontalOptions="Fill"
-            HorizontalTextAlignment="Center"
-            Text="{x:Static resx:AppResources.SecondString}"
-            VerticalTextAlignment="Center" />
-                        </Grid>
-                        <Button Clicked="StartCalculateTime_Clicked" IsVisible="{Binding IsNotFinished}" CornerRadius="20">
-                            <Button.Style>
-                                <Style TargetType="Button">
-                                    <Setter Property="Text" Value="{x:Static resx:AppResources.MakeTrainingString}" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsTimeCalculating}" TargetType="Button" Value="True">
-                                            <Setter Property="Text" Value="{x:Static resx:AppResources.StopString}" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-                    </StackLayout>
-
-                    <StackLayout Margin="0" Padding="0" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByDistance}}"
-    Orientation="Horizontal">
-                        <Label Margin="0" FontAttributes="Bold" FontSize="Medium" Text="{x:Static resx:AppResources.DistanceString}" VerticalOptions="Center" />
-                        <Entry HorizontalOptions="Start" HorizontalTextAlignment="Center" Text="{Binding DistanceString}" WidthRequest="50" />
-                    </StackLayout>
+                    </Border>
                 </StackLayout>
 
                 <StackLayout x:Name="DescriptionGrid" Margin="0">

@@ -20,7 +20,6 @@ public class TrainingExerciseViewModel : ExerciseViewModel
 	private int superSetNum;
 	private bool isTimeCalculating;
 	private TimeSpan time;
-	private double distance;
 
 	public TrainingExerciseViewModel()
 	{
@@ -94,8 +93,9 @@ public class TrainingExerciseViewModel : ExerciseViewModel
 		{
 			superSetId = value;
 			OnPropertyChanged();
-		}
-	}
+            OnPropertyChanged(nameof(IsCheckBoxVisible));
+        }
+    }
 
 	public int SuperSetNum
 	{
@@ -104,7 +104,8 @@ public class TrainingExerciseViewModel : ExerciseViewModel
 		{
 			superSetNum = value;
 			OnPropertyChanged();
-		}
+			OnPropertyChanged(nameof(IsCheckBoxVisible));
+        }
 	}
 
 	public ObservableCollection<WeightAndRepsViewModel> WeightAndRepsItems
@@ -136,59 +137,7 @@ public class TrainingExerciseViewModel : ExerciseViewModel
 		{
 			time = value;
 			OnPropertyChanged();
-			OnPropertyChanged(nameof(TimeHours));
-			OnPropertyChanged(nameof(TimeMinutes));
-			OnPropertyChanged(nameof(TimeSeconds));
 		}
-	}
-
-	public int TimeHours
-	{
-		get => (int)Time.TotalHours;
-		set
-		{
-			Time = new TimeSpan(value, TimeMinutes, TimeSeconds);
-			OnPropertyChanged();
-		}
-	}
-
-	public int TimeMinutes
-	{
-		get => Time.Minutes;
-		set
-		{
-			Time = new TimeSpan(TimeHours, value, TimeSeconds);
-			OnPropertyChanged();
-		}
-	}
-
-	public int TimeSeconds
-	{
-		get => Time.Seconds;
-		set
-		{
-			Time = new TimeSpan(TimeHours, TimeMinutes, value);
-			OnPropertyChanged();
-		}
-	}
-
-	public string DistanceString
-	{
-		get => Distance.ToString(CultureInfo.InvariantCulture);
-		set
-		{
-			var res = double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var newValue);
-			if (res)
-			{
-				Distance = newValue;
-			}
-		}
-	}
-
-	public double Distance
-	{
-		get => distance;
-		set => SetProperty(ref distance, value);
 	}
 
 	public TrainingExerciseDto GetTrainingExerciseComm()

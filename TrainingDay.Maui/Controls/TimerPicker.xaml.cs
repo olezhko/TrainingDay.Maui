@@ -1,3 +1,4 @@
+using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Resources.Strings;
 using static TrainingDay.Maui.Controls.ExerciseView;
 

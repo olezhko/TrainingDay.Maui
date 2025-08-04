@@ -210,9 +210,6 @@
   <data name="Denied" xml:space="preserve">
     <value>Denied</value>
   </data>
-  <data name="DistanceString" xml:space="preserve">
-    <value>Distance</value>
-  </data>
   <data name="DistinctExercisesPercentFormat" xml:space="preserve">
     <value>Different finished exercises: {0:0.0}%</value>
   </data>

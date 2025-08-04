@@ -19,14 +19,14 @@ namespace TrainingDay.Maui.Resources.Strings {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Build.Tasks.StronglyTypedResourceBuilder", "15.1.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class AppResources {
+    internal class AppResources_ru {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal AppResources() {
+        internal AppResources_ru() {
         }
         
         /// <summary>
@@ -36,7 +36,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TrainingDay.Maui.Resources.Strings.AppResources", typeof(AppResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TrainingDay.Maui.Resources.Strings.AppResources.ru", typeof(AppResources_ru).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -58,7 +58,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Account.
+        ///   Looks up a localized string similar to Аккаунт.
         /// </summary>
         internal static string Account {
             get {
@@ -67,7 +67,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Achievements.
+        ///   Looks up a localized string similar to Достижения.
         /// </summary>
         internal static string Achievements {
             get {
@@ -76,7 +76,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add workout.
+        ///   Looks up a localized string similar to Добавление тренировки.
         /// </summary>
         internal static string AddTrainingString {
             get {
@@ -85,7 +85,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Advice and Tips.
+        ///   Looks up a localized string similar to Советы.
         /// </summary>
         internal static string Advice {
             get {
@@ -94,7 +94,13 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to After workout, the post-workout routine is useful, the post-workout routine allows smoothing the transition from high-intensity work to a state of rest. You thereby reduce the burden on the heart muscle, which has to pump blood intensively, to remove its stagnation from the muscles and provide it with internal organs. Suitable: Easy running, smoothly turning into walking (you can in place). Easy work on a bicycle or elliptical simulator, a stepper with a smooth decrease in intensity up to a stop. Jumping on [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to Заминка. 
+        ///Заминка позволяет сгладить переход от высокоинтенсивной работы к состоянию покоя. Вы тем самым снижаете нагрузку на сердечную мышцу, которой приходится усиленно прокачивать кровь, чтобы убрать ее застой из мышц и снабдить ею внутренние органы. 
+        ///Подойдут: 
+        ///•Легкий бег, плавно переходящий в ходьбу (можно на месте). 
+        ///•Легкая работа на вело- или эллиптическом тренажере
+        ///•Прыжки на скакалке в небыстром темпе. 
+        ///•Спарринг с грушей. 3 раунда по 2 минуты..
         /// </summary>
         internal static string AdviceAfterTrainingMessage {
             get {
@@ -103,7 +109,13 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stretching before workout is a complex of exercises for preparing the body for physical activity, which will help you avoid injuries and conduct the session as efficiently as possible. Stretching speeds up metabolic processes. Stretching before exercise improves blood circulation, which will saturate your muscles with oxygen and nutrients. This will help improve endurance during class. The warmed muscles are better compressed and relax during workout, which means that your strengths will be higher during th [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to Разминка.
+        ///Комплекс упражнений для подготовки тела к физической нагрузке, который поможет вам: 
+        ///• избежать травм и провести занятие максимально эффективно.
+        ///• ускоряет метаболические процессы
+        ///• улучшает кровообращение, что насытит ваши мышцы кислородом и питательными веществами
+        ///• повысит выносливость во время занятий
+        ///Разогретые мышцы лучше сжимаются и расслабляются во время тренировки, значит ваша силовые возможности во время выполнения упражнений будут выше. Подойдут базовые упражнения вроде махов руками, пр [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string AdviceBeforeTrainingMessage {
             get {
@@ -112,7 +124,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Advice.
+        ///   Looks up a localized string similar to Совет.
         /// </summary>
         internal static string AdviceString {
             get {
@@ -121,7 +133,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Author: {0}.
+        ///   Looks up a localized string similar to Автор: {0}.
         /// </summary>
         internal static string AuthorString {
             get {
@@ -130,7 +142,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back.
+        ///   Looks up a localized string similar to Назад.
         /// </summary>
         internal static string Back {
             get {
@@ -139,7 +151,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to Workouts.
+        ///   Looks up a localized string similar to Назад к тренировкам.
         /// </summary>
         internal static string BackToWorkouts {
             get {
@@ -148,7 +160,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to begins at.
+        ///   Looks up a localized string similar to начинается с.
         /// </summary>
         internal static string BeginsAt {
             get {
@@ -157,7 +169,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Buy.
+        ///   Looks up a localized string similar to Купить.
         /// </summary>
         internal static string BuyString {
             get {
@@ -166,7 +178,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cancel.
+        ///   Looks up a localized string similar to Отмена.
         /// </summary>
         internal static string CancelString {
             get {
@@ -175,7 +187,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cancel workout?.
+        ///   Looks up a localized string similar to Отменить выполнение тренировки?.
         /// </summary>
         internal static string CancelTrainingQuestion {
             get {
@@ -184,7 +196,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Changes will be accepted after restart application.
+        ///   Looks up a localized string similar to Изменения вступят в силу после перезапуска приложения.
         /// </summary>
         internal static string ChangesAcceptAfterReboot {
             get {
@@ -193,7 +205,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Group.
+        ///   Looks up a localized string similar to Группа.
         /// </summary>
         internal static string ChooseGroupOrNewString {
             get {
@@ -202,7 +214,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Language.
+        ///   Looks up a localized string similar to Язык.
         /// </summary>
         internal static string ChooseLanguage {
             get {
@@ -211,7 +223,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose action.
+        ///   Looks up a localized string similar to Выберите действие.
         /// </summary>
         internal static string ChoseAction {
             get {
@@ -220,7 +232,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Continue last workout?.
+        ///   Looks up a localized string similar to Продолжить последнюю тренировку?.
         /// </summary>
         internal static string ContinueLastTrainingQuestion {
             get {
@@ -229,7 +241,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Copy.
+        ///   Looks up a localized string similar to _Копия.
         /// </summary>
         internal static string CopiedString {
             get {
@@ -238,7 +250,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Coping exercises completed.
+        ///   Looks up a localized string similar to Копирование упражнений завершено.
         /// </summary>
         internal static string CopyExercisesFinishedMessage {
             get {
@@ -247,7 +259,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copy.
+        ///   Looks up a localized string similar to Копировать.
         /// </summary>
         internal static string CopyString {
             get {
@@ -256,7 +268,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create new.
+        ///   Looks up a localized string similar to Создать новую.
         /// </summary>
         internal static string CreateNewString {
             get {
@@ -265,7 +277,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create SuperSet.
+        ///   Looks up a localized string similar to Создать суперсет.
         /// </summary>
         internal static string CreateSuperSetString {
             get {
@@ -274,7 +286,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Current.
+        ///   Looks up a localized string similar to Текущий.
         /// </summary>
         internal static string CurrentString {
             get {
@@ -283,7 +295,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Time: {0}.
+        ///   Looks up a localized string similar to Время: {0}.
         /// </summary>
         internal static string CurrentTimeString {
             get {
@@ -292,7 +304,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}.
+        ///   Looks up a localized string similar to {0:dd.MM.yyyy HH:mm:ss}.
         /// </summary>
         internal static string DateTimeFormat {
             get {
@@ -301,7 +313,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Days.
+        ///   Looks up a localized string similar to Дней.
         /// </summary>
         internal static string Days {
             get {
@@ -310,7 +322,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deleted.
+        ///   Looks up a localized string similar to Удалено.
         /// </summary>
         internal static string DeletedString {
             get {
@@ -319,7 +331,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete this exercise?.
+        ///   Looks up a localized string similar to Удалить упражнение?.
         /// </summary>
         internal static string DeleteExercise {
             get {
@@ -328,7 +340,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete exercise from SuperSet?.
+        ///   Looks up a localized string similar to Удалить упражнение из суперсета?.
         /// </summary>
         internal static string DeleteExerciseFromSuperSetQuestion {
             get {
@@ -337,7 +349,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete this workout?.
+        ///   Looks up a localized string similar to Удалить эту тренировку?.
         /// </summary>
         internal static string DeleteTraining {
             get {
@@ -346,7 +358,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Denied.
+        ///   Looks up a localized string similar to Отказано.
         /// </summary>
         internal static string Denied {
             get {
@@ -355,7 +367,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Different finished exercises: {0:0.0}%.
+        ///   Looks up a localized string similar to Процент различных упражнений: {0:0.0}%.
         /// </summary>
         internal static string DistinctExercisesPercentFormat {
             get {
@@ -364,7 +376,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Duplicate.
+        ///   Looks up a localized string similar to Дублировать.
         /// </summary>
         internal static string Duplicate {
             get {
@@ -373,7 +385,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit.
+        ///   Looks up a localized string similar to Изменение.
         /// </summary>
         internal static string Editing {
             get {
@@ -382,7 +394,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Time: {0:hh\:mm\:ss}.
+        ///   Looks up a localized string similar to Время: {0:hh\:mm\:ss}.
         /// </summary>
         internal static string ElapsedTimeString {
             get {
@@ -391,7 +403,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter workout name and press OK.
+        ///   Looks up a localized string similar to Введите название тренировки и нажмите OK.
         /// </summary>
         internal static string EnterTrainingName {
             get {
@@ -400,7 +412,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Execution.
+        ///   Looks up a localized string similar to Выполнение.
         /// </summary>
         internal static string Execution {
             get {
@@ -409,7 +421,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exercise for .
+        ///   Looks up a localized string similar to Упражнение на .
         /// </summary>
         internal static string ExerciseForTypeString {
             get {
@@ -418,7 +430,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exercise is in workouts:.
+        ///   Looks up a localized string similar to Упражнение есть в тренировках:.
         /// </summary>
         internal static string ExerciseInTrainings {
             get {
@@ -427,7 +439,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exercises.
+        ///   Looks up a localized string similar to Упражнения.
         /// </summary>
         internal static string ExercisesString {
             get {
@@ -436,7 +448,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export data to file.
+        ///   Looks up a localized string similar to Экспортировать данные.
         /// </summary>
         internal static string ExportData {
             get {
@@ -445,7 +457,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Filter.
+        ///   Looks up a localized string similar to Фильтр.
         /// </summary>
         internal static string FilterString {
             get {
@@ -454,7 +466,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Finish.
+        ///   Looks up a localized string similar to Закончить.
         /// </summary>
         internal static string Finish {
             get {
@@ -463,7 +475,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to For.
+        ///   Looks up a localized string similar to Для.
         /// </summary>
         internal static string For {
             get {
@@ -472,7 +484,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Goal.
+        ///   Looks up a localized string similar to Цель.
         /// </summary>
         internal static string GoalString {
             get {
@@ -481,7 +493,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Got it.
+        ///   Looks up a localized string similar to Понятно.
         /// </summary>
         internal static string GotItString {
             get {
@@ -490,7 +502,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Default.
+        ///   Looks up a localized string similar to Без Группы.
         /// </summary>
         internal static string GroupingDefaultName {
             get {
@@ -499,7 +511,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter group`s name.
+        ///   Looks up a localized string similar to Введите название группы.
         /// </summary>
         internal static string GroupingEnterNameofGroup {
             get {
@@ -508,7 +520,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Workout already in Default group.
+        ///   Looks up a localized string similar to Тренировка уже в основной группе. .
         /// </summary>
         internal static string GroupingTrainingNotInGroup {
             get {
@@ -517,7 +529,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Half year.
+        ///   Looks up a localized string similar to Полгода.
         /// </summary>
         internal static string HalfYearString {
             get {
@@ -526,7 +538,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to HELPER.
+        ///   Looks up a localized string similar to ПОМОЩНИК.
         /// </summary>
         internal static string HelperString {
             get {
@@ -535,7 +547,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hips.
+        ///   Looks up a localized string similar to Бедра.
         /// </summary>
         internal static string HipsString {
             get {
@@ -544,7 +556,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Past workouts.
+        ///   Looks up a localized string similar to Выполненные тренировки.
         /// </summary>
         internal static string HistoryTrainings {
             get {
@@ -553,7 +565,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hours.
+        ///   Looks up a localized string similar to Часов.
         /// </summary>
         internal static string Hours {
             get {
@@ -562,7 +574,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to h.
+        ///   Looks up a localized string similar to ч.
         /// </summary>
         internal static string HourString {
             get {
@@ -571,7 +583,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Import Data from file.
+        ///   Looks up a localized string similar to Импортировать данные.
         /// </summary>
         internal static string ImportData {
             get {
@@ -580,7 +592,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to In-App Purchase.
+        ///   Looks up a localized string similar to Покупки в приложении.
         /// </summary>
         internal static string InAppPurchase {
             get {
@@ -589,7 +601,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to kg .
+        ///   Looks up a localized string similar to  кг  .
         /// </summary>
         internal static string KilogramsString {
             get {
@@ -598,7 +610,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Last: {0}.
+        ///   Looks up a localized string similar to Последнее выполнение: {0}.
         /// </summary>
         internal static string LastImplementedFormatString {
             get {
@@ -607,7 +619,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to lbs.
+        ///   Looks up a localized string similar to фунты.
         /// </summary>
         internal static string LbsString {
             get {
@@ -616,7 +628,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Let’s Build Your Workout.
+        ///   Looks up a localized string similar to Начать подбор упражнений.
         /// </summary>
         internal static string LetsBuildYourWorkout {
             get {
@@ -625,7 +637,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to START.
+        ///   Looks up a localized string similar to СТАРТ.
         /// </summary>
         internal static string MakeTrainingString {
             get {
@@ -634,7 +646,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Checkmark the required exercises and press {0}.
+        ///   Looks up a localized string similar to Отметьте необходимые упражнения и нажмите кнопку {0}.
         /// </summary>
         internal static string MarkTheRequiredExercisesAndPressFormat {
             get {
@@ -643,7 +655,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Measure of weight (kg/lbs).
+        ///   Looks up a localized string similar to Мера веса (кг или фунты).
         /// </summary>
         internal static string MeasureWeight {
             get {
@@ -652,7 +664,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Minutes.
+        ///   Looks up a localized string similar to Минут.
         /// </summary>
         internal static string Minutes {
             get {
@@ -661,7 +673,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to min.
+        ///   Looks up a localized string similar to мин.
         /// </summary>
         internal static string MinuteString {
             get {
@@ -670,7 +682,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to More than year.
+        ///   Looks up a localized string similar to Больше года.
         /// </summary>
         internal static string MoreThanYearString {
             get {
@@ -679,7 +691,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Most often day: {0:0}.
+        ///   Looks up a localized string similar to Самый частый день: {0:0}.
         /// </summary>
         internal static string MostOftenDayFormat {
             get {
@@ -688,7 +700,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TOP exercises.
+        ///   Looks up a localized string similar to ТОП упражнений.
         /// </summary>
         internal static string MostPopularExercises {
             get {
@@ -697,7 +709,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Moving workouts finished.
+        ///   Looks up a localized string similar to Перемещение тренировок завершено.
         /// </summary>
         internal static string MoveExercisesFinishedMessage {
             get {
@@ -706,7 +718,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move.
+        ///   Looks up a localized string similar to Переместить.
         /// </summary>
         internal static string MoveString {
             get {
@@ -715,7 +727,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name: {0}.
+        ///   Looks up a localized string similar to Название: {0}.
         /// </summary>
         internal static string NameFormatString {
             get {
@@ -724,7 +736,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name.
+        ///   Looks up a localized string similar to Название.
         /// </summary>
         internal static string NameString {
             get {
@@ -733,7 +745,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to News.
+        ///   Looks up a localized string similar to Новости.
         /// </summary>
         internal static string NewsString {
             get {
@@ -742,7 +754,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Next.
+        ///   Looks up a localized string similar to Дальше.
         /// </summary>
         internal static string Next {
             get {
@@ -751,7 +763,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your filter term of did not match any exercises.
+        ///   Looks up a localized string similar to Нет упражнений по заданному фильтру..
         /// </summary>
         internal static string NoExercisesFilterString {
             get {
@@ -760,7 +772,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No exercises. You should add exercise..
+        ///   Looks up a localized string similar to Нет упражнений. Добавьте упражнение..
         /// </summary>
         internal static string NoExercisesNeedAddNewString {
             get {
@@ -769,7 +781,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You haven’t done any workouts yet. Start your first workout!.
+        ///   Looks up a localized string similar to Вы ещё не выполнили ни одной тренировки. Начните свою первую тренировку!.
         /// </summary>
         internal static string NoLastTrainings {
             get {
@@ -778,7 +790,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No notifications. You should add notification..
+        ///   Looks up a localized string similar to Нет напоминаний. Добавьте напоминание..
         /// </summary>
         internal static string NoNotificationsString {
             get {
@@ -787,7 +799,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No.
+        ///   Looks up a localized string similar to Нет.
         /// </summary>
         internal static string NoString {
             get {
@@ -796,7 +808,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Not all fields entered.
+        ///   Looks up a localized string similar to Введены не все поля.
         /// </summary>
         internal static string NotAllFieldsEntered {
             get {
@@ -805,7 +817,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Not executed yet.
+        ///   Looks up a localized string similar to Еще не выполнялась.
         /// </summary>
         internal static string NotExecutedYet {
             get {
@@ -814,7 +826,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Notification.
+        ///   Looks up a localized string similar to Напоминание.
         /// </summary>
         internal static string Notification {
             get {
@@ -823,7 +835,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No workouts. You should add workout..
+        ///   Looks up a localized string similar to Нет тренировок. Добавьте тренировку..
         /// </summary>
         internal static string NoTrainingsNeedAddNewString {
             get {
@@ -832,7 +844,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ok.
+        ///   Looks up a localized string similar to OK.
         /// </summary>
         internal static string OkString {
             get {
@@ -841,7 +853,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Month.
+        ///   Looks up a localized string similar to Месяц.
         /// </summary>
         internal static string OneMounthString {
             get {
@@ -850,7 +862,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maximum weeks with workout: {0:0}.
+        ///   Looks up a localized string similar to Максимум подрят недель с тренировками: {0:0}.
         /// </summary>
         internal static string OneTrainingPerWeekCountFormat {
             get {
@@ -859,7 +871,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to On these days.
+        ///   Looks up a localized string similar to Для дней.
         /// </summary>
         internal static string OnTheseDays {
             get {
@@ -868,7 +880,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Or.
+        ///   Looks up a localized string similar to Или.
         /// </summary>
         internal static string Or {
             get {
@@ -877,7 +889,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter your new weight. Maybe something has changed..
+        ///   Looks up a localized string similar to Введите свой новый вес. Возможно что-то изменилось..
         /// </summary>
         internal static string PleaseEnterYourNewWeight {
             get {
@@ -886,7 +898,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Abdominal.
+        ///   Looks up a localized string similar to Мышцы пресса.
         /// </summary>
         internal static string PreparedAbdominalString {
             get {
@@ -895,7 +907,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Strong arms.
+        ///   Looks up a localized string similar to Сильные руки.
         /// </summary>
         internal static string PreparedArmsStrength {
             get {
@@ -904,7 +916,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Strong and embossed back.
+        ///   Looks up a localized string similar to Крепкая и рельефная спина.
         /// </summary>
         internal static string PreparedBackReady {
             get {
@@ -913,7 +925,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cardio.
+        ///   Looks up a localized string similar to Кардио.
         /// </summary>
         internal static string PreparedCardioString {
             get {
@@ -922,7 +934,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fitness.
+        ///   Looks up a localized string similar to Фитнес.
         /// </summary>
         internal static string PreparedFitnessString {
             get {
@@ -931,7 +943,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Strong legs and thighs.
+        ///   Looks up a localized string similar to Сильные ноги и бедра.
         /// </summary>
         internal static string PreparedFootTraining {
             get {
@@ -940,7 +952,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Without Inventory.
+        ///   Looks up a localized string similar to Без инвентаря.
         /// </summary>
         internal static string PreparedHomeString {
             get {
@@ -949,7 +961,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maximum Upper Body.
+        ///   Looks up a localized string similar to Максимальная верхняя часть тела.
         /// </summary>
         internal static string PreparedMaximumUpperBody {
             get {
@@ -958,7 +970,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Morning Workout.
+        ///   Looks up a localized string similar to Утренняя зарядка.
         /// </summary>
         internal static string PreparedMorningWorkout {
             get {
@@ -967,7 +979,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Flat Stomach.
+        ///   Looks up a localized string similar to Плоский живот.
         /// </summary>
         internal static string PreparedNiceStomach {
             get {
@@ -976,7 +988,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Workout for beginners.
+        ///   Looks up a localized string similar to Для начинающих.
         /// </summary>
         internal static string PreparedTrainingForBeginners {
             get {
@@ -985,7 +997,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wide Shoulders.
+        ///   Looks up a localized string similar to Широкие плечи.
         /// </summary>
         internal static string PreparedWideShoulders {
             get {
@@ -994,7 +1006,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rate App.
+        ///   Looks up a localized string similar to Оценить приложение.
         /// </summary>
         internal static string RateAppString {
             get {
@@ -1003,7 +1015,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Register.
+        ///   Looks up a localized string similar to Регистрация.
         /// </summary>
         internal static string RegisterAction {
             get {
@@ -1012,7 +1024,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete.
+        ///   Looks up a localized string similar to Удалить.
         /// </summary>
         internal static string RemoveString {
             get {
@@ -1021,7 +1033,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to reps.
+        ///   Looks up a localized string similar to повт.
         /// </summary>
         internal static string RepetitionsShort {
             get {
@@ -1030,7 +1042,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Repetitions | Weight.
+        ///   Looks up a localized string similar to Повторения | Вес.
         /// </summary>
         internal static string RepsAndWeightString {
             get {
@@ -1039,7 +1051,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Repetitions.
+        ///   Looks up a localized string similar to Повторения.
         /// </summary>
         internal static string RepsString {
             get {
@@ -1048,7 +1060,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rest.
+        ///   Looks up a localized string similar to Перерыв.
         /// </summary>
         internal static string Rest {
             get {
@@ -1057,7 +1069,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Restore Purchase.
+        ///   Looks up a localized string similar to Восстановить покупки.
         /// </summary>
         internal static string RestorePurchase {
             get {
@@ -1066,7 +1078,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You have not implemented a workout for a long time. Maybe today is that day?.
+        ///   Looks up a localized string similar to Вы давно не выполняли тренировку. Может сегодня тот день?.
         /// </summary>
         internal static string ReturnToTrainingMessage {
             get {
@@ -1075,7 +1087,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Saved.
+        ///   Looks up a localized string similar to Сохранено.
         /// </summary>
         internal static string SavedString {
             get {
@@ -1084,7 +1096,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save.
+        ///   Looks up a localized string similar to Сохранить тренировку.
         /// </summary>
         internal static string SaveTrainingString {
             get {
@@ -1093,7 +1105,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The screen should be turned on when doing a workout.
+        ///   Looks up a localized string similar to Оставлять экран включенным при выполнении тренировки.
         /// </summary>
         internal static string ScreenOnWhenImplementing {
             get {
@@ -1102,7 +1114,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Disable to save battery.
+        ///   Looks up a localized string similar to Выключить для экономии батареи.
         /// </summary>
         internal static string ScreenOnWhenImplementingTip {
             get {
@@ -1111,7 +1123,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search by Name.
+        ///   Looks up a localized string similar to Поиск по названию.
         /// </summary>
         internal static string SearchByNameString {
             get {
@@ -1120,7 +1132,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seconds.
+        ///   Looks up a localized string similar to Секунды.
         /// </summary>
         internal static string Seconds {
             get {
@@ -1129,7 +1141,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to sec.
+        ///   Looks up a localized string similar to сек.
         /// </summary>
         internal static string SecondString {
             get {
@@ -1138,7 +1150,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select all.
+        ///   Looks up a localized string similar to Выбрать все.
         /// </summary>
         internal static string SelectAllString {
             get {
@@ -1147,7 +1159,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select muscles.
+        ///   Looks up a localized string similar to Выбрать мышцы.
         /// </summary>
         internal static string SelectMusclesString {
             get {
@@ -1156,7 +1168,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Period.
+        ///   Looks up a localized string similar to Период.
         /// </summary>
         internal static string SelectPeriodString {
             get {
@@ -1165,7 +1177,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select.
+        ///   Looks up a localized string similar to Выбрать.
         /// </summary>
         internal static string SelectString {
             get {
@@ -1174,7 +1186,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Workout:.
+        ///   Looks up a localized string similar to Тренировка:.
         /// </summary>
         internal static string SelectTraining {
             get {
@@ -1183,7 +1195,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Set frequency.
+        ///   Looks up a localized string similar to Задать частоту.
         /// </summary>
         internal static string SetFrequency {
             get {
@@ -1192,7 +1204,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Settings.
+        ///   Looks up a localized string similar to Настройки.
         /// </summary>
         internal static string SettingsString {
             get {
@@ -1201,7 +1213,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Workout settings.
+        ///   Looks up a localized string similar to Настройки тренировки.
         /// </summary>
         internal static string SettingsTrainingString {
             get {
@@ -1210,7 +1222,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shared.
+        ///   Looks up a localized string similar to Отправлено.
         /// </summary>
         internal static string SharedString {
             get {
@@ -1219,7 +1231,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Share workout.
+        ///   Looks up a localized string similar to Поделиться тренировкой.
         /// </summary>
         internal static string ShareTrainingString {
             get {
@@ -1228,7 +1240,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description.
+        ///   Looks up a localized string similar to Описание.
         /// </summary>
         internal static string ShortDescriptionString1 {
             get {
@@ -1237,7 +1249,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show warm-up and cool-down tips while doing a workout.
+        ///   Looks up a localized string similar to Показывать советы по разминке и заминке во время выполнения тренировки.
         /// </summary>
         internal static string ShowAdvicesOnImplementing {
             get {
@@ -1246,7 +1258,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show tooltips.
+        ///   Looks up a localized string similar to Показывать подсказки.
         /// </summary>
         internal static string ShowToolTipsString {
             get {
@@ -1255,7 +1267,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Skip.
+        ///   Looks up a localized string similar to Пропустить.
         /// </summary>
         internal static string SkipString {
             get {
@@ -1264,7 +1276,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Starting Position.
+        ///   Looks up a localized string similar to Начальная позиция.
         /// </summary>
         internal static string StartPosition {
             get {
@@ -1273,7 +1285,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stop.
+        ///   Looks up a localized string similar to Стоп.
         /// </summary>
         internal static string StopString {
             get {
@@ -1282,7 +1294,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SuperSet Control.
+        ///   Looks up a localized string similar to Управление суперсетами.
         /// </summary>
         internal static string SuperSetControl {
             get {
@@ -1291,7 +1303,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SuperSet created.
+        ///   Looks up a localized string similar to Суперсет создан.
         /// </summary>
         internal static string SuperSetCreatedMessage {
             get {
@@ -1300,7 +1312,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To create a Superset you need more than 2 exercises.
+        ///   Looks up a localized string similar to Для создания Суперсета необходимо больше 2ух упражнений.
         /// </summary>
         internal static string SupersetInvalidMessage {
             get {
@@ -1309,7 +1321,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SuperSet.
+        ///   Looks up a localized string similar to Суперсет.
         /// </summary>
         internal static string SuperSetString {
             get {
@@ -1318,7 +1330,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure? Your unsynchronized data will be deleted..
+        ///   Looks up a localized string similar to Вы уверены? Ваши несинхронизированные данные удалятся..
         /// </summary>
         internal static string SynchronizationDownloadingQuestion {
             get {
@@ -1327,7 +1339,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This exercise is already exists in workout.
+        ///   Looks up a localized string similar to Это упражнение уже есть в тренировке.
         /// </summary>
         internal static string ThisExerciseAlreadyInWorkoutMessage {
             get {
@@ -1336,7 +1348,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 3 Month.
+        ///   Looks up a localized string similar to 3 Месяца.
         /// </summary>
         internal static string ThreeMounthString {
             get {
@@ -1345,7 +1357,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Time.
+        ///   Looks up a localized string similar to Время.
         /// </summary>
         internal static string TimeString {
             get {
@@ -1354,7 +1366,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click this button to add a new workout.
+        ///   Looks up a localized string similar to Нажмите на эту кнопку, чтобы добавить новую тренировку.
         /// </summary>
         internal static string ToolTipAddTrainingButton {
             get {
@@ -1363,7 +1375,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This button will add a set for the exercise (Set means how many reps you will do the exercise with a given weight).
+        ///   Looks up a localized string similar to Эта кнопка добавит подход для упражнения (Подход означает, сколько повторений вы будете делать упражнение с заданным весом).
         /// </summary>
         internal static string ToolTipAddWeightAndRepsString {
             get {
@@ -1372,7 +1384,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This button cancels the workout..
+        ///   Looks up a localized string similar to Эта кнопка для отмены выполнения тренировки.
         /// </summary>
         internal static string ToolTipCancelImplementingTraining {
             get {
@@ -1381,7 +1393,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click on the desired muscle to apply a filter for those muscles.
+        ///   Looks up a localized string similar to Нажмите на нужные мышцы, чтобы отобразить упражнения для этих мышц.
         /// </summary>
         internal static string ToolTipFilterMuscle {
             get {
@@ -1390,7 +1402,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This button ends the exercise..
+        ///   Looks up a localized string similar to Эта кнопка завершает выполнение упражнения.
         /// </summary>
         internal static string ToolTipFinishExercise {
             get {
@@ -1399,7 +1411,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To change the order of the exercises, you need to hold the image of the exercise and drag it to the desired position..
+        ///   Looks up a localized string similar to Чтобы изменить порядок упражнений необходимо зажать изображение упражнение и тянуть до необходимой позиции..
         /// </summary>
         internal static string ToolTipHoldImageExercises {
             get {
@@ -1408,7 +1420,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Press the button to select exercises for workout.
+        ///   Looks up a localized string similar to Нажмите на кнопку, чтобы выбрать упражнения для тренировки.
         /// </summary>
         internal static string ToolTipSelectExercisesToTrainingButton {
             get {
@@ -1417,7 +1429,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This button skips the exercise, this exercise will not appear in completed.
+        ///   Looks up a localized string similar to Эта кнопка пропускает упражнение, это упражнение не будет отображаться в выполненных.
         /// </summary>
         internal static string ToolTipSkipExercise {
             get {
@@ -1426,7 +1438,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click this button to start your workout.
+        ///   Looks up a localized string similar to Нажмите на эту кнопку, чтобы начать выполнение тренировки.
         /// </summary>
         internal static string ToolTipStartWorkout {
             get {
@@ -1435,7 +1447,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SuperSet is a combination of two or more exercises designed to work the same muscle or muscles of the antagonists. The most common way to use supersets is to train muscle groups with different functions. For example: biceps / triceps.
+        ///   Looks up a localized string similar to Суперсет – это сочетание двухи более упражнений, рассчитанных на работу одной и той же мышцы либо мышц антагонистов. Наиболее распространенный способ применения суперсетов – это тренировка как раз разных по функциям мышечных групп. Например: бицепс/трицепс.
         /// </summary>
         internal static string ToolTipSuperSet {
             get {
@@ -1444,7 +1456,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Press and hold on a workout to see settings..
+        ///   Looks up a localized string similar to Нажмите и удерживайте на тренировке, чтобы увидеть настройки..
         /// </summary>
         internal static string ToolTipTapHoldTraining {
             get {
@@ -1453,7 +1465,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Finished exercises: {0:0}.
+        ///   Looks up a localized string similar to Выполненных упражнений: {0:0}.
         /// </summary>
         internal static string TotalExercisesFormat {
             get {
@@ -1462,7 +1474,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Time spent:.
+        ///   Looks up a localized string similar to Затраченное время:.
         /// </summary>
         internal static string TotalTimeSpent {
             get {
@@ -1471,7 +1483,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Finished workouts: {0:0}.
+        ///   Looks up a localized string similar to Выполненных тренировок: {0:0}.
         /// </summary>
         internal static string TotalTrainingsFormat {
             get {
@@ -1480,7 +1492,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Workout finished.
+        ///   Looks up a localized string similar to Тренировка завершена.
         /// </summary>
         internal static string TrainingFinishedString {
             get {
@@ -1489,7 +1501,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Notifications.
+        ///   Looks up a localized string similar to Напоминания.
         /// </summary>
         internal static string TrainingNotifications {
             get {
@@ -1498,7 +1510,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Workouts.
+        ///   Looks up a localized string similar to Тренировки.
         /// </summary>
         internal static string TrainingsBaseString {
             get {
@@ -1507,7 +1519,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Workout.
+        ///   Looks up a localized string similar to Тренировка.
         /// </summary>
         internal static string TrainingString {
             get {
@@ -1516,7 +1528,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move to group.
+        ///   Looks up a localized string similar to Назначить группу.
         /// </summary>
         internal static string TrainingToGroupString {
             get {
@@ -1525,7 +1537,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove from Group &quot;{0}&quot;.
+        ///   Looks up a localized string similar to Удалить из группы &quot;{0}&quot;.
         /// </summary>
         internal static string TrainingUnGroupString {
             get {
@@ -1534,7 +1546,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2 month.
+        ///   Looks up a localized string similar to 2 месяца.
         /// </summary>
         internal static string TwoMonthString {
             get {
@@ -1543,7 +1555,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2 weeks.
+        ///   Looks up a localized string similar to 2 недели.
         /// </summary>
         internal static string TwoWeeksString {
             get {
@@ -1552,7 +1564,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Video.
+        ///   Looks up a localized string similar to Видео.
         /// </summary>
         internal static string VideoString {
             get {
@@ -1561,7 +1573,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Index value = {0:0.00}._Read more?.
+        ///   Looks up a localized string similar to Значение индекса = {0:0.00}._Хотите узнать больше?.
         /// </summary>
         internal static string WaistHipMessage {
             get {
@@ -1570,7 +1582,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Waist-Hip Index.
+        ///   Looks up a localized string similar to Индекс талия-бедра.
         /// </summary>
         internal static string WaistHipTitle {
             get {
@@ -1579,7 +1591,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Waist.
+        ///   Looks up a localized string similar to Талия.
         /// </summary>
         internal static string WaistString {
             get {
@@ -1588,7 +1600,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Week.
+        ///   Looks up a localized string similar to Неделя.
         /// </summary>
         internal static string WeekString {
             get {
@@ -1597,7 +1609,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Body.
+        ///   Looks up a localized string similar to Фигура.
         /// </summary>
         internal static string WeightControlString {
             get {
@@ -1606,7 +1618,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Weight entry notifications.
+        ///   Looks up a localized string similar to Уведомления о вводе веса.
         /// </summary>
         internal static string WeightNotifyString {
             get {
@@ -1615,7 +1627,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Weight.
+        ///   Looks up a localized string similar to Вес.
         /// </summary>
         internal static string WeightString {
             get {
@@ -1624,7 +1636,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Workout not added. The file format may not be correct..
+        ///   Looks up a localized string similar to Тренировка не добавлена. Возможно неправильный формат файла..
         /// </summary>
         internal static string WorkoutAddedErrorString {
             get {
@@ -1633,7 +1645,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Workout added.
+        ///   Looks up a localized string similar to Тренировка добавлена.
         /// </summary>
         internal static string WorkoutAddedString {
             get {
@@ -1642,7 +1654,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to In the application there is a limit on the creation of 3 workouts. Do you want to remove limit for $2.99?.
+        ///   Looks up a localized string similar to В приложении ограничение на создание 3ех тренировок. Хотите снять ограничение за $2.99?.
         /// </summary>
         internal static string WorkoutLimitMessage {
             get {
@@ -1651,7 +1663,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Year.
+        ///   Looks up a localized string similar to Год.
         /// </summary>
         internal static string YearString {
             get {
@@ -1660,7 +1672,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yes.
+        ///   Looks up a localized string similar to Да.
         /// </summary>
         internal static string YesString {
             get {

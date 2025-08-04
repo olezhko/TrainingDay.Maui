@@ -19,7 +19,6 @@ public partial class ExerciseItemPage : ContentPage
         InitializeComponent();
         FillMuscleLookup();
         ExerciseByRepsCheckBox.Content = $"{LanguageResource.ExerciseForTypeString}{LanguageResource.RepsString}";
-        ExerciseByDistanceCheckBox.Content = $"{LanguageResource.ExerciseForTypeString}{LanguageResource.DistanceString}";
         ExerciseByRepsAndWeightCheckBox.Content = $"{LanguageResource.ExerciseForTypeString}{LanguageResource.RepsAndWeightString}";
         ExerciseByTimeCheckBox.Content = $"{LanguageResource.ExerciseForTypeString}{LanguageResource.TimeString}";
     }
@@ -47,8 +46,6 @@ public partial class ExerciseItemPage : ContentPage
         {
             ExerciseViewModel ex = BindingContext as ExerciseViewModel;
             ex.Tags.Clear();
-            if (ExerciseByDistanceCheckBox.IsChecked)
-                ex.Tags.Add(ExerciseTags.ExerciseByDistance);
 
             if (ExerciseByRepsAndWeightCheckBox.IsChecked)
                 ex.Tags.Add(ExerciseTags.ExerciseByRepsAndWeight);

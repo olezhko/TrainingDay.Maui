@@ -92,6 +92,14 @@ public partial class TrainingImplementPage : ContentPage
         HandlerChanged += OnHandlerChanged;
     }
 
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        UnsubscribeMessages();
+        //_timer -= _timer_Tick;
+        StepProgressBarControl.PropertyChanged -= StepProgressBarControl_PropertyChanged;
+    }
+
     private void OnHandlerChanged(object sender, EventArgs e)
     {
         if (Handler != null)

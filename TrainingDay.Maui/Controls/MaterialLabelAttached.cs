@@ -90,6 +90,10 @@ namespace TrainingDay.Maui.Controls
                 case MaterialControlTypes.Entry:
                     {
                         var entry = parent.Children.FirstOrDefault(item => (item as InputView) != null) as InputView;
+                        if (entry is null )
+                        {
+                            return;
+                        }
                         if (entry.Text.IsNotNullOrEmpty())
                         {
                             ChangeActivate(label, true);
@@ -137,6 +141,9 @@ namespace TrainingDay.Maui.Controls
                         };
                     }
                     break;
+                case MaterialControlTypes.None:
+                    ChangeActivate(label, true);
+                    break;
             }
         }
 
@@ -160,6 +167,8 @@ namespace TrainingDay.Maui.Controls
     {
         Entry,
         Picker,
-        Editor
+        Editor,
+
+        None
     }
 }

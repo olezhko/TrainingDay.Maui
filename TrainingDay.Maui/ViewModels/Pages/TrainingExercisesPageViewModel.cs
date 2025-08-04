@@ -188,6 +188,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
                     var id = sender.SuperSetId;
                     sender.SuperSetId = 0;
                     sender.SuperSetNum = 0;
+                    sender.IsCheckBoxVisible = true;
                     CheckSuperSetExist(id);
                     App.Database.SaveTrainingExerciseItem(sender.GetTrainingExerciseComm());
                 }
@@ -247,6 +248,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
             var item = list.First();
             item.SuperSetId = 0;
             item.SuperSetNum = 0;
+            item.IsCheckBoxVisible = true;
             App.Database.SaveTrainingExerciseItem(item.GetTrainingExerciseComm());
             App.Database.DeleteSuperSetItem(supersetId);
         }
@@ -285,6 +287,8 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
         CurrentAction = ExerciseCheckBoxAction.SuperSet;
         OnPropertyChanged(nameof(CurrentAction));
+        MessageManager.DisplayAlert(AppResources.AdviceString,
+                "Нажмите на кружочек справа от упражнения для тех, какие хотите добавить в суперсет. Или крестик, если хотите удалить из других суперсетов.", AppResources.OkString);
         PrepareAction(Resources.Strings.AppResources.CreateSuperSetString);
     }
 

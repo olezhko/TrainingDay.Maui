@@ -17,7 +17,7 @@ public class ExerciseManager
 
         if (tagsList.Contains(ExerciseTags.ExerciseByTime) || tagsList.Contains(ExerciseTags.ExerciseByDistance))
         {
-            weightAndReps = JsonConvert.SerializeObject((viewmodel.Time, viewmodel.Distance));
+            weightAndReps = JsonConvert.SerializeObject((viewmodel.Time, 0));
         }
 
         return weightAndReps;
@@ -41,7 +41,6 @@ public class ExerciseManager
             if (tagsList.Contains(ExerciseTags.ExerciseByTime) || tagsList.Contains(ExerciseTags.ExerciseByDistance))
             {
                 var obj = JsonConvert.DeserializeObject<(TimeSpan, double)>(value);
-                viewmodel.Distance = obj.Item2;
                 viewmodel.Time = obj.Item1;
             }
         }

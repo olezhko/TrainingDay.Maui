@@ -85,9 +85,6 @@
                     <RadioButton x:Name="ExerciseByTimeCheckBox" GroupName="ExerciseType" BackgroundColor="Transparent"
                              IsChecked="{Binding Tags,Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}, Mode=OneWay}"
                              IsEnabled="{Binding IsBase,Converter={StaticResource InverseBooleanConverter}}"/>
-                    <RadioButton x:Name="ExerciseByDistanceCheckBox" GroupName="ExerciseType" BackgroundColor="Transparent"
-                             IsChecked="{Binding Tags,Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByDistance}, Mode=OneWay}"
-                             IsEnabled="{Binding IsBase,Converter={StaticResource InverseBooleanConverter}}"/>
                 </StackLayout>
 
                 <Grid Grid.Row="4" RowDefinitions="auto,auto,auto" RowSpacing="5">

@@ -4,6 +4,7 @@ using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using Plugin.AdMob;
 using SkiaSharp.Views.Maui.Controls.Hosting;
+using Syncfusion.Maui.Toolkit.Hosting;
 using TrainingDay.Maui.Controls;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels.Pages;
@@ -21,6 +22,7 @@ namespace TrainingDay.Maui
                 .UseMauiCommunityToolkit()
                 .UseSkiaSharp()
                 .UseAdMob()
+                .ConfigureSyncfusionToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("Inter-Regular.ttf", "OpenSansRegular");
@@ -78,7 +80,7 @@ namespace TrainingDay.Maui
 #if IOS
         private static void MapFormatting(IEntryHandler handler, IEntry entry)
         {
-            handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
+            //handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
 
             handler.PlatformView?.UpdateMaxLength(entry);
 

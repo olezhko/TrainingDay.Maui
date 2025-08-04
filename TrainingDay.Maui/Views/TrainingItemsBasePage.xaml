@@ -45,7 +45,7 @@
                             CommandParameter="{Binding }" Margin="5" Padding="30,0">
                         <Button.Style>
                             <Style TargetType="Button">
-                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}"/>
+                                <Setter Property="BackgroundColor" Value="{StaticResource Gray500}"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding IsSelected}" Value="True" TargetType="Button">
                                         <Setter Property="BackgroundColor" Value="{StaticResource Main}"/>

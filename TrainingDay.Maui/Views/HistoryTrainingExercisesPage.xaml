@@ -51,7 +51,7 @@
                             </Border>
 
                             <StackLayout Grid.Column="1">
-                                <Label HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Center" Text="{Binding Name}"
+                                <Label HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Title" HorizontalOptions="Center" Text="{Binding Name}"
                                     VerticalTextAlignment="Center" />
 
                                 <StackLayout Orientation="Vertical">
@@ -87,15 +87,8 @@
                                     </FlexLayout>
 
                                     <Label Margin="0" Padding="0" FontSize="Medium" HorizontalOptions="Center"
-                                IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}"
-                                Text="{Binding Time, StringFormat={x:Static resx:AppResources.CurrentTimeString}}" />
-
-                                    <StackLayout Margin="0" Padding="0" HorizontalOptions="Center" Orientation="Horizontal"
-                                IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByDistance}}">
-                                        <Label FontSize="Medium" Text="{x:Static resx:AppResources.DistanceString}" />
-                                        <Label FontSize="Medium" Text=": " />
-                                        <Label FontSize="Medium" Text="{Binding Distance}" />
-                                    </StackLayout>
+                                        IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}"
+                                        Text="{Binding Time, StringFormat={x:Static resx:AppResources.CurrentTimeString}}" />
                                 </StackLayout>
 
                                 <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" HorizontalOptions="Center" Wrap="Wrap" VerticalOptions="Center" 
