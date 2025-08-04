@@ -28,7 +28,7 @@ public partial class ExerciseItemPage : ContentPage
         base.OnAppearing();
         ExerciseViewModel item = BindingContext as ExerciseViewModel;
 
-        if (item.Id == 0)
+        if (item.LoadId == 0)
         {
             TitleLabel.Text = LanguageResource.CreateNewString;
             DeleteExerciseToolbarItem.IsVisible = false;

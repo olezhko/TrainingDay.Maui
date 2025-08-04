@@ -10,19 +10,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.7" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Microcharts\Microcharts.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Update="Microsoft.Maui.Controls" Version="9.0.81" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Update="Microsoft.Maui.Controls.Compatibility" Version="8.0.14" />
+      <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.7" />
+      <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.90" />
+      <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.90" />
     </ItemGroup>
 
 </Project>

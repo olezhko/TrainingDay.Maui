@@ -107,7 +107,7 @@
         <FlexLayout Grid.Row="3" BindableLayout.ItemsSource="{Binding Muscles}" HorizontalOptions="Center" Wrap="Wrap" VerticalOptions="Center" Direction="Row"
             JustifyContent="Center" AlignItems="Center" AlignContent="Start">
             <BindableLayout.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="viewModels:MuscleViewModel">
                     <Border Margin="1" Style="{StaticResource MuscleBorderCellStyle}">
                         <Label FontSize="14" Text="{Binding Name}" TextColor="White" LineBreakMode="TailTruncation" />
                     </Border>

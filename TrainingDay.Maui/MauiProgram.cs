@@ -80,7 +80,7 @@ namespace TrainingDay.Maui
 #if IOS
         private static void MapFormatting(IEntryHandler handler, IEntry entry)
         {
-            //handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
+            handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
 
             handler.PlatformView?.UpdateMaxLength(entry);
 

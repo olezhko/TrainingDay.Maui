@@ -33,36 +33,31 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
-		<ApplicationVersion>300</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.6.1</ApplicationDisplayVersion>
+		<ApplicationVersion>311</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.7.1</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
 		<CreatePackage>false</CreatePackage>
 		<ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
-    <ApplicationVersion>300</ApplicationVersion>
-    <ApplicationDisplayVersion>1.2.6.1</ApplicationDisplayVersion>
-    <EnableSGenConc>True</EnableSGenConc>
-    <SkipStaticLibraryValidation>true</SkipStaticLibraryValidation>
+		<ApplicationVersion>311</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.7.1</ApplicationDisplayVersion>
+		<EnableSGenConc>True</EnableSGenConc>
+		<SkipStaticLibraryValidation>true</SkipStaticLibraryValidation>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
-		<ApplicationVersion>300</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.6.1</ApplicationDisplayVersion>
+		<ApplicationVersion>311</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.7.1</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
-		<ApplicationVersion>300</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.6.1</ApplicationDisplayVersion>
+		<ApplicationVersion>1.2.7.11</ApplicationVersion>
+		<ApplicationDisplayVersion>311</ApplicationDisplayVersion>
 		<CreatePackage>false</CreatePackage>
 		<CodesignProvision>TrainingDayPublish</CodesignProvision>
 		<CodesignKey>Apple Distribution: Oleg Ladyka (36WMJT4QLC)</CodesignKey>
 		<EnableSGenConc>True</EnableSGenConc>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(TargetFramework)'=='net9.0-ios'">
-	  <CodesignKey>Apple Development: Created via API (9GK3U38622)</CodesignKey>
-	  <CodesignProvision>VS: com.OLASoft.TrainingDay Development</CodesignProvision>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -83,205 +78,205 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Platforms\Android\google-services.json" />
-	  <None Remove="Platforms\Android\Resources\values\styles.xml" />
-	  <None Remove="Resources\Images\main.png" />
-	  <None Remove="Resources\Images\prepared\arms.png" />
-	  <None Remove="Resources\Images\prepared\back.png" />
-	  <None Remove="Resources\Images\prepared\begin.png" />
-	  <None Remove="Resources\Images\prepared\cardio.png" />
-	  <None Remove="Resources\Images\prepared\chest.png" />
-	  <None Remove="Resources\Images\prepared\fitness.png" />
-	  <None Remove="Resources\Images\prepared\flat_stomach.png" />
-	  <None Remove="Resources\Images\prepared\home.png" />
-	  <None Remove="Resources\Images\prepared\legs_and_glutes.png" />
-	  <None Remove="Resources\Images\prepared\morning.png" />
-	  <None Remove="Resources\Images\prepared\press.png" />
-	  <None Remove="Resources\Images\prepared\shoulders.png" />
-	  <None Remove="Resources\Images\prepared\up.png" />
-	  <None Remove="Resources\Images\prepared\wide_shoulders.png" />
-	  <None Remove="Models\Questions\" />
+		<None Remove="Platforms\Android\google-services.json" />
+		<None Remove="Platforms\Android\Resources\values\styles.xml" />
+		<None Remove="Resources\Images\main.png" />
+		<None Remove="Resources\Images\prepared\arms.png" />
+		<None Remove="Resources\Images\prepared\back.png" />
+		<None Remove="Resources\Images\prepared\begin.png" />
+		<None Remove="Resources\Images\prepared\cardio.png" />
+		<None Remove="Resources\Images\prepared\chest.png" />
+		<None Remove="Resources\Images\prepared\fitness.png" />
+		<None Remove="Resources\Images\prepared\flat_stomach.png" />
+		<None Remove="Resources\Images\prepared\home.png" />
+		<None Remove="Resources\Images\prepared\legs_and_glutes.png" />
+		<None Remove="Resources\Images\prepared\morning.png" />
+		<None Remove="Resources\Images\prepared\press.png" />
+		<None Remove="Resources\Images\prepared\shoulders.png" />
+		<None Remove="Resources\Images\prepared\up.png" />
+		<None Remove="Resources\Images\prepared\wide_shoulders.png" />
+		<None Remove="Models\Questions\" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Include="Resources\Images\prepared\arms.png" />
-	  <EmbeddedResource Include="Resources\Images\prepared\back.png" />
-	  <EmbeddedResource Include="Resources\Images\prepared\begin.png" />
-	  <EmbeddedResource Include="Resources\Images\prepared\cardio.png" />
-	  <EmbeddedResource Include="Resources\Images\prepared\chest.png" />
-	  <EmbeddedResource Include="Resources\Images\prepared\fitness.png" />
-	  <EmbeddedResource Include="Resources\Images\prepared\flat_stomach.png" />
-	  <EmbeddedResource Include="Resources\Images\prepared\home.png" />
-	  <EmbeddedResource Include="Resources\Images\prepared\legs_and_glutes.png" />
-	  <EmbeddedResource Include="Resources\Images\prepared\press.png" />
-	  <EmbeddedResource Include="Resources\Images\prepared\shoulders.png" />
-	  <EmbeddedResource Include="Resources\Images\prepared\up.png" />
-	  <EmbeddedResource Include="Resources\Images\prepared\wide_shoulders.png" />
-    <EmbeddedResource Include="Resources\Images\prepared\morning.png" />
-  </ItemGroup>
+		<EmbeddedResource Include="Resources\Images\prepared\arms.png" />
+		<EmbeddedResource Include="Resources\Images\prepared\back.png" />
+		<EmbeddedResource Include="Resources\Images\prepared\begin.png" />
+		<EmbeddedResource Include="Resources\Images\prepared\cardio.png" />
+		<EmbeddedResource Include="Resources\Images\prepared\chest.png" />
+		<EmbeddedResource Include="Resources\Images\prepared\fitness.png" />
+		<EmbeddedResource Include="Resources\Images\prepared\flat_stomach.png" />
+		<EmbeddedResource Include="Resources\Images\prepared\home.png" />
+		<EmbeddedResource Include="Resources\Images\prepared\legs_and_glutes.png" />
+		<EmbeddedResource Include="Resources\Images\prepared\press.png" />
+		<EmbeddedResource Include="Resources\Images\prepared\shoulders.png" />
+		<EmbeddedResource Include="Resources\Images\prepared\up.png" />
+		<EmbeddedResource Include="Resources\Images\prepared\wide_shoulders.png" />
+		<EmbeddedResource Include="Resources\Images\prepared\morning.png" />
+	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
-	  <GoogleServicesJson Include="Platforms\Android\google-services.json" />
-	  <PackageReference Include="Xamarin.Firebase.Iid" Version="121.1.0.14">
-	  </PackageReference>
-	  <PackageReference Include="Xamarin.Firebase.Messaging" Version="123.4.1">
-	  </PackageReference>
-	  <PackageReference Include="Xamarin.GooglePlayServices.Base" Version="118.3.0">
-	  </PackageReference>
-      <PackageReference Include="sqlite-net-pcl" Version="1.5.231">
-      </PackageReference>
+		<GoogleServicesJson Include="Platforms\Android\google-services.json" />
+		<PackageReference Include="Xamarin.Firebase.Iid" Version="121.1.0.14">
+		</PackageReference>
+		<PackageReference Include="Xamarin.Firebase.Messaging" Version="123.4.1">
+		</PackageReference>
+		<PackageReference Include="Xamarin.GooglePlayServices.Base" Version="118.3.0">
+		</PackageReference>
+		<PackageReference Include="sqlite-net-pcl" Version="1.5.231">
+		</PackageReference>
 	</ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0-ios'">
-    <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
-    <PackageReference Include="SQLitePCLRaw.core" Version="2.1.9" />
-    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.9" />
-    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.2" />
-    <PackageReference Include="SQLitePCLRaw.provider.dynamic_cdecl" Version="2.1.9" />
-    <PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="2.1.9" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.301" />
-    <PackageReference Include="AWSSDK.S3" Version="3.7.405.9" />
-    <PackageReference Include="CommunityToolkit.Maui" Version="12.1.0" />
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
-    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.6" />
-    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.6" />
-	<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.81" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.81" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
-    <PackageReference Include="Plugin.AdMob" Version="2.3.1" />
-    <PackageReference Include="RestSharp" Version="112.1.0" />
-    <PackageReference Include="SkiaSharp.Views" Version="2.88.7" />
-    <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.7" />
-    <PackageReference Include="Syncfusion.Maui.Picker" Version="30.1.42" />
-    <PackageReference Include="Syncfusion.Maui.Toolkit" Version="1.0.6" />
-  </ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\..\TrainingDay-Core\TrainingDay.Common\TrainingDay.Common.csproj" />
-	  <ProjectReference Include="..\Plugins\Microcharts.Maui\Microcharts.Maui.csproj" />
-	  <ProjectReference Include="..\Plugins\Microcharts\Microcharts.csproj" />
+	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0-ios'">
+		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+		<PackageReference Include="SQLitePCLRaw.core" Version="2.1.9" />
+		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.9" />
+		<PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.2" />
+		<PackageReference Include="SQLitePCLRaw.provider.dynamic_cdecl" Version="2.1.9" />
+		<PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="2.1.9" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Update="Resources\Strings\AppResources.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	    <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\Strings\AppResources.ru.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	    <LastGenOutput>AppResources.ru.Designer.cs</LastGenOutput>
-	  </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Strings\AppResources.de.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>AppResources.de.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+		<PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.301" />
+		<PackageReference Include="AWSSDK.S3" Version="3.7.405.9" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="12.1.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+		<PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.6" />
+		<PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.6" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.90" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.90" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="Plugin.AdMob" Version="2.3.1" />
+		<PackageReference Include="RestSharp" Version="112.1.0" />
+		<PackageReference Include="SkiaSharp.Views" Version="2.88.7" />
+		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.7" />
+		<PackageReference Include="Syncfusion.Maui.Picker" Version="30.1.42" />
+		<PackageReference Include="Syncfusion.Maui.Toolkit" Version="1.0.6" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Controls\ExerciseView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Controls\RepsAndWeightControl.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Controls\SuperSetControl.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Controls\TimerPicker.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Controls\ToolTipControl.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\BlogItemPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\BlogsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\ExerciseItemPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\FilterPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\HistoryTrainingExercisesPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\HistoryTrainingPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\ExerciseListPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\PreparedTrainingsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\SettingsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\StatisticsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\TrainingExerciseItemPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\TrainingExercisesMoveOrCopy.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\TrainingExercisesPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\TrainingImplementPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\TrainingItemsBasePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\TrainingsSetGroupPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\WeightViewAndSetPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+		<ProjectReference Include="..\..\TrainingDay-Core\TrainingDay.Common\TrainingDay.Common.csproj" />
+		<ProjectReference Include="..\Plugins\Microcharts.Maui\Microcharts.Maui.csproj" />
+		<ProjectReference Include="..\Plugins\Microcharts\Microcharts.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <BundleResource Include="GoogleService-Info.plist">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </BundleResource>
+		<EmbeddedResource Update="Resources\Strings\AppResources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\Strings\AppResources.ru.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>AppResources.ru.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\Strings\AppResources.de.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>AppResources.de.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Models\Questions\" />
+		<MauiXaml Update="Controls\ExerciseView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\RepsAndWeightControl.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\SuperSetControl.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\TimerPicker.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\ToolTipControl.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\BlogItemPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\BlogsPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\ExerciseItemPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\FilterPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\HistoryTrainingExercisesPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\HistoryTrainingPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\ExerciseListPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\PreparedTrainingsPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\SettingsPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\StatisticsPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\TrainingExerciseItemPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\TrainingExercisesMoveOrCopy.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\TrainingExercisesPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\TrainingImplementPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\TrainingItemsBasePage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\TrainingsSetGroupPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\WeightViewAndSetPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Resources\Strings\AppResources.Designer.cs">
-	    <DependentUpon>AppResources.resx</DependentUpon>
-	  </Compile>
-	  <Compile Update="Resources\Strings\AppResources.ru.Designer.cs">
-	    <DependentUpon>AppResources.ru.resx</DependentUpon>
-	  </Compile>
-	  <Compile Update="Resources\Strings\AppResources.de.Designer.cs">
-	    <DependentUpon>AppResources.de.resx</DependentUpon>
-	  </Compile>
+		<BundleResource Include="GoogleService-Info.plist">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</BundleResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Models\Questions\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Resources\Strings\AppResources.Designer.cs">
+			<DependentUpon>AppResources.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\Strings\AppResources.ru.Designer.cs">
+			<DependentUpon>AppResources.ru.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\Strings\AppResources.de.Designer.cs">
+			<DependentUpon>AppResources.de.resx</DependentUpon>
+		</Compile>
 	</ItemGroup>
 	<Target Name="LinkWithSwift" DependsOnTargets="_ParseBundlerArguments;_DetectSdkLocations" BeforeTargets="_LinkNativeExecutable">
- 		<PropertyGroup>
- 			<_SwiftPlatform Condition="$(RuntimeIdentifier.StartsWith('iossimulator-'))">iphonesimulator</_SwiftPlatform>
- 			<_SwiftPlatform Condition="$(RuntimeIdentifier.StartsWith('ios-'))">iphoneos</_SwiftPlatform>
- 		</PropertyGroup>
- 		<ItemGroup>
- 			<_CustomLinkFlags Include="-L" />
- 			<_CustomLinkFlags Include="/usr/lib/swift" />
- 			<_CustomLinkFlags Include="-L" />
- 			<_CustomLinkFlags Include="$(_SdkDevPath)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/$(_SwiftPlatform)" />
- 			<_CustomLinkFlags Include="-Wl,-rpath" />
- 			<_CustomLinkFlags Include="-Wl,/usr/lib/swift" />
- 		</ItemGroup>
- 	</Target>
+		<PropertyGroup>
+			<_SwiftPlatform Condition="$(RuntimeIdentifier.StartsWith('iossimulator-'))">iphonesimulator</_SwiftPlatform>
+			<_SwiftPlatform Condition="$(RuntimeIdentifier.StartsWith('ios-'))">iphoneos</_SwiftPlatform>
+		</PropertyGroup>
+		<ItemGroup>
+			<_CustomLinkFlags Include="-L" />
+			<_CustomLinkFlags Include="/usr/lib/swift" />
+			<_CustomLinkFlags Include="-L" />
+			<_CustomLinkFlags Include="$(_SdkDevPath)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/$(_SwiftPlatform)" />
+			<_CustomLinkFlags Include="-Wl,-rpath" />
+			<_CustomLinkFlags Include="-Wl,/usr/lib/swift" />
+		</ItemGroup>
+	</Target>
 </Project>
