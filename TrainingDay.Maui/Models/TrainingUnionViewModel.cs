@@ -12,7 +12,6 @@ public class TrainingUnionViewModel
 
     public TrainingUnionViewModel(TrainingUnionDto union)
     {
-        IsExpanded = union.IsExpanded;
         Id = union.Id;
         Name = union.Name;
         if (!string.IsNullOrEmpty(union.TrainingIDsString))
@@ -31,14 +30,11 @@ public class TrainingUnionViewModel
 
     public List<int> TrainingIDs { get; set; }
 
-    public bool IsExpanded { get; set; } = true;
-
     public TrainingUnionDto Model =>
         new TrainingUnionDto()
         {
             Id = Id,
             Name = Name,
-            IsExpanded = IsExpanded,
             TrainingIDsString = JsonConvert.SerializeObject(TrainingIDs),
         };
 }

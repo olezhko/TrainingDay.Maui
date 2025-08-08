@@ -1,6 +1,7 @@
 ﻿using Amazon;
 using Amazon.S3;
 using Amazon.S3.Model;
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
@@ -61,6 +62,12 @@ namespace TrainingDay.Maui
         {
             return new Window(new AppShell());
         }
+        
+        private void SetStatusBarStyle()
+        {
+            CommunityToolkit.Maui.Core.Platform.StatusBar.SetColor(RequestedTheme == AppTheme.Light ? Color.FromRgba("#FFFFFFFF") : Color.FromRgba("#FF000000"));
+            CommunityToolkit.Maui.Core.Platform.StatusBar.SetStyle(RequestedTheme == AppTheme.Light ? StatusBarStyle.DarkContent : StatusBarStyle.LightContent);
+        }
 
         protected override void OnStart()
         {
@@ -70,7 +77,7 @@ namespace TrainingDay.Maui
 
             LoggingService.TrackEvent("Application Started");
 
-            
+
             Dispatcher.Dispatch(async () =>
             {
                 await DownloadImages();

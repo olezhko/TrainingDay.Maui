@@ -20,8 +20,7 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="0" Padding="0">
-						<Border StrokeShape="RoundRectangle 20" Style="{DynamicResource BorderCellStyle}" Padding="10" Margin="0"
-                           BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight},Dark={StaticResource ListItemBackgroundColor}}" >
+						<Border Style="{DynamicResource BorderCellStyle}" >
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Source={x:Reference Page}, Path=BindingContext.OpenBlogCommand}" CommandParameter="{Binding }"/>
                             </Border.GestureRecognizers>

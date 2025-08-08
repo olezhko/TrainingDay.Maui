@@ -30,7 +30,7 @@
         </Grid>
     </Shell.TitleView>
 
-    <controls:TooltipControlContainer x:Name="Container" RowSpacing="2" BackgroundColor="Transparent">
+    <controls:TooltipControlContainer x:Name="Container" RowSpacing="5" BackgroundColor="Transparent">
         <controls:TooltipControlContainer.Style>
             <Style TargetType="controls:TooltipControlContainer" >
                 <Setter Property="RowDefinitions" Value="auto,*,auto,auto,auto"/>
@@ -42,7 +42,7 @@
             </Style>
         </controls:TooltipControlContainer.Style>
 
-        <Border Style="{StaticResource MaterialBorder}" Margin="5">
+        <Border Style="{StaticResource MaterialBorder}">
             <Grid>
                 <Label Text="{x:Static resx:AppResources.NameString}" Style="{StaticResource MaterialLabel}"/>
                 <Entry Text="{Binding Training.Title, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="22" VerticalOptions="End"/>
@@ -54,7 +54,7 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:TrainingExerciseViewModel">
                     <Grid RowDefinitions="auto,*" RowSpacing="0" Padding="0" >
-                        <Border Grid.Row="0" MinimumHeightRequest="80" x:Name="viewCell" Style="{StaticResource BorderCellStyle}" Margin="5,4,5,5">
+                        <Border Grid.Row="0" MinimumHeightRequest="80" x:Name="viewCell" Style="{StaticResource BorderCellStyle}" Margin="0,-1,0,0">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding BindingContext.ItemTappedCommand, Source={x:Reference ItemsListView}}"
                                               CommandParameter="{Binding}"/>
@@ -101,12 +101,7 @@
                                 </Border>
 
                                 <CheckBox Grid.Column="2" VerticalOptions="Center" IsChecked="{Binding IsSelected, Mode=TwoWay}" HorizontalOptions="End"
-                                  IsVisible="{Binding IsCheckBoxVisible}">
-                                    <CheckBox.Behaviors>
-                                        <toolkit:EventToCommandBehavior EventName="CheckedChanged" Command="{Binding Source={x:Reference ItemsListView}, 
-                                            Path=BindingContext.ExercisesCheckedChangedCommand}" CommandParameter="{Binding }"/>
-                                    </CheckBox.Behaviors>
-                                </CheckBox>
+                                  IsVisible="{Binding IsCheckBoxVisible}" />
 
                                 <StackLayout Orientation="Vertical" Grid.Column="1" Padding="0" Margin="0" VerticalOptions="Center">
                                     <Label Text="{Binding Name}" FontSize="17" HorizontalTextAlignment="Center" HorizontalOptions="Fill" VerticalOptions="Start" Margin="0"/>
@@ -131,8 +126,6 @@
                                 </ImageButton>
                             </Grid>
                         </Border>
-
-                        <BoxView Grid.Row="1" HeightRequest="1" BackgroundColor="gray" VerticalOptions="End"/>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

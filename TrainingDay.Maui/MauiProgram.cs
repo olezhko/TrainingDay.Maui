@@ -34,18 +34,21 @@ namespace TrainingDay.Maui
                 })
                 .ConfigureMauiHandlers(handlers =>
                 {
+#if IOS
+                    handlers.AddHandler<Shell, Platforms.iOS.CustomShellRenderer>();
+#endif
                 });
 
-			builder.Services.AddSingleton<SettingsPage>();
+            builder.Services.AddSingleton<SettingsPage>();
 
-			builder.Services.AddSingleton<BlogsPageViewModel>();
-			builder.Services.AddSingleton<BlogsPage>();
+            builder.Services.AddSingleton<BlogsPageViewModel>();
+            builder.Services.AddSingleton<BlogsPage>();
 
-			builder.Services.AddTransient<IDataService, DataService>();
+            builder.Services.AddTransient<IDataService, DataService>();
             builder.Services.AddSingleton<WorkoutService>();
 
 #if DEBUG
-			builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
 #if ANDROID
@@ -65,7 +68,21 @@ namespace TrainingDay.Maui
 #endif
 
 #if IOS
-            MapFormatting(handler, entry);
+                MapFormatting(handler, entry);
+#endif
+
+            });
+
+            Microsoft.Maui.Handlers.SearchBarHandler.Mapper.AppendToMapping("Borderless", (handler, entry) =>
+            {
+#if ANDROID
+                handler.PlatformView.SetHighlightColor(Android.Graphics.Color.Transparent);
+                handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
+                handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
+#endif
+
+#if IOS
+                MapSearchFormatting(handler, entry);
 #endif
 
             });
@@ -90,6 +107,11 @@ namespace TrainingDay.Maui
             // Setting any of those may have removed text alignment settings,
             // so we need to make sure those are applied, too
             handler.PlatformView?.UpdateHorizontalTextAlignment(entry);
+        }
+        
+        private static void MapSearchFormatting(ISearchBarHandler handler, ISearchBar entry)
+        {
+            handler.PlatformView.SearchBarStyle = UIKit.UISearchBarStyle.Minimal;
         }
 #endif
 

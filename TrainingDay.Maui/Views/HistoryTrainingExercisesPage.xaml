@@ -38,8 +38,7 @@
         <CollectionView.ItemTemplate>
             <DataTemplate>
                 <Grid>
-                    <Border Style="{StaticResource BorderCellStyle}" Padding="10" Margin="0"
-                           BackgroundColor="{AppThemeBinding Dark={StaticResource ListItemBackgroundColor}, Light={StaticResource ListItemBackgroundColorLight}}">
+                    <Border Style="{StaticResource BorderCellStyle}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="70" />

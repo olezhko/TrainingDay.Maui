@@ -18,30 +18,30 @@ namespace TrainingDay.Maui.Services
 
     public class WorkoutService : IWorkoutService
     {
-		public async Task UpdateExerciseNameAndDescription()
-		{
-			var inits = await ResourceExtension.LoadResource<BaseExercise>("exercises", Settings.GetLanguage().TwoLetterISOLanguageName);
-			var exers = App.Database.GetExerciseItems();
-			exers.Where(item => item.CodeNum != 0).ForEach(exer =>
-			{
-				try
-				{
-					var init = inits.FirstOrDefault(item => item.CodeNum == exer.CodeNum);
-					if (init != null)
-					{
-						exer.Description = JsonConvert.SerializeObject(init.Description);
-						exer.Name = init.Name;
-						App.Database.SaveExerciseItem(exer);
-					}
-				}
-				catch (Exception e)
-				{
-					Console.WriteLine(e);
-				}
-			});
-		}
+        public async Task UpdateExerciseNameAndDescription()
+        {
+            var inits = await ResourceExtension.LoadResource<BaseExercise>("exercises", Settings.GetLanguage().TwoLetterISOLanguageName);
+            var exers = App.Database.GetExerciseItems();
+            exers.Where(item => item.CodeNum != 0).ForEach(exer =>
+            {
+                try
+                {
+                    var init = inits.FirstOrDefault(item => item.CodeNum == exer.CodeNum);
+                    if (init != null)
+                    {
+                        exer.Description = JsonConvert.SerializeObject(init.Description);
+                        exer.Name = init.Name;
+                        App.Database.SaveExerciseItem(exer);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            });
+        }
 
-		public async Task CreateWorkoutAsync(string name, IEnumerable<ExerciseQueryResponse> exercises, CancellationToken token = default)
+        public async Task CreateWorkoutAsync(string name, IEnumerable<ExerciseQueryResponse> exercises, CancellationToken token = default)
         {
             var id = App.Database.SaveItem(new TrainingDto()
             {
@@ -84,7 +84,7 @@ namespace TrainingDay.Maui.Services
                     }
                 }
 
-                if (tags.Contains(ExerciseTags.ExerciseByTime) || tags.Contains(ExerciseTags.ExerciseByDistance))
+                if (tags.Contains(ExerciseTags.ExerciseByTime))
                 {
                     exerciseModel.Time = TimeSpan.Parse(exercise.CountOfRepsOrTime);
                 }

@@ -18,7 +18,7 @@
     <Style TargetType="CollectionView" ApplyToDerivedTypes="True">
         <Setter Property="ItemsLayout">
             <Setter.Value>
-                <LinearItemsLayout Orientation="Vertical" ItemSpacing="0"/>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
             </Setter.Value>
         </Setter>
     </Style>
@@ -43,13 +43,12 @@
 		<Setter Property="StrokeShape" Value="RoundRectangle 10"/>
 		<Setter Property="BackgroundColor" Value="Gray"/>
 	</Style>
-	<Style TargetType="Border"
-		   x:Key="BorderCellStyle">
-		<Setter Property="Stroke" Value="Transparent" />
-		<Setter Property="StrokeShape" Value="RoundRectangle 5"/>
-		<Setter Property="Margin" Value="10"/>
-		<Setter Property="Padding" Value="0"/>
-		<Setter Property="BackgroundColor" Value="Transparent"/>
+	<Style TargetType="Border" x:Key="BorderCellStyle">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}"/>
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 20"/>
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="Margin" Value="0"/>
 	</Style>
 	<Style TargetType="Border" 
 		   x:Key="MaterialBorder">
@@ -432,8 +431,8 @@
     <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
     <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
 
-
     <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+        <Setter Property="Padding" Value="5"/>
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}" />
     </Style>
     
@@ -441,7 +440,12 @@
         <Setter Property="StepColor" Value="{AppThemeBinding Light=Black, Dark=Gray}" />
     </Style>
 
+    <Style TargetType="controls:TooltipControlContainer" ApplyToDerivedTypes="True">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}" />
+    </Style>
+
     <Style TargetType="controls:ToolTipControl" ApplyToDerivedTypes="True">
+        <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FrameBackground" Value="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark=Gray}" />
     </Style>
 </ResourceDictionary>

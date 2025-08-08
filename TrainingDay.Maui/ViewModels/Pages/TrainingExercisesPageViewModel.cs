@@ -15,7 +15,6 @@ namespace TrainingDay.Maui.ViewModels.Pages;
 public sealed class TrainingExercisesPageViewModel : BaseViewModel
 {
     private int itemId;
-    readonly ObservableCollection<TrainingExerciseViewModel> selectedItems = new ObservableCollection<TrainingExerciseViewModel>();
 
     public ObservableCollection<TrainingViewModel> TrainingItems { get; set; } = new ObservableCollection<TrainingViewModel>();
 
@@ -38,8 +37,6 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
     public ICommand ShowTrainingSettingsPageCommand => new Command(ShowTrainingSettingsPage);
 
     public ICommand AddExercisesCommand => new Command(AddExercises);
-
-    public ICommand ExercisesCheckedChangedCommand => new Command<TrainingExerciseViewModel>(CollectCheckedExercises);
 
     public ICommand CancelActionCommand => new Command(() => StopAction());
 
@@ -292,34 +289,6 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         PrepareAction(Resources.Strings.AppResources.CreateSuperSetString);
     }
 
-    private void CollectCheckedExercises(object sender)
-    {
-        if (sender is null)
-            return;
-
-        TrainingExerciseViewModel item = sender as TrainingExerciseViewModel;
-        if (item.IsSelected)
-        {
-            if (selectedItems.All(sel => sel.Id != item.Id))
-            {
-                selectedItems.Add(item.Clone());
-            }
-        }
-        else
-        {
-            if (selectedItems.Count == 0)
-            {
-                return;
-            }
-
-            var items = selectedItems.FirstOrDefault(selected => selected.TrainingExerciseId == item.TrainingExerciseId);
-            if (items != null)
-            {
-                selectedItems.Remove(items);
-            }
-        }
-    }
-
     private async Task CreateSuperSet()
     {
         var countSelected = Training.Exercises.Count(item => item.IsSelected);
@@ -331,7 +300,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         LoggingService.TrackEvent($"{GetType().Name}: CreateSuperSet finished");
         var id = App.Database.SaveSuperSetItem(new SuperSetDto()
         {
-            Count = selectedItems.Count,
+            Count = countSelected,
             TrainingId = Training.Id,
         });
 
@@ -407,12 +376,9 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
                     break;
             }
         }
-        else
-        {
-            Training.Exercises.ForEach(item => item.IsSelected = false);
-        }
 
-        selectedItems.Clear();
+        Training.Exercises.ForEach(item => item.IsSelected = false);
+        
         CurrentAction = ExerciseCheckBoxAction.None;
         OnPropertyChanged(nameof(CurrentAction));
 
@@ -425,7 +391,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         LoggingService.TrackEvent($"{GetType().Name}: StartAction {CurrentAction} Started");
         if (CurrentAction == ExerciseCheckBoxAction.Copy || CurrentAction == ExerciseCheckBoxAction.Move)
         {
-            ReFillTrainingToCopyOrMove();
+            UpdateTrainingListToMoveOrCopy();
 
             Dictionary<string, object> param = new Dictionary<string, object> { { "Context", this } };
             await Shell.Current.GoToAsync(nameof(TrainingExercisesMoveOrCopy), param);
@@ -437,22 +403,17 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         }
     }
 
-    private void ReFillTrainingToCopyOrMove()
+    private void UpdateTrainingListToMoveOrCopy()
     {
-        var trainingsItems = App.Database.GetTrainingItems(); // get list of trainings
-        TrainingItems.Clear();
+        var trainingsItems = App.Database.GetTrainingItems();
         if (trainingsItems != null && trainingsItems.Any())
         {
-            foreach (var training in trainingsItems)
-            {
-                if (training.Id != Training.Id)
+            TrainingItems = trainingsItems.Where(item => item.Id != Training.Id)
+                .Select(item => new TrainingViewModel(item)
                 {
-                    TrainingItems.Add(new TrainingViewModel(training)
-                    {
-                        Title = training.Title,
-                    });
-                }
-            }
+                    Title = item.Title,
+                })
+                .ToObservableCollection();
         }
 
         OnPropertyChanged(nameof(TrainingItems));
@@ -462,6 +423,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
     {
         await Shell.Current.GoToAsync("..");
 
+        var selectedItems = Training.Exercises.Where(item => item.IsSelected).Select(item => item.Clone()).ToList();
         if (SelectedTrainingForCopyOrMove != null && SelectedTrainingForCopyOrMove.Id != 0)
         {
             while (selectedItems.Count != 0)
@@ -505,6 +467,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
                 Title = result,
             });
 
+            var selectedItems = Training.Exercises.Where(item => item.IsSelected).Select(item => item.Clone()).ToList();
             while (selectedItems.Count != 0)
             {
                 var model = selectedItems[0];

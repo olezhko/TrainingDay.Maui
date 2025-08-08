@@ -61,7 +61,7 @@ public class MusclesConverter
             foreach (var muscleViewModel in array)
             {
                 res.Append((MusclesEnum)muscleViewModel.Id);
-                res.Append(",");
+                res.Append(',');
             }
 
             res.Remove(res.Length - 1, 1);

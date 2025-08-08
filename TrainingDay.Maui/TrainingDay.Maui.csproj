@@ -20,16 +20,12 @@
 		<ApplicationDisplayVersion>1</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">12.2</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 		<Company>LATec</Company>
 		<Product>TrainingDay</Product>
 		<PackageId>TrainingDay</PackageId>
 		<SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="$(TargetFramework.Contains('-ios'))">
-		<UseInterpreter>True</UseInterpreter>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
@@ -52,12 +48,14 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
-		<ApplicationVersion>1.2.7.11</ApplicationVersion>
-		<ApplicationDisplayVersion>311</ApplicationDisplayVersion>
+		<ApplicationVersion>1.2.7.4</ApplicationVersion>
+		<ApplicationDisplayVersion>314</ApplicationDisplayVersion>
 		<CreatePackage>false</CreatePackage>
 		<CodesignProvision>TrainingDayPublish</CodesignProvision>
 		<CodesignKey>Apple Distribution: Oleg Ladyka (36WMJT4QLC)</CodesignKey>
 		<EnableSGenConc>True</EnableSGenConc>
+		<UseInterpreter>True</UseInterpreter>
+		<Registrar>static</Registrar>
 	</PropertyGroup>
 
 	<ItemGroup>

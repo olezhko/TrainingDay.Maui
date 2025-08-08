@@ -11,14 +11,13 @@
         <viewModels:PreparedTrainingsPageViewModel />
     </ContentPage.BindingContext>
 
-    <controls:TooltipControlContainer x:Name="Container" RowSpacing="0" RowDefinitions="auto,*,Auto"
-                                      BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}">
+    <controls:TooltipControlContainer x:Name="Container" RowSpacing="0" RowDefinitions="auto,*,Auto" BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}">
 		<Grid x:Name="LetsBuildYourWorkoutButton" IsVisible="False">
             <Button Text="{x:Static resx:AppResources.LetsBuildYourWorkout}" Margin="5" Command="{Binding NavigateToQuestionsCommnd}"/>
 			<Image Source="magic.png" HorizontalOptions="Start" Margin="25,0,0,0" HeightRequest="40" />
         </Grid>
 
-        <CollectionView Grid.Row="1" Margin="5,0"  ItemsSource="{Binding PreparedTrainingsCollection}" SelectionMode="Single">
+        <CollectionView Grid.Row="1" ItemsSource="{Binding PreparedTrainingsCollection}" SelectionMode="Single" >
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Border Style="{StaticResource BorderCellStyle}" VerticalOptions="Fill" Stroke="Transparent">

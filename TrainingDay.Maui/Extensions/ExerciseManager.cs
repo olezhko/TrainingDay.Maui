@@ -15,7 +15,7 @@ public class ExerciseManager
             weightAndReps = JsonConvert.SerializeObject(viewmodel.WeightAndRepsItems);
         }
 
-        if (tagsList.Contains(ExerciseTags.ExerciseByTime) || tagsList.Contains(ExerciseTags.ExerciseByDistance))
+        if (tagsList.Contains(ExerciseTags.ExerciseByTime))
         {
             weightAndReps = JsonConvert.SerializeObject((viewmodel.Time, 0));
         }
@@ -38,7 +38,7 @@ public class ExerciseManager
                 viewmodel.WeightAndRepsItems = JsonConvert.DeserializeObject<ObservableCollection<WeightAndRepsViewModel>>(value);
             }
 
-            if (tagsList.Contains(ExerciseTags.ExerciseByTime) || tagsList.Contains(ExerciseTags.ExerciseByDistance))
+            if (tagsList.Contains(ExerciseTags.ExerciseByTime))
             {
                 var obj = JsonConvert.DeserializeObject<(TimeSpan, double)>(value);
                 viewmodel.Time = obj.Item1;

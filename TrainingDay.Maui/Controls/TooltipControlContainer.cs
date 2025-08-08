@@ -69,24 +69,11 @@ public class TooltipControlContainer : Grid
         {
             if (child is VisualElement visualElement)
             {
-                if (child.GetType() != typeof(ToolTipControl) && !GetIgnoreVisible(child))
+                if (child.GetType() != typeof(ToolTipControl))
                 {
                     child.SetValue(VisualElement.IsVisibleProperty, isVisible ? true : false);
                 }
             }
         }
-    }
-
-    public static readonly BindableProperty IgnoreVisibleProperty =
-        BindableProperty.CreateAttached("IgnoreVisible", typeof(bool), typeof(TooltipControlContainer), false);
-
-    public static bool GetIgnoreVisible(BindableObject view)
-    {
-        return (bool)view.GetValue(IgnoreVisibleProperty);
-    }
-
-    public static void SetIgnoreVisible(BindableObject view, bool value)
-    {
-        view.SetValue(IgnoreVisibleProperty, value);
     }
 }

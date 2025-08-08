@@ -123,8 +123,6 @@
                                 </StackLayout>
                             </Grid>
                         </Border>
-
-                        <BoxView HeightRequest="1" BackgroundColor="gray" VerticalOptions="End"/>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

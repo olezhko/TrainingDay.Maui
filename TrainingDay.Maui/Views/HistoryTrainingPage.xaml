@@ -5,7 +5,8 @@
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              x:Class="TrainingDay.Maui.Views.HistoryTrainingPage"
-             Title="{x:Static resx:AppResources.HistoryTrainings}" Padding="5">
+             Title="{x:Static resx:AppResources.HistoryTrainings}"
+             Shell.TabBarIsVisible="False">
     <ContentPage.BindingContext>
         <viewModels:HistoryTrainingPageViewModel/>
     </ContentPage.BindingContext>
@@ -35,8 +36,7 @@
         <CollectionView.ItemTemplate>
             <DataTemplate>
                 <Grid>
-                    <Border Style="{StaticResource BorderCellStyle}" Padding="10" Margin="0" StrokeShape="RoundRectangle 25"
-                           BackgroundColor="{AppThemeBinding Dark={StaticResource ListItemBackgroundColor}, Light={StaticResource ListItemBackgroundColorLight}}">
+                    <Border Style="{StaticResource BorderCellStyle}">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HistoryTrainingPageViewModel}}, Path=ItemSelectedCommand}"
                             CommandParameter="{Binding .}" NumberOfTapsRequired="1" />
