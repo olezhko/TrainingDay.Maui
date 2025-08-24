@@ -432,6 +432,7 @@
     <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
 
     <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+        <Setter Property="HideSoftInputOnTapped" Value="True"/>
         <Setter Property="Padding" Value="5"/>
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}" />
     </Style>

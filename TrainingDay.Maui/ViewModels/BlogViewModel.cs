@@ -17,7 +17,7 @@ public class BlogViewModel : BaseViewModel
     {
         Title = item.Title;
         Text = System.Text.RegularExpressions.Regex.Unescape(item.Content);
-        DateTime = DateTime.Parse(item.Published, CultureInfo.InvariantCulture);
+        DateTime = item.Published;
     }
 
     public string Title

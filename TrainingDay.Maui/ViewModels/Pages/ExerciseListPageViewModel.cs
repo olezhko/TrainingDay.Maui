@@ -43,10 +43,9 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
         }
         else
         {
-            ExistedExercises = new ObservableCollection<TrainingExerciseViewModel> { };
+            ExistedExercises = [];
         }
     }
-
 
     private void SubscribeMessages()
     {
@@ -61,15 +60,9 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
         });
     }
 
-    private void UnsubscribeMessages()
-    {
-        WeakReferenceMessenger.Default.Unregister<FilterAcceptedForExercisesMessage>(this);
-    }
+    private void UnsubscribeMessages() => WeakReferenceMessenger.Default.Unregister<FilterAcceptedForExercisesMessage>(this);
 
-    private async void Cancel()
-    {
-        await Shell.Current.GoToAsync("..");
-    }
+    private async void Cancel() => await Shell.Current.GoToAsync("..");
 
     /// <summary>
     /// Если элементы были выбраны путем поиска, а потом сбросили поиск, то оставить их выбранными
@@ -136,13 +129,23 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
                 var newItem = new ExerciseListItemViewModel(exercise);
                 newItem.IsExerciseExistsInWorkout = ExistedExercises != null && ExistedExercises.Any(x => x.ExerciseId == exercise.Id);
                 newItem.IsSelected = selectedIndexes.Contains(newItem.Id);
-                bool? byname = null, byFilter = null, atHome = null;
+                bool? byname = null, byFilter = null, atHome = null, barbell = null, dumbbell = null;
 
                 var tags = ExerciseExtensions.ConvertTagIntToList(exercise.TagsValue);
 
                 if (Filter.IsNoEquipmentFilter)
                 {
                     atHome = tags.Contains(ExerciseTags.CanDoAtHome);
+                }
+
+                if (Filter.IsBarbellExists)
+                {
+                    barbell = tags.Contains(ExerciseTags.BarbellExist);
+                }
+
+                if (Filter.IsDumbbellExists)
+                {
+                    dumbbell = tags.Contains(ExerciseTags.DumbbellExist);
                 }
 
                 if (!string.IsNullOrEmpty(Filter.NameFilter))
@@ -155,7 +158,11 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
                     byFilter = newItem.Muscles.Select(i => (MusclesEnum)i.Id).Intersect(Filter.CurrentMuscles).Count() != 0;
                 }
 
-                if (byname.HasValue && !byname.Value || byFilter.HasValue && !byFilter.Value || atHome.HasValue && !atHome.Value)
+                if (byname.HasValue && !byname.Value 
+                    || byFilter.HasValue && !byFilter.Value 
+                    || atHome.HasValue && !atHome.Value
+                    || barbell.HasValue && !barbell.Value
+                    || dumbbell.HasValue && !dumbbell.Value)
                 {
                     continue;
                 }
@@ -195,8 +202,8 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
 
     private async void ChoseExercises()
     {
-        await Shell.Current.GoToAsync("..");
         WeakReferenceMessenger.Default.Send(new ExercisesSelectFinishedMessage(GetSelectedItems()));
+        await Shell.Current.GoToAsync("..");
     }
 
     private void FillSelectedIndexes()

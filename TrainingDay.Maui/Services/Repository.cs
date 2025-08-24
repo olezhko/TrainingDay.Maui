@@ -105,7 +105,7 @@ public class Repository
             }
         }
     }
-    public void AddorUpdateExercise(Common.Models.BaseExercise newExercise, IEnumerable<ExerciseDto> dbExercises)
+    private bool AddorUpdateExercise(Common.Models.BaseExercise newExercise, IEnumerable<ExerciseDto> dbExercises)
     {
         try
         {
@@ -116,15 +116,18 @@ public class Repository
 				dbExercise.CodeNum = newExercise.CodeNum;
 			}
 
+			dbExercise.DifficultType = newExercise.DifficultType;
 			dbExercise.Description = JsonConvert.SerializeObject(newExercise.Description);
 			dbExercise.MusclesString = newExercise.MusclesString;
 			dbExercise.Name = newExercise.Name;
 			dbExercise.TagsValue = ExerciseExtensions.ConvertTagStringToInt(newExercise.Tags);
 			SaveExerciseItem(dbExercise);
+            return true;
 		}
 		catch (Exception e)
         {
 			LoggingService.TrackError(e);
+            return false;
 		}
     }
 

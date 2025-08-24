@@ -8,7 +8,6 @@ using TrainingDay.Common.Models;
 using TrainingDay.Maui.Controls;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models;
-using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
@@ -95,8 +94,6 @@ public partial class TrainingImplementPage : ContentPage
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-        UnsubscribeMessages();
-        //_timer -= _timer_Tick;
         StepProgressBarControl.PropertyChanged -= StepProgressBarControl_PropertyChanged;
     }
 
@@ -370,7 +367,7 @@ public partial class TrainingImplementPage : ContentPage
     private void SubscribeMessages()
     {
         UnsubscribeMessages();
-        WeakReferenceMessenger.Default.Register<ExercisesSelectFinishedMessage>(this, async (r, args) =>
+        WeakReferenceMessenger.Default.Register<ExercisesSelectFinishedMessage>(this, (r, args) =>
         {
             AddExercises(args.Selected.Select(item => TrainingExerciseViewModel.Create(item.GetExercise())));
 

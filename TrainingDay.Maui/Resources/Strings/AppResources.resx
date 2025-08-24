@@ -438,29 +438,14 @@
   <data name="SecondString" xml:space="preserve">
     <value>sec</value>
   </data>
-  <data name="SelectAllString" xml:space="preserve">
-    <value>Select all</value>
-  </data>
   <data name="SelectMusclesString" xml:space="preserve">
     <value>Select muscles</value>
-  </data>
-  <data name="SelectPeriodString" xml:space="preserve">
-    <value>Period</value>
   </data>
   <data name="SelectString" xml:space="preserve">
     <value>Select</value>
   </data>
-  <data name="SelectTraining" xml:space="preserve">
-    <value>Workout:</value>
-  </data>
-  <data name="SetFrequency" xml:space="preserve">
-    <value>Set frequency</value>
-  </data>
   <data name="SettingsString" xml:space="preserve">
     <value>Settings</value>
-  </data>
-  <data name="SettingsTrainingString" xml:space="preserve">
-    <value>Workout settings</value>
   </data>
   <data name="SharedString" xml:space="preserve">
     <value>Shared</value>
@@ -473,9 +458,6 @@
   </data>
   <data name="ShowAdvicesOnImplementing" xml:space="preserve">
     <value>Show warm-up and cool-down tips while doing a workout</value>
-  </data>
-  <data name="ShowToolTipsString" xml:space="preserve">
-    <value>Show tooltips</value>
   </data>
   <data name="SkipString" xml:space="preserve">
     <value>Skip</value>
@@ -500,9 +482,6 @@
   </data>
   <data name="SynchronizationDownloadingQuestion" xml:space="preserve">
     <value>Are you sure? Your unsynchronized data will be deleted.</value>
-  </data>
-  <data name="ThisExerciseAlreadyInWorkoutMessage" xml:space="preserve">
-    <value>This exercise is already exists in workout</value>
   </data>
   <data name="ThreeMounthString" xml:space="preserve">
     <value>3 Month</value>
@@ -551,9 +530,6 @@
   </data>
   <data name="TotalTrainingsFormat" xml:space="preserve">
     <value>Finished workouts: {0:0}</value>
-  </data>
-  <data name="TrainingFinishedString" xml:space="preserve">
-    <value>Workout finished</value>
   </data>
   <data name="TrainingNotifications" xml:space="preserve">
     <value>Notifications</value>
@@ -606,9 +582,6 @@
   <data name="WorkoutAddedString" xml:space="preserve">
     <value>Workout added</value>
   </data>
-  <data name="WorkoutLimitMessage" xml:space="preserve">
-    <value>In the application there is a limit on the creation of 3 workouts. Do you want to remove limit for $2.99?</value>
-  </data>
   <data name="YearString" xml:space="preserve">
     <value>Year</value>
   </data>
@@ -653,5 +626,29 @@
   </data>
   <data name="BackToWorkouts" xml:space="preserve">
     <value>Back to Workouts</value>
+  </data>
+  <data name="WithBarbell" xml:space="preserve">
+    <value>By clicking this button, the user will show or hide exercises with barbells.</value>
+  </data>
+  <data name="WithDumbbell" xml:space="preserve">
+    <value>By clicking this button, the user will show or hide exercises with dumbbells.</value>
+  </data>
+  <data name="Difficulty" xml:space="preserve">
+    <value>Difficulty</value>
+  </data>
+  <data name="DifficultyEasy" xml:space="preserve">
+    <value>Easy</value>
+  </data>
+  <data name="DifficultyMedium" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="DifficultyHard" xml:space="preserve">
+    <value>Hard</value>
+  </data>
+  <data name="DifficultyAny" xml:space="preserve">
+    <value>Any</value>
+  </data>
+  <data name="WithoutEquipment" xml:space="preserve">
+    <value>By clicking this button, the user will show or hide exercises without equipment (home-friendly).</value>
   </data>
 </root>

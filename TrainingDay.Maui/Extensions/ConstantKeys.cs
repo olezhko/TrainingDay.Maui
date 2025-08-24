@@ -18,10 +18,11 @@ public class ConstantKeys
 
     public const string NotFinishedTrainingName = "NotFinished.trday";
     public const string DatabaseName = "exercise.db";
+
     public class AwsS3
     {
-        public const string accessKey = " ";
-        public const string secretKey = " ";
+        public const string accessKey = "";
+        public const string secretKey = "";
         public const string BucketName = "trainingday-exercise-images";
     }
 }

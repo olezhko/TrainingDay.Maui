@@ -438,29 +438,14 @@
   <data name="SecondString" xml:space="preserve">
     <value>sec</value>
   </data>
-  <data name="SelectAllString" xml:space="preserve">
-    <value>Wählen Sie Alle</value>
-  </data>
   <data name="SelectMusclesString" xml:space="preserve">
     <value>MUSKELN HINZUFÜGEN</value>
-  </data>
-  <data name="SelectPeriodString" xml:space="preserve">
-    <value>Zeitraum</value>
   </data>
   <data name="SelectString" xml:space="preserve">
     <value>Wählen</value>
   </data>
-  <data name="SelectTraining" xml:space="preserve">
-    <value>Training:</value>
-  </data>
-  <data name="SetFrequency" xml:space="preserve">
-    <value>Frequenz einstellen</value>
-  </data>
   <data name="SettingsString" xml:space="preserve">
     <value>Einstellungen</value>
-  </data>
-  <data name="SettingsTrainingString" xml:space="preserve">
-    <value>Trainingseinstellungen</value>
   </data>
   <data name="SharedString" xml:space="preserve">
     <value>Geteilt</value>
@@ -473,9 +458,6 @@
   </data>
   <data name="ShowAdvicesOnImplementing" xml:space="preserve">
     <value>Zeige während des Trainings Tipps zum Aufwärmen und Abkühlen</value>
-  </data>
-  <data name="ShowToolTipsString" xml:space="preserve">
-    <value>Tooltips anzeigen</value>
   </data>
   <data name="SkipString" xml:space="preserve">
     <value>Überspringen</value>
@@ -500,9 +482,6 @@
   </data>
   <data name="SynchronizationDownloadingQuestion" xml:space="preserve">
     <value>Bist du dir sicher? Ihre nicht synchronisierten Daten werden gelöscht.</value>
-  </data>
-  <data name="ThisExerciseAlreadyInWorkoutMessage" xml:space="preserve">
-    <value>Diese Übung ist bereits im Training vorhanden</value>
   </data>
   <data name="ThreeMounthString" xml:space="preserve">
     <value>3 month</value>
@@ -551,9 +530,6 @@
   </data>
   <data name="TotalTrainingsFormat" xml:space="preserve">
     <value>Abgeschlossenen trainingseinheiten: {0:0}</value>
-  </data>
-  <data name="TrainingFinishedString" xml:space="preserve">
-    <value>Trainieren beendet</value>
   </data>
   <data name="TrainingNotifications" xml:space="preserve">
     <value>Benachrichtigungen</value>
@@ -606,9 +582,6 @@
   <data name="WorkoutAddedString" xml:space="preserve">
     <value>Training hinzugefügt</value>
   </data>
-  <data name="WorkoutLimitMessage" xml:space="preserve">
-    <value>In der Anwendung ist die Erstellung von 3 Workouts begrenzt. Möchten Sie das Limit für 2,99 $ entfernen?</value>
-  </data>
   <data name="YearString" xml:space="preserve">
     <value>Jahr</value>
   </data>
@@ -653,5 +626,29 @@
   </data>
   <data name="BackToWorkouts" xml:space="preserve">
     <value>Zurück zu den Workouts</value>
+  </data>
+  <data name="WithBarbell" xml:space="preserve">
+    <value>Durch Klicken auf diese Schaltfläche kann der Benutzer Übungen mit Hantelstangen ein- oder ausblenden.</value>
+  </data>
+  <data name="WithDumbbell" xml:space="preserve">
+    <value>Durch Klicken auf diese Schaltfläche kann der Benutzer Übungen mit Kurzhanteln ein- oder ausblenden.</value>
+  </data>
+  <data name="Difficulty" xml:space="preserve">
+    <value>Schwierigkeit</value>
+  </data>
+  <data name="DifficultyEasy" xml:space="preserve">
+    <value>Anfänger</value>
+  </data>
+  <data name="DifficultyMedium" xml:space="preserve">
+    <value>Mittelstufe</value>
+  </data>
+  <data name="DifficultyHard" xml:space="preserve">
+    <value>Schwer</value>
+  </data>
+  <data name="DifficultyAny" xml:space="preserve">
+    <value>Jeder</value>
+  </data>
+  <data name="WithoutEquipment" xml:space="preserve">
+    <value>Durch Klicken auf diese Schaltfläche kann der Benutzer Übungen ohne Geräte (für Zuhause geeignet) ein- oder ausblenden.</value>
   </data>
 </root>

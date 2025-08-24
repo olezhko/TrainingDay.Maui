@@ -88,9 +88,7 @@
                 </StackLayout>
 
                 <Grid Grid.Row="4" RowDefinitions="auto,auto,auto" RowSpacing="5">
-
                     <VerticalStackLayout Grid.Row="0">
-
                         <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.StartPosition}" TextColor="DodgerBlue" VerticalTextAlignment="Center" 
                            IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
                         <Editor

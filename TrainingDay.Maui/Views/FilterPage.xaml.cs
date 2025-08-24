@@ -1,4 +1,7 @@
+using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Maui.Controls.Shapes;
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
 using System.Collections.ObjectModel;
@@ -6,6 +9,7 @@ using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Messages;
+using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels;
 
@@ -19,6 +23,7 @@ public partial class FilterPage : ContentPage, IQueryAttributable
     {
         InitializeComponent();
 
+        Filter = new FilterModel();
         var itemsMuscles = new ObservableCollection<MuscleCheckItem>();
 
         for (int i = 0; i < (int)MusclesEnum.None; i++)
@@ -35,16 +40,17 @@ public partial class FilterPage : ContentPage, IQueryAttributable
 
         BindingContext = this;
         BindableLayout.SetItemsSource(MusclesListView, itemsMuscles);
+
+        DifficultyLevelLabel.Text = $"{AppResources.Difficulty}: {GetDifficultyLevelLabel(0)}";
+
+        ShowPopups();
     }
 
-    private void SetMuscleFilter(FilterModel filter)
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        Filter = filter;
-        var itemsSource = BindableLayout.GetItemsSource(MusclesListView);
-        NoEquipmentCheckBox.IsChecked = filter.IsNoEquipmentFilter;
-        foreach (MuscleCheckItem item in itemsSource)
+        if (query.TryGetValue("Filter", out var filterObj) && filterObj is FilterModel filter)
         {
-            item.IsChecked = Filter.CurrentMuscles.Contains(item.Muscle);
+            SetMuscleFilter(filter);
         }
     }
 
@@ -58,7 +64,72 @@ public partial class FilterPage : ContentPage, IQueryAttributable
 
         SkiaView.WidthRequest = MuscleImage.WidthRequest;
         SkiaView.HeightRequest = MuscleImage.HeightRequest;
-        MainGrid.RowDefinitions[1].Height = MuscleImage.HeightRequest;
+        MainGrid.RowDefinitions[2].Height = MuscleImage.HeightRequest;
+    }
+
+    private void SetMuscleFilter(FilterModel filter)
+    {
+        Filter = filter;
+        var itemsSource = BindableLayout.GetItemsSource(MusclesListView);
+        SetColor(NoEquipmentFilterButton, filter.IsNoEquipmentFilter);
+        SetColor(BarbellFilterButton, filter.IsBarbellExists);
+        SetColor(DumbbellFilterButton, filter.IsDumbbellExists);
+        foreach (MuscleCheckItem item in itemsSource)
+        {
+            item.IsChecked = Filter.CurrentMuscles.Contains(item.Muscle);
+        }
+
+        SetDifficultyLevel(Filter.DifficultyLevel);
+    }
+
+
+    List<Tuple<string, string>> newFilterButtonMessages = new List<Tuple<string, string>>();
+    int popupIndex = 0;
+    private async Task ShowPopups()
+    {
+        newFilterButtonMessages.Add(new Tuple<string, string>(AppResources.WithoutEquipment, "no_equipment.png"));
+        newFilterButtonMessages.Add(new Tuple<string, string>(AppResources.WithBarbell, "barbell.png"));
+        newFilterButtonMessages.Add(new Tuple<string, string>(AppResources.WithDumbbell, "dumbbell.png"));
+
+        await ShowPopup();
+    }
+
+    private async Task ShowPopup()
+    {
+        Tuple<string, string> textImageTuple = newFilterButtonMessages[popupIndex];
+        var view = new VerticalStackLayout() { Spacing = 5};
+        view.Children.Add(new Image()
+        {
+            HeightRequest = 100,
+            WidthRequest = 100,
+            Source = textImageTuple.Item2
+        });
+        view.Children.Add(new Label() { Text = textImageTuple.Item1, HorizontalOptions = LayoutOptions.Center, 
+            HorizontalTextAlignment = TextAlignment.Center });
+        Button button = new Button();
+        button.Text = popupIndex == newFilterButtonMessages.Count - 1 ? AppResources.Finish : AppResources.Next;
+        button.Clicked += async (sender, args) =>
+        {
+            await Navigation.PopModalAsync();
+            if (popupIndex != newFilterButtonMessages.Count)
+                await ShowPopup();
+        };
+
+        view.Children.Add(button);
+
+        popupIndex++;
+
+        await Navigation.ShowPopupAsync(
+            view, new PopupOptions
+            {
+                CanBeDismissedByTappingOutsideOfPopup = false,
+                Shape = new RoundRectangle
+                {
+                    CornerRadius = new CornerRadius(20, 20, 20, 20),
+                    StrokeThickness = 2,
+                    Stroke = Colors.LightGray
+                }
+            });
     }
 
     #region Draw
@@ -67,7 +138,7 @@ public partial class FilterPage : ContentPage, IQueryAttributable
     SKPaint fillPaint = new SKPaint
     {
         Style = SKPaintStyle.Fill,
-        Color = SKColors.Red,
+        Color = SKColor.Parse("#FFA500"),
         StrokeWidth = 1,
         StrokeJoin = SKStrokeJoin.Round
     };
@@ -649,6 +720,13 @@ public partial class FilterPage : ContentPage, IQueryAttributable
     }
     #endregion
 
+    private void MusclesListView_OnItemTapped(object sender, TappedEventArgs args)
+    {
+        var item = sender as Border;
+        MuscleCheckItem send = item.BindingContext as MuscleCheckItem;
+        send.IsChecked = !send.IsChecked;
+    }
+
     private void NewItem_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
         var item = sender as MuscleCheckItem;
@@ -674,15 +752,61 @@ public partial class FilterPage : ContentPage, IQueryAttributable
         WeakReferenceMessenger.Default.Send(new FilterAcceptedForExercisesMessage(Filter));
     }
 
-    private void MusclesListView_OnItemTapped(object sender, object e)
+    #region DifficultyLevel
+    private void RatingView_RatingChanged(object sender, CommunityToolkit.Maui.Core.RatingChangedEventArgs e)
     {
-        var item = sender as Border;
-        MuscleCheckItem send = item.BindingContext as MuscleCheckItem;
-        send.IsChecked = !send.IsChecked;
+        SetDifficultyLevel((int)Math.Round(e.Rating));
     }
 
-    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    private string GetDifficultyLevelLabel(object value)
     {
-        SetMuscleFilter(query["Filter"] as FilterModel);
+        if (value is int difficultyLevel)
+        {
+            return difficultyLevel switch
+            {
+                1 => AppResources.DifficultyEasy,
+                2 => AppResources.DifficultyMedium,
+                3 => AppResources.DifficultyHard,
+                _ => AppResources.DifficultyAny
+            };
+        }
+        return AppResources.DifficultyAny;
     }
+
+    private void SetDifficultyLevel(int newValue)
+    {
+        Filter.DifficultyLevel = newValue;
+        DifficultyLevelLabel.Text = $"{AppResources.Difficulty}: {GetDifficultyLevelLabel(Filter.DifficultyLevel)}";
+    }
+
+    private void ResetDifficulty_Click(object sender, EventArgs e)
+    {
+        SetDifficultyLevel(0);
+    }
+    #endregion
+
+    #region CheckBoxes
+    private void ChangeNoEquipment_Click(object sender, EventArgs e)
+    {
+        Filter.IsNoEquipmentFilter = !Filter.IsNoEquipmentFilter;
+        SetColor(sender, Filter.IsNoEquipmentFilter);
+    }
+    private void ChangeBarbell_Click(object sender, EventArgs e)
+    {
+        Filter.IsBarbellExists = !Filter.IsBarbellExists;
+        SetColor(sender, Filter.IsBarbellExists);
+    }
+    private void ChangeDumbbell_Click(object sender, EventArgs e)
+    {
+        Filter.IsDumbbellExists = !Filter.IsDumbbellExists;
+        SetColor(sender, Filter.IsDumbbellExists);
+    }
+
+    private void SetColor(object sender, bool value)
+    {
+        ImageButton imageButton = sender as ImageButton;
+        var mainColorResult = App.Current.Resources.TryGetValue("Main", out var mainColor);
+        imageButton.BackgroundColor = value ? (Color)mainColor : Colors.Transparent;
+    }
+    #endregion
 }

@@ -21,27 +21,48 @@
         </Grid>
     </Shell.TitleView>
     <ScrollView>
-        <Grid x:Name="MainGrid">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+        <Grid x:Name="MainGrid" RowDefinitions="auto,auto,auto,*" RowSpacing="5" >
+            <Border StrokeShape="RoundRectangle 20" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,5">
+                <Grid ColumnDefinitions="50,1,50,1,50" >
+                    <ImageButton x:Name="NoEquipmentFilterButton" Grid.Column="0" Source="no_equipment.png" HeightRequest="50" WidthRequest="50" 
+                                 Clicked="ChangeNoEquipment_Click"/>
 
-            <StackLayout Grid.Row="0" Orientation="Horizontal">
-                <CheckBox
-                x:Name="NoEquipmentCheckBox"
-                HorizontalOptions="Start"
-                IsChecked="{Binding Filter.IsNoEquipmentFilter}" />
-                <Label
-                HorizontalOptions="StartAndExpand"
-                Text="{x:Static resx:AppResources.PreparedHomeString}"
-                VerticalOptions="Center" />
-            </StackLayout>
+                    <Border Grid.Column="1" BackgroundColor="#AA383838" WidthRequest="1" HorizontalOptions="Center"/>
+                    <Border Grid.Column="3" BackgroundColor="#AA383838" WidthRequest="1" HorizontalOptions="Center"/>
 
+                    <ImageButton x:Name="BarbellFilterButton" Grid.Column="2" Source="barbell.png" HeightRequest="50" WidthRequest="50" Clicked="ChangeBarbell_Click"/>
+                    <ImageButton x:Name="DumbbellFilterButton" Grid.Column="4" Source="dumbbell.png" HeightRequest="50" WidthRequest="50" Clicked="ChangeDumbbell_Click"/>
+                </Grid>
+            </Border>
+
+            <Border HeightRequest="1" VerticalOptions="End" Padding="10,0"/>
+            <Border Grid.Row="1" HeightRequest="1" VerticalOptions="End" Padding="10,0"/>
+
+            <Grid Grid.Row="1" ColumnDefinitions="*,auto,auto" VerticalOptions="Start" Margin="5" ColumnSpacing="10">
+                <Label x:Name="DifficultyLevelLabel" VerticalOptions="Center" />
+
+                <toolkit:RatingView Grid.Column="1" VerticalOptions="Center"
+                     EmptyShapeColor="Transparent"
+                     FillColor="{StaticResource Main}"
+                     FillOption ="Shape"
+                     IsReadOnly="False"
+                     ShapeDiameter="37"
+                     MaximumRating="3"
+                     Rating="{Binding Filter.DifficultyLevel, Mode=TwoWay}"
+                     RatingChanged="RatingView_RatingChanged"
+                     Shape="Star"
+                     ShapeBorderColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"
+                     ShapeBorderThickness="1"
+                     Spacing="3" />
+
+                <Button Text="Reset" Grid.Column="2" BackgroundColor="Transparent" TextColor="{StaticResource Primary}"
+                        Clicked="ResetDifficulty_Click"/>
+
+            </Grid>
+            
             <Image
             x:Name="MuscleImage"
-            Grid.Row="1"
+            Grid.Row="2"
             Aspect="AspectFit"
             HeightRequest="514"
             HorizontalOptions="Fill"
@@ -50,13 +71,13 @@
             WidthRequest="496" />
             <skia:SKCanvasView
             x:Name="SkiaView"
-            Grid.Row="1"
+            Grid.Row="2"
             PaintSurface="OnPaintSurface"
             VerticalOptions="Start" />
 
             <FlexLayout
             x:Name="MusclesListView"
-            Grid.Row="2"
+            Grid.Row="3"
             AlignContent="Start"
             AlignItems="Center"
             Direction="Row"
@@ -115,7 +136,7 @@
 
             <controls:ToolTipControl
             Title="{x:Static resx:AppResources.FilterString}"
-            Grid.Row="1"
+            Grid.Row="2"
             AttachedControl="MusclesListView"
             NeverShow="{Binding Source={x:Static Application.Current}, Path=ToolTipManager.ToolTipFilterMuscle, Mode=TwoWay}"
             NeverShowText="{x:Static resx:AppResources.GotItString}"

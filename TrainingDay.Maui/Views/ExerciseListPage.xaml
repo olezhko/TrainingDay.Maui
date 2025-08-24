@@ -57,7 +57,7 @@
                     <Label FontSize="20" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.NoExercisesNeedAddNewString}" VerticalOptions="Fill" />
 
                     <ImageButton Grid.Column="1" WidthRequest="60" HeightRequest="60" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="add_empty.png"
-        Clicked="AddExercisesButton_Clicked" BackgroundColor="Transparent">
+                        Clicked="AddExercisesButton_Clicked" BackgroundColor="Transparent">
                         <ImageButton.Behaviors>
                             <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
                         </ImageButton.Behaviors>
@@ -79,7 +79,7 @@
                                 </Grid.ColumnDefinitions>
 
 								<Border StrokeShape="RoundRectangle 10" Grid.Column="0" Padding="0" BackgroundColor="Green" HorizontalOptions="Center" IsVisible="{Binding IsExerciseExistsInWorkout}"
-                        VerticalOptions="Start" WidthRequest="20" Stroke="Transparent" HeightRequest="20" >
+                                    VerticalOptions="Start" WidthRequest="20" Stroke="Transparent" HeightRequest="20" >
                                     <Image HeightRequest="20" Source="save" WidthRequest="20" >
                                         <Image.Behaviors>
                                             <toolkit:IconTintColorBehavior TintColor="White" />
@@ -89,29 +89,20 @@
 
                                 <CheckBox x:Name="SelectCheckBox" IsChecked="{Binding IsSelected}" VerticalOptions="Center" />
 								<Border StrokeShape="RoundRectangle 5"
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Margin="0"
-                    Padding="5"
-                    BackgroundColor="White"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center">
-                                    <controls:ImageCache
-                        HeightRequest="60"
-                        CodeNum="{Binding CodeNum}"
-                        WidthRequest="60" />
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Margin="0"
+                                    Padding="5"
+                                    BackgroundColor="White"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center">
+                                    <controls:ImageCache HeightRequest="60" WidthRequest="60" CodeNum="{Binding CodeNum}" />
                                 </Border>
 
                                 <StackLayout Grid.Column="2" VerticalOptions="Center">
-                                    <Label
-                        FontAttributes="Bold"
-                        FontSize="17"
-                        HorizontalOptions="Center"
-                        HorizontalTextAlignment="Center"
-                        Text="{Binding Name}"
-                        VerticalTextAlignment="Center" />
+                                    <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="17" HorizontalOptions="Center" Text="{Binding Name}" />
                                     <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" HorizontalOptions="Center" Wrap="Wrap" VerticalOptions="Center" Direction="Row"
-                                                    JustifyContent="Center" AlignItems="Center" AlignContent="Start">
+                                                JustifyContent="Center" AlignItems="Center" AlignContent="Start">
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate>
                                                 <Border Margin="1" Style="{StaticResource MuscleBorderCellStyle}">
@@ -120,6 +111,19 @@
                                             </DataTemplate>
                                         </BindableLayout.ItemTemplate>
                                     </FlexLayout>
+                                    <toolkit:RatingView HorizontalOptions="Center"
+			                            EmptyShapeColor="Transparent"
+			                            FillColor="{StaticResource Main}"
+			                            FillOption ="Shape"
+			                            IsReadOnly="True"
+			                            ShapePadding="3,7,7,3"
+			                            ShapeDiameter="20"
+			                            MaximumRating="3"
+			                            Rating="{Binding DifficultType}"
+			                            Shape="Star"
+			                            ShapeBorderColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"
+			                            ShapeBorderThickness="1"
+			                            Spacing="3" />
                                 </StackLayout>
                             </Grid>
                         </Border>
@@ -133,7 +137,7 @@
                     BackgroundColor="Transparent" BorderColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" BorderWidth="1"/>
 
             <Button CornerRadius="20" Grid.Column="1" Command="{Binding ChoseExercisesCommand}"
-            CommandParameter="{Binding}" Text="{x:Static resx:AppResources.SelectString}" />
+                    CommandParameter="{Binding}" Text="{x:Static resx:AppResources.SelectString}" />
         </Grid>
 
         <admob:BannerAd x:Name="AdMob" Grid.Row="4" AdSize="Banner" />

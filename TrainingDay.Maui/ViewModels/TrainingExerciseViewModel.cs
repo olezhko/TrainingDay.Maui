@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.Extensions;
@@ -199,11 +198,11 @@ public class TrainingExerciseViewModel : ExerciseViewModel
 	{
 		return new TrainingExerciseViewModel(exercise, new TrainingExerciseDto()
 		{
-			WeightAndRepsString = GetDefualtWeightAndRepsString(exercise.TagsValue)
+			WeightAndRepsString = GetDefaultWeightAndRepsString(exercise.TagsValue)
 		});
 	}
 
-	private static string GetDefualtWeightAndRepsString(int tagsValue)
+	private static string GetDefaultWeightAndRepsString(int tagsValue)
 	{
 		var tagsList = ExerciseExtensions.ConvertTagIntToList(tagsValue);
 		string weightAndReps = string.Empty;

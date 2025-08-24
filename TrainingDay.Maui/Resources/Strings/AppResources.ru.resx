@@ -450,29 +450,14 @@
   <data name="SecondString" xml:space="preserve">
     <value>сек</value>
   </data>
-  <data name="SelectAllString" xml:space="preserve">
-    <value>Выбрать все</value>
-  </data>
   <data name="SelectMusclesString" xml:space="preserve">
     <value>Выбрать мышцы</value>
-  </data>
-  <data name="SelectPeriodString" xml:space="preserve">
-    <value>Период</value>
   </data>
   <data name="SelectString" xml:space="preserve">
     <value>Выбрать</value>
   </data>
-  <data name="SelectTraining" xml:space="preserve">
-    <value>Тренировка:</value>
-  </data>
-  <data name="SetFrequency" xml:space="preserve">
-    <value>Задать частоту</value>
-  </data>
   <data name="SettingsString" xml:space="preserve">
     <value>Настройки</value>
-  </data>
-  <data name="SettingsTrainingString" xml:space="preserve">
-    <value>Настройки тренировки</value>
   </data>
   <data name="SharedString" xml:space="preserve">
     <value>Отправлено</value>
@@ -485,9 +470,6 @@
   </data>
   <data name="ShowAdvicesOnImplementing" xml:space="preserve">
     <value>Показывать советы по разминке и заминке во время выполнения тренировки</value>
-  </data>
-  <data name="ShowToolTipsString" xml:space="preserve">
-    <value>Показывать подсказки</value>
   </data>
   <data name="SkipString" xml:space="preserve">
     <value>Пропустить</value>
@@ -512,9 +494,6 @@
   </data>
   <data name="SynchronizationDownloadingQuestion" xml:space="preserve">
     <value>Вы уверены? Ваши несинхронизированные данные удалятся.</value>
-  </data>
-  <data name="ThisExerciseAlreadyInWorkoutMessage" xml:space="preserve">
-    <value>Это упражнение уже есть в тренировке</value>
   </data>
   <data name="ThreeMounthString" xml:space="preserve">
     <value>3 Месяца</value>
@@ -563,9 +542,6 @@
   </data>
   <data name="TotalTrainingsFormat" xml:space="preserve">
     <value>Выполненных тренировок: {0:0}</value>
-  </data>
-  <data name="TrainingFinishedString" xml:space="preserve">
-    <value>Тренировка завершена</value>
   </data>
   <data name="TrainingNotifications" xml:space="preserve">
     <value>Напоминания</value>
@@ -618,9 +594,6 @@
   <data name="WorkoutAddedString" xml:space="preserve">
     <value>Тренировка добавлена</value>
   </data>
-  <data name="WorkoutLimitMessage" xml:space="preserve">
-    <value>В приложении ограничение на создание 3ех тренировок. Хотите снять ограничение за $2.99?</value>
-  </data>
   <data name="YearString" xml:space="preserve">
     <value>Год</value>
   </data>
@@ -665,5 +638,29 @@
   </data>
   <data name="BackToWorkouts" xml:space="preserve">
     <value>Назад к тренировкам</value>
+  </data>
+  <data name="WithBarbell" xml:space="preserve">
+    <value>Нажав эту кнопку, пользователь сможет показывать или скрывать упражнения со штангой.</value>
+  </data>
+  <data name="WithDumbbell" xml:space="preserve">
+    <value>Нажав эту кнопку, пользователь сможет показывать или скрывать упражнения с гантелями.</value>
+  </data>
+  <data name="Difficulty" xml:space="preserve">
+    <value>Сложность</value>
+  </data>
+  <data name="DifficultyEasy" xml:space="preserve">
+    <value>Начальный</value>
+  </data>
+  <data name="DifficultyMedium" xml:space="preserve">
+    <value>Средний</value>
+  </data>
+  <data name="DifficultyHard" xml:space="preserve">
+    <value>Сложный</value>
+  </data>
+  <data name="DifficultyAny" xml:space="preserve">
+    <value>Любой</value>
+  </data>
+  <data name="WithoutEquipment" xml:space="preserve">
+    <value>Нажав эту кнопку, пользователь сможет показывать или скрывать упражнения без инвентаря (подходящие для дома).</value>
   </data>
 </root>

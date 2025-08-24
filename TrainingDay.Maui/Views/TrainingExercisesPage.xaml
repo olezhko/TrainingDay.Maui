@@ -170,7 +170,7 @@
         <admob:BannerAd x:Name="AdMob" Grid.Row="4" AdSize="Banner" />
 
         <controls:ToolTipControl Grid.Row="1" 
-                              Text="{x:Static resx:AppResources.ToolTipHoldImageExercises}" Title="{x:Static resx:AppResources.SettingsTrainingString}" 
+                              Text="{x:Static resx:AppResources.ToolTipHoldImageExercises}" Title="{x:Static resx:AppResources.SettingsString}" 
                               NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipHoldImageExercises,Mode=TwoWay}" 
                               AttachedControl="ItemsListView" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}" Position="Center"
                               ParentHeight="{Binding Source={x:Reference Container},Path=Height}"

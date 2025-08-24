@@ -16,7 +16,7 @@ public class ExerciseViewModel : BaseViewModel
     private DescriptionViewModel _descriptionItem;
     private int codeNum;
     private ObservableCollection<MuscleViewModel> muscles;
-
+    private DifficultType difficultType;
 
     public ExerciseViewModel()
     {
@@ -88,34 +88,14 @@ public class ExerciseViewModel : BaseViewModel
         }
     }
 
-    public DescriptionViewModel Description
-    {
-        get => _descriptionItem;
-        set
-        {
-            _descriptionItem = value;
-            OnPropertyChanged();
-        }
-    }
 
-    public int CodeNum
-    {
-        get => codeNum;
-        set
-        {
-            codeNum = value;
-            OnPropertyChanged();
-        }
-    }
+    public DescriptionViewModel Description { get => _descriptionItem; set => SetProperty(ref _descriptionItem, value); }
 
-    public ObservableCollection<MuscleViewModel> Muscles
-    {
-        get => muscles;
-        set
-        {
-            muscles = value;
-            OnPropertyChanged();
-        }
-    }
+    public int CodeNum { get => codeNum; set => SetProperty(ref codeNum, value); }
+
+    public ObservableCollection<MuscleViewModel> Muscles { get => muscles; set => SetProperty(ref muscles, value); }
+
+    public DifficultType DifficultType { get => difficultType; set => SetProperty(ref difficultType, value); }
+
     #endregion
 }

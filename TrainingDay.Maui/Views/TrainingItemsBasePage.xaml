@@ -103,7 +103,7 @@
             </CollectionView.EmptyView>
         </CollectionView>
 
-        <controls:ToolTipControl x:Name="ToolTipTapHoldTraining" Text="{x:Static resx:AppResources.ToolTipTapHoldTraining}" Title="{x:Static resx:AppResources.SettingsTrainingString}" 
+        <controls:ToolTipControl x:Name="ToolTipTapHoldTraining" Text="{x:Static resx:AppResources.ToolTipTapHoldTraining}" Title="{x:Static resx:AppResources.SettingsString}" 
                               NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipTapHoldTraining,Mode=TwoWay}" 
                               AttachedControl="ItemsListView" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}" Position="Center"
                               ParentHeight="{Binding Source={x:Reference Container},Path=Height}" Grid.Row="1"

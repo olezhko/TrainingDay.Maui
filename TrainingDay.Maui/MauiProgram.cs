@@ -76,7 +76,6 @@ namespace TrainingDay.Maui
             Microsoft.Maui.Handlers.SearchBarHandler.Mapper.AppendToMapping("Borderless", (handler, entry) =>
             {
 #if ANDROID
-                handler.PlatformView.SetHighlightColor(Android.Graphics.Color.Transparent);
                 handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
                 handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
 #endif

@@ -29,27 +29,27 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
-		<ApplicationVersion>311</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.7.1</ApplicationDisplayVersion>
+		<ApplicationVersion>312</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.7.2</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
 		<CreatePackage>false</CreatePackage>
 		<ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
-		<ApplicationVersion>311</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.7.1</ApplicationDisplayVersion>
+		<ApplicationVersion>312</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.7.2</ApplicationDisplayVersion>
 		<EnableSGenConc>True</EnableSGenConc>
 		<SkipStaticLibraryValidation>true</SkipStaticLibraryValidation>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
-		<ApplicationVersion>311</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.7.1</ApplicationDisplayVersion>
+		<ApplicationVersion>312</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.7.2</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
-		<ApplicationVersion>1.2.7.4</ApplicationVersion>
-		<ApplicationDisplayVersion>314</ApplicationDisplayVersion>
+		<ApplicationVersion>312</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.7.2</ApplicationDisplayVersion>
 		<CreatePackage>false</CreatePackage>
 		<CodesignProvision>TrainingDayPublish</CodesignProvision>
 		<CodesignKey>Apple Distribution: Oleg Ladyka (36WMJT4QLC)</CodesignKey>
@@ -137,17 +137,17 @@
 	<ItemGroup>
 		<PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.301" />
 		<PackageReference Include="AWSSDK.S3" Version="3.7.405.9" />
-		<PackageReference Include="CommunityToolkit.Maui" Version="12.1.0" />
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="12.2.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.6" />
 		<PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.6" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.90" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.90" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.100" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.100" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.8" />
 		<PackageReference Include="Plugin.AdMob" Version="2.3.1" />
 		<PackageReference Include="RestSharp" Version="112.1.0" />
-		<PackageReference Include="SkiaSharp.Views" Version="2.88.7" />
-		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.7" />
+		<PackageReference Include="SkiaSharp.Views" Version="3.119.0" />
+		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.119.0" />
 		<PackageReference Include="Syncfusion.Maui.Picker" Version="30.1.42" />
 		<PackageReference Include="Syncfusion.Maui.Toolkit" Version="1.0.6" />
 	</ItemGroup>
@@ -255,6 +255,8 @@
 	<ItemGroup>
 		<Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Resources\Strings\AppResources.Designer.cs">
 			<DependentUpon>AppResources.resx</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
 		</Compile>
 		<Compile Update="Resources\Strings\AppResources.ru.Designer.cs">
 			<DependentUpon>AppResources.ru.resx</DependentUpon>
