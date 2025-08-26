@@ -43,7 +43,8 @@ public partial class FilterPage : ContentPage, IQueryAttributable
 
         DifficultyLevelLabel.Text = $"{AppResources.Difficulty}: {GetDifficultyLevelLabel(0)}";
 
-        ShowPopups();
+        if (!Settings.IsUserKnownExerciseFilters)
+            ShowPopups();
     }
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -113,6 +114,8 @@ public partial class FilterPage : ContentPage, IQueryAttributable
             await Navigation.PopModalAsync();
             if (popupIndex != newFilterButtonMessages.Count)
                 await ShowPopup();
+            else
+                Settings.IsUserKnownExerciseFilters = true;
         };
 
         view.Children.Add(button);

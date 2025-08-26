@@ -109,6 +109,11 @@ public static class Settings
         get => Preferences.Get(nameof(WeightMeasureType), (int)MeasureWeightTypes.Kilograms);
         set => Preferences.Set(nameof(WeightMeasureType), value);
     }
+    public static bool IsUserKnownExerciseFilters
+    {
+        get => Preferences.Get(nameof(IsUserKnownExerciseFilters), false);
+        set => Preferences.Set(nameof(IsUserKnownExerciseFilters), value);
+    }
 
     public static CultureInfo GetLanguage()
     {

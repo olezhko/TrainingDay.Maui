@@ -16,7 +16,7 @@ public class ExerciseViewModel : BaseViewModel
     private DescriptionViewModel _descriptionItem;
     private int codeNum;
     private ObservableCollection<MuscleViewModel> muscles;
-    private DifficultType difficultType;
+    private DifficultTypes difficultType;
 
     public ExerciseViewModel()
     {
@@ -95,7 +95,13 @@ public class ExerciseViewModel : BaseViewModel
 
     public ObservableCollection<MuscleViewModel> Muscles { get => muscles; set => SetProperty(ref muscles, value); }
 
-    public DifficultType DifficultType { get => difficultType; set => SetProperty(ref difficultType, value); }
+    public DifficultTypes DifficultType { get => difficultType; set => SetProperty(ref difficultType, value); }
 
+    public enum DifficultTypes
+    {
+        Easy,
+        Medium,
+        Hard
+    }
     #endregion
 }

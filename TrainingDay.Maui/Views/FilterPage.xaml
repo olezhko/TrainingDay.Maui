@@ -78,7 +78,7 @@
             <FlexLayout
             x:Name="MusclesListView"
             Grid.Row="3"
-            AlignContent="Start"
+            AlignContent="Stretch"
             AlignItems="Center"
             Direction="Row"
             HorizontalOptions="Center"
@@ -109,7 +109,7 @@
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
-                            <Label FontSize="Default" Text="{Binding Text}">
+                            <Label FontSize="Default" Text="{Binding Text}" LineBreakMode="NoWrap">
                                 <Label.Style>
                                     <Style TargetType="Label">
                                         <Style.Triggers>
@@ -135,16 +135,16 @@
             </FlexLayout>
 
             <controls:ToolTipControl
-            Title="{x:Static resx:AppResources.FilterString}"
-            Grid.Row="2"
-            AttachedControl="MusclesListView"
-            NeverShow="{Binding Source={x:Static Application.Current}, Path=ToolTipManager.ToolTipFilterMuscle, Mode=TwoWay}"
-            NeverShowText="{x:Static resx:AppResources.GotItString}"
-            ParentHeight="{Binding Source={x:Reference MusclesListView}, Path=Height}"
-            ParentWidth="{Binding Source={x:Reference MusclesListView}, Path=Width}"
-            Position="Center"
-            SkipText="{x:Static resx:AppResources.SkipString}"
-            Text="{x:Static resx:AppResources.ToolTipFilterMuscle}" />
+                Title="{x:Static resx:AppResources.FilterString}"
+                Grid.Row="2"
+                AttachedControl="MusclesListView"
+                NeverShow="{Binding Source={x:Static Application.Current}, Path=ToolTipManager.ToolTipFilterMuscle, Mode=TwoWay}"
+                NeverShowText="{x:Static resx:AppResources.GotItString}"
+                ParentHeight="{Binding Source={x:Reference MusclesListView}, Path=Height}"
+                ParentWidth="{Binding Source={x:Reference MusclesListView}, Path=Width}"
+                Position="Center"
+                SkipText="{x:Static resx:AppResources.SkipString}"
+                Text="{x:Static resx:AppResources.ToolTipFilterMuscle}" />
         </Grid>
     </ScrollView>
 </ContentPage>

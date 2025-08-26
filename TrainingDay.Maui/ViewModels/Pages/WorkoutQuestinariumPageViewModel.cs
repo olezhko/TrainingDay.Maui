@@ -14,6 +14,7 @@ namespace TrainingDay.Maui.ViewModels.Pages
 	{
 		private WorkoutQuestinariumStepViewModel currentStep;
         private readonly IDataService _dataService;
+        private readonly IWorkoutService _workoutService;
 
         public WorkoutQuestinariumStepViewModel CurrentStep
 		{
@@ -25,7 +26,6 @@ namespace TrainingDay.Maui.ViewModels.Pages
         public ICommand BackOrCancelCommand { get; set; }
         public ICommand NextOrFinishCommand { get; set; }
 
-        IWorkoutService _workoutService;
         public WorkoutQuestinariumPageViewModel(IDataService dataService, IWorkoutService workoutService)
 		{
             _dataService = dataService;

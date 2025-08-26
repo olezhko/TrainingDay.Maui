@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using TrainingDay.Maui.Extensions;
+﻿using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels.Pages;
 
@@ -20,30 +19,11 @@ public partial class WorkoutQuestinariumPage : ContentPage
         base.OnHandlerChanged();
         if (Handler is not null)
         {
-            var dataService = Handler.MauiContext.Services.GetRequiredService<DataService>();
+            var dataService = Handler.MauiContext.Services.GetRequiredService<IDataService>();
             var workoutService = Handler.MauiContext.Services.GetRequiredService<WorkoutService>();
             viewModel = new WorkoutQuestinariumPageViewModel(dataService, workoutService);
-            viewModel.PropertyChanged += ViewModelPropertyChanged;
             BindingContext = viewModel;
             await viewModel.LoadSteps();
         }
-    }
-
-    CancellationTokenSource CancellationTokenSource = new CancellationTokenSource();
-    private async void ViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
-    {
-        if (e.PropertyName != nameof(WorkoutQuestinariumPageViewModel.IsBusy))
-            return;
-
-        if (viewModel.IsBusy)
-            await ActivityBorder.StartInfiniteRotate(CancellationTokenSource.Token);
-        else
-            CancellationTokenSource.Cancel();
-    }
-
-    protected override void OnDisappearing()
-    {
-        base.OnDisappearing();
-        viewModel.PropertyChanged -= ViewModelPropertyChanged;
     }
 }

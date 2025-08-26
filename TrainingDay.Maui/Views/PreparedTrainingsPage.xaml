@@ -12,9 +12,12 @@
     </ContentPage.BindingContext>
 
     <controls:TooltipControlContainer x:Name="Container" RowSpacing="0" RowDefinitions="auto,*,Auto" BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}">
-		<Grid x:Name="LetsBuildYourWorkoutButton" IsVisible="False">
-            <Button Text="{x:Static resx:AppResources.LetsBuildYourWorkout}" Margin="5" Command="{Binding NavigateToQuestionsCommnd}"/>
-			<Image Source="magic.png" HorizontalOptions="Start" Margin="25,0,0,0" HeightRequest="40" />
+		<Grid x:Name="LetsBuildYourWorkoutButton">
+            <Button Margin="5" Command="{Binding NavigateToQuestionsCommnd}"/>
+            <HorizontalStackLayout HorizontalOptions="Center" HeightRequest="40">
+                <Image Source="ai.png" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Label Text="{x:Static resx:AppResources.LetsBuildYourWorkout}" VerticalOptions="Center" TextColor="White"/>
+            </HorizontalStackLayout>
         </Grid>
 
         <CollectionView Grid.Row="1" ItemsSource="{Binding PreparedTrainingsCollection}" SelectionMode="Single" >
