@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="TrainingDay.Maui.Views.PreparedTrainingsPage"
              Title="{x:Static resx:AppResources.AddTrainingString}">
     <ContentPage.BindingContext>
@@ -15,7 +15,11 @@
 		<Grid x:Name="LetsBuildYourWorkoutButton">
             <Button Margin="5" Command="{Binding NavigateToQuestionsCommnd}"/>
             <HorizontalStackLayout HorizontalOptions="Center" HeightRequest="40">
-                <Image Source="ai.png" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Image Source="ai.png" HorizontalOptions="Start" VerticalOptions="Center">
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="White" />
+                    </Image.Behaviors>
+                </Image>
                 <Label Text="{x:Static resx:AppResources.LetsBuildYourWorkout}" VerticalOptions="Center" TextColor="White"/>
             </HorizontalStackLayout>
         </Grid>
@@ -48,9 +52,9 @@
                             TextTransform="Uppercase"
                             VerticalOptions="Center" />
 
-                            <Image Grid.Column="2" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" VerticalOptions="Center" Source="arrow_left" BackgroundColor="Transparent">
+                            <Image Grid.Column="2" WidthRequest="30" HeightRequest="30" HorizontalOptions="Center" VerticalOptions="Center" Source="arrow_left" BackgroundColor="Transparent">
                                 <Image.Behaviors>
-                                    <toolkit:IconTintColorBehavior TintColor="Gray" />
+                                    <toolkit:IconTintColorBehavior TintColor="LightGray" />
                                 </Image.Behaviors>
                             </Image>
                         </Grid>

@@ -25,6 +25,7 @@ public partial class TrainingImplementPage : ContentPage
     private bool enabledTimer;
     private IDispatcherTimer _timer;
     private IPushNotification notificator;
+    private IDataService dataService;
     private TrainingViewModel trainingItem;
 
     public TrainingImplementPage()
@@ -95,6 +96,7 @@ public partial class TrainingImplementPage : ContentPage
     {
         base.OnDisappearing();
         StepProgressBarControl.PropertyChanged -= StepProgressBarControl_PropertyChanged;
+        HandlerChanged -= OnHandlerChanged;
     }
 
     private void OnHandlerChanged(object sender, EventArgs e)
@@ -102,13 +104,11 @@ public partial class TrainingImplementPage : ContentPage
         if (Handler != null)
         {
             notificator = Handler.MauiContext.Services.GetRequiredService<IPushNotification>();
+            dataService = Handler.MauiContext.Services.GetRequiredService<IDataService>();
         }
     }
 
-    protected override bool OnBackButtonPressed()
-    {
-        return true; // cancel back button
-    }
+    protected override bool OnBackButtonPressed() => true; // cancel back button
 
     #region Timer
     private void _timer_Tick(object? sender, EventArgs e)
@@ -280,7 +280,7 @@ public partial class TrainingImplementPage : ContentPage
 
         await Shell.Current.GoToAsync("..");
         await Shell.Current.GoToAsync("..");
-        //await SiteService.SendFinishedWorkout(Settings.Token);
+        await dataService.PostActionAsync(Settings.Token, Common.Communication.MobileActions.Workout);
     }
 
     private IInterstitialAdService _interstitialAdService;

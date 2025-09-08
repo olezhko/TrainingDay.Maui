@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.Extensions;
+using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Database;
 
 namespace TrainingDay.Maui.ViewModels;
@@ -17,11 +18,13 @@ public class ExerciseViewModel : BaseViewModel
     private int codeNum;
     private ObservableCollection<MuscleViewModel> muscles;
     private DifficultTypes difficultType;
+    private ObservableCollection<ExerciseVideo> videoItems;
 
     public ExerciseViewModel()
     {
         Muscles = new ObservableCollection<MuscleViewModel>();
         Tags = new List<ExerciseTags> { ExerciseTags.ExerciseByReps };
+        VideoItems = new ObservableCollection<ExerciseVideo>();
         Description = new DescriptionViewModel();
     }
 
@@ -96,6 +99,8 @@ public class ExerciseViewModel : BaseViewModel
     public ObservableCollection<MuscleViewModel> Muscles { get => muscles; set => SetProperty(ref muscles, value); }
 
     public DifficultTypes DifficultType { get => difficultType; set => SetProperty(ref difficultType, value); }
+
+    public ObservableCollection<ExerciseVideo> VideoItems { get => videoItems; set => SetProperty(ref videoItems, value); }
 
     public enum DifficultTypes
     {

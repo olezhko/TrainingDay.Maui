@@ -45,7 +45,8 @@
         </VerticalStackLayout>
 
         <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="10" Padding="10">
-            <Button Grid.Column="0" Command="{Binding BackOrCancelCommand}" BackgroundColor="Transparent" TextColor="{StaticResource PrimaryDark}" BorderColor="{StaticResource PrimaryDark}" BorderWidth="1"> 
+            <Button Grid.Column="0" Command="{Binding BackOrCancelCommand}" BackgroundColor="Transparent" TextColor="{StaticResource Primary}" 
+                    BorderColor="{StaticResource Primary}" BorderWidth="1"> 
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Text" Value="{x:Static resx:AppResources.Back}" />

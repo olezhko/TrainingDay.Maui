@@ -3,7 +3,6 @@ using System.Text;
 using System.Windows.Input;
 using TrainingDay.Common.Extensions;
 using TrainingDay.Maui.Extensions;
-using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Models.Questions;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
@@ -88,28 +87,27 @@ namespace TrainingDay.Maui.ViewModels.Pages
 				return;
             }
 
-			await CreateWorkout();
+			await PrepareRequest();
             IsBusy = false;
             await NavigateToHome();
         }
 
-        private async Task CreateWorkout()
+        private async Task PrepareRequest()
         {
             try
             {
                 StringBuilder sb = new StringBuilder();
-
                 var step = CurrentStep;
                 while (true)
                 {
-                    step = step.Previous;
                     if (step is null)
                     {
                         break;
                     }
 
-                    sb.Append($"Question: {step.Title}.");
-                    sb.Append($" {string.Join(", ", step.Variants.Where(item => item.IsChecked).Select(item => item.Title))}. "); // answer
+                    sb.Append($"{step.Title}:");
+                    sb.Append($"{string.Join(", ", step.Variants.Where(item => item.IsChecked).Select(item => item.Title))}. ");
+                    step = step.Previous;
                 }
 
                 await SendRequest(sb.ToString());
@@ -126,10 +124,12 @@ namespace TrainingDay.Maui.ViewModels.Pages
 
         private async Task SendRequest(string message)
         {
-            var response = await _dataService.GetExercisesByQuery(message);
+            var response = await _dataService.GetExercisesByQueryAsync(message);
             if (response.Any())
             {
-                var nameOfWorkout = await Shell.Current.DisplayPromptAsync("Workout Created", "Your workout has been created successfully. You can find it in the workouts section.", "OK", "Cancel", "Enter a name for your workout", maxLength: 50, keyboard: Keyboard.Text);
+                var nameOfWorkout = await Shell.Current.DisplayPromptAsync(AppResources.WorkoutAlmostCreated, AppResources.EnterTrainingName, 
+                    AppResources.OkString, AppResources.CancelString, AppResources.NameString, maxLength: 50, keyboard: Keyboard.Text);
+
                 if (nameOfWorkout is not null)
                 {
                     await _workoutService.CreateWorkoutAsync(nameOfWorkout, response, CancellationToken.None);

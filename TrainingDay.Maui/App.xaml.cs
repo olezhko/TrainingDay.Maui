@@ -21,6 +21,7 @@ namespace TrainingDay.Maui
     public partial class App : Application
     {
         private IPushNotification notificator;
+        private IDataService dataService;
         
         private static Repository database;
         private static object lockBase = new object();
@@ -77,14 +78,15 @@ namespace TrainingDay.Maui
 
             LoggingService.TrackEvent("Application Started");
 
+            notificator = Handler.MauiContext.Services.GetRequiredService<IPushNotification>();
+            dataService = Handler.MauiContext.Services.GetRequiredService<IDataService>();
+            MeasureOfWeight = GetMeasureOfWeight();
 
             Dispatcher.Dispatch(async () =>
             {
                 await DownloadImages();
+                await dataService.PostActionAsync(Settings.Token, Common.Communication.MobileActions.Enter);
             });
-
-            notificator = Handler.MauiContext.Services.GetRequiredService<IPushNotification>();
-            MeasureOfWeight = GetMeasureOfWeight();
         }
 
         private async Task DownloadImages()

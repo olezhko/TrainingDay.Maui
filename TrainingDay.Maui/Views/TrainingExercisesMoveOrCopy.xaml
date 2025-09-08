@@ -5,9 +5,6 @@
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              x:Class="TrainingDay.Maui.Views.TrainingExercisesMoveOrCopy"
              Title="{Binding CurrentAction}">
-    <ContentPage.BindingContext>
-        <viewModels:TrainingExercisesPageViewModel/>
-    </ContentPage.BindingContext>
     <VerticalStackLayout BackgroundColor="Transparent" VerticalOptions="Center" Margin="5">
         <CollectionView x:Name="GroupCollection" ItemsSource="{Binding TrainingItems}" Grid.Row="0" SelectionChanged="GroupCollection_SelectionChanged" SelectionMode="Single">
             <CollectionView.ItemTemplate>

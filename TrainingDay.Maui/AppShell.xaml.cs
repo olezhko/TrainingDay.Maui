@@ -23,6 +23,7 @@ namespace TrainingDay.Maui
             Routing.RegisterRoute(nameof(FilterPage), typeof(FilterPage));
 
             Routing.RegisterRoute(nameof(BlogsPage), typeof(BlogsPage));
+            Routing.RegisterRoute(nameof(BlogItemPage), typeof(BlogItemPage));
 
             Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
             Routing.RegisterRoute(nameof(StatisticsPage), typeof(StatisticsPage));

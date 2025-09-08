@@ -64,9 +64,11 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         }
     }
 
-    public TrainingExercisesPageViewModel()
+    IDataService dataService;
+    public TrainingExercisesPageViewModel(IDataService dataService)
     {
         Training = new TrainingViewModel();
+        this.dataService = dataService;
     }
 
     #region Load
@@ -223,7 +225,13 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
             return;
         }
 
-        selectedExercise.IsNotFinished = false;// --> for Time start button, to hide button
+        selectedExercise.IsNotFinished = false; // --> for Time start button, to hide button
+        selectedExercise.VideoItems = (await dataService.GetVideosAsync(selectedExercise.Name))
+            .Select(video => new Models.ExerciseVideo()
+            {
+                VideoUrl = video.VideoUrl
+            })
+            .ToObservableCollection();
 
         Dictionary<string, object> param = new Dictionary<string, object> { { "Item", selectedExercise } };
         await Shell.Current.GoToAsync(nameof(TrainingExerciseItemPage), param);

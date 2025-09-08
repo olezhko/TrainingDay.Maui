@@ -7,10 +7,11 @@ namespace TrainingDay.Maui.Views;
 
 public partial class TrainingExercisesPage : ContentPage
 {
-    private TrainingExercisesPageViewModel viewModel;
-    public TrainingExercisesPage()
+    private readonly TrainingExercisesPageViewModel viewModel;
+    public TrainingExercisesPage(TrainingExercisesPageViewModel vm)
     {
         InitializeComponent();
+        this.BindingContext = viewModel = vm;
         AdMob.AdUnitId = DeviceInfo.Platform == DevicePlatform.Android ? ConstantKeys.WorkoutAndroidAds : ConstantKeys.WorkoutiOSAds;
         NavigationPage.SetBackButtonTitle(this, AppResources.TrainingString);
     }
@@ -18,7 +19,6 @@ public partial class TrainingExercisesPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        viewModel = BindingContext as TrainingExercisesPageViewModel;
         ScrollItems(viewModel.TappedExerciseIndex);
     }
 

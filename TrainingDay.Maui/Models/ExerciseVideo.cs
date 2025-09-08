@@ -2,21 +2,18 @@
 
 namespace TrainingDay.Maui.Models;
 
-public class YoutubeVideoItem
+public class ExerciseVideo
 {
-    public string VideoAuthor { get; set; }
-
-    public string VideoUrl { get; set; }
-
-    public string VideoTitle { get; set; }
+    public required string VideoUrl { get; set; }
 
     public WebViewSource WebViewData
     {
         get
         {
+            var width = DeviceDisplay.Current.MainDisplayInfo.Width / DeviceDisplay.Current.MainDisplayInfo.Density - 10;
             var htmlSource = new HtmlWebViewSource();
             htmlSource.Html = $@"<html><body>
-                  <iframe width=""{DeviceDisplay.Current.MainDisplayInfo.Width - 45}"" height=""{DeviceDisplay.Current.MainDisplayInfo.Width - 45}"" src=""{ConvertUrl()}"" frameborder=""0"" allow=""accelerometer; autoplay; encrypted - media; gyroscope; picture -in-picture"" allowfullscreen ></iframe>
+                  <iframe width=""{width}"" height=""{width}"" src=""{ConvertUrl()}"" frameborder=""0"" allow=""accelerometer; autoplay; encrypted - media; gyroscope; picture -in-picture"" allowfullscreen ></iframe>
                      </body></html>";
             return htmlSource;
         }

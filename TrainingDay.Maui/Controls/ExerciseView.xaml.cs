@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows.Input;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.ViewModels;
@@ -10,29 +9,18 @@ public partial class ExerciseView : ContentView
 {
     public ICommand DeleteRequestCommand => new Command<WeightAndRepsViewModel>(DeleteRequestWeightAndReps);
 
-    public ObservableCollection<YoutubeVideoItem> VideoItems { get; set; } = new ObservableCollection<YoutubeVideoItem>();
+    public ObservableCollection<ExerciseVideo> VideoItems { get; set; } = [];
 
     public TrainingExerciseViewModel CurrentExercise
     {
-        get
-        {
-            var ex = (TrainingExerciseViewModel)BindingContext;
-            return ex;
-        }
+        get => (TrainingExerciseViewModel)BindingContext;
     }
-
 
     public event EventHandler<ImageSource> ImageTappedEvent;
 
     public ExerciseView()
     {
         InitializeComponent();
-        BindingContextChanged += ExerciseView_BindingContextChanged;
-    }
-
-    private void ExerciseView_BindingContextChanged(object sender, EventArgs e)
-    {
-        //LoadVideoItems();
     }
 
     private void ImageTapped(object sender, EventArgs e)
@@ -58,58 +46,5 @@ public partial class ExerciseView : ContentView
     {
         var item = (TrainingExerciseViewModel)BindingContext;
         item.WeightAndRepsItems.Remove(sender);
-    }
-
-    private async void Description_Click(object sender, EventArgs e)
-    {
-        DesctiptionLabel.BackgroundColor = Colors.Green;
-        //VideoLabel.BackgroundColor = Colors.DarkGray;
-
-        VideoCollectionView.IsVisible = false;
-        DescriptionGrid.IsVisible = true;
-        VideoActivityIndicatorGrid.IsVisible = false;
-    }
-
-    private async void Video_Click(object sender, EventArgs e)
-    {
-        DesctiptionLabel.BackgroundColor = Colors.DarkGray;
-        //VideoLabel.BackgroundColor = Colors.Green;
-        DescriptionGrid.IsVisible = false;
-
-        VideoActivityIndicatorGrid.IsVisible = true;
-        VideoActivityIndicator.IsRunning = true;
-
-        //await LoadVideoItems();
-
-        VideoActivityIndicator.IsRunning = false;
-        VideoCollectionView.IsVisible = true;
-        VideoActivityIndicatorGrid.IsVisible = false;
-    }
-
-    public async Task LoadVideoItems()
-    {
-        try
-        {
-            //VideoItems.Clear();
-            //if (CurrentExercise != null)
-            //{
-            //    var items = await SiteService.GetVideosFromServer(CurrentExercise.ExerciseItemName);
-            //    foreach (var item in items)
-            //    {
-            //        VideoItems.Add(new YoutubeVideoItem()
-            //        {
-            //            VideoAuthor = item.VideoAuthor,
-            //            VideoTitle = item.VideoTitle,
-            //            VideoUrl = item.VideoUrl,
-            //        });
-            //    }
-            //}
-
-            //VideoCollectionView.ItemsSource = VideoItems;
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine(ex);
-        }
     }
 }

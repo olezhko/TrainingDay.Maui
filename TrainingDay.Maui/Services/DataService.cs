@@ -6,11 +6,11 @@ namespace TrainingDay.Maui.Services
 {
     public interface IDataService
     {
-		Task<BlogsResponse> GetBlogsAsync(int page);
+		Task<IReadOnlyCollection<BlogResponse>> GetBlogsAsync(int page);
 		Task<BlogResponse> GetBlogAsync(string id);
-		Task<IEnumerable<ExerciseQueryResponse>> GetExercisesByQuery(string query);
-		Task<bool> PostAction(string token, MobileActions action, string data = null);
-		Task<IEnumerable<YoutubeVideoItem>> GetVideos(string exerciseName);
+		Task<IEnumerable<ExerciseQueryResponse>> GetExercisesByQueryAsync(string query);
+		Task<bool> PostActionAsync(string token, MobileActions action, string data = null);
+		Task<IEnumerable<YoutubeVideoItem>> GetVideosAsync(string exerciseName);
 	}
 
     public class DataService : IDisposable, IDataService
@@ -19,10 +19,10 @@ namespace TrainingDay.Maui.Services
 
 		public DataService()
 		{
-			_client = new RestClient(new RestClientOptions("https://trainingday.space/api"));
-		}
+            _client = new RestClient(new RestClientOptions("https://api.trainingday.space/api"));
+        }
 
-		public void Dispose()
+        public void Dispose()
 		{
 			_client?.Dispose();
 		}
@@ -37,25 +37,26 @@ namespace TrainingDay.Maui.Services
 			return request;
 		}
 
-		public async Task<BlogsResponse> GetBlogsAsync(int page)
+		public async Task<IReadOnlyCollection<BlogResponse>> GetBlogsAsync(int page)
 		{
-			var request = CreateRequest($"/blogs?page={page}", Method.Get);
+			var cultureId = Settings.CultureName.Contains("en", StringComparison.OrdinalIgnoreCase) ? 1 : 2; 
+			var request = CreateRequest($"/mobileblogs/blogs?cultureId={cultureId}&page={page}&pageSize=5", Method.Get);
 			var response = await _client.ExecuteAsync(request);
 			return response.IsSuccessful
-				? JsonConvert.DeserializeObject<BlogsResponse>(response.Content)
+				? JsonConvert.DeserializeObject<IReadOnlyCollection<BlogResponse>>(response.Content)
 				: null;
 		}
 
 		public async Task<BlogResponse> GetBlogAsync(string id)
 		{
-			var request = CreateRequest($"/blogs?id={id}", Method.Get);
+			var request = CreateRequest($"/mobileblogs?id={id}", Method.Get);
 			var response = await _client.ExecuteAsync(request);
 			return response.IsSuccessful
 				? JsonConvert.DeserializeObject<BlogResponse>(response.Content)
 				: null;
 		}
 
-		public async Task<IEnumerable<ExerciseQueryResponse>> GetExercisesByQuery(string query)
+		public async Task<IEnumerable<ExerciseQueryResponse>> GetExercisesByQueryAsync(string query)
 		{
 			var request = CreateRequest($"/exercises/query", Method.Post, new { Query = query });
 			var response = await _client.ExecuteAsync(request);
@@ -64,7 +65,7 @@ namespace TrainingDay.Maui.Services
 				: Enumerable.Empty<ExerciseQueryResponse>();
 		}
 
-		public async Task<bool> PostAction(string token, MobileActions action, string data = null)
+		public async Task<bool> PostActionAsync(string token, MobileActions action, string data = null)
 		{
 			var model = new MobileAction { Action = action, Token = token, Data = data };
 			var request = CreateRequest("/users/action", Method.Post, model);
@@ -72,9 +73,9 @@ namespace TrainingDay.Maui.Services
 			return response.IsSuccessful;
 		}
 
-		public async Task<IEnumerable<YoutubeVideoItem>> GetVideos(string exerciseName)
+		public async Task<IEnumerable<YoutubeVideoItem>> GetVideosAsync(string exerciseName)
 		{
-			var request = CreateRequest($"/exercises/video?name={exerciseName}", Method.Get);
+			var request = CreateRequest($"/YouTubeVideos/{exerciseName}", Method.Get);
 			var response = await _client.ExecuteAsync(request);
 			return response.IsSuccessful
 				? JsonConvert.DeserializeObject<IEnumerable<YoutubeVideoItem>>(response.Content)

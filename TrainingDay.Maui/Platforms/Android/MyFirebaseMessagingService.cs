@@ -30,7 +30,7 @@ namespace TrainingDay.Maui.Platforms.Android
 		private static async Task SendToken(string token)
 		{
 			var dataService = IPlatformApplication.Current.Services.GetService<IDataService>();
-            await dataService.PostAction(token, MobileActions.Enter);
+            await dataService.PostActionAsync(token, MobileActions.Enter);
 		}
 
 		public override void OnMessageReceived(RemoteMessage message)

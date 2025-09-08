@@ -453,9 +453,6 @@
   <data name="ShareTrainingString" xml:space="preserve">
     <value>Share workout</value>
   </data>
-  <data name="ShortDescriptionString1" xml:space="preserve">
-    <value>Description</value>
-  </data>
   <data name="ShowAdvicesOnImplementing" xml:space="preserve">
     <value>Show warm-up and cool-down tips while doing a workout</value>
   </data>
@@ -552,9 +549,6 @@
   <data name="TwoWeeksString" xml:space="preserve">
     <value>2 weeks</value>
   </data>
-  <data name="VideoString" xml:space="preserve">
-    <value>Video</value>
-  </data>
   <data name="WaistHipMessage" xml:space="preserve">
     <value>Index value = {0:0.00}._Read more?</value>
   </data>
@@ -650,5 +644,8 @@
   </data>
   <data name="WithoutEquipment" xml:space="preserve">
     <value>By clicking this button, the user will show or hide exercises without equipment (home-friendly).</value>
+  </data>
+  <data name="WorkoutAlmostCreated" xml:space="preserve">
+    <value>Workout almost created</value>
   </data>
 </root>

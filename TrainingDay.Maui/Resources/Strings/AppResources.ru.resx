@@ -465,9 +465,6 @@
   <data name="ShareTrainingString" xml:space="preserve">
     <value>Поделиться тренировкой</value>
   </data>
-  <data name="ShortDescriptionString1" xml:space="preserve">
-    <value>Описание</value>
-  </data>
   <data name="ShowAdvicesOnImplementing" xml:space="preserve">
     <value>Показывать советы по разминке и заминке во время выполнения тренировки</value>
   </data>
@@ -564,9 +561,6 @@
   <data name="TwoWeeksString" xml:space="preserve">
     <value>2 недели</value>
   </data>
-  <data name="VideoString" xml:space="preserve">
-    <value>Видео</value>
-  </data>
   <data name="WaistHipMessage" xml:space="preserve">
     <value>Значение индекса = {0:0.00}._Хотите узнать больше?</value>
   </data>
@@ -662,5 +656,8 @@
   </data>
   <data name="WithoutEquipment" xml:space="preserve">
     <value>Нажав эту кнопку, пользователь сможет показывать или скрывать упражнения без инвентаря (подходящие для дома).</value>
+  </data>
+  <data name="WorkoutAlmostCreated" xml:space="preserve">
+    <value>Тренировка почти создана</value>
   </data>
 </root>

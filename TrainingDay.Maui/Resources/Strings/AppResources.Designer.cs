@@ -1231,15 +1231,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description.
-        /// </summary>
-        internal static string ShortDescriptionString1 {
-            get {
-                return ResourceManager.GetString("ShortDescriptionString1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Show warm-up and cool-down tips while doing a workout.
         /// </summary>
         internal static string ShowAdvicesOnImplementing {
@@ -1528,15 +1519,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Video.
-        /// </summary>
-        internal static string VideoString {
-            get {
-                return ResourceManager.GetString("VideoString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Index value = {0:0.00}._Read more?.
         /// </summary>
         internal static string WaistHipMessage {
@@ -1641,6 +1623,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string WorkoutAddedString {
             get {
                 return ResourceManager.GetString("WorkoutAddedString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Workout almost created.
+        /// </summary>
+        internal static string WorkoutAlmostCreated {
+            get {
+                return ResourceManager.GetString("WorkoutAlmostCreated", resourceCulture);
             }
         }
         

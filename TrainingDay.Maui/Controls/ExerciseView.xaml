@@ -117,21 +117,7 @@
 
 		<Border Grid.Row="4" Margin="0" Padding="0" Style="{StaticResource BorderCellStyle}" VerticalOptions="Fill" IsVisible="True">
             <StackLayout>
-                <Grid ColumnDefinitions="*,*">
-                    <Label x:Name="DesctiptionLabel" Padding="10" Grid.ColumnSpan="2" BackgroundColor="Green" Text="{x:Static resx:AppResources.ShortDescriptionString1}"
-                               HorizontalTextAlignment="Center" FontSize="Medium" TextColor="White" FontAttributes="Bold" VerticalTextAlignment="Center">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="Description_Click" />
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <!--<Label x:Name="VideoLabel" Grid.Column="1" Padding="10" BackgroundColor="Gray" Text="{x:Static resx:AppResources.VideoString}">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="Video_Click" />
-                            </Label.GestureRecognizers>
-                        </Label>-->
-                </Grid>
-
-                <StackLayout x:Name="DescriptionGrid" Margin="5">
+                <StackLayout Margin="5">
                     <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.StartPosition}" TextColor="DodgerBlue" VerticalTextAlignment="Center" 
                            IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
                     <Label FontSize="Small" Text="{Binding Description.StartPosition}" 
@@ -149,18 +135,10 @@
                            IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
                 </StackLayout>
 
-                <Grid x:Name="VideoActivityIndicatorGrid" HeightRequest="300" IsVisible="False" WidthRequest="300">
-                    <ActivityIndicator x:Name="VideoActivityIndicator" HorizontalOptions="Center" VerticalOptions="Center" />
-                </Grid>
-
-                <CollectionView x:Name="VideoCollectionView" IsVisible="False">
+                <CollectionView ItemsSource="{Binding VideoItems}">
                     <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="models:YoutubeVideoItem">
-                            <StackLayout Padding="10">
-                                <Label FontSize="Small" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" Text="{Binding VideoTitle}" />
-                                <Label FontSize="Small" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" Text="{Binding VideoAuthor, StringFormat={x:Static resx:AppResources.AuthorString}}" />
-                                <controls:FullScreenVideoWebView HeightRequest="400" HorizontalOptions="Fill" Source="{Binding WebViewData}" VerticalOptions="Fill" WidthRequest="400" />
-                            </StackLayout>
+                        <DataTemplate x:DataType="models:ExerciseVideo">
+                            <controls:FullScreenVideoWebView HorizontalOptions="Fill" Source="{Binding WebViewData}" VerticalOptions="Fill" />
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>

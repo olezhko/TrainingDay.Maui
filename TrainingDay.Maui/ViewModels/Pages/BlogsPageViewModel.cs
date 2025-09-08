@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using TrainingDay.Common.Communication;
 using TrainingDay.Maui.Services;
+using TrainingDay.Maui.Views;
 
 namespace TrainingDay.Maui.ViewModels.Pages;
 
@@ -10,9 +11,8 @@ public class BlogsPageViewModel : BaseViewModel
     private Command newBlogLoadCommand;
     private Command refreshCommand;
     private Command openBlogCommand;
-    int page = 0;
+    int page = 1;
     IDataService dataService;
-
 
 	public BlogsPageViewModel(IDataService dataService)
     {
@@ -22,7 +22,7 @@ public class BlogsPageViewModel : BaseViewModel
 
     public async void LoadItems()
     {
-        Page = 0;
+        Page = 1;
         if (IsBusy)
         {
             return;
@@ -38,7 +38,7 @@ public class BlogsPageViewModel : BaseViewModel
         var res = await dataService.GetBlogsAsync(Page);
         if (res != null)
         {
-            BlogsCollection = new ObservableCollection<BlogViewModel>(res.Items.Where(CheckLanguage).Select(item => new BlogViewModel(item)).OrderByDescending(item => item.DateTime));
+            BlogsCollection = new ObservableCollection<BlogViewModel>(res.Where(CheckLanguage).Select(item => new BlogViewModel(item)).OrderByDescending(item => item.DateTime));
             OnPropertyChanged(nameof(BlogsCollection));
 
             IsBusy = false;
@@ -59,9 +59,11 @@ public class BlogsPageViewModel : BaseViewModel
         return true;
     }
 
-    private async void OpenBlog(BlogViewModel obj)
+    private async void OpenBlog(BlogViewModel sender)
     {
-        //await Shell.Current.GoToAsync($"{nameof(BlogItemPage)}?{nameof(BlogItemPage.ItemId)}={obj.}");
+        var blog = await dataService.GetBlogAsync(sender.Guid);
+        Dictionary<string, object> param = new Dictionary<string, object> { { "Context", new BlogViewModel(blog) } };
+        await Shell.Current.GoToAsync(nameof(BlogItemPage), param);
     }
 
     private async void NewBlogsRequest()
@@ -77,7 +79,7 @@ public class BlogsPageViewModel : BaseViewModel
         var res = await dataService.GetBlogsAsync(Page);
         if (res != null)
         {
-            foreach (var item in res.Items)
+            foreach (var item in res)
             {
                 BlogsCollection.Add(new BlogViewModel(item));
             }
