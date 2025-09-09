@@ -33,7 +33,7 @@
             </Grid.ColumnDefinitions>
             <SearchBar x:Name="SearchBar" Placeholder="{x:Static resx:AppResources.SearchByNameString}" Text="{Binding Filter.NameFilter}" TextChanged="SearchBar_OnTextChanged" />
 
-            <ImageButton Grid.Column="1" WidthRequest="40" HeightRequest="40" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="filter.png"
+            <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="filter.png"
                     Command="{Binding ViewFilterWindowCommand}" BackgroundColor="Transparent">
                 <ImageButton.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
@@ -116,14 +116,14 @@
 			                            FillColor="{StaticResource Main}"
 			                            FillOption ="Shape"
 			                            IsReadOnly="True"
-			                            ShapePadding="3,7,7,3"
+			                            ShapePadding="1,2,2,1"
 			                            ShapeDiameter="20"
 			                            MaximumRating="3"
 			                            Rating="{Binding DifficultType}"
 			                            Shape="Star"
 			                            ShapeBorderColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"
-			                            ShapeBorderThickness="1"
-			                            Spacing="3" />
+			                            ShapeBorderThickness="0.3"
+			                            Spacing="1" />
                                 </StackLayout>
                             </Grid>
                         </Border>

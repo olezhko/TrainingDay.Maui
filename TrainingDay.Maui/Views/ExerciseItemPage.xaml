@@ -31,8 +31,7 @@
     </ContentPage.BindingContext>
     <Grid>
         <ScrollView>
-            <Grid x:Name="ContentGrid" RowDefinitions="auto,auto,auto,auto,auto" RowSpacing="10">
-
+            <Grid x:Name="ContentGrid" RowDefinitions="auto,auto,auto,auto,auto,auto" RowSpacing="0">
                 <Border Grid.Row="0" Style="{StaticResource MaterialBorder}" IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}">
                     <Grid>
                         <Label Text="{x:Static resx:AppResources.NameString}" Style="{StaticResource MaterialLabel}"/>
@@ -42,19 +41,19 @@
                 </Border>
 
                 <Label
-            x:Name="NameLabel"
-            Grid.Row="0"
-            FontSize="Large"
-            IsVisible="{Binding IsBase}"
-            Text="{Binding Name}" HorizontalTextAlignment="Center"
-            VerticalOptions="Start" />
+                    x:Name="NameLabel"
+                    Grid.Row="0"
+                    FontSize="Large"
+                    IsVisible="{Binding IsBase}"
+                    Text="{Binding Name}" HorizontalTextAlignment="Center"
+                    VerticalOptions="Start" />
 
                 <Border
-            Grid.Row="1"
-            Padding="0"
-            HeightRequest="120"
-            HorizontalOptions="Center"
-            WidthRequest="120">
+                    Grid.Row="1"
+                    Padding="0"
+                    HeightRequest="120"
+                    HorizontalOptions="Center"
+                    WidthRequest="120">
                     <controls:ImageCache CodeNum="{Binding CodeNum, Mode=TwoWay}" />
                 </Border>
 
@@ -87,7 +86,7 @@
                              IsEnabled="{Binding IsBase,Converter={StaticResource InverseBooleanConverter}}"/>
                 </StackLayout>
 
-                <Grid Grid.Row="4" RowDefinitions="auto,auto,auto" RowSpacing="5">
+                <Grid Grid.Row="4" RowDefinitions="auto,auto,auto">
                     <VerticalStackLayout Grid.Row="0">
                         <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.StartPosition}" TextColor="DodgerBlue" VerticalTextAlignment="Center" 
                            IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
@@ -119,6 +118,21 @@
                         <Label FontSize="Small" IsVisible="{Binding Source={x:Reference AdviceDescEditor}, Path=IsReadOnly}" Text="{Binding Description.Advice}" />
                     </VerticalStackLayout>
                 </Grid>
+
+                <toolkit:RatingView HorizontalOptions="Center" Grid.Row="5"
+                                        VerticalOptions="End"
+			                            EmptyShapeColor="Transparent"
+			                            FillColor="{StaticResource Main}"
+			                            FillOption ="Shape"
+			                            IsReadOnly="True"
+			                            ShapePadding="1,2,2,1"
+			                            ShapeDiameter="20"
+			                            MaximumRating="3"
+			                            Rating="{Binding DifficultType}"
+			                            Shape="Star"
+			                            ShapeBorderColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"
+			                            ShapeBorderThickness="0.3"
+			                            Spacing="1" />
             </Grid>
         </ScrollView>
 

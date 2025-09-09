@@ -41,6 +41,7 @@ public class ExerciseViewModel : BaseViewModel
         Muscles = new ObservableCollection<MuscleViewModel>(MusclesConverter.ConvertFromStringToList(exercise.MusclesString));
         Description = DescriptionViewModel.ConvertFromJson(exercise.Description);
         CodeNum = exercise.CodeNum;
+        DifficultType = exercise.DifficultType;
         OnPropertyChanged(nameof(IsBase));
     }
 
@@ -54,6 +55,7 @@ public class ExerciseViewModel : BaseViewModel
             MusclesString = MusclesConverter.ConvertFromListToString(Muscles.ToList()),
             TagsValue = ExerciseExtensions.ConvertTagListToInt(Tags),
             CodeNum = CodeNum,
+            DifficultType = DifficultType
         };
     }
 
@@ -102,11 +104,5 @@ public class ExerciseViewModel : BaseViewModel
 
     public ObservableCollection<ExerciseVideo> VideoItems { get => videoItems; set => SetProperty(ref videoItems, value); }
 
-    public enum DifficultTypes
-    {
-        Easy,
-        Medium,
-        Hard
-    }
     #endregion
 }

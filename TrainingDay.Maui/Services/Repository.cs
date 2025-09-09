@@ -26,7 +26,7 @@ public class Repository
             database = new SQLiteConnection(path);
 #elif IOS
             string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            string libraryPath = Path.Combine(documentsPath, "..", "Library"); // папка библиотеки
+            string libraryPath = Path.Combine(documentsPath, "..", "Library");
             var path = Path.Combine(libraryPath, filename);
             database = new SQLiteConnection(path);
 #endif
@@ -56,7 +56,7 @@ public class Repository
             database.CreateTable<ImageDto>();
             //database.CreateTable<BlogDto>();
 
-            var initExercises = await ResourceExtension.LoadResource<Common.Models.BaseExercise>("exercises", Settings.GetLanguage().TwoLetterISOLanguageName);
+            var initExercises = await ResourceExtension.LoadResource<BaseExercise>("exercises", Settings.GetLanguage().TwoLetterISOLanguageName);
             var dbExercises = GetExerciseItems();
 
             foreach (var exercise in initExercises)
@@ -105,7 +105,7 @@ public class Repository
             }
         }
     }
-    private bool AddorUpdateExercise(Common.Models.BaseExercise newExercise, IEnumerable<ExerciseDto> dbExercises)
+    private bool AddorUpdateExercise(BaseExercise newExercise, IEnumerable<ExerciseDto> dbExercises)
     {
         try
         {
@@ -116,7 +116,7 @@ public class Repository
 				dbExercise.CodeNum = newExercise.CodeNum;
 			}
 
-			dbExercise.DifficultType = newExercise.DifficultType;
+			dbExercise.DifficultType = newExercise.DifficultLevel;
 			dbExercise.Description = JsonConvert.SerializeObject(newExercise.Description);
 			dbExercise.MusclesString = newExercise.MusclesString;
 			dbExercise.Name = newExercise.Name;
