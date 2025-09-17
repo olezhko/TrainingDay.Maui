@@ -39,8 +39,8 @@ namespace TrainingDay.Maui.Services
 
 		public async Task<IReadOnlyCollection<BlogResponse>> GetBlogsAsync(int page)
 		{
-			var cultureId = Settings.CultureName.Contains("en", StringComparison.OrdinalIgnoreCase) ? 1 : 2; 
-			var request = CreateRequest($"/mobileblogs/blogs?cultureId={cultureId}&page={page}&pageSize=5", Method.Get);
+			var cultureId = Settings.CultureName.Contains("en", StringComparison.OrdinalIgnoreCase) ? 1 : 2;
+			var request = CreateRequest($"/mobileblogs/blogs?cultureId={cultureId}&page={page}&pageSize=10", Method.Get);
 			var response = await _client.ExecuteAsync(request);
 			return response.IsSuccessful
 				? JsonConvert.DeserializeObject<IReadOnlyCollection<BlogResponse>>(response.Content)

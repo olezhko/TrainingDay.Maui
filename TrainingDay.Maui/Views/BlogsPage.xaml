@@ -19,13 +19,13 @@
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Margin="0" Padding="0">
+                    <Grid Margin="0" Padding="0" MinimumHeightRequest="80">
 						<Border Style="{DynamicResource BorderCellStyle}" >
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Source={x:Reference Page}, Path=BindingContext.OpenBlogCommand}" CommandParameter="{Binding }"/>
                             </Border.GestureRecognizers>
 
-                            <Label Text="{Binding Title}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                            <Label Text="{Binding Title}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                         </Border>
                     </Grid>
                 </DataTemplate>
