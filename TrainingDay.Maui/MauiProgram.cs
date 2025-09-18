@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
-using Plugin.AdMob;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using Syncfusion.Maui.Toolkit.Hosting;
 using TrainingDay.Maui.Controls;
@@ -21,7 +20,6 @@ namespace TrainingDay.Maui
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
                 .UseSkiaSharp()
-                .UseAdMob()
                 .ConfigureSyncfusionToolkit()
                 .ConfigureFonts(fonts =>
                 {
@@ -89,10 +87,6 @@ namespace TrainingDay.Maui
 #endif
 
             });
-
-#if IOS
-            Plugin.AdMob.Configuration.AdConfig.DefaultBannerAdUnitId = Extensions.ConstantKeys.WorkoutiOSAds;
-#endif
 
             return builder.Build();
         }

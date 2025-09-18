@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
-             xmlns:admob="clr-namespace:Plugin.AdMob;assembly=Plugin.AdMob"
              x:Class="TrainingDay.Maui.Views.WorkoutQuestinariumPage"
              Shell.TabBarIsVisible="False"
              Title="{x:Static resx:AppResources.LetsBuildYourWorkout}">
@@ -71,7 +70,5 @@
                 </Button.Style>
             </Button>
         </Grid>
-
-        <admob:BannerAd x:Name="AdMob" Grid.Row="3" AdSize="Banner" />
     </Grid>
 </ContentPage>

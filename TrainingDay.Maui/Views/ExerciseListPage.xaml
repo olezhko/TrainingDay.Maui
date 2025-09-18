@@ -6,7 +6,6 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
-             xmlns:admob="clr-namespace:Plugin.AdMob;assembly=Plugin.AdMob"
              x:Class="TrainingDay.Maui.Views.ExerciseListPage"
              Shell.TabBarIsVisible="False"
              Padding="5">
@@ -25,7 +24,7 @@
     <ContentPage.BindingContext>
         <viewModels:ExerciseListPageViewModel />
     </ContentPage.BindingContext>
-    <Grid RowDefinitions="50,*,auto,auto">
+    <Grid RowDefinitions="50,*,auto">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -139,7 +138,5 @@
             <Button CornerRadius="20" Grid.Column="1" Command="{Binding ChoseExercisesCommand}"
                     CommandParameter="{Binding}" Text="{x:Static resx:AppResources.SelectString}" />
         </Grid>
-
-        <admob:BannerAd x:Name="AdMob" Grid.Row="4" AdSize="Banner" />
     </Grid>
 </ContentPage>

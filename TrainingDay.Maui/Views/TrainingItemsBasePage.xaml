@@ -5,7 +5,6 @@
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
-             xmlns:admob="clr-namespace:Plugin.AdMob;assembly=Plugin.AdMob"
              x:Class="TrainingDay.Maui.Views.TrainingItemsBasePage"
              x:Name="Page">
     <Shell.TitleView>
@@ -109,6 +108,5 @@
                               ParentHeight="{Binding Source={x:Reference Container},Path=Height}" Grid.Row="1"
                               ParentWidth="{Binding Source={x:Reference Container},Path=Width}"/>
 
-        <admob:BannerAd x:Name="AdMob" Grid.Row="2" AdSize="Banner" />
     </controls:TooltipControlContainer>
 </ContentPage>

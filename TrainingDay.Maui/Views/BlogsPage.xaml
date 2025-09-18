@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
-             xmlns:admob="clr-namespace:Plugin.AdMob;assembly=Plugin.AdMob"
              xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
              x:Class="TrainingDay.Maui.Views.BlogsPage"
              x:Name="Page">
@@ -11,27 +10,23 @@
         <Label Text="{x:Static resx:AppResources.NewsString}" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
     </Shell.TitleView>
 
-    <Grid RowDefinitions="*,auto">
-        <CollectionView ItemsSource="{Binding BlogsCollection}" RemainingItemsThresholdReachedCommand="{Binding NewBlogLoadCommand}" 
-                RemainingItemsThreshold="{Binding Page}" ItemSizingStrategy="MeasureAllItems">
-            <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Margin="0" Padding="0" MinimumHeightRequest="80">
-						<Border Style="{DynamicResource BorderCellStyle}" >
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={x:Reference Page}, Path=BindingContext.OpenBlogCommand}" CommandParameter="{Binding }"/>
-                            </Border.GestureRecognizers>
+    <CollectionView ItemsSource="{Binding BlogsCollection}" RemainingItemsThresholdReachedCommand="{Binding NewBlogLoadCommand}" 
+            RemainingItemsThreshold="{Binding Page}" ItemSizingStrategy="MeasureAllItems">
+        <CollectionView.ItemsLayout>
+            <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
+        </CollectionView.ItemsLayout>
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Grid Margin="0" Padding="0" MinimumHeightRequest="80">
+                    <Border Style="{DynamicResource BorderCellStyle}" >
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={x:Reference Page}, Path=BindingContext.OpenBlogCommand}" CommandParameter="{Binding }"/>
+                        </Border.GestureRecognizers>
 
-                            <Label Text="{Binding Title}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                        </Border>
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-
-        <admob:BannerAd x:Name="AdMob" Grid.Row="1" AdSize="Banner" />
-    </Grid>
+                        <Label Text="{Binding Title}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    </Border>
+                </Grid>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
 </ContentPage>

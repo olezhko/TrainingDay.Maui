@@ -17,7 +17,6 @@ public partial class ExerciseListPage : ContentPage
     public ExerciseListPage()
     {
         InitializeComponent();
-        AdMob.AdUnitId = DeviceInfo.Platform == DevicePlatform.Android ? ConstantKeys.ExercisesAndroidAds : ConstantKeys.ExercisesiOSAds;
         _viewModel = new ExerciseListPageViewModel();
         BindingContext = _viewModel;
         NavigationPage.SetBackButtonTitle(this, AppResources.ExercisesString);

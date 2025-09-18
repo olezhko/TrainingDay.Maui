@@ -10,7 +10,6 @@ public partial class BlogsPage : ContentPage
 	{
 		InitializeComponent();
         BindingContext = new BlogsPageViewModel(service);
-        AdMob.AdUnitId = DeviceInfo.Platform == DevicePlatform.Android ? ConstantKeys.WorkoutsAndroidAds : ConstantKeys.WorkoutsiOSAds;
     }
 
     protected override void OnAppearing()

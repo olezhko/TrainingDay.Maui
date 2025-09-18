@@ -1,6 +1,4 @@
 using CommunityToolkit.Mvvm.Messaging;
-using Plugin.AdMob;
-using Plugin.AdMob.Services;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Common.Extensions;
@@ -42,7 +40,6 @@ public partial class TrainingImplementPage : ContentPage
         _timer.Tick += _timer_Tick;
         _timer.Interval = TimeSpan.FromSeconds(1);
 
-        AdMob.AdUnitId = DeviceInfo.Platform == DevicePlatform.Android ? ConstantKeys.ImplementAndroidAds : ConstantKeys.ImplementiOSAds;
         RestPicker.TextColor = App.Current.RequestedTheme == AppTheme.Light ? Colors.Black : Colors.White;
     }
 
@@ -272,30 +269,11 @@ public partial class TrainingImplementPage : ContentPage
             await MessageManager.DisplayAlert(AppResources.AdviceString, AppResources.AdviceAfterTrainingMessage, AppResources.OkString);
         }
 
-        ShowAd(DeviceInfo.Platform == DevicePlatform.Android
-            ? ConstantKeys.FinishWorkoutAndroidAds
-            : ConstantKeys.FinishWorkoutiOSAds);
-
         notificator.Cancel(PushMessagesExtensions.TrainingNotificationId);
 
         await Shell.Current.GoToAsync("..");
         await Shell.Current.GoToAsync("..");
         await dataService.PostActionAsync(Settings.Token, Common.Communication.MobileActions.Workout);
-    }
-
-    private IInterstitialAdService _interstitialAdService;
-    private void ShowAd(string ads)
-    {
-        _interstitialAdService = Handler.MauiContext.Services.GetService<IInterstitialAdService>();
-        _interstitialAdService.PrepareAd(ads);
-        var interstitialAd = _interstitialAdService.CreateAd(ads);
-        interstitialAd.OnAdLoaded += InterstitialAd_OnAdLoaded;
-        interstitialAd.Load();
-    }
-
-    private void InterstitialAd_OnAdLoaded(object sender, EventArgs e)
-    {
-        (sender as IInterstitialAd).Show();
     }
 
     private void SaveLastTraining()

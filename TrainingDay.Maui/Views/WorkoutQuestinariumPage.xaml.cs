@@ -11,7 +11,6 @@ public partial class WorkoutQuestinariumPage : ContentPage
     public WorkoutQuestinariumPage()
 	{
 		InitializeComponent();
-        AdMob.AdUnitId = DeviceInfo.Platform == DevicePlatform.Android ? ConstantKeys.WorkoutAndroidAds : ConstantKeys.WorkoutiOSAds;
     }
 
     protected override async void OnHandlerChanged()
