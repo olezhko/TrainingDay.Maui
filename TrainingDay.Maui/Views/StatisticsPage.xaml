@@ -14,7 +14,7 @@
         <!--<ToolbarItem IconImageSource="share" Command="{Binding ShareResultsCommand}"/>-->
     </ContentPage.ToolbarItems>
     
-    <Grid Padding="5">
+    <Grid>
         <Label HorizontalTextAlignment="Center" VerticalOptions="Start" Text="{x:Static resx:AppResources.NoLastTrainings}" FontSize="Medium" IsVisible="{Binding IsLastTrainingsAvailable, Converter={StaticResource InverseBooleanConverter}}"/>
 
         <StackLayout Spacing="10" IsVisible="{Binding IsLastTrainingsAvailable}">
@@ -73,7 +73,7 @@
             </StackLayout>
 
             <Border BackgroundColor="{AppThemeBinding Dark={StaticResource ListItemBackgroundColor}, Light={StaticResource ListItemBackgroundColorLight}}"
-           IsVisible="{Binding IsShowTopExercisesBlock}">
+                IsVisible="{Binding IsShowTopExercisesBlock}" Stroke="Transparent" Padding="10" StrokeShape="RoundRectangle 20" >
                 <StackLayout Spacing="10">
                     <Label FontSize="Title" Text="{x:Static resx:AppResources.MostPopularExercises}" HorizontalTextAlignment="Center"/>
 

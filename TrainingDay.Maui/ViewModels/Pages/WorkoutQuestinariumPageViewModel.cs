@@ -44,9 +44,11 @@ namespace TrainingDay.Maui.ViewModels.Pages
                 var newStep = new WorkoutQuestinariumStepViewModel()
                 {
                     Title = step.Title,
+                    Instruction = step.Instruction,
                     Variants = step.Answers.Select(item => new WorkoutQuestinariumVariantViewModel()
                     {
-                        Title = item,
+                        Title = item.Answer,
+                        Option = item.Option,
                         IsMultiple = step.IsMultiple,
                         QuestionNumber = step.Number.ToString()
                     }).ToObservableCollection(),
@@ -106,7 +108,7 @@ namespace TrainingDay.Maui.ViewModels.Pages
                     }
 
                     sb.Append($"{step.Title} ");
-                    sb.Append($"{string.Join(" or ", step.Variants.Where(item => item.IsChecked).Select(item => item.Title))}. ");
+                    sb.Append($"{string.Join(" or ", step.Variants.Where(item => item.IsChecked).Select(item => item.Option))}. ");
                     step = step.Previous;
                 }
 
@@ -125,14 +127,14 @@ namespace TrainingDay.Maui.ViewModels.Pages
         private async Task SendRequest(string message)
         {
             var response = await _dataService.GetExercisesByQueryAsync(message);
-            if (response.Any())
+            if (response.Exercises.Any())
             {
                 var nameOfWorkout = await Shell.Current.DisplayPromptAsync(AppResources.WorkoutAlmostCreated, AppResources.EnterTrainingName, 
                     AppResources.OkString, AppResources.CancelString, AppResources.NameString, maxLength: 50, keyboard: Keyboard.Text);
 
                 if (nameOfWorkout is not null)
                 {
-                    await _workoutService.CreateWorkoutAsync(nameOfWorkout, response, CancellationToken.None);
+                    await _workoutService.CreateWorkoutAsync(nameOfWorkout, response.Exercises, CancellationToken.None);
                 }
             }
         }
@@ -163,10 +165,12 @@ namespace TrainingDay.Maui.ViewModels.Pages
 	public class WorkoutQuestinariumStepViewModel : BaseViewModel
 	{
         private string title;
+        private string instruction;
         private WorkoutQuestinariumStepViewModel? next;
         private WorkoutQuestinariumStepViewModel? previous;
 
         public string Title { get => title; set => SetProperty(ref title, value); }
+        public string Instruction { get => instruction; set => SetProperty(ref instruction, value); }
 
         public ObservableCollection<WorkoutQuestinariumVariantViewModel> Variants { get; set; }
 
@@ -175,17 +179,22 @@ namespace TrainingDay.Maui.ViewModels.Pages
         public WorkoutQuestinariumStepViewModel? Previous { get => previous; set => SetProperty(ref previous, value); }
     }
 
-	public class WorkoutQuestinariumVariantViewModel : BaseViewModel
-	{
+    public class WorkoutQuestinariumVariantViewModel : BaseViewModel
+    {
         private bool isChecked;
         private string title;
         private bool isMultiple;
         private string questionNumber;
+        private string instruction;
+        private string option;
 
         public bool IsChecked { get => isChecked; set => SetProperty(ref isChecked, value); }
         public bool IsMultiple { get => isMultiple; set => SetProperty(ref isMultiple, value); }
         public string Title { get => title; set => SetProperty(ref title, value); }
         public string QuestionNumber { get => questionNumber; set => SetProperty(ref questionNumber, value); }
+        
+        public string Instruction { get => instruction; set => SetProperty(ref instruction, value); }
+        public string Option { get => option; set => SetProperty(ref option, value); }
     }
 }
 

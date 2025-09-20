@@ -56,8 +56,6 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         }
 
         SelectWorkout(tempGroups);
-
-        Debug.WriteLine("Training Items loaded");
     }
 
     private void SelectWorkout(List<Grouping<string, TrainingViewModel>> tempGroups)

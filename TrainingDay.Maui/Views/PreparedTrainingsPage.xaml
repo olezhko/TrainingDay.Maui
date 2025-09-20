@@ -15,7 +15,7 @@
 		<Grid x:Name="LetsBuildYourWorkoutButton">
             <Button Margin="5" Command="{Binding NavigateToQuestionsCommnd}"/>
             <HorizontalStackLayout HorizontalOptions="Center" HeightRequest="40">
-                <Image Source="ai.png" HorizontalOptions="Start" VerticalOptions="Center">
+                <Image Source="ai.png" HorizontalOptions="Start" VerticalOptions="Center" HeightRequest="40" WidthRequest="40">
                     <Image.Behaviors>
                         <toolkit:IconTintColorBehavior TintColor="White" />
                     </Image.Behaviors>

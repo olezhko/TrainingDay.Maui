@@ -29,27 +29,27 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
-		<ApplicationVersion>312</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.7.2</ApplicationDisplayVersion>
+		<ApplicationVersion>315</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.8.1</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
 		<CreatePackage>false</CreatePackage>
 		<ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
-		<ApplicationVersion>312</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.7.2</ApplicationDisplayVersion>
+		<ApplicationVersion>315</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.8.1</ApplicationDisplayVersion>
 		<EnableSGenConc>True</EnableSGenConc>
 		<SkipStaticLibraryValidation>true</SkipStaticLibraryValidation>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
-		<ApplicationVersion>312</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.7.2</ApplicationDisplayVersion>
+		<ApplicationVersion>315</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.8.1</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
-		<ApplicationVersion>312</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.7.2</ApplicationDisplayVersion>
+		<ApplicationVersion>1.2.8.3</ApplicationVersion>
+		<ApplicationDisplayVersion>317</ApplicationDisplayVersion>
 		<CreatePackage>false</CreatePackage>
 		<CodesignProvision>TrainingDayPublish</CodesignProvision>
 		<CodesignKey>Apple Distribution: Oleg Ladyka (36WMJT4QLC)</CodesignKey>
@@ -152,9 +152,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\TrainingDay-Core\TrainingDay.Common\TrainingDay.Common.csproj" />
-		<ProjectReference Include="..\Plugins\Microcharts.Maui\Microcharts.Maui.csproj" />
-		<ProjectReference Include="..\Plugins\Microcharts\Microcharts.csproj" />
+		<ProjectReference Include="..\..\TrainingDay-Core\TrainingDay.Common\TrainingDay.Common.csproj">
+		  <ReferenceSourceTarget></ReferenceSourceTarget>
+		</ProjectReference>
+		<ProjectReference Include="..\Plugins\Microcharts.Maui\Microcharts.Maui.csproj">
+		  <ReferenceSourceTarget></ReferenceSourceTarget>
+		</ProjectReference>
+		<ProjectReference Include="..\Plugins\Microcharts\Microcharts.csproj">
+		  <ReferenceSourceTarget></ReferenceSourceTarget>
+		</ProjectReference>
 	</ItemGroup>
 
 	<ItemGroup>

@@ -16,14 +16,14 @@
 
         <VerticalStackLayout Grid.Row="1" BindingContext="{Binding CurrentStep}" Margin="10"
                              IsVisible="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}">
-            <Label Text="{Binding Title}" FontSize="Medium" FontAttributes="Bold"/>
+            <Label Text="{Binding Title}" FontSize="20" FontAttributes="Bold"/>
             <CollectionView ItemsSource="{Binding Variants}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
-                            <Grid IsVisible="{Binding IsMultiple}" >
-                                <Label Text="{Binding Title}" VerticalTextAlignment="Center"/>
-                                <CheckBox IsChecked="{Binding IsChecked}" VerticalOptions="Center" HorizontalOptions="Fill"/>
+                            <Grid IsVisible="{Binding IsMultiple}" ColumnDefinitions="auto,*">
+                                <Label Grid.Column="1" Text="{Binding Title}" VerticalTextAlignment="Center"/>
+                                <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked}" VerticalOptions="Center" HorizontalOptions="Start"/>
                             </Grid>
                             <RadioButton VerticalOptions="Center" Content="{Binding Title}"
                                          IsVisible="{Binding IsMultiple, Converter={StaticResource InverseBooleanConverter}}" IsChecked="{Binding IsChecked}">

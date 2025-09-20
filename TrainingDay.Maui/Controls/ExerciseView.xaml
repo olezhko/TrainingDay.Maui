@@ -86,7 +86,8 @@
             <Border Style="{StaticResource MaterialBorder}" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}">
                 <Grid>
                     <Label Text="{x:Static resx:AppResources.TimeString}" Style="{StaticResource MaterialLabel}" controls:MaterialLabelAttached.MaterialControlType="None"/>
-                    <syncfusion:SfTimePicker SelectedTime="{Binding Time, Mode=TwoWay}" Format="HH_mm_ss" Grid.Row="1" HeightRequest="120" BackgroundColor="Transparent" HorizontalOptions="Center">
+                    <syncfusion:SfTimePicker SelectedTime="{Binding Time, Mode=TwoWay}" Format="HH_mm_ss" Grid.Row="1" HeightRequest="120" BackgroundColor="Transparent" 
+                        HorizontalOptions="Center">
                             <syncfusion:SfTimePicker.ColumnHeaderTemplate>
                                 <DataTemplate>
                                     <Grid BackgroundColor="Transparent" ColumnDefinitions="*,*,*">
@@ -96,9 +97,12 @@
                                     </Grid>
                                 </DataTemplate>
                             </syncfusion:SfTimePicker.ColumnHeaderTemplate>
-                            <syncfusion:SfTimePicker.ColumnHeaderView >
+                            <syncfusion:SfTimePicker.ColumnHeaderView>
                                 <syncfusion:TimePickerColumnHeaderView DividerColor="Transparent" />
-                            </syncfusion:SfTimePicker.ColumnHeaderView> 
+                            </syncfusion:SfTimePicker.ColumnHeaderView>
+                            <syncfusion:SfTimePicker.SelectedTextStyle>
+                                <syncfusion:PickerTextStyle TextColor="White"/>
+                            </syncfusion:SfTimePicker.SelectedTextStyle> 
                     </syncfusion:SfTimePicker>
                 </Grid>
             </Border>

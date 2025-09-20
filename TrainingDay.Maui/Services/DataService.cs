@@ -4,11 +4,13 @@ using TrainingDay.Common.Communication;
 
 namespace TrainingDay.Maui.Services
 {
+	public record ExerciseAiResponse(IEnumerable<ExerciseQueryResponse> Exercises);
+	
     public interface IDataService
-    {
+	{
 		Task<IReadOnlyCollection<BlogResponse>> GetBlogsAsync(int page);
 		Task<BlogResponse> GetBlogAsync(string id);
-		Task<IEnumerable<ExerciseQueryResponse>> GetExercisesByQueryAsync(string query);
+		Task<ExerciseAiResponse> GetExercisesByQueryAsync(string query);
 		Task<bool> PostActionAsync(string token, MobileActions action, string data = null);
 		Task<IEnumerable<YoutubeVideoItem>> GetVideosAsync(string exerciseName);
 	}
@@ -19,7 +21,7 @@ namespace TrainingDay.Maui.Services
 
 		public DataService()
 		{
-            _client = new RestClient(new RestClientOptions("https://api.trainingday.space/api"));
+            _client = new RestClient(new RestClientOptions("https://trainingday.space/api"));
         }
 
         public void Dispose()
@@ -56,13 +58,13 @@ namespace TrainingDay.Maui.Services
 				: null;
 		}
 
-		public async Task<IEnumerable<ExerciseQueryResponse>> GetExercisesByQueryAsync(string query)
+		public async Task<ExerciseAiResponse> GetExercisesByQueryAsync(string query)
 		{
 			var request = CreateRequest($"/exercises/query", Method.Post, new { Query = query });
 			var response = await _client.ExecuteAsync(request);
 			return response.IsSuccessful
-				? JsonConvert.DeserializeObject<IEnumerable<ExerciseQueryResponse>>(response.Content)
-				: Enumerable.Empty<ExerciseQueryResponse>();
+				? JsonConvert.DeserializeObject<ExerciseAiResponse>(response.Content)
+				: new ExerciseAiResponse([]);
 		}
 
 		public async Task<bool> PostActionAsync(string token, MobileActions action, string data = null)
