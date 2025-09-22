@@ -648,4 +648,7 @@
   <data name="WorkoutAlmostCreated" xml:space="preserve">
     <value>Das Training ist fast beendet</value>
   </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Zurücksetzen</value>
+  </data>
 </root>

@@ -98,17 +98,26 @@ public partial class FilterPage : ContentPage, IQueryAttributable
     private async Task ShowPopup()
     {
         Tuple<string, string> textImageTuple = newFilterButtonMessages[popupIndex];
-        var view = new VerticalStackLayout() { Spacing = 5};
+
+        var style = App.Current.Resources["PopupLayout"] as Style;
+        var view = new VerticalStackLayout() { Spacing = 5, Style = style };
         view.Children.Add(new Image()
         {
             HeightRequest = 100,
             WidthRequest = 100,
             Source = textImageTuple.Item2
         });
-        view.Children.Add(new Label() { Text = textImageTuple.Item1, HorizontalOptions = LayoutOptions.Center, 
-            HorizontalTextAlignment = TextAlignment.Center });
-        Button button = new Button();
-        button.Text = popupIndex == newFilterButtonMessages.Count - 1 ? AppResources.Finish : AppResources.Next;
+        view.Children.Add(new Label()
+        {
+            Text = textImageTuple.Item1,
+            HorizontalOptions = LayoutOptions.Center,
+            HorizontalTextAlignment = TextAlignment.Center,
+        });
+
+        Button button = new()
+        {
+            Text = popupIndex == newFilterButtonMessages.Count - 1 ? AppResources.Finish : AppResources.Next
+        };
         button.Clicked += async (sender, args) =>
         {
             await Navigation.PopModalAsync();

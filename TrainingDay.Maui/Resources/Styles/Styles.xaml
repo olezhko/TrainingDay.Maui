@@ -58,7 +58,7 @@
 		<Setter Property="Padding" Value="5"/>
 	</Style>
 
-	<Style TargetType="BoxView">
+    <Style TargetType="BoxView">
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
     </Style>
 
@@ -178,17 +178,14 @@
         </Setter>
     </Style>
 
-    <Style TargetType="Label" x:Key="MaterialLabel">
-        <Setter Property="AnchorX" Value="0"/>
-        <Setter Property="TextColor" Value="Orange"/>
-        <Setter Property="FontSize" Value="18"/>
-        <Setter Property="HorizontalOptions" Value="Start"/>
-        <Setter Property="VerticalOptions" Value="Center"/>
-        <Setter Property="Margin" Value="5,0"/>
-
-        <Setter Property="ZIndex" Value="2"/>
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}"/>
-        <Setter Property="controls:MaterialLabelAttached.IsMaterialBehavior" Value="True"/>
+    <Style x:Key="MuscleFlexStyle" TargetType="FlexLayout">
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="Wrap" Value="Wrap" />
+        <Setter Property="Direction" Value="Row" />
+        <Setter Property="JustifyContent" Value="Center" />
+        <Setter Property="AlignItems" Value="Center" />
+        <Setter Property="AlignContent" Value="Start" />
     </Style>
 
     <Style TargetType="ImageButton">
@@ -235,6 +232,19 @@
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
+    </Style>
+
+    <Style TargetType="Label" x:Key="MaterialLabel">
+        <Setter Property="AnchorX" Value="0"/>
+        <Setter Property="TextColor" Value="Orange"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="HorizontalOptions" Value="Start"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="Margin" Value="5,0"/>
+
+        <Setter Property="ZIndex" Value="2"/>
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}"/>
+        <Setter Property="controls:MaterialLabelAttached.IsMaterialBehavior" Value="True"/>
     </Style>
 
     <Style TargetType="Span">
@@ -413,6 +423,10 @@
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
+    </Style>
+
+    <Style TargetType="VerticalStackLayout" x:Key="PopupLayout">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}" />
     </Style>
 
     <Style TargetType="Element" x:Key="BaseStyle">

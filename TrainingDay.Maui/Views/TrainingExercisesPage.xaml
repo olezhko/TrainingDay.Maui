@@ -101,8 +101,7 @@
 
                                 <StackLayout Orientation="Vertical" Grid.Column="1" Padding="0" Margin="0" VerticalOptions="Center">
                                     <Label Text="{Binding Name}" FontSize="17" HorizontalTextAlignment="Center" HorizontalOptions="Fill" VerticalOptions="Start" Margin="0"/>
-                                    <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" HorizontalOptions="Center" Wrap="Wrap" VerticalOptions="Center" 
-                                                Direction="Row" JustifyContent="Center" AlignItems="Center" AlignContent="Start">
+                                    <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" Style="{StaticResource MuscleFlexStyle}">
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate x:DataType="models:MuscleViewModel">
                                                 <Border Style="{StaticResource MuscleBorderCellStyle}" Margin="1">

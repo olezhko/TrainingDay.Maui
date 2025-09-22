@@ -660,4 +660,7 @@
   <data name="WorkoutAlmostCreated" xml:space="preserve">
     <value>Тренировка почти создана</value>
   </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Сбросить</value>
+  </data>
 </root>

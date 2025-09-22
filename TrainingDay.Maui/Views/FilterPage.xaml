@@ -55,9 +55,8 @@
                      ShapeBorderThickness="1"
                      Spacing="3" />
 
-                <Button Text="Reset" Grid.Column="2" BackgroundColor="Transparent" TextColor="{StaticResource Primary}"
+                <Button Text="{x:Static resx:AppResources.Reset}" Grid.Column="2" BackgroundColor="Transparent" TextColor="{StaticResource Primary}"
                         Clicked="ResetDifficulty_Click"/>
-
             </Grid>
             
             <Image

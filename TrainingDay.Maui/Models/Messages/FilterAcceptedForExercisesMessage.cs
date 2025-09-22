@@ -1,12 +1,7 @@
 ﻿namespace TrainingDay.Maui.Models.Messages
 {
-    public class FilterAcceptedForExercisesMessage
+    public class FilterAcceptedForExercisesMessage(FilterModel filter)
     {
-        public FilterAcceptedForExercisesMessage(FilterModel filter)
-        {
-            Filter = filter;
-        }
-
-        public FilterModel Filter { get; set; }
+        public FilterModel Filter { get; set; } = filter;
     }
 }

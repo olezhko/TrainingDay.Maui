@@ -44,8 +44,10 @@
         </VerticalStackLayout>
 
         <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="10" Padding="10">
-            <Button Grid.Column="0" Command="{Binding BackOrCancelCommand}" BackgroundColor="Transparent" TextColor="{StaticResource Primary}" 
-                    BorderColor="{StaticResource Primary}" BorderWidth="1"> 
+            <Button Grid.Column="0" Command="{Binding BackOrCancelCommand}" BackgroundColor="Transparent" 
+                    TextColor="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}" 
+                    BorderColor="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}" 
+                    BorderWidth="1" IsEnabled="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}"> 
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Text" Value="{x:Static resx:AppResources.Back}" />
@@ -57,7 +59,9 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button Grid.Column="1" Command="{Binding NextOrFinishCommand}">
+            <Button Grid.Column="1"
+                    Command="{Binding NextOrFinishCommand}" 
+                    IsEnabled="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Text" Value="{x:Static resx:AppResources.Next}" />

@@ -129,7 +129,7 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
                 var newItem = new ExerciseListItemViewModel(exercise);
                 newItem.IsExerciseExistsInWorkout = ExistedExercises != null && ExistedExercises.Any(x => x.ExerciseId == exercise.Id);
                 newItem.IsSelected = selectedIndexes.Contains(newItem.Id);
-                bool? byname = null, byFilter = null, atHome = null, barbell = null, dumbbell = null;
+                bool? byname = null, byFilter = null, atHome = null, barbell = null, dumbbell = null, byLevel = null;
 
                 var tags = ExerciseExtensions.ConvertTagIntToList(exercise.TagsValue);
 
@@ -158,11 +158,17 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
                     byFilter = newItem.Muscles.Select(i => (MusclesEnum)i.Id).Intersect(Filter.CurrentMuscles).Count() != 0;
                 }
 
+                if (Filter.DifficultyLevel != 0)
+                {
+                    byLevel = (int)newItem.DifficultType == Filter.DifficultyLevel;
+                }
+
                 if (byname.HasValue && !byname.Value 
                     || byFilter.HasValue && !byFilter.Value 
                     || atHome.HasValue && !atHome.Value
                     || barbell.HasValue && !barbell.Value
-                    || dumbbell.HasValue && !dumbbell.Value)
+                    || dumbbell.HasValue && !dumbbell.Value
+                    || byLevel.HasValue && !byLevel.Value)
                 {
                     continue;
                 }

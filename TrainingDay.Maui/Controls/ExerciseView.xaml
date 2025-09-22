@@ -108,8 +108,7 @@
             </Border>
         </StackLayout>
 
-        <FlexLayout Grid.Row="3" BindableLayout.ItemsSource="{Binding Muscles}" HorizontalOptions="Center" Wrap="Wrap" VerticalOptions="Center" Direction="Row"
-            JustifyContent="Center" AlignItems="Center" AlignContent="Start">
+        <FlexLayout Grid.Row="3" BindableLayout.ItemsSource="{Binding Muscles}" Style="{StaticResource MuscleFlexStyle}">
             <BindableLayout.ItemTemplate>
                 <DataTemplate x:DataType="viewModels:MuscleViewModel">
                     <Border Margin="1" Style="{StaticResource MuscleBorderCellStyle}">

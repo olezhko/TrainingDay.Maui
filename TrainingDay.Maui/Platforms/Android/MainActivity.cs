@@ -1,8 +1,6 @@
 ﻿using Android.App;
 using Android.Content.PM;
-using Android.Gms.Ads;
 using Android.OS;
-using Firebase.Messaging;
 
 namespace TrainingDay.Maui
 {
@@ -12,12 +10,6 @@ namespace TrainingDay.Maui
         protected override void OnCreate(Bundle? savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
-#if DEBUG
-            var configBuilder = new RequestConfiguration.Builder();
-            configBuilder.SetTestDeviceIds(new List<string>() { "FEDBECEF163A5F1950904DE45DEFD8BD" });
-            MobileAds.RequestConfiguration = configBuilder.Build();
-#endif
             CreateNotificationChannel();
         }
 

@@ -90,8 +90,7 @@
                                         Text="{Binding Time, StringFormat={x:Static resx:AppResources.CurrentTimeString}}" />
                                 </StackLayout>
 
-                                <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" HorizontalOptions="Center" Wrap="Wrap" VerticalOptions="Center" 
-                                                Direction="Row" JustifyContent="Center" AlignItems="Center" AlignContent="Start">
+                                <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" Style="{StaticResource MuscleFlexStyle}">
                                     <BindableLayout.ItemTemplate>
                                         <DataTemplate>
                                             <Border Margin="1" Style="{StaticResource MuscleBorderCellStyle}">
