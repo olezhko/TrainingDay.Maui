@@ -3,6 +3,7 @@ using Microcharts;
 using SkiaSharp;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using TrainingDay.Common.Communication;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Resources.Strings;
@@ -91,10 +92,10 @@ class WeightViewAndSetPageViewModel : BaseViewModel
 
         sender.ChartItems.Add(note);
         sender.Chart = PrepareChart(sender.GoalValue, sender.ChartItems);
-        await Toast.Make(Resources.Strings.AppResources.SavedString).Show();
+        await Toast.Make(AppResources.SavedString).Show();
 
-		//var dataService = IPlatformApplication.Current.Services.GetService<IDataService>();
-		//await dataService.PostAction(Settings.Token, MobileActions.Weight);
+		var dataService = IPlatformApplication.Current.Services.GetService<IDataService>();
+        await dataService.PostActionAsync(Settings.Token, MobileActions.Weight);
 
 		OnPropertyChanged(nameof(BodyControlItems));
     }

@@ -11,7 +11,7 @@ namespace TrainingDay.Maui.Services
 		Task<IReadOnlyCollection<BlogResponse>> GetBlogsAsync(int page);
 		Task<BlogResponse> GetBlogAsync(string id);
 		Task<ExerciseAiResponse> GetExercisesByQueryAsync(string query);
-		Task<bool> PostActionAsync(string token, MobileActions action, string data = null);
+		Task<bool> PostActionAsync(string token, MobileActions action);
 		Task<IEnumerable<YoutubeVideoItem>> GetVideosAsync(string exerciseName);
 	}
 
@@ -21,7 +21,7 @@ namespace TrainingDay.Maui.Services
 
 		public DataService()
 		{
-            _client = new RestClient(new RestClientOptions("https://trainingday.space/api"));
+            _client = new RestClient(new RestClientOptions("https://api.trainingday.space/api"));
         }
 
         public void Dispose()
@@ -36,6 +36,7 @@ namespace TrainingDay.Maui.Services
 			{
 				request.AddJsonBody(body);
 			}
+			
 			return request;
 		}
 
@@ -67,9 +68,9 @@ namespace TrainingDay.Maui.Services
 				: new ExerciseAiResponse([]);
 		}
 
-		public async Task<bool> PostActionAsync(string token, MobileActions action, string data = null)
+		public async Task<bool> PostActionAsync(string token, MobileActions action)
 		{
-			var model = new MobileAction { Action = action, Token = token, Data = data };
+			var model = new MobileActionDto { Action = action, Token = token };
 			var request = CreateRequest("/users/action", Method.Post, model);
 			var response = await _client.ExecuteAsync(request);
 			return response.IsSuccessful;

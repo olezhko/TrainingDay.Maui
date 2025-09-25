@@ -13,15 +13,28 @@
 
     <controls:TooltipControlContainer x:Name="Container" RowSpacing="0" RowDefinitions="auto,*,Auto" BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}">
 		<Grid x:Name="LetsBuildYourWorkoutButton">
-            <Button Margin="5" Command="{Binding NavigateToQuestionsCommnd}"/>
-            <HorizontalStackLayout HorizontalOptions="Center" HeightRequest="40">
-                <Image Source="ai.png" HorizontalOptions="Start" VerticalOptions="Center" HeightRequest="40" WidthRequest="40">
-                    <Image.Behaviors>
-                        <toolkit:IconTintColorBehavior TintColor="White" />
-                    </Image.Behaviors>
-                </Image>
-                <Label Text="{x:Static resx:AppResources.LetsBuildYourWorkout}" VerticalOptions="Center" TextColor="White"/>
-            </HorizontalStackLayout>
+            <ContentView BackgroundColor="Transparent" Margin="5">
+                <ContentView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToQuestionsCommnd}" />
+                </ContentView.GestureRecognizers>
+                
+                <Border StrokeShape="RoundRectangle 20" Padding="0" Margin="0" BackgroundColor="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}">
+                    <HorizontalStackLayout HorizontalOptions="Center" HeightRequest="40">
+                        <Image Source="ai.png" 
+                            HorizontalOptions="Start" 
+                            VerticalOptions="Center" 
+                            HeightRequest="40" 
+                            WidthRequest="40">
+                            <Image.Behaviors>
+                                <toolkit:IconTintColorBehavior TintColor="White" />
+                            </Image.Behaviors>
+                        </Image>
+                        <Label Text="{x:Static resx:AppResources.LetsBuildYourWorkout}" 
+                            VerticalOptions="Center" 
+                            TextColor="White"/>
+                    </HorizontalStackLayout>
+                </Border>
+            </ContentView>
         </Grid>
 
         <CollectionView Grid.Row="1" ItemsSource="{Binding PreparedTrainingsCollection}" SelectionMode="Single" >

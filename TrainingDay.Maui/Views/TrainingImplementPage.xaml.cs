@@ -17,6 +17,7 @@ using TrainingExerciseComm = TrainingDay.Maui.Models.Database.TrainingExerciseDt
 namespace TrainingDay.Maui.Views;
 
 [QueryProperty(nameof(TrainingItem), "TrainingItem")]
+[QueryProperty(nameof(StartTime), "StartTime")]
 public partial class TrainingImplementPage : ContentPage
 {
     private readonly DateTime _startTrainingDateTime;
@@ -272,7 +273,7 @@ public partial class TrainingImplementPage : ContentPage
         notificator.Cancel(PushMessagesExtensions.TrainingNotificationId);
 
         await Shell.Current.GoToAsync("..");
-        await Shell.Current.GoToAsync("..");
+
         await dataService.PostActionAsync(Settings.Token, Common.Communication.MobileActions.Workout);
     }
 

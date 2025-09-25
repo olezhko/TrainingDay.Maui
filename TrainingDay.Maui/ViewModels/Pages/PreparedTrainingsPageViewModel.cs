@@ -49,8 +49,8 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
 
             SaveNewTrainingViewModelToDatabase(training, null);
 
-            await Shell.Current.GoToAsync("..", false);
-            await Shell.Current.GoToAsync("..", false);
+            await Shell.Current.GoToAsync("..");
+
             UnsubscribeMessages();
             LoggingService.TrackEvent($"PreparedTrainingsPageViewModel: AddExercises finished");
         });
@@ -60,7 +60,6 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
     {
         WeakReferenceMessenger.Default.Unregister<ExercisesSelectFinishedMessage>(this);
     }
-
 
     private async void NavigateToQuestions()
     {
@@ -83,7 +82,11 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
         {
             newTrainingName = result;
             SubscribeMessages();
+
             await Shell.Current.GoToAsync(nameof(ExerciseListPage));
+
+            var lastIndex = Shell.Current.Navigation.NavigationStack.Count - 2; // remove current
+            Shell.Current.Navigation.RemovePage(Shell.Current.Navigation.NavigationStack[lastIndex]);
 
             await MessageManager.DisplayAlert(AppResources.AdviceString,
                 AppResources.MarkTheRequiredExercisesAndPressFormat.Fill(AppResources.SelectString), AppResources.OkString);

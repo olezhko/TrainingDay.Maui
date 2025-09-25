@@ -274,10 +274,13 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
         if (Settings.IsShowAdvicesOnImplementing)
         {
-            await MessageManager.DisplayAlert(Resources.Strings.AppResources.AdviceString, Resources.Strings.AppResources.AdviceBeforeTrainingMessage, Resources.Strings.AppResources.OkString);
+            await MessageManager.DisplayAlert(AppResources.AdviceString, AppResources.AdviceBeforeTrainingMessage, AppResources.OkString);
         }
 
         LoggingService.TrackEvent($"{GetType().Name}: Training Implementing started");
+
+        var lastIndex = Shell.Current.Navigation.NavigationStack.Count - 1; // remove current
+        Shell.Current.Navigation.RemovePage(Shell.Current.Navigation.NavigationStack[lastIndex]);
 
         Dictionary<string, object> param = new Dictionary<string, object> { { "TrainingItem", Training } };
         await Shell.Current.GoToAsync(nameof(TrainingImplementPage), param);
@@ -292,8 +295,9 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
         CurrentAction = ExerciseCheckBoxAction.SuperSet;
         OnPropertyChanged(nameof(CurrentAction));
-        MessageManager.DisplayAlert(AppResources.AdviceString,
-                "Нажмите на кружочек справа от упражнения для тех, какие хотите добавить в суперсет. Или крестик, если хотите удалить из других суперсетов.", AppResources.OkString);
+
+        MessageManager.DisplayAlert(AppResources.AdviceString, AppResources.SupersetAdvice, AppResources.OkString);
+
         PrepareAction(Resources.Strings.AppResources.CreateSuperSetString);
     }
 

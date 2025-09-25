@@ -1667,5 +1667,14 @@ namespace TrainingDay.Maui.Resources.Strings {
                 return ResourceManager.GetString("YesString", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select exercises for your superset by clicking the circles. Use the 'X' to remove an exercise from other supersets.
+        /// </summary>
+        internal static string SupersetAdvice {
+            get {
+                return ResourceManager.GetString("SupersetAdvice", resourceCulture);
+            }
+        }
     }
 }

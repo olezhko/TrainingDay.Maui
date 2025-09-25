@@ -85,12 +85,9 @@ public partial class TrainingItemsBasePage : ContentPage
                         }
                     }
 
-                    await Navigation.PushAsync(new TrainingImplementPage()
-                    {
-                        TrainingItem = training,
-                        Title = training.Title,
-                        StartTime = TimeSpan.Parse(Settings.IsTrainingNotFinishedTime),
-                    });
+                    Dictionary<string, object> param = new Dictionary<string, object> { { "TrainingItem", training },
+                        {"StartTime", TimeSpan.Parse(Settings.IsTrainingNotFinishedTime)} };
+                    await Shell.Current.GoToAsync(nameof(TrainingImplementPage), param);
                 }
             }
         }

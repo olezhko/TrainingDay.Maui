@@ -108,7 +108,7 @@ namespace TrainingDay.Maui.ViewModels.Pages
                     }
 
                     sb.Append($"{step.Title} ");
-                    sb.Append($"{string.Join(" or ", step.Variants.Where(item => item.IsChecked).Select(item => item.Option))}. ");
+                    sb.Append($"{string.Join(" or ", step.Variants.Where(item => item.IsChecked).Select(item => item.Instruction))}. ");
                     step = step.Previous;
                 }
 
@@ -155,11 +155,7 @@ namespace TrainingDay.Maui.ViewModels.Pages
             await NavigateToHome();
         }
 
-        private async Task NavigateToHome()
-        {
-            await Shell.Current.GoToAsync("..");
-            await Shell.Current.GoToAsync("..");
-        }
+        private static async Task NavigateToHome() => await Shell.Current.GoToAsync("//workouts");
     }
 
 	public class WorkoutQuestinariumStepViewModel : BaseViewModel

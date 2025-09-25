@@ -663,4 +663,7 @@
   <data name="Reset" xml:space="preserve">
     <value>Сбросить</value>
   </data>
+  <data name="SupersetAdvice" xml:space="preserve">
+    <value>Выберите упражнения для суперсета, нажимая на кружки. Крестик удалит упражнение из существующих суперсетов.</value>
+  </data>
 </root>
