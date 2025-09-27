@@ -4,13 +4,13 @@
              xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels"
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
-             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Toolkit.Picker;assembly=Syncfusion.Maui.Toolkit"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:data="clr-namespace:TrainingDay.Common.Models;assembly=TrainingDay.Common" xmlns:models="clr-namespace:TrainingDay.Maui.Models"
              x:Class="TrainingDay.Maui.Controls.ExerciseView"
              x:Name="View">
     <Grid x:Name="MainGrid" RowSpacing="3" x:DataType="viewModels:TrainingExerciseViewModel">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -84,26 +84,10 @@
             </StackLayout>
 
             <Border Style="{StaticResource MaterialBorder}" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}">
-                <Grid>
-                    <Label Text="{x:Static resx:AppResources.TimeString}" Style="{StaticResource MaterialLabel}" controls:MaterialLabelAttached.MaterialControlType="None"/>
-                    <syncfusion:SfTimePicker SelectedTime="{Binding Time, Mode=TwoWay}" Format="HH_mm_ss" Grid.Row="1" HeightRequest="120" BackgroundColor="Transparent" 
-                        HorizontalOptions="Center">
-                            <syncfusion:SfTimePicker.ColumnHeaderTemplate>
-                                <DataTemplate>
-                                    <Grid BackgroundColor="Transparent" ColumnDefinitions="*,*,*">
-                                        <Label Text="{x:Static resx:AppResources.Hours}" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                        <Label Text="{x:Static resx:AppResources.Minutes}" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                        <Label Text="{x:Static resx:AppResources.Seconds}" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                    </Grid>
-                                </DataTemplate>
-                            </syncfusion:SfTimePicker.ColumnHeaderTemplate>
-                            <syncfusion:SfTimePicker.ColumnHeaderView>
-                                <syncfusion:TimePickerColumnHeaderView DividerColor="Transparent" />
-                            </syncfusion:SfTimePicker.ColumnHeaderView>
-                            <syncfusion:SfTimePicker.SelectedTextStyle>
-                                <syncfusion:PickerTextStyle TextColor="White"/>
-                            </syncfusion:SfTimePicker.SelectedTextStyle> 
-                    </syncfusion:SfTimePicker>
+                <Grid ColumnDefinitions="Auto,*">
+                    <Label Text="{x:Static resx:AppResources.TimeString}" TextColor="{StaticResource Main}" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" FontAttributes="Bold"/>
+                    <Entry Grid.Column="1" HorizontalOptions="Fill" Margin="30,0,0,0" HorizontalTextAlignment="Start" VerticalOptions="Center"
+                           Text="{Binding TimeString}" />
                 </Grid>
             </Border>
         </StackLayout>
@@ -119,33 +103,32 @@
         </FlexLayout>
 
 		<Border Grid.Row="4" Margin="0" Padding="0" Style="{StaticResource BorderCellStyle}" VerticalOptions="Fill" IsVisible="True">
-            <StackLayout>
-                <StackLayout Margin="5">
-                    <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.StartPosition}" TextColor="DodgerBlue" VerticalTextAlignment="Center" 
-                           IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
-                    <Label FontSize="Small" Text="{Binding Description.StartPosition}" 
-                           IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
+            <StackLayout Margin="5">
+                <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.StartPosition}" TextColor="DodgerBlue" VerticalTextAlignment="Center" 
+           IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
+                <Label FontSize="Small" Text="{Binding Description.StartPosition}" 
+           IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
 
-                    <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Execution}" TextColor="LimeGreen" VerticalTextAlignment="Center" 
-                           IsVisible="{Binding Description.Execution, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
-                    <Label FontSize="Small" Text="{Binding Description.Execution}" 
-                           IsVisible="{Binding Description.Execution, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
+                <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Execution}" TextColor="LimeGreen" VerticalTextAlignment="Center" 
+           IsVisible="{Binding Description.Execution, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
+                <Label FontSize="Small" Text="{Binding Description.Execution}" 
+           IsVisible="{Binding Description.Execution, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
 
-                    <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Advice}" TextColor="Orange" VerticalTextAlignment="Center" 
-                           IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
+                <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Advice}" TextColor="Orange" VerticalTextAlignment="Center" 
+           IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
 
-                    <Label FontSize="Small" Text="{Binding Description.Advice}" 
-                           IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
-                </StackLayout>
-
-                <CollectionView ItemsSource="{Binding VideoItems}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="models:ExerciseVideo">
-                            <controls:FullScreenVideoWebView HorizontalOptions="Fill" Source="{Binding WebViewData}" VerticalOptions="Fill" />
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                <Label FontSize="Small" Text="{Binding Description.Advice}" 
+           IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
             </StackLayout>
         </Border>
+        
+        <CollectionView Grid.Row="5" ItemsSource="{Binding VideoItems}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:ExerciseVideo">
+                    <controls:FullScreenVideoWebView HorizontalOptions="Fill" VerticalOptions="Fill"
+                                                     Source="{Binding WebViewData}" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </Grid>
 </ContentView>

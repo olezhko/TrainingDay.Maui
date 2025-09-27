@@ -10,11 +10,21 @@ public class ExerciseVideo
     {
         get
         {
-            var width = DeviceDisplay.Current.MainDisplayInfo.Width / DeviceDisplay.Current.MainDisplayInfo.Density - 10;
+            var width = DeviceDisplay.Current.MainDisplayInfo.Width / DeviceDisplay.Current.MainDisplayInfo.Density - 30;
             var htmlSource = new HtmlWebViewSource();
-            htmlSource.Html = $@"<html><body>
-                  <iframe width=""{width}"" height=""{width}"" src=""{ConvertUrl()}"" frameborder=""0"" allow=""accelerometer; autoplay; encrypted - media; gyroscope; picture -in-picture"" allowfullscreen ></iframe>
-                     </body></html>";
+            htmlSource.Html =
+$@"<html>
+    <body>
+        <iframe 
+            width=""{width}"" 
+            height=""{width}"" 
+            frameborder=""0""
+            src=""{ConvertUrl()}"" 
+            allow=""accelerometer;gyroscope;""
+            allowfullscreen>
+        </iframe>
+    </body>
+</html>";
             return htmlSource;
         }
     }

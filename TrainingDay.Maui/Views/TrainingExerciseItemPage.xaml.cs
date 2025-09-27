@@ -18,6 +18,7 @@ public partial class TrainingExerciseItemPage : ContentPage
         {
             item = value;
             ExerciseView.BindingContext = value;
+            ExerciseView.CurrentExercise.TimeString = value.Time.ToString(@"hh\:mm\:ss");
         }
     }
 
@@ -44,6 +45,7 @@ public partial class TrainingExerciseItemPage : ContentPage
             return;
 
         isSaved = true;
+        ExerciseView.CurrentExercise.Time = TimeSpan.TryParse(ExerciseView.CurrentExercise.TimeString, out var newTime) ? newTime : TimeSpan.Zero;
         App.Database.SaveTrainingExerciseItem(ExerciseView.CurrentExercise.GetTrainingExerciseComm());
 
 		await Toast.Make(AppResources.SavedString).Show();

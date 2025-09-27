@@ -5,7 +5,6 @@
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:data="clr-namespace:TrainingDay.Common.Models;assembly=TrainingDay.Common"
-             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Toolkit.Picker;assembly=Syncfusion.Maui.Toolkit"
              x:Class="TrainingDay.Maui.Controls.SuperSetControl"
              x:Name="Self">
     <Grid RowDefinitions="auto,*" RowSpacing="5">
@@ -113,37 +112,27 @@
                         </CollectionView>
                     </Border>
                     
-                    <Border Style="{StaticResource MaterialBorder}" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}" Margin="0,5">
-                        <Grid RowDefinitions="auto,*">
-                            <Grid ColumnDefinitions="*,auto">
-                                <Label Text="{x:Static resx:AppResources.TimeString}" TextColor="{StaticResource Main}" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                <Button Grid.Column="1" Clicked="StartCalculateTime_Clicked" CornerRadius="20" VerticalOptions="Start" BackgroundColor="Transparent" TextColor="{AppThemeBinding Dark=White, Light=Black}" FontAttributes="Bold">
-                                    <Button.Style>
-                                        <Style TargetType="Button">
-                                            <Setter Property="Text" Value="{x:Static resx:AppResources.MakeTrainingString}" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsTimeCalculating}" TargetType="Button" Value="True">
-                                                    <Setter Property="Text" Value="{x:Static resx:AppResources.StopString}" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
-                            </Grid>
-                            <syncfusion:SfTimePicker SelectedTime="{Binding Time, Mode=TwoWay}" Format="HH_mm_ss" Grid.Row="1" HeightRequest="120" BackgroundColor="Transparent" HorizontalOptions="Center">
-                                <syncfusion:SfTimePicker.ColumnHeaderTemplate>
-                                    <DataTemplate>
-                                        <Grid BackgroundColor="Transparent" ColumnDefinitions="*,*,*">
-                                            <Label Text="{x:Static resx:AppResources.Hours}" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                            <Label Text="{x:Static resx:AppResources.Minutes}" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                            <Label Text="{x:Static resx:AppResources.Seconds}" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                        </Grid>
-                                    </DataTemplate>
-                                </syncfusion:SfTimePicker.ColumnHeaderTemplate>
-                                <syncfusion:SfTimePicker.ColumnHeaderView >
-                                    <syncfusion:TimePickerColumnHeaderView DividerColor="Transparent" />
-                                </syncfusion:SfTimePicker.ColumnHeaderView> 
-                            </syncfusion:SfTimePicker>
+                    <Border Style="{StaticResource MaterialBorder}"
+                            IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}" Margin="0,5">
+                        <Grid ColumnDefinitions="Auto,*,auto">
+                            <Label Text="{x:Static resx:AppResources.TimeString}" TextColor="{StaticResource Main}" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" FontAttributes="Bold"/>
+                            <Label Grid.Column="1" HorizontalOptions="Fill" Margin="30,0,0,0" Text="{Binding Time, StringFormat='{}{0:hh\\:mm\\:ss}', Mode=TwoWay}" HorizontalTextAlignment="Start" 
+           VerticalOptions="Center"/>
+                            <Button Grid.Column="2" Clicked="StartCalculateTime_Clicked" CornerRadius="10" 
+                                VerticalOptions="Start" Padding="0" 
+                                BackgroundColor="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}" 
+                                TextColor="{AppThemeBinding Dark=White, Light=Black}" FontAttributes="Bold">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Text" Value="{x:Static resx:AppResources.MakeTrainingString}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsTimeCalculating}" TargetType="Button" Value="True">
+                                                <Setter Property="Text" Value="{x:Static resx:AppResources.StopString}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
                         </Grid>
                     </Border>
                 </StackLayout>
