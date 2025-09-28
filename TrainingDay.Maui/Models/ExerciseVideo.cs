@@ -21,7 +21,7 @@ $@"<html>
             frameborder=""0""
             src=""{ConvertUrl()}"" 
             allow=""accelerometer;gyroscope;""
-            allowfullscreen>
+            fullscreen>
         </iframe>
     </body>
 </html>";

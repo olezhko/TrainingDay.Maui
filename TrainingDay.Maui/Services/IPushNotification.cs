@@ -1,4 +1,4 @@
-﻿using TrainingDay.Maui.Models;
+﻿using TrainingDay.Maui.Models.Notifications;
 
 namespace TrainingDay.Maui.Services;
 

@@ -11,6 +11,7 @@ using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Models.Messages;
+using TrainingDay.Maui.Models.Notifications;
 using TrainingDay.Maui.Models.Serialize;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;

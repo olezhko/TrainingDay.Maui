@@ -21,7 +21,7 @@
 		<ApplicationVersion>1</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">23.0</SupportedOSPlatformVersion>
 		<Company>LATec</Company>
 		<Product>TrainingDay</Product>
 		<PackageId>TrainingDay</PackageId>
@@ -29,27 +29,27 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
-		<ApplicationVersion>315</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.8.1</ApplicationDisplayVersion>
+		<ApplicationVersion>316</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.8.3</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
 		<CreatePackage>false</CreatePackage>
 		<ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
-		<ApplicationVersion>315</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.8.1</ApplicationDisplayVersion>
+		<ApplicationVersion>316</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.8.3</ApplicationDisplayVersion>
 		<EnableSGenConc>True</EnableSGenConc>
 		<SkipStaticLibraryValidation>true</SkipStaticLibraryValidation>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
-		<ApplicationVersion>315</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.8.1</ApplicationDisplayVersion>
+		<ApplicationVersion>316</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.8.3</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
-		<ApplicationVersion>1.2.8.3</ApplicationVersion>
-		<ApplicationDisplayVersion>317</ApplicationDisplayVersion>
+		<ApplicationVersion>316</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.8.3</ApplicationDisplayVersion>
 		<CreatePackage>false</CreatePackage>
 		<CodesignProvision>TrainingDayPublish</CodesignProvision>
 		<CodesignKey>Apple Distribution: Oleg Ladyka (36WMJT4QLC)</CodesignKey>
@@ -121,7 +121,7 @@
 		</PackageReference>
 		<PackageReference Include="Xamarin.GooglePlayServices.Base" Version="118.3.0">
 		</PackageReference>
-		<PackageReference Include="sqlite-net-pcl" Version="1.5.231">
+		<PackageReference Include="sqlite-net-pcl" Version="1.9.172">
 		</PackageReference>
 	</ItemGroup>
 

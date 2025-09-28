@@ -3,7 +3,7 @@ using Android.Content;
 using Android.Graphics;
 using Android.OS;
 using AndroidX.Core.App;
-using TrainingDay.Maui.Models;
+using TrainingDay.Maui.Models.Notifications;
 using TrainingDay.Maui.Services;
 using Application = Android.App.Application;
 

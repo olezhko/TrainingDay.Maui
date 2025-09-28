@@ -1,5 +1,5 @@
 ﻿using TrainingDay.Maui.Extensions;
-using TrainingDay.Maui.Models;
+using TrainingDay.Maui.Models.Notifications;
 using TrainingDay.Maui.Services;
 using UserNotifications;
 

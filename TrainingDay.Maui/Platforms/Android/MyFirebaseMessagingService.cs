@@ -7,7 +7,7 @@ using AndroidX.Core.App;
 using Firebase.Messaging;
 using TrainingDay.Common.Communication;
 using TrainingDay.Maui.Extensions;
-using TrainingDay.Maui.Models;
+using TrainingDay.Maui.Models.Notifications;
 using TrainingDay.Maui.Services;
 using Application = Android.App.Application;
 
