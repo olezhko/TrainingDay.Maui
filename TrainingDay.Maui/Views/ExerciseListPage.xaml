@@ -79,7 +79,7 @@
 
 								<Border StrokeShape="RoundRectangle 10" Grid.Column="0" Padding="0" BackgroundColor="Green" HorizontalOptions="Center" IsVisible="{Binding IsExerciseExistsInWorkout}"
                                     VerticalOptions="Start" WidthRequest="20" Stroke="Transparent" HeightRequest="20" >
-                                    <Image HeightRequest="20" Source="save" WidthRequest="20" >
+                                    <Image HeightRequest="20" Source="save.png" WidthRequest="20" >
                                         <Image.Behaviors>
                                             <toolkit:IconTintColorBehavior TintColor="White" />
                                         </Image.Behaviors>

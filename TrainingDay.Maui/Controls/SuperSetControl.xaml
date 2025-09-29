@@ -63,7 +63,7 @@
                                         </Border>
 
                                         <ImageButton Grid.Row="1" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" HorizontalOptions="Center" CornerRadius="17" Background="Transparent"
-                                            IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}" Source="save" VerticalOptions="Center" WidthRequest="35">
+                                            IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}" Source="save.png" VerticalOptions="Center" WidthRequest="35">
                                             <ImageButton.Behaviors>
                                                 <toolkit:IconTintColorBehavior TintColor="LightGray" />
                                             </ImageButton.Behaviors>
@@ -87,7 +87,7 @@
                                         <Border Grid.Row="2" BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
                                         <Entry Margin="0" FontSize="Medium" Keyboard="Numeric" MaxLength="3" Text="{Binding Repetitions, Mode=TwoWay}" HorizontalTextAlignment="Center" MinimumWidthRequest="70"/>
                                         <ImageButton Grid.Row="1" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" HorizontalOptions="Center" CornerRadius="17"
-                                            IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}" Source="save" VerticalOptions="Fill" WidthRequest="35">
+                                            IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}" Source="save.png" VerticalOptions="Fill" WidthRequest="35">
                                             <ImageButton.Behaviors>
                                                 <toolkit:IconTintColorBehavior TintColor="LightGray" />
                                             </ImageButton.Behaviors>

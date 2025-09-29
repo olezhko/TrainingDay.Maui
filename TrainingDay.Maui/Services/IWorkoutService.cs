@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 using TrainingDay.Common.Communication;
 using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
@@ -80,7 +81,8 @@ namespace TrainingDay.Maui.Services
                     exerciseModel.WeightAndRepsItems = new ObservableCollection<WeightAndRepsViewModel>();
                     for (int i = 0; i < exercise.CountOfSets; i++)
                     {
-                        exerciseModel.WeightAndRepsItems.Add(new WeightAndRepsViewModel(exercise.WorkingWeight, Convert.ToInt32(exercise.CountOfRepsOrTime)));
+                        var isValid = TryGetReps(exercise.CountOfRepsOrTime, out var result);
+                        exerciseModel.WeightAndRepsItems.Add(new WeightAndRepsViewModel(exercise.WorkingWeight, isValid ? result : 5));
                     }
                 }
 
@@ -95,6 +97,43 @@ namespace TrainingDay.Maui.Services
             }
 
             return ExerciseManager.ConvertJson(tags, exerciseModel);
+        }
+
+        public static bool TryGetReps(string input, out int number1)
+        {
+            number1 = 0;
+            var number2 = 0;
+
+            if (string.IsNullOrWhiteSpace(input))
+                return false;
+
+            // Pattern 1: "{number} {text}" (e.g., "123 abc")
+            var pattern1 = @"^\s*(\d+)\s+([a-zA-Z]+)\s*$";
+            
+            // Pattern 2: "{number}-{number}" (e.g., "123-456")
+            var pattern2 = @"^\s*(\d+)\s*-\s*(\d+)\s*$";
+
+            var match1 = Regex.Match(input, pattern1);
+            if (match1.Success)
+            {
+                if (int.TryParse(match1.Groups[1].Value, out number1))
+                {
+                    var text = match1.Groups[2].Value;
+                    return true;
+                }
+            }
+
+            var match2 = Regex.Match(input, pattern2);
+            if (match2.Success)
+            {
+                if (int.TryParse(match2.Groups[1].Value, out number1) && 
+                    int.TryParse(match2.Groups[2].Value, out number2))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

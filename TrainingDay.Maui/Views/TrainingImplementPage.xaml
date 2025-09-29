@@ -23,7 +23,7 @@
         <VerticalStackLayout Grid.ColumnSpan="3" Margin="5,0">
             <Grid ColumnDefinitions="*,auto">
                 <Label FontSize="Title" Text="{Binding CurrentTime}" HorizontalOptions="Start" VerticalOptions="Center" HorizontalTextAlignment="End" FontAttributes="Bold"/>
-                <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Padding="0" HorizontalOptions="End" VerticalOptions="Center" Source="add_empty"
+                <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Padding="0" HorizontalOptions="End" VerticalOptions="Center" Source="add_empty.png"
                                      Command="{Binding AddExercisesCommand}" BackgroundColor="Transparent">
                     <ImageButton.Behaviors>
                         <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
@@ -74,7 +74,7 @@
             <Border.GestureRecognizers>
                 <TapGestureRecognizer Tapped="FinishButtonClicked"/>
             </Border.GestureRecognizers>
-            <Image Source="save" HeightRequest="40" WidthRequest="40" >
+            <Image Source="save.png" HeightRequest="40" WidthRequest="40" >
                 <Image.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="White" />
                 </Image.Behaviors>
@@ -114,7 +114,7 @@
                                          ParentWidth="{Binding Source={x:Reference MainGrid},Path=Width}">
             <controls:ToolTipControl.EmptyView>
                 <Border Stroke="Transparent" StrokeShape="RoundRectangle 15" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Green" HeightRequest="30" WidthRequest="30" Padding="0" Margin="0">
-                    <Image Source="save" >
+                    <Image Source="save.png" >
                         <Image.Behaviors>
                             <toolkit:IconTintColorBehavior TintColor="White" />
                         </Image.Behaviors>

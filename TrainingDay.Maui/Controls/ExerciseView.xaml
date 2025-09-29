@@ -35,7 +35,7 @@
                 <StackLayout Orientation="Horizontal" VerticalOptions="Start" Spacing="10">
                     <Label FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Start" Text="{x:Static resx:AppResources.RepsString}" VerticalTextAlignment="Center" />
 
-                    <ImageButton WidthRequest="40" HeightRequest="40" Padding="0" Source="add_empty" Clicked="AddWeightAndRepsItem_Clicked" BackgroundColor="Transparent">
+                    <ImageButton WidthRequest="40" HeightRequest="40" Padding="0" Source="add_empty.png" Clicked="AddWeightAndRepsItem_Clicked" BackgroundColor="Transparent">
                         <ImageButton.Behaviors>
                             <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
                         </ImageButton.Behaviors>
@@ -60,7 +60,7 @@
             Orientation="Vertical">
                 <StackLayout Orientation="Horizontal" VerticalOptions="Start" Spacing="10">
                     <Label FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Start" Text="{x:Static resx:AppResources.RepsAndWeightString}" VerticalTextAlignment="Center" />
-                    <ImageButton WidthRequest="40" HeightRequest="40" Padding="0" Source="add_empty" Clicked="AddWeightAndRepsItem_Clicked" BackgroundColor="Transparent">
+                    <ImageButton WidthRequest="40" HeightRequest="40" Padding="0" Source="add_empty.png" Clicked="AddWeightAndRepsItem_Clicked" BackgroundColor="Transparent">
                         <ImageButton.Behaviors>
                             <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
                         </ImageButton.Behaviors>
@@ -122,13 +122,13 @@
             </StackLayout>
         </Border>
         
-        <CollectionView Grid.Row="5" ItemsSource="{Binding VideoItems}">
+        <!-- <CollectionView Grid.Row="5" ItemsSource="{Binding VideoItems}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:ExerciseVideo">
                     <controls:FullScreenVideoWebView HorizontalOptions="Fill" VerticalOptions="Fill"
                                                      Source="{Binding WebViewData}" />
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-        </CollectionView>
+        </CollectionView> -->
     </Grid>
 </ContentView>

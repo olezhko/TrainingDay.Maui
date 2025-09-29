@@ -50,7 +50,7 @@
                             </Border>
 
                             <StackLayout Grid.Column="1">
-                                <Label HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Title" HorizontalOptions="Center" Text="{Binding Name}"
+                                <Label HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="17" HorizontalOptions="Center" Text="{Binding Name}"
                                     VerticalTextAlignment="Center" />
 
                                 <StackLayout Orientation="Vertical">
