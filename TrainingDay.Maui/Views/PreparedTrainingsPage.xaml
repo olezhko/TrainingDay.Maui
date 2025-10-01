@@ -13,7 +13,7 @@
 
     <controls:TooltipControlContainer x:Name="Container" RowSpacing="0" RowDefinitions="auto,*,Auto" BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}">
 		<Grid x:Name="LetsBuildYourWorkoutButton">
-            <ContentView BackgroundColor="Transparent" Margin="5">
+            <ContentView BackgroundColor="Transparent" Margin="5" IsVisible="False">
                 <ContentView.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding NavigateToQuestionsCommnd}" />
                 </ContentView.GestureRecognizers>

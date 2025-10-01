@@ -109,19 +109,6 @@
                                             </DataTemplate>
                                         </BindableLayout.ItemTemplate>
                                     </FlexLayout>
-                                    <toolkit:RatingView HorizontalOptions="Center"
-			                            EmptyShapeColor="Transparent"
-			                            FillColor="{StaticResource Main}"
-			                            FillOption ="Shape"
-			                            IsReadOnly="True"
-			                            ShapePadding="1,2,2,1"
-			                            ShapeDiameter="20"
-			                            MaximumRating="3"
-			                            Rating="{Binding DifficultType}"
-			                            Shape="Star"
-			                            ShapeBorderColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"
-			                            ShapeBorderThickness="0.3"
-			                            Spacing="1" />
                                 </StackLayout>
                             </Grid>
                         </Border>
