@@ -58,7 +58,7 @@
                     </Border>
 
                     <Grid Grid.Column="1" RowDefinitions="auto,auto" HorizontalOptions="End">
-                        <Label Text="{x:Static resx:AppResources.Difficulty}" VerticalOptions="Center"/>
+                        <Label Text="{x:Static resx:AppResources.Difficulty}" VerticalOptions="Center" HorizontalOptions="Center"/>
                         <toolkit:RatingView HorizontalOptions="Center" Grid.Row="1"
                                             VerticalOptions="End"
                                             EmptyShapeColor="Transparent"
@@ -66,7 +66,7 @@
                                             FillOption ="Shape"
                                             IsReadOnly="True"
                                             ShapePadding="1,2,2,1"
-                                            ShapeDiameter="30"
+                                            ShapeDiameter="25"
                                             MaximumRating="3"
                                             Rating="{Binding DifficultType}"
                                             Shape="Star"

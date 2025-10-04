@@ -113,19 +113,24 @@ namespace TrainingDay.Maui
                 {
                     try
                     {
+                        var response = await s3Client.GetObjectAsync(ConstantKeys.AwsS3.BucketName, b.Key);
+                        if (response is null)
+                            return;
+
                         var url = b.Key.Replace(".jpg", string.Empty).Replace(".png", string.Empty);
                         ImageDto image = App.Database.GetImage(url);
-                        if (image == null)
-                        {
-                            var path = await GetFile(s3Client, b.Key);
-                            var bytes = File.ReadAllBytes(path);
-                            var item = new ImageDto()
-                            {
-                                Data = bytes.ToArray(),
-                                Url = url,
-                            };
 
-                            App.Database.SaveImage(item);
+                        if (image is null)
+                            image = new ImageDto();
+
+                        if (image.Data.Length != response.Headers.ContentLength)
+                        {
+                            var path = await GetFile(response, b.Key);
+                            var bytes = File.ReadAllBytes(path);
+                            image.Data = bytes;
+                            image.Url = url;
+
+                            App.Database.SaveImage(image);
                         }
                     }
                     catch (Exception ex)
@@ -134,16 +139,14 @@ namespace TrainingDay.Maui
                     }
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 LoggingService.TrackError(ex);
             }
         }
 
-        public static async Task<string> GetFile(AmazonS3Client amazonS3Client, string key)
+        public static async Task<string> GetFile(GetObjectResponse response, string key)
         {
-            var response = await amazonS3Client.GetObjectAsync(ConstantKeys.AwsS3.BucketName, key);
-
             string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             var path = Path.Combine(documentsPath, key);
 
