@@ -133,7 +133,7 @@ public partial class TrainingImplementPage : ContentPage
             isStartRest = false;
         }
 
-        UpdateTime();
+        UpdateExerciseTime();
         // save to restore if not finish
         SaveNotFinishedTraining(TrainingItem.Title, TrainingItem.Id);
         UpdateNotifyTimer();
@@ -152,7 +152,6 @@ public partial class TrainingImplementPage : ContentPage
             Android.Media.Ringtone rt = Android.Media.RingtoneManager.GetRingtone(instance.ApplicationContext, uri);
             rt.Play();
 #endif
-
     }
 
     private void SaveNotFinishedTraining(string title, int id)
@@ -196,7 +195,7 @@ public partial class TrainingImplementPage : ContentPage
         }
     }
 
-    private void UpdateTime()
+    private void UpdateExerciseTime()
     {
         try
         {
@@ -273,7 +272,7 @@ public partial class TrainingImplementPage : ContentPage
 
         notificator.Cancel(PushMessagesExtensions.TrainingNotificationId);
 
-        await Shell.Current.GoToAsync("..");
+        await Shell.Current.GoToAsync("//workouts");
 
         await dataService.PostActionAsync(Settings.Token, Common.Communication.MobileActions.Workout);
     }

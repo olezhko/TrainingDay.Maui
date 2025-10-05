@@ -5,7 +5,6 @@ using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models;
-using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
@@ -49,8 +48,6 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
 
             SaveNewTrainingViewModelToDatabase(training, null);
 
-            await Shell.Current.GoToAsync("..");
-
             UnsubscribeMessages();
             LoggingService.TrackEvent($"PreparedTrainingsPageViewModel: AddExercises finished");
         });
@@ -84,9 +81,6 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
             SubscribeMessages();
 
             await Shell.Current.GoToAsync(nameof(ExerciseListPage));
-
-            var lastIndex = Shell.Current.Navigation.NavigationStack.Count - 2; // remove current
-            Shell.Current.Navigation.RemovePage(Shell.Current.Navigation.NavigationStack[lastIndex]);
 
             await MessageManager.DisplayAlert(AppResources.AdviceString,
                 AppResources.MarkTheRequiredExercisesAndPressFormat.Fill(AppResources.SelectString), AppResources.OkString);

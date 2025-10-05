@@ -279,9 +279,6 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
         LoggingService.TrackEvent($"{GetType().Name}: Training Implementing started");
 
-        var lastIndex = Shell.Current.Navigation.NavigationStack.Count - 1; // remove current
-        Shell.Current.Navigation.RemovePage(Shell.Current.Navigation.NavigationStack[lastIndex]);
-
         Dictionary<string, object> param = new Dictionary<string, object> { { "TrainingItem", Training } };
         await Shell.Current.GoToAsync(nameof(TrainingImplementPage), param);
     }

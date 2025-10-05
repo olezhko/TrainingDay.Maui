@@ -209,7 +209,8 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
     private async void ChoseExercises()
     {
         WeakReferenceMessenger.Default.Send(new ExercisesSelectFinishedMessage(GetSelectedItems()));
-        await Shell.Current.GoToAsync("..");
+        
+        await Shell.Current.GoToAsync("//workouts");
     }
 
     private void FillSelectedIndexes()
