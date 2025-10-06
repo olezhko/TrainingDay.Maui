@@ -15,23 +15,27 @@
 
             <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="save.png" Clicked="AcceptFilter_Click">
                 <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>
             </ImageButton>
         </Grid>
     </Shell.TitleView>
     <ScrollView>
         <Grid x:Name="MainGrid" RowDefinitions="auto,auto,auto,*" RowSpacing="5" >
-            <Border StrokeShape="RoundRectangle 10" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,5" BackgroundColor="DimGray">
+            <Border StrokeShape="RoundRectangle 10" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,5" 
+                    BackgroundColor="DimGray">
                 <Grid ColumnDefinitions="50,1,50,1,50" >
-                    <ImageButton x:Name="NoEquipmentFilterButton" Grid.Column="0" Source="no_equipment.png" HeightRequest="50" WidthRequest="50" 
-                                 Clicked="ChangeNoEquipment_Click" BackgroundColor="DimGray" CornerRadius="10"/>
-
-
-                    <ImageButton x:Name="BarbellFilterButton" Grid.Column="2" Source="barbell.png" HeightRequest="50" WidthRequest="50" 
-                                 Clicked="ChangeBarbell_Click" BackgroundColor="DimGray" CornerRadius="10"/>
-                    <ImageButton x:Name="DumbbellFilterButton" Grid.Column="4" Source="dumbbell.png" HeightRequest="50" WidthRequest="50" 
-                                 Clicked="ChangeDumbbell_Click" BackgroundColor="DimGray" CornerRadius="10"/>
+                    <Grid.Resources>
+                        <Style TargetType="ImageButton">
+                            <Setter Property="HeightRequest" Value="50" />
+                            <Setter Property="WidthRequest" Value="50" />
+                            <Setter Property="BackgroundColor" Value="DimGray" />
+                            <Setter Property="CornerRadius" Value="10" />
+                        </Style>
+                    </Grid.Resources>
+                    <ImageButton x:Name="NoEquipmentFilterButton" Grid.Column="0" Source="no_equipment.png" Clicked="ChangeNoEquipment_Click" />
+                    <ImageButton x:Name="BarbellFilterButton" Grid.Column="2" Source="barbell.png" Clicked="ChangeBarbell_Click" />
+                    <ImageButton x:Name="DumbbellFilterButton" Grid.Column="4" Source="dumbbell.png" Clicked="ChangeDumbbell_Click" />
                 </Grid>
             </Border>
 

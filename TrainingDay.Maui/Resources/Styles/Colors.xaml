@@ -7,7 +7,6 @@
     <Color x:Key="PlaceholderColor">#AAFFA500</Color>
     <Color x:Key="Primary">#512BD4</Color>
     <Color x:Key="PrimaryDark">#ac99ea</Color>
-    <Color x:Key="PrimaryDarkText">#242424</Color>
     <Color x:Key="Secondary">#DFD8F7</Color>
     <Color x:Key="Main">#FFA500</Color>
 
@@ -24,10 +23,8 @@
     <Color x:Key="Gray950">#141414</Color>
 
 
-    <Color x:Key="ListItemBackgroundColor">#44abb4da</Color>
+    <Color x:Key="ListItemBackgroundColor">#2b2b2b</Color>
     <Color x:Key="ListItemBackgroundColorLight">#ffffff</Color>
-    <Color x:Key="PrimaryDarkColor">#1b1b1b</Color>
-    <Color x:Key="SeparatorColor">#abb4da</Color>
 
     <Color x:Key="ContentPageBackgroundColor">#1b1b1b</Color>
     <Color x:Key="ContentPageBackgroundColorLight">#f0f0f0</Color>

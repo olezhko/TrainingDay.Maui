@@ -14,6 +14,6 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <WebView Source="{Binding WebViewDataText}" Grid.Row="0"/>
-        <Label Text="{Binding DateTime}" HorizontalOptions="End" TextColor="{DynamicResource SeparatorColor}" Grid.Row="1"/>
+        <Label Text="{Binding DateTime}" HorizontalOptions="End" TextColor="{StaticResource Gray300}" Grid.Row="1"/>
     </Grid>
 </ContentPage>

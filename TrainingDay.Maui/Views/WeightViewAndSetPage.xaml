@@ -15,7 +15,7 @@
 
             <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="info.png" Clicked="ShowInfo_Click">
                 <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>
             </ImageButton>
         </Grid>

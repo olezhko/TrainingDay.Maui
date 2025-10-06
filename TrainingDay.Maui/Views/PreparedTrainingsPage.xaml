@@ -51,9 +51,9 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="20" />
                             </Grid.ColumnDefinitions>
-                            <Grid HeightRequest="80" WidthRequest="80" Padding="0" Margin="0">
+                            <Border HeightRequest="80" WidthRequest="80" Padding="0" Margin="0" Stroke="Transparent" StrokeShape="RoundRectangle 10">
                                 <Image Aspect="AspectFit" HeightRequest="80" HorizontalOptions="Start" Source="{Binding TrainingImageUrl}" VerticalOptions="Center" WidthRequest="80" />
-                            </Grid>
+                            </Border>
                             
                             <Label
                             Grid.Column="1"

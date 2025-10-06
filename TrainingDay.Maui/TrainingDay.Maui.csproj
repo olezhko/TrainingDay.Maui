@@ -29,27 +29,27 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
-		<ApplicationVersion>317</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.8.4</ApplicationDisplayVersion>
+		<ApplicationVersion>319</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.8.6</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
 		<CreatePackage>false</CreatePackage>
 		<ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
-		<ApplicationVersion>317</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.8.4</ApplicationDisplayVersion>
+		<ApplicationVersion>319</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.8.6</ApplicationDisplayVersion>
 		<EnableSGenConc>True</EnableSGenConc>
 		<SkipStaticLibraryValidation>true</SkipStaticLibraryValidation>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
-		<ApplicationVersion>317</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.8.4</ApplicationDisplayVersion>
+		<ApplicationVersion>319</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.8.6</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
-		<ApplicationVersion>317</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.8.4</ApplicationDisplayVersion>
+		<ApplicationVersion>319</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.8.6</ApplicationDisplayVersion>
 		<CreatePackage>false</CreatePackage>
 		<CodesignProvision>TrainingDayPublish</CodesignProvision>
 		<CodesignKey>Apple Distribution: Oleg Ladyka (36WMJT4QLC)</CodesignKey>
@@ -121,12 +121,9 @@
 		</PackageReference>
 		<PackageReference Include="Xamarin.GooglePlayServices.Base" Version="118.3.0">
 		</PackageReference>
-		<PackageReference Include="sqlite-net-pcl" Version="1.9.172">
-		</PackageReference>
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0-ios'">
-		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 		<PackageReference Include="SQLitePCLRaw.core" Version="2.1.9" />
 		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.9" />
 		<PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.2" />
@@ -147,7 +144,8 @@
 		<PackageReference Include="RestSharp" Version="112.1.0" />
 		<PackageReference Include="SkiaSharp.Views" Version="3.119.0" />
 		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.119.0" />
-	</ItemGroup>
+    <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+  </ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\TrainingDay-Core\TrainingDay.Common\TrainingDay.Common.csproj">

@@ -13,7 +13,7 @@
 
             <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="star.png" Clicked="OpenStatistics_Click">
                 <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>
             </ImageButton>
         </Grid>
@@ -62,12 +62,12 @@
                 
                 <Button Text="{x:Static resx:AppResources.ExportData}" Command="{Binding ExportDataCommand}" ImageSource="data_export.png" CornerRadius="20">
                     <Button.Behaviors>
-                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=White, Dark={StaticResource PrimaryDarkColor}}" />
+                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=White, Dark=Black}" />
                     </Button.Behaviors>
                 </Button>
                 <Button Text="{x:Static resx:AppResources.ImportData}" Command="{Binding ImportDataCommand}" ImageSource="data_import.png" CornerRadius="20">
                     <Button.Behaviors>
-                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=White, Dark={StaticResource PrimaryDarkColor}}" />
+                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=White, Dark=Black}" />
                     </Button.Behaviors>
                 </Button>
             </VerticalStackLayout>

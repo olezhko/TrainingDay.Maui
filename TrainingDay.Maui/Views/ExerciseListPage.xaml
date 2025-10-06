@@ -15,7 +15,7 @@
 
             <ImageButton x:Name="AddToolbarItem" Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="add_empty.png" Clicked="AddExercisesButton_Clicked">
                 <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>
             </ImageButton>
         </Grid>
@@ -35,7 +35,7 @@
             <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="filter.png"
                     Command="{Binding ViewFilterWindowCommand}" BackgroundColor="Transparent">
                 <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>
             </ImageButton>
         </Grid>
@@ -58,7 +58,7 @@
                     <ImageButton Grid.Column="1" WidthRequest="60" HeightRequest="60" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="add_empty.png"
                         Clicked="AddExercisesButton_Clicked" BackgroundColor="Transparent">
                         <ImageButton.Behaviors>
-                            <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
+                            <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                         </ImageButton.Behaviors>
                     </ImageButton>
                 </StackLayout>

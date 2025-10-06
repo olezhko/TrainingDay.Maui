@@ -817,8 +817,7 @@ public partial class FilterPage : ContentPage, IQueryAttributable
     private void SetColor(object sender, bool value)
     {
         ImageButton imageButton = sender as ImageButton;
-        var mainColorResult = App.Current.Resources.TryGetValue("Main", out var mainColor);
-        imageButton.BackgroundColor = value ? (Color)mainColor : Colors.DimGray;
+        imageButton.BackgroundColor = value ? Colors.White : Colors.DimGray;
     }
     #endregion
 }

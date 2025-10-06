@@ -15,13 +15,13 @@
 
             <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="save.png" Clicked="Save_clicked">
                 <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>
             </ImageButton>
 
             <ImageButton x:Name="DeleteExerciseToolbarItem" Grid.Column="2" WidthRequest="30" HeightRequest="30" Source="remove.png" Clicked="Remove_clicked">
                 <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>
             </ImageButton>
         </Grid>

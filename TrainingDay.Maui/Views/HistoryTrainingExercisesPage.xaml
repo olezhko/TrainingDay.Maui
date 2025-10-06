@@ -15,13 +15,13 @@
 
             <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="renew.png" Command="{Binding StartAgainCommand}">
                 <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>
             </ImageButton>
 
             <ImageButton Grid.Column="2" WidthRequest="30" HeightRequest="30" Source="remove.png" Command="{Binding RemoveLastTrainingCommand}">
                 <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource PrimaryDarkColor}, Dark=White}" />
+                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>
             </ImageButton>
         </Grid>
@@ -37,72 +37,62 @@
         </CollectionView.ItemsLayout>
         <CollectionView.ItemTemplate>
             <DataTemplate>
-                <Grid>
-                    <Border Style="{StaticResource BorderCellStyle}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="70" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
+                <Border Style="{StaticResource BorderCellStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-                            <Border Padding="5" BackgroundColor="White" StrokeShape="RoundRectangle 5" HorizontalOptions="Center" VerticalOptions="Center" Stroke="Transparent">
-                                <controls:ImageCache HeightRequest="60" CodeNum="{Binding CodeNum}" WidthRequest="60" BackgroundColor="Transparent"/>
-                            </Border>
+                        <Border Padding="5" BackgroundColor="White" StrokeShape="RoundRectangle 5" HorizontalOptions="Center" VerticalOptions="Center" Stroke="Transparent">
+                            <controls:ImageCache HeightRequest="60" CodeNum="{Binding CodeNum}" WidthRequest="60" BackgroundColor="Transparent"/>
+                        </Border>
 
-                            <StackLayout Grid.Column="1">
-                                <Label HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="17" HorizontalOptions="Center" Text="{Binding Name}"
-                                    VerticalTextAlignment="Center" />
+                        <StackLayout Grid.Column="1">
+                            <Label HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="17" HorizontalOptions="Center" Text="{Binding Name}"
+                                    VerticalTextAlignment="Center" Margin="0,0,0,5"/>
 
-                                <StackLayout Orientation="Vertical">
-                                    <FlexLayout AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}" Direction="Row" HorizontalOptions="Center"
-                                        IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByReps}}"
-                                        JustifyContent="Center" VerticalOptions="Center" Wrap="Wrap">
-                                        <BindableLayout.ItemTemplate>
-                                            <DataTemplate>
-                                                <HorizontalStackLayout HorizontalOptions="Center" Spacing="0">
-                                                    <Label Text="•" VerticalTextAlignment="Center" />
-                                                    <Label Margin="5" FontSize="Medium" HorizontalTextAlignment="Center" Text="{Binding Repetitions}" VerticalTextAlignment="Center" />
-                                                    <Label Text="{x:Static resx:AppResources.RepetitionsShort}" VerticalTextAlignment="Center" />
-                                                </HorizontalStackLayout>
-                                            </DataTemplate>
-                                        </BindableLayout.ItemTemplate>
-                                    </FlexLayout>
-                                    <FlexLayout AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}"
-                                        Direction="Row" HorizontalOptions="Center" JustifyContent="SpaceAround" VerticalOptions="Center" Wrap="Wrap"
-                                        IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByRepsAndWeight}}">
-                                        <BindableLayout.ItemTemplate>
-                                            <DataTemplate>
-                                                <HorizontalStackLayout HorizontalOptions="Center" Spacing="0">
-                                                    <Label Text="•" VerticalTextAlignment="Center" />
-                                                    <Label Margin="5" FontSize="Medium" HorizontalTextAlignment="Center" Text="{Binding Weight}" VerticalTextAlignment="Center" />
-                                                    <Label Text="{Binding Source={x:Static Application.Current},Path=MeasureOfWeight}" VerticalTextAlignment="Center" />
-                                                    <Label Text="x" VerticalTextAlignment="Center" />
-                                                    <Label Margin="5" FontSize="Medium" HorizontalTextAlignment="Center" Text="{Binding Repetitions}"
-                                                    VerticalTextAlignment="Center" />
-                                                    <Label Text="{x:Static resx:AppResources.RepetitionsShort}" VerticalTextAlignment="Center" />
-                                                </HorizontalStackLayout>
-                                            </DataTemplate>
-                                        </BindableLayout.ItemTemplate>
-                                    </FlexLayout>
+                            <FlexLayout AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}" Direction="Row" HorizontalOptions="Center"
+        IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByReps}}"
+        JustifyContent="Center" VerticalOptions="Center" Wrap="Wrap">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Stroke="Transparent" StrokeShape="RoundRectangle 10" Padding="5,0"
+                BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}">
+                                            <HorizontalStackLayout HorizontalOptions="Center" Spacing="0">
+                                                <Label FontSize="12" Margin="5" HorizontalTextAlignment="Center" Text="{Binding Repetitions}" VerticalTextAlignment="Center" />
+                                                <Label FontSize="12" Text="{x:Static resx:AppResources.RepetitionsShort}" VerticalTextAlignment="Center" />
+                                            </HorizontalStackLayout>
+                                        </Border>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </FlexLayout>
+                            <FlexLayout AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}"
+        Direction="Row" HorizontalOptions="Center" JustifyContent="SpaceAround" VerticalOptions="Center" Wrap="Wrap"
+        IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByRepsAndWeight}}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Stroke="Transparent" StrokeShape="RoundRectangle 10" Padding="5,0"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}">
+                                            <HorizontalStackLayout HorizontalOptions="Center" Spacing="0">
+                                                <Label FontSize="12" Margin="5" HorizontalTextAlignment="Center" Text="{Binding Weight}" VerticalTextAlignment="Center" />
+                                                <Label FontSize="12" Text="{Binding Source={x:Static Application.Current},Path=MeasureOfWeight}" VerticalTextAlignment="Center" />
+                                                <Label FontSize="12" Text="x" VerticalTextAlignment="Center" />
+                                                <Label FontSize="12" Margin="5" HorizontalTextAlignment="Center" Text="{Binding Repetitions}"
+                            VerticalTextAlignment="Center" />
+                                                <Label FontSize="12" Text="{x:Static resx:AppResources.RepetitionsShort}" VerticalTextAlignment="Center" />
+                                            </HorizontalStackLayout>
+                                        </Border>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </FlexLayout>
 
-                                    <Label Margin="0" Padding="0" FontSize="Medium" HorizontalOptions="Center"
-                                        IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}"
-                                        Text="{Binding Time, StringFormat={x:Static resx:AppResources.CurrentTimeString}}" />
-                                </StackLayout>
-
-                                <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" Style="{StaticResource MuscleFlexStyle}">
-                                    <BindableLayout.ItemTemplate>
-                                        <DataTemplate>
-                                            <Border Margin="1" Style="{StaticResource MuscleBorderCellStyle}">
-                                                <Label FontSize="11" Text="{Binding Name}" TextColor="White" LineBreakMode="TailTruncation" />
-                                            </Border>
-                                        </DataTemplate>
-                                    </BindableLayout.ItemTemplate>
-                                </FlexLayout>
-                            </StackLayout>
-                        </Grid>
-                    </Border>
-                </Grid>
+                            <Label Margin="0" Padding="0" FontSize="Medium" HorizontalOptions="Center"
+                                IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}"
+                                Text="{Binding Time, StringFormat={x:Static resx:AppResources.CurrentTimeString}}" />
+                        </StackLayout>
+                    </Grid>
+                </Border>
             </DataTemplate>
         </CollectionView.ItemTemplate>
     </CollectionView>
