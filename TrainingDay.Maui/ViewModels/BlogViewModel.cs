@@ -1,29 +1,40 @@
-﻿using TrainingDay.Common.Communication;
+﻿using TrainingDay.Maui.Models.Database;
 
 namespace TrainingDay.Maui.ViewModels;
 
 public class BlogViewModel : BaseViewModel
 {
-    private string guid;
+    private int id;
+    private int guid;
     private string title;
     private string text;
     private DateTime dateTime;
-
     public BlogViewModel()
     {
     }
 
-    public BlogViewModel(BlogResponse item)
+    public BlogViewModel(BlogDto item)
     {
+        id = item.Id;
         Title = item.Title;
-        Text = item.Content;
+        Text = item.Content ??string.Empty;
         DateTime = item.Published;
         guid = item.Guid;
     }
 
-    public string Guid
+    public int Id
+    {
+        get { return id; }
+    }
+
+    public int Guid
     {
         get { return guid; }
+    }
+
+    public bool IsNew
+    {
+        get { return string.IsNullOrEmpty(Text); }
     }
 
     public string Title
@@ -43,6 +54,7 @@ public class BlogViewModel : BaseViewModel
         {
             text = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(IsNew));
         }
     }
 
@@ -60,18 +72,31 @@ public class BlogViewModel : BaseViewModel
     {
         get
         {
-            var textColorString = App.Current.RequestedTheme == AppTheme.Light ? 
-                "<head><style>body { background-color:#f0f0f0;color: #1b1b1b;}</style></head>" : 
-                "<head><style>body { background-color:#1b1b1b;color: #FFFFFF;}</style></head>";
+            var lightHead = """
+                <head>
+                <style>
+                    body { background-color:#f0f0f0;color: #1b1b1b !important; }
+                </style>
+                </head>
+                """;
+            var darkHead = """
+                <head>
+                <style>
+                    body { background-color:#1b1b1b;color: #FFFFFF; !important; }
+                </style>
+                </head>
+                """;
+            Text = Text.Replace("style=\"color:rgb(0, 0, 0);\"", string.Empty);
+            var textColorString = App.Current.RequestedTheme == AppTheme.Light ? lightHead : darkHead;
             var htmlSource = new HtmlWebViewSource
             {
                 Html = $@"
-<html>{textColorString}
-    <body>
-    <h3>{Title}</h3>
-    {Text}
-    </body>
-</html>",
+                    <html>{textColorString}
+                        <body>
+                        <h3>{Title}</h3>
+                        {Text}
+                        </body>
+                    </html>",
             };
             return htmlSource;
         }

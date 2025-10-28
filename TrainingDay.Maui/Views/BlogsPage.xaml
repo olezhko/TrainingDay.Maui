@@ -10,23 +10,28 @@
         <Label Text="{x:Static resx:AppResources.NewsString}" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
     </Shell.TitleView>
 
-    <CollectionView ItemsSource="{Binding BlogsCollection}" RemainingItemsThresholdReachedCommand="{Binding NewBlogLoadCommand}" 
-            RemainingItemsThreshold="{Binding Page}" ItemSizingStrategy="MeasureAllItems">
-        <CollectionView.ItemsLayout>
-            <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
-        </CollectionView.ItemsLayout>
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Grid Margin="0" Padding="0" MinimumHeightRequest="80">
-                    <Border Style="{DynamicResource BorderCellStyle}" >
+    <Grid>
+        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+        
+        <CollectionView ItemsSource="{Binding BlogsCollection}" ItemSizingStrategy="MeasureAllItems">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Style="{DynamicResource BorderCellStyle}" Margin="0" Padding="0" MinimumHeightRequest="80">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={x:Reference Page}, Path=BindingContext.OpenBlogCommand}" CommandParameter="{Binding }"/>
                         </Border.GestureRecognizers>
+                        <Grid ColumnDefinitions="Auto,*">
+                            <BoxView Grid.Column="0" WidthRequest="10" HeightRequest="10" Color="{StaticResource Main}" CornerRadius="5" IsVisible="{Binding IsNew}"
+                                     VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Transparent" Margin="5"/>
 
-                        <Label Text="{Binding Title}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                            <Label Grid.Column="1" Text="{Binding Title}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                        </Grid>
                     </Border>
-                </Grid>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentPage>

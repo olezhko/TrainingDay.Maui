@@ -1,4 +1,3 @@
-using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels.Pages;
 

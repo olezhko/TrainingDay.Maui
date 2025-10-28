@@ -654,4 +654,7 @@
   <data name="SupersetAdvice" xml:space="preserve">
     <value>Select exercises for your superset by clicking the circles. Use the 'X' to remove an exercise from other supersets.</value>
   </data>
+  <data name="PreparedBicepsTricepsSuperSet" xml:space="preserve">
+    <value>Biceps/Triceps Supersets</value>
+  </data>
 </root>

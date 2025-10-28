@@ -961,6 +961,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Biceps/Triceps Supersets.
+        /// </summary>
+        internal static string PreparedBicepsTricepsSuperSet {
+            get {
+                return ResourceManager.GetString("PreparedBicepsTricepsSuperSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cardio.
         /// </summary>
         internal static string PreparedCardioString {
@@ -1272,6 +1281,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string StopString {
             get {
                 return ResourceManager.GetString("StopString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select exercises for your superset by clicking the circles. Use the &apos;X&apos; to remove an exercise from other supersets..
+        /// </summary>
+        internal static string SupersetAdvice {
+            get {
+                return ResourceManager.GetString("SupersetAdvice", resourceCulture);
             }
         }
         
@@ -1659,15 +1677,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string YesString {
             get {
                 return ResourceManager.GetString("YesString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select exercises for your superset by clicking the circles. Use the 'X' to remove an exercise from other supersets.
-        /// </summary>
-        internal static string SupersetAdvice {
-            get {
-                return ResourceManager.GetString("SupersetAdvice", resourceCulture);
             }
         }
     }

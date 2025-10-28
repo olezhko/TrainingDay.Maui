@@ -115,7 +115,7 @@ public class TrainingViewModel : BaseViewModel
 
     public void AddExercise(TrainingExerciseViewModel exercise)
     {
-        exercise.SuperSetNum = GetSuperSetNum(this, exercise);
+        exercise.SuperSetNum = GetSuperSetNum(Exercises, exercise);
         Exercises.Add(exercise);
     }
 
@@ -136,39 +136,22 @@ public class TrainingViewModel : BaseViewModel
         Exercises.Remove(exercise);
     }
 
-    public static int GetSuperSetNum(TrainingViewModel training, TrainingExerciseViewModel item)
+    public static int GetSuperSetNum(ObservableCollection<TrainingExerciseViewModel> allItems, TrainingExerciseViewModel item)
     {
         if (item.SuperSetId == 0)
-        {
             return 0;
-        }
 
-        int number = 1;
-        List<int> superSetIds = new List<int>();
-        foreach (var exercise in training.Exercises)
-        {
-            if (exercise.SuperSetId == 0)
-            {
-                continue;
-            }
+        var uniqueSuperSetIds = allItems
+            .Where(x => x.SuperSetId != 0)
+            .Select(x => x.SuperSetId)
+            .Distinct()
+            .ToList();
 
-            if (exercise.SuperSetId == item.SuperSetId && exercise.Id != item.Id)
-            {
-                return exercise.SuperSetNum;
-            }
-            else
-            {
-                if (!superSetIds.Contains(exercise.SuperSetId))
-                {
-                    superSetIds.Add(exercise.SuperSetId);
-                    number++;
-                }
+        int index = uniqueSuperSetIds.IndexOf(item.SuperSetId);
+        if (index < 0) // new item with new SuperSetId
+            return uniqueSuperSetIds.Count + 1;
 
-                return number;
-            }
-        }
-
-        return number;
+        return index >= 0 ? index + 1 : 0;
     }
 
     public int GetNewSuperSetNum()

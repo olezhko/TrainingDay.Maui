@@ -54,7 +54,7 @@ public class Repository
             database.CreateTable<SuperSetDto>();
             database.CreateTable<TrainingUnionDto>();
             database.CreateTable<ImageDto>();
-            //database.CreateTable<BlogDto>();
+            database.CreateTable<BlogDto>();
 
             var initExercises = await ResourceExtension.LoadResource<BaseExercise>("exercises", Settings.GetLanguage().TwoLetterISOLanguageName);
             var dbExercises = GetExerciseItems();
@@ -456,8 +456,13 @@ public class Repository
         }
     }
 
+    public IEnumerable<BlogDto> GetBlogItems()
+    {
+        return [.. (from i in database.Table<BlogDto>() select i)];
+    }
+
     public IEnumerable<BlogDto> GetBlogItems(int page, int size)
     {
-        return (from i in database.Table<BlogDto>() select i).Skip((page - 1) * size).Take(size).ToList();
+        return [.. (from i in database.Table<BlogDto>() select i).Skip((page - 1) * size).Take(size)];
     }
 }

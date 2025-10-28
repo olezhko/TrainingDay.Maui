@@ -9,8 +9,6 @@ public sealed class PreparedTrainingViewModel : BaseViewModel
 
     public ImageSource TrainingImageUrl { get; set; }
 
-    public ObservableCollection<MuscleViewModel> MainMuscles { get; set; }
-
     public Action CreateTraining { get; set; }
 
     public List<PreparedSuperSet> SuperSets { get; set; }

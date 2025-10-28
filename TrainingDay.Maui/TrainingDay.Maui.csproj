@@ -29,27 +29,27 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
-		<ApplicationVersion>320</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.8.7</ApplicationDisplayVersion>
+		<ApplicationVersion>321</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.9.1</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
 		<CreatePackage>false</CreatePackage>
 		<ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
-		<ApplicationVersion>320</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.8.7</ApplicationDisplayVersion>
+		<ApplicationVersion>321</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.9.1</ApplicationDisplayVersion>
 		<EnableSGenConc>True</EnableSGenConc>
 		<SkipStaticLibraryValidation>true</SkipStaticLibraryValidation>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
-		<ApplicationVersion>320</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.8.7</ApplicationDisplayVersion>
+		<ApplicationVersion>321</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.9.1</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
-		<ApplicationVersion>320</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.8.7</ApplicationDisplayVersion>
+		<ApplicationVersion>321</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.9.1</ApplicationDisplayVersion>
 		<CreatePackage>false</CreatePackage>
 		<CodesignProvision>TrainingDayPublish</CodesignProvision>
 		<CodesignKey>Apple Distribution: Oleg Ladyka (36WMJT4QLC)</CodesignKey>
@@ -82,6 +82,7 @@
 		<None Remove="Resources\Images\prepared\arms.png" />
 		<None Remove="Resources\Images\prepared\back.png" />
 		<None Remove="Resources\Images\prepared\begin.png" />
+		<None Remove="Resources\Images\prepared\biceps_triceps.png" />
 		<None Remove="Resources\Images\prepared\cardio.png" />
 		<None Remove="Resources\Images\prepared\chest.png" />
 		<None Remove="Resources\Images\prepared\fitness.png" />
@@ -100,6 +101,7 @@
 		<EmbeddedResource Include="Resources\Images\prepared\arms.png" />
 		<EmbeddedResource Include="Resources\Images\prepared\back.png" />
 		<EmbeddedResource Include="Resources\Images\prepared\begin.png" />
+		<EmbeddedResource Include="Resources\Images\prepared\biceps_triceps.png" />
 		<EmbeddedResource Include="Resources\Images\prepared\cardio.png" />
 		<EmbeddedResource Include="Resources\Images\prepared\chest.png" />
 		<EmbeddedResource Include="Resources\Images\prepared\fitness.png" />

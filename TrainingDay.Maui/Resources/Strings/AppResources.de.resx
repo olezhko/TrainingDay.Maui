@@ -654,4 +654,7 @@
   <data name="SupersetAdvice" xml:space="preserve">
     <value>Wählen Sie Übungen für Ihren Supersatz aus, indem Sie auf die Kreise klicken. Nutzen Sie das "X", um eine Übung aus anderen Supersätzen zu entfernen.</value>
   </data>
+  <data name="PreparedBicepsTricepsSuperSet" xml:space="preserve">
+    <value>Bizeps/Trizeps-Supersätze</value>
+  </data>
 </root>

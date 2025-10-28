@@ -103,7 +103,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
             preparedTrainingForBeginners.Training = new TrainingViewModel()
             {
                 Exercises = new ObservableCollection<TrainingExerciseViewModel>(
-                    GetExercisesByCodeNum(exerciseBase, 40, 13, 34, 10, 16, 27, 31, 56, 58)),
+                    PreparedTrainingsPageViewModel.GetExercisesByCodeNum(exerciseBase, 40, 13, 34, 10, 16, 27, 31, 56, 58)),
                 Title = AppResources.PreparedTrainingForBeginners,
             };
         };
@@ -118,7 +118,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
         {
             preparedTrainingForMorning.Training = new TrainingViewModel()
             {
-                Exercises = [.. GetExercisesByCodeNum(exerciseBase, 140, 141, 143, 142, 133, 139, 84, 83, 132, 137, 115)],
+                Exercises = [.. PreparedTrainingsPageViewModel.GetExercisesByCodeNum(exerciseBase, 140, 141, 143, 142, 133, 139, 84, 83, 132, 137, 115)],
                 Title = AppResources.PreparedMorningWorkout,
             };
         };
@@ -133,7 +133,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
         {
             preparedFitnessString.Training = new TrainingViewModel()
             {
-                Exercises = new ObservableCollection<TrainingExerciseViewModel>(GetExercisesByCodeNum(exerciseBase,
+                Exercises = new ObservableCollection<TrainingExerciseViewModel>(PreparedTrainingsPageViewModel.GetExercisesByCodeNum(exerciseBase,
                     113, 109, 115, 116, 117, 118, 119, 108, 111, 84, 103, 102, 110)),
                 Title = AppResources.PreparedFitnessString,
             };
@@ -144,15 +144,12 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
         {
             Name = AppResources.PreparedCardioString,
             TrainingImageUrl = ImageSource.FromResource("TrainingDay.Maui.Resources.Images.prepared.cardio.png"),
-            MainMuscles =
-                new ObservableCollection<MuscleViewModel>(
-                    MusclesConverter.SetMuscles(MusclesEnum.Cardio)),
         };
         preparedCardioString.CreateTraining = () =>
         {
             preparedCardioString.Training = new TrainingViewModel()
             {
-                Exercises = GetExerciseByMuscles(exerciseBase,
+                Exercises = PreparedTrainingsPageViewModel.GetExerciseByMuscles(exerciseBase,
                     MusclesConverter.SetMuscles(MusclesEnum.Cardio).ToArray()),
                 Title = AppResources.PreparedCardioString,
             };
@@ -169,7 +166,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
             preparedNiceAbs.Training = new TrainingViewModel()
             {
                 Exercises = new ObservableCollection<TrainingExerciseViewModel>(
-                    GetExercisesByCodeNum(exerciseBase, 45, 87, 46, 50, 88, 110, 111, 113, 118, 137, 126, 138)),
+                    PreparedTrainingsPageViewModel.GetExercisesByCodeNum(exerciseBase, 45, 87, 46, 50, 88, 110, 111, 113, 118, 137, 126, 138)),
                 Title = AppResources.PreparedNiceStomach,
             };
         };
@@ -202,7 +199,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
             preparedWideShoulders.Training = new TrainingViewModel()
             {
                 Exercises = new ObservableCollection<TrainingExerciseViewModel>(
-                    GetExercisesByCodeNum(exerciseBase, 8, 9, 5, 6, 120, 122, 3, 101, 11, 86)),
+                    PreparedTrainingsPageViewModel.GetExercisesByCodeNum(exerciseBase, 8, 9, 5, 6, 120, 122, 3, 101, 11, 86)),
                 Title = AppResources.PreparedWideShoulders,
             };
         };
@@ -212,15 +209,12 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
         {
             Name = AppResources.PreparedBackReady,
             TrainingImageUrl = ImageSource.FromResource("TrainingDay.Maui.Resources.Images.prepared.back.png"),
-            MainMuscles = new ObservableCollection<MuscleViewModel>(MusclesConverter.SetMuscles(
-                MusclesEnum.LowerBack, MusclesEnum.MiddleBack,
-                MusclesEnum.WidestBack)),
         };
         preparedBackReady.CreateTraining = () =>
         {
             preparedBackReady.Training = new TrainingViewModel()
             {
-                Exercises = GetExercisesByCodeNum(exerciseBase, new[] { 51, 60, 55, 73, 58, 52, 56, 10, 101 }),
+                Exercises = PreparedTrainingsPageViewModel.GetExercisesByCodeNum(exerciseBase, new[] { 51, 60, 55, 73, 58, 52, 56, 10, 101 }),
                 Title = AppResources.PreparedBackReady,
             };
         };
@@ -230,34 +224,12 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
         {
             Name = AppResources.PreparedMaximumUpperBody,
             TrainingImageUrl = ImageSource.FromResource("TrainingDay.Maui.Resources.Images.prepared.up.png"),
-            MainMuscles = new ObservableCollection<MuscleViewModel>(MusclesConverter.SetMuscles(
-                MusclesEnum.LowerBack, MusclesEnum.MiddleBack,
-                MusclesEnum.WidestBack)),
-            SuperSets = new List<PreparedSuperSet>(new[]
-            {
-                    new PreparedSuperSet()
-                    {
-                        ExerciseOrderArray = new[] {1, 2},
-                    },
-                    new PreparedSuperSet()
-                    {
-                        ExerciseOrderArray = new[] {3, 4},
-                    },
-                    new PreparedSuperSet()
-                    {
-                        ExerciseOrderArray = new[] {5, 6, 7},
-                    },
-                    new PreparedSuperSet()
-                    {
-                        ExerciseOrderArray = new[] {8, 9},
-                    },
-                }),
         };
         preparedMaximumUpperBody.CreateTraining = () =>
         {
             preparedMaximumUpperBody.Training = new TrainingViewModel()
             {
-                Exercises = GetExercisesByCodeNum(exerciseBase,
+                Exercises = PreparedTrainingsPageViewModel.GetExercisesByCodeNum(exerciseBase,
                     new[] { 121, 6, 56, 60, 89, 43, 48, 87, 4, 5, 1, 127 }),
                 Title = AppResources.PreparedMaximumUpperBody,
             };
@@ -268,38 +240,12 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
         {
             Name = AppResources.PreparedArmsStrength,
             TrainingImageUrl = ImageSource.FromResource("TrainingDay.Maui.Resources.Images.prepared.arms.png"),
-            MainMuscles = new ObservableCollection<MuscleViewModel>(MusclesConverter.SetMuscles(
-                MusclesEnum.LowerBack, MusclesEnum.MiddleBack,
-                MusclesEnum.WidestBack)),
-            SuperSets = new List<PreparedSuperSet>(new[]
-            {
-                    new PreparedSuperSet()
-                    {
-                        ExerciseOrderArray = new[] {1, 2},
-                    },
-                    new PreparedSuperSet()
-                    {
-                        ExerciseOrderArray = new[] {3, 4},
-                    },
-                    new PreparedSuperSet()
-                    {
-                        ExerciseOrderArray = new[] {5, 6,},
-                    },
-                    new PreparedSuperSet()
-                    {
-                        ExerciseOrderArray = new[] {7, 8},
-                    },
-                    new PreparedSuperSet()
-                    {
-                        ExerciseOrderArray = new[] {9, 10},
-                    },
-                }),
         };
         preparedArmsStrength.CreateTraining = () =>
         {
             preparedArmsStrength.Training = new TrainingViewModel()
             {
-                Exercises = GetExercisesByCodeNum(exerciseBase, new[] { 83, 13, 23, 15, 93, 16, 27, 17, 22, 89, 82 }),
+                Exercises = PreparedTrainingsPageViewModel.GetExercisesByCodeNum(exerciseBase, new[] { 83, 13, 23, 15, 93, 16, 27, 17, 22, 89, 82 }),
                 Title = AppResources.PreparedArmsStrength,
             };
         };
@@ -310,23 +256,78 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
         {
             Name = AppResources.PreparedFootTraining,
             TrainingImageUrl = ImageSource.FromResource("TrainingDay.Maui.Resources.Images.prepared.legs_and_glutes.png"),
-            MainMuscles = new ObservableCollection<MuscleViewModel>(MusclesConverter.SetMuscles(
-                MusclesEnum.Buttocks, MusclesEnum.Thighs,MusclesEnum.Quadriceps)),
         };
         preparedFootReady.CreateTraining = () =>
         {
             preparedFootReady.Training = new TrainingViewModel()
             {
-                Exercises = GetExercisesByCodeNum(exerciseBase, new[] { 64, 67, 66, 60, 69, 62, 73, 76, 124, 125, 74, 65}),
+                Exercises = PreparedTrainingsPageViewModel.GetExercisesByCodeNum(exerciseBase, new[] { 64, 67, 66, 60, 69, 62, 73, 76, 124, 125, 74, 65}),
                 Title = AppResources.PreparedFootTraining,
             };
         };
         PreparedTrainingsCollection.Add(preparedFootReady);
 
+        var bicepsTricepsSuperSet = CreatePreparedTraining(
+            exerciseBase,
+            AppResources.PreparedBicepsTricepsSuperSet,
+            "TrainingDay.Maui.Resources.Images.prepared.biceps_triceps.png",
+            (baseExercises) => GetExercisesByCodeNum(baseExercises, 13, 22, 7, 24, 89, 23, 14, 82, 16, 27),
+            superSets: new List<PreparedSuperSet>(new[]
+            {
+                new PreparedSuperSet()
+                {
+                    ExerciseOrderArray = new[] {1, 2},
+                },
+                new PreparedSuperSet()
+                {
+                    ExerciseOrderArray = new[] {3, 4},
+                },
+                new PreparedSuperSet()
+                {
+                    ExerciseOrderArray = new[] {5, 6},
+                },
+                new PreparedSuperSet()
+                {
+                    ExerciseOrderArray = new[] {7, 8},
+                },
+                new PreparedSuperSet()
+                {
+                    ExerciseOrderArray = new[] {9, 10},
+                },
+            })
+        );
+        PreparedTrainingsCollection.Add(bicepsTricepsSuperSet);
+
         OnPropertyChanged(nameof(PreparedTrainingsCollection));
     }
 
-    private ObservableCollection<TrainingExerciseViewModel> GetExerciseByMuscles(List<ExerciseDto> baseExercises,
+    private static PreparedTrainingViewModel CreatePreparedTraining(
+        List<ExerciseDto> baseExercises,
+        string name,
+        string imagePath,
+        Func<List<ExerciseDto>, ObservableCollection<TrainingExerciseViewModel>> buildExercises,
+        List<PreparedSuperSet>? superSets = null)
+    {
+        var viewModel = new PreparedTrainingViewModel
+        {
+            Name = name,
+            TrainingImageUrl = ImageSource.FromResource(imagePath),
+            SuperSets = superSets
+        };
+
+        viewModel.CreateTraining = () =>
+        {
+            viewModel.Training = new TrainingViewModel
+            {
+                Exercises = buildExercises(baseExercises),
+                Title = name
+            };
+        };
+
+        return viewModel;
+    }
+
+    private static ObservableCollection<TrainingExerciseViewModel> GetExerciseByMuscles(List<ExerciseDto> baseExercises,
         params MuscleViewModel[] muscles)
     {
         var result = new ObservableCollection<TrainingExerciseViewModel>();
@@ -358,7 +359,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
         return result;
     }
 
-    private ObservableCollection<TrainingExerciseViewModel> GetExercisesByCodeNum(List<ExerciseDto> baseExercises, params int[] codeNums)
+    private static ObservableCollection<TrainingExerciseViewModel> GetExercisesByCodeNum(List<ExerciseDto> baseExercises, params int[] codeNums)
     {
         var result = new ObservableCollection<TrainingExerciseViewModel>();
         foreach (var codeNum in codeNums)
@@ -387,9 +388,11 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
             Title = viewModel.Title,
         });
 
-        if (superSets != null && superSets.Count != 0)
+        var isSuperSet = superSets is not null && superSets.Count != 0;
+
+        if (isSuperSet)
         {
-            foreach (var superSet in superSets)
+            foreach (var superSet in superSets!)
             {
                 var superSetId = App.Database.SaveSuperSetItem(new SuperSet()
                 {
@@ -403,9 +406,9 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
         foreach (var exercise in viewModel.Exercises)
         {
             int superSetId = 0;
-            if (superSets != null && superSets.Count != 0)
+            if (isSuperSet)
             {
-                var superSet = superSets.FirstOrDefault(set => set.ExerciseOrderArray.Contains(order));
+                var superSet = superSets!.FirstOrDefault(set => set.ExerciseOrderArray.Contains(order + 1));
                 if (superSet != null)
                 {
                     superSetId = superSet.Id;

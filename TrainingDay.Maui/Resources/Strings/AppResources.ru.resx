@@ -666,4 +666,7 @@
   <data name="SupersetAdvice" xml:space="preserve">
     <value>Выберите упражнения для суперсета, нажимая на кружки. Крестик удалит упражнение из существующих суперсетов.</value>
   </data>
+  <data name="PreparedBicepsTricepsSuperSet" xml:space="preserve">
+    <value>Бицепс/Трицепс Суперсетами</value>
+  </data>
 </root>

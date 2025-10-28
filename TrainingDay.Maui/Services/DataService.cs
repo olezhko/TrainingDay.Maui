@@ -8,8 +8,9 @@ namespace TrainingDay.Maui.Services
 	
     public interface IDataService
 	{
-		Task<IReadOnlyCollection<BlogResponse>> GetBlogsAsync(int page);
-		Task<BlogResponse> GetBlogAsync(string id);
+		Task<IReadOnlyCollection<BlogResponse>> GetBlogsAsync(DateTimeOffset? createdOffset);
+
+        Task<BlogResponse> GetBlogAsync(int id);
 		Task<ExerciseAiResponse> GetExercisesByQueryAsync(string query);
 		Task<bool> PostActionAsync(string token, MobileActions action);
 		Task<IEnumerable<YoutubeVideoItem>> GetVideosAsync(string exerciseName);
@@ -40,19 +41,19 @@ namespace TrainingDay.Maui.Services
 			return request;
 		}
 
-		public async Task<IReadOnlyCollection<BlogResponse>> GetBlogsAsync(int page)
+		public async Task<IReadOnlyCollection<BlogResponse>> GetBlogsAsync(DateTimeOffset? createdOffset)
 		{
 			var cultureId = Settings.CultureName.Contains("en", StringComparison.OrdinalIgnoreCase) ? 1 : 2;
-			var request = CreateRequest($"/mobileblogs/blogs?cultureId={cultureId}&page={page}&pageSize=10", Method.Get);
+			var request = CreateRequest($"/mobileblogs?cultureId={cultureId}&createdFilter={createdOffset}", Method.Get);
 			var response = await _client.ExecuteAsync(request);
 			return response.IsSuccessful
 				? JsonConvert.DeserializeObject<IReadOnlyCollection<BlogResponse>>(response.Content)
 				: null;
 		}
 
-		public async Task<BlogResponse> GetBlogAsync(string id)
+		public async Task<BlogResponse> GetBlogAsync(int id)
 		{
-			var request = CreateRequest($"/mobileblogs?id={id}", Method.Get);
+			var request = CreateRequest($"/mobileblogs/{id}", Method.Get);
 			var response = await _client.ExecuteAsync(request);
 			return response.IsSuccessful
 				? JsonConvert.DeserializeObject<BlogResponse>(response.Content)

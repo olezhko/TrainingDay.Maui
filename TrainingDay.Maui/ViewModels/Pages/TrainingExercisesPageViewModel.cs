@@ -55,12 +55,9 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         get => itemId;
         set
         {
-            if (itemId != value)
-            {
-                itemId = value;
-                LoadItemId(value);
-                OnPropertyChanged();
-            }
+            itemId = value;
+            LoadItemId(value);
+            OnPropertyChanged();
         }
     }
 

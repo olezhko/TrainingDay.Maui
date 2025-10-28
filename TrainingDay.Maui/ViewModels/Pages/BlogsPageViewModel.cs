@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
-using TrainingDay.Common.Communication;
+using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.Views;
 
@@ -8,10 +8,7 @@ namespace TrainingDay.Maui.ViewModels.Pages;
 
 public class BlogsPageViewModel : BaseViewModel
 {
-    private Command newBlogLoadCommand;
-    private Command refreshCommand;
     private Command openBlogCommand;
-    int page = 1;
     IDataService dataService;
 
 	public BlogsPageViewModel(IDataService dataService)
@@ -22,7 +19,6 @@ public class BlogsPageViewModel : BaseViewModel
 
     public async void LoadItems()
     {
-        Page = 1;
         if (IsBusy)
         {
             return;
@@ -35,71 +31,66 @@ public class BlogsPageViewModel : BaseViewModel
 
         IsBusy = true;
 
-        var res = await dataService.GetBlogsAsync(Page);
-        if (res != null)
+        var dbBlogs = App.Database.GetBlogItems()
+            .OrderByDescending(item => item.Published)
+            .Select(item => new BlogViewModel(item))
+            .ToList();
+
+        var lastDate = dbBlogs.FirstOrDefault()?.DateTime;
+        try
         {
-            BlogsCollection = new ObservableCollection<BlogViewModel>(res.Where(CheckLanguage).Select(item => new BlogViewModel(item)).OrderByDescending(item => item.DateTime));
-            OnPropertyChanged(nameof(BlogsCollection));
+            var newBlogs = await dataService.GetBlogsAsync(lastDate);
 
-            IsBusy = false;
+            if (newBlogs != null)
+            {
+                foreach (var item in newBlogs)
+                {
+                    var newBlog = new BlogDto()
+                    {
+                        Guid = item.Guid,
+                        Content = item.Content,
+                        Published = item.Published,
+                        Title = item.Title,
+                    };
+                    var id = App.Database.SaveItem(newBlog);
+                    newBlog.Id = id;
+
+                    dbBlogs.Add(new BlogViewModel(newBlog));
+                }
+            }
         }
-    }
-
-    private bool CheckLanguage(BlogResponse response)
-    {
-        if (response.Labels is not null)
+        catch
         {
-            if (Settings.GetLanguage().TwoLetterISOLanguageName.ToLower() is "en" or "de")
-                return response.Labels.Contains("en");
-
-            if (Settings.GetLanguage().TwoLetterISOLanguageName.ToLower() is "ru")
-                return response.Labels.Contains("ru");
         }
 
-        return true;
+        BlogsCollection = new ObservableCollection<BlogViewModel>(dbBlogs.OrderByDescending(item => item.DateTime));
+        OnPropertyChanged(nameof(BlogsCollection));
+
+        IsBusy = false;
     }
 
     private async void OpenBlog(BlogViewModel sender)
     {
         var blog = await dataService.GetBlogAsync(sender.Guid);
-        Dictionary<string, object> param = new Dictionary<string, object> { { "Context", new BlogViewModel(blog) } };
+        var update = new BlogDto()
+        {
+            Id = sender.Id,
+            Guid = sender.Guid,
+            Content = blog.Content,
+            Published = blog.Published,
+            Title = blog.Title,
+        };
+        App.Database.SaveItem(update, sender.Id);
+
+        Dictionary<string, object> param = new Dictionary<string, object> { { "Context", new BlogViewModel(update) } };
         await Shell.Current.GoToAsync(nameof(BlogItemPage), param);
-    }
-
-    private async void NewBlogsRequest()
-    {
-        if (IsBusy)
-        {
-            return;
-        }
-
-        IsBusy = true;
-        Page++;
-
-        var res = await dataService.GetBlogsAsync(Page);
-        if (res != null)
-        {
-            foreach (var item in res)
-            {
-                BlogsCollection.Add(new BlogViewModel(item));
-            }
-
-            OnPropertyChanged(nameof(BlogsCollection));
-        }
-        IsBusy = false;
     }
 
     #region Properties
 
-    public int Page { get => page; set => SetProperty(ref page, value); }
-
     public ObservableCollection<BlogViewModel> BlogsCollection { get; set; }
 
-    public ICommand RefreshCommand => refreshCommand ?? (refreshCommand = new Command(LoadItems));
-
     public ICommand OpenBlogCommand => openBlogCommand ?? (openBlogCommand = new Command<BlogViewModel>(OpenBlog));
-
-    public ICommand NewBlogLoadCommand => newBlogLoadCommand ?? (newBlogLoadCommand = new Command(NewBlogsRequest));
 
     #endregion
 }
