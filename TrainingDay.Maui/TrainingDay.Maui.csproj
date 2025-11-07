@@ -29,27 +29,27 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
-		<ApplicationVersion>321</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.9.1</ApplicationDisplayVersion>
+		<ApplicationVersion>322</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.9.2</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
 		<CreatePackage>false</CreatePackage>
 		<ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
-		<ApplicationVersion>321</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.9.1</ApplicationDisplayVersion>
+		<ApplicationVersion>322</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.9.2</ApplicationDisplayVersion>
 		<EnableSGenConc>True</EnableSGenConc>
 		<SkipStaticLibraryValidation>true</SkipStaticLibraryValidation>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
-		<ApplicationVersion>321</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.9.1</ApplicationDisplayVersion>
+		<ApplicationVersion>322</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.9.2</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
-		<ApplicationVersion>321</ApplicationVersion>
-		<ApplicationDisplayVersion>1.2.9.1</ApplicationDisplayVersion>
+		<ApplicationVersion>322</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2.9.2</ApplicationDisplayVersion>
 		<CreatePackage>false</CreatePackage>
 		<CodesignProvision>TrainingDayPublish</CodesignProvision>
 		<CodesignKey>Apple Distribution: Oleg Ladyka (36WMJT4QLC)</CodesignKey>
@@ -126,12 +126,11 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0-ios'">
-		<PackageReference Include="SQLitePCLRaw.core" Version="2.1.9" />
+		<PackageReference Include="SQLitePCLRaw.core" Version="3.0.2" />
 		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.9" />
-		<PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.2" />
 		<PackageReference Include="SQLitePCLRaw.provider.dynamic_cdecl" Version="2.1.9" />
 		<PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="2.1.9" />
-	</ItemGroup>
+  </ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.301" />
@@ -146,7 +145,8 @@
 		<PackageReference Include="RestSharp" Version="112.1.0" />
 		<PackageReference Include="SkiaSharp.Views" Version="3.119.0" />
 		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.119.0" />
-    <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+    <PackageReference Include="SourceGear.sqlite3" Version="3.50.4.5" />
+    <PackageReference Include="sqlite-net-e" Version="1.11.0" />
   </ItemGroup>
 
 	<ItemGroup>
