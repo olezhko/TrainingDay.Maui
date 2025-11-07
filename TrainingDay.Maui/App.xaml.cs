@@ -85,12 +85,12 @@ namespace TrainingDay.Maui
 
             Dispatcher.Dispatch(async () =>
             {
-                await DownloadImages();
+                await DownloadImagesAsync();
                 await dataService.PostActionAsync(Settings.Token, Common.Communication.MobileActions.Enter);
             });
         }
 
-        private async Task DownloadImages()
+        private async Task DownloadImagesAsync()
         {
             try
             {
@@ -123,7 +123,7 @@ namespace TrainingDay.Maui
                         if (image is null)
                             image = new ImageDto();
 
-                        if (image.Data.Length != response.Headers.ContentLength)
+                        if (image.Data?.Length != response.Headers.ContentLength)
                         {
                             var path = await GetFile(response, b.Key);
                             var bytes = File.ReadAllBytes(path);
