@@ -83,7 +83,7 @@ namespace TrainingDay.Maui.Services
 			var response = await _client.ExecuteAsync(request);
 			return response.IsSuccessful
 				? JsonConvert.DeserializeObject<IEnumerable<YoutubeVideoItem>>(response.Content)
-				: Enumerable.Empty<YoutubeVideoItem>();
+				: [];
 		}
 	}
 }

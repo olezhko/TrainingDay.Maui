@@ -11,13 +11,20 @@ public partial class TrainingExercisesMoveOrCopy : ContentPage
         InitializeComponent();
     }
 
+    protected override void OnDisappearing()
+    {
+        Context.IsExercisesCheckBoxVisible = false;
+        Context.CurrentAction = ExerciseCheckBoxAction.None;
+        base.OnDisappearing();
+    }
+
     public TrainingExercisesPageViewModel Context
     {
         get => BindingContext as TrainingExercisesPageViewModel;
         set => BindingContext = value;
     }
 
-    void GroupCollection_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
+    void GroupCollection_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         Context.SelectedTrainingForCopyOrMove = GroupCollection.SelectedItem as TrainingViewModel;
         Context.AcceptTrainingForMoveOrCopyCommand.Execute(null);

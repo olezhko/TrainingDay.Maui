@@ -916,7 +916,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Or.
+        ///   Looks up a localized string similar to or.
         /// </summary>
         internal static string Or {
             get {

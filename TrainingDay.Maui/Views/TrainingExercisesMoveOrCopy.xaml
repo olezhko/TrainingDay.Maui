@@ -4,9 +4,10 @@
              xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              x:Class="TrainingDay.Maui.Views.TrainingExercisesMoveOrCopy"
-             Title="{Binding CurrentAction}">
-    <VerticalStackLayout BackgroundColor="Transparent" VerticalOptions="Center" Margin="5">
-        <CollectionView x:Name="GroupCollection" ItemsSource="{Binding TrainingItems}" Grid.Row="0" SelectionChanged="GroupCollection_SelectionChanged" SelectionMode="Single">
+             Title="{Binding ExerciseActionString}">
+    <VerticalStackLayout BackgroundColor="Transparent" VerticalOptions="Center" Margin="5" >
+        <CollectionView x:Name="GroupCollection" ItemsSource="{Binding TrainingItems}" IsVisible="{Binding TrainingItems, Converter={StaticResource IsNoItemsConverter}}"
+                        SelectionChanged="GroupCollection_SelectionChanged" SelectionMode="Single">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Border StrokeShape="RoundRectangle 25" HeightRequest="50" Stroke="Transparent"
@@ -20,13 +21,13 @@
             </CollectionView.ItemsLayout>
         </CollectionView>
 
-        <Grid ColumnDefinitions="100,auto,100" HorizontalOptions="Center" ColumnSpacing="10">
+        <Grid ColumnDefinitions="100,auto,100" HorizontalOptions="Center" ColumnSpacing="10" VerticalOptions="End" IsVisible="{Binding TrainingItems, Converter={StaticResource IsNoItemsConverter}}">
             <Border Margin="0,5" HeightRequest="1"/>
             <Border Grid.Column="2" Margin="0,5" HeightRequest="1"/>
             <Label Grid.Column="1" Text="{x:Static resx:AppResources.Or}" HorizontalOptions="Center" FontSize="20"/>
         </Grid>
 
-        <Button VerticalOptions="Center" Command="{Binding CreateTrainingFromSelectedExercisesCommand}" Text="{x:Static resx:AppResources.CreateNewString}" 
+        <Button VerticalOptions="End" Command="{Binding CreateTrainingFromSelectedExercisesCommand}" Text="{x:Static resx:AppResources.CreateNewString}" 
             Style="{DynamicResource ActionButton}" Margin="5" TextColor="White" FontSize="Body"/>
     </VerticalStackLayout>
 </ContentPage>

@@ -21,9 +21,9 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
     public string ExerciseActionString { get; set; } = Resources.Strings.AppResources.TrainingString;
 
-    public bool IsExercisesCheckBoxVisible { get; set; }
+    public bool IsExercisesCheckBoxVisible { get => isExercisesCheckBoxVisible; set => SetProperty(ref isExercisesCheckBoxVisible, value); }
 
-    public ExerciseCheckBoxAction CurrentAction { get; set; }
+    public ExerciseCheckBoxAction CurrentAction { get => currentAction; set => SetProperty(ref currentAction, value); }
 
     public int TappedExerciseIndex { get; set; } = -1;
 
@@ -61,6 +61,9 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
     }
 
     IDataService dataService;
+    private bool isExercisesCheckBoxVisible;
+    private ExerciseCheckBoxAction currentAction;
+
     public TrainingExercisesPageViewModel(IDataService dataService)
     {
         Training = new TrainingViewModel();
@@ -221,12 +224,19 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
             return;
         }
 
-        selectedExercise!.VideoItems = (await dataService.GetVideosAsync(selectedExercise.Name))
-            .Select(video => new Models.ExerciseVideo()
-            {
-                VideoUrl = video.VideoUrl
-            })
-            .ToObservableCollection();
+        try
+        {
+            selectedExercise!.VideoItems = (await dataService.GetVideosAsync(selectedExercise.Name))
+                .Select(video => new Models.ExerciseVideo()
+                {
+                    VideoUrl = video.VideoUrl
+                })
+                .ToObservableCollection();
+        }
+        catch (Exception)
+        {
+
+        }
 
         var param = new Dictionary<string, object> { { "Item", selectedExercise } };
         await Shell.Current.GoToAsync(nameof(TrainingExerciseItemPage), param);
@@ -286,7 +296,6 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         });
 
         CurrentAction = ExerciseCheckBoxAction.SuperSet;
-        OnPropertyChanged(nameof(CurrentAction));
 
         MessageManager.DisplayAlert(AppResources.AdviceString, AppResources.SupersetAdvice, AppResources.OkString);
 
@@ -397,7 +406,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         {
             UpdateTrainingListToMoveOrCopy();
 
-            Dictionary<string, object> param = new Dictionary<string, object> { { "Context", this } };
+            var param = new Dictionary<string, object> { { "Context", this } };
             await Shell.Current.GoToAsync(nameof(TrainingExercisesMoveOrCopy), param);
         }
         else
