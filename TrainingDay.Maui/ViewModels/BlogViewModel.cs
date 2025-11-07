@@ -86,7 +86,11 @@ public class BlogViewModel : BaseViewModel
                 </style>
                 </head>
                 """;
-            Text = Text.Replace("style=\"color:rgb(0, 0, 0);\"", string.Empty);
+            if (Text is not null)
+            {
+                Text = Text.Replace("style=\"color:rgb(0, 0, 0);\"", string.Empty);
+            }
+
             var textColorString = App.Current.RequestedTheme == AppTheme.Light ? lightHead : darkHead;
             var htmlSource = new HtmlWebViewSource
             {

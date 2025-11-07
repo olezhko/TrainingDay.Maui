@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows.Input;
+using TrainingDay.Maui.Controls;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Database;
@@ -21,8 +21,8 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
     public TrainingItemsBasePageViewModel()
     {
         ItemsGrouped = new ObservableCollection<Grouping<string, TrainingViewModel>>();
-        AddNewTrainingCommand = new Command(AddNewTraining);
-        ItemSelectedCommand = new Command<Border>(TrainingSelected);
+        AddNewTrainingCommand = new DoOnceCommand(AddNewTraining);
+        ItemSelectedCommand = new DoOnceCommand<Border>(TrainingSelected);
         SubscribeMessages();
     }
 
@@ -156,7 +156,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         WeakReferenceMessenger.Default.Unregister<IncomingTrainingAddedMessage>(this);
     }
 
-    private async void AddNewTraining()
+    private async Task AddNewTraining()
     {
         LoggingService.TrackEvent($"{GetType().Name}: AddNewTraining Button Clicked");
         await Shell.Current.GoToAsync(nameof(PreparedTrainingsPage));
@@ -198,7 +198,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         }
     }
 
-    private async void TrainingSelected(Border viewCell)
+    private async Task TrainingSelected(Border viewCell)
     {
         LoggingService.TrackEvent($"{GetType().Name}: TrainingSelected Clicked");
         var item = (TrainingViewModel)viewCell.BindingContext;

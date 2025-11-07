@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
+using TrainingDay.Maui.Controls;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.Views;
@@ -8,8 +9,8 @@ namespace TrainingDay.Maui.ViewModels.Pages;
 
 public class BlogsPageViewModel : BaseViewModel
 {
-    private Command openBlogCommand;
-    IDataService dataService;
+    private DoOnceCommand<BlogViewModel> openBlogCommand;
+    private readonly IDataService dataService;
 
 	public BlogsPageViewModel(IDataService dataService)
     {
@@ -69,7 +70,7 @@ public class BlogsPageViewModel : BaseViewModel
         IsBusy = false;
     }
 
-    private async void OpenBlog(BlogViewModel sender)
+    private async Task OpenBlog(BlogViewModel sender)
     {
         var blog = await dataService.GetBlogAsync(sender.Guid);
         var update = new BlogDto()
@@ -90,7 +91,7 @@ public class BlogsPageViewModel : BaseViewModel
 
     public ObservableCollection<BlogViewModel> BlogsCollection { get; set; }
 
-    public ICommand OpenBlogCommand => openBlogCommand ?? (openBlogCommand = new Command<BlogViewModel>(OpenBlog));
+    public ICommand OpenBlogCommand => openBlogCommand ?? (openBlogCommand = new DoOnceCommand<BlogViewModel>(OpenBlog));
 
     #endregion
 }

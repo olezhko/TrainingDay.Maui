@@ -20,6 +20,12 @@
             </CollectionView.ItemsLayout>
         </CollectionView>
 
+        <Grid ColumnDefinitions="100,auto,100" HorizontalOptions="Center" ColumnSpacing="10">
+            <Border Margin="0,5" HeightRequest="1"/>
+            <Border Grid.Column="2" Margin="0,5" HeightRequest="1"/>
+            <Label Grid.Column="1" Text="{x:Static resx:AppResources.Or}" HorizontalOptions="Center" FontSize="20"/>
+        </Grid>
+
         <Button VerticalOptions="Center" Command="{Binding CreateTrainingFromSelectedExercisesCommand}" Text="{x:Static resx:AppResources.CreateNewString}" 
             Style="{DynamicResource ActionButton}" Margin="5" TextColor="White" FontSize="Body"/>
     </VerticalStackLayout>

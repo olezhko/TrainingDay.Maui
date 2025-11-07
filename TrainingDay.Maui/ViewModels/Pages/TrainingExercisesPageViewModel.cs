@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using TrainingDay.Maui.Controls;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Models.Messages;
@@ -30,13 +31,13 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
     public ICommand DeleteExerciseCommand => new Command<TrainingExerciseViewModel>(DeleteExercise);
 
-    public ICommand MakeTrainingCommand => new Command(MakeTraining);
+    public ICommand MakeTrainingCommand => new DoOnceCommand(MakeTraining);
 
-    public ICommand ItemTappedCommand => new Command<object>(TrainingExerciseTapped);
+    public ICommand ItemTappedCommand => new DoOnceCommand<object>(TrainingExerciseTapped);
 
     public ICommand ShowTrainingSettingsPageCommand => new Command(ShowTrainingSettingsPage);
 
-    public ICommand AddExercisesCommand => new Command(AddExercises);
+    public ICommand AddExercisesCommand => new DoOnceCommand(AddExercises);
 
     public ICommand CancelActionCommand => new Command(() => StopAction());
 
@@ -44,10 +45,8 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
     public ICommand StartActionCommand => new Command(StartAction);
 
-    public ICommand AcceptTrainingForMoveOrCopyCommand => new Command(AcceptTrainingForMoveOrCopy);
-
 	public TrainingViewModel? SelectedTrainingForCopyOrMove { get; set; } = null;
-
+    public ICommand AcceptTrainingForMoveOrCopyCommand => new Command(AcceptTrainingForMoveOrCopy);
     public ICommand CreateTrainingFromSelectedExercisesCommand => new Command(CreateTrainingFromSelectedExercises);
 
     public int ItemId
@@ -135,7 +134,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
     }
     #endregion
 
-    private async void AddExercises()
+    private async Task AddExercises()
     {
         WeakReferenceMessenger.Default.Unregister<ExercisesSelectFinishedMessage>(this);
         WeakReferenceMessenger.Default.Register<ExercisesSelectFinishedMessage>(this, (r, m) =>
@@ -205,15 +204,15 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         }
     }
 
-    private async void TrainingExerciseTapped(object item)
+    private async Task TrainingExerciseTapped(object item)
     {
         var selectedExercise = item as TrainingExerciseViewModel;
-        TappedExerciseIndex = Training.Exercises.IndexOf(selectedExercise);
+        TappedExerciseIndex = Training.Exercises.IndexOf(selectedExercise!);
         if (CurrentAction != ExerciseCheckBoxAction.None) // when we in action, tapped equals changing selected
         {
             if (CurrentAction == ExerciseCheckBoxAction.SuperSet)
             {
-                if (selectedExercise.SuperSetId == 0) //!IsExerciseInSuperSet
+                if (selectedExercise!.SuperSetId == 0)
                 {
                     selectedExercise.IsSelected = !selectedExercise.IsSelected;
                 }
@@ -222,15 +221,14 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
             return;
         }
 
-        selectedExercise.IsNotFinished = false; // --> for Time start button, to hide button
-        selectedExercise.VideoItems = (await dataService.GetVideosAsync(selectedExercise.Name))
+        selectedExercise!.VideoItems = (await dataService.GetVideosAsync(selectedExercise.Name))
             .Select(video => new Models.ExerciseVideo()
             {
                 VideoUrl = video.VideoUrl
             })
             .ToObservableCollection();
 
-        Dictionary<string, object> param = new Dictionary<string, object> { { "Item", selectedExercise } };
+        var param = new Dictionary<string, object> { { "Item", selectedExercise } };
         await Shell.Current.GoToAsync(nameof(TrainingExerciseItemPage), param);
     }
 
@@ -256,7 +254,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         }
     }
 
-    private async void MakeTraining()
+    private async Task MakeTraining()
     {
         if (Training.Exercises.Count == 0)
         {

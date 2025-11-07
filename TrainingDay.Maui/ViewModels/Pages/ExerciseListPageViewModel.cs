@@ -12,7 +12,7 @@ namespace TrainingDay.Maui.ViewModels.Pages;
 
 public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
 {
-    private List<int> selectedIndexes = new List<int>();
+    private List<int> selectedIndexes = [];
     public FilterModel Filter { get; set; }
     public ObservableCollection<ExerciseListItemViewModel> BaseItems { get; set; } // все упражнения из базы
     public ObservableCollection<ExerciseListItemViewModel> Items { get; set; } // элементы, отображенные на экране в списке
@@ -75,9 +75,8 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
             .Select(x => x.Id)
             .Union(selectedIndexes)
             .Distinct();
-
         
-        List<ExerciseListItemViewModel> resultItems = new List<ExerciseListItemViewModel>();
+        var resultItems = new List<ExerciseListItemViewModel>();
 
         foreach (var id in ids)
         {
@@ -119,84 +118,66 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
     private ObservableCollection<ExerciseListItemViewModel> LoadItems()
     {
         var newItems = new ObservableCollection<ExerciseListItemViewModel>();
-        var baseItems = App.Database.GetExerciseItems();
+
         try
         {
             FillSelectedIndexes();
 
+            var baseItems = App.Database.GetExerciseItems();
+            var nameFilter = Filter.NameFilter?.Trim();
+            var hasMuscleFilter = Filter.CurrentMuscles?.Count > 0;
+            var existedExerciseIds = ExistedExercises?.Select(x => x.ExerciseId).ToHashSet() ?? new HashSet<int>();
+            bool checkTags = Filter.IsNoEquipmentFilter || Filter.IsBarbellExists || Filter.IsDumbbellExists;
+
             foreach (var exercise in baseItems)
             {
-                var newItem = new ExerciseListItemViewModel(exercise);
-                newItem.IsExerciseExistsInWorkout = ExistedExercises != null && ExistedExercises.Any(x => x.ExerciseId == exercise.Id);
-                newItem.IsSelected = selectedIndexes.Contains(newItem.Id);
-                bool? byname = null, byFilter = null, atHome = null, barbell = null, dumbbell = null, byLevel = null;
+                bool match = true;
 
-                var tags = ExerciseExtensions.ConvertTagIntToList(exercise.TagsValue);
+                if (!string.IsNullOrEmpty(nameFilter))
+                {
+                    match &= exercise.Name.Contains(nameFilter, StringComparison.OrdinalIgnoreCase);
+                }
+
+                List<ExerciseTags>? tags = null;
+                if (checkTags)
+                    tags = [.. ExerciseExtensions.ConvertTagIntToList(exercise.TagsValue)];
 
                 if (Filter.IsNoEquipmentFilter)
-                {
-                    atHome = tags.Contains(ExerciseTags.CanDoAtHome);
-                }
+                    match &= tags!.Contains(ExerciseTags.CanDoAtHome);
 
                 if (Filter.IsBarbellExists)
-                {
-                    barbell = tags.Contains(ExerciseTags.BarbellExist);
-                }
+                    match &= tags!.Contains(ExerciseTags.BarbellExist);
 
                 if (Filter.IsDumbbellExists)
-                {
-                    dumbbell = tags.Contains(ExerciseTags.DumbbellExist);
-                }
-
-                if (!string.IsNullOrEmpty(Filter.NameFilter))
-                {
-                    byname = newItem.Name.Contains(Filter.NameFilter, StringComparison.OrdinalIgnoreCase);
-                }
-
-                if (Filter.CurrentMuscles.Count != 0)
-                {
-                    byFilter = newItem.Muscles.Select(i => (MusclesEnum)i.Id).Intersect(Filter.CurrentMuscles).Count() != 0;
-                }
+                    match &= tags!.Contains(ExerciseTags.DumbbellExist);
 
                 if (Filter.DifficultyLevel != 0)
+                    match &= (int)exercise.DifficultType == Filter.DifficultyLevel;
+
+                var newItem = new ExerciseListItemViewModel(exercise)
                 {
-                    byLevel = (int)newItem.DifficultType == Filter.DifficultyLevel;
+                    IsExerciseExistsInWorkout = existedExerciseIds.Contains(exercise.Id),
+                    IsSelected = selectedIndexes.Contains(exercise.Id)
+                };
+
+                if (hasMuscleFilter)
+                {
+                    var exerciseMuscles = newItem.Muscles.Select(m => (MusclesEnum)m.Id);
+                    match &= exerciseMuscles.Any(m => Filter.CurrentMuscles!.Contains(m));
                 }
 
-                if (byname.HasValue && !byname.Value 
-                    || byFilter.HasValue && !byFilter.Value 
-                    || atHome.HasValue && !atHome.Value
-                    || barbell.HasValue && !barbell.Value
-                    || dumbbell.HasValue && !dumbbell.Value
-                    || byLevel.HasValue && !byLevel.Value)
-                {
+                if (!match)
                     continue;
-                }
 
                 newItems.Add(newItem);
             }
-
-            return newItems;
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
             LoggingService.TrackError(e);
-            try
-            {
-                foreach (var exercise in baseItems)
-                {
-                    newItems.Add(new ExerciseListItemViewModel(exercise));
-                }
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception);
-                LoggingService.TrackError(e);
-            }
-
-            return newItems;
         }
+
+        return newItems;
     }
 
     private async void ViewFilterWindow()

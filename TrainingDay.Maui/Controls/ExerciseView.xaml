@@ -102,7 +102,7 @@
             </BindableLayout.ItemTemplate>
         </FlexLayout>
 
-		<Border Grid.Row="4" Margin="0" Padding="0" Style="{StaticResource BorderCellStyle}" VerticalOptions="Fill" IsVisible="True">
+        <Border Grid.Row="4" Margin="0" Padding="0" Style="{StaticResource BorderCellStyle}" VerticalOptions="Fill" IsVisible="True">
             <StackLayout Margin="5">
                 <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.StartPosition}" TextColor="DodgerBlue" VerticalTextAlignment="Center" 
            IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
@@ -121,14 +121,6 @@
            IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
             </StackLayout>
         </Border>
-        
-        <!-- <CollectionView Grid.Row="5" ItemsSource="{Binding VideoItems}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:ExerciseVideo">
-                    <controls:FullScreenVideoWebView HorizontalOptions="Fill" VerticalOptions="Fill"
-                                                     Source="{Binding WebViewData}" />
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView> -->
+
     </Grid>
 </ContentView>
