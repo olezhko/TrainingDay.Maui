@@ -14,12 +14,9 @@
         <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
         
         <CollectionView ItemsSource="{Binding BlogsCollection}" ItemSizingStrategy="MeasureAllItems">
-            <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
-            </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Border Style="{DynamicResource BorderCellStyle}" Margin="0" Padding="0" MinimumHeightRequest="80">
+                    <Border Style="{DynamicResource BorderCellStyle}" Margin="0" Padding="10" MinimumHeightRequest="80">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={x:Reference Page}, Path=BindingContext.OpenBlogCommand}" CommandParameter="{Binding }"/>
                         </Border.GestureRecognizers>

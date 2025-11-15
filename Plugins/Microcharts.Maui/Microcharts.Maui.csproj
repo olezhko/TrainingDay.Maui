@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <!-- iOS, Android, MacCatalyst -->
-        <TargetFrameworks>net9.0-ios;net9.0-android</TargetFrameworks>
+        <TargetFrameworks>net10.0-ios;net10.0-android</TargetFrameworks>
         <UseMaui>true</UseMaui>
 
         <Description>Simple, cross-platform chart library for .NET MAUI.</Description>

@@ -13,7 +13,9 @@ namespace TrainingDay.Maui.Services
         Task<BlogResponse> GetBlogAsync(int id);
 		Task<ExerciseAiResponse> GetExercisesByQueryAsync(string query);
 		Task<bool> PostActionAsync(string token, MobileActions action);
-		Task<IEnumerable<YoutubeVideoItem>> GetVideosAsync(string exerciseName);
+		Task<bool> SendFirebaseTokenAsync(string token, string culture, string zone);
+
+        Task<IEnumerable<YoutubeVideoItem>> GetVideosAsync(string exerciseName);
 	}
 
     public class DataService : IDisposable, IDataService
@@ -44,7 +46,10 @@ namespace TrainingDay.Maui.Services
 		public async Task<IReadOnlyCollection<BlogResponse>> GetBlogsAsync(DateTimeOffset? createdOffset)
 		{
 			var cultureId = Settings.CultureName.Contains("en", StringComparison.OrdinalIgnoreCase) ? 1 : 2;
-			var request = CreateRequest($"/mobileblogs?cultureId={cultureId}&createdFilter={createdOffset}", Method.Get);
+
+			string? createdQuery = createdOffset?.ToString("yyyy-MM-dd HH:mm:ss");
+
+			var request = CreateRequest($"/mobileblogs?cultureId={cultureId}&createdFilter={createdQuery}", Method.Get);
 			var response = await _client.ExecuteAsync(request);
 			return response.IsSuccessful
 				? JsonConvert.DeserializeObject<IReadOnlyCollection<BlogResponse>>(response.Content)
@@ -69,10 +74,18 @@ namespace TrainingDay.Maui.Services
 				: new ExerciseAiResponse([]);
 		}
 
-		public async Task<bool> PostActionAsync(string token, MobileActions action)
+        public async Task<bool> SendFirebaseTokenAsync(string token, string culture, string zone)
+        {
+            var model = new FirebaseTokenDto { Language = culture, Token = token, Zone = zone};
+            var request = CreateRequest("/MobileTokens", Method.Post, model);
+            var response = await _client.ExecuteAsync(request);
+            return response.IsSuccessful;
+        }
+
+        public async Task<bool> PostActionAsync(string token, MobileActions action)
 		{
 			var model = new MobileActionDto { Action = action, Token = token };
-			var request = CreateRequest("/users/action", Method.Post, model);
+			var request = CreateRequest("/MobileTokens/action", Method.Post, model);
 			var response = await _client.ExecuteAsync(request);
 			return response.IsSuccessful;
 		}

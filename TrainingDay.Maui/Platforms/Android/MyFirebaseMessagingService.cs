@@ -5,6 +5,7 @@ using Android.OS;
 using Android.Util;
 using AndroidX.Core.App;
 using Firebase.Messaging;
+using System.Globalization;
 using TrainingDay.Common.Communication;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models.Notifications;
@@ -23,14 +24,15 @@ namespace TrainingDay.Maui.Platforms.Android
 		{
 			base.OnNewToken(p0);
 			Log.Debug(TAG, "Refreshed token: " + p0);
+
 			await SendToken(p0);
-			TrainingDay.Maui.Services.Settings.Token = p0;
+			Settings.Token = p0;
 		}
 
 		private static async Task SendToken(string token)
 		{
 			var dataService = IPlatformApplication.Current.Services.GetService<IDataService>();
-            await dataService.PostActionAsync(token, MobileActions.Enter);
+            await dataService.SendFirebaseTokenAsync(token, CultureInfo.CurrentCulture.Name, TimeZoneInfo.Local.DisplayName);
 		}
 
 		public override void OnMessageReceived(RemoteMessage message)

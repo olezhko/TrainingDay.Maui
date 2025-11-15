@@ -185,7 +185,7 @@
         <Setter Property="Direction" Value="Row" />
         <Setter Property="JustifyContent" Value="Center" />
         <Setter Property="AlignItems" Value="Center" />
-        <Setter Property="AlignContent" Value="Start" />
+        <Setter Property="AlignContent" Value="Stretch" />
     </Style>
 
     <Style TargetType="ImageButton">

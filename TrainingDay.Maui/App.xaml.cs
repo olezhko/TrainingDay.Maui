@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using System.Globalization;
 using System.Net;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models;
@@ -21,7 +22,7 @@ namespace TrainingDay.Maui
 {
     public partial class App : Application
     {
-        private IPushNotification notificator;
+        private IPushNotification notificationService;
         private IDataService dataService;
         
         private static Repository database;
@@ -65,12 +66,6 @@ namespace TrainingDay.Maui
             return new Window(new AppShell());
         }
         
-        private void SetStatusBarStyle()
-        {
-            CommunityToolkit.Maui.Core.Platform.StatusBar.SetColor(RequestedTheme == AppTheme.Light ? Color.FromRgba("#FFFFFFFF") : Color.FromRgba("#FF000000"));
-            CommunityToolkit.Maui.Core.Platform.StatusBar.SetStyle(RequestedTheme == AppTheme.Light ? StatusBarStyle.DarkContent : StatusBarStyle.LightContent);
-        }
-
         protected override void OnStart()
         {
             base.OnStart();
@@ -79,14 +74,15 @@ namespace TrainingDay.Maui
 
             LoggingService.TrackEvent("Application Started");
 
-            notificator = Handler.MauiContext.Services.GetRequiredService<IPushNotification>();
+            notificationService = Handler.MauiContext.Services.GetRequiredService<IPushNotification>();
             dataService = Handler.MauiContext.Services.GetRequiredService<IDataService>();
             MeasureOfWeight = GetMeasureOfWeight();
 
             Dispatcher.Dispatch(async () =>
             {
-                await DownloadImagesAsync();
+                await dataService.SendFirebaseTokenAsync(Settings.Token, CultureInfo.CurrentCulture.Name, TimeZoneInfo.Local.BaseUtcOffset.ToString());
                 await dataService.PostActionAsync(Settings.Token, Common.Communication.MobileActions.Enter);
+                await DownloadImagesAsync();
             });
         }
 
@@ -97,7 +93,7 @@ namespace TrainingDay.Maui
                 string accessKey = ConstantKeys.AwsS3.accessKey;
                 string secretKey = ConstantKeys.AwsS3.secretKey;
 
-                AmazonS3Client s3Client = new AmazonS3Client(
+                var s3Client = new AmazonS3Client(
                         accessKey,
                         secretKey,
                         RegionEndpoint.GetBySystemName("us-east-1")
@@ -118,10 +114,8 @@ namespace TrainingDay.Maui
                             return;
 
                         var url = b.Key.Replace(".jpg", string.Empty).Replace(".png", string.Empty);
-                        ImageDto image = App.Database.GetImage(url);
 
-                        if (image is null)
-                            image = new ImageDto();
+                        ImageDto image = App.Database.GetImage(url) ?? new ImageDto();
 
                         if (image.Data?.Length != response.Headers.ContentLength)
                         {
@@ -166,7 +160,7 @@ namespace TrainingDay.Maui
                 if (vm != null)
                 {
                     IncomingTraining(vm);
-                    notificator.Show(new PushMessage()
+                    notificationService.Show(new PushMessage()
                     {
                         Id = PushMessagesExtensions.WorkoutAddedId,
                         Title = AppResources.WorkoutAddedString,
@@ -185,7 +179,7 @@ namespace TrainingDay.Maui
                 LoggingService.TrackError(ex);
             }
 
-            notificator.Show(new PushMessage()
+            notificationService.Show(new PushMessage()
             {
                 Id = PushMessagesExtensions.WorkoutAddedId,
                 Title = AppResources.Denied,
@@ -274,7 +268,7 @@ namespace TrainingDay.Maui
                 new Tuple<MeasureWeightTypes, string>(MeasureWeightTypes.Lbs, AppResources.LbsString),
             ];
 
-            return items.FirstOrDefault(item => (int)item.Item1 == Settings.WeightMeasureType).Item2;
+            return items.FirstOrDefault(item => (int)item.Item1 == Settings.WeightMeasureType)!.Item2;
         }
     }
 }

@@ -37,7 +37,7 @@ public class BlogsPageViewModel : BaseViewModel
             .Select(item => new BlogViewModel(item))
             .ToList();
 
-        var lastDate = dbBlogs.FirstOrDefault()?.DateTime;
+        var lastDate = dbBlogs.FirstOrDefault()?.DateTime + TimeSpan.FromSeconds(1);
         try
         {
             var newBlogs = await dataService.GetBlogsAsync(lastDate);

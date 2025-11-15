@@ -51,7 +51,7 @@
             </ImageButton>
 
             <ImageButton Grid.Column="3" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" HorizontalOptions="Center" CornerRadius="17"
-                         IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}" Source="save.png" VerticalOptions="Fill" WidthRequest="35">
+                         Source="save.png" VerticalOptions="Fill" WidthRequest="35">
                 <ImageButton.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Dark=White,Light=Black}" />
                 </ImageButton.Behaviors>
