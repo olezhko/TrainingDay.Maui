@@ -4,7 +4,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels"
              x:Class="TrainingDay.Maui.Controls.RepsAndWeightControl"
-            x:Name="Self">
+             x:Name="Self">
     <ContentView.BindingContext>
         <viewModels:WeightAndRepsViewModel />
     </ContentView.BindingContext>
@@ -15,58 +15,39 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <!--  dont fix HorizontalTextAlignment it broke entry with in carousel view  -->
             <Entry
-            Margin="5,0,0,0"
-            FontSize="Medium"
-            Keyboard="Numeric"
-            MaxLength="3"
-            Text="{Binding Repetitions, Mode=TwoWay}"
-            MinimumWidthRequest="50" />
+                Margin="5,0,0,0"
+                FontSize="Medium"
+                Keyboard="Numeric"
+                MaxLength="3"
+                Text="{Binding Repetitions, Mode=TwoWay}"
+                MinimumWidthRequest="60" />
+            
             <Entry
-            Grid.Column="2"
-            Margin="5,0,0,0"
-            FontSize="Medium"
-            Keyboard="Numeric"
-            IsVisible="{Binding Source={x:Reference Self}, Path=IsOnlyReps, Converter={StaticResource InverseBooleanConverter}}"
-            MaxLength="4"
-            Text="{Binding WeightString, Mode=TwoWay}"
-            MinimumWidthRequest="50" />
+                Grid.Column="2"
+                Margin="5,0,0,0"
+                FontSize="Medium"
+                Keyboard="Numeric"
+                IsVisible="{Binding Source={x:Reference Self}, Path=IsOnlyReps, Converter={StaticResource InverseBooleanConverter}}"
+                MaxLength="4"
+                Text="{Binding WeightString, Mode=TwoWay}"
+                MinimumWidthRequest="60" />
 
             <BoxView
-            Grid.Column="1"
-            HeightRequest="40"
-            IsVisible="{Binding Source={x:Reference Self}, Path=IsOnlyReps, Converter={StaticResource InverseBooleanConverter}}"
-            VerticalOptions="Center"
-            WidthRequest="2"
-            Color="{DynamicResource SeparatorColor}" />
+                Grid.Column="1"
+                HeightRequest="40"
+                IsVisible="{Binding Source={x:Reference Self}, Path=IsOnlyReps, Converter={StaticResource InverseBooleanConverter}}"
+                VerticalOptions="Center"
+                WidthRequest="2"
+                Color="{DynamicResource SeparatorColor}" />
 
-            <ImageButton Grid.Column="4" Margin="0" CornerRadius="17" Clicked="DeleteButton_Clicked" HeightRequest="34" WidthRequest="34" HorizontalOptions="Center" Source="remove.png" VerticalOptions="Fill">
+            <ImageButton Grid.Column="3" Margin="0" CornerRadius="17" Clicked="DeleteButton_Clicked" HeightRequest="34" WidthRequest="34" HorizontalOptions="Center" Source="remove.png" VerticalOptions="Fill">
                 <ImageButton.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Dark=White,Light=Black}" />
                 </ImageButton.Behaviors>
-            </ImageButton>
-
-            <ImageButton Grid.Column="3" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" HorizontalOptions="Center" CornerRadius="17"
-                         Source="save.png" VerticalOptions="Fill" WidthRequest="35">
-                <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Dark=White,Light=Black}" />
-                </ImageButton.Behaviors>
-                <ImageButton.Style>
-                    <Style TargetType="ImageButton">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsFinished}" TargetType="ImageButton" Value="True">
-                                <Setter Property="BackgroundColor" Value="Green" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding IsFinished}" TargetType="ImageButton" Value="False">
-                                <Setter Property="BackgroundColor" Value="Transparent" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </ImageButton.Style>
             </ImageButton>
         </Grid>
     </Border>

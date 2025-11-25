@@ -103,7 +103,7 @@
                                     <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" Style="{StaticResource MuscleFlexStyle}">
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate>
-                                                <Border Margin="1" Style="{StaticResource MuscleBorderCellStyle}" Padding="10,2">
+                                                <Border Style="{StaticResource MuscleBorderCellStyle}">
                                                     <Label FontSize="11" Text="{Binding Name}" TextColor="White" LineBreakMode="NoWrap"/>
                                                 </Border>
                                             </DataTemplate>
