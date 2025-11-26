@@ -104,8 +104,9 @@
                                                 </Style>
                                             </ImageButton.Style>
                                         </ImageButton>
-                                        <Entry Grid.Row="2" Margin="0" FontSize="Medium" IsVisible="{Binding Source={x:Reference Self}, Path=IsOnlyReps, Converter={StaticResource InverseBooleanConverter}}"
-                                        MaxLength="4" Text="{Binding WeightString, Mode=TwoWay}" MinimumWidthRequest="70" HorizontalTextAlignment="Center" />
+                                        <Entry Grid.Row="2" Margin="0" FontSize="Medium" Keyboard="Numeric"
+                                               IsVisible="{Binding Source={x:Reference Self}, Path=IsOnlyReps, Converter={StaticResource InverseBooleanConverter}}"
+                                                MaxLength="4" Text="{Binding WeightString, Mode=TwoWay}" MinimumWidthRequest="70" HorizontalTextAlignment="Center" />
                                     </Grid>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>

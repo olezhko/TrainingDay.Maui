@@ -104,10 +104,11 @@
                                     <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" Style="{StaticResource MuscleFlexStyle}">
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate x:DataType="models:MuscleViewModel">
-                                                <Border Style="{StaticResource MuscleBorderCellStyle}">
-                                                    <Label Text="{Binding Name}" FontSize="11" TextColor="White" LineBreakMode="NoWrap"
-                                                           controls:LabelAutoWidth.EnableAutoWidth="True"/>
-                                                </Border>
+                                                <AbsoluteLayout>
+                                                    <Border Style="{StaticResource MuscleBorderCellStyle}">
+                                                        <Label Text="{Binding Name}" FontSize="11" TextColor="White" LineBreakMode="NoWrap"/>
+                                                    </Border>
+                                                </AbsoluteLayout>
                                             </DataTemplate>
                                         </BindableLayout.ItemTemplate>
                                     </FlexLayout>
