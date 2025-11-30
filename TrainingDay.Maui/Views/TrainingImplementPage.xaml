@@ -43,7 +43,7 @@
 
 
         <controls:StepProgressBar x:Name="StepProgressBarControl" Grid.Row="1" Grid.ColumnSpan="3" Margin="5"
-                                  SteppedColor="{StaticResource Main}">
+                                  SteppedColor="{StaticResource Main}" >
             <controls:StepProgressBar.ItemTemplate>
                 <DataTemplate>
                     <controls:SuperSetControl Grid.Row="1" SuperSetItems="{Binding SuperSetItems}"/>

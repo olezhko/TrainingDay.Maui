@@ -2,12 +2,8 @@
 
 namespace TrainingDay.Maui.Models.Messages
 {
-    internal class ExercisesSelectFinishedMessage
+    internal class ExercisesSelectFinishedMessage(List<ExerciseListItemViewModel> selected)
     {
-        public List<ExerciseListItemViewModel> Selected;
-        public ExercisesSelectFinishedMessage(List<ExerciseListItemViewModel> selected)
-        {
-            Selected = selected;
-        }
+        public List<ExerciseListItemViewModel> Selected = selected;
     }
 }

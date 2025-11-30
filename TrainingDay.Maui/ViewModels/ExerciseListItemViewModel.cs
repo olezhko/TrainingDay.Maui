@@ -22,7 +22,7 @@ public class ExerciseListItemViewModel : ExerciseViewModel
         }
     }
 
-    public ExerciseListItemViewModel(ExerciseDto exercise) : base(exercise)
+    public ExerciseListItemViewModel(ExerciseEntity exercise) : base(exercise)
     {
         Id = exercise.Id;
     }

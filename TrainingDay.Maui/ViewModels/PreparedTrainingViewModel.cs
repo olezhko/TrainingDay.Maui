@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using TrainingDay.Maui.Models;
+﻿using TrainingDay.Maui.Models;
 
 namespace TrainingDay.Maui.ViewModels;
 

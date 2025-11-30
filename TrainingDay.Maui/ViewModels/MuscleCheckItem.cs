@@ -1,5 +1,4 @@
-﻿using TrainingDay.Common;
-using TrainingDay.Common.Models;
+﻿using TrainingDay.Common.Models;
 
 namespace TrainingDay.Maui.ViewModels;
 

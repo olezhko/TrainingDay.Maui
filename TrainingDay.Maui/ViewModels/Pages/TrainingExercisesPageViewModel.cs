@@ -224,20 +224,6 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
             return;
         }
 
-        try
-        {
-            selectedExercise!.VideoItems = (await dataService.GetVideosAsync(selectedExercise.Name))
-                .Select(video => new Models.ExerciseVideo()
-                {
-                    VideoUrl = video.VideoUrl
-                })
-                .ToObservableCollection();
-        }
-        catch (Exception)
-        {
-
-        }
-
         var param = new Dictionary<string, object> { { "Item", selectedExercise } };
         await Shell.Current.GoToAsync(nameof(TrainingExerciseItemPage), param);
     }
@@ -311,7 +297,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         }
 
         LoggingService.TrackEvent($"{GetType().Name}: CreateSuperSet finished");
-        var id = App.Database.SaveSuperSetItem(new SuperSetDto()
+        var id = App.Database.SaveSuperSetItem(new SuperSetEntity()
         {
             Count = countSelected,
             TrainingId = Training.Id,
@@ -475,7 +461,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         {
             await Shell.Current.GoToAsync("..");
 
-            var id = App.Database.SaveTrainingItem(new TrainingDto()
+            var id = App.Database.SaveTrainingItem(new TrainingEntity()
             {
                 Title = result,
             });
@@ -521,13 +507,15 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
             Title = AppResources.ShareTrainingString,
             File = new ShareFile(filename, "application/trday"),
         });
+
+        await Toast.Make(AppResources.SharedString).Show();
     }
 
     private async void ShowTrainingSettingsPage()
     {
         LoggingService.TrackEvent($"{GetType().Name}: ShowTrainingSettingsPage");
 
-        var action = await Shell.Current.DisplayActionSheet(AppResources.ChoseAction, AppResources.CancelString, null, 
+        var action = await Shell.Current.DisplayActionSheetAsync(AppResources.ChoseAction, AppResources.CancelString, null, 
             AppResources.ShareTrainingString, 
             AppResources.SuperSetControl, 
             AppResources.MoveString, 
@@ -558,7 +546,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         foreach (var item in Training.Exercises)
         {
             order++;
-            App.Database.SaveTrainingExerciseItem(new TrainingExerciseDto()
+            App.Database.SaveTrainingExerciseItem(new TrainingExerciseEntity()
             {
                 ExerciseId = item.ExerciseId,
                 TrainingId = Training.Id,

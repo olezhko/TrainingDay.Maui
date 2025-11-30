@@ -24,8 +24,7 @@ public class PushMessagesExtensions
         var weight = App.Database.GetWeightNotesItems();
         if (weight.Any())
         {
-            weight = weight.OrderBy(note => note.Date);
-            var last = weight.Last();
+            var last = weight.OrderBy(note => note.Date).Last();
             if (DateTime.Now - last.Date > TimeSpan.FromDays(7))
             {
                 return true;

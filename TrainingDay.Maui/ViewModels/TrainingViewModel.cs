@@ -46,7 +46,7 @@ public class TrainingViewModel : BaseViewModel
         Exercises = new ObservableCollection<TrainingExerciseViewModel>();
     }
 
-    public TrainingViewModel(TrainingDto tr)
+    public TrainingViewModel(TrainingEntity tr)
         : this()
     {
         Title = tr.Title;
@@ -96,7 +96,7 @@ public class TrainingViewModel : BaseViewModel
                 SuperSetId = trainingExerciseViewModel.SuperSetId,
                 OrderNumber = trainingExerciseViewModel.OrderNumber,
                 TrainingId = Id,
-                Muscles = MusclesConverter.ConvertFromListToString(trainingExerciseViewModel.Muscles.ToList()),
+                Muscles = MusclesExtensions.ConvertFromListToString(trainingExerciseViewModel.Muscles.ToList()),
                 ExerciseId = trainingExerciseViewModel.ExerciseId,
                 Description = JsonConvert.SerializeObject(trainingExerciseViewModel.Description.Model),
                 Name = trainingExerciseViewModel.Name,

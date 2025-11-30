@@ -13,7 +13,7 @@ public class BlogViewModel : BaseViewModel
     {
     }
 
-    public BlogViewModel(BlogDto item)
+    public BlogViewModel(BlogEntity item)
     {
         id = item.Id;
         Title = item.Title;

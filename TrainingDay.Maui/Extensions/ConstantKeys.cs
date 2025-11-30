@@ -1,5 +1,6 @@
 ﻿namespace TrainingDay.Maui.Extensions;
-public class ConstantKeys
+
+public static class ConstantKeys
 {
     public const string WorkoutsAndroidAds = "ca-app-pub-5313002236683041/3406765721";
     public const string WorkoutsiOSAds = "ca-app-pub-5313002236683041/6962867352";
@@ -18,6 +19,8 @@ public class ConstantKeys
 
     public const string NotFinishedTrainingName = "NotFinished.trday";
     public const string DatabaseName = "exercise.db";
+
+    public static string Version => "1.3.1";
 
     public class AwsS3
     {

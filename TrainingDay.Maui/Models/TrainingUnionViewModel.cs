@@ -7,10 +7,10 @@ public class TrainingUnionViewModel
 {
     public TrainingUnionViewModel()
     {
-        TrainingIDs = new List<int>();
+        TrainingIDs = [];
     }
 
-    public TrainingUnionViewModel(TrainingUnionDto union)
+    public TrainingUnionViewModel(TrainingUnionEntity union)
     {
         Id = union.Id;
         Name = union.Name;
@@ -20,7 +20,7 @@ public class TrainingUnionViewModel
         }
         else
         {
-            TrainingIDs = new List<int>();
+            TrainingIDs = [];
         }
     }
 
@@ -30,8 +30,8 @@ public class TrainingUnionViewModel
 
     public List<int> TrainingIDs { get; set; }
 
-    public TrainingUnionDto Model =>
-        new TrainingUnionDto()
+    public TrainingUnionEntity Model =>
+        new TrainingUnionEntity()
         {
             Id = Id,
             Name = Name,

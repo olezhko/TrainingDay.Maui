@@ -12,14 +12,14 @@ namespace TrainingDay.Maui.ViewModels;
 
 public class RepositoryData
 {
-    public IEnumerable<TrainingDto> Trainings { get; set; }
-    public IEnumerable<TrainingExerciseDto> TrainingExercises { get; set; }
-    public IEnumerable<TrainingUnionDto> Groups { get; set; }
-    public IEnumerable<ExerciseDto> Exercises { get; set; }
-    public IEnumerable<WeightNoteDto> WeightNotes { get; set; }
-    public IEnumerable<SuperSetDto> SuperSets { get; set; }
-    public IEnumerable<LastTrainingDto> LastTrainings { get; set; }
-    public IEnumerable<LastTrainingExerciseDto> LastTrainingExercises { get; set; }
+    public IEnumerable<TrainingEntity> Trainings { get; set; }
+    public IEnumerable<TrainingExerciseEntity> TrainingExercises { get; set; }
+    public IEnumerable<TrainingUnionEntity> Groups { get; set; }
+    public IEnumerable<ExerciseEntity> Exercises { get; set; }
+    public IEnumerable<WeightNoteEntity> WeightNotes { get; set; }
+    public IEnumerable<SuperSetEntity> SuperSets { get; set; }
+    public IEnumerable<LastTrainingEntity> LastTrainings { get; set; }
+    public IEnumerable<LastTrainingExerciseEntity> LastTrainingExercises { get; set; }
 }
 
 public class DataManageViewModel : BaseViewModel

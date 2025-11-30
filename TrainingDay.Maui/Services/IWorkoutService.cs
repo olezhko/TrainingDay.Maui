@@ -44,7 +44,7 @@ namespace TrainingDay.Maui.Services
 
         public async Task CreateWorkoutAsync(string name, IEnumerable<ExerciseQueryResponse> exercises, CancellationToken token = default)
         {
-            var id = App.Database.SaveItem(new TrainingDto()
+            var id = App.Database.SaveItem(new TrainingEntity()
             {
                 Title = name,
             });
@@ -54,7 +54,7 @@ namespace TrainingDay.Maui.Services
             foreach (var exercise in exercises)
             {
                 var exerciseItem = baseExercises.FirstOrDefault(item => item.CodeNum == exercise.Guid);
-                var trainingExercise = new TrainingExerciseDto()
+                var trainingExercise = new TrainingExerciseEntity()
                 {
                     TrainingId = id,
                     ExerciseId = exerciseItem.Id,

@@ -4,7 +4,7 @@ using TrainingDay.Maui.ViewModels;
 
 namespace TrainingDay.Maui.Extensions;
 
-public class MusclesConverter
+public class MusclesExtensions
 {
     public static List<MuscleViewModel> SetMuscles(params MusclesEnum[] muscles)
     {

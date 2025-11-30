@@ -38,21 +38,21 @@ class WeightViewAndSetPageViewModel : BaseViewModel
     public WeightViewAndSetPageViewModel()
     {
         WeightPeriodChangedCommand = new Command<object>(obj => PrepareBodyControlItems((ChartWeightPeriod)obj));
-        BodyControlItems.Add(new BodyControlItem(new List<WeightNoteDto>())
+        BodyControlItems.Add(new BodyControlItem(new List<WeightNoteEntity>())
         {
             Name = AppResources.WeightString,
             GoalValue = Settings.WeightGoal,
             Type = WeightType.Weight,
         });
 
-        BodyControlItems.Add(new BodyControlItem(new List<WeightNoteDto>())
+        BodyControlItems.Add(new BodyControlItem(new List<WeightNoteEntity>())
         {
             Name = AppResources.WaistString,
             GoalValue = Settings.WaistGoal,
             Type = WeightType.Waist,
         });
 
-        BodyControlItems.Add(new BodyControlItem(new List<WeightNoteDto>())
+        BodyControlItems.Add(new BodyControlItem(new List<WeightNoteEntity>())
         {
             Name = AppResources.HipsString,
             GoalValue = Settings.HipGoal,
@@ -82,7 +82,7 @@ class WeightViewAndSetPageViewModel : BaseViewModel
                 break;
         }
 
-        WeightNoteDto note = new WeightNoteDto
+        WeightNoteEntity note = new WeightNoteEntity
         {
             Date = DateTime.Now,
             Weight = sender.CurrentValue,
@@ -126,10 +126,10 @@ class WeightViewAndSetPageViewModel : BaseViewModel
         return countDaysPeriod;
     }
 
-    private List<WeightNoteDto> PrepareChartData(IEnumerable<WeightNoteDto> bodyControlItems, DateTime startDate, WeightType type)
+    private List<WeightNoteEntity> PrepareChartData(IEnumerable<WeightNoteEntity> bodyControlItems, DateTime startDate, WeightType type)
     {
         var periodWeightItems = bodyControlItems.Where(a => a.Date > startDate).Where(a => a.Type == (int)type);
-        var chartItems = new List<WeightNoteDto>();
+        var chartItems = new List<WeightNoteEntity>();
         var lastItem = bodyControlItems.LastOrDefault(item => item.Date < startDate && item.Type == (int)type);
         if (lastItem != null)
             chartItems.Add(lastItem);
@@ -181,7 +181,7 @@ class WeightViewAndSetPageViewModel : BaseViewModel
         IsBusy = false;
     }
 
-    private LineChart PrepareChart(double goal, IEnumerable<WeightNoteDto> items)
+    private LineChart PrepareChart(double goal, IEnumerable<WeightNoteEntity> items)
     {
         if (!items.Any())
         {

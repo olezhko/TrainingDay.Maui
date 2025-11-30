@@ -38,21 +38,21 @@ public class ExerciseViewModel : BaseViewModel
         Id = exercise.Id;
         Tags = [.. ExerciseExtensions.ConvertTagIntToList(exercise.TagsValue)];
         Name = exercise.Name;
-        Muscles = new ObservableCollection<MuscleViewModel>(MusclesConverter.ConvertFromStringToList(exercise.MusclesString));
+        Muscles = new ObservableCollection<MuscleViewModel>(MusclesExtensions.ConvertFromStringToList(exercise.MusclesString));
         Description = DescriptionViewModel.ConvertFromJson(exercise.Description);
         CodeNum = exercise.CodeNum;
         DifficultType = exercise.DifficultType;
         OnPropertyChanged(nameof(IsBase));
     }
 
-    public virtual ExerciseDto GetExercise()
+    public virtual ExerciseEntity GetExercise()
     {
-        return new ExerciseDto()
+        return new ExerciseEntity()
         {
             Id = Id,
             Description = JsonConvert.SerializeObject(Description?.Model),
             Name = Name,
-            MusclesString = MusclesConverter.ConvertFromListToString(Muscles.ToList()),
+            MusclesString = MusclesExtensions.ConvertFromListToString(Muscles.ToList()),
             TagsValue = ExerciseExtensions.ConvertTagListToInt(Tags),
             CodeNum = CodeNum,
             DifficultType = DifficultType

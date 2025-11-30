@@ -155,6 +155,16 @@ IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringC
                     <Label FontSize="Small" Text="{Binding Description.Advice}" 
 IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
                 </StackLayout>
+
+                <CarouselView ItemsSource="{Binding VideoItems}" HeightRequest="300" WidthRequest="400" IndicatorView="indicatorView">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <toolkit:MediaElement Source="{Binding VideoUrl}" HeightRequest="300" WidthRequest="400" />
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+
+                <IndicatorView x:Name="indicatorView" ItemsSource="{Binding VideoItems}" HorizontalOptions="Center"/>
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

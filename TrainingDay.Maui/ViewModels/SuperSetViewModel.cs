@@ -16,8 +16,8 @@ public class SuperSetViewModel : ObservableCollection<TrainingExerciseViewModel>
         get { return new ObservableCollection<TrainingExerciseViewModel>(this.Items); }
     }
 
-    public SuperSetDto Model =>
-        new SuperSetDto()
+    public SuperSetEntity Model =>
+        new ()
         {
             Count = Items.Count,
             Id = Id,

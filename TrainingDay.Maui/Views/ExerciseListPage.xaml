@@ -5,7 +5,6 @@
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
-             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
              x:Class="TrainingDay.Maui.Views.ExerciseListPage"
              Shell.TabBarIsVisible="False"
              Padding="5">
@@ -30,7 +29,8 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
-            <SearchBar x:Name="SearchBar" Placeholder="{x:Static resx:AppResources.SearchByNameString}" Text="{Binding Filter.NameFilter}" TextChanged="SearchBar_OnTextChanged" />
+            <SearchBar x:Name="SearchBar" Placeholder="{x:Static resx:AppResources.SearchByNameString}" Text="{Binding Filter.NameFilter}" 
+                       TextChanged="SearchBar_OnTextChanged" SearchButtonPressed="SearchButtonPressed"/>
 
             <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="filter.png"
                     Command="{Binding ViewFilterWindowCommand}" BackgroundColor="Transparent">
@@ -42,7 +42,6 @@
 
         <ActivityIndicator Grid.Row="1" IsVisible="{Binding IsBusy}" IsRunning="True"/>
         <CollectionView x:Name="ExercisesListView" Grid.Row="1" BackgroundColor="Transparent" IsVisible="{Binding IsBusy,Converter={StaticResource InverseBooleanConverter}}"
-                        android:ListView.IsFastScrollEnabled="true"
                         ItemsSource="{Binding Items}" ItemsUpdatingScrollMode="KeepScrollOffset" SelectionMode="Single" VerticalScrollBarVisibility="Always">
             <CollectionView.EmptyView>
                 <StackLayout VerticalOptions="Center">
@@ -53,7 +52,7 @@
                         <Image Source="no_exercises.png" />
                     </Border>
 
-                    <Label FontSize="20" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.NoExercisesNeedAddNewString}" VerticalOptions="Fill" />
+                    <Label FontSize="20" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.NoExercisesFilterString}" VerticalOptions="Fill" />
 
                     <ImageButton Grid.Column="1" WidthRequest="60" HeightRequest="60" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="add_empty.png"
                         Clicked="AddExercisesButton_Clicked" BackgroundColor="Transparent">

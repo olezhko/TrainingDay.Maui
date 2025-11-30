@@ -77,7 +77,7 @@ public class StatisticsViewModel : BaseViewModel
         IsBusy = false;
     }
 
-    private int CalculateMaxOneTrainingPerWeekCount(IEnumerable<LastTrainingDto> trainings)
+    private int CalculateMaxOneTrainingPerWeekCount(IEnumerable<LastTrainingEntity> trainings)
     {
         int result = 0;
         if (!trainings.Any())

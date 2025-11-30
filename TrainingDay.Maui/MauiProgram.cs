@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Handlers;
+using Microsoft.Maui.LifecycleEvents;
 using Microsoft.Maui.Platform;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using TrainingDay.Maui.Controls;
@@ -17,7 +18,20 @@ namespace TrainingDay.Maui
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
-                .UseMauiCommunityToolkit()
+                .UseMauiCommunityToolkit(static options =>
+                {
+                    options.SetPopupDefaults(new DefaultPopupSettings
+                    {
+                        CanBeDismissedByTappingOutsideOfPopup = true,
+                        Padding = 4
+                    });
+
+                    options.SetPopupOptionsDefaults(new DefaultPopupOptionsSettings
+                    {
+                        CanBeDismissedByTappingOutsideOfPopup = true,
+                    });
+                })
+                .UseMauiCommunityToolkitMediaElement()
                 .UseSkiaSharp()
                 .ConfigureFonts(fonts =>
                 {
@@ -86,10 +100,38 @@ namespace TrainingDay.Maui
 
             });
 
+            Microsoft.Maui.Handlers.PickerHandler.Mapper.AppendToMapping("Borderless", (handler, entry) =>
+            {
+#if ANDROID
+                handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
+                handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
+#endif
+
+#if IOS
+                MapPickerFormatting(handler, entry);
+#endif
+
+            });
+
+            builder.RegisterFirebase();
+
             return builder.Build();
         }
 
 #if IOS
+
+        private static void MapPickerFormatting(IPickerHandler handler, IPicker entry)
+        {
+            handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
+
+            // Update all of the attributed text formatting properties
+            handler.PlatformView?.UpdateCharacterSpacing(entry);
+
+            // Setting any of those may have removed text alignment settings,
+            // so we need to make sure those are applied, too
+            handler.PlatformView?.UpdateHorizontalTextAlignment(entry);
+        }
+
         private static void MapFormatting(IEntryHandler handler, IEntry entry)
         {
             handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
@@ -109,6 +151,26 @@ namespace TrainingDay.Maui
             handler.PlatformView.SearchBarStyle = UIKit.UISearchBarStyle.Minimal;
         }
 #endif
+        private static MauiAppBuilder RegisterFirebase(this MauiAppBuilder builder)
+        {
+            builder.ConfigureLifecycleEvents(events =>
+            {
+#if IOS
+            events.AddiOS(iOS => iOS.FinishedLaunching((app, launchOptions) => {
+                //Firebase.Core.App.Configure();
+                //Firebase.Crashlytics.Crashlytics.SharedInstance.Init();
+                //Firebase.Crashlytics.Crashlytics.SharedInstance.SetCrashlyticsCollectionEnabled(true);
+                //Firebase.Crashlytics.Crashlytics.SharedInstance.SendUnsentReports();
+                return false;
+            }));
+#else
+                events.AddAndroid(android => android.OnCreate((activity, bundle) => {
+                    Firebase.FirebaseApp.InitializeApp(activity);
+                }));
+#endif
+            });
 
+            return builder;
+        }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace TrainingDay.Maui.Models.Database;
 
-public class BlogDto
+public class BlogEntity
 {
     [PrimaryKey, AutoIncrement, Column("_id")]
     public int Id { get; set; }

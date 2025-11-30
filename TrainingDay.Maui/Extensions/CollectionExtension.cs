@@ -51,25 +51,3 @@ public static class CollectionExtensions
         return result;
     }
 }
-
-public static class UIHelper
-{
-    public static IEnumerable<T> FindVisualChildren<T>(Element parent) where T : Element
-    {
-        if (parent == null) yield break;
-
-        foreach (var child in parent.LogicalChildren)
-        {
-            if (child is T tChild)
-            {
-                yield return tChild;
-            }
-
-            // Recursively look for children of the specific type
-            foreach (var descendant in FindVisualChildren<T>(child))
-            {
-                yield return descendant;
-            }
-        }
-    }
-}
