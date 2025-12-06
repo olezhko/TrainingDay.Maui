@@ -91,7 +91,9 @@ namespace Microcharts
             }
         }
 
-        internal static void DrawYAxis(bool showYAxisText, bool showYAxisLines, Position yAxisPosition, SKPaint yAxisTextPaint, SKPaint yAxisLinesPaint, float margin, float animationProgress, float maxValue, float valueRange, SKCanvas canvas, int width, float yAxisXShift, List<float> yAxisIntervalLabels, float headerHeight, SKSize itemSize, float origin)
+        internal static void DrawYAxis(bool showYAxisText, bool showYAxisLines, Position yAxisPosition, SKPaint yAxisTextPaint, SKPaint yAxisLinesPaint, float margin, 
+            float animationProgress, float maxValue, float valueRange, SKCanvas canvas, int width, float yAxisXShift, List<float> yAxisIntervalLabels, float headerHeight, 
+            SKSize itemSize, float origin)
         {
             if (showYAxisText || showYAxisLines)
             {
@@ -137,8 +139,8 @@ namespace Microcharts
             var pt = yAxisTextPaint.Clone();
             pt.TextAlign = yAxisPosition == Position.Left ? SKTextAlign.Right : SKTextAlign.Left;
 
-            foreach (var @int in intervals)
-                canvas.DrawTextCenteredVertically(@int.Label, pt, @int.Point.X, @int.Point.Y);
+            foreach (var item in intervals)
+                canvas.DrawTextCenteredVertically(item.Label, pt, item.Point.X, item.Point.Y);
         }
 
         /// <summary>

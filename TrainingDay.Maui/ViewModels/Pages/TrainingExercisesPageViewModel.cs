@@ -209,36 +209,42 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
     private async Task TrainingExerciseTapped(object item)
     {
-        var selectedExercise = item as TrainingExerciseViewModel;
-        TappedExerciseIndex = Training.Exercises.IndexOf(selectedExercise!);
+        IsBusy = true;
+        if (item is not TrainingExerciseViewModel selectedExercise)
+        {
+            IsBusy = false;
+            return;
+        }
+
+        TappedExerciseIndex = Training.Exercises.IndexOf(selectedExercise);
         if (CurrentAction != ExerciseCheckBoxAction.None) // when we in action, tapped equals changing selected
         {
             if (CurrentAction == ExerciseCheckBoxAction.SuperSet)
             {
                 if (selectedExercise!.SuperSetId == 0)
                 {
-                    selectedExercise.IsSelected = !selectedExercise.IsSelected;
+                    selectedExercise.IsSelected = selectedExercise.IsSelected;
                 }
             }
 
             return;
         }
 
-        try
-        {
-            selectedExercise!.VideoItems = (await dataService.GetVideosAsync(selectedExercise.Name))
-                .Select(video => new Models.ExerciseVideo()
-                {
-                    VideoUrl = video.VideoUrl
-                })
-                .ToObservableCollection();
-        }
-        catch (Exception)
-        {
-
-        }
+        //try
+        //{
+        //    selectedExercise.VideoItems = (await dataService.GetVideosAsync(selectedExercise.Name))
+        //        .Select(video => new Models.ExerciseVideo()
+        //        {
+        //            VideoUrl = video.VideoUrl
+        //        })
+        //        .ToObservableCollection();
+        //}
+        //catch
+        //{
+        //}
 
         var param = new Dictionary<string, object> { { "Item", selectedExercise } };
+        IsBusy = false;
         await Shell.Current.GoToAsync(nameof(TrainingExerciseItemPage), param);
     }
 
@@ -527,7 +533,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
     {
         LoggingService.TrackEvent($"{GetType().Name}: ShowTrainingSettingsPage");
 
-        var action = await Shell.Current.DisplayActionSheet(AppResources.ChoseAction, AppResources.CancelString, null, 
+        var action = await Shell.Current.DisplayActionSheetAsync(AppResources.ChoseAction, AppResources.CancelString, null, 
             AppResources.ShareTrainingString, 
             AppResources.SuperSetControl, 
             AppResources.MoveString, 

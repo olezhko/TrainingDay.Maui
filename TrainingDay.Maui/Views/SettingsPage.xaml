@@ -43,7 +43,7 @@
                 <StackLayout Margin="5">
                     <StackLayout Orientation="Horizontal">
                         <Label Text="{x:Static resx:AppResources.ScreenOnWhenImplementing}" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
-                        <Switch Toggled="ScreenOnImplementedSwitch_OnToggled" x:Name="ScreenOnImplementedSwitch" />
+                        <Switch x:Name="ScreenOnImplementedSwitch" Toggled="ScreenOnImplementedSwitch_OnToggled" />
                     </StackLayout>
                     <Label Text="{x:Static resx:AppResources.ScreenOnWhenImplementingTip}" FontSize="Small" TextColor="Gray" />
                 </StackLayout>

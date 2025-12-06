@@ -31,12 +31,11 @@
     </ContentPage.BindingContext>
     <Grid>
         <ScrollView>
-            <Grid x:Name="ContentGrid" RowDefinitions="auto,auto,auto,auto,auto,auto" RowSpacing="0">
+            <Grid x:Name="ContentGrid" RowDefinitions="auto,auto,auto,auto,auto,auto" RowSpacing="10">
                 <Border Grid.Row="0" Style="{StaticResource MaterialBorder}" IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}">
                     <Grid>
                         <Label Text="{x:Static resx:AppResources.NameString}" Style="{StaticResource MaterialLabel}"/>
-                        <Entry x:Name="NameEditor" FontSize="22" IsReadOnly="{Binding IsBase}" 
-                            Keyboard="Text" Text="{Binding Name}" VerticalOptions="End"/>
+                        <Entry x:Name="NameEditor" FontSize="22" IsReadOnly="{Binding IsBase}" Keyboard="Text" Text="{Binding Name}" VerticalOptions="End" />
                     </Grid>
                 </Border>
 
@@ -48,53 +47,64 @@
                     Text="{Binding Name}" HorizontalTextAlignment="Center"
                     VerticalOptions="Start" />
 
-                <Grid Grid.Row="1" ColumnDefinitions="*, auto">
-                    <Border Grid.ColumnSpan="2"
-                        Padding="0"
-                        HeightRequest="120"
-                        HorizontalOptions="Center"
-                        WidthRequest="120">
-                        <controls:ImageCache CodeNum="{Binding CodeNum, Mode=TwoWay}" />
-                    </Border>
+                <Border Padding="20" Grid.Row="1" StrokeDashArray="5,5" StrokeDashOffset="5" StrokeShape="RoundRectangle 20" BackgroundColor="{StaticResource Gray100}">
+                    <VerticalStackLayout Spacing="10">
+                        <Border StrokeShape="RoundRectangle 20" WidthRequest="120" HeightRequest="120" BackgroundColor="{StaticResource Gray200}">
+                            <controls:ImageCache x:Name="ExerciseImage" CodeNum="{Binding CodeNum, Mode=TwoWay}" ExerciseId="{Binding LoadId, Mode=TwoWay}" >
+                                <controls:ImageCache.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="White" />
+                                </controls:ImageCache.Behaviors>
+                            </controls:ImageCache>
+                        </Border>
 
-                    <Grid Grid.Column="1" RowDefinitions="auto,auto" HorizontalOptions="End">
-                        <Label Text="{x:Static resx:AppResources.Difficulty}" VerticalOptions="Center" HorizontalOptions="Center"/>
-                        <toolkit:RatingView HorizontalOptions="Center" Grid.Row="1"
-                                            VerticalOptions="End"
+                        <Button BackgroundColor="{StaticResource PlaceholderColor}" Text="{x:Static resx:AppResources.AddImage}" CornerRadius="20" HorizontalOptions="Center" Padding="30,0"
+                                    Clicked="Button_Clicked" IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border StrokeShape="RoundRectangle 20" Padding="15" Grid.Row="2">
+                    <StackLayout>
+                        <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                            <Label Text="{x:Static resx:AppResources.TargetMuscles}" FontSize="17" VerticalOptions="Center"/>
+                            <ImageButton Grid.Column="1" HorizontalOptions="Start" Source="edit.png" IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}" Clicked="ShowMusclesLookup_Click"/>
+                        </Grid>
+                        <StackLayout>
+                            <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" Style="{StaticResource MuscleFlexStyle}" >
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <AbsoluteLayout>
+                                            <Border Style="{StaticResource MuscleBorderCellStyle}">
+                                                <Label Text="{Binding Name}" FontSize="14" TextColor="White" LineBreakMode="NoWrap"/>
+                                            </Border>
+                                        </AbsoluteLayout>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </FlexLayout>
+                        </StackLayout>
+                    </StackLayout>
+                </Border>
+
+                <Border StrokeShape="RoundRectangle 20" Padding="15" Grid.Row="3" >
+                    <Grid ColumnSpacing="20">
+                        <Label x:Name="DifficultyLevelLabel" Text="{x:Static resx:AppResources.Difficulty}" FontSize="17" VerticalOptions="Center"/>
+
+                        <toolkit:RatingView HorizontalOptions="End" Grid.Column="1"
                                             EmptyShapeColor="Transparent"
                                             FillColor="{StaticResource Main}"
                                             FillOption ="Shape"
-                                            IsReadOnly="True"
                                             ShapePadding="1,2,2,1"
                                             ShapeDiameter="25"
                                             MaximumRating="3"
                                             Rating="{Binding DifficultType}"
                                             Shape="Star"
+                                            RatingChanged="RatingView_RatingChanged"
                                             ShapeBorderColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"
                                             ShapeBorderThickness="0.3"
                                             Spacing="1" />
                     </Grid>
-                </Grid>
+                </Border>
 
-                <StackLayout Grid.Row="2">
-                    <Button CornerRadius="20" Text="{x:Static resx:AppResources.SelectMusclesString}" IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}" 
-                        HorizontalOptions="Fill" Clicked="ShowMusclesLookup_Click"/>
-                    <StackLayout>
-                        <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" Style="{StaticResource MuscleFlexStyle}">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate>
-                                    <AbsoluteLayout>
-                                        <Border Style="{StaticResource MuscleBorderCellStyle}">
-                                            <Label Text="{Binding Name}" FontSize="14" TextColor="White" LineBreakMode="NoWrap"/>
-                                        </Border>
-                                    </AbsoluteLayout>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </FlexLayout>
-                    </StackLayout>
-                </StackLayout>
-
-                <StackLayout Grid.Row="3" IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}">
+                <StackLayout Grid.Row="4" IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}">
                     <RadioButton x:Name="ExerciseByRepsCheckBox" GroupName="ExerciseType" BackgroundColor="Transparent"
                              IsChecked="{Binding Tags,Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByReps}, Mode=OneWay}"
                              IsEnabled="{Binding IsBase,Converter={StaticResource InverseBooleanConverter}}"/>
@@ -106,38 +116,73 @@
                              IsEnabled="{Binding IsBase,Converter={StaticResource InverseBooleanConverter}}"/>
                 </StackLayout>
 
-                <Grid Grid.Row="4" RowDefinitions="auto,auto,auto">
-                    <VerticalStackLayout Grid.Row="0">
-                        <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.StartPosition}" TextColor="DodgerBlue" VerticalTextAlignment="Center" 
-                           IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
-                        <Editor
-                            x:Name="StartingDescEditor"
-                            AutoSize="TextChanges"
-                            FontSize="Small"
-                            IsReadOnly="{Binding IsBase}"
-                            IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"
-                            Placeholder="{x:Static resx:AppResources.StartPosition}"
-                            BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}"
-                            Text="{Binding Description.StartPosition}" />
-                        <Label FontSize="Small" IsVisible="{Binding Source={x:Reference StartingDescEditor}, Path=IsReadOnly}" Text="{Binding Description.StartPosition}" />
-                    </VerticalStackLayout>
+                <Border Grid.Row="5" Padding="10" StrokeShape="RoundRectangle 20">
+                    <Grid RowDefinitions="auto,auto,auto,auto" RowSpacing="15">
+                        <Label Text="{x:Static resx:AppResources.ExerciseInstructions}" FontSize="17"/>
 
-                    <VerticalStackLayout Grid.Row="1">
-                        <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Execution}" TextColor="LimeGreen" VerticalTextAlignment="Center" 
-                           IsVisible="{Binding Description.Execution, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
-                        <Editor x:Name="ExecDescEditor" AutoSize="TextChanges" FontSize="Small" IsReadOnly="{Binding IsBase}" IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}" Placeholder="{x:Static resx:AppResources.Execution}"
-                            BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}" Text="{Binding Description.Execution}" />
-                        <Label FontSize="Small" IsVisible="{Binding Source={x:Reference ExecDescEditor}, Path=IsReadOnly}" Text="{Binding Description.Execution}" />
-                    </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Row="1" Spacing="0">
+                            <Label FontSize="15" Text="{x:Static resx:AppResources.StartPosition}" VerticalTextAlignment="Center" />
+                            <Border StrokeShape="RoundRectangle 20" Padding="10">
+                                <Grid>
+                                    <Editor MinimumHeightRequest="90"
+                                    x:Name="StartingDescEditor"
+                                    AutoSize="TextChanges" Keyboard="Text"
+                                    FontSize="Small"
+                                    IsReadOnly="{Binding IsBase}"
+                                    IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"
+                                    Placeholder="{x:Static resx:AppResources.StartPosition}" PlaceholderColor="Gray"
+                                    BackgroundColor="Transparent"
+                                    Text="{Binding Description.StartPosition}" />
+                                    <Label FontSize="Small" IsVisible="{Binding Source={x:Reference StartingDescEditor}, Path=IsReadOnly}" 
+                                   Text="{Binding Description.StartPosition}" />
+                                </Grid>
+                            </Border>
 
-                    <VerticalStackLayout Grid.Row="2">
-                        <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Advice}" TextColor="Orange" VerticalTextAlignment="Center" 
-                           IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
-                        <Editor x:Name="AdviceDescEditor" AutoSize="TextChanges" FontSize="Small" IsReadOnly="{Binding IsBase}" IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"
-                            Placeholder="{x:Static resx:AppResources.Advice}" BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}" Text="{Binding Description.Advice}" />
-                        <Label FontSize="Small" IsVisible="{Binding Source={x:Reference AdviceDescEditor}, Path=IsReadOnly}" Text="{Binding Description.Advice}" />
-                    </VerticalStackLayout>
-                </Grid>
+                            <Label Text="{x:Static resx:AppResources.DescribeStartingPosition}" TextColor="LightSlateGray" IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"/>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Grid.Row="2" Spacing="0">
+                            <Label FontSize="15" Text="{x:Static resx:AppResources.Execution}" VerticalTextAlignment="Center" />
+                            <Border StrokeShape="RoundRectangle 20" Padding="10" >
+                                <Grid>
+                                    <Editor MinimumHeightRequest="90"
+                                    x:Name="ExecDescEditor"
+                                    AutoSize="TextChanges" Keyboard="Text"
+                                    FontSize="Small"
+                                    IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"
+                                    IsReadOnly="{Binding IsBase}"
+                                    Placeholder="{x:Static resx:AppResources.Execution}" PlaceholderColor="Gray"
+                                    BackgroundColor="Transparent"
+                                    Text="{Binding Description.Execution}" />
+                                    <Label FontSize="Small" IsVisible="{Binding Source={x:Reference ExecDescEditor}, Path=IsReadOnly}" Text="{Binding Description.Execution}" />
+                                </Grid>
+                            </Border>
+
+                            <Label Text="{x:Static resx:AppResources.DescribePerformMovement}" TextColor="LightSlateGray" IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"/>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Grid.Row="3" Spacing="0">
+                            <Label FontSize="15" Text="{x:Static resx:AppResources.Advice}" VerticalTextAlignment="Center" />
+                            <Border StrokeShape="RoundRectangle 20" Padding="10">
+                                <Grid>
+                                    <Editor MinimumHeightRequest="90" Keyboard="Text"
+                                    x:Name="AdviceDescEditor"
+                                    AutoSize="TextChanges"
+                                    FontSize="Small"
+                                    IsReadOnly="{Binding IsBase}"
+                                    IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"
+                                    Placeholder="{x:Static resx:AppResources.Advice}" PlaceholderColor="Gray"
+                                    BackgroundColor="Transparent"
+                                    Text="{Binding Description.Advice}" />
+
+                                    <Label FontSize="Small" IsVisible="{Binding Source={x:Reference AdviceDescEditor}, Path=IsReadOnly}" Text="{Binding Description.Advice}" />
+                                </Grid>
+                            </Border>
+
+                            <Label Text="{x:Static resx:AppResources.TipsImportantNotes}" TextColor="LightSlateGray" IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
             </Grid>
         </ScrollView>
 
@@ -163,7 +208,9 @@
                 </CollectionView>
 
                 <Grid Grid.Row="2" VerticalOptions="End" ColumnDefinitions="*,*" ColumnSpacing="10">
-                    <Button CornerRadius="20" Text="{x:Static resx:AppResources.CancelString}" Clicked="MuscleSelectorViewCancel_OnClicked" BackgroundColor="Transparent" BorderWidth="1"/>
+                    <Button CornerRadius="20" Text="{x:Static resx:AppResources.CancelString}" Clicked="MuscleSelectorViewCancel_OnClicked" 
+                            BorderColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" 
+                            TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" BorderWidth="1" BackgroundColor="Transparent" />
                     <Button CornerRadius="20" Grid.Column="1" Text="{x:Static resx:AppResources.SelectString}" Clicked="MuscleSelectorViewApprove_OnClicked" />
                 </Grid>
             </Grid>

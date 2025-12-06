@@ -72,7 +72,8 @@
 
                                 <Border Grid.Column="0" HeightRequest="70" WidthRequest="70" VerticalOptions="Center" BackgroundColor="White" Stroke="Transparent">
                                     <Grid HeightRequest="70" WidthRequest="70">
-                                        <controls:ImageCache x:Name="ImageControl" HeightRequest="70" WidthRequest="70" CodeNum="{Binding CodeNum}">
+                                        <controls:ImageCache x:Name="ImageControl" HeightRequest="70" WidthRequest="70" 
+                                                             CodeNum="{Binding CodeNum}" ExerciseId="{Binding LoadId}">
                                             <controls:ImageCache.GestureRecognizers>
                                                 <DragGestureRecognizer
                                                 CanDrag="True"

@@ -5,7 +5,6 @@ using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.Controls;
 using TrainingDay.Maui.Extensions;
-using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Models.Notifications;
 using TrainingDay.Maui.Resources.Strings;
@@ -272,6 +271,7 @@ public partial class TrainingImplementPage : ContentPage
 
         notificator.Cancel(PushMessagesExtensions.TrainingNotificationId);
 
+        Shell.SetNavBarIsVisible(this, true);
         await Shell.Current.GoToAsync("//workouts");
 
         await dataService.PostActionAsync(Settings.Token, Common.Communication.MobileActions.Workout);

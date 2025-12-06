@@ -19,7 +19,7 @@ namespace TrainingDay.Maui.Resources.Strings {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class AppResources {
@@ -75,6 +75,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string Achievements {
             get {
                 return ResourceManager.GetString("Achievements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add image.
+        /// </summary>
+        internal static string AddImage {
+            get {
+                return ResourceManager.GetString("AddImage", resourceCulture);
             }
         }
         
@@ -358,6 +367,24 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Describe how to perform the movement.
+        /// </summary>
+        internal static string DescribePerformMovement {
+            get {
+                return ResourceManager.GetString("DescribePerformMovement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Describe the starting position.
+        /// </summary>
+        internal static string DescribeStartingPosition {
+            get {
+                return ResourceManager.GetString("DescribeStartingPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Difficulty.
         /// </summary>
         internal static string Difficulty {
@@ -462,6 +489,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string ExerciseForTypeString {
             get {
                 return ResourceManager.GetString("ExerciseForTypeString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exercise Instructions.
+        /// </summary>
+        internal static string ExerciseInstructions {
+            get {
+                return ResourceManager.GetString("ExerciseInstructions", resourceCulture);
             }
         }
         
@@ -1339,6 +1375,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Target Muscles.
+        /// </summary>
+        internal static string TargetMuscles {
+            get {
+                return ResourceManager.GetString("TargetMuscles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 3 Month.
         /// </summary>
         internal static string ThreeMounthString {
@@ -1353,6 +1398,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string TimeString {
             get {
                 return ResourceManager.GetString("TimeString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tips and important notes.
+        /// </summary>
+        internal static string TipsImportantNotes {
+            get {
+                return ResourceManager.GetString("TipsImportantNotes", resourceCulture);
             }
         }
         

@@ -657,4 +657,22 @@
   <data name="PreparedBicepsTricepsSuperSet" xml:space="preserve">
     <value>Bizeps/Trizeps-Supersätze</value>
   </data>
+  <data name="AddImage" xml:space="preserve">
+    <value>Bild hinzufügen</value>
+  </data>
+  <data name="TargetMuscles" xml:space="preserve">
+    <value>Zielmuskeln</value>
+  </data>
+  <data name="ExerciseInstructions" xml:space="preserve">
+    <value>Übungsanleitung</value>
+  </data>
+  <data name="DescribeStartingPosition" xml:space="preserve">
+    <value>Ausgangsposition beschreiben</value>
+  </data>
+  <data name="TipsImportantNotes" xml:space="preserve">
+    <value>Tipps und wichtige Hinweise</value>
+  </data>
+  <data name="DescribePerformMovement" xml:space="preserve">
+    <value>Ausführung der Übung beschreiben</value>
+  </data>
 </root>
