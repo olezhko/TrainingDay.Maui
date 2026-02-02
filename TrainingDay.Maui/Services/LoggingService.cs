@@ -1,4 +1,9 @@
-﻿namespace TrainingDay.Maui.Services
+﻿#if IOS
+using CoreData;
+using Foundation;
+#endif
+
+namespace TrainingDay.Maui.Services
 {
     public static class LoggingService
     {
@@ -23,6 +28,22 @@
             Firebase.Crashlytics.FirebaseCrashlytics.Instance.RecordException(Java.Lang.Throwable.FromException(ex), keyAndValue.Build());
 #elif IOS
 
+            var userInfo = new NSMutableDictionary
+            {
+                { new NSString("Session"), new NSString(SessionId.ToString()) },
+                { new NSString("Message"), new NSString(ex.Message) },
+                { new NSString("StackTrace"), new NSString(ex.StackTrace ?? "empty stack trace") }
+            };
+
+            if (properties != null)
+            {
+                foreach (var param in properties)
+                {
+                    userInfo.Add(new NSString(param.Key), new NSString(param.Value));
+                }
+            }
+
+            Firebase.Crashlytics.Crashlytics.SharedInstance.RecordError(new Foundation.NSError(new NSString("TrainingDay"), ex.HResult, userInfo));
 #endif
         }
 
@@ -46,7 +67,7 @@
 
             firebaseAnalytics.LogEvent(text, bundle);
 #elif IOS
-
+            Firebase.Crashlytics.Crashlytics.SharedInstance.Log(text);
 #endif
         }
     }
