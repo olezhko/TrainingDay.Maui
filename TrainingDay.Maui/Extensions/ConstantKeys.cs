@@ -21,6 +21,7 @@ public static class ConstantKeys
     public const string DatabaseName = "exercise.db";
 
     public static string Version => "1.3.1";
+    public static string SentinelTrackerProjectId => "prod_key";
 
     public class AwsS3
     {

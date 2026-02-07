@@ -2,6 +2,7 @@
 using Amazon.S3;
 using Amazon.S3.Model;
 using CommunityToolkit.Mvvm.Messaging;
+using SentinelAnalytics.Maui;
 using System.Globalization;
 using System.Net;
 using TrainingDay.Maui.Extensions;
@@ -64,9 +65,14 @@ namespace TrainingDay.Maui
         protected override void OnStart()
         {
             base.OnStart();
-            Settings.LastDatabaseSyncDateTime = Settings.LastDatabaseSyncDateTime.IsNotNullOrEmpty() ? Settings.LastDatabaseSyncDateTime : DateTime.Now.ToString(Settings.GetLanguage());
 
-            LoggingService.TrackEvent("start");
+            SentinelTracker.Initialize(new SentinelOptions
+            {
+                ApiKey = ConstantKeys.SentinelTrackerProjectId,
+                AppVersion = AppInfo.VersionString
+            });
+
+            Settings.LastDatabaseSyncDateTime = Settings.LastDatabaseSyncDateTime.IsNotNullOrEmpty() ? Settings.LastDatabaseSyncDateTime : DateTime.Now.ToString(Settings.GetLanguage());
 
             notificationService = Handler.MauiContext.Services.GetRequiredService<IPushNotification>();
             dataService = Handler.MauiContext.Services.GetRequiredService<IDataService>();
@@ -74,6 +80,7 @@ namespace TrainingDay.Maui
 
             Dispatcher.Dispatch(async () =>
             {
+                await LoggingService.TrackEvent("Application start");
                 await dataService.SendFirebaseTokenAsync(Settings.Token, CultureInfo.CurrentCulture.Name, TimeZoneInfo.Local.BaseUtcOffset.ToString());
                 await dataService.PostActionAsync(Settings.Token, Common.Communication.MobileActions.Enter);
                 await DownloadImagesAsync();
