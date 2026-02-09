@@ -130,7 +130,7 @@
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="10.0.10" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
 		<PackageReference Include="RestSharp" Version="112.1.0" />
-		<PackageReference Include="SentinelAnalytics.MAUI" Version="1.0.0" />
+		<PackageReference Include="SentinelAnalytics.MAUI" Version="1.0.1" />
 		<PackageReference Include="SkiaSharp.Views" Version="3.119.0" />
 		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.119.0" />
     <PackageReference Include="SourceGear.sqlite3" Version="3.50.4.5" />

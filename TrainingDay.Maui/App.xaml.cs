@@ -66,11 +66,7 @@ namespace TrainingDay.Maui
         {
             base.OnStart();
 
-            SentinelTracker.Initialize(new SentinelOptions
-            {
-                ApiKey = ConstantKeys.SentinelTrackerProjectId,
-                AppVersion = AppInfo.VersionString
-            });
+            SentinelTracker.Initialize(ConstantKeys.SentinelTrackerProjectId);
 
             Settings.LastDatabaseSyncDateTime = Settings.LastDatabaseSyncDateTime.IsNotNullOrEmpty() ? Settings.LastDatabaseSyncDateTime : DateTime.Now.ToString(Settings.GetLanguage());
 
