@@ -117,7 +117,8 @@
 		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.9" />
 		<PackageReference Include="SQLitePCLRaw.provider.dynamic_cdecl" Version="2.1.9" />
 		<PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="2.1.9" />
-    <BundleResource Include="GoogleService-Info.plist" />
+		<PackageReference Include="Xamarin.Firebase.iOS.CloudMessaging" Version="8.10.0.3" />
+    	<BundleResource Include="GoogleService-Info.plist" />
   </ItemGroup>
 
 	<ItemGroup>
