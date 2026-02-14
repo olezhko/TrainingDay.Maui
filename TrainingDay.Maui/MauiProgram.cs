@@ -23,7 +23,8 @@ namespace TrainingDay.Maui
                     options.SetPopupDefaults(new DefaultPopupSettings
                     {
                         CanBeDismissedByTappingOutsideOfPopup = true,
-                        Padding = 4
+                        Padding = 4,
+                        BackgroundColor = Color.FromArgb("#818181")
                     });
 
                     options.SetPopupOptionsDefaults(new DefaultPopupOptionsSettings

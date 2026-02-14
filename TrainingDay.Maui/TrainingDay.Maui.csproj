@@ -133,9 +133,9 @@
 		<PackageReference Include="SentinelAnalytics.MAUI" Version="1.0.1" />
 		<PackageReference Include="SkiaSharp.Views" Version="3.119.0" />
 		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.119.0" />
-    <PackageReference Include="SourceGear.sqlite3" Version="3.50.4.5" />
-    <PackageReference Include="sqlite-net-e" Version="1.11.0" />
-    <PackageReference Include="YoutubeExplode" Version="6.5.6" />
+		<PackageReference Include="SourceGear.sqlite3" Version="3.50.4.5" />
+		<PackageReference Include="sqlite-net-e" Version="1.11.0" />
+		<PackageReference Include="YoutubeExplode" Version="6.5.6" />
   </ItemGroup>
 
 	<ItemGroup>

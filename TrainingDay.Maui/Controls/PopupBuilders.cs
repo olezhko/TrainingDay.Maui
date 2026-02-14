@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using Microsoft.Maui.Controls.Shapes;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Resources.Strings;
 
@@ -15,7 +16,8 @@ namespace TrainingDay.Maui.Controls
                 Text = AppResources.CreateNewString,
                 FontSize = 15,
                 CornerRadius = 20,
-                Style = App.Current.Resources["SecondActionButton"] as Style
+                BackgroundColor = App.Current.RequestedTheme == AppTheme.Light ? Color.FromArgb("#FFFFFF") : Color.FromArgb("#000000"),
+                TextColor = App.Current.RequestedTheme != AppTheme.Light ? Color.FromArgb("#FFFFFF") : Color.FromArgb("#000000")
             };
             newButton.Clicked += (s, e) =>
             {
@@ -42,12 +44,13 @@ namespace TrainingDay.Maui.Controls
             {
                 Title = AppResources.SelectGroup,
                 ItemsSource = trainingsGroups,
-                FontSize = 15,
+                FontSize = 16,
                 ItemDisplayBinding = new Binding()
                 {
                     Path = "Name"
                 },
-                HorizontalOptions = LayoutOptions.Fill
+                HorizontalOptions = LayoutOptions.Fill,
+                TextColor = App.Current.RequestedTheme == AppTheme.Light ? Color.FromArgb("#FFFFFF") : Color.FromArgb("#000000")
             };
 
             var acceptPickerButton = new Button()
@@ -105,14 +108,25 @@ namespace TrainingDay.Maui.Controls
                 {
                     headImage,
                     dropImage,
-                    selectPicker,
+                    selectPicker
                 },
             };
 
             Grid.SetColumn(dropImage, 2);
             Grid.SetColumn(selectPicker, 1);
 
-            verticalStack.Children.Insert(0, horLayout);
+            var pickerBorder = new Border()
+            {
+                Stroke = App.Current.RequestedTheme == AppTheme.Light ? Color.FromArgb("#FFFFFF") : Color.FromArgb("#000000"),
+                StrokeShape = new RoundRectangle()
+                {
+                    CornerRadius = 20
+                },
+                Padding = new Thickness(10,5),
+                Content = horLayout
+            };
+
+            verticalStack.Children.Insert(0, pickerBorder);
             verticalStack.Children.Insert(1, acceptPickerButton);
             verticalStack.Children.Insert(2, new Border()
             {

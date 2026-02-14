@@ -1,9 +1,7 @@
-﻿using CommunityToolkit.Maui;
-using CommunityToolkit.Maui.Alerts;
+﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using TrainingDay.Maui.Controls;
 using TrainingDay.Maui.Extensions;
@@ -66,12 +64,15 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         try
         {
             SelectedTrainings.Clear();
-            Grouping<string, TrainingViewModel> selectedGroup = tempGroups.FirstOrDefault(gp => gp.Key == AppResources.GroupingDefaultName);
-            if (selectedGroup is null)
+            var defaultGroup = tempGroups.FirstOrDefault(gp => gp.Key == AppResources.GroupingDefaultName);
+            if (defaultGroup is null)
             {
-                selectedGroup = tempGroups.FirstOrDefault();
+                defaultGroup = tempGroups.FirstOrDefault();
             }
-            foreach (var item in selectedGroup)
+
+            defaultGroup.IsSelected = true;
+            
+            foreach (var item in defaultGroup)
             {
                 SelectedTrainings.Add(item);
             }
@@ -246,10 +247,13 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
 
         var item = (TrainingViewModel)viewCell.BindingContext;
 
-        var result = await Shell.Current.ShowPopupAsync(PopupBuilders.BuildWorkoutGroupsPopup(async accept =>
-        {
-            await GroupSelected(item, accept.Id);
-        }, async () => await CreateNewGroup(item)));
+        var result = await Shell.Current.ShowPopupAsync(
+            PopupBuilders.BuildWorkoutGroupsPopup(async accept =>
+                {
+                    await GroupSelected(item, accept.Id);
+                }, async () => await CreateNewGroup(item)
+            )
+        );
     }
 
     private async Task GroupSelected(TrainingViewModel TrainingMoveToGroup, int id)
