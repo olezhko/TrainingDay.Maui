@@ -342,7 +342,7 @@ public partial class TrainingImplementPage : ContentPage
         }
 
         notificator.Cancel(PushMessagesExtensions.TrainingNotificationId);
-
+        Shell.SetNavBarIsVisible(this, true);
         await Shell.Current.GoToAsync("//workouts");
 
         await dataService.PostActionAsync(Settings.Token, Common.Communication.MobileActions.Workout);
@@ -458,6 +458,7 @@ public partial class TrainingImplementPage : ContentPage
             notificator.Cancel(PushMessagesExtensions.TrainingImplementTimeId);
             Settings.IsTrainingNotFinished = false;
 
+            Shell.SetNavBarIsVisible(this, true);
             await Shell.Current.GoToAsync("..");
         }
     }

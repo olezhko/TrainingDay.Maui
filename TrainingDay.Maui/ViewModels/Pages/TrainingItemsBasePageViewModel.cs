@@ -32,12 +32,18 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
 
     private async Task UpdateFirebaseToken()
     {
-        #if IOS
-        await Plugin.Firebase.CloudMessaging.CrossFirebaseCloudMessaging.Current.CheckIfValidAsync();
-        Settings.Token = await Plugin.Firebase.CloudMessaging.CrossFirebaseCloudMessaging.Current.GetTokenAsync();
-        await dataService.SendFirebaseTokenAsync(Settings.Token, CultureInfo.CurrentCulture.Name, TimeZoneInfo.Local.BaseUtcOffset.ToString());
-        await dataService.PostActionAsync(Settings.Token, Common.Communication.MobileActions.Enter);
-        #endif
+        try
+        {
+            #if IOS
+            await Plugin.Firebase.CloudMessaging.CrossFirebaseCloudMessaging.Current.CheckIfValidAsync();
+            Settings.Token = await Plugin.Firebase.CloudMessaging.CrossFirebaseCloudMessaging.Current.GetTokenAsync();
+            await dataService.SendFirebaseTokenAsync(Settings.Token, CultureInfo.CurrentCulture.Name, TimeZoneInfo.Local.BaseUtcOffset.ToString());
+            await dataService.PostActionAsync(Settings.Token, Common.Communication.MobileActions.Enter);
+            #endif
+        }
+        catch
+        {
+        }
     }
 
     public void LoadItems(bool isOverride = false)
