@@ -47,12 +47,6 @@ public static class Settings
         set => Preferences.Set(nameof(HipGoal), value);
     }
 
-    public static string AuthToken
-    {
-        get => Preferences.Get(nameof(AuthToken), string.Empty);
-        set => Preferences.Set(nameof(AuthToken), value);
-    }
-
     public static string LastDatabaseSyncDateTime
     {
         get => Preferences.Get(nameof(LastDatabaseSyncDateTime), string.Empty);
@@ -89,6 +83,18 @@ public static class Settings
     {
         get => Preferences.Get(nameof(IsUserKnownExerciseFilters), false);
         set => Preferences.Set(nameof(IsUserKnownExerciseFilters), value);
+    }
+
+    public static bool IsLightTheme
+    {
+        get => Preferences.Get(nameof(IsLightTheme), false);
+        set => Preferences.Set(nameof(IsLightTheme), value);
+    }
+
+    public static string AuthToken
+    {
+        get => Preferences.Get(nameof(AuthToken), string.Empty);
+        set => Preferences.Set(nameof(AuthToken), value);
     }
 
     public static CultureInfo GetLanguage()

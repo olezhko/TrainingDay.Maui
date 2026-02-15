@@ -2,6 +2,7 @@
 using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Windows.Input;
 using TrainingDay.Maui.Controls;
 using TrainingDay.Maui.Extensions;
@@ -16,19 +17,36 @@ namespace TrainingDay.Maui.ViewModels.Pages;
 
 public class TrainingItemsBasePageViewModel : BaseViewModel
 {
+    private readonly IDataService dataService;
     private bool isLongPressPopupOpened;
     private ObservableCollection<Grouping<string, TrainingViewModel>> itemsGrouped;
 
-    public TrainingItemsBasePageViewModel()
+    public TrainingItemsBasePageViewModel(IDataService dataService)
     {
+        this.dataService = dataService;
         ItemsGrouped = new ObservableCollection<Grouping<string, TrainingViewModel>>();
         AddNewTrainingCommand = new DoOnceCommand(AddNewTraining);
         ItemSelectedCommand = new DoOnceCommand<Border>(TrainingSelected);
         SubscribeMessages();
     }
 
+    private async Task UpdateFirebaseToken()
+    {
+        #if IOS
+        await Plugin.Firebase.CloudMessaging.CrossFirebaseCloudMessaging.Current.CheckIfValidAsync();
+        Settings.Token = await Plugin.Firebase.CloudMessaging.CrossFirebaseCloudMessaging.Current.GetTokenAsync();
+        await dataService.SendFirebaseTokenAsync(Settings.Token, CultureInfo.CurrentCulture.Name, TimeZoneInfo.Local.BaseUtcOffset.ToString());
+        await dataService.PostActionAsync(Settings.Token, Common.Communication.MobileActions.Enter);
+        #endif
+    }
+
     public void LoadItems(bool isOverride = false)
     {
+        Shell.Current.Dispatcher.Dispatch(async () =>
+        {
+            await LoggingService.TrackEvent("Application start");
+            await UpdateFirebaseToken();
+        });
         var trainingsItems = App.Database.GetTrainingItems();
 
         var existCount = ItemsGrouped.Count;
@@ -465,9 +483,6 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
     public ObservableCollection<Grouping<string, TrainingViewModel>> ItemsGrouped { get => itemsGrouped; set => SetProperty(ref itemsGrouped, value); }
 
     public ObservableCollection<TrainingViewModel> SelectedTrainings { get; set; } = new ObservableCollection<TrainingViewModel>();
-
-
-    public INavigation Navigation { get; set; }
 
     public ICommand AddNewTrainingCommand { get; set; }
 

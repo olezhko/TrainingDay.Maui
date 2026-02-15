@@ -22,6 +22,7 @@ public static class ConstantKeys
 
     public static string Version => "1.3.1";
     public static string SentinelTrackerProjectId => "prod_key";
+    public static string Version => "1.3.4";
 
     public class AwsS3
     {

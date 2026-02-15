@@ -60,14 +60,12 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         }
     }
 
-    IDataService dataService;
     private bool isExercisesCheckBoxVisible;
     private ExerciseCheckBoxAction currentAction;
 
-    public TrainingExercisesPageViewModel(IDataService dataService)
+    public TrainingExercisesPageViewModel()
     {
         Training = new TrainingViewModel();
-        this.dataService = dataService;
     }
 
     #region Load

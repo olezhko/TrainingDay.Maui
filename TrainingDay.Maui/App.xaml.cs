@@ -1,6 +1,7 @@
 ﻿using Amazon;
 using Amazon.S3;
 using Amazon.S3.Model;
+using CommunityToolkit.Maui;
 using CommunityToolkit.Mvvm.Messaging;
 using SentinelAnalytics.Maui;
 using System.Globalization;
@@ -24,6 +25,7 @@ namespace TrainingDay.Maui
         
         private static Repository database;
         private static object lockBase = new object();
+        public static Options Options;
 
         public static Repository Database
         {
@@ -55,16 +57,28 @@ namespace TrainingDay.Maui
                 Exception ex = (Exception)args.ExceptionObject;
                 LoggingService.TrackError(ex);
             };
+
+            RequestedThemeChanged += (sender, args) => {
+                Console.WriteLine($"New theme requested {args.RequestedTheme}");
+                Settings.IsLightTheme = App.Current.RequestedTheme == AppTheme.Light;
+                App.Options.SetPopupDefaults(new DefaultPopupSettings
+                {
+                    CanBeDismissedByTappingOutsideOfPopup = true,
+                    Padding = 4,
+                    Margin = 10,
+                    // because App.Current not exist yet
+                    // because options not handle theme change
+                    BackgroundColor = Settings.IsLightTheme ? Color.FromArgb("#f0f0f0") : Color.FromArgb("#1b1b1b")
+                });
+            };
         }
 
-        protected override Window CreateWindow(IActivationState? activationState)
-        {
-            return new Window(new AppShell());
-        }
-        
+        protected override Window CreateWindow(IActivationState? activationState) => new Window(new AppShell());
+
         protected override void OnStart()
         {
             base.OnStart();
+            Settings.IsLightTheme = App.Current.RequestedTheme == AppTheme.Light;
 
             SentinelTracker.Initialize(ConstantKeys.SentinelTrackerProjectId);
 

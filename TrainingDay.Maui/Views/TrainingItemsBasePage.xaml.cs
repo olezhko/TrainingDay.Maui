@@ -14,13 +14,10 @@ public partial class TrainingItemsBasePage : ContentPage
 {
     private TrainingItemsBasePageViewModel _vm;
 
-    public TrainingItemsBasePage()
+    public TrainingItemsBasePage(IDataService service)
     {
         InitializeComponent();
-        BindingContext = new TrainingItemsBasePageViewModel()
-        {
-            Navigation = Navigation,
-        };
+        BindingContext = new TrainingItemsBasePageViewModel(service);
 
         NavigationPage.SetBackButtonTitle(this, AppResources.TrainingsBaseString);
     }

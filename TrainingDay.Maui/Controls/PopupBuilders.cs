@@ -16,8 +16,7 @@ namespace TrainingDay.Maui.Controls
                 Text = AppResources.CreateNewString,
                 FontSize = 15,
                 CornerRadius = 20,
-                BackgroundColor = App.Current.RequestedTheme == AppTheme.Light ? Color.FromArgb("#FFFFFF") : Color.FromArgb("#000000"),
-                TextColor = App.Current.RequestedTheme != AppTheme.Light ? Color.FromArgb("#FFFFFF") : Color.FromArgb("#000000")
+                Style = App.Current.Resources["SecondActionButton"] as Style,
             };
             newButton.Clicked += (s, e) =>
             {
@@ -44,13 +43,12 @@ namespace TrainingDay.Maui.Controls
             {
                 Title = AppResources.SelectGroup,
                 ItemsSource = trainingsGroups,
-                FontSize = 16,
+                FontSize = 14,
                 ItemDisplayBinding = new Binding()
                 {
                     Path = "Name"
                 },
                 HorizontalOptions = LayoutOptions.Fill,
-                TextColor = App.Current.RequestedTheme == AppTheme.Light ? Color.FromArgb("#FFFFFF") : Color.FromArgb("#000000")
             };
 
             var acceptPickerButton = new Button()
@@ -73,15 +71,6 @@ namespace TrainingDay.Maui.Controls
                 acceptPickerButton.IsEnabled = selectPicker.SelectedItem != null;
             };
 
-            var headImage = new Image()
-            {
-                Source = "workouts.png",
-                HeightRequest = 20,
-                WidthRequest = 20,
-                BackgroundColor = Colors.Transparent,
-                HorizontalOptions = LayoutOptions.Start
-            };
-
             var dropImage = new Image()
             {
                 Source = "arrow_left.png",
@@ -94,10 +83,7 @@ namespace TrainingDay.Maui.Controls
 
             var horLayout = new Grid()
             {
-                ColumnDefinitions = new ColumnDefinitionCollection(new()
-                {
-                    Width = 20
-                }, 
+                ColumnDefinitions = new ColumnDefinitionCollection(
                 new (), 
                 new ()
                 {
@@ -106,18 +92,17 @@ namespace TrainingDay.Maui.Controls
                 ColumnSpacing = 10,
                 Children =
                 {
-                    headImage,
                     dropImage,
                     selectPicker
                 },
             };
 
-            Grid.SetColumn(dropImage, 2);
-            Grid.SetColumn(selectPicker, 1);
+            Grid.SetColumn(dropImage, 1);
+            Grid.SetColumn(selectPicker, 0);
 
             var pickerBorder = new Border()
             {
-                Stroke = App.Current.RequestedTheme == AppTheme.Light ? Color.FromArgb("#FFFFFF") : Color.FromArgb("#000000"),
+                Stroke = App.Current.RequestedTheme != AppTheme.Light ? Color.FromArgb("#FFFFFF") : Color.FromArgb("#919191"),
                 StrokeShape = new RoundRectangle()
                 {
                     CornerRadius = 20

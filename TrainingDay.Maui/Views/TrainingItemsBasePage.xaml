@@ -23,9 +23,6 @@
             </ImageButton>
         </Grid>
     </Shell.TitleView>
-    <ContentPage.BindingContext>
-        <viewModels:TrainingItemsBasePageViewModel/>
-    </ContentPage.BindingContext>
 
     <controls:TooltipControlContainer x:Name="Container" RowSpacing="5">
         <Grid.RowDefinitions>

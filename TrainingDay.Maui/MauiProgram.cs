@@ -20,11 +20,14 @@ namespace TrainingDay.Maui
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit(static options =>
                 {
+                    App.Options = options;
                     options.SetPopupDefaults(new DefaultPopupSettings
                     {
                         CanBeDismissedByTappingOutsideOfPopup = true,
                         Padding = 4,
-                        BackgroundColor = Color.FromArgb("#818181")
+                        Margin = 10,
+                        // because App.Current not exist yet
+                        BackgroundColor = Settings.IsLightTheme ? Color.FromArgb("#f0f0f0") : Color.FromArgb("#1b1b1b")
                     });
 
                     options.SetPopupOptionsDefaults(new DefaultPopupOptionsSettings
@@ -33,6 +36,10 @@ namespace TrainingDay.Maui
                     });
                 })
                 .UseMauiCommunityToolkitMediaElement()
+
+#if IOS
+                .RegisterFirebaseServices()
+#endif
                 .UseSkiaSharp()
                 .ConfigureFonts(fonts =>
                 {
@@ -54,6 +61,9 @@ namespace TrainingDay.Maui
 
             builder.Services.AddSingleton<BlogsPageViewModel>();
             builder.Services.AddSingleton<BlogsPage>();
+
+            builder.Services.AddSingleton<TrainingItemsBasePageViewModel>();
+            builder.Services.AddSingleton<TrainingItemsBasePage>();
 
             builder.Services.AddSingleton<TrainingExercisesPageViewModel>();
             builder.Services.AddSingleton<TrainingExercisesPage>();
@@ -148,6 +158,18 @@ namespace TrainingDay.Maui
         private static void MapSearchFormatting(ISearchBarHandler handler, ISearchBar entry)
         {
             handler.PlatformView.SearchBarStyle = UIKit.UISearchBarStyle.Minimal;
+        }
+
+        private static MauiAppBuilder RegisterFirebaseServices(this MauiAppBuilder builder)
+        {
+            builder.ConfigureLifecycleEvents(events => {
+                events.AddiOS(iOS => iOS.WillFinishLaunching((_, __) => {
+                    Plugin.Firebase.Core.Platforms.iOS.CrossFirebase.Initialize();
+                    Plugin.Firebase.CloudMessaging.FirebaseCloudMessagingImplementation.Initialize();
+                    return false;
+                }));
+            });
+            return builder;
         }
 #endif
     }
