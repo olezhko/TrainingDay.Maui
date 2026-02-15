@@ -24,7 +24,10 @@ namespace TrainingDay.Maui.Services
 
 		public DataService()
 		{
-            _client = new RestClient(new RestClientOptions("https://api.trainingday.space/api"));
+            _client = new RestClient(new RestClientOptions("https://api.trainingday.space/api")
+			{
+				Timeout= TimeSpan.FromSeconds(2)
+			});
         }
 
         public void Dispose()

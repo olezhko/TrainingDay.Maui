@@ -207,22 +207,29 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
     private async Task TrainingExerciseTapped(object item)
     {
-        var selectedExercise = item as TrainingExerciseViewModel;
-        TappedExerciseIndex = Training.Exercises.IndexOf(selectedExercise!);
+        IsBusy = true;
+        if (item is not TrainingExerciseViewModel selectedExercise)
+        {
+            IsBusy = false;
+            return;
+        }
+
+        TappedExerciseIndex = Training.Exercises.IndexOf(selectedExercise);
         if (CurrentAction != ExerciseCheckBoxAction.None) // when we in action, tapped equals changing selected
         {
             if (CurrentAction == ExerciseCheckBoxAction.SuperSet)
             {
                 if (selectedExercise!.SuperSetId == 0)
                 {
-                    selectedExercise.IsSelected = !selectedExercise.IsSelected;
+                    selectedExercise.IsSelected = selectedExercise.IsSelected;
                 }
             }
 
             return;
         }
-
+        
         var param = new Dictionary<string, object> { { "Item", selectedExercise } };
+        IsBusy = false;
         await Shell.Current.GoToAsync(nameof(TrainingExerciseItemPage), param);
     }
 

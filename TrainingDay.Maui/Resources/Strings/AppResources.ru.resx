@@ -626,5 +626,22 @@
   </data>
   <data name="SelectGroup" xml:space="preserve">
     <value>Выберите группу</value>
+  <data name="AddImage" xml:space="preserve">
+    <value>Добавить изображение</value>
+  </data>
+  <data name="TargetMuscles" xml:space="preserve">
+    <value>Целевые мышцы</value>
+  </data>
+  <data name="ExerciseInstructions" xml:space="preserve">
+    <value>Инструкции</value>
+  </data>
+  <data name="DescribeStartingPosition" xml:space="preserve">
+    <value>Опишите исходное положение</value>
+  </data>
+  <data name="TipsImportantNotes" xml:space="preserve">
+    <value>Советы и важные замечания</value>
+  </data>
+  <data name="DescribePerformMovement" xml:space="preserve">
+    <value>Опишите, как выполнять движение</value>
   </data>
 </root>

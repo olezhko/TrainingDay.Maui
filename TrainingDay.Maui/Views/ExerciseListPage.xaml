@@ -7,6 +7,7 @@
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              x:Class="TrainingDay.Maui.Views.ExerciseListPage"
              Shell.TabBarIsVisible="False"
+             HideSoftInputOnTapped="True"
              Padding="5">
     <Shell.TitleView>
         <Grid ColumnDefinitions="*, auto" Padding="10,0" ColumnSpacing="10">
@@ -30,7 +31,7 @@
                 <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
             <SearchBar x:Name="SearchBar" Placeholder="{x:Static resx:AppResources.SearchByNameString}" Text="{Binding Filter.NameFilter}" 
-                       TextChanged="SearchBar_OnTextChanged" SearchButtonPressed="SearchButtonPressed"/>
+                       TextChanged="SearchBar_OnTextChanged" SearchButtonPressed="SearchButtonPressed" ReturnType="Done"/>
 
             <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="filter.png"
                     Command="{Binding ViewFilterWindowCommand}" BackgroundColor="Transparent">
@@ -94,7 +95,7 @@
                                     BackgroundColor="White"
                                     HorizontalOptions="Center"
                                     VerticalOptions="Center">
-                                    <controls:ImageCache HeightRequest="60" WidthRequest="60" CodeNum="{Binding CodeNum}" />
+                                    <controls:ImageCache HeightRequest="60" WidthRequest="60" CodeNum="{Binding CodeNum}" ExerciseId="{Binding Id}" />
                                 </Border>
 
                                 <StackLayout Grid.Column="2" VerticalOptions="Center">

@@ -103,6 +103,7 @@ public class ExerciseViewModel : BaseViewModel
     public DifficultTypes DifficultType { get => difficultType; set => SetProperty(ref difficultType, value); }
 
     public ObservableCollection<ExerciseVideo> VideoItems { get => videoItems; set => SetProperty(ref videoItems, value); }
+    public byte[] ImageData { get; internal set; }
 
     #endregion
 }

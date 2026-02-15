@@ -22,37 +22,35 @@ public class ImageCache : Image
         set => SetValue(CodeNumProperty, value);
     }
 
-    public void OnImageUrlChanged()
+    public static readonly BindableProperty ExerciseIdProperty = BindableProperty.Create(nameof(ExerciseId), typeof(int), typeof(ImageCache), null, propertyChanged: (bindable, oldvalue, newvalue) => ((ImageCache)bindable).OnImageUrlChanged(), defaultBindingMode: BindingMode.TwoWay);
+    public int ExerciseId
     {
-        LoadImage();
+        get => (int)GetValue(ExerciseIdProperty);
+        set => SetValue(ExerciseIdProperty, value);
     }
+
+    public void OnImageUrlChanged() => LoadImage();
 
     private void LoadImage()
     {
+        Source = "workouts.png";
+
         try
         {
-            if (CodeNum != 0)
+            string key = CodeNum != 0 ? CodeNum.ToString() : $"new_{ExerciseId}";
+
+            BackgroundColor = Colors.Transparent;
+
+            var imageSource = App.Database.GetImage(key);
+
+            if (imageSource != null)
             {
-                BackgroundColor = Colors.Transparent;
-                var imageSource = App.Database.GetImage(CodeNum.ToString());
-                if (imageSource != null)
-                {
-                    Source = ImageSource.FromStream(() => Stream(imageSource));
-                }
-                else
-                {
-					Source = "main.png";
-				}
-            }
-            else
-            {
-                Source = "main.png";
+                Behaviors.Clear();
+                Source = ImageSource.FromStream(() => Stream(imageSource));
             }
         }
-        catch (Exception e)
+        catch
         {
-            Console.WriteLine(e);
-            Source = "main.png";
         }
     }
 
