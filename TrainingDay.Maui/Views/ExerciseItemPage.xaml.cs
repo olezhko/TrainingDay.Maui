@@ -67,7 +67,7 @@ public partial class ExerciseItemPage : ContentPage
 
                 if (ex.ImageData != null && ex.ImageData.Any())
                 {
-                    App.Database.SaveImage(new Models.Database.ImageDto()
+                    App.Database.SaveImage(new Models.Database.ImageEntity()
                     {
                         Data = ex.ImageData,
                         Url = $"new_{exercise.Id}"

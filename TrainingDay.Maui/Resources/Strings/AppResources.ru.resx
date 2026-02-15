@@ -626,6 +626,7 @@
   </data>
   <data name="SelectGroup" xml:space="preserve">
     <value>Выберите группу</value>
+  </data>
   <data name="AddImage" xml:space="preserve">
     <value>Добавить изображение</value>
   </data>
