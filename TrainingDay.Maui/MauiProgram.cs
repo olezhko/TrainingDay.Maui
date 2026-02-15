@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Handlers;
+using Microsoft.Maui.LifecycleEvents;
 using Microsoft.Maui.Platform;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using TrainingDay.Maui.Controls;
@@ -17,7 +18,28 @@ namespace TrainingDay.Maui
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
-                .UseMauiCommunityToolkit()
+                .UseMauiCommunityToolkit(static options =>
+                {
+                    App.Options = options;
+                    options.SetPopupDefaults(new DefaultPopupSettings
+                    {
+                        CanBeDismissedByTappingOutsideOfPopup = true,
+                        Padding = 4,
+                        Margin = 10,
+                        // because App.Current not exist yet
+                        BackgroundColor = Settings.IsLightTheme ? Color.FromArgb("#f0f0f0") : Color.FromArgb("#1b1b1b")
+                    });
+
+                    options.SetPopupOptionsDefaults(new DefaultPopupOptionsSettings
+                    {
+                        CanBeDismissedByTappingOutsideOfPopup = true,
+                    });
+                })
+                .UseMauiCommunityToolkitMediaElement()
+
+#if IOS
+                .RegisterFirebaseServices()
+#endif
                 .UseSkiaSharp()
                 .ConfigureFonts(fonts =>
                 {
@@ -39,6 +61,9 @@ namespace TrainingDay.Maui
 
             builder.Services.AddSingleton<BlogsPageViewModel>();
             builder.Services.AddSingleton<BlogsPage>();
+
+            builder.Services.AddSingleton<TrainingItemsBasePageViewModel>();
+            builder.Services.AddSingleton<TrainingItemsBasePage>();
 
             builder.Services.AddSingleton<TrainingExercisesPageViewModel>();
             builder.Services.AddSingleton<TrainingExercisesPage>();
@@ -86,10 +111,36 @@ namespace TrainingDay.Maui
 
             });
 
+            Microsoft.Maui.Handlers.PickerHandler.Mapper.AppendToMapping("Borderless", (handler, entry) =>
+            {
+#if ANDROID
+                handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
+                handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
+#endif
+
+#if IOS
+                MapPickerFormatting(handler, entry);
+#endif
+
+            });
+
             return builder.Build();
         }
 
 #if IOS
+
+        private static void MapPickerFormatting(IPickerHandler handler, IPicker entry)
+        {
+            handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
+
+            // Update all of the attributed text formatting properties
+            handler.PlatformView?.UpdateCharacterSpacing(entry);
+
+            // Setting any of those may have removed text alignment settings,
+            // so we need to make sure those are applied, too
+            handler.PlatformView?.UpdateHorizontalTextAlignment(entry);
+        }
+
         private static void MapFormatting(IEntryHandler handler, IEntry entry)
         {
             handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
@@ -108,7 +159,18 @@ namespace TrainingDay.Maui
         {
             handler.PlatformView.SearchBarStyle = UIKit.UISearchBarStyle.Minimal;
         }
-#endif
 
+        private static MauiAppBuilder RegisterFirebaseServices(this MauiAppBuilder builder)
+        {
+            builder.ConfigureLifecycleEvents(events => {
+                events.AddiOS(iOS => iOS.WillFinishLaunching((_, __) => {
+                    Plugin.Firebase.Core.Platforms.iOS.CrossFirebase.Initialize();
+                    Plugin.Firebase.CloudMessaging.FirebaseCloudMessagingImplementation.Initialize();
+                    return false;
+                }));
+            });
+            return builder;
+        }
+#endif
     }
 }

@@ -4,8 +4,8 @@ using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Services;
-using ExerciseDto = TrainingDay.Maui.Models.Database.ExerciseDto;
-using TrainingExerciseDto = TrainingDay.Maui.Models.Database.TrainingExerciseDto;
+using ExerciseEntity = TrainingDay.Maui.Models.Database.ExerciseEntity;
+using TrainingExerciseEntity = TrainingDay.Maui.Models.Database.TrainingExerciseEntity;
 
 namespace TrainingDay.Maui.ViewModels;
 
@@ -14,7 +14,7 @@ public class TrainingExerciseViewModel : ExerciseViewModel
     private bool isSelected;
     private bool notFinished = true;
     private bool skipped;
-    private ObservableCollection<WeightAndRepsViewModel> weightAndRepsItems = new ObservableCollection<WeightAndRepsViewModel>();
+    private ObservableCollection<WeightAndRepsViewModel> weightAndRepsItems = [];
     private int superSetId = -1;
     private int superSetNum;
     private bool isTimeCalculating;
@@ -24,19 +24,19 @@ public class TrainingExerciseViewModel : ExerciseViewModel
     {
     }
 
-    public TrainingExerciseViewModel(ExerciseDto exercise, TrainingExerciseDto comm)
+    public TrainingExerciseViewModel(ExerciseEntity exercise, TrainingExerciseEntity comm)
     {
         try
         {
             Id = comm.Id;
             TrainingExerciseId = comm.Id;
             ExerciseId = exercise.Id;
-            Muscles = new ObservableCollection<MuscleViewModel>(MusclesConverter.ConvertFromStringToList(exercise.MusclesString));
+            Muscles = new ObservableCollection<MuscleViewModel>(MusclesExtensions.ConvertFromStringToList(exercise.MusclesString));
             Name = exercise.Name;
             TrainingId = comm.TrainingId;
             OrderNumber = comm.OrderNumber;
             SuperSetId = comm.SuperSetId;
-            Tags = ExerciseExtensions.ConvertTagIntToList(exercise.TagsValue).ToList();
+            Tags = [.. ExerciseExtensions.ConvertTagIntToList(exercise.TagsValue)];
             CodeNum = exercise.CodeNum;
             ExerciseManager.ConvertJsonBack(this, comm.WeightAndRepsString);
             Description = DescriptionViewModel.ConvertFromJson(exercise.Description);
@@ -156,11 +156,11 @@ public class TrainingExerciseViewModel : ExerciseViewModel
         }
     }
 
-    public TrainingExerciseDto GetTrainingExerciseComm()
+    public TrainingExerciseEntity GetTrainingExerciseComm()
     {
         string weightAndReps = ExerciseManager.ConvertJson(Tags, this);
 
-        return new TrainingExerciseDto()
+        return new TrainingExerciseEntity()
         {
             ExerciseId = ExerciseId,
             WeightAndRepsString = weightAndReps,
@@ -171,14 +171,14 @@ public class TrainingExerciseViewModel : ExerciseViewModel
         };
     }
 
-    public override ExerciseDto GetExercise()
+    public override ExerciseEntity GetExercise()
     {
-        return new ExerciseDto()
+        return new ExerciseEntity()
         {
             Id = ExerciseId,
             Description = JsonConvert.SerializeObject(Description?.Model),
             Name = Name,
-            MusclesString = MusclesConverter.ConvertFromListToString(Muscles.ToList()),
+            MusclesString = MusclesExtensions.ConvertFromListToString([.. Muscles]),
             TagsValue = ExerciseExtensions.ConvertTagListToInt(Tags),
             CodeNum = CodeNum,
         };
@@ -211,9 +211,9 @@ public class TrainingExerciseViewModel : ExerciseViewModel
         set => SetProperty(ref isCheckBoxVisible, value);
     }
 
-    public static TrainingExerciseViewModel Create(ExerciseDto exercise)
+    public static TrainingExerciseViewModel Create(ExerciseEntity exercise)
     {
-        return new TrainingExerciseViewModel(exercise, new TrainingExerciseDto()
+        return new TrainingExerciseViewModel(exercise, new TrainingExerciseEntity()
         {
             WeightAndRepsString = GetDefaultWeightAndRepsString(exercise.TagsValue)
         });

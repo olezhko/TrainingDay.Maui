@@ -14,13 +14,10 @@ public partial class TrainingItemsBasePage : ContentPage
 {
     private TrainingItemsBasePageViewModel _vm;
 
-    public TrainingItemsBasePage()
+    public TrainingItemsBasePage(IDataService service)
     {
         InitializeComponent();
-        BindingContext = new TrainingItemsBasePageViewModel()
-        {
-            Navigation = Navigation,
-        };
+        BindingContext = new TrainingItemsBasePageViewModel(service);
 
         NavigationPage.SetBackButtonTitle(this, AppResources.TrainingsBaseString);
     }
@@ -65,7 +62,7 @@ public partial class TrainingItemsBasePage : ContentPage
                                 ExerciseId = trainingExerciseSerialize.ExerciseId,
                                 TrainingId = trainingExerciseSerialize.TrainingId,
                                 IsNotFinished = trainingExerciseSerialize.IsNotFinished,
-                                Muscles = new ObservableCollection<MuscleViewModel>(MusclesConverter.ConvertFromStringToList(trainingExerciseSerialize.Muscles)),
+                                Muscles = new ObservableCollection<MuscleViewModel>(MusclesExtensions.ConvertFromStringToList(trainingExerciseSerialize.Muscles)),
                                 OrderNumber = trainingExerciseSerialize.OrderNumber,
                                 Name = trainingExerciseSerialize.Name,
                                 SuperSetId = trainingExerciseSerialize.SuperSetId,

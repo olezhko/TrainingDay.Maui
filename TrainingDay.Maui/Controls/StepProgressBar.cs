@@ -262,6 +262,7 @@ public class StepProgressBar : Grid
         if (StepSelected >= 0)
         {
             element.BindingContext = list[StepSelected];
+            CurrentItemChanged?.Invoke(this, new StepProgressBarCurrentItemChangedEventArgs(element.BindingContext!));
         }
 
         _lastStepSelected = elementSelected;
@@ -325,6 +326,8 @@ public class StepProgressBar : Grid
     }
 
     private static event EventHandler<NotifyCollectionChangedEventArgs> CollectionChanged;
+    public event EventHandler<StepProgressBarCurrentItemChangedEventArgs> CurrentItemChanged;
+
     private static void ItemsSource_OnItemChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
         CollectionChanged?.Invoke(null, e);
@@ -337,4 +340,13 @@ public class StepProgressBar : Grid
         var setter = style.Setters.First(item => item.Property.PropertyName == BackgroundColorProperty.PropertyName);
         setter.Value = newValue;
     }
+}
+
+public class StepProgressBarCurrentItemChangedEventArgs : EventArgs
+{
+    public StepProgressBarCurrentItemChangedEventArgs(object currentItem)
+    {
+        CurrentItem = currentItem;
+    }
+    public object CurrentItem { get; }
 }

@@ -2,7 +2,7 @@
 
 namespace TrainingDay.Maui.Models.Messages;
 
-public class ExerciseChangedMessage
+public class ExerciseChangedMessage(ExerciseEntity sender, ExerciseChangedMessage.ExerciseAction action)
 {
     public enum ExerciseAction
     {
@@ -11,13 +11,7 @@ public class ExerciseChangedMessage
         Changed,
     }
 
-    public ExerciseDto Sender { get; set; }
+    public ExerciseEntity Sender { get; set; } = sender;
 
-    public ExerciseAction Action { get; set; }
-
-    public ExerciseChangedMessage(ExerciseDto sender, ExerciseAction action)
-    {
-        Sender = sender;
-        Action = action;
-    }
+    public ExerciseAction Action { get; set; } = action;
 }

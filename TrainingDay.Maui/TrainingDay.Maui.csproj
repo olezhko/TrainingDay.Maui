@@ -21,7 +21,7 @@
 		<ApplicationVersion>1</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">23.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">26.0</SupportedOSPlatformVersion>
 		<Company>LATec</Company>
 		<Product>TrainingDay</Product>
 		<PackageId>TrainingDay</PackageId>
@@ -29,27 +29,27 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
-		<ApplicationVersion>327</ApplicationVersion>
-		<ApplicationDisplayVersion>1.3.0.3</ApplicationDisplayVersion>
+		<ApplicationVersion>331</ApplicationVersion>
+		<ApplicationDisplayVersion>1.3.1.5</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-ios|AnyCPU'">
 		<CreatePackage>false</CreatePackage>
 		<ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
-		<ApplicationVersion>327</ApplicationVersion>
-		<ApplicationDisplayVersion>1.3.0.3</ApplicationDisplayVersion>
+		<ApplicationVersion>331</ApplicationVersion>
+		<ApplicationDisplayVersion>1.3.1.5</ApplicationDisplayVersion>
 		<EnableSGenConc>True</EnableSGenConc>
 		<SkipStaticLibraryValidation>true</SkipStaticLibraryValidation>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
-		<ApplicationVersion>327</ApplicationVersion>
-		<ApplicationDisplayVersion>1.3.0.3</ApplicationDisplayVersion>
+		<ApplicationVersion>331</ApplicationVersion>
+		<ApplicationDisplayVersion>1.3.1.5</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-ios|AnyCPU'">
-		<ApplicationVersion>327</ApplicationVersion>
-		<ApplicationDisplayVersion>1.3.0.3</ApplicationDisplayVersion>
+		<ApplicationVersion>331</ApplicationVersion>
+		<ApplicationDisplayVersion>1.3.1.5</ApplicationDisplayVersion>
 		<CreatePackage>false</CreatePackage>
 		<CodesignProvision>TrainingDayPublish</CodesignProvision>
 		<CodesignKey>Apple Distribution: Oleg Ladyka (36WMJT4QLC)</CodesignKey>
@@ -59,24 +59,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.png" />
-
-		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Images\main.png" Color="#000000" BaseSize="256,256" />
-
-		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-
-		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
-
-		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Remove="Platforms\Android\google-services.json" />
 		<None Remove="Platforms\Android\Resources\values\styles.xml" />
 		<None Remove="Resources\Images\main.png" />
 		<None Remove="Resources\Images\prepared\arms.png" />
@@ -117,12 +107,9 @@
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0-android'">
 		<GoogleServicesJson Include="Platforms\Android\google-services.json" />
-		<PackageReference Include="Xamarin.Firebase.Iid" Version="121.1.0.14">
-		</PackageReference>
-		<PackageReference Include="Xamarin.Firebase.Messaging" Version="123.4.1">
-		</PackageReference>
-		<PackageReference Include="Xamarin.GooglePlayServices.Base" Version="118.3.0">
-		</PackageReference>
+		<PackageReference Include="Xamarin.Firebase.Iid" Version="121.1.0.14" />
+		<PackageReference Include="Xamarin.Firebase.Messaging" Version="123.4.1" />
+		<PackageReference Include="Xamarin.GooglePlayServices.Base" Version="118.9.0" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0-ios'">
@@ -130,23 +117,26 @@
 		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.9" />
 		<PackageReference Include="SQLitePCLRaw.provider.dynamic_cdecl" Version="2.1.9" />
 		<PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="2.1.9" />
+		<PackageReference Include="Plugin.Firebase.CloudMessaging" Version="4.0.0" />
+    	<BundleResource Include="GoogleService-Info.plist" />
   </ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.301" />
 		<PackageReference Include="AWSSDK.S3" Version="3.7.405.9" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="13.0.0" />
+		<PackageReference Include="CommunityToolkit.Maui.MediaElement" Version="6.1.3" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-		<PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.7" />
-		<PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.7" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.10" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="10.0.10" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
 		<PackageReference Include="RestSharp" Version="112.1.0" />
+		<PackageReference Include="SentinelAnalytics.MAUI" Version="1.0.2" />
 		<PackageReference Include="SkiaSharp.Views" Version="3.119.0" />
 		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.119.0" />
-    <PackageReference Include="SourceGear.sqlite3" Version="3.50.4.5" />
-    <PackageReference Include="sqlite-net-e" Version="1.11.0" />
+		<PackageReference Include="SourceGear.sqlite3" Version="3.50.4.5" />
+		<PackageReference Include="sqlite-net-e" Version="1.11.0" />
+		<PackageReference Include="YoutubeExplode" Version="6.5.6" />
   </ItemGroup>
 
 	<ItemGroup>
@@ -237,22 +227,9 @@
 		<MauiXaml Update="Views\TrainingItemsBasePage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\TrainingsSetGroupPage.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
 		<MauiXaml Update="Views\WeightViewAndSetPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-		<BundleResource Include="GoogleService-Info.plist">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</BundleResource>
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="Models\Questions\" />
 	</ItemGroup>
 
 	<ItemGroup>

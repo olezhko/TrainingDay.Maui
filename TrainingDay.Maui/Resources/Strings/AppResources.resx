@@ -138,15 +138,6 @@
   <data name="AdviceString" xml:space="preserve">
     <value>Advice</value>
   </data>
-  <data name="AuthorString" xml:space="preserve">
-    <value>Author: {0}</value>
-  </data>
-  <data name="BeginsAt" xml:space="preserve">
-    <value>begins at</value>
-  </data>
-  <data name="BuyString" xml:space="preserve">
-    <value>Buy</value>
-  </data>
   <data name="CancelString" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -155,9 +146,6 @@
   </data>
   <data name="ChangesAcceptAfterReboot" xml:space="preserve">
     <value>Changes will be accepted after restart application</value>
-  </data>
-  <data name="ChooseGroupOrNewString" xml:space="preserve">
-    <value>Group</value>
   </data>
   <data name="ChooseLanguage" xml:space="preserve">
     <value>Language</value>
@@ -240,9 +228,6 @@
   <data name="FilterString" xml:space="preserve">
     <value>Filter</value>
   </data>
-  <data name="For" xml:space="preserve">
-    <value>For</value>
-  </data>
   <data name="GoalString" xml:space="preserve">
     <value>Goal</value>
   </data>
@@ -275,9 +260,6 @@
   </data>
   <data name="HourString" xml:space="preserve">
     <value>h</value>
-  </data>
-  <data name="InAppPurchase" xml:space="preserve">
-    <value>In-App Purchase</value>
   </data>
   <data name="KilogramsString" xml:space="preserve">
     <value>kg </value>
@@ -330,20 +312,11 @@
   <data name="NoLastTrainings" xml:space="preserve">
     <value>You haven’t done any workouts yet. Start your first workout!</value>
   </data>
-  <data name="NoNotificationsString" xml:space="preserve">
-    <value>No notifications. You should add notification.</value>
-  </data>
   <data name="NoString" xml:space="preserve">
     <value>No</value>
   </data>
-  <data name="NotAllFieldsEntered" xml:space="preserve">
-    <value>Not all fields entered</value>
-  </data>
   <data name="NotExecutedYet" xml:space="preserve">
     <value>Not executed yet</value>
-  </data>
-  <data name="Notification" xml:space="preserve">
-    <value>Notification</value>
   </data>
   <data name="NoTrainingsNeedAddNewString" xml:space="preserve">
     <value>No workouts. You should add workout.</value>
@@ -356,9 +329,6 @@
   </data>
   <data name="OneTrainingPerWeekCountFormat" xml:space="preserve">
     <value>Maximum weeks with workout: {0:0}</value>
-  </data>
-  <data name="OnTheseDays" xml:space="preserve">
-    <value>On these days</value>
   </data>
   <data name="Or" xml:space="preserve">
     <value>or</value>
@@ -411,17 +381,11 @@
   <data name="RepsString" xml:space="preserve">
     <value>Repetitions</value>
   </data>
-  <data name="RestorePurchase" xml:space="preserve">
-    <value>Restore Purchase</value>
-  </data>
   <data name="ReturnToTrainingMessage" xml:space="preserve">
     <value>You have not implemented a workout for a long time. Maybe today is that day?</value>
   </data>
   <data name="SavedString" xml:space="preserve">
     <value>Saved</value>
-  </data>
-  <data name="SaveTrainingString" xml:space="preserve">
-    <value>Save</value>
   </data>
   <data name="ScreenOnWhenImplementing" xml:space="preserve">
     <value>The screen should be turned on when doing a workout</value>
@@ -477,9 +441,6 @@
   <data name="SuperSetString" xml:space="preserve">
     <value>SuperSet</value>
   </data>
-  <data name="SynchronizationDownloadingQuestion" xml:space="preserve">
-    <value>Are you sure? Your unsynchronized data will be deleted.</value>
-  </data>
   <data name="ThreeMounthString" xml:space="preserve">
     <value>3 Month</value>
   </data>
@@ -528,9 +489,6 @@
   <data name="TotalTrainingsFormat" xml:space="preserve">
     <value>Finished workouts: {0:0}</value>
   </data>
-  <data name="TrainingNotifications" xml:space="preserve">
-    <value>Notifications</value>
-  </data>
   <data name="TrainingsBaseString" xml:space="preserve">
     <value>Workouts</value>
   </data>
@@ -563,9 +521,6 @@
   </data>
   <data name="WeightControlString" xml:space="preserve">
     <value>Body</value>
-  </data>
-  <data name="WeightNotifyString" xml:space="preserve">
-    <value>Weight entry notifications</value>
   </data>
   <data name="WeightString" xml:space="preserve">
     <value>Weight</value>
@@ -657,6 +612,8 @@
   <data name="PreparedBicepsTricepsSuperSet" xml:space="preserve">
     <value>Biceps/Triceps Supersets</value>
   </data>
+  <data name="SelectGroup" xml:space="preserve">
+    <value>Select group</value>
   <data name="AddImage" xml:space="preserve">
     <value>Add image</value>
   </data>

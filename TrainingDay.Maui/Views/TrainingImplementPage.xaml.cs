@@ -10,9 +10,11 @@ using TrainingDay.Maui.Models.Notifications;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels;
-using LastTraining = TrainingDay.Maui.Models.Database.LastTrainingDto;
-using LastTrainingExercise = TrainingDay.Maui.Models.Database.LastTrainingExerciseDto;
-using TrainingExerciseComm = TrainingDay.Maui.Models.Database.TrainingExerciseDto;
+using YoutubeExplode;
+using YoutubeExplode.Videos.Streams;
+using LastTraining = TrainingDay.Maui.Models.Database.LastTrainingEntity;
+using LastTrainingExercise = TrainingDay.Maui.Models.Database.LastTrainingExerciseEntity;
+using TrainingExerciseComm = TrainingDay.Maui.Models.Database.TrainingExerciseEntity;
 
 namespace TrainingDay.Maui.Views;
 
@@ -22,10 +24,11 @@ public partial class TrainingImplementPage : ContentPage
 {
     private readonly DateTime _startTrainingDateTime;
     private bool enabledTimer;
-    private IDispatcherTimer _timer;
+    private readonly IDispatcherTimer _timer;
     private IPushNotification notificator;
     private IDataService dataService;
     private TrainingViewModel trainingItem;
+    private SuperSetViewModel currentSuperSet;
 
     public TrainingImplementPage()
     {
@@ -35,6 +38,7 @@ public partial class TrainingImplementPage : ContentPage
         _startTrainingDateTime = DateTime.Now;
         enabledTimer = true;
         StepProgressBarControl.PropertyChanged += StepProgressBarControl_PropertyChanged;
+        StepProgressBarControl.CurrentItemChanged += StepProgressBarControl_CurrentItemChanged;
         Settings.IsTrainingNotFinished = true;
 
         _timer = Shell.Current.Dispatcher.CreateTimer();
@@ -42,6 +46,12 @@ public partial class TrainingImplementPage : ContentPage
         _timer.Interval = TimeSpan.FromSeconds(1);
 
         RestPicker.TextColor = App.Current.RequestedTheme == AppTheme.Light ? Colors.Black : Colors.White;
+    }
+
+    private async void StepProgressBarControl_CurrentItemChanged(object? sender, StepProgressBarCurrentItemChangedEventArgs e)
+    {
+        var currentSuperSet = e.CurrentItem as SuperSetViewModel;
+        await LoadVideoItemsAsync(currentSuperSet);
     }
 
     private void StepProgressBarControl_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -52,9 +62,11 @@ public partial class TrainingImplementPage : ContentPage
         }
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
+
+        HandlerChanged += OnHandlerChanged;
 
         if (StepProgressBarControl.ItemsSource == null)
         {
@@ -67,6 +79,11 @@ public partial class TrainingImplementPage : ContentPage
             int index = 0;
             foreach (var item in Items)
             {
+                if (index == 0)
+                {
+                    currentSuperSet = item;
+                }
+
                 if (!item.SuperSetItems.First().IsNotFinished)
                 {
                     StepProgressBarControl.DeselectElement();
@@ -84,10 +101,62 @@ public partial class TrainingImplementPage : ContentPage
             StepProgressBarControl.NextElement(FirstIndexIsNotFinished());
         }
 
-        _timer.Start();
-        ToolTipCancelImplementingTraining.Show();
+        await ToolTipCancelImplementingTraining.Show();
 
-        HandlerChanged += OnHandlerChanged;
+        _timer.Start();
+    }
+
+    private async Task LoadVideoItemsAsync(SuperSetViewModel item)
+    {
+        IsVideoLoading = true;
+        foreach (var exercise in item.SuperSetItems)
+        {
+            if (exercise.VideoItems.Any())
+            {
+                continue;
+            }
+
+            if (dataService == null)
+            {
+                return;
+            }
+
+            try
+            {
+                var videoUrls = await dataService.GetVideosAsync(exercise.Name);
+                foreach (var video in videoUrls)
+                {
+                    video.VideoUrl = await GetVideoURLAsync("http://www.youtube.com/watch?v=" + video.VideoUrl);
+                }
+
+                exercise!.VideoItems = videoUrls.Select(item => new ExerciseVideo()
+                {
+                    VideoUrl = item.VideoUrl
+                }).ToObservableCollection();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        IsVideoLoading = false;
+    }
+
+    private static async Task<string> GetVideoURLAsync(string url)
+    {
+        return await Task.Run(async () =>
+        {
+            var youtube = new YoutubeClient();
+
+            var streamManifest = await youtube.Videos.Streams.GetManifestAsync(url);
+
+            IEnumerable<MuxedStreamInfo> streamInfo = streamManifest.GetMuxedStreams();
+
+            var videoPlayerStream = streamInfo.First(video => video.VideoQuality.Label is "240p" or "360p" or "480p");
+
+            return videoPlayerStream.Url;
+        });
     }
 
     protected override void OnDisappearing()
@@ -97,12 +166,14 @@ public partial class TrainingImplementPage : ContentPage
         HandlerChanged -= OnHandlerChanged;
     }
 
-    private void OnHandlerChanged(object sender, EventArgs e)
+    private async void OnHandlerChanged(object sender, EventArgs e)
     {
         if (Handler != null)
         {
             notificator = Handler.MauiContext.Services.GetRequiredService<IPushNotification>();
             dataService = Handler.MauiContext.Services.GetRequiredService<IDataService>();
+
+            await LoadVideoItemsAsync(currentSuperSet);
         }
     }
 
@@ -270,7 +341,6 @@ public partial class TrainingImplementPage : ContentPage
         }
 
         notificator.Cancel(PushMessagesExtensions.TrainingNotificationId);
-
         Shell.SetNavBarIsVisible(this, true);
         await Shell.Current.GoToAsync("//workouts");
 
@@ -302,7 +372,7 @@ public partial class TrainingImplementPage : ContentPage
                     LastTrainingId = id,
                     OrderNumber = item.OrderNumber,
                     ExerciseName = item.Name,
-                    MusclesString = MusclesConverter.ConvertFromListToString(item.Muscles.ToList()),
+                    MusclesString = MusclesExtensions.ConvertFromListToString(item.Muscles.ToList()),
                     Description = item.GetExercise().Description,
                     SuperSetId = item.SuperSetId,
                     TagsValue = ExerciseExtensions.ConvertTagListToInt(item.Tags),
@@ -335,14 +405,6 @@ public partial class TrainingImplementPage : ContentPage
     }
     #endregion
 
-    private async void AddExercisesRequest()
-    {
-        SubscribeMessages();
-        Dictionary<string, object> param = new Dictionary<string, object> { { "ExistedExercises", TrainingItem.Exercises } };
-
-        await Shell.Current.GoToAsync(nameof(ExerciseListPage), param);
-    }
-
     private void SubscribeMessages()
     {
         UnsubscribeMessages();
@@ -358,6 +420,14 @@ public partial class TrainingImplementPage : ContentPage
     private void UnsubscribeMessages()
     {
         WeakReferenceMessenger.Default.Unregister<ExercisesSelectFinishedMessage>(this);
+    }
+
+    private async void AddExercisesRequest()
+    {
+        SubscribeMessages();
+        Dictionary<string, object> param = new Dictionary<string, object> { { "ExistedExercises", TrainingItem.Exercises } };
+
+        await Shell.Current.GoToAsync(nameof(ExerciseListPage), param);
     }
 
     private void AddExercises(IEnumerable<TrainingExerciseViewModel> selectedItems)
@@ -380,13 +450,14 @@ public partial class TrainingImplementPage : ContentPage
 
     private async void CancelTrainingClicked(object sender, TappedEventArgs e)
     {
-        var result = await MessageManager.DisplayAlert(AppResources.CancelTrainingQuestion, trainingItem.Title, AppResources.YesString, AppResources.NoString);
+        var result = await MessageManager.DisplayAlert(AppResources.CancelTrainingQuestion, TrainingItem.Title, AppResources.YesString, AppResources.NoString);
         if (result)
         {
             enabledTimer = false;
             notificator.Cancel(PushMessagesExtensions.TrainingImplementTimeId);
             Settings.IsTrainingNotFinished = false;
 
+            Shell.SetNavBarIsVisible(this, true);
             await Shell.Current.GoToAsync("..");
         }
     }
@@ -451,6 +522,8 @@ public partial class TrainingImplementPage : ContentPage
             trainingItem = value;
         }
     }
+
+    public bool IsVideoLoading { get => field; set => field = value; }
 
     #endregion
 }

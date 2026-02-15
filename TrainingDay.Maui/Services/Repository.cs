@@ -45,16 +45,16 @@ public class Repository
     {
         try
         {
-            database.CreateTable<ExerciseDto>();
-            database.CreateTable<TrainingExerciseDto>();
-            database.CreateTable<TrainingDto>();
-            database.CreateTable<LastTrainingDto>();
-            database.CreateTable<WeightNoteDto>();
-            database.CreateTable<LastTrainingExerciseDto>();
-            database.CreateTable<SuperSetDto>();
-            database.CreateTable<TrainingUnionDto>();
-            database.CreateTable<ImageDto>();
-            database.CreateTable<BlogDto>();
+            database.CreateTable<ExerciseEntity>();
+            database.CreateTable<TrainingExerciseEntity>();
+            database.CreateTable<TrainingEntity>();
+            database.CreateTable<LastTrainingEntity>();
+            database.CreateTable<WeightNoteEntity>();
+            database.CreateTable<LastTrainingExerciseEntity>();
+            database.CreateTable<SuperSetEntity>();
+            database.CreateTable<TrainingUnionEntity>();
+            database.CreateTable<ImageEntity>();
+            database.CreateTable<BlogEntity>();
 
             var initExercises = await ResourceExtension.LoadResource<BaseExercise>("exercises", Settings.GetLanguage().TwoLetterISOLanguageName);
             var dbExercises = GetExerciseItems();
@@ -73,7 +73,7 @@ public class Repository
     }
 
     #region Update Exercises
-    private void DeleteUnused(IEnumerable<ExerciseDto> dbExercises)
+    private void DeleteUnused(IEnumerable<ExerciseEntity> dbExercises)
     {
         var dbGroups = dbExercises.GroupBy(item => item.CodeNum).ToList();
         var trEx = GetTrainingExerciseItems();
@@ -105,14 +105,14 @@ public class Repository
             }
         }
     }
-    private bool AddorUpdateExercise(BaseExercise newExercise, IEnumerable<ExerciseDto> dbExercises)
+    private bool AddorUpdateExercise(BaseExercise newExercise, IEnumerable<ExerciseEntity> dbExercises)
     {
         try
         {
 			var dbExercise = dbExercises.FirstOrDefault(item => item.CodeNum == newExercise.CodeNum);
 			if (dbExercise == null)
 			{
-				dbExercise = new ExerciseDto();
+				dbExercise = new ExerciseEntity();
 				dbExercise.CodeNum = newExercise.CodeNum;
 			}
 
@@ -137,7 +137,7 @@ public class Repository
 
     #region Weight Save And Load
 
-    public int SaveWeightNotesItem(WeightNoteDto item)
+    public int SaveWeightNotesItem(WeightNoteEntity item)
     {
         if (item.Id != 0)
         {
@@ -148,25 +148,25 @@ public class Repository
         return database.Insert(item);
     }
 
-    public IEnumerable<WeightNoteDto> GetWeightNotesItems()
+    public IEnumerable<WeightNoteEntity> GetWeightNotesItems()
     {
-        return (from i in database.Table<WeightNoteDto>() select i).ToList();
+        return (from i in database.Table<WeightNoteEntity>() select i).ToList();
     }
 
     public void DeleteWeightNote(int senderId)
     {
-        database.Delete<WeightNoteDto>(senderId);
+        database.Delete<WeightNoteEntity>(senderId);
     }
     #endregion
 
     #region LastTrainings
 
-    public IEnumerable<LastTrainingDto> GetLastTrainingItems()
+    public IEnumerable<LastTrainingEntity> GetLastTrainingItems()
     {
-        return (from i in database.Table<LastTrainingDto>() select i).ToList();
+        return (from i in database.Table<LastTrainingEntity>() select i).ToList();
     }
 
-    public int SaveLastTrainingItem(LastTrainingDto item)
+    public int SaveLastTrainingItem(LastTrainingEntity item)
     {
         if (item.Id != 0)
         {
@@ -178,10 +178,10 @@ public class Repository
 
     public int DeleteLastTraining(int lastId)
     {
-        return database.Delete<LastTrainingDto>(lastId);
+        return database.Delete<LastTrainingEntity>(lastId);
     }
 
-    public int SaveLastTrainingExerciseItem(LastTrainingExerciseDto item)
+    public int SaveLastTrainingExerciseItem(LastTrainingExerciseEntity item)
     {
         if (item.Id != 0)
         {
@@ -190,34 +190,34 @@ public class Repository
         }
         return database.Insert(item);
     }
-    public IEnumerable<LastTrainingExerciseDto> GetLastTrainingExerciseItems()
+    public IEnumerable<LastTrainingExerciseEntity> GetLastTrainingExerciseItems()
     {
-        return (from i in database.Table<LastTrainingExerciseDto>() select i).ToList();
+        return (from i in database.Table<LastTrainingExerciseEntity>() select i).ToList();
     }
 
     public int DeleteLastTrainingExercise(int lastId)
     {
-        return database.Delete<LastTrainingExerciseDto>(lastId);
+        return database.Delete<LastTrainingExerciseEntity>(lastId);
     }
     #endregion
 
     #region Exercise Methods
-    public IEnumerable<ExerciseDto> GetExerciseItems()
+    public IEnumerable<ExerciseEntity> GetExerciseItems()
     {
-        return (from i in database.Table<ExerciseDto>() select i).ToList();
+        return (from i in database.Table<ExerciseEntity>() select i).ToList();
     }
 
-    public ExerciseDto GetExerciseItem(int id)
+    public ExerciseEntity GetExerciseItem(int id)
     {
-        return database.Get<ExerciseDto>(id);
+        return database.Get<ExerciseEntity>(id);
     }
 
     public int DeleteExerciseItem(int id)
     {
-        return database.Delete<ExerciseDto>(id);
+        return database.Delete<ExerciseEntity>(id);
     }
 
-    public int SaveExerciseItem(ExerciseDto item)
+    public int SaveExerciseItem(ExerciseEntity item)
     {
         if (item.Id != 0)
         {
@@ -231,22 +231,22 @@ public class Repository
     #endregion
 
     #region TrainingExerciseComm Methods
-    public IEnumerable<TrainingExerciseDto> GetTrainingExerciseItems()
+    public IEnumerable<TrainingExerciseEntity> GetTrainingExerciseItems()
     {
-        return (from i in database.Table<TrainingExerciseDto>() select i).ToList();
+        return (from i in database.Table<TrainingExerciseEntity>() select i).ToList();
     }
 
-    public TrainingExerciseDto GetTrainingExerciseItem(int id)
+    public TrainingExerciseEntity GetTrainingExerciseItem(int id)
     {
-        return database.Get<TrainingExerciseDto>(id);
+        return database.Get<TrainingExerciseEntity>(id);
     }
 
     public int DeleteTrainingExerciseItem(int id)
     {
-        return database.Delete<TrainingExerciseDto>(id);
+        return database.Delete<TrainingExerciseEntity>(id);
     }
 
-    public int SaveTrainingExerciseItem(TrainingExerciseDto item)
+    public int SaveTrainingExerciseItem(TrainingExerciseEntity item)
     {
         if (item.Id != 0)
         {
@@ -290,29 +290,29 @@ public class Repository
     #endregion
 
     #region Training Methods
-    public IEnumerable<TrainingDto> GetTrainingItems()
+    public IEnumerable<TrainingEntity> GetTrainingItems()
     {
-        return (from i in database.Table<TrainingDto>() select i).ToList();
+        return (from i in database.Table<TrainingEntity>() select i).ToList();
     }
 
-    public TrainingDto GetTrainingItem(int id)
+    public TrainingEntity GetTrainingItem(int id)
     {
         try
         {
-            return database.Get<TrainingDto>(id);
+            return database.Get<TrainingEntity>(id);
         }
         catch
         {
-            return new TrainingDto();
+            return new TrainingEntity();
         }
     }
 
     public int DeleteTrainingItem(int id)
     {
-        return database.Delete<TrainingDto>(id);
+        return database.Delete<TrainingEntity>(id);
     }
 
-    public int SaveTrainingItem(TrainingDto item)
+    public int SaveTrainingItem(TrainingEntity item)
     {
         if (item.Id != 0)
         {
@@ -348,12 +348,12 @@ public class Repository
     //}
 
 
-    public IEnumerable<SuperSetDto> GetSuperSetItems()
+    public IEnumerable<SuperSetEntity> GetSuperSetItems()
     {
-        return (from i in database.Table<SuperSetDto>() select i).ToList();
+        return (from i in database.Table<SuperSetEntity>() select i).ToList();
     }
 
-    public int SaveSuperSetItem(SuperSetDto item)
+    public int SaveSuperSetItem(SuperSetEntity item)
     {
         if (item.Id != 0)
         {
@@ -366,7 +366,7 @@ public class Repository
 
     public int DeleteSuperSetItem(int id)
     {
-        return database.Delete<SuperSetDto>(id);
+        return database.Delete<SuperSetEntity>(id);
     }
 
     public void DeleteSuperSetsByTrainingId(int trainingId)
@@ -383,12 +383,12 @@ public class Repository
     #endregion
 
     #region Image
-    public ImageDto GetImage(string imageUrl)
+    public ImageEntity GetImage(string imageUrl)
     {
-        return database.Find<ImageDto>(a => a.Url == imageUrl);
+        return database.Find<ImageEntity>(a => a.Url == imageUrl);
     }
 
-    public int SaveImage(ImageDto item)
+    public int SaveImage(ImageEntity item)
     {
         if (item.Id != 0)
         {
@@ -400,12 +400,12 @@ public class Repository
     }
     #endregion
 
-    public IEnumerable<TrainingUnionDto> GetTrainingsGroups()
+    public IEnumerable<TrainingUnionEntity> GetTrainingsGroups()
     {
-        return (from i in database.Table<TrainingUnionDto>() select i).ToList();
+        return (from i in database.Table<TrainingUnionEntity>() select i).ToList();
     }
 
-    public int SaveTrainingGroup(TrainingUnionDto item)
+    public int SaveTrainingGroup(TrainingUnionEntity item)
     {
         if (item.Id != 0)
         {
@@ -417,14 +417,14 @@ public class Repository
         return GetLastInsertId();
     }
 
-    public TrainingUnionDto GetTrainingGroup(int id)
+    public TrainingUnionEntity GetTrainingGroup(int id)
     {
-        return database.Get<TrainingUnionDto>(id);
+        return database.Get<TrainingUnionEntity>(id);
     }
 
     public int DeleteTrainingGroup(int id)
     {
-        return database.Delete<TrainingUnionDto>(id);
+        return database.Delete<TrainingUnionEntity>(id);
     }
 
     public int SaveItem(object item, int id = 0)
@@ -456,13 +456,13 @@ public class Repository
         }
     }
 
-    public IEnumerable<BlogDto> GetBlogItems()
+    public IEnumerable<BlogEntity> GetBlogItems()
     {
-        return [.. (from i in database.Table<BlogDto>() select i)];
+        return [.. (from i in database.Table<BlogEntity>() select i)];
     }
 
-    public IEnumerable<BlogDto> GetBlogItems(int page, int size)
+    public IEnumerable<BlogEntity> GetBlogItems(int page, int size)
     {
-        return [.. (from i in database.Table<BlogDto>() select i).Skip((page - 1) * size).Take(size)];
+        return [.. (from i in database.Table<BlogEntity>() select i).Skip((page - 1) * size).Take(size)];
     }
 }

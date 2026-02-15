@@ -150,15 +150,6 @@
   <data name="AdviceString" xml:space="preserve">
     <value>Совет</value>
   </data>
-  <data name="AuthorString" xml:space="preserve">
-    <value>Автор: {0}</value>
-  </data>
-  <data name="BeginsAt" xml:space="preserve">
-    <value>начинается с</value>
-  </data>
-  <data name="BuyString" xml:space="preserve">
-    <value>Купить</value>
-  </data>
   <data name="CancelString" xml:space="preserve">
     <value>Отмена</value>
   </data>
@@ -167,9 +158,6 @@
   </data>
   <data name="ChangesAcceptAfterReboot" xml:space="preserve">
     <value>Изменения вступят в силу после перезапуска приложения</value>
-  </data>
-  <data name="ChooseGroupOrNewString" xml:space="preserve">
-    <value>Группа</value>
   </data>
   <data name="ChooseLanguage" xml:space="preserve">
     <value>Язык</value>
@@ -252,9 +240,6 @@
   <data name="FilterString" xml:space="preserve">
     <value>Фильтр</value>
   </data>
-  <data name="For" xml:space="preserve">
-    <value>Для</value>
-  </data>
   <data name="GoalString" xml:space="preserve">
     <value>Цель</value>
   </data>
@@ -287,9 +272,6 @@
   </data>
   <data name="HourString" xml:space="preserve">
     <value>ч</value>
-  </data>
-  <data name="InAppPurchase" xml:space="preserve">
-    <value>Покупки в приложении</value>
   </data>
   <data name="KilogramsString" xml:space="preserve">
     <value> кг  </value>
@@ -342,20 +324,11 @@
   <data name="NoLastTrainings" xml:space="preserve">
     <value>Вы ещё не выполнили ни одной тренировки. Начните свою первую тренировку!</value>
   </data>
-  <data name="NoNotificationsString" xml:space="preserve">
-    <value>Нет напоминаний. Добавьте напоминание.</value>
-  </data>
   <data name="NoString" xml:space="preserve">
     <value>Нет</value>
   </data>
-  <data name="NotAllFieldsEntered" xml:space="preserve">
-    <value>Введены не все поля</value>
-  </data>
   <data name="NotExecutedYet" xml:space="preserve">
     <value>Еще не выполнялась</value>
-  </data>
-  <data name="Notification" xml:space="preserve">
-    <value>Напоминание</value>
   </data>
   <data name="NoTrainingsNeedAddNewString" xml:space="preserve">
     <value>Нет тренировок. Добавьте тренировку.</value>
@@ -368,9 +341,6 @@
   </data>
   <data name="OneTrainingPerWeekCountFormat" xml:space="preserve">
     <value>Максимум подрят недель с тренировками: {0:0}</value>
-  </data>
-  <data name="OnTheseDays" xml:space="preserve">
-    <value>Для дней</value>
   </data>
   <data name="Or" xml:space="preserve">
     <value>или</value>
@@ -423,17 +393,11 @@
   <data name="RepsString" xml:space="preserve">
     <value>Повторения</value>
   </data>
-  <data name="RestorePurchase" xml:space="preserve">
-    <value>Восстановить покупки</value>
-  </data>
   <data name="ReturnToTrainingMessage" xml:space="preserve">
     <value>Вы давно не выполняли тренировку. Может сегодня тот день?</value>
   </data>
   <data name="SavedString" xml:space="preserve">
     <value>Сохранено</value>
-  </data>
-  <data name="SaveTrainingString" xml:space="preserve">
-    <value>Сохранить тренировку</value>
   </data>
   <data name="ScreenOnWhenImplementing" xml:space="preserve">
     <value>Оставлять экран включенным при выполнении тренировки</value>
@@ -489,9 +453,6 @@
   <data name="SuperSetString" xml:space="preserve">
     <value>Суперсет</value>
   </data>
-  <data name="SynchronizationDownloadingQuestion" xml:space="preserve">
-    <value>Вы уверены? Ваши несинхронизированные данные удалятся.</value>
-  </data>
   <data name="ThreeMounthString" xml:space="preserve">
     <value>3 Месяца</value>
   </data>
@@ -540,9 +501,6 @@
   <data name="TotalTrainingsFormat" xml:space="preserve">
     <value>Выполненных тренировок: {0:0}</value>
   </data>
-  <data name="TrainingNotifications" xml:space="preserve">
-    <value>Напоминания</value>
-  </data>
   <data name="TrainingsBaseString" xml:space="preserve">
     <value>Тренировки</value>
   </data>
@@ -575,9 +533,6 @@
   </data>
   <data name="WeightControlString" xml:space="preserve">
     <value>Фигура</value>
-  </data>
-  <data name="WeightNotifyString" xml:space="preserve">
-    <value>Уведомления о вводе веса</value>
   </data>
   <data name="WeightString" xml:space="preserve">
     <value>Вес</value>
@@ -669,6 +624,8 @@
   <data name="PreparedBicepsTricepsSuperSet" xml:space="preserve">
     <value>Бицепс/Трицепс Суперсетами</value>
   </data>
+  <data name="SelectGroup" xml:space="preserve">
+    <value>Выберите группу</value>
   <data name="AddImage" xml:space="preserve">
     <value>Добавить изображение</value>
   </data>

@@ -10,7 +10,7 @@
              x:Name="Page">
     <Shell.TitleView>
         <Grid ColumnDefinitions="*, auto, auto" ColumnSpacing="10" Margin="10,0">
-            <Label Grid.Column="0" Text="{x:Static resx:AppResources.TrainingsBaseString}" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
+            <Label Grid.Column="0" Text="TrainingDay" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
 
             <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="train_hist.png" Clicked="ShowHistory_Click">
                 <ImageButton.Behaviors>
@@ -24,9 +24,6 @@
             </ImageButton>
         </Grid>
     </Shell.TitleView>
-    <ContentPage.BindingContext>
-        <viewModels:TrainingItemsBasePageViewModel/>
-    </ContentPage.BindingContext>
 
     <controls:TooltipControlContainer x:Name="Container" RowSpacing="5">
         <Grid.RowDefinitions>

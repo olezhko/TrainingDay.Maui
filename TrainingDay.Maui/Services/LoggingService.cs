@@ -1,25 +1,13 @@
-﻿using Microsoft.AppCenter;
-using Microsoft.AppCenter.Analytics;
-using Microsoft.AppCenter.Crashes;
+﻿using SentinelAnalytics.Maui;
 
 namespace TrainingDay.Maui.Services
 {
     public static class LoggingService
     {
-        public static void TrackError(Exception ex, IDictionary<string, string> properties = null)
-        {
-            Crashes.TrackError(ex, properties);
-            //var parameters = new Bundle();
-            //parameters.PutString("error_message", ex.Message);
-            //parameters.PutString("stack_trace", ex.StackTrace);
+        public static async Task TrackError(Exception ex, IDictionary<string, string>? properties = null) 
+            => await SentinelTracker.TrackErrorAsync(ex, properties: (IDictionary<string, object>?)properties);
 
-            //var context = Android.App.Application.Context;
-            //FirebaseAnalytics.GetInstance(context).LogEvent("app_error", parameters);
-        }
-
-        public static void TrackEvent(string text, IDictionary<string, string> properties = null)
-        {
-            Analytics.TrackEvent(text, properties);
-        }
+        public static async Task TrackEvent(string text, IDictionary<string, string>? properties = null) 
+            => await SentinelTracker.TrackEventAsync(text, properties: (IDictionary<string, object>?)properties);
     }
 }

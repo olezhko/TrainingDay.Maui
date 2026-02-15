@@ -35,12 +35,6 @@ public static class Settings
         set => Preferences.Set(nameof(Token), value);
     }
 
-    public static bool IsTokenSavedOnServer
-    {
-        get => Preferences.Get(nameof(IsTokenSavedOnServer), false);
-        set => Preferences.Set(nameof(IsTokenSavedOnServer), value);
-    }
-
     public static double WaistGoal
     {
         get => Preferences.Get(nameof(WaistGoal), 0.0);
@@ -51,24 +45,6 @@ public static class Settings
     {
         get => Preferences.Get(nameof(HipGoal), 0.0);
         set => Preferences.Set(nameof(HipGoal), value);
-    }
-
-    public static string GoogleToken
-    {
-        get => Preferences.Get(nameof(GoogleToken), string.Empty);
-        set => Preferences.Set(nameof(GoogleToken), value);
-    }
-
-    public static string Email
-    {
-        get => Preferences.Get(nameof(Email), string.Empty);
-        set => Preferences.Set(nameof(Email), value);
-    }
-
-    public static string Password
-    {
-        get => Preferences.Get(nameof(Password), string.Empty);
-        set => Preferences.Set(nameof(Password), value);
     }
 
     public static string LastDatabaseSyncDateTime
@@ -98,12 +74,6 @@ public static class Settings
         set => Preferences.Set(nameof(IsShowAdvicesOnImplementing), value);
     }
 
-    public static string Nick
-    {
-        get => Preferences.Get(nameof(Nick), string.Empty);
-        set => Preferences.Set(nameof(Nick), value);
-    }
-
     public static int WeightMeasureType
     {
         get => Preferences.Get(nameof(WeightMeasureType), (int)MeasureWeightTypes.Kilograms);
@@ -113,6 +83,18 @@ public static class Settings
     {
         get => Preferences.Get(nameof(IsUserKnownExerciseFilters), false);
         set => Preferences.Set(nameof(IsUserKnownExerciseFilters), value);
+    }
+
+    public static bool IsLightTheme
+    {
+        get => Preferences.Get(nameof(IsLightTheme), false);
+        set => Preferences.Set(nameof(IsLightTheme), value);
+    }
+
+    public static string AuthToken
+    {
+        get => Preferences.Get(nameof(AuthToken), string.Empty);
+        set => Preferences.Set(nameof(AuthToken), value);
     }
 
     public static CultureInfo GetLanguage()

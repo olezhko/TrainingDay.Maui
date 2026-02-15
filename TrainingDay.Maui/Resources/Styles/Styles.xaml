@@ -62,13 +62,34 @@
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
     </Style>
 
-    <Style TargetType="Button" x:Key="ActionButton" ApplyToDerivedTypes="True">
+    <Style TargetType="Button" x:Key="ActionButton" >
         <Setter Property="CornerRadius" Value="15"/>
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray500}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver" />
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
     </Style>
-    
-    <Style TargetType="Button">
+
+    <Style TargetType="Button" x:Key="SecondActionButton">
+        <Setter Property="CornerRadius" Value="15"/>
+        <Setter Property="BorderWidth" Value="1"/>
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+        <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+    </Style>
+
+    <Style TargetType="Button" ApplyToDerivedTypes="True">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
         <Setter Property="FontFamily" Value="OpenSansRegular"/>
@@ -76,7 +97,6 @@
         <Setter Property="BorderWidth" Value="0"/>
         <Setter Property="CornerRadius" Value="8"/>
         <Setter Property="Padding" Value="14,10"/>
-        <Setter Property="MinimumHeightRequest" Value="44"/>
         <Setter Property="MinimumWidthRequest" Value="44"/>
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>

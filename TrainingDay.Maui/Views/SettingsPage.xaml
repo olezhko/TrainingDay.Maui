@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
+             xmlns:ext="clr-namespace:TrainingDay.Maui.Extensions"
              x:Class="TrainingDay.Maui.Views.SettingsPage"
              Title="{x:Static resx:AppResources.Account}" Padding="5">
     <Shell.TitleView>
@@ -81,6 +82,8 @@
                     </OnPlatform>
                 </Button.IsVisible>
             </Button>
+
+            <Label Text="{x:Static ext:ConstantKeys.Version}" FontSize="Small" HorizontalOptions="Center"/>
         </StackLayout>
     </ScrollView>
 </ContentPage>

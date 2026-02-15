@@ -9,10 +9,10 @@ using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.Views;
-using ExerciseDto = TrainingDay.Maui.Models.Database.ExerciseDto;
-using SuperSet = TrainingDay.Maui.Models.Database.SuperSetDto;
-using Training = TrainingDay.Maui.Models.Database.TrainingDto;
-using TrainingExerciseComm = TrainingDay.Maui.Models.Database.TrainingExerciseDto;
+using ExerciseEntity = TrainingDay.Maui.Models.Database.ExerciseEntity;
+using SuperSet = TrainingDay.Maui.Models.Database.SuperSetEntity;
+using Training = TrainingDay.Maui.Models.Database.TrainingEntity;
+using TrainingExerciseComm = TrainingDay.Maui.Models.Database.TrainingExerciseEntity;
 
 namespace TrainingDay.Maui.ViewModels.Pages;
 
@@ -150,7 +150,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
             preparedCardioString.Training = new TrainingViewModel()
             {
                 Exercises = PreparedTrainingsPageViewModel.GetExerciseByMuscles(exerciseBase,
-                    MusclesConverter.SetMuscles(MusclesEnum.Cardio).ToArray()),
+                    MusclesExtensions.SetMuscles(MusclesEnum.Cardio).ToArray()),
                 Title = AppResources.PreparedCardioString,
             };
         };
@@ -302,10 +302,10 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
     }
 
     private static PreparedTrainingViewModel CreatePreparedTraining(
-        List<ExerciseDto> baseExercises,
+        List<ExerciseEntity> baseExercises,
         string name,
         string imagePath,
-        Func<List<ExerciseDto>, ObservableCollection<TrainingExerciseViewModel>> buildExercises,
+        Func<List<ExerciseEntity>, ObservableCollection<TrainingExerciseViewModel>> buildExercises,
         List<PreparedSuperSet>? superSets = null)
     {
         var viewModel = new PreparedTrainingViewModel
@@ -327,7 +327,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
         return viewModel;
     }
 
-    private static ObservableCollection<TrainingExerciseViewModel> GetExerciseByMuscles(List<ExerciseDto> baseExercises,
+    private static ObservableCollection<TrainingExerciseViewModel> GetExerciseByMuscles(List<ExerciseEntity> baseExercises,
         params MuscleViewModel[] muscles)
     {
         var result = new ObservableCollection<TrainingExerciseViewModel>();
@@ -335,7 +335,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
         {
             try
             {
-                var exMuscles = MusclesConverter.ConvertFromStringToList(baseExercise.MusclesString);
+                var exMuscles = MusclesExtensions.ConvertFromStringToList(baseExercise.MusclesString);
                 var sub = new List<MuscleViewModel>();
                 foreach (var muscleViewModel in exMuscles)
                 {
@@ -359,7 +359,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
         return result;
     }
 
-    private static ObservableCollection<TrainingExerciseViewModel> GetExercisesByCodeNum(List<ExerciseDto> baseExercises, params int[] codeNums)
+    private static ObservableCollection<TrainingExerciseViewModel> GetExercisesByCodeNum(List<ExerciseEntity> baseExercises, params int[] codeNums)
     {
         var result = new ObservableCollection<TrainingExerciseViewModel>();
         foreach (var codeNum in codeNums)

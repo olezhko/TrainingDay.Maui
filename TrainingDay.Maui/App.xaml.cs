@@ -1,11 +1,9 @@
 ﻿using Amazon;
 using Amazon.S3;
 using Amazon.S3.Model;
-using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui;
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.AppCenter;
-using Microsoft.AppCenter.Analytics;
-using Microsoft.AppCenter.Crashes;
+using SentinelAnalytics.Maui;
 using System.Globalization;
 using System.Net;
 using TrainingDay.Maui.Extensions;
@@ -27,6 +25,7 @@ namespace TrainingDay.Maui
         
         private static Repository database;
         private static object lockBase = new object();
+        public static Options Options;
 
         public static Repository Database
         {
@@ -44,7 +43,6 @@ namespace TrainingDay.Maui
             }
         }
         public bool IsTrainingNotFinished => Settings.IsTrainingNotFinished;
-        public static double FullWidth => DeviceDisplay.Current.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density;
         public string MeasureOfWeight { get; set; }
         public ToolTipManager ToolTipManager { get; set; }
 
@@ -59,20 +57,32 @@ namespace TrainingDay.Maui
                 Exception ex = (Exception)args.ExceptionObject;
                 LoggingService.TrackError(ex);
             };
+
+            RequestedThemeChanged += (sender, args) => {
+                Console.WriteLine($"New theme requested {args.RequestedTheme}");
+                Settings.IsLightTheme = App.Current.RequestedTheme == AppTheme.Light;
+                App.Options.SetPopupDefaults(new DefaultPopupSettings
+                {
+                    CanBeDismissedByTappingOutsideOfPopup = true,
+                    Padding = 4,
+                    Margin = 10,
+                    // because App.Current not exist yet
+                    // because options not handle theme change
+                    BackgroundColor = Settings.IsLightTheme ? Color.FromArgb("#f0f0f0") : Color.FromArgb("#1b1b1b")
+                });
+            };
         }
 
-        protected override Window CreateWindow(IActivationState? activationState)
-        {
-            return new Window(new AppShell());
-        }
-        
+        protected override Window CreateWindow(IActivationState? activationState) => new Window(new AppShell());
+
         protected override void OnStart()
         {
             base.OnStart();
-            AppCenter.Start(DeviceInfo.Platform == DevicePlatform.iOS ? "59807e71-013b-4d42-9306-4a6044d9dc5f" : "96acc322-4770-4aa3-876b-16ce5a802a38", typeof(Analytics), typeof(Crashes));
-            Settings.LastDatabaseSyncDateTime = Settings.LastDatabaseSyncDateTime.IsNotNullOrEmpty() ? Settings.LastDatabaseSyncDateTime : DateTime.Now.ToString(Settings.GetLanguage());
+            Settings.IsLightTheme = App.Current.RequestedTheme == AppTheme.Light;
 
-            LoggingService.TrackEvent("Application Started");
+            SentinelTracker.Initialize(ConstantKeys.SentinelTrackerProjectId);
+
+            Settings.LastDatabaseSyncDateTime = Settings.LastDatabaseSyncDateTime.IsNotNullOrEmpty() ? Settings.LastDatabaseSyncDateTime : DateTime.Now.ToString(Settings.GetLanguage());
 
             notificationService = Handler.MauiContext.Services.GetRequiredService<IPushNotification>();
             dataService = Handler.MauiContext.Services.GetRequiredService<IDataService>();
@@ -80,6 +90,7 @@ namespace TrainingDay.Maui
 
             Dispatcher.Dispatch(async () =>
             {
+                await LoggingService.TrackEvent("Application start");
                 await dataService.SendFirebaseTokenAsync(Settings.Token, CultureInfo.CurrentCulture.Name, TimeZoneInfo.Local.BaseUtcOffset.ToString());
                 await dataService.PostActionAsync(Settings.Token, Common.Communication.MobileActions.Enter);
                 await DownloadImagesAsync();
@@ -115,7 +126,7 @@ namespace TrainingDay.Maui
 
                         var url = b.Key.Replace(".jpg", string.Empty).Replace(".png", string.Empty);
 
-                        ImageDto image = App.Database.GetImage(url) ?? new ImageDto();
+                        ImageEntity image = App.Database.GetImage(url) ?? new ImageEntity();
 
                         if (image.Data?.Length != response.Headers.ContentLength)
                         {
@@ -194,9 +205,9 @@ namespace TrainingDay.Maui
         private void IncomingTraining(TrainingSerialize vm)
         {
             var exercises = Database.GetExerciseItems().ToList();
-            var superSets = new List<Models.Database.SuperSetDto>();
+            var superSets = new List<Models.Database.SuperSetEntity>();
 
-            var id = Database.SaveTrainingItem(new Models.Database.TrainingDto() { Title = vm.Title });
+            var id = Database.SaveTrainingItem(new Models.Database.TrainingEntity() { Title = vm.Title });
 
             foreach (var item in vm.Items)
             {
@@ -208,7 +219,7 @@ namespace TrainingDay.Maui
                 }
                 else
                 {
-                    var newItem = new Models.Database.ExerciseDto()
+                    var newItem = new Models.Database.ExerciseEntity()
                     {
                         Description = item.Description,
                         Name = item.Name,
@@ -237,7 +248,7 @@ namespace TrainingDay.Maui
                     }
                     else
                     {
-                        var newItem = new Models.Database.SuperSetDto()
+                        var newItem = new Models.Database.SuperSetEntity()
                         {
                             TrainingId = id,
                         };
@@ -249,7 +260,7 @@ namespace TrainingDay.Maui
                     }
                 }
 
-                Database.SaveTrainingExerciseItem(new Models.Database.TrainingExerciseDto()
+                Database.SaveTrainingExerciseItem(new Models.Database.TrainingExerciseEntity()
                 {
                     OrderNumber = item.OrderNumber,
                     TrainingId = id,

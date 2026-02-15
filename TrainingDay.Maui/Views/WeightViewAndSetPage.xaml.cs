@@ -13,8 +13,6 @@ public partial class WeightViewAndSetPage : ContentPage
         InitializeComponent();
         vm = new WeightViewAndSetPageViewModel();
         BindingContext = vm;
-        BodyControlView.ChildAdded += ChilderAdded;
-        vm.PropertyChanged += ViewModelPropertyChanged;
 
         var md = App.Current.Resources.MergedDictionaries.First();
         inactiveColor = App.Current.RequestedTheme == AppTheme.Dark ? (Color)md["ContentPageBackgroundColor"] : (Color)md["ContentPageBackgroundColorLight"];
@@ -31,39 +29,12 @@ public partial class WeightViewAndSetPage : ContentPage
     Button lastPeriodButton;
     private void SetPeriod_Click(object sender, EventArgs args)
     {
-        if (lastPeriodButton is not null)
-        {
-            lastPeriodButton.BackgroundColor = inactiveColor;
-        }
-
+        lastPeriodButton?.BackgroundColor = inactiveColor;
         lastPeriodButton = sender as Button;
 
         ChartWeightPeriod period = (ChartWeightPeriod)Enum.Parse(typeof(ChartWeightPeriod), lastPeriodButton.AutomationId);
         vm.WeightPeriodChangedCommand.Execute(period);
         lastPeriodButton.BackgroundColor = Colors.Orange;
-    }
-
-    private void ViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs args)
-    {
-        if (args.PropertyName == nameof(WeightViewAndSetPageViewModel.BodyControlItems))
-        {
-            var isAnyEntryFocused = weightEntryList.Any(item => item.IsFocused);
-            if (!isAnyEntryFocused)
-            {
-                foreach (var entry in weightEntryList)
-                {
-                    //entry.HideKeyboardAsync(CancellationToken.None);
-                }
-            }
-        }
-    }
-
-    List<Entry> weightEntryList = new List<Entry>();
-    private void ChilderAdded(object sender, ElementEventArgs args)
-    {
-        Grid element = args.Element as Grid;
-        var entries = Extensions.UIHelper.FindVisualChildren<Entry>(element);
-        weightEntryList.AddRange(entries);
     }
 
     private async void ShowInfo_Click(object sender, EventArgs e)

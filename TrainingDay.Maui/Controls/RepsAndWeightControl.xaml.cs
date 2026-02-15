@@ -17,9 +17,9 @@ public partial class RepsAndWeightControl : ContentView
         set { SetValue(ValueProperty, value); }
     }
 
-    public static readonly BindableProperty IsOnlyRepsProperty = BindableProperty.Create(nameof(IsOnlyReps), typeof(bool), typeof(RepsAndWeightControl), false, defaultBindingMode: BindingMode.TwoWay, propertyChanged: PropertyChanged);
+    public static readonly BindableProperty IsOnlyRepsProperty = BindableProperty.Create(nameof(IsOnlyReps), typeof(bool), typeof(RepsAndWeightControl), false, defaultBindingMode: BindingMode.TwoWay, propertyChanged: IsOnlyRepsPropertyChanged);
 
-    private static void PropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+    private static void IsOnlyRepsPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
     {
         if ((bool)newvalue)
         {

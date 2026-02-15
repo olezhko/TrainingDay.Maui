@@ -75,7 +75,7 @@ namespace TrainingDay.Maui.Platforms.Android
                             }
                             break;
                         case PushNotificationItem.WorkoutType:
-                            if (true)
+                            if (PushMessagesExtensions.IsShowNewWorkoutNotify())
                             {
                                 ShowPushNotification(new PushMessage()
                                 {

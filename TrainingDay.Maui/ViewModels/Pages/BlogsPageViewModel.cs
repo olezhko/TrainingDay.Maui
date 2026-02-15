@@ -46,7 +46,7 @@ public class BlogsPageViewModel : BaseViewModel
             {
                 foreach (var item in newBlogs)
                 {
-                    var newBlog = new BlogDto()
+                    var newBlog = new BlogEntity()
                     {
                         Guid = item.Guid,
                         Content = item.Content,
@@ -73,7 +73,7 @@ public class BlogsPageViewModel : BaseViewModel
     private async Task OpenBlog(BlogViewModel sender)
     {
         var blog = await dataService.GetBlogAsync(sender.Guid);
-        var update = new BlogDto()
+        var update = new BlogEntity()
         {
             Id = sender.Id,
             Guid = sender.Guid,

@@ -13,7 +13,7 @@ namespace TrainingDay.Maui.ViewModels.Pages;
 
 public class HistoryTrainingPageViewModel : BaseViewModel
 {
-    private IOrderedEnumerable<LastTrainingDto> baseItems;
+    private IOrderedEnumerable<LastTrainingEntity> baseItems;
     private static List<Tuple<string, int>> DaysAndTextLimits = new List<Tuple<string, int>>();
 
     public HistoryTrainingPageViewModel()
@@ -100,7 +100,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
             {
                 Name = trainingExercise.ExerciseName,
                 Muscles = new ObservableCollection<MuscleViewModel>(
-                    MusclesConverter.ConvertFromStringToList(trainingExercise.MusclesString)),
+                    MusclesExtensions.ConvertFromStringToList(trainingExercise.MusclesString)),
                 OrderNumber = trainingExercise.OrderNumber,
                 Description = DescriptionViewModel.ConvertFromJson(trainingExercise.Description),
                 TrainingExerciseId = trainingExercise.Id,
