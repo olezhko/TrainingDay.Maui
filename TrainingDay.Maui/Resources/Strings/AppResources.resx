@@ -633,4 +633,10 @@
   <data name="DescribePerformMovement" xml:space="preserve">
     <value>Describe how to perform the movement</value>
   </data>
+  <data name="Gallery" xml:space="preserve">
+    <value>Gallery</value>
+  </data>
+  <data name="Photo" xml:space="preserve">
+    <value>Photo</value>
+  </data>
 </root>

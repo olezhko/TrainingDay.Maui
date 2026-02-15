@@ -33,13 +33,13 @@
                         TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"
                         Clicked="SetPeriod_Click" AutomationId="0" Text="{x:Static resx:AppResources.WeekString}"/>
 
-                <Button Padding="0" Grid.Column="1" CornerRadius="5" BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}" LineBreakMode="TailTruncation"
+                <Button Padding="0,10" Grid.Column="1" CornerRadius="5" BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}" LineBreakMode="TailTruncation"
                             Clicked="SetPeriod_Click" AutomationId="1" Text="{x:Static resx:AppResources.OneMounthString}" TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"/>
-                <Button Padding="0" Grid.Column="2" CornerRadius="5" BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}" LineBreakMode="TailTruncation"
+                <Button Padding="0,10" Grid.Column="2" CornerRadius="5" BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}" LineBreakMode="TailTruncation"
                             Clicked="SetPeriod_Click" AutomationId="2" Text="{x:Static resx:AppResources.ThreeMounthString}" TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"/>
-                <Button Padding="0" Grid.Column="3" CornerRadius="5" BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}" LineBreakMode="TailTruncation"
+                <Button Padding="0,10" Grid.Column="3" CornerRadius="5" BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}" LineBreakMode="TailTruncation"
                             Clicked="SetPeriod_Click" AutomationId="3" Text="{x:Static resx:AppResources.HalfYearString}" TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"/>
-                <Button Padding="0" Grid.Column="4" CornerRadius="5" BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}" LineBreakMode="TailTruncation"
+                <Button Padding="0,10" Grid.Column="4" CornerRadius="5" BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}" LineBreakMode="TailTruncation"
                             Clicked="SetPeriod_Click" AutomationId="4" Text="{x:Static resx:AppResources.YearString}" TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"/>
             </Grid>
         </Border>

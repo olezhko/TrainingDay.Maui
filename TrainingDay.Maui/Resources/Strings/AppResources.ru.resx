@@ -645,4 +645,10 @@
   <data name="DescribePerformMovement" xml:space="preserve">
     <value>Опишите, как выполнять движение</value>
   </data>
+  <data name="Gallery" xml:space="preserve">
+    <value>Галерея</value>
+  </data>
+  <data name="Photo" xml:space="preserve">
+    <value>Фото</value>
+  </data>
 </root>

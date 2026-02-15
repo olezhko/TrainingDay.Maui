@@ -511,6 +511,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gallery.
+        /// </summary>
+        internal static string Gallery {
+            get {
+                return ResourceManager.GetString("Gallery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Goal.
         /// </summary>
         internal static string GoalString {
@@ -867,6 +876,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string Or {
             get {
                 return ResourceManager.GetString("Or", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Photo.
+        /// </summary>
+        internal static string Photo {
+            get {
+                return ResourceManager.GetString("Photo", resourceCulture);
             }
         }
         
@@ -1263,15 +1281,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string SuperSetString {
             get {
                 return ResourceManager.GetString("SuperSetString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Are you sure? Your unsynchronized data will be deleted..
-        /// </summary>
-        internal static string SynchronizationDownloadingQuestion {
-            get {
-                return ResourceManager.GetString("SynchronizationDownloadingQuestion", resourceCulture);
             }
         }
         

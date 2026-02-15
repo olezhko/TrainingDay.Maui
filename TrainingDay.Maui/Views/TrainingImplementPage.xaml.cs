@@ -152,9 +152,10 @@ public partial class TrainingImplementPage : ContentPage
 
             var streamManifest = await youtube.Videos.Streams.GetManifestAsync(url);
 
-            IEnumerable<MuxedStreamInfo> streamInfo = streamManifest.GetMuxedStreams();
-
-            var videoPlayerStream = streamInfo.First(video => video.VideoQuality.Label is "240p" or "360p" or "480p");
+            var videoPlayerStream = streamManifest
+                .GetVideoOnlyStreams()
+                .Where(s => s.Container == Container.Mp4)
+                .GetWithHighestVideoQuality();
 
             return videoPlayerStream.Url;
         });

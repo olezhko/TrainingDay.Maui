@@ -9,7 +9,6 @@ using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels;
 using static TrainingDay.Maui.Models.Messages.ExerciseChangedMessage;
-using LanguageResource = TrainingDay.Maui.Resources.Strings.AppResources;
 
 namespace TrainingDay.Maui.Views;
 
@@ -19,9 +18,9 @@ public partial class ExerciseItemPage : ContentPage
     {
         InitializeComponent();
         FillMuscleLookup();
-        ExerciseByRepsCheckBox.Content = $"{LanguageResource.ExerciseForTypeString}{LanguageResource.RepsString}";
-        ExerciseByRepsAndWeightCheckBox.Content = $"{LanguageResource.ExerciseForTypeString}{LanguageResource.RepsAndWeightString}";
-        ExerciseByTimeCheckBox.Content = $"{LanguageResource.ExerciseForTypeString}{LanguageResource.TimeString}";
+        ExerciseByRepsCheckBox.Content = $"{AppResources.ExerciseForTypeString}{AppResources.RepsString}";
+        ExerciseByRepsAndWeightCheckBox.Content = $"{AppResources.ExerciseForTypeString}{AppResources.RepsAndWeightString}";
+        ExerciseByTimeCheckBox.Content = $"{AppResources.ExerciseForTypeString}{AppResources.TimeString}";
     }
 
     protected override void OnAppearing()
@@ -31,7 +30,7 @@ public partial class ExerciseItemPage : ContentPage
 
         if (item.LoadId == 0)
         {
-            TitleLabel.Text = LanguageResource.CreateNewString;
+            TitleLabel.Text = AppResources.CreateNewString;
             DeleteExerciseToolbarItem.IsVisible = false;
         }
         else
@@ -76,7 +75,7 @@ public partial class ExerciseItemPage : ContentPage
 
                 WeakReferenceMessenger.Default.Send(new ExerciseChangedMessage(exercise, action));
 
-                await Toast.Make(LanguageResource.SavedString).Show();
+                await Toast.Make(AppResources.SavedString).Show();
                 await Shell.Current.GoToAsync("..");
             }
         }
@@ -102,15 +101,15 @@ public partial class ExerciseItemPage : ContentPage
             {
                 questionBuilder.Append("\n");
                 var trainingNames = string.Join(", ", trainings);
-                questionBuilder.Append(LanguageResource.ExerciseInTrainings + "\n" + trainingNames);
+                questionBuilder.Append(AppResources.ExerciseInTrainings + "\n" + trainingNames);
             }
 
-            var result = await MessageManager.DisplayAlert(LanguageResource.DeleteExercise, questionBuilder.ToString(), LanguageResource.OkString, LanguageResource.CancelString);
+            var result = await MessageManager.DisplayAlert(AppResources.DeleteExercise, questionBuilder.ToString(), AppResources.OkString, AppResources.CancelString);
             if (result)
             {
                 App.Database.DeleteExerciseItem(ex.LoadId);
                 App.Database.DeleteTrainingExerciseItemByExerciseId(ex.LoadId);
-                await Toast.Make(LanguageResource.DeletedString).Show();
+                await Toast.Make(AppResources.DeletedString).Show();
 
                 WeakReferenceMessenger.Default.Send(new ExerciseChangedMessage(ex.GetExercise(), ExerciseAction.Removed));
 
@@ -197,11 +196,11 @@ public partial class ExerciseItemPage : ContentPage
     private async void Button_Clicked(object sender, EventArgs e)
     {
         var action = await Shell.Current.DisplayActionSheetAsync(
-           "Add Image",
-           LanguageResource.CancelString,
+           AppResources.AddImage,
+           AppResources.CancelString,
            null,
-           "Gallery",
-           "Photo");
+           AppResources.Gallery,
+           AppResources.Photo);
 
         FileResult? result = null;
         if (action == AppResources.CancelString)

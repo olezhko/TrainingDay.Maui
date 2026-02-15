@@ -57,7 +57,7 @@
                             </controls:ImageCache>
                         </Border>
 
-                        <Button BackgroundColor="{StaticResource PlaceholderColor}" Text="{x:Static resx:AppResources.AddImage}" CornerRadius="20" HorizontalOptions="Center" Padding="30,0"
+                        <Button BackgroundColor="{StaticResource PlaceholderColor}" Text="{x:Static resx:AppResources.AddImage}" CornerRadius="20" HorizontalOptions="Center" Padding="30,10"
                                     Clicked="Button_Clicked" IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}"/>
                     </VerticalStackLayout>
                 </Border>
