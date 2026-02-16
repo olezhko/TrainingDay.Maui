@@ -1,6 +1,8 @@
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
+using TrainingDay.Common.Communication;
 using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.Controls;
@@ -12,6 +14,7 @@ using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels;
 using YoutubeExplode;
+using YoutubeExplode.Videos;
 using YoutubeExplode.Videos.Streams;
 using LastTraining = TrainingDay.Maui.Models.Database.LastTrainingEntity;
 using LastTrainingExercise = TrainingDay.Maui.Models.Database.LastTrainingExerciseEntity;
@@ -51,8 +54,11 @@ public partial class TrainingImplementPage : ContentPage
 
     private async void StepProgressBarControl_CurrentItemChanged(object? sender, StepProgressBarCurrentItemChangedEventArgs e)
     {
-        var currentSuperSet = e.CurrentItem as SuperSetViewModel;
-        await LoadVideoItemsAsync(currentSuperSet);
+        if (IsLoaded)
+        {
+            var currentSuperSet = e.CurrentItem as SuperSetViewModel;
+            await LoadVideoItemsAsync(currentSuperSet);
+        }
     }
 
     private void StepProgressBarControl_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -125,14 +131,12 @@ public partial class TrainingImplementPage : ContentPage
             try
             {
                 var videoUrls = await dataService.GetVideosAsync(exercise.Name);
-                foreach (var video in videoUrls)
-                {
-                    video.VideoUrl = await GetVideoURLAsync("http://www.youtube.com/watch?v=" + video.VideoUrl);
-                }
+                videoUrls = videoUrls.Take(5);
+                var videoUrlsList = await GetVideoUrlsAsync(videoUrls);
 
-                exercise!.VideoItems = videoUrls.Select(item => new ExerciseVideo()
+                exercise!.VideoItems = videoUrlsList.Select(item => new ExerciseVideo()
                 {
-                    VideoUrl = item.VideoUrl
+                    VideoUrl = item
                 }).ToObservableCollection();
             }
             catch (Exception ex)
@@ -144,22 +148,39 @@ public partial class TrainingImplementPage : ContentPage
         IsVideoLoading = false;
     }
 
-    private static async Task<string> GetVideoURLAsync(string url)
+    private Task<List<string>> GetVideoUrlsAsync(IEnumerable<YoutubeVideoItem> videoItems)
     {
-        return await Task.Run(async () =>
+        return Task.Run(async () =>
         {
-            var youtube = new YoutubeClient();
+            var tasks = videoItems.Select(async video =>
+            {
+                try
+                {
+                    var streamManifest = await youtube.Videos.Streams.GetManifestAsync("http://www.youtube.com/watch?v=" + video.VideoUrl);
 
-            var streamManifest = await youtube.Videos.Streams.GetManifestAsync(url);
+                    var videoStream = streamManifest
+                        .GetVideoOnlyStreams()
+                        .Where(s => s.Container == Container.Mp4)
+                        .GetWithHighestVideoQuality();
 
-            var videoPlayerStream = streamManifest
-                .GetVideoOnlyStreams()
-                .Where(s => s.Container == Container.Mp4)
-                .GetWithHighestVideoQuality();
+                    return videoStream?.Url;
+                }
+                catch
+                {
+                    return null;
+                }
+            });
 
-            return videoPlayerStream.Url;
+            var results = await Task.WhenAll(tasks);
+
+            return results
+                .Where(url => !string.IsNullOrEmpty(url))
+                .ToList()!;
+
         });
     }
+
+    YoutubeClient youtube = new YoutubeClient();
 
     protected override void OnDisappearing()
     {
