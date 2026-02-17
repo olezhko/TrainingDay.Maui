@@ -11,16 +11,16 @@
 
         <Grid MinimumHeightRequest="40">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="20"/>
             </Grid.ColumnDefinitions>
 
             <ImageButton Source="arrow_right.png" Grid.Column="0" BackgroundColor="Transparent" Command="{Binding Source={x:Reference Self}, Path=PreviousCommand}"
                     WidthRequest="20" HeightRequest="20" VerticalOptions="Start" IsVisible="{Binding Source={x:Reference Self}, Path=IsPrevAvailable}"/>
 
-            <Label Grid.Column="1" Text="{Binding Source={x:Reference Self}, Path=CurrentItem.Name}" VerticalOptions="Start" HorizontalOptions="Center" FontSize="25"
-                            TextColor="{AppThemeBinding Light=Black,Dark=White}" HorizontalTextAlignment="Center"/>
+            <Label Grid.Column="1" Text="{Binding Source={x:Reference Self}, Path=CurrentItem.Name}" VerticalOptions="Start" 
+                   HorizontalOptions="Center" HorizontalTextAlignment="Center" FontSize="25" TextColor="{AppThemeBinding Light=Black,Dark=White}" />
 
             <ImageButton Source="arrow_left.png" Grid.Column="2" BackgroundColor="Transparent" Command="{Binding Source={x:Reference Self}, Path=NextCommand}"
                     WidthRequest="20" HeightRequest="20" VerticalOptions="Start" IsVisible="{Binding Source={x:Reference Self}, Path=IsNextAvailable}">
@@ -118,7 +118,7 @@
                         <Grid ColumnDefinitions="Auto,*,auto">
                             <Label Text="{x:Static resx:AppResources.TimeString}" TextColor="{StaticResource Main}" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" FontAttributes="Bold"/>
                             <Label Grid.Column="1" HorizontalOptions="Fill" Margin="30,0,0,0" Text="{Binding Time, StringFormat='{}{0:hh\\:mm\\:ss}', Mode=TwoWay}" HorizontalTextAlignment="Start" 
-           VerticalOptions="Center"/>
+                                VerticalOptions="Center"/>
                             <Button Grid.Column="2" Clicked="StartCalculateTime_Clicked" CornerRadius="10" 
                                 VerticalOptions="Start" Padding="0" 
                                 BackgroundColor="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}" 
@@ -140,23 +140,23 @@
 
                 <StackLayout x:Name="DescriptionGrid" Margin="0">
                     <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.StartPosition}" TextColor="DodgerBlue" VerticalTextAlignment="Center" 
-IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
+                        IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
                     <Label FontSize="Small" Text="{Binding Description.StartPosition}" 
-IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
+                        IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
 
                     <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Execution}" TextColor="LimeGreen" VerticalTextAlignment="Center" 
-IsVisible="{Binding Description.Execution, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
+                        IsVisible="{Binding Description.Execution, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
                     <Label FontSize="Small" Text="{Binding Description.Execution}" 
-IsVisible="{Binding Description.Execution, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
+                        IsVisible="{Binding Description.Execution, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
 
                     <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Advice}" TextColor="Orange" VerticalTextAlignment="Center" 
-IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
+                        IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
 
                     <Label FontSize="Small" Text="{Binding Description.Advice}" 
-IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
+                        IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
                 </StackLayout>
 
-                <CarouselView ItemsSource="{Binding VideoItems}" HeightRequest="300" WidthRequest="400" IndicatorView="indicatorView">
+                <!--<CarouselView ItemsSource="{Binding VideoItems}" HeightRequest="300" WidthRequest="400" IndicatorView="indicatorView">
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
                             <toolkit:MediaElement Source="{Binding VideoUrl}" HeightRequest="300" WidthRequest="400" />
@@ -164,7 +164,7 @@ IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringC
                     </CarouselView.ItemTemplate>
                 </CarouselView>
 
-                <IndicatorView x:Name="indicatorView" ItemsSource="{Binding VideoItems}" HorizontalOptions="Center"/>
+                <IndicatorView x:Name="indicatorView" ItemsSource="{Binding VideoItems}" HorizontalOptions="Center"/>-->
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

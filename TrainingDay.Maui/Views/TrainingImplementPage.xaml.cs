@@ -12,8 +12,6 @@ using TrainingDay.Maui.Models.Notifications;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels;
-using YoutubeExplode;
-using YoutubeExplode.Videos.Streams;
 using LastTraining = TrainingDay.Maui.Models.Database.LastTrainingEntity;
 using LastTrainingExercise = TrainingDay.Maui.Models.Database.LastTrainingExerciseEntity;
 using TrainingExerciseComm = TrainingDay.Maui.Models.Database.TrainingExerciseEntity;
@@ -129,18 +127,10 @@ public partial class TrainingImplementPage : ContentPage
             try
             {
                 var videoUrls = await dataService.GetVideosAsync(exercise.Name);
-                videoUrls = videoUrls.Take(5);
 
-                if (youtube == null)
+                exercise!.VideoItems = videoUrls.Select(item => new ExerciseVideo()
                 {
-                    youtube = new YoutubeClient();
-                }
-
-                var videoUrlsList = await GetVideoUrlsAsync(videoUrls);
-
-                exercise!.VideoItems = videoUrlsList.Select(item => new ExerciseVideo()
-                {
-                    VideoUrl = item
+                    VideoUrl = item.VideoUrl
                 }).ToObservableCollection();
             }
             catch (Exception ex)
@@ -151,41 +141,6 @@ public partial class TrainingImplementPage : ContentPage
 
         IsVideoLoading = false;
     }
-
-    YoutubeClient youtube;
-
-    private Task<List<string>> GetVideoUrlsAsync(IEnumerable<YoutubeVideoItem> videoItems)
-    {
-        return Task.Run(async () =>
-        {
-            var tasks = videoItems.Select(async video =>
-            {
-                try
-                {
-                    var streamManifest = await youtube.Videos.Streams.GetManifestAsync("http://www.youtube.com/watch?v=" + video.VideoUrl);
-
-                    var videoStream = streamManifest
-                        .GetVideoOnlyStreams()
-                        .Where(s => s.Container == Container.Mp4)
-                        .GetWithHighestVideoQuality();
-
-                    return videoStream?.Url;
-                }
-                catch
-                {
-                    return null;
-                }
-            });
-
-            var results = await Task.WhenAll(tasks);
-
-            return results
-                .Where(url => !string.IsNullOrEmpty(url))
-                .Select(url => url!)
-                .ToList();
-        });
-    }
-
 
     protected override void OnDisappearing()
     {

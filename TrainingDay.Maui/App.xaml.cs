@@ -90,7 +90,7 @@ namespace TrainingDay.Maui
 
             Dispatcher.Dispatch(async () =>
             {
-                await LoggingService.TrackEvent("Application start");
+                LoggingService.TrackEvent("Application start");
                 await dataService.SendFirebaseTokenAsync(Settings.Token, CultureInfo.CurrentCulture.Name, TimeZoneInfo.Local.BaseUtcOffset.ToString());
                 await dataService.PostActionAsync(Settings.Token, Common.Communication.MobileActions.Enter);
                 await DownloadImagesAsync();
