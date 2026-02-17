@@ -8,23 +8,15 @@
              x:Class="TrainingDay.Maui.Controls.SuperSetControl"
              x:Name="Self">
     <Grid RowDefinitions="auto,*" RowSpacing="5">
-
-        <Grid MinimumHeightRequest="40">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="20"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="20"/>
-            </Grid.ColumnDefinitions>
-
+        <Grid MinimumHeightRequest="40" ColumnDefinitions="20,*,20">
             <ImageButton Source="arrow_right.png" Grid.Column="0" BackgroundColor="Transparent" Command="{Binding Source={x:Reference Self}, Path=PreviousCommand}"
                     WidthRequest="20" HeightRequest="20" VerticalOptions="Start" IsVisible="{Binding Source={x:Reference Self}, Path=IsPrevAvailable}"/>
 
-            <Label Grid.Column="1" Text="{Binding Source={x:Reference Self}, Path=CurrentItem.Name}" VerticalOptions="Start" 
-                   HorizontalOptions="Center" HorizontalTextAlignment="Center" FontSize="25" TextColor="{AppThemeBinding Light=Black,Dark=White}" />
+            <Label Grid.Column="0" Text="{Binding Source={x:Reference Self}, Path=CurrentItem.Name}" VerticalOptions="Start" Grid.ColumnSpan="3" Margin="20,0"
+                   HorizontalOptions="Fill" HorizontalTextAlignment="Center" FontSize="25" TextColor="{AppThemeBinding Light=Black,Dark=White}" />
 
             <ImageButton Source="arrow_left.png" Grid.Column="2" BackgroundColor="Transparent" Command="{Binding Source={x:Reference Self}, Path=NextCommand}"
-                    WidthRequest="20" HeightRequest="20" VerticalOptions="Start" IsVisible="{Binding Source={x:Reference Self}, Path=IsNextAvailable}">
-            </ImageButton>
+                    WidthRequest="20" HeightRequest="20" VerticalOptions="Start" IsVisible="{Binding Source={x:Reference Self}, Path=IsNextAvailable}" />
         </Grid>
 
         <ScrollView Grid.Row="1" Orientation="Vertical">
