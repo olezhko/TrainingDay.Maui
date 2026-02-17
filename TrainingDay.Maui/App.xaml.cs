@@ -56,10 +56,10 @@ namespace TrainingDay.Maui
             {
                 Exception ex = (Exception)args.ExceptionObject;
                 LoggingService.TrackError(ex);
+                Thread.Sleep(300);
             };
 
             RequestedThemeChanged += (sender, args) => {
-                Console.WriteLine($"New theme requested {args.RequestedTheme}");
                 Settings.IsLightTheme = App.Current.RequestedTheme == AppTheme.Light;
                 App.Options.SetPopupDefaults(new DefaultPopupSettings
                 {

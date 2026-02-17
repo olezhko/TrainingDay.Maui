@@ -1,6 +1,5 @@
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows.Input;
 using TrainingDay.Common.Communication;
 using TrainingDay.Common.Extensions;
@@ -14,7 +13,6 @@ using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels;
 using YoutubeExplode;
-using YoutubeExplode.Videos;
 using YoutubeExplode.Videos.Streams;
 using LastTraining = TrainingDay.Maui.Models.Database.LastTrainingEntity;
 using LastTrainingExercise = TrainingDay.Maui.Models.Database.LastTrainingExerciseEntity;
@@ -132,6 +130,12 @@ public partial class TrainingImplementPage : ContentPage
             {
                 var videoUrls = await dataService.GetVideosAsync(exercise.Name);
                 videoUrls = videoUrls.Take(5);
+
+                if (youtube == null)
+                {
+                    youtube = new YoutubeClient();
+                }
+
                 var videoUrlsList = await GetVideoUrlsAsync(videoUrls);
 
                 exercise!.VideoItems = videoUrlsList.Select(item => new ExerciseVideo()
@@ -147,6 +151,8 @@ public partial class TrainingImplementPage : ContentPage
 
         IsVideoLoading = false;
     }
+
+    YoutubeClient youtube;
 
     private Task<List<string>> GetVideoUrlsAsync(IEnumerable<YoutubeVideoItem> videoItems)
     {
@@ -175,12 +181,11 @@ public partial class TrainingImplementPage : ContentPage
 
             return results
                 .Where(url => !string.IsNullOrEmpty(url))
-                .ToList()!;
-
+                .Select(url => url!)
+                .ToList();
         });
     }
 
-    YoutubeClient youtube = new YoutubeClient();
 
     protected override void OnDisappearing()
     {
