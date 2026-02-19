@@ -217,6 +217,7 @@ public partial class ExerciseItemPage : ContentPage
             {
                 SelectionLimit = 1,
                 CompressionQuality = 85,
+                RotateImage = true,
             });
             result = files.FirstOrDefault();
         }

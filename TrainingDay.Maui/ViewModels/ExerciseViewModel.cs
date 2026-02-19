@@ -70,6 +70,7 @@ public class ExerciseViewModel : BaseViewModel
             _id = value;
             var exercise = App.Database.GetExerciseItem(_id);
             LoadExercise(exercise);
+            OnPropertyChanged();
         }
     }
 
