@@ -50,7 +50,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
     {
         Shell.Current.Dispatcher.Dispatch(async () =>
         {
-            await LoggingService.TrackEvent("Application start");
+            LoggingService.TrackEvent("Application start");
             await UpdateFirebaseToken();
         });
         var trainingsItems = App.Database.GetTrainingItems();

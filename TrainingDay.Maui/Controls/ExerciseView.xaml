@@ -22,7 +22,7 @@
                VerticalOptions="Start" />
 
         <Border Grid.Row="1" Padding="5" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" Stroke="Transparent">
-            <controls:ImageCache x:Name="ImageControl" HeightRequest="100" CodeNum="{Binding CodeNum}" WidthRequest="100">
+            <controls:ImageCache x:Name="ImageControl" HeightRequest="100" CodeNum="{Binding CodeNum}" WidthRequest="100" ExerciseId="{Binding ExerciseId,Mode=TwoWay}">
                 <controls:ImageCache.GestureRecognizers>
                     <TapGestureRecognizer Tapped="ImageTapped" />
                 </controls:ImageCache.GestureRecognizers>

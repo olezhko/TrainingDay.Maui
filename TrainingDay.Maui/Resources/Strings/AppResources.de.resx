@@ -614,6 +614,7 @@
   </data>
   <data name="SelectGroup" xml:space="preserve">
     <value>Gruppe</value>
+  </data>
   <data name="AddImage" xml:space="preserve">
     <value>Bild hinzufügen</value>
   </data>
@@ -631,5 +632,11 @@
   </data>
   <data name="DescribePerformMovement" xml:space="preserve">
     <value>Ausführung der Übung beschreiben</value>
+  </data>
+  <data name="Gallery" xml:space="preserve">
+    <value>Galerie</value>
+  </data>
+  <data name="Photo" xml:space="preserve">
+    <value>Fotos</value>
   </data>
 </root>

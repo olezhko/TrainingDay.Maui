@@ -56,10 +56,10 @@ namespace TrainingDay.Maui
             {
                 Exception ex = (Exception)args.ExceptionObject;
                 LoggingService.TrackError(ex);
+                Thread.Sleep(300);
             };
 
             RequestedThemeChanged += (sender, args) => {
-                Console.WriteLine($"New theme requested {args.RequestedTheme}");
                 Settings.IsLightTheme = App.Current.RequestedTheme == AppTheme.Light;
                 App.Options.SetPopupDefaults(new DefaultPopupSettings
                 {
@@ -90,7 +90,7 @@ namespace TrainingDay.Maui
 
             Dispatcher.Dispatch(async () =>
             {
-                await LoggingService.TrackEvent("Application start");
+                LoggingService.TrackEvent("Application start");
                 await dataService.SendFirebaseTokenAsync(Settings.Token, CultureInfo.CurrentCulture.Name, TimeZoneInfo.Local.BaseUtcOffset.ToString());
                 await dataService.PostActionAsync(Settings.Token, Common.Communication.MobileActions.Enter);
                 await DownloadImagesAsync();

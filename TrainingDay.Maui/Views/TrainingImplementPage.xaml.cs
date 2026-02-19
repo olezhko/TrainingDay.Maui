@@ -1,17 +1,17 @@
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using TrainingDay.Common.Communication;
 using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.Controls;
 using TrainingDay.Maui.Extensions;
+using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Models.Notifications;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels;
-using YoutubeExplode;
-using YoutubeExplode.Videos.Streams;
 using LastTraining = TrainingDay.Maui.Models.Database.LastTrainingEntity;
 using LastTrainingExercise = TrainingDay.Maui.Models.Database.LastTrainingExerciseEntity;
 using TrainingExerciseComm = TrainingDay.Maui.Models.Database.TrainingExerciseEntity;
@@ -50,8 +50,11 @@ public partial class TrainingImplementPage : ContentPage
 
     private async void StepProgressBarControl_CurrentItemChanged(object? sender, StepProgressBarCurrentItemChangedEventArgs e)
     {
-        var currentSuperSet = e.CurrentItem as SuperSetViewModel;
-        await LoadVideoItemsAsync(currentSuperSet);
+        if (IsLoaded)
+        {
+            var currentSuperSet = e.CurrentItem as SuperSetViewModel;
+            await LoadVideoItemsAsync(currentSuperSet);
+        }
     }
 
     private void StepProgressBarControl_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -124,10 +127,6 @@ public partial class TrainingImplementPage : ContentPage
             try
             {
                 var videoUrls = await dataService.GetVideosAsync(exercise.Name);
-                foreach (var video in videoUrls)
-                {
-                    video.VideoUrl = await GetVideoURLAsync("http://www.youtube.com/watch?v=" + video.VideoUrl);
-                }
 
                 exercise!.VideoItems = videoUrls.Select(item => new ExerciseVideo()
                 {
@@ -141,22 +140,6 @@ public partial class TrainingImplementPage : ContentPage
         }
 
         IsVideoLoading = false;
-    }
-
-    private static async Task<string> GetVideoURLAsync(string url)
-    {
-        return await Task.Run(async () =>
-        {
-            var youtube = new YoutubeClient();
-
-            var streamManifest = await youtube.Videos.Streams.GetManifestAsync(url);
-
-            IEnumerable<MuxedStreamInfo> streamInfo = streamManifest.GetMuxedStreams();
-
-            var videoPlayerStream = streamInfo.First(video => video.VideoQuality.Label is "240p" or "360p" or "480p");
-
-            return videoPlayerStream.Url;
-        });
     }
 
     protected override void OnDisappearing()
