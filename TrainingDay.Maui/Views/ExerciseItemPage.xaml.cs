@@ -211,16 +211,17 @@ public partial class ExerciseItemPage : ContentPage
         {
             return;
         }
-        if (action == "Gallery")
+        if (action == AppResources.Gallery)
         {
-            result = await FilePicker.PickAsync(new PickOptions()
+            var files = await MediaPicker.PickPhotosAsync(new MediaPickerOptions
             {
-                FileTypes = FilePickerFileType.Images,
-                PickerTitle = "Please select an image"
+                SelectionLimit = 1,
+                CompressionQuality = 85,
             });
+            result = files.FirstOrDefault();
         }
 
-        if (action == "Photo")
+        if (action == AppResources.Photo)
         {
             result = await MediaPicker.CapturePhotoAsync();
         }
