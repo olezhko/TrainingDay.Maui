@@ -224,7 +224,12 @@ public partial class ExerciseItemPage : ContentPage
 
         if (action == AppResources.Photo)
         {
-            result = await MediaPicker.CapturePhotoAsync();
+            result = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions
+            {
+                SelectionLimit = 1,
+                CompressionQuality = 85,
+                RotateImage = true,
+            });
         }
 
         if (result == null)
