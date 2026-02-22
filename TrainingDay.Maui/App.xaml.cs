@@ -80,7 +80,11 @@ namespace TrainingDay.Maui
             base.OnStart();
             Settings.IsLightTheme = App.Current.RequestedTheme == AppTheme.Light;
 
-            SentinelTracker.Initialize(ConstantKeys.SentinelTrackerProjectId);
+#if     DEBUG
+            SentinelTracker.Initialize(ConstantKeys.SentinelTrackerProjectId, false);
+#elif   RELEASE
+            SentinelTracker.Initialize(ConstantKeys.SentinelTrackerProjectId, true);
+#endif
 
             Settings.LastDatabaseSyncDateTime = Settings.LastDatabaseSyncDateTime.IsNotNullOrEmpty() ? Settings.LastDatabaseSyncDateTime : DateTime.Now.ToString(Settings.GetLanguage());
 
@@ -90,7 +94,6 @@ namespace TrainingDay.Maui
 
             Dispatcher.Dispatch(async () =>
             {
-                LoggingService.TrackEvent("Application start");
                 await dataService.SendFirebaseTokenAsync(Settings.Token, CultureInfo.CurrentCulture.Name, TimeZoneInfo.Local.BaseUtcOffset.ToString());
                 await dataService.PostActionAsync(Settings.Token, Common.Communication.MobileActions.Enter);
                 await DownloadImagesAsync();
@@ -108,7 +111,7 @@ namespace TrainingDay.Maui
                         accessKey,
                         secretKey,
                         RegionEndpoint.GetBySystemName("us-east-1")
-                        );
+                );
 
                 var request = new ListObjectsV2Request()
                 {
