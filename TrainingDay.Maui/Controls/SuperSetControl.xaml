@@ -28,81 +28,114 @@
                 <StackLayout Spacing="0">
                     <Border StrokeShape="RoundRectangle 20" Padding="10" HorizontalOptions="Center" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByReps}}"
                            BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}">
-                        <CollectionView HorizontalOptions="Center" ItemsSource="{Binding WeightAndRepsItems}" HeightRequest="90" VerticalOptions="Center">
-                            <CollectionView.ItemsLayout>
-                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5"/>
-                            </CollectionView.ItemsLayout>
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid RowDefinitions="auto,45" RowSpacing="2">
-                                        <Border BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
-                                        <Entry Margin="0" FontSize="Medium" Keyboard="Numeric" MaxLength="3" Text="{Binding Repetitions, Mode=TwoWay}" MinimumWidthRequest="70" HorizontalTextAlignment="Center" />
+                        <Grid RowDefinitions="auto, auto">
+                            <Grid ColumnDefinitions="auto, *, auto" ColumnSpacing="10">
+                                <VerticalStackLayout Grid.Column="0">
+                                    <ImageButton Source="add_empty.png" BackgroundColor="Transparent" Command="{Binding AddSetCommand}" HeightRequest="20" WidthRequest="20"  >
+                                        <ImageButton.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="Green" />
+                                        </ImageButton.Behaviors>
+                                    </ImageButton>
+                                    <Label Text="Add Set" FontSize="10" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
 
-                                        <Border Grid.Row="1" Stroke="Transparent" StrokeShape="RoundRectangle 20" HeightRequest="40" WidthRequest="40"
-                                                VerticalOptions="Center" HorizontalOptions="Center" >
-                                            <Border.Style>
-                                                <Style TargetType="Border">
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding IsFinished}" TargetType="Border" Value="True">
-                                                            <Setter Property="Background" Value="Green" />
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding IsFinished}" TargetType="Border" Value="False">
-                                                            <Setter Property="Background" Value="Transparent" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Border.Style>
-                                        </Border>
+                                <VerticalStackLayout Grid.Column="2">
+                                    <ImageButton Source="minus_cirlce.png" BackgroundColor="Transparent" Command="{Binding RemoveSetCommand}" HeightRequest="20" WidthRequest="20" />
+                                    <Label Text="Remove Set" FontSize="10" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Grid>
+                            <CollectionView Grid.Row="1" HorizontalOptions="Center" ItemsSource="{Binding WeightAndRepsItems}" HeightRequest="90" VerticalOptions="Center">
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5"/>
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid RowDefinitions="auto,45" RowSpacing="2">
+                                            <Border BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
+                                            <Entry Margin="0" FontSize="Medium" Keyboard="Numeric" MaxLength="3" Text="{Binding Repetitions, Mode=TwoWay}" MinimumWidthRequest="70" HorizontalTextAlignment="Center" />
 
-                                        <ImageButton Grid.Row="1" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" HorizontalOptions="Center" CornerRadius="17" Background="Transparent"
-                                            IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}" Source="save.png" VerticalOptions="Center" WidthRequest="35">
-                                            <ImageButton.Behaviors>
-                                                <toolkit:IconTintColorBehavior TintColor="LightGray" />
-                                            </ImageButton.Behaviors>
-                                        </ImageButton>
-                                    </Grid>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
+                                            <Border Grid.Row="1" Stroke="Transparent" StrokeShape="RoundRectangle 20" HeightRequest="40" WidthRequest="40" VerticalOptions="Center" HorizontalOptions="Center" >
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsFinished}" TargetType="Border" Value="True">
+                                                                <Setter Property="Background" Value="Green" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsFinished}" TargetType="Border" Value="False">
+                                                                <Setter Property="Background" Value="Transparent" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+                                            </Border>
+
+                                            <ImageButton Grid.Row="1" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" HorizontalOptions="Center" CornerRadius="17" Background="Transparent"
+                                                IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}" Source="save.png" VerticalOptions="Center" WidthRequest="35">
+                                                <ImageButton.Behaviors>
+                                                    <toolkit:IconTintColorBehavior TintColor="LightGray" />
+                                                </ImageButton.Behaviors>
+                                            </ImageButton>
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Grid>
                     </Border>
 
 					<Border StrokeShape="RoundRectangle 20" Padding="10" HorizontalOptions="Center" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByRepsAndWeight}}"
                            BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}">
-                        <CollectionView HorizontalOptions="Center" ItemsSource="{Binding WeightAndRepsItems}" HeightRequest="140" VerticalOptions="Center">
-                            <CollectionView.ItemsLayout>
-                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5"/>
-                            </CollectionView.ItemsLayout>
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid RowDefinitions="auto,auto,auto" RowSpacing="2" VerticalOptions="Center">
-                                        <Border BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
-                                        <Border Grid.Row="2" BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
-                                        <Entry Margin="0" FontSize="Medium" Keyboard="Numeric" MaxLength="3" Text="{Binding Repetitions, Mode=TwoWay}" HorizontalTextAlignment="Center" MinimumWidthRequest="70"/>
-                                        <ImageButton Grid.Row="1" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" HorizontalOptions="Center" CornerRadius="17"
-                                            IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}" Source="save.png" VerticalOptions="Fill" WidthRequest="35">
-                                            <ImageButton.Behaviors>
-                                                <toolkit:IconTintColorBehavior TintColor="LightGray" />
-                                            </ImageButton.Behaviors>
-                                            <ImageButton.Style>
-                                                <Style TargetType="ImageButton">
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding IsFinished}" TargetType="ImageButton" Value="True">
-                                                            <Setter Property="BackgroundColor" Value="Green" />
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding IsFinished}" TargetType="ImageButton" Value="False">
-                                                            <Setter Property="BackgroundColor" Value="Transparent" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </ImageButton.Style>
-                                        </ImageButton>
-                                        <Entry Grid.Row="2" Margin="0" FontSize="Medium" Keyboard="Numeric"
-                                               IsVisible="{Binding Source={x:Reference Self}, Path=IsOnlyReps, Converter={StaticResource InverseBooleanConverter}}"
-                                                MaxLength="4" Text="{Binding WeightString, Mode=TwoWay}" MinimumWidthRequest="70" HorizontalTextAlignment="Center" />
-                                    </Grid>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
+                        <Grid RowDefinitions="auto, auto">
+                            <Grid ColumnDefinitions="auto, *, auto" ColumnSpacing="10">
+                                <VerticalStackLayout Grid.Column="0">
+                                    <ImageButton Source="add_empty.png" BackgroundColor="Transparent" Command="{Binding AddSetCommand}" HeightRequest="20" WidthRequest="20"  >
+                                        <ImageButton.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="Green" />
+                                        </ImageButton.Behaviors>
+                                    </ImageButton>
+                                    <Label Text="Add Set" FontSize="10" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout Grid.Column="2">
+                                    <ImageButton Source="minus_cirlce.png" BackgroundColor="Transparent" Command="{Binding RemoveSetCommand}" HeightRequest="20" WidthRequest="20" />
+                                    <Label Text="Remove Set" FontSize="10" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Grid>
+                            <CollectionView Grid.Row="1" HorizontalOptions="Center" ItemsSource="{Binding WeightAndRepsItems}" HeightRequest="140" VerticalOptions="Center">
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5"/>
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid RowDefinitions="auto,auto,auto" RowSpacing="2" VerticalOptions="Center">
+                                            <Border BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
+                                            <Border Grid.Row="2" BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
+                                            <Entry Margin="0" FontSize="Medium" Keyboard="Numeric" MaxLength="3" Text="{Binding Repetitions, Mode=TwoWay}" HorizontalTextAlignment="Center" MinimumWidthRequest="70"/>
+                                            <ImageButton Grid.Row="1" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" HorizontalOptions="Center" CornerRadius="17"
+                                                    IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}" Source="save.png" VerticalOptions="Fill" WidthRequest="35">
+                                                <ImageButton.Behaviors>
+                                                    <toolkit:IconTintColorBehavior TintColor="LightGray" />
+                                                </ImageButton.Behaviors>
+                                                <ImageButton.Style>
+                                                    <Style TargetType="ImageButton">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsFinished}" TargetType="ImageButton" Value="True">
+                                                                <Setter Property="BackgroundColor" Value="Green" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsFinished}" TargetType="ImageButton" Value="False">
+                                                                <Setter Property="BackgroundColor" Value="Transparent" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ImageButton.Style>
+                                            </ImageButton>
+                                            <Entry Grid.Row="2" Margin="0" FontSize="Medium" Keyboard="Numeric"
+                                                   IsVisible="{Binding Source={x:Reference Self}, Path=IsOnlyReps, Converter={StaticResource InverseBooleanConverter}}"
+                                                    MaxLength="4" Text="{Binding WeightString, Mode=TwoWay}" MinimumWidthRequest="70" HorizontalTextAlignment="Center" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Grid>
                     </Border>
                     
                     <Border Style="{StaticResource MaterialBorder}"
@@ -111,7 +144,7 @@
                             <Label Text="{x:Static resx:AppResources.TimeString}" TextColor="{StaticResource Main}" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" FontAttributes="Bold"/>
                             <Label Grid.Column="1" HorizontalOptions="Fill" Margin="30,0,0,0" Text="{Binding Time, StringFormat='{}{0:hh\\:mm\\:ss}', Mode=TwoWay}" HorizontalTextAlignment="Start" 
                                 VerticalOptions="Center"/>
-                            <Button Grid.Column="2" Clicked="StartCalculateTime_Clicked" CornerRadius="10" 
+                            <Button Grid.Column="2" Command="{Binding StartCalculatingTimeCommand}" CornerRadius="10" 
                                 VerticalOptions="Start" Padding="0" 
                                 BackgroundColor="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}" 
                                 TextColor="{AppThemeBinding Dark=White, Light=Black}" FontAttributes="Bold">

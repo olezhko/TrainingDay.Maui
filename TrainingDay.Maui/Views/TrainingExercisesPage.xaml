@@ -29,10 +29,10 @@
     <controls:TooltipControlContainer x:Name="Container" RowSpacing="5" BackgroundColor="Transparent">
         <controls:TooltipControlContainer.Style>
             <Style TargetType="controls:TooltipControlContainer" >
-                <Setter Property="RowDefinitions" Value="auto,*,auto,auto,auto"/>
+                <Setter Property="RowDefinitions" Value="auto,*,auto"/>
                 <Style.Triggers>
                     <DataTrigger TargetType="controls:TooltipControlContainer" Binding="{Binding IsExercisesCheckBoxVisible}" Value="True">
-                        <Setter Property="RowDefinitions" Value="auto,*,auto,auto,auto"/>
+                        <Setter Property="RowDefinitions" Value="auto,*,auto"/>
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
@@ -153,8 +153,8 @@
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
 
-            <Button x:Name="MakeTrainingButton" Margin="5" CornerRadius="20" Text="{x:Static resx:AppResources.MakeTrainingString}"
-                Command="{Binding MakeTrainingCommand}" TextColor="White" FontSize="Body" />
+            <Button x:Name="MakeTrainingButton" Margin="0,5,0,0" CornerRadius="20" Text="{x:Static resx:AppResources.MakeTrainingString}" Command="{Binding MakeTrainingCommand}" 
+                    TextColor="White" FontSize="Body" />
 
             <Grid x:Name="ExerciseActionGrid" HorizontalOptions="Fill" ColumnSpacing="5" Margin="5,0" ColumnDefinitions="*,*">
                 <Button Grid.Column="0" CornerRadius="20" Text="{x:Static resx:AppResources.CancelString}" Command="{Binding CancelActionCommand}" HorizontalOptions="Fill"

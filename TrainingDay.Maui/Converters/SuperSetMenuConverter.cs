@@ -7,7 +7,7 @@ public class SuperSetMenuConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is SuperSetViewModel items)
+        if (value is SuperSetViewModel<TrainingExerciseViewModel> items)
         {
             bool res = items.Count == 1;
             return !res;

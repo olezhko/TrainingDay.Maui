@@ -3,7 +3,7 @@ using TrainingDay.Maui.Models.Database;
 
 namespace TrainingDay.Maui.ViewModels;
 
-public class SuperSetViewModel : ObservableCollection<TrainingExerciseViewModel>
+public class SuperSetViewModel<T> : ObservableCollection<T>
 {
     public int Id { get; set; }
 
@@ -11,9 +11,9 @@ public class SuperSetViewModel : ObservableCollection<TrainingExerciseViewModel>
 
     public bool IsSuperSet => SuperSetItems.Count > 1;
 
-    public ObservableCollection<TrainingExerciseViewModel> SuperSetItems
+    public ObservableCollection<T> SuperSetItems
     {
-        get { return new ObservableCollection<TrainingExerciseViewModel>(this.Items); }
+        get { return new ObservableCollection<T>(this.Items); }
     }
 
     public SuperSetEntity Model =>

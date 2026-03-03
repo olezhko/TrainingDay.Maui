@@ -12,12 +12,9 @@ namespace TrainingDay.Maui.ViewModels;
 public class TrainingExerciseViewModel : ExerciseViewModel
 {
     private bool isSelected;
-    private bool notFinished = true;
-    private bool skipped;
     private ObservableCollection<WeightAndRepsViewModel> weightAndRepsItems = [];
     private int superSetId = -1;
     private int superSetNum;
-    private bool isTimeCalculating;
     private TimeSpan time;
 
     public TrainingExerciseViewModel()
@@ -53,26 +50,6 @@ public class TrainingExerciseViewModel : ExerciseViewModel
         set
         {
             isSelected = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public bool IsNotFinished
-    {
-        get => notFinished;
-        set
-        {
-            notFinished = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public bool IsSkipped
-    {
-        get => skipped;
-        set
-        {
-            skipped = value;
             OnPropertyChanged();
         }
     }
@@ -113,18 +90,6 @@ public class TrainingExerciseViewModel : ExerciseViewModel
         set
         {
             weightAndRepsItems = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public DateTime StartCalculateDateTime { get; set; }
-
-    public bool IsTimeCalculating
-    {
-        get => isTimeCalculating;
-        set
-        {
-            isTimeCalculating = value;
             OnPropertyChanged();
         }
     }

@@ -15,20 +15,20 @@ public partial class SuperSetControl : ContentView
     #region Properties
 
     public static readonly BindableProperty SuperSetItemsProperty =
-        BindableProperty.Create("SuperSetItems", typeof(ObservableCollection<TrainingExerciseViewModel>), typeof(SuperSetControl), null, propertyChanged: SourcePropertyChanged);
+        BindableProperty.Create("SuperSetItems", typeof(ObservableCollection<ImplementTrainingExerciseViewModel>), typeof(SuperSetControl), null, propertyChanged: SourcePropertyChanged);
 
-    public ObservableCollection<TrainingExerciseViewModel> SuperSetItems
+    public ObservableCollection<ImplementTrainingExerciseViewModel> SuperSetItems
     {
-        get { return (ObservableCollection<TrainingExerciseViewModel>)GetValue(SuperSetItemsProperty); }
+        get { return (ObservableCollection<ImplementTrainingExerciseViewModel>)GetValue(SuperSetItemsProperty); }
         set { SetValue(SuperSetItemsProperty, value); }
     }
 
     public static readonly BindableProperty CurrentItemProperty =
-        BindableProperty.Create("CurrentItem", typeof(TrainingExerciseViewModel), typeof(SuperSetControl), propertyChanged: CurrentItemPropertyChanged);
+        BindableProperty.Create("CurrentItem", typeof(ImplementTrainingExerciseViewModel), typeof(SuperSetControl), propertyChanged: CurrentItemPropertyChanged);
 
-    public TrainingExerciseViewModel CurrentItem
+    public ImplementTrainingExerciseViewModel CurrentItem
     {
-        get { return (TrainingExerciseViewModel)GetValue(CurrentItemProperty); }
+        get { return (ImplementTrainingExerciseViewModel)GetValue(CurrentItemProperty); }
         set { SetValue(CurrentItemProperty, value); }
     }
 
@@ -91,11 +91,11 @@ public partial class SuperSetControl : ContentView
     private static void SourcePropertyChanged(BindableObject bindable, object oldValue, object newValue)
     {
         var control = bindable as SuperSetControl;
-        var items = (ObservableCollection<TrainingExerciseViewModel>)newValue;
+        var items = (ObservableCollection<ImplementTrainingExerciseViewModel>)newValue;
         control.SourceChanged(items);
     }
 
-    private void SourceChanged(ObservableCollection<TrainingExerciseViewModel> newValue)
+    private void SourceChanged(ObservableCollection<ImplementTrainingExerciseViewModel> newValue)
     {
         Move(0);
     }
@@ -126,18 +126,5 @@ public partial class SuperSetControl : ContentView
             var last = item.WeightAndRepsItems.Last();
             item.WeightAndRepsItems.Add(new WeightAndRepsViewModel(last.Weight, last.Repetitions));
         }
-    }
-
-    private void StartCalculateTime_Clicked(object sender, EventArgs e)
-    {
-        var item = CurrentItem;
-        if (item.IsTimeCalculating)
-        {
-            item.IsTimeCalculating = false;
-            return;
-        }
-
-        item.StartCalculateDateTime = DateTime.Now;
-        item.IsTimeCalculating = true;
     }
 }
