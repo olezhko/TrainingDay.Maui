@@ -639,4 +639,10 @@
   <data name="Photo" xml:space="preserve">
     <value>Fotos</value>
   </data>
+  <data name="AddSet" xml:space="preserve">
+    <value>Add Set</value>
+  </data>
+  <data name="RemoveSet" xml:space="preserve">
+    <value>Remove Set</value>
+  </data>
 </root>
