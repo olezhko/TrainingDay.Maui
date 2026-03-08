@@ -23,25 +23,42 @@
             <VerticalStackLayout BindingContext="{Binding Source={x:Reference Self}, Path=CurrentItem}" Spacing="5">
                 <Border Padding="5" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" 
                     Stroke="Transparent" Margin="5,0">
-                    <controls:ImageCache x:Name="ImageControl" HeightRequest="200" CodeNum="{Binding CodeNum}" WidthRequest="200"/>
+                    <controls:ImageCache HeightRequest="200" WidthRequest="200" CodeNum="{Binding CodeNum}" />
                 </Border>
+
                 <StackLayout Spacing="0">
                     <Border StrokeShape="RoundRectangle 20" Padding="10" HorizontalOptions="Center" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByReps}}"
                            BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}">
                         <Grid RowDefinitions="auto, auto">
-                            <Grid ColumnDefinitions="auto, *, auto" ColumnSpacing="10">
+                            <Grid ColumnDefinitions="auto, *, auto" ColumnSpacing="10" HorizontalOptions="Center">
                                 <VerticalStackLayout Grid.Column="0">
-                                    <ImageButton Source="add_empty.png" BackgroundColor="Transparent" Command="{Binding AddSetCommand}" HeightRequest="20" WidthRequest="20"  >
-                                        <ImageButton.Behaviors>
-                                            <toolkit:IconTintColorBehavior TintColor="Green" />
-                                        </ImageButton.Behaviors>
-                                    </ImageButton>
-                                    <Label Text="Add Set" FontSize="10" HorizontalOptions="Center" />
+                                    <Grid>
+                                        <Image Source="add_empty.png" BackgroundColor="Transparent" HeightRequest="20" WidthRequest="20" >
+                                            <Image.Behaviors>
+                                                <toolkit:IconTintColorBehavior TintColor="Green" />
+                                                <toolkit:TouchBehavior PressedScale="1.3" PressedOpacity="0.5" PressedAnimationDuration="250"
+                                                    PressedAnimationEasing="{x:Static Easing.CubicInOut}"/>
+                                            </Image.Behaviors>
+                                        </Image>
+                                        <Button Command="{Binding AddSetCommand}" BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="20" WidthRequest="20"/>
+                                    </Grid>
+                                    
+                                    <Label Text="{x:Static resx:AppResources.AddSet}" FontSize="10" HorizontalOptions="Center" />
                                 </VerticalStackLayout>
 
                                 <VerticalStackLayout Grid.Column="2">
-                                    <ImageButton Source="minus_cirlce.png" BackgroundColor="Transparent" Command="{Binding RemoveSetCommand}" HeightRequest="20" WidthRequest="20" />
-                                    <Label Text="Remove Set" FontSize="10" HorizontalOptions="Center" />
+                                    <Grid>
+                                        <Image Source="minus_cirlce.png" BackgroundColor="Transparent" HeightRequest="20" WidthRequest="20" >
+                                            <Image.Behaviors>
+                                                <toolkit:IconTintColorBehavior TintColor="Red" />
+                                                <toolkit:TouchBehavior PressedScale="1.3" PressedOpacity="0.5" PressedAnimationDuration="250"
+                                                    PressedAnimationEasing="{x:Static Easing.CubicInOut}"/>
+                                            </Image.Behaviors>
+                                        </Image>
+                                        <Button Command="{Binding RemoveSetCommand}" BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="20" WidthRequest="20"/>
+                                    </Grid>
+                                    
+                                    <Label Text="{x:Static resx:AppResources.RemoveSet}" FontSize="10" HorizontalOptions="Center" />
                                 </VerticalStackLayout>
                             </Grid>
                             <CollectionView Grid.Row="1" HorizontalOptions="Center" ItemsSource="{Binding WeightAndRepsItems}" HeightRequest="90" VerticalOptions="Center">
@@ -85,19 +102,35 @@
 					<Border StrokeShape="RoundRectangle 20" Padding="10" HorizontalOptions="Center" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByRepsAndWeight}}"
                            BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}">
                         <Grid RowDefinitions="auto, auto">
-                            <Grid ColumnDefinitions="auto, *, auto" ColumnSpacing="10">
+                            <Grid ColumnDefinitions="auto, *, auto" ColumnSpacing="10" HorizontalOptions="Center">
                                 <VerticalStackLayout Grid.Column="0">
-                                    <ImageButton Source="add_empty.png" BackgroundColor="Transparent" Command="{Binding AddSetCommand}" HeightRequest="20" WidthRequest="20"  >
-                                        <ImageButton.Behaviors>
-                                            <toolkit:IconTintColorBehavior TintColor="Green" />
-                                        </ImageButton.Behaviors>
-                                    </ImageButton>
-                                    <Label Text="Add Set" FontSize="10" HorizontalOptions="Center" />
+                                    <Grid>
+                                        <Image Source="add_empty.png" BackgroundColor="Transparent" HeightRequest="20" WidthRequest="20" >
+                                            <Image.Behaviors>
+                                                <toolkit:IconTintColorBehavior TintColor="Green" />
+                                                <toolkit:TouchBehavior PressedScale="1.3" PressedOpacity="0.5" PressedAnimationDuration="250"
+                                                    PressedAnimationEasing="{x:Static Easing.CubicInOut}"/>
+                                            </Image.Behaviors>
+                                        </Image>
+                                        <Button Command="{Binding AddSetCommand}" BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="20" WidthRequest="20"/>
+                                    </Grid>
+                                    
+                                    <Label Text="{x:Static resx:AppResources.AddSet}" FontSize="10" HorizontalOptions="Center" />
                                 </VerticalStackLayout>
 
                                 <VerticalStackLayout Grid.Column="2">
-                                    <ImageButton Source="minus_cirlce.png" BackgroundColor="Transparent" Command="{Binding RemoveSetCommand}" HeightRequest="20" WidthRequest="20" />
-                                    <Label Text="Remove Set" FontSize="10" HorizontalOptions="Center" />
+                                    <Grid>
+                                        <Image Source="minus_cirlce.png" BackgroundColor="Transparent" HeightRequest="20" WidthRequest="20" >
+                                            <Image.Behaviors>
+                                                <toolkit:IconTintColorBehavior TintColor="Red" />
+                                                <toolkit:TouchBehavior PressedScale="1.3" PressedOpacity="0.5" PressedAnimationDuration="250"
+                                                    PressedAnimationEasing="{x:Static Easing.CubicInOut}"/>
+                                            </Image.Behaviors>
+                                        </Image>
+                                        <Button Command="{Binding RemoveSetCommand}" BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="20" WidthRequest="20"/>
+                                    </Grid>
+                                    
+                                    <Label Text="{x:Static resx:AppResources.RemoveSet}" FontSize="10" HorizontalOptions="Center" />
                                 </VerticalStackLayout>
                             </Grid>
                             <CollectionView Grid.Row="1" HorizontalOptions="Center" ItemsSource="{Binding WeightAndRepsItems}" HeightRequest="140" VerticalOptions="Center">

@@ -66,7 +66,6 @@ namespace TrainingDay.Maui
                     CanBeDismissedByTappingOutsideOfPopup = true,
                     Padding = 4,
                     Margin = 10,
-                    // because App.Current not exist yet
                     // because options not handle theme change
                     BackgroundColor = Settings.IsLightTheme ? Color.FromArgb("#f0f0f0") : Color.FromArgb("#1b1b1b")
                 });
