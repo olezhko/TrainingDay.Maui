@@ -42,7 +42,7 @@ public class ImplementTrainingExerciseViewModel : TrainingExerciseViewModel
 
     public ICommand AddSetCommand => new Command(() =>
     {
-        var lastItem = WeightAndRepsItems.LastOrDefault() ?? new WeightAndRepsViewModel(15,0);
+        var lastItem = WeightAndRepsItems.LastOrDefault() ?? new WeightAndRepsViewModel(0,15);
         WeightAndRepsItems.Add(lastItem);
         IsNotFinished = true;
     });
