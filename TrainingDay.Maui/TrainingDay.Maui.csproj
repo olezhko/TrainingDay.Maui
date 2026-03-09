@@ -122,8 +122,6 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.301" />
-		<PackageReference Include="AWSSDK.S3" Version="3.7.405.9" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="14.0.0" />
 		<PackageReference Include="CommunityToolkit.Maui.MediaElement" Version="8.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />

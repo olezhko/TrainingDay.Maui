@@ -4,7 +4,7 @@ namespace TrainingDay.Maui.ViewModels;
 
 public sealed class PreparedTrainingViewModel : BaseViewModel
 {
-    public string Name { get; set; }
+    public required string Name { get; set; }
 
     public ImageSource TrainingImageUrl { get; set; }
 

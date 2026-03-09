@@ -1,7 +1,4 @@
-﻿using Amazon;
-using Amazon.S3;
-using Amazon.S3.Model;
-using CommunityToolkit.Maui;
+﻿using CommunityToolkit.Maui;
 using CommunityToolkit.Mvvm.Messaging;
 using SentinelAnalytics.Maui;
 using System.Globalization;
@@ -103,38 +100,24 @@ namespace TrainingDay.Maui
         {
             try
             {
-                string accessKey = ConstantKeys.AwsS3.accessKey;
-                string secretKey = ConstantKeys.AwsS3.secretKey;
-
-                var s3Client = new AmazonS3Client(
-                        accessKey,
-                        secretKey,
-                        RegionEndpoint.GetBySystemName("us-east-1")
-                );
-
-                var request = new ListObjectsV2Request()
-                {
-                    BucketName = ConstantKeys.AwsS3.BucketName,
-                };
-
-                var result = await s3Client.ListObjectsV2Async(request);
-                foreach (var b in result.S3Objects)
+                int maxCode = 139;
+                HttpClient httpClient = new HttpClient();
+                for(int i = 1; i < maxCode; i++)
                 {
                     try
                     {
-                        var response = await s3Client.GetObjectAsync(ConstantKeys.AwsS3.BucketName, b.Key);
+                        var urlToDownload = @$"https://api.trainingday.space/exercise_images/{i}.jpg";
+                        var response = await httpClient.GetByteArrayAsync(urlToDownload);
                         if (response is null)
                             return;
 
-                        var url = b.Key.Replace(".jpg", string.Empty).Replace(".png", string.Empty);
+                        var url = $"{i}";
 
                         ImageEntity image = App.Database.GetImage(url) ?? new ImageEntity();
 
-                        if (image.Data?.Length != response.Headers.ContentLength)
+                        if (image.Data?.Length != response.Length)
                         {
-                            var path = await GetFile(response, b.Key);
-                            var bytes = File.ReadAllBytes(path);
-                            image.Data = bytes;
+                            image.Data = response;
                             image.Url = url;
 
                             App.Database.SaveImage(image);
@@ -150,19 +133,6 @@ namespace TrainingDay.Maui
             {
                 LoggingService.TrackError(ex);
             }
-        }
-
-        public static async Task<string> GetFile(GetObjectResponse response, string key)
-        {
-            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var path = Path.Combine(documentsPath, key);
-
-            if (response.HttpStatusCode == HttpStatusCode.OK)
-            {
-                await response.WriteResponseStreamToFileAsync(path, false, CancellationToken.None);
-            }
-
-            return path;
         }
 
         internal void SetIncomingFile(string data)
@@ -204,7 +174,7 @@ namespace TrainingDay.Maui
             });
         }
 
-        private void IncomingTraining(TrainingSerialize vm)
+        private static void IncomingTraining(TrainingSerialize vm)
         {
             var exercises = Database.GetExerciseItems().ToList();
             var superSets = new List<Models.Database.SuperSetEntity>();
