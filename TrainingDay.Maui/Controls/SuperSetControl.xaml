@@ -33,7 +33,7 @@
                             <Grid ColumnDefinitions="auto, *, auto" ColumnSpacing="10" HorizontalOptions="Center">
                                 <VerticalStackLayout Grid.Column="0">
                                     <Grid>
-                                        <Image Source="add_empty.png" BackgroundColor="Transparent" HeightRequest="20" WidthRequest="20" >
+                                        <Image Source="add_empty.png" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="30" >
                                             <Image.Behaviors>
                                                 <toolkit:IconTintColorBehavior TintColor="Green" />
                                                 <toolkit:TouchBehavior PressedScale="1.3" PressedOpacity="0.5" PressedAnimationDuration="250"
@@ -48,7 +48,7 @@
 
                                 <VerticalStackLayout Grid.Column="2">
                                     <Grid>
-                                        <Image Source="minus_cirlce.png" BackgroundColor="Transparent" HeightRequest="20" WidthRequest="20" >
+                                        <Image Source="minus_cirlce.png" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="30" >
                                             <Image.Behaviors>
                                                 <toolkit:IconTintColorBehavior TintColor="Red" />
                                                 <toolkit:TouchBehavior PressedScale="1.3" PressedOpacity="0.5" PressedAnimationDuration="250"
@@ -105,7 +105,7 @@
                             <Grid ColumnDefinitions="auto, *, auto" ColumnSpacing="10" HorizontalOptions="Center">
                                 <VerticalStackLayout Grid.Column="0">
                                     <Grid>
-                                        <Image Source="add_empty.png" BackgroundColor="Transparent" HeightRequest="20" WidthRequest="20" >
+                                        <Image Source="add_empty.png" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="30" >
                                             <Image.Behaviors>
                                                 <toolkit:IconTintColorBehavior TintColor="Green" />
                                                 <toolkit:TouchBehavior PressedScale="1.3" PressedOpacity="0.5" PressedAnimationDuration="250"
@@ -120,7 +120,7 @@
 
                                 <VerticalStackLayout Grid.Column="2">
                                     <Grid>
-                                        <Image Source="minus_cirlce.png" BackgroundColor="Transparent" HeightRequest="20" WidthRequest="20" >
+                                        <Image Source="minus_cirlce.png" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="30" >
                                             <Image.Behaviors>
                                                 <toolkit:IconTintColorBehavior TintColor="Red" />
                                                 <toolkit:TouchBehavior PressedScale="1.3" PressedOpacity="0.5" PressedAnimationDuration="250"
@@ -178,9 +178,9 @@
                             <Label Grid.Column="1" HorizontalOptions="Fill" Margin="30,0,0,0" Text="{Binding Time, StringFormat='{}{0:hh\\:mm\\:ss}', Mode=TwoWay}" HorizontalTextAlignment="Start" 
                                 VerticalOptions="Center"/>
                             <Button Grid.Column="2" Command="{Binding StartCalculatingTimeCommand}" CornerRadius="10" 
-                                VerticalOptions="Start" Padding="0" 
+                                VerticalOptions="Start" Padding="10" 
                                 BackgroundColor="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}" 
-                                TextColor="{AppThemeBinding Dark=White, Light=Black}" FontAttributes="Bold">
+                                TextColor="{AppThemeBinding Dark=White, Light=White}" FontAttributes="Bold">
                                 <Button.Style>
                                     <Style TargetType="Button">
                                         <Setter Property="Text" Value="{x:Static resx:AppResources.MakeTrainingString}" />
