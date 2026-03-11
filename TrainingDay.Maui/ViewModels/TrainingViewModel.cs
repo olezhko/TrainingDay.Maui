@@ -37,7 +37,7 @@ public class TrainingViewModel : BaseViewModel
         }
     }
 
-    public ObservableCollection<SuperSetViewModel> ExercisesBySuperSet => PrepareSuperSets();
+    public ObservableCollection<SuperSetViewModel<TrainingExerciseViewModel>> ExercisesBySuperSet => PrepareSuperSets();
 
     public ObservableCollection<TrainingExerciseViewModel> Exercises { get; set; }
 
@@ -53,9 +53,9 @@ public class TrainingViewModel : BaseViewModel
         Id = tr.Id;
     }
 
-    private ObservableCollection<SuperSetViewModel> PrepareSuperSets()
+    private ObservableCollection<SuperSetViewModel<TrainingExerciseViewModel>> PrepareSuperSets()
     {
-        ObservableCollection<SuperSetViewModel> res = new ObservableCollection<SuperSetViewModel>();
+        ObservableCollection<SuperSetViewModel<TrainingExerciseViewModel>> res = [];
         foreach (var exercise in Exercises)
         {
             if (exercise.SuperSetId != 0)
@@ -67,13 +67,13 @@ public class TrainingViewModel : BaseViewModel
                 }
                 else
                 {
-                    res.Add(new SuperSetViewModel() { TrainingId = exercise.TrainingId, Id = exercise.SuperSetId });
+                    res.Add(new SuperSetViewModel<TrainingExerciseViewModel>() { TrainingId = exercise.TrainingId, Id = exercise.SuperSetId });
                     res.Last().Add(exercise);
                 }
             }
             else
             {
-                res.Add(new SuperSetViewModel() { TrainingId = exercise.TrainingId });
+                res.Add(new SuperSetViewModel<TrainingExerciseViewModel>() { TrainingId = exercise.TrainingId });
                 res.Last().Add(exercise);
             }
         }
@@ -100,8 +100,6 @@ public class TrainingViewModel : BaseViewModel
                 ExerciseId = trainingExerciseViewModel.ExerciseId,
                 Description = JsonConvert.SerializeObject(trainingExerciseViewModel.Description.Model),
                 Name = trainingExerciseViewModel.Name,
-                IsNotFinished = trainingExerciseViewModel.IsNotFinished,
-                IsSkipped = trainingExerciseViewModel.IsSkipped,
                 SuperSetNum = trainingExerciseViewModel.SuperSetNum,
 
                 TagsValue = ExerciseExtensions.ConvertTagListToInt(trainingExerciseViewModel.Tags),

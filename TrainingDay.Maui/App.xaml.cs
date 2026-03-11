@@ -1,7 +1,4 @@
-﻿using Amazon;
-using Amazon.S3;
-using Amazon.S3.Model;
-using CommunityToolkit.Maui;
+﻿using CommunityToolkit.Maui;
 using CommunityToolkit.Mvvm.Messaging;
 using SentinelAnalytics.Maui;
 using System.Globalization;
@@ -66,7 +63,6 @@ namespace TrainingDay.Maui
                     CanBeDismissedByTappingOutsideOfPopup = true,
                     Padding = 4,
                     Margin = 10,
-                    // because App.Current not exist yet
                     // because options not handle theme change
                     BackgroundColor = Settings.IsLightTheme ? Color.FromArgb("#f0f0f0") : Color.FromArgb("#1b1b1b")
                 });
@@ -102,68 +98,33 @@ namespace TrainingDay.Maui
 
         private async Task DownloadImagesAsync()
         {
-            try
+            int maxCode = 143;
+            HttpClient httpClient = new HttpClient();
+            for (int i = 1; i < maxCode; i++)
             {
-                string accessKey = ConstantKeys.AwsS3.accessKey;
-                string secretKey = ConstantKeys.AwsS3.secretKey;
-
-                var s3Client = new AmazonS3Client(
-                        accessKey,
-                        secretKey,
-                        RegionEndpoint.GetBySystemName("us-east-1")
-                );
-
-                var request = new ListObjectsV2Request()
+                try
                 {
-                    BucketName = ConstantKeys.AwsS3.BucketName,
-                };
+                    var urlToDownload = @$"https://api.trainingday.space/exercise_images/{i}.jpg";
+                    var response = await httpClient.GetByteArrayAsync(urlToDownload);
+                    if (response is null)
+                        return;
 
-                var result = await s3Client.ListObjectsV2Async(request);
-                foreach (var b in result.S3Objects)
-                {
-                    try
+                    var url = $"{i}";
+
+                    ImageEntity image = App.Database.GetImage(url) ?? new ImageEntity();
+
+                    if (image.Data?.Length != response.Length)
                     {
-                        var response = await s3Client.GetObjectAsync(ConstantKeys.AwsS3.BucketName, b.Key);
-                        if (response is null)
-                            return;
+                        image.Data = response;
+                        image.Url = url;
 
-                        var url = b.Key.Replace(".jpg", string.Empty).Replace(".png", string.Empty);
-
-                        ImageEntity image = App.Database.GetImage(url) ?? new ImageEntity();
-
-                        if (image.Data?.Length != response.Headers.ContentLength)
-                        {
-                            var path = await GetFile(response, b.Key);
-                            var bytes = File.ReadAllBytes(path);
-                            image.Data = bytes;
-                            image.Url = url;
-
-                            App.Database.SaveImage(image);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        LoggingService.TrackError(ex);
+                        App.Database.SaveImage(image);
                     }
                 }
+                catch
+                {
+                }
             }
-            catch (Exception ex)
-            {
-                LoggingService.TrackError(ex);
-            }
-        }
-
-        public static async Task<string> GetFile(GetObjectResponse response, string key)
-        {
-            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var path = Path.Combine(documentsPath, key);
-
-            if (response.HttpStatusCode == HttpStatusCode.OK)
-            {
-                await response.WriteResponseStreamToFileAsync(path, false, CancellationToken.None);
-            }
-
-            return path;
         }
 
         internal void SetIncomingFile(string data)
@@ -205,7 +166,7 @@ namespace TrainingDay.Maui
             });
         }
 
-        private void IncomingTraining(TrainingSerialize vm)
+        private static void IncomingTraining(TrainingSerialize vm)
         {
             var exercises = Database.GetExerciseItems().ToList();
             var superSets = new List<Models.Database.SuperSetEntity>();

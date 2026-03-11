@@ -1625,5 +1625,23 @@ namespace TrainingDay.Maui.Resources.Strings {
                 return ResourceManager.GetString("YesString", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to AddSet.
+        /// </summary>
+        internal static string AddSet {
+            get {
+                return ResourceManager.GetString("AddSet", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to RemoveSet.
+        /// </summary>
+        internal static string RemoveSet {
+            get {
+                return ResourceManager.GetString("RemoveSet", resourceCulture);
+            }
+        }
     }
 }

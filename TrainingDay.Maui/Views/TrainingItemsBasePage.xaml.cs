@@ -56,7 +56,7 @@ public partial class TrainingItemsBasePage : ContentPage
                     {
                         try
                         {
-                            var item = new TrainingExerciseViewModel()
+                            var item = new ImplementTrainingExerciseViewModel()
                             {
                                 TrainingExerciseId = trainingExerciseSerialize.TrainingExerciseId,
                                 ExerciseId = trainingExerciseSerialize.ExerciseId,

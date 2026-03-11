@@ -651,4 +651,10 @@
   <data name="Photo" xml:space="preserve">
     <value>Фото</value>
   </data>
+  <data name="AddSet" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+  <data name="RemoveSet" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
 </root>
