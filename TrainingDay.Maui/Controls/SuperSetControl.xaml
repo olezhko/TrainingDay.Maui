@@ -40,7 +40,7 @@
                                                     PressedAnimationEasing="{x:Static Easing.CubicInOut}"/>
                                             </Image.Behaviors>
                                         </Image>
-                                        <Button Command="{Binding AddSetCommand}" BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="20" WidthRequest="20"/>
+                                        <Button Command="{Binding AddSetCommand}" BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="30" WidthRequest="30"/>
                                     </Grid>
                                     
                                     <Label Text="{x:Static resx:AppResources.AddSet}" FontSize="10" HorizontalOptions="Center" />
@@ -55,7 +55,7 @@
                                                     PressedAnimationEasing="{x:Static Easing.CubicInOut}"/>
                                             </Image.Behaviors>
                                         </Image>
-                                        <Button Command="{Binding RemoveSetCommand}" BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="20" WidthRequest="20"/>
+                                        <Button Command="{Binding RemoveSetCommand}" BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="30" WidthRequest="30"/>
                                     </Grid>
                                     
                                     <Label Text="{x:Static resx:AppResources.RemoveSet}" FontSize="10" HorizontalOptions="Center" />
@@ -108,11 +108,9 @@
                                         <Image Source="add_empty.png" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="30" >
                                             <Image.Behaviors>
                                                 <toolkit:IconTintColorBehavior TintColor="Green" />
-                                                <toolkit:TouchBehavior PressedScale="1.3" PressedOpacity="0.5" PressedAnimationDuration="250"
-                                                    PressedAnimationEasing="{x:Static Easing.CubicInOut}"/>
                                             </Image.Behaviors>
                                         </Image>
-                                        <Button Command="{Binding AddSetCommand}" BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="20" WidthRequest="20"/>
+                                        <Button Command="{Binding AddSetCommand}" BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="30" WidthRequest="30"/>
                                     </Grid>
                                     
                                     <Label Text="{x:Static resx:AppResources.AddSet}" FontSize="10" HorizontalOptions="Center" />
@@ -123,11 +121,9 @@
                                         <Image Source="minus_cirlce.png" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="30" >
                                             <Image.Behaviors>
                                                 <toolkit:IconTintColorBehavior TintColor="Red" />
-                                                <toolkit:TouchBehavior PressedScale="1.3" PressedOpacity="0.5" PressedAnimationDuration="250"
-                                                    PressedAnimationEasing="{x:Static Easing.CubicInOut}"/>
                                             </Image.Behaviors>
                                         </Image>
-                                        <Button Command="{Binding RemoveSetCommand}" BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="20" WidthRequest="20"/>
+                                        <Button Command="{Binding RemoveSetCommand}" BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="30" WidthRequest="30"/>
                                     </Grid>
                                     
                                     <Label Text="{x:Static resx:AppResources.RemoveSet}" FontSize="10" HorizontalOptions="Center" />

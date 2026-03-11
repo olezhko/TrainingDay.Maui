@@ -98,40 +98,32 @@ namespace TrainingDay.Maui
 
         private async Task DownloadImagesAsync()
         {
-            try
+            int maxCode = 143;
+            HttpClient httpClient = new HttpClient();
+            for (int i = 1; i < maxCode; i++)
             {
-                int maxCode = 139;
-                HttpClient httpClient = new HttpClient();
-                for(int i = 1; i < maxCode; i++)
+                try
                 {
-                    try
+                    var urlToDownload = @$"https://api.trainingday.space/exercise_images/{i}.jpg";
+                    var response = await httpClient.GetByteArrayAsync(urlToDownload);
+                    if (response is null)
+                        return;
+
+                    var url = $"{i}";
+
+                    ImageEntity image = App.Database.GetImage(url) ?? new ImageEntity();
+
+                    if (image.Data?.Length != response.Length)
                     {
-                        var urlToDownload = @$"https://api.trainingday.space/exercise_images/{i}.jpg";
-                        var response = await httpClient.GetByteArrayAsync(urlToDownload);
-                        if (response is null)
-                            return;
+                        image.Data = response;
+                        image.Url = url;
 
-                        var url = $"{i}";
-
-                        ImageEntity image = App.Database.GetImage(url) ?? new ImageEntity();
-
-                        if (image.Data?.Length != response.Length)
-                        {
-                            image.Data = response;
-                            image.Url = url;
-
-                            App.Database.SaveImage(image);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        LoggingService.TrackError(ex);
+                        App.Database.SaveImage(image);
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                LoggingService.TrackError(ex);
+                catch
+                {
+                }
             }
         }
 
