@@ -26,13 +26,13 @@ public partial class FilterPage : ContentPage, IQueryAttributable
         Filter = new FilterModel();
         var itemsMuscles = new ObservableCollection<MuscleCheckItem>();
 
-        for (int i = 0; i < (int)MusclesEnum.None; i++)
+        var muscleItems = Enum.GetValues<MusclesEnum>();
+        for (int i = 0; i < muscleItems.Length; i++)
         {
-            var type = (MusclesEnum)i;
             var newItem = new MuscleCheckItem()
             {
-                Text = ExerciseExtensions.GetEnumDescription(type, Settings.GetLanguage()),
-                Muscle = type,
+                Text = ExerciseExtensions.GetEnumDescription(muscleItems[i], Settings.GetLanguage()),
+                Muscle = muscleItems[i],
             };
             newItem.PropertyChanged += NewItem_PropertyChanged;
             itemsMuscles.Add(newItem);
@@ -245,8 +245,6 @@ public partial class FilterPage : ContentPage, IQueryAttributable
                 break;
             case MusclesEnum.ShinAnteriorTibialis:
                 DrawShinAnteriorTibialis();
-                break;
-            case MusclesEnum.None:
                 break;
             case MusclesEnum.ErectorSpinae:
                 break;
