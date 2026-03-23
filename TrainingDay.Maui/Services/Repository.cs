@@ -7,11 +7,6 @@ using TrainingDay.Maui.ViewModels;
 
 namespace TrainingDay.Maui.Services;
 
-public interface ISQLite
-{
-    string GetDatabasePath(string filename);
-}
-
 public class Repository
 {
     SQLiteConnection database;

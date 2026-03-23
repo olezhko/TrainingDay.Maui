@@ -263,11 +263,6 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
             return;
         }
 
-        foreach (var item in Training.Exercises)
-        {
-            item.IsNotFinished = true;
-        }
-
         if (Settings.IsShowAdvicesOnImplementing)
         {
             await MessageManager.DisplayAlert(AppResources.AdviceString, AppResources.AdviceBeforeTrainingMessage, AppResources.OkString);

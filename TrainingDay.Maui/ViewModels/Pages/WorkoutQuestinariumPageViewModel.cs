@@ -44,6 +44,7 @@ namespace TrainingDay.Maui.ViewModels.Pages
                 var newStep = new WorkoutQuestinariumStepViewModel()
                 {
                     Title = step.Title,
+                    Number = step.Number,
                     Instruction = step.Instruction,
                     Variants = step.Answers.Select(item => new WorkoutQuestinariumVariantViewModel()
                     {
@@ -66,13 +67,11 @@ namespace TrainingDay.Maui.ViewModels.Pages
             InsertAfter(previous, null);
         }
 
-        private void InsertAfter(WorkoutQuestinariumStepViewModel current, WorkoutQuestinariumStepViewModel newStep)
+        private void InsertAfter(WorkoutQuestinariumStepViewModel current, 
+            WorkoutQuestinariumStepViewModel newStep)
         {
-            if (newStep is not null)
-                newStep.Previous = current;
-
-            if (current is not null)
-                current.Next = newStep;
+            newStep?.Previous = current;
+            current?.Next = newStep;
         }
 
         public async void Next()
@@ -156,41 +155,6 @@ namespace TrainingDay.Maui.ViewModels.Pages
         }
 
         private static async Task NavigateToHome() => await Shell.Current.GoToAsync("//workouts");
-    }
-
-	public class WorkoutQuestinariumStepViewModel : BaseViewModel
-	{
-        private string title;
-        private string instruction;
-        private WorkoutQuestinariumStepViewModel? next;
-        private WorkoutQuestinariumStepViewModel? previous;
-
-        public string Title { get => title; set => SetProperty(ref title, value); }
-        public string Instruction { get => instruction; set => SetProperty(ref instruction, value); }
-
-        public ObservableCollection<WorkoutQuestinariumVariantViewModel> Variants { get; set; }
-
-		public WorkoutQuestinariumStepViewModel? Next { get => next; set => SetProperty(ref next, value); }
-
-        public WorkoutQuestinariumStepViewModel? Previous { get => previous; set => SetProperty(ref previous, value); }
-    }
-
-    public class WorkoutQuestinariumVariantViewModel : BaseViewModel
-    {
-        private bool isChecked;
-        private string title;
-        private bool isMultiple;
-        private string questionNumber;
-        private string instruction;
-        private string option;
-
-        public bool IsChecked { get => isChecked; set => SetProperty(ref isChecked, value); }
-        public bool IsMultiple { get => isMultiple; set => SetProperty(ref isMultiple, value); }
-        public string Title { get => title; set => SetProperty(ref title, value); }
-        public string QuestionNumber { get => questionNumber; set => SetProperty(ref questionNumber, value); }
-        
-        public string Instruction { get => instruction; set => SetProperty(ref instruction, value); }
-        public string Option { get => option; set => SetProperty(ref option, value); }
     }
 }
 

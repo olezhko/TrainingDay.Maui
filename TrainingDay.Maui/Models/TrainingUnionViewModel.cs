@@ -18,10 +18,6 @@ public class TrainingUnionViewModel
         {
             TrainingIDs = JsonConvert.DeserializeObject<List<int>>(union.TrainingIDsString);
         }
-        else
-        {
-            TrainingIDs = [];
-        }
     }
 
     public int Id { get; set; }

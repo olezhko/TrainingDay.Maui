@@ -20,14 +20,6 @@ public static class ConstantKeys
     public const string NotFinishedTrainingName = "NotFinished.trday";
     public const string DatabaseName = "exercise.db";
 
-    public static string Version => "1.3.1";
     public static string SentinelTrackerProjectId => "prod_key";
-    public static string Version => "1.3.4";
-
-    public class AwsS3
-    {
-        public const string accessKey = "";
-        public const string secretKey = "";
-        public const string BucketName = "trainingday-exercise-images";
-    }
+    public static string Version => "1.3.2";
 }

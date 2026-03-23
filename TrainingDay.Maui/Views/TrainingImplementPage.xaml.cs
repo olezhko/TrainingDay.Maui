@@ -1,14 +1,16 @@
 using CommunityToolkit.Mvvm.Messaging;
+using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using TrainingDay.Common.Communication;
 using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.Controls;
 using TrainingDay.Maui.Extensions;
+using TrainingDay.Maui.Mapper;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Models.Notifications;
+using TrainingDay.Maui.Models.Serialize;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels;
@@ -28,12 +30,12 @@ public partial class TrainingImplementPage : ContentPage
     private IPushNotification notificator;
     private IDataService dataService;
     private TrainingViewModel trainingItem;
-    private SuperSetViewModel currentSuperSet;
+    private SuperSetViewModel<ImplementTrainingExerciseViewModel> currentSuperSet;
 
     public TrainingImplementPage()
     {
         InitializeComponent();
-        Items = new ObservableCollection<SuperSetViewModel>();
+        Items = new ObservableCollection<SuperSetViewModel<ImplementTrainingExerciseViewModel>>();
         BindingContext = this;
         _startTrainingDateTime = DateTime.Now;
         enabledTimer = true;
@@ -52,7 +54,7 @@ public partial class TrainingImplementPage : ContentPage
     {
         if (IsLoaded)
         {
-            var currentSuperSet = e.CurrentItem as SuperSetViewModel;
+            var currentSuperSet = e.CurrentItem as SuperSetViewModel<ImplementTrainingExerciseViewModel>;
             await LoadVideoItemsAsync(currentSuperSet);
         }
     }
@@ -73,7 +75,10 @@ public partial class TrainingImplementPage : ContentPage
 
         if (StepProgressBarControl.ItemsSource == null)
         {
-            Items = TrainingItem.ExercisesBySuperSet;
+            Items = TrainingItem.ExercisesBySuperSet
+                .Select(MapBaseSuperSetToImplementMapper.Map)
+                .ToObservableCollection<SuperSetViewModel<ImplementTrainingExerciseViewModel>>();
+
             StepProgressBarControl.ItemsSource = Items;
             OnPropertyChanged(nameof(Items));
 
@@ -109,7 +114,7 @@ public partial class TrainingImplementPage : ContentPage
         _timer.Start();
     }
 
-    private async Task LoadVideoItemsAsync(SuperSetViewModel item)
+    private async Task LoadVideoItemsAsync(SuperSetViewModel<ImplementTrainingExerciseViewModel> item)
     {
         IsVideoLoading = true;
         foreach (var exercise in item.SuperSetItems)
@@ -212,19 +217,38 @@ public partial class TrainingImplementPage : ContentPage
         Settings.IsTrainingNotFinishedTime = CurrentTime;
         var filename = Path.Combine(FileSystem.CacheDirectory, ConstantKeys.NotFinishedTrainingName);
 
-        TrainingViewModel training = new TrainingViewModel();
-        training.Id = id;
-        training.Title = title;
+        TrainingSerialize serialize = new()
+        {
+            Title = Title,
+            Id = id
+        };
 
         foreach (var item in Items)
         {
             foreach (var trainingExerciseViewModel in item.SuperSetItems)
             {
-                training.AddExercise(trainingExerciseViewModel);
+                serialize.Items.Add(new TrainingExerciseSerialize()
+                {
+                    TrainingExerciseId = trainingExerciseViewModel.TrainingExerciseId,
+                    SuperSetId = trainingExerciseViewModel.SuperSetId,
+                    OrderNumber = trainingExerciseViewModel.OrderNumber,
+                    TrainingId = id,
+                    Muscles = MusclesExtensions.ConvertFromListToString(trainingExerciseViewModel.Muscles.ToList()),
+                    ExerciseId = trainingExerciseViewModel.ExerciseId,
+                    Description = JsonConvert.SerializeObject(trainingExerciseViewModel.Description.Model),
+                    Name = trainingExerciseViewModel.Name,
+                    IsNotFinished = trainingExerciseViewModel.IsNotFinished,
+                    IsSkipped = trainingExerciseViewModel.IsSkipped,
+                    SuperSetNum = trainingExerciseViewModel.SuperSetNum,
+
+                    TagsValue = ExerciseExtensions.ConvertTagListToInt(trainingExerciseViewModel.Tags),
+                    WeightAndRepsString = ExerciseManager.ConvertJson(trainingExerciseViewModel.Tags, trainingExerciseViewModel),
+                    CodeNum = trainingExerciseViewModel.CodeNum,
+                });
             }
         }
 
-        training.SaveToFile(filename);
+        DataManageViewModel.SaveToFile(serialize, filename);
     }
 
     private void UpdateNotifyTimer()
@@ -418,8 +442,9 @@ public partial class TrainingImplementPage : ContentPage
         selectedItems.ForEach(a => a.IsSelected = false);
         foreach (var exerciseItem in selectedItems)
         {
-            var newSuperSet = new SuperSetViewModel() { TrainingId = TrainingItem.Id };
-            newSuperSet.Add(exerciseItem);
+            var newSuperSet = new SuperSetViewModel<ImplementTrainingExerciseViewModel>() { TrainingId = TrainingItem.Id };
+            newSuperSet.Add(MapBaseSuperSetToImplementMapper.Map(exerciseItem));
+
             Items.Add(newSuperSet);
             exerciseItem.TrainingId = TrainingItem.Id;
             exerciseItem.OrderNumber = Items.Count - 1;
@@ -495,7 +520,7 @@ public partial class TrainingImplementPage : ContentPage
 
     public TimeSpan StartTime { get; set; }
 
-    public ObservableCollection<SuperSetViewModel> Items { get; set; }
+    public ObservableCollection<SuperSetViewModel<ImplementTrainingExerciseViewModel>> Items { get; set; }
 
     public TrainingViewModel TrainingItem
     {
