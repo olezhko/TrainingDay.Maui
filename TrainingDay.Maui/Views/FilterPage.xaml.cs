@@ -61,7 +61,7 @@ public partial class FilterPage : ContentPage, IQueryAttributable
         SkiaView.InvalidateSurface();
 
         MuscleImage.WidthRequest = DeviceDisplay.Current.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density;
-        MuscleImage.HeightRequest = MuscleImage.WidthRequest / (496.0 / 514.0);
+        MuscleImage.HeightRequest = MuscleImage.WidthRequest / ((float)imageSourceSizeWidth / (float)imageSourceSizeHeight);
 
         SkiaView.WidthRequest = MuscleImage.WidthRequest;
         SkiaView.HeightRequest = MuscleImage.HeightRequest;
@@ -145,6 +145,7 @@ public partial class FilterPage : ContentPage, IQueryAttributable
     }
 
     #region Draw
+
     private float scaleX;
     private float scaleY;
     SKPaint fillPaint = new SKPaint
@@ -155,8 +156,9 @@ public partial class FilterPage : ContentPage, IQueryAttributable
         StrokeJoin = SKStrokeJoin.Round
     };
     private SKCanvas canvas;
-    //HeightRequest="514" WidthRequest="496"
     private double _width, _height;
+    int imageSourceSizeWidth = 496;
+    int imageSourceSizeHeight = 514;
     protected override void OnSizeAllocated(double width, double height)
     {
         base.OnSizeAllocated(width, height);
@@ -169,8 +171,8 @@ public partial class FilterPage : ContentPage, IQueryAttributable
 
     private void OnPaintSurface(object sender, SKPaintSurfaceEventArgs e)
     {
-        scaleX = (float)(SkiaView.Width / 496);
-        scaleY = (float)(SkiaView.Height / 514);
+        scaleX = (float)(SkiaView.Width / imageSourceSizeWidth);
+        scaleY = (float)(SkiaView.Height / imageSourceSizeHeight);
         // the the canvas and properties
         canvas = e.Surface.Canvas;
         var scaleW = (float)(e.Info.Width / SkiaView.Width);
@@ -818,4 +820,19 @@ public partial class FilterPage : ContentPage, IQueryAttributable
         imageButton.BackgroundColor = value ? Colors.White : Colors.DimGray;
     }
     #endregion
+}
+
+
+public class Muscle
+{
+    public MusclesEnum MuscleType { get; private set; }
+    public string Name { get; private set; } // Will be the English description from the enum
+    public SKPath Path { get; private set; }
+
+    public Muscle(MusclesEnum type, string name, SKPath path)
+    {
+        MuscleType = type;
+        Name = name;
+        Path = path;
+    }
 }

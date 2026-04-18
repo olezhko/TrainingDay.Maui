@@ -336,6 +336,7 @@ public partial class TrainingImplementPage : ContentPage
 
     private async Task FinishAndSave()
     {
+        ConfettiControl.IsVisible = true;
         enabledTimer = false;
         notificator.Cancel(PushMessagesExtensions.TrainingImplementTimeId);
         Settings.IsTrainingNotFinished = false;
@@ -345,6 +346,10 @@ public partial class TrainingImplementPage : ContentPage
         if (Settings.IsShowAdvicesOnImplementing)
         {
             await MessageManager.DisplayAlert(AppResources.AdviceString, AppResources.AdviceAfterTrainingMessage, AppResources.OkString);
+        }
+        else
+        {
+            await Task.Delay(2000);
         }
 
         notificator.Cancel(PushMessagesExtensions.TrainingNotificationId);

@@ -4,22 +4,18 @@
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
              x:Class="TrainingDay.Maui.Views.TrainingImplementPage"
              Shell.TabBarIsVisible="False"
              Shell.NavBarIsVisible="False"
              x:Name="Page">
-    <controls:TooltipControlContainer x:Name="MainGrid" BackgroundColor="Transparent">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <controls:TooltipControlContainer x:Name="MainGrid" BackgroundColor="Transparent" RowDefinitions="Auto,*,Auto,Auto">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+
         <VerticalStackLayout Grid.ColumnSpan="3" Margin="5,0">
             <Grid ColumnDefinitions="*,auto">
                 <Label FontSize="Title" Text="{Binding CurrentTime}" HorizontalOptions="Start" VerticalOptions="Center" HorizontalTextAlignment="End" FontAttributes="Bold"/>
@@ -40,7 +36,6 @@
                 </Grid>
             </Border>
         </VerticalStackLayout>
-
 
         <controls:StepProgressBar x:Name="StepProgressBarControl" Grid.Row="1" Grid.ColumnSpan="3" Margin="5"
                                   SteppedColor="{StaticResource Main}" >
@@ -123,5 +118,7 @@
             </controls:ToolTipControl.EmptyView>
         </controls:ToolTipControl>
 
+        <skia:SKLottieView x:Name="ConfettiControl" HorizontalOptions="Fill" Source="confetti.json" RepeatCount="3" RepeatMode="Restart" VerticalOptions="Fill" Grid.RowSpan="4"
+                           Grid.ColumnSpan="3" IsVisible="False"/>
     </controls:TooltipControlContainer>
 </ContentPage>

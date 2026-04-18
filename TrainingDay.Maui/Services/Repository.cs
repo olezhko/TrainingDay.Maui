@@ -25,7 +25,6 @@ public class Repository
             var path = Path.Combine(libraryPath, filename);
             database = new SQLiteConnection(path);
 #endif
-
         }
         catch (Exception e)
         {
@@ -100,6 +99,7 @@ public class Repository
             }
         }
     }
+    
     private bool AddorUpdateExercise(BaseExercise newExercise, IEnumerable<ExerciseEntity> dbExercises)
     {
         try
@@ -148,10 +148,6 @@ public class Repository
         return (from i in database.Table<WeightNoteEntity>() select i).ToList();
     }
 
-    public void DeleteWeightNote(int senderId)
-    {
-        database.Delete<WeightNoteEntity>(senderId);
-    }
     #endregion
 
     #region LastTrainings
@@ -185,6 +181,7 @@ public class Repository
         }
         return database.Insert(item);
     }
+    
     public IEnumerable<LastTrainingExerciseEntity> GetLastTrainingExerciseItems()
     {
         return (from i in database.Table<LastTrainingExerciseEntity>() select i).ToList();
@@ -231,11 +228,6 @@ public class Repository
         return (from i in database.Table<TrainingExerciseEntity>() select i).ToList();
     }
 
-    public TrainingExerciseEntity GetTrainingExerciseItem(int id)
-    {
-        return database.Get<TrainingExerciseEntity>(id);
-    }
-
     public int DeleteTrainingExerciseItem(int id)
     {
         return database.Delete<TrainingExerciseEntity>(id);
@@ -269,7 +261,6 @@ public class Repository
         items = new List<TrainingExerciseViewModel>(items.OrderBy(a => a.OrderNumber));
         return items;
     }
-
 
     public void DeleteTrainingExerciseItemByTrainingId(int trainingId)
     {
@@ -320,29 +311,6 @@ public class Repository
     #endregion
 
     #region SuperSet
-
-    //public IEnumerable<SuperSetExercise> GetSuperSetItems()
-    //{
-    //    return (from i in database.Table<SuperSetExercise>() select i).ToList();
-    //}
-
-    //public SuperSetExercise GetSuperSetItem(int id)
-    //{
-    //    return database.Get<SuperSetExercise>(id);
-    //}
-
-    //public int SaveSuperSetExerciseItem(SuperSetExercise item)
-    //{
-    //    if (item.Id != 0)
-    //    {
-    //        database.Update(item);
-    //        return item.Id;
-    //    }
-    //    database.Insert(item);
-    //    return GetLastInsertId();
-    //}
-
-
     public IEnumerable<SuperSetEntity> GetSuperSetItems()
     {
         return (from i in database.Table<SuperSetEntity>() select i).ToList();
@@ -434,11 +402,6 @@ public class Repository
         return GetLastInsertId();
     }
 
-    public void DeleteAll<T>()
-    {
-        database.DeleteAll<T>();
-    }
-
     public void DeleteTrainingExerciseItemByExerciseId(int itemExerciseId)
     {
         var allItems = GetTrainingExerciseItems();
@@ -454,10 +417,5 @@ public class Repository
     public IEnumerable<BlogEntity> GetBlogItems()
     {
         return [.. (from i in database.Table<BlogEntity>() select i)];
-    }
-
-    public IEnumerable<BlogEntity> GetBlogItems(int page, int size)
-    {
-        return [.. (from i in database.Table<BlogEntity>() select i).Skip((page - 1) * size).Take(size)];
     }
 }

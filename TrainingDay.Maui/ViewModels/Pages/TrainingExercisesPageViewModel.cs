@@ -154,16 +154,16 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
     private void AddSelectedExercises(IEnumerable<TrainingExerciseViewModel> args)
     {
         args.ForEach(a => a.IsSelected = false);
-        var count = Training.Exercises.Count - 1;
+        int orderNumber = Training.Exercises.Count == 0 ? 1 : Training.Exercises.Last().OrderNumber + 1;
         foreach (var exerciseItem in args)
         {
             exerciseItem.TrainingId = Training.Id;
-            exerciseItem.OrderNumber = count;
+            exerciseItem.OrderNumber = orderNumber;
             var id = App.Database.SaveTrainingExerciseItem(exerciseItem.GetTrainingExerciseComm());
             exerciseItem.TrainingExerciseId = id;
             Training.AddExercise(exerciseItem);
             OnPropertyChanged(nameof(Training.Exercises));
-            count += 1;
+            orderNumber += 1;
         }
 
         LoggingService.TrackEvent($"{GetType().Name}: AddExercises finished");
