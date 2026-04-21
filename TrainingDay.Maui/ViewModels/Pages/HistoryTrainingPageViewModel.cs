@@ -222,11 +222,6 @@ public class HistoryTrainingPageViewModel : BaseViewModel
                 App.Database.DeleteLastTrainingExercise(trainingExerciseViewModel.TrainingExerciseId);
             }
 
-            if (LastTrainings.Select(lastTraining => lastTraining.Remove(SelectedTraining)).Any(res => res))
-            {
-                return;
-            }
-
             await Toast.Make(AppResources.DeletedString).Show();
             await Shell.Current.GoToAsync("..");
         }

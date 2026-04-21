@@ -361,7 +361,7 @@ public partial class TrainingImplementPage : ContentPage
 
     private void SaveLastTraining()
     {
-        App.Database.SaveLastTrainingItem(new LastTraining()
+        var id = App.Database.SaveLastTrainingItem(new LastTraining()
         {
             ElapsedTime = DateTime.Now - _startTrainingDateTime + StartTime,
             Time = _startTrainingDateTime,
@@ -369,7 +369,6 @@ public partial class TrainingImplementPage : ContentPage
             TrainingId = TrainingItem.Id,
         });
 
-        var id = App.Database.GetLastInsertId();
         foreach (var superSet in Items)
         {
             foreach (var item in superSet)

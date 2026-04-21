@@ -128,7 +128,7 @@ public class Repository
 
     #endregion
 
-    public int GetLastInsertId() => (int)SQLite3.LastInsertRowid(database.Handle);
+    private int GetLastInsertId() => (int)SQLite3.LastInsertRowid(database.Handle);
 
     #region Weight Save And Load
 

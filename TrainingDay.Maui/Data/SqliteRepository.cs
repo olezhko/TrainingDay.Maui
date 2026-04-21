@@ -6,7 +6,7 @@ public class SqliteRepository<T> : IRepository<T> where T : class, IEntity, new(
 {
     private readonly SQLiteConnection _database;
 
-    public SqliteRepository(SQLiteConnection database)
+    public SqliteRepository(string filename)
     {
         _database = database;
         _database.CreateTable<T>(); // ensure table exists
@@ -27,7 +27,7 @@ public class SqliteRepository<T> : IRepository<T> where T : class, IEntity, new(
     public int Delete(int id)
     {
         var entity = GetById(id);
-        if (entity == null) return 0;
+        if (entity == null) return -1;
 
         return _database.Delete(entity);
     }

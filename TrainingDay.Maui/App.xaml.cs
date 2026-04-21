@@ -30,11 +30,7 @@ namespace TrainingDay.Maui
             {
                 lock (lockBase)
                 {
-                    if (database == null)
-                    {
-                        database = new Repository(ConstantKeys.DatabaseName);
-                    }
-
+                    database ??= new Repository(ConstantKeys.DatabaseName);
                     return database;
                 }
             }
