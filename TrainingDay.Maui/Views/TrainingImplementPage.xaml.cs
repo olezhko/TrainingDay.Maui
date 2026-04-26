@@ -336,20 +336,27 @@ public partial class TrainingImplementPage : ContentPage
 
     private async Task FinishAndSave()
     {
-        ConfettiControl.IsVisible = true;
         enabledTimer = false;
         notificator.Cancel(PushMessagesExtensions.TrainingImplementTimeId);
         Settings.IsTrainingNotFinished = false;
+
+        // Save before showing animation so synchronous DB work doesn't stall the first frame
         SaveLastTraining();
         SaveChangedExercises();
+
+        ConfettiControl.IsVisible = true;
+        ConfettiControl.IsAnimationEnabled = true;
+
+        // Wait for the animation to play through (fr=30, op=112 → ~3.7 s per play), capped at 5 s
+        var singleMs = ConfettiControl.Duration.TotalMilliseconds;
+        var waitMs = singleMs > 0
+            ? (int)Math.Min(singleMs * ConfettiControl.RepeatCount, 5000)
+            : 3700;
+        await Task.Delay(Math.Max(waitMs, 1500));
 
         if (Settings.IsShowAdvicesOnImplementing)
         {
             await MessageManager.DisplayAlert(AppResources.AdviceString, AppResources.AdviceAfterTrainingMessage, AppResources.OkString);
-        }
-        else
-        {
-            await Task.Delay(2000);
         }
 
         notificator.Cancel(PushMessagesExtensions.TrainingNotificationId);

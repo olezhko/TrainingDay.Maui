@@ -77,11 +77,13 @@ public class StepProgressBar : Grid
 
         RowSpacing = 10;
 
-        headersStackLayout = new HorizontalStackLayout();
-        headersStackLayout.VerticalOptions = LayoutOptions.Start;
-        headersStackLayout.HorizontalOptions = LayoutOptions.Fill;
-        headersStackLayout.Padding = new Thickness(0);
-        headersStackLayout.Spacing = 2;
+        headersStackLayout = new HorizontalStackLayout
+        {
+            VerticalOptions = LayoutOptions.Start,
+            HorizontalOptions = LayoutOptions.Fill,
+            Padding = new Thickness(0),
+            Spacing = 2
+        };
 
         var headerScroll = new ScrollView();
         headerScroll.Orientation = ScrollOrientation.Horizontal;
@@ -108,30 +110,30 @@ public class StepProgressBar : Grid
         var unselectedCircleStyle = new Style(typeof(Button))
         {
             Setters =
-                {
-                    new Setter { Property = Button.BackgroundColorProperty, Value = Colors.Transparent },
-                    new Setter { Property = Button.BorderColorProperty, Value = StepColor },
-                    new Setter { Property = Button.TextColorProperty, Value = App.Current.RequestedTheme == AppTheme.Light? Colors.Black : Colors.White },
-                    new Setter { Property = Button.BorderWidthProperty, Value = 0.5 },
-                    new Setter { Property = HeightRequestProperty, Value = 45 },
-                    new Setter { Property = WidthRequestProperty, Value = 45 },
-                    new Setter { Property = PaddingProperty, Value = new Thickness(0) },
-                },
+            {
+                new Setter { Property = Button.BackgroundColorProperty, Value = Colors.Transparent },
+                new Setter { Property = Button.BorderColorProperty, Value = StepColor },
+                new Setter { Property = Button.TextColorProperty, Value = App.Current.RequestedTheme == AppTheme.Light? Colors.Black : Colors.White },
+                new Setter { Property = Button.BorderWidthProperty, Value = 0.5 },
+                new Setter { Property = HeightRequestProperty, Value = 45 },
+                new Setter { Property = WidthRequestProperty, Value = 45 },
+                new Setter { Property = PaddingProperty, Value = new Thickness(0) },
+            },
         };
 
         var selectedCircleStyle = new Style(typeof(Button))
         {
             Setters =
-                {
-                    new Setter { Property = Button.BackgroundColorProperty, Value = SteppedColor },
-                    new Setter { Property = Button.FontAttributesProperty, Value = FontAttributes.Bold },
-                    new Setter { Property = Button.TextColorProperty, Value = App.Current.RequestedTheme == AppTheme.Light? Colors.Black : Colors.White },
-                    new Setter { Property = Button.BorderColorProperty, Value = StepColor },
-                    new Setter { Property = Button.BorderWidthProperty, Value = 0.5 },
-                    new Setter { Property = HeightRequestProperty, Value = 45 },
-                    new Setter { Property = WidthRequestProperty, Value = 45 },
-                    new Setter { Property = PaddingProperty, Value = new Thickness(0) },
-                },
+            {
+                new Setter { Property = Button.BackgroundColorProperty, Value = SteppedColor },
+                new Setter { Property = Button.FontAttributesProperty, Value = FontAttributes.Bold },
+                new Setter { Property = Button.TextColorProperty, Value = App.Current.RequestedTheme == AppTheme.Light? Colors.Black : Colors.White },
+                new Setter { Property = Button.BorderColorProperty, Value = StepColor },
+                new Setter { Property = Button.BorderWidthProperty, Value = 0.5 },
+                new Setter { Property = HeightRequestProperty, Value = 45 },
+                new Setter { Property = WidthRequestProperty, Value = 45 },
+                new Setter { Property = PaddingProperty, Value = new Thickness(0) },
+            },
         };
 
         Resources = new ResourceDictionary
@@ -158,12 +160,6 @@ public class StepProgressBar : Grid
                 }
             }
         }
-
-        //if (propertyName == StepSelectedProperty.PropertyName)
-        //{
-        //    var children = headersStackLayout.Children.FirstOrDefault(p => (!string.IsNullOrEmpty(p.ClassId) && Convert.ToInt32(p.ClassId) == StepSelected));
-        //    if (children != null) SelectElement(children as Button);
-        //}
 
         if (propertyName == StepColorProperty.PropertyName)
         {

@@ -65,56 +65,55 @@
             </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
-						<Border Style="{StaticResource BorderCellStyle}" >
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="ListView_OnItemTapped"/>
-                            </Border.GestureRecognizers>
-                            <Grid Margin="0" Padding="0" ColumnSpacing="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="30" />
-                                    <ColumnDefinition Width="70" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
+                    <Border Style="{StaticResource BorderCellStyle}" >
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="ListView_OnItemTapped"/>
+                        </Border.GestureRecognizers>
+                        <Grid Margin="0" Padding="0" ColumnSpacing="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-								<Border StrokeShape="RoundRectangle 10" Grid.Column="0" Padding="0" BackgroundColor="Green" HorizontalOptions="Center" IsVisible="{Binding IsExerciseExistsInWorkout}"
-                                    VerticalOptions="Start" WidthRequest="20" Stroke="Transparent" HeightRequest="20" >
-                                    <Image HeightRequest="20" Source="save.png" WidthRequest="20" >
-                                        <Image.Behaviors>
-                                            <toolkit:IconTintColorBehavior TintColor="White" />
-                                        </Image.Behaviors>
-                                    </Image>
-                                </Border>
+                            <Border StrokeShape="RoundRectangle 10" Grid.Column="0" Padding="0" BackgroundColor="Green" HorizontalOptions="Center" IsVisible="{Binding IsExerciseExistsInWorkout}"
+                                VerticalOptions="Start" WidthRequest="20" Stroke="Transparent" HeightRequest="20" >
+                                <Image HeightRequest="20" Source="save.png" WidthRequest="20" >
+                                    <Image.Behaviors>
+                                        <toolkit:IconTintColorBehavior TintColor="White" />
+                                    </Image.Behaviors>
+                                </Image>
+                            </Border>
 
-                                <CheckBox x:Name="SelectCheckBox" IsChecked="{Binding IsSelected}" VerticalOptions="Center" />
-								<Border StrokeShape="RoundRectangle 5"
-                                    Grid.Row="0"
-                                    Grid.Column="1"
-                                    Margin="0"
-                                    Padding="5"
-                                    BackgroundColor="White"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center">
-                                    <controls:ImageCache HeightRequest="60" WidthRequest="60" CodeNum="{Binding CodeNum}" ExerciseId="{Binding Id}" />
-                                </Border>
+                            <CheckBox x:Name="SelectCheckBox" IsChecked="{Binding IsSelected}" VerticalOptions="Center" />
+                            <Border StrokeShape="RoundRectangle 5"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Margin="0"
+                                Padding="5"
+                                BackgroundColor="White"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center">
+                                <controls:ImageCache HeightRequest="60" WidthRequest="60" CodeNum="{Binding CodeNum}" ExerciseId="{Binding Id}" />
+                            </Border>
 
-                                <StackLayout Grid.Column="2" VerticalOptions="Center">
-                                    <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="17" HorizontalOptions="Center" Text="{Binding Name}" />
-                                    <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" Style="{StaticResource MuscleFlexStyle}">
-                                        <BindableLayout.ItemTemplate>
-                                            <DataTemplate>
-                                                <AbsoluteLayout>
-                                                    <Border Style="{StaticResource MuscleBorderCellStyle}">
-                                                        <Label Text="{Binding Name}" FontSize="11" TextColor="White" LineBreakMode="NoWrap"/>
-                                                    </Border>
-                                                </AbsoluteLayout>
-                                            </DataTemplate>
-                                        </BindableLayout.ItemTemplate>
-                                    </FlexLayout>
-                                </StackLayout>
-                            </Grid>
-                        </Border>
-                    </Grid>
+                            <StackLayout Grid.Column="2" VerticalOptions="Center">
+                                <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="17" HorizontalOptions="Center" Text="{Binding Name}" />
+                                <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" Style="{StaticResource MuscleFlexStyle}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <!--AbsoluteLayout needed for proper draw muscle label. without it cropped in the end-->
+                                            <AbsoluteLayout>
+                                                <Border Style="{StaticResource MuscleBorderCellStyle}">
+                                                    <Label Text="{Binding Name}" FontSize="11" TextColor="White" LineBreakMode="NoWrap"/>
+                                                </Border>
+                                            </AbsoluteLayout>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </FlexLayout>
+                            </StackLayout>
+                        </Grid>
+                    </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

@@ -12,8 +12,8 @@
 
     <Grid>
         <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
-        
-        <CollectionView ItemsSource="{Binding BlogsCollection}" ItemSizingStrategy="MeasureAllItems">
+
+        <CollectionView ItemsSource="{Binding BlogsCollection}" ItemSizingStrategy="MeasureFirstItem">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Border Style="{DynamicResource BorderCellStyle}" Margin="0" Padding="10" MinimumHeightRequest="80">
@@ -24,7 +24,8 @@
                             <BoxView Grid.Column="0" WidthRequest="10" HeightRequest="10" Color="{StaticResource Main}" CornerRadius="5" IsVisible="{Binding IsNew}"
                                      VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Transparent" Margin="5"/>
 
-                            <Label Grid.Column="1" Text="{Binding Title}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                            <Label Grid.Column="1" Text="{Binding Title}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                                   LineBreakMode="TailTruncation"/>
                         </Grid>
                     </Border>
                 </DataTemplate>

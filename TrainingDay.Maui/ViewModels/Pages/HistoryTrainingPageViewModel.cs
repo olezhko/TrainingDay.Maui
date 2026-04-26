@@ -14,13 +14,14 @@ namespace TrainingDay.Maui.ViewModels.Pages;
 public class HistoryTrainingPageViewModel : BaseViewModel
 {
     private IOrderedEnumerable<LastTrainingEntity> baseItems;
-    private static List<Tuple<string, int>> DaysAndTextLimits = new List<Tuple<string, int>>();
+    private static readonly List<Tuple<string, int>> DaysAndTextLimits = new List<Tuple<string, int>>();
 
     public HistoryTrainingPageViewModel()
     {
         LastTrainings = new ObservableCollection<LastTrainingViewModelList>();
         ItemSelectedCommand = new Command<LastTrainingViewModel>(SelectionChanged);
 
+        DaysAndTextLimits.Clear();
         DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.WeekString, 7));
         DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.OneMounthString, 31));
         DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.ThreeMounthString, 91));
