@@ -78,7 +78,7 @@
                     <Label FontSize="Title" Text="{x:Static resx:AppResources.MostPopularExercises}" HorizontalTextAlignment="Center"/>
 
                     <StackLayout Orientation="Horizontal" Spacing="10">
-                        <Image WidthRequest="30" HeightRequest="30" Source="champion" >
+                        <Image WidthRequest="30" HeightRequest="30" Source="champion.png" >
                             <Image.Behaviors>
                                 <toolkit:IconTintColorBehavior TintColor="{StaticResource Main}" />
                             </Image.Behaviors>
@@ -87,7 +87,7 @@
                     </StackLayout>
 
                     <StackLayout Orientation="Horizontal" Spacing="10">
-                        <Image WidthRequest="30" HeightRequest="30" Source="champion" >
+                        <Image WidthRequest="30" HeightRequest="30" Source="champion.png" >
                             <Image.Behaviors>
                                 <toolkit:IconTintColorBehavior TintColor="Silver" />
                             </Image.Behaviors>
@@ -96,7 +96,7 @@
                     </StackLayout>
 
                     <StackLayout Orientation="Horizontal" Spacing="10">
-                        <Image WidthRequest="30" HeightRequest="30" Source="champion" >
+                        <Image WidthRequest="30" HeightRequest="30" Source="champion.png" >
                             <Image.Behaviors>
                                 <toolkit:IconTintColorBehavior TintColor="#CD7F32" />
                             </Image.Behaviors>

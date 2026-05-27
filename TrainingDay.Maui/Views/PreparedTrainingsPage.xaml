@@ -65,7 +65,7 @@
                             TextTransform="Uppercase"
                             VerticalOptions="Center" />
 
-                            <Image Grid.Column="2" WidthRequest="30" HeightRequest="30" HorizontalOptions="Center" VerticalOptions="Center" Source="arrow_left" BackgroundColor="Transparent">
+                            <Image Grid.Column="2" WidthRequest="30" HeightRequest="30" HorizontalOptions="Center" VerticalOptions="Center" Source="arrow_left.png" BackgroundColor="Transparent">
                                 <Image.Behaviors>
                                     <toolkit:IconTintColorBehavior TintColor="LightGray" />
                                 </Image.Behaviors>

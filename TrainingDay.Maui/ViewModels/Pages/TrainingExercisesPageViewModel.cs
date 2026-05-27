@@ -56,7 +56,6 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         {
             itemId = value;
             LoadItemId(value);
-            OnPropertyChanged();
         }
     }
 
