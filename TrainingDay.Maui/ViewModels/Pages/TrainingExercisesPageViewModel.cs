@@ -55,7 +55,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         set
         {
             itemId = value;
-            LoadItemId(value);
+            _ = LoadItemIdAsync(value);
         }
     }
 
@@ -68,10 +68,14 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
     }
 
     #region Load
-    private void LoadItemId(int id)
+    private async Task LoadItemIdAsync(int id)
     {
-        TrainingViewModel trVm = new TrainingViewModel(App.Database.GetTrainingItem(id));
-        PrepareTrainingViewModel(trVm);
+        var trVm = await Task.Run(() =>
+        {
+            var vm = new TrainingViewModel(App.Database.GetTrainingItem(id));
+            PrepareTrainingViewModel(vm);
+            return vm;
+        });
         Load(trVm);
     }
 
@@ -113,7 +117,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         }
     }
 
-    public void Load(TrainingViewModel trVm)
+    private void Load(TrainingViewModel trVm)
     {
         if (trVm == null)
         {

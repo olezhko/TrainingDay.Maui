@@ -94,18 +94,20 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
                 defaultGroup = tempGroups.FirstOrDefault();
             }
 
-            defaultGroup.IsSelected = true;
-            
+            defaultGroup?.IsSelected = true;
+
             foreach (var item in defaultGroup)
             {
                 SelectedTrainings.Add(item);
             }
-
-            OnPropertyChanged(nameof(SelectedTrainings));
         }
         catch (Exception e)
         {
             LoggingService.TrackError(e);
+        }
+        finally
+        {
+            OnPropertyChanged(nameof(SelectedTrainings));
         }
     }
 

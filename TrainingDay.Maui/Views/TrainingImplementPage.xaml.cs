@@ -12,6 +12,7 @@ using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Models.Notifications;
 using TrainingDay.Maui.Models.Serialize;
 using TrainingDay.Maui.Resources.Strings;
+using SkiaSharp.Extended.UI.Controls;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels;
 using LastTraining = TrainingDay.Maui.Models.Database.LastTrainingEntity;
@@ -340,19 +341,10 @@ public partial class TrainingImplementPage : ContentPage
         notificator.Cancel(PushMessagesExtensions.TrainingImplementTimeId);
         Settings.IsTrainingNotFinished = false;
 
-        // Save before showing animation so synchronous DB work doesn't stall the first frame
         SaveLastTraining();
         SaveChangedExercises();
 
-        ConfettiControl.IsVisible = true;
-        ConfettiControl.IsAnimationEnabled = true;
-
-        // Wait for the animation to play through (fr=30, op=112 → ~3.7 s per play), capped at 5 s
-        var singleMs = ConfettiControl.Duration.TotalMilliseconds;
-        var waitMs = singleMs > 0
-            ? (int)Math.Min(singleMs * ConfettiControl.RepeatCount, 5000)
-            : 3700;
-        await Task.Delay(Math.Max(waitMs, 1500));
+        await ShowConfettiAsync();
 
         if (Settings.IsShowAdvicesOnImplementing)
         {
@@ -364,6 +356,30 @@ public partial class TrainingImplementPage : ContentPage
         await Shell.Current.GoToAsync("//workouts");
 
         await dataService.PostActionAsync(Settings.Token, Common.Communication.MobileActions.Workout);
+    }
+
+    private async Task ShowConfettiAsync()
+    {
+        var confetti = new SKLottieView
+        {
+            HorizontalOptions = LayoutOptions.Fill,
+            VerticalOptions = LayoutOptions.Fill,
+            Source = new SKFileLottieImageSource { File = "confetti.json" },
+            RepeatCount = 3,
+            RepeatMode = SKLottieRepeatMode.Restart,
+            IsAnimationEnabled = true,
+        };
+        Grid.SetRowSpan(confetti, 4);
+        Grid.SetColumnSpan(confetti, 3);
+        MainGrid.Add(confetti);
+
+        var singleMs = confetti.Duration.TotalMilliseconds;
+        var waitMs = singleMs > 0
+            ? (int)Math.Min(singleMs * confetti.RepeatCount, 5000)
+            : 3700;
+        await Task.Delay(Math.Max(waitMs, 1500));
+
+        MainGrid.Remove(confetti);
     }
 
     private void SaveLastTraining()

@@ -4,7 +4,6 @@ public class TooltipControlContainer : Grid
 {
     private List<ToolTipControl> nextToolTipControls = new List<ToolTipControl>();
     private int currentToolTip;
-    private View lastAttachedView;
 
     public TooltipControlContainer()
     {
@@ -20,26 +19,23 @@ public class TooltipControlContainer : Grid
 
             if (nextToolTipControls.Count != 0) // if this one not first tool tip
             {
-                childToolTipControl.Hide(false);
+                _ = childToolTipControl.Hide(false); // hide previous tooltip
             }
 
             if (!childToolTipControl.NeverShow)
             {
                 childToolTipControl.Closed += ChildToolTipControl_Closed;
                 nextToolTipControls.Add(childToolTipControl);
-                if (lastAttachedView != null)
-                {
-                    lastAttachedView.IsVisible = false;
-                }
-
-                lastAttachedView = childToolTipControl.AttachedControl;
-                lastAttachedView.IsVisible = true;
             }
 
             if (nextToolTipControls.Count == 0)
             {
                 BackgroundColor = Colors.Transparent;
                 VisibleAllChild(true);
+            }
+            else
+            {
+                nextToolTipControls.First().AttachedControl.IsVisible = true;
             }
         }
     }
@@ -69,9 +65,9 @@ public class TooltipControlContainer : Grid
         {
             if (child is VisualElement visualElement)
             {
-                if (child.GetType() != typeof(ToolTipControl))
+                if (visualElement.GetType() != typeof(ToolTipControl))
                 {
-                    child.SetValue(VisualElement.IsVisibleProperty, isVisible ? true : false);
+                    visualElement.IsVisible = isVisible;
                 }
             }
         }

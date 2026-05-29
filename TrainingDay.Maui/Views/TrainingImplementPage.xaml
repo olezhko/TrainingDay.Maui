@@ -4,8 +4,7 @@
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
-             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
-             x:Class="TrainingDay.Maui.Views.TrainingImplementPage"
+x:Class="TrainingDay.Maui.Views.TrainingImplementPage"
              Shell.TabBarIsVisible="False"
              Shell.NavBarIsVisible="False"
              x:Name="Page">
@@ -118,7 +117,5 @@
             </controls:ToolTipControl.EmptyView>
         </controls:ToolTipControl>
 
-        <skia:SKLottieView x:Name="ConfettiControl" HorizontalOptions="Fill" Source="confetti.json" RepeatCount="3" RepeatMode="Restart" VerticalOptions="Fill" Grid.RowSpan="4"
-                           Grid.ColumnSpan="3" IsVisible="False"/>
     </controls:TooltipControlContainer>
 </ContentPage>

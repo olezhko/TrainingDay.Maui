@@ -33,13 +33,13 @@ public partial class ToolTipControl : ContentView
         {
             AttachedControl.IsVisible = true;
             IsVisible = true;
-            await frame.FadeTo(1, 500);
+            await frame.FadeToAsync(1, 500);
         }
     }
 
     public async Task Hide(bool isRaise = true)
     {
-        await frame.FadeTo(0, 500);
+        await frame.FadeToAsync(0, 500);
         if (isRaise)
         {
             OnClosed();
@@ -120,7 +120,7 @@ public partial class ToolTipControl : ContentView
                 Margin = new Thickness(control.X, control.Y, 0, 0);
                 break;
             case ToolTipPosition.Center:
-                Margin = new Thickness(50, ParentHeight / 2 - control.Height / 2, 50, 0);
+                Margin = new Thickness(50, ParentHeight / 2, 50, 0);
                 break;
         }
     }

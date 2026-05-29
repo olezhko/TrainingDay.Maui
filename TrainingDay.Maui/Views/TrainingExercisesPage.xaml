@@ -26,18 +26,7 @@
         </Grid>
     </Shell.TitleView>
 
-    <controls:TooltipControlContainer x:Name="Container" RowSpacing="5" BackgroundColor="Transparent">
-        <controls:TooltipControlContainer.Style>
-            <Style TargetType="controls:TooltipControlContainer" >
-                <Setter Property="RowDefinitions" Value="auto,*,auto"/>
-                <Style.Triggers>
-                    <DataTrigger TargetType="controls:TooltipControlContainer" Binding="{Binding IsExercisesCheckBoxVisible}" Value="True">
-                        <Setter Property="RowDefinitions" Value="auto,*,auto"/>
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-        </controls:TooltipControlContainer.Style>
-
+    <controls:TooltipControlContainer x:Name="Container" RowSpacing="5" BackgroundColor="Transparent" RowDefinitions="auto,*,auto">
         <Border Style="{StaticResource MaterialBorder}">
             <Grid>
                 <Label Text="{x:Static resx:AppResources.NameString}" Style="{StaticResource MaterialLabel}"/>
@@ -129,7 +118,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2" x:Name="ControlGrid">
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup Name="CommonStates">
                     <VisualState Name="StateA">
@@ -175,7 +164,7 @@
         <controls:ToolTipControl Grid.Row="1" 
                               Text="{x:Static resx:AppResources.ToolTipStartWorkout}" Title="{x:Static resx:AppResources.Execution}" 
                               NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipStartWorkout,Mode=TwoWay}" 
-                              AttachedControl="MakeTrainingButton" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}" Position="Center"
+                              AttachedControl="ControlGrid" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}" Position="Center"
                               ParentHeight="{Binding Source={x:Reference Container},Path=Height}"
                               ParentWidth="{Binding Source={x:Reference Container},Path=Width}"/>
 

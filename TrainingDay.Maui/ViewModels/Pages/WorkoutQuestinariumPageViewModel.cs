@@ -107,7 +107,7 @@ namespace TrainingDay.Maui.ViewModels.Pages
                     }
 
                     sb.Append($"{step.Title} ");
-                    sb.Append($"{string.Join(" or ", step.Variants.Where(item => item.IsChecked).Select(item => item.Instruction))}. ");
+                    sb.Append($"{string.Join(" or ", step.Variants.Where(item => item.IsChecked).Select(item => item.Option))}. ");
                     step = step.Previous;
                 }
 
