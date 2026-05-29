@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 using System.Collections.ObjectModel;
 using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
@@ -141,7 +141,7 @@ public class TrainingExerciseViewModel : ExerciseViewModel
         return new ExerciseEntity()
         {
             Id = ExerciseId,
-            Description = JsonConvert.SerializeObject(Description?.Model),
+            Description = JsonSerializer.Serialize(Description?.Model),
             Name = Name,
             MusclesString = MusclesExtensions.ConvertFromListToString([.. Muscles]),
             TagsValue = ExerciseExtensions.ConvertTagListToInt(Tags),
@@ -190,7 +190,7 @@ public class TrainingExerciseViewModel : ExerciseViewModel
         string weightAndReps = string.Empty;
         if (tagsList.Contains(ExerciseTags.ExerciseByRepsAndWeight) || tagsList.Contains(ExerciseTags.ExerciseByReps))
         {
-            weightAndReps = JsonConvert.SerializeObject(
+            weightAndReps = JsonSerializer.Serialize(
                 new List<WeightAndRepsViewModel>
                 {
                     new WeightAndRepsViewModel(0,15),

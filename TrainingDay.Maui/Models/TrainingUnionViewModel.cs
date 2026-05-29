@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 using TrainingDay.Maui.Models.Database;
 
 namespace TrainingDay.Maui.Models;
@@ -16,7 +16,7 @@ public class TrainingUnionViewModel
         Name = union.Name;
         if (!string.IsNullOrEmpty(union.TrainingIDsString))
         {
-            TrainingIDs = JsonConvert.DeserializeObject<List<int>>(union.TrainingIDsString);
+            TrainingIDs = JsonSerializer.Deserialize<List<int>>(union.TrainingIDsString);
         }
     }
 
@@ -31,6 +31,6 @@ public class TrainingUnionViewModel
         {
             Id = Id,
             Name = Name,
-            TrainingIDsString = JsonConvert.SerializeObject(TrainingIDs),
+            TrainingIDsString = JsonSerializer.Serialize(TrainingIDs),
         };
 }

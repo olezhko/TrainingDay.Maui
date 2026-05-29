@@ -1,5 +1,5 @@
 using CommunityToolkit.Mvvm.Messaging;
-using Newtonsoft.Json;
+using System.Text.Json;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Common.Extensions;
@@ -236,7 +236,7 @@ public partial class TrainingImplementPage : ContentPage
                     TrainingId = id,
                     Muscles = MusclesExtensions.ConvertFromListToString(trainingExerciseViewModel.Muscles.ToList()),
                     ExerciseId = trainingExerciseViewModel.ExerciseId,
-                    Description = JsonConvert.SerializeObject(trainingExerciseViewModel.Description.Model),
+                    Description = JsonSerializer.Serialize(trainingExerciseViewModel.Description.Model),
                     Name = trainingExerciseViewModel.Name,
                     IsNotFinished = trainingExerciseViewModel.IsNotFinished,
                     IsSkipped = trainingExerciseViewModel.IsSkipped,

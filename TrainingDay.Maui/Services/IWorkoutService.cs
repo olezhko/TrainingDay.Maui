@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 using TrainingDay.Common.Communication;
@@ -30,7 +30,7 @@ namespace TrainingDay.Maui.Services
                     var init = inits.FirstOrDefault(item => item.CodeNum == exer.CodeNum);
                     if (init != null)
                     {
-                        exer.Description = JsonConvert.SerializeObject(init.Description);
+                        exer.Description = JsonSerializer.Serialize(init.Description);
                         exer.Name = init.Name;
                         App.Database.SaveExerciseItem(exer);
                     }

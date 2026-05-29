@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.Messaging;
-using Newtonsoft.Json;
+using System.Text.Json;
 using System.Text;
 using System.Windows.Input;
 using TrainingDay.Maui.Models.Database;
@@ -40,7 +40,7 @@ public class DataManageViewModel : BaseViewModel
 
         var content = File.ReadAllText(file.FullPath);
 
-        RepositoryData data = JsonConvert.DeserializeObject<RepositoryData>(content);
+        RepositoryData data = JsonSerializer.Deserialize<RepositoryData>(content);
 		SetRepositoryData(data);
 
         WeakReferenceMessenger.Default.Send<IncomingTrainingAddedMessage>();
@@ -88,8 +88,8 @@ public class DataManageViewModel : BaseViewModel
         {
             int oldId = item.Id;
             item.Id = 0;
-            var TrainingIDs = JsonConvert.DeserializeObject<List<int>>(item.TrainingIDsString).Select(id => trainingPairs[id]);
-            item.TrainingIDsString = JsonConvert.SerializeObject(TrainingIDs);
+            var TrainingIDs = JsonSerializer.Deserialize<List<int>>(item.TrainingIDsString).Select(id => trainingPairs[id]);
+            item.TrainingIDsString = JsonSerializer.Serialize(TrainingIDs);
             int newId = App.Database.SaveTrainingGroup(item);
         }
 
@@ -176,7 +176,7 @@ public class DataManageViewModel : BaseViewModel
     {
         filename = Path.Combine(FileSystem.CacheDirectory, $"RepositoryData.trday");
 
-        var content = JsonConvert.SerializeObject(repositoryData);
+        var content = JsonSerializer.Serialize(repositoryData);
         File.WriteAllText(filename, content, Encoding.UTF8);
     }
 
@@ -184,7 +184,7 @@ public class DataManageViewModel : BaseViewModel
     {
         try
         {
-            var training = JsonConvert.DeserializeObject<TrainingSerialize>(data);
+            var training = JsonSerializer.Deserialize<TrainingSerialize>(data);
             return training;
         }
         catch (Exception)
@@ -208,7 +208,7 @@ public class DataManageViewModel : BaseViewModel
 
     public static void SaveToFile(TrainingSerialize training, string filename)
     {
-        var content = JsonConvert.SerializeObject(training);
+        var content = JsonSerializer.Serialize(training);
         File.WriteAllText(filename, content, Encoding.UTF8);
     }
 }

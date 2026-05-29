@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 using System.Collections.ObjectModel;
 using TrainingDay.Common.Extensions;
 using TrainingDay.Maui.Extensions;
@@ -98,7 +98,7 @@ public class TrainingViewModel : BaseViewModel
                 TrainingId = Id,
                 Muscles = MusclesExtensions.ConvertFromListToString(trainingExerciseViewModel.Muscles.ToList()),
                 ExerciseId = trainingExerciseViewModel.ExerciseId,
-                Description = JsonConvert.SerializeObject(trainingExerciseViewModel.Description.Model),
+                Description = JsonSerializer.Serialize(trainingExerciseViewModel.Description.Model),
                 Name = trainingExerciseViewModel.Name,
                 SuperSetNum = trainingExerciseViewModel.SuperSetNum,
 

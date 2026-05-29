@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using RestSharp;
+﻿using RestSharp;
+using System.Text.Json;
 using TrainingDay.Common.Communication;
 
 namespace TrainingDay.Maui.Services
@@ -21,6 +21,7 @@ namespace TrainingDay.Maui.Services
     public class DataService : IDisposable, IDataService
     {
 		private readonly RestClient _client;
+        private static readonly JsonSerializerOptions _jsonOptions = new() { PropertyNameCaseInsensitive = true };
 
 		public DataService()
 		{
@@ -55,7 +56,7 @@ namespace TrainingDay.Maui.Services
 			var request = CreateRequest($"/mobileblogs?cultureId={cultureId}&createdFilter={createdQuery}", Method.Get);
 			var response = await _client.ExecuteAsync(request);
 			return response.IsSuccessful
-				? JsonConvert.DeserializeObject<IReadOnlyCollection<BlogResponse>>(response.Content)
+				? JsonSerializer.Deserialize<IReadOnlyCollection<BlogResponse>>(response.Content, _jsonOptions)
 				: null;
 		}
 
@@ -64,7 +65,7 @@ namespace TrainingDay.Maui.Services
 			var request = CreateRequest($"/mobileblogs/{id}", Method.Get);
 			var response = await _client.ExecuteAsync(request);
 			return response.IsSuccessful
-				? JsonConvert.DeserializeObject<BlogResponse>(response.Content)
+				? JsonSerializer.Deserialize<BlogResponse>(response.Content, _jsonOptions)
 				: null;
 		}
 
@@ -73,7 +74,7 @@ namespace TrainingDay.Maui.Services
 			var request = CreateRequest($"/exercises/query", Method.Post, new { Query = query });
 			var response = await _client.ExecuteAsync(request);
 			return response.IsSuccessful
-				? JsonConvert.DeserializeObject<ExerciseAiResponse>(response.Content)
+				? JsonSerializer.Deserialize<ExerciseAiResponse>(response.Content, _jsonOptions)
 				: new ExerciseAiResponse([]);
 		}
 
@@ -98,7 +99,7 @@ namespace TrainingDay.Maui.Services
 			var request = CreateRequest($"/YouTubeVideos/{exerciseName}", Method.Get);
 			var response = await _client.ExecuteAsync(request);
 			return response.IsSuccessful
-				? JsonConvert.DeserializeObject<IEnumerable<YoutubeVideoItem>>(response.Content)
+				? JsonSerializer.Deserialize<IEnumerable<YoutubeVideoItem>>(response.Content, _jsonOptions)
 				: [];
 		}
 	}

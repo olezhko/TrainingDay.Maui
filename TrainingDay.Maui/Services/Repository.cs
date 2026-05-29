@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 using SQLite;
 using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
@@ -112,7 +112,7 @@ public class Repository
 			}
 
 			dbExercise.DifficultType = newExercise.DifficultLevel;
-			dbExercise.Description = JsonConvert.SerializeObject(newExercise.Description);
+			dbExercise.Description = JsonSerializer.Serialize(newExercise.Description);
 			dbExercise.MusclesString = newExercise.MusclesString;
 			dbExercise.Name = newExercise.Name;
 			dbExercise.TagsValue = ExerciseExtensions.ConvertTagStringToInt(newExercise.Tags);

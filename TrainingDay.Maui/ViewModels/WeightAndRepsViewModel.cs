@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.Globalization;
+﻿using System.Globalization;
+using System.Text.Json.Serialization;
 using System.Windows.Input;
 
 namespace TrainingDay.Maui.ViewModels;
@@ -23,10 +23,7 @@ public class WeightAndRepsViewModel : BaseViewModel
     [JsonIgnore]
     public ICommand ChangeFinishedCommand => new Command(ChangeFinished);
 
-    [JsonIgnore]
     private int repetitions;
-
-    [JsonIgnore]
     private double weight;
 
     public int Repetitions
