@@ -156,10 +156,6 @@ Unused `SelectionMode="Single"` overhead — tap handled by gesture recognizer.
 Duplicate Editor+Label per description field, both always created.
 **Fix:** Use single control with `IsReadOnly` toggle or DataTemplateSelector.
 
-### XAML-07 — TrainingImplementPage.xaml:121
-Lottie `SKLottieView` always instantiated even when `IsVisible=False`.
-**Fix:** Lazy-load only when confetti is triggered.
-
 ### SVC-02 — Services/Settings.cs:100
 `new CultureInfo(CultureName)` allocated on every `GetLanguage()` call.
 **Fix:** Cache with invalidation on `CultureName` setter.
@@ -167,10 +163,6 @@ Lottie `SKLottieView` always instantiated even when `IsVisible=False`.
 ### CS-03 — WorkoutQuestinariumPageViewModel.cs:100
 String interpolation `$"..."` inside `StringBuilder.Append` — defeats StringBuilder purpose.
 **Fix:** Use `sb.Append(value).Append(' ')` directly.
-
-### CS-05 — Controls/StepProgressBar.cs:231
-LINQ scan of all children in `RecalculateSeparatorLineWidth` on every add.
-**Fix:** Maintain a separate `List<BoxView> _separatorLines` field.
 
 ---
 
