@@ -208,6 +208,7 @@ public class StepProgressBar : Grid
 		RecalculateSeparatorLineWidth();
 	}
 
+    List<BoxView> separatorLines = new List<BoxView>();
     private void AddSeparatorLine()
     {
         var separatorLine = new BoxView()
@@ -220,18 +221,18 @@ public class StepProgressBar : Grid
             Margin = new Thickness(0),
         };
         headersStackLayout.Children.Add(separatorLine);
+        separatorLines.Add(separatorLine);
 
         RecalculateSeparatorLineWidth();
 	}
 
     private void RecalculateSeparatorLineWidth()
     {
-        List<BoxView> lines = headersStackLayout.Children.Where(item => item.GetType() == typeof(BoxView)).Select(item => (BoxView)item).ToList();
-        var newWidth = (Width - (lines.Count + 1) * (45 + 2)) / lines.Count;
+        var newWidth = (Width - (separatorLines.Count + 1) * (45 + 2)) / separatorLines.Count;
         if(newWidth < 15)
             newWidth = 15;
 
-        lines.ForEach(item => item.WidthRequest = newWidth - 2);
+        separatorLines.ForEach(item => item.WidthRequest = newWidth - 2);
 	}
 
     #endregion
