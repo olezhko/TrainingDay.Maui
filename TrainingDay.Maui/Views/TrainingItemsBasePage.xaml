@@ -61,13 +61,14 @@
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Border x:Name="viewCell" Style="{StaticResource BorderCellStyle}"
-                           controls:LongPressedEffect.Command="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.LongPressedEffectCommand}" 
-                           controls:LongPressedEffect.CommandParameter="{Binding Source={x:Reference viewCell}}"
-                           controls:LongPressedEffect.ClickCommand="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.ItemSelectedCommand}">
-                        <Border.Effects>
-                            <controls:LongPressedEffect />
-                        </Border.Effects>
+                    <Border x:Name="viewCell" Style="{StaticResource BorderCellStyle}">
+                        <Border.Behaviors>
+                            <toolkit:TouchBehavior
+                                Command="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.ItemSelectedCommand}"
+                                CommandParameter="{Binding Source={x:Reference viewCell}}"
+                                LongPressCommand="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.LongPressedEffectCommand}"
+                                LongPressCommandParameter="{Binding Source={x:Reference viewCell}}"/>
+                        </Border.Behaviors>
                         <StackLayout>
                             <Label Text="{Binding Title}" FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="Center"/>
                             <Label Text="{Binding LastImplementedDateTime,StringFormat={x:Static resx:AppResources.LastImplementedFormatString}}" FontSize="13" VerticalOptions="Center" HorizontalTextAlignment="Center" TextColor="Gray"/>

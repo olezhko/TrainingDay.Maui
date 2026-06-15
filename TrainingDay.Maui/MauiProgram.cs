@@ -72,10 +72,6 @@ namespace TrainingDay.Maui
             builder.Services.AddSingleton<IDataService, DataService>();
             builder.Services.AddSingleton<WorkoutService>();
 
-#if DEBUG
-            builder.Logging.AddDebug();
-#endif
-
 #if ANDROID
             builder.Services.AddTransient<IPushNotification, Platforms.Android.PushNotificationService>();
 #endif

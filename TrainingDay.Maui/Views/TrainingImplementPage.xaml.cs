@@ -1,5 +1,7 @@
+using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Mvvm.Messaging;
 using Newtonsoft.Json;
+using SkiaSharp.Extended.UI.Controls;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Common.Extensions;
@@ -12,7 +14,6 @@ using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Models.Notifications;
 using TrainingDay.Maui.Models.Serialize;
 using TrainingDay.Maui.Resources.Strings;
-using SkiaSharp.Extended.UI.Controls;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels;
 using LastTraining = TrainingDay.Maui.Models.Database.LastTrainingEntity;
@@ -348,7 +349,9 @@ public partial class TrainingImplementPage : ContentPage
 
         if (Settings.IsShowAdvicesOnImplementing)
         {
-            await MessageManager.DisplayAlert(AppResources.AdviceString, AppResources.AdviceAfterTrainingMessage, AppResources.OkString);
+            await Shell.Current.ShowPopupAsync(
+                PopupBuilders.CreateAdvicePopup(AppResources.AdviceAfterTrainingMessage)
+            );
         }
 
         notificator.Cancel(PushMessagesExtensions.TrainingNotificationId);
@@ -384,7 +387,7 @@ public partial class TrainingImplementPage : ContentPage
 
     private void SaveLastTraining()
     {
-        var id = App.Database.SaveLastTrainingItem(new LastTraining()
+        var id = App.Database.SaveItem(new LastTraining()
         {
             ElapsedTime = DateTime.Now - _startTrainingDateTime + StartTime,
             Time = _startTrainingDateTime,

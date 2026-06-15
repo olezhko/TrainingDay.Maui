@@ -4,8 +4,10 @@ using TrainingDay.Maui.ViewModels;
 
 namespace TrainingDay.Maui.Models;
 
-public class LastTrainingViewModel : TrainingEntity
+public class LastTrainingViewModel
 {
+    public int Id { get; set; }
+    public string Title { get; set; }
     public DateTime ImplementDateTime { get; set; }
     public TimeSpan ElapsedTime { get; set; }
     public int TrainingId { get; set; }

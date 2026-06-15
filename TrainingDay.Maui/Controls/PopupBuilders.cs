@@ -1,5 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using CommunityToolkit.Maui.Extensions;
 using Microsoft.Maui.Controls.Shapes;
+using System.Collections.ObjectModel;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Resources.Strings;
 
@@ -7,6 +8,43 @@ namespace TrainingDay.Maui.Controls
 {
     public static class PopupBuilders
     {
+        internal static View CreateAdvicePopup(string text)
+        {
+            var titleLabel = new Label
+            {
+                Text = AppResources.AdviceString,
+                FontSize = 18,
+                FontAttributes = FontAttributes.Bold,
+                HorizontalTextAlignment = TextAlignment.Center,
+            };
+
+            var messageLabel = new Label
+            {
+                Text = text,
+                FontSize = 14,
+                HorizontalTextAlignment = TextAlignment.Start,
+            };
+
+            var okButton = new Button
+            {
+                Text = AppResources.OkString,
+                FontSize = 15,
+                CornerRadius = 20,
+                Style = App.Current.Resources["ActionButton"] as Style,
+            };
+            okButton.Clicked += async (s, e) =>
+            {
+                await Shell.Current.ClosePopupAsync();
+            };
+
+            return new VerticalStackLayout
+            {
+                Spacing = 15,
+                Padding = new Thickness(20),
+                Children = { titleLabel, messageLabel, okButton },
+            };
+        }
+
         internal static View BuildWorkoutGroupsPopup(
             Action<TrainingUnionEntity> acceptGroup,
             Action createNewGroup)

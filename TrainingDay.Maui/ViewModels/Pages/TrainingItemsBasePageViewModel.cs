@@ -50,9 +50,9 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
     {
         Shell.Current.Dispatcher.Dispatch(async () =>
         {
-            LoggingService.TrackEvent("Application start");
             await UpdateFirebaseToken();
         });
+
         var trainingsItems = App.Database.GetTrainingItems();
 
         var existCount = ItemsGrouped.Count;

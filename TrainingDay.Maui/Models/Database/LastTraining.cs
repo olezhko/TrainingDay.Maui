@@ -6,5 +6,5 @@ namespace TrainingDay.Maui.Models.Database;
 public class LastTrainingEntity : TrainingDay.Common.Models.LastTraining
 {
     [PrimaryKey, AutoIncrement, Column("_id")]
-    public new int Id { get; set; }
+    public int Id { get; set; }
 }

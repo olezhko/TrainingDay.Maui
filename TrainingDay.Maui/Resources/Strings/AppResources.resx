@@ -130,10 +130,37 @@
     <value>Advice and Tips</value>
   </data>
   <data name="AdviceAfterTrainingMessage" xml:space="preserve">
-    <value>After workout, the post-workout routine is useful, the post-workout routine allows smoothing the transition from high-intensity work to a state of rest. You thereby reduce the burden on the heart muscle, which has to pump blood intensively, to remove its stagnation from the muscles and provide it with internal organs. Suitable: Easy running, smoothly turning into walking (you can in place). Easy work on a bicycle or elliptical simulator, a stepper with a smooth decrease in intensity up to a stop. Jumping on the rope at a slow pace. Sparring with a pear. 3 rounds of 2 minutes each. Performing a complex of general warm-up or yoga complexes. The goal is to normalize breathing with light exercises.</value>
+    <value>The post-workout routine helps facilitate a smooth transition from high-intensity exercise to a resting state. It reduces the strain on the heart muscle by gradually decreasing the need for intensive blood circulation, preventing blood pooling in the muscles and supporting normal blood flow to internal organs.
+
+Suitable post-workout activities:
+• Easy jogging that gradually transitions into walking (walking in place is also acceptable).
+• Light activity on a stationary bicycle, elliptical trainer, or stepper, with a gradual reduction in intensity until stopping completely.
+• Slow-paced jump rope exercises.
+• Light sparring with a punching bag: 3 rounds of 2 minutes each.
+• Performing a general warm-up routine or yoga sequence.
+
+Goal:
+Normalize breathing and heart rate through light, low-intensity exercises.</value>
   </data>
   <data name="AdviceBeforeTrainingMessage" xml:space="preserve">
-    <value>Stretching before workout is a complex of exercises for preparing the body for physical activity, which will help you avoid injuries and conduct the session as efficiently as possible. Stretching speeds up metabolic processes. Stretching before exercise improves blood circulation, which will saturate your muscles with oxygen and nutrients. This will help improve endurance during class. The warmed muscles are better compressed and relax during workout, which means that your strengths will be higher during the exercises. Suitable basic exercises like hand swing, jumps, push-ups and sit-ups for at least five minutes.</value>
+    <value>Pre-workout stretching is a series of exercises designed to prepare the body for physical activity. It helps reduce the risk of injury and allows you to perform your workout more effectively. Stretching also stimulates metabolic processes and improves overall readiness for exercise.
+
+Benefits of pre-workout stretching:
+• Helps prevent injuries during training.
+• Increases blood circulation, delivering more oxygen and nutrients to the muscles.
+• Enhances endurance and exercise performance.
+• Prepares muscles for physical activity by improving their ability to contract and relax efficiently.
+• Supports better overall workout efficiency and strength output.
+
+Suitable warm-up exercises (perform for at least 5 minutes):
+• Arm swings and circles.
+• Light jumping exercises.
+• Push-ups.
+• Sit-ups.
+• Other basic dynamic warm-up movements.
+
+Goal
+Increase body temperature, activate the muscles and joints, and prepare the cardiovascular system for exercise.</value>
   </data>
   <data name="AdviceString" xml:space="preserve">
     <value>Advice</value>
