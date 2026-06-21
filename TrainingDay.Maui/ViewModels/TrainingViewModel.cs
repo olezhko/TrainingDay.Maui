@@ -27,7 +27,7 @@ public class TrainingViewModel : BaseViewModel
 
     public string LastImplementedDateTime { get; set; } = AppResources.NotExecutedYet;
 
-    public TrainingUnionViewModel GroupName
+    public TrainingUnionViewModel Group
     {
         get => groupName;
         set
