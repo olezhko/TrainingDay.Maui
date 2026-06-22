@@ -54,7 +54,7 @@ namespace TrainingDay.Maui.Controls
                 Text = AppResources.CreateNewString,
                 FontSize = 15,
                 CornerRadius = 20,
-                Style = App.Current.Resources["SecondActionButton"] as Style,
+                //Style = App.Current.Resources["SecondActionButton"] as Style,
             };
             newButton.Clicked += (s, e) =>
             {
@@ -65,7 +65,8 @@ namespace TrainingDay.Maui.Controls
             {
                 Spacing = 15,
                 Padding = new Thickness(20),
-                Children =
+                BackgroundColor = Color.FromArgb("#00555555"),
+                Children = 
                 {
                     newButton
                 }

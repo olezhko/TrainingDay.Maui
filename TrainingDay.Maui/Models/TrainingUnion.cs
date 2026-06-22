@@ -3,14 +3,9 @@ using TrainingDay.Maui.Models.Database;
 
 namespace TrainingDay.Maui.Models;
 
-public class TrainingUnionViewModel
+public class TrainingUnion
 {
-    public TrainingUnionViewModel()
-    {
-        TrainingIDs = [];
-    }
-
-    public TrainingUnionViewModel(TrainingUnionEntity union)
+    public TrainingUnion(TrainingUnionEntity union)
     {
         Id = union.Id;
         Name = union.Name;
@@ -24,7 +19,7 @@ public class TrainingUnionViewModel
 
     public string Name { get; set; }
 
-    public List<int> TrainingIDs { get; set; }
+    public List<int> TrainingIDs { get; set; } = [];
 
     public TrainingUnionEntity Model =>
         new TrainingUnionEntity()

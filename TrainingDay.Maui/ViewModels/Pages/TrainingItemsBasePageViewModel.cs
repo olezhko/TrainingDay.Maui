@@ -18,7 +18,6 @@ namespace TrainingDay.Maui.ViewModels.Pages;
 public class TrainingItemsBasePageViewModel : BaseViewModel
 {
     private readonly IDataService dataService;
-    private bool isLongPressPopupOpened;
     private ObservableCollection<Grouping<string, TrainingViewModel>> itemsGrouped;
 
     public TrainingItemsBasePageViewModel(IDataService dataService)
@@ -121,7 +120,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
             .OrderByDescending(item => item.Time)
             .FirstOrDefault();
 
-        var trainingUnion = unions.FirstOrDefault(union => new TrainingUnionViewModel(union).TrainingIDs.Contains(training.Id));
+        var trainingUnion = unions.FirstOrDefault(union => new TrainingUnion(union).TrainingIDs.Contains(training.Id));
         if (trainingUnion != null) // union exist
         {
             var group = tempGroups.FirstOrDefault(item => item.Id == trainingUnion.Id);
@@ -148,7 +147,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
                     item.LastImplementedDateTime = lastTraining.Time.ToString(Settings.GetLanguage());
                 }
 
-                item.Group = new TrainingUnionViewModel(trainingUnion);
+                item.Group = new TrainingUnion(trainingUnion);
                 tempGroups.Last().Add(item);
             }
         }
@@ -269,7 +268,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
     }
 
     #region grouping
-    private async Task AddToGroup(Border viewCell)
+    private async Task AddToGroupAsync(Border viewCell)
     {
         LoggingService.TrackEvent($"{GetType().Name}: AddToGroup started");
 
@@ -300,7 +299,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
             if (TrainingMoveToGroup.Group != null && TrainingMoveToGroup.Group.Id != 0)
             {
                 var unionToEdit = unions.First(u => u.Id == TrainingMoveToGroup.Group.Id);
-                var vm = new TrainingUnionViewModel(unionToEdit);
+                var vm = new TrainingUnion(unionToEdit);
                 vm.TrainingIDs.Remove(TrainingMoveToGroup.Id);
                 if (vm.TrainingIDs.Count != 0)
                     App.Database.SaveTrainingGroup(vm.Model);
@@ -313,7 +312,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
                 var union = unions.FirstOrDefault(un => un.Id == id);
                 if (union != null)
                 {
-                    var viewModel = new TrainingUnionViewModel(union);
+                    var viewModel = new TrainingUnion(union);
                     viewModel.TrainingIDs.Add(TrainingMoveToGroup.Id);
                     TrainingMoveToGroup.Group = viewModel;
                     App.Database.SaveTrainingGroup(viewModel.Model);
@@ -344,7 +343,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
                 var union = unions.FirstOrDefault(un => un.Name == result);
                 if (union != null) // если группа с таким именем уже существует
                 {
-                    var viewModel = new TrainingUnionViewModel(union);
+                    var viewModel = new TrainingUnion(union);
                     if (!viewModel.TrainingIDs.Contains(trainingItem.Id))
                     {
                         viewModel.TrainingIDs.Add(trainingItem.Id);// добавляем в список тренировок у группы выбранную тренировку
@@ -354,7 +353,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
                 }
                 else
                 {
-                    var viewModel = new TrainingUnionViewModel();
+                    var viewModel = new TrainingUnion(new TrainingUnionEntity());
                     viewModel.Name = result;
                     viewModel.TrainingIDs.Add(trainingItem.Id);
                     trainingItem.Group = viewModel;
@@ -381,10 +380,11 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
     {
         try
         {
+            var unionToEdit = new TrainingUnion(unions.First(u => u.Id == trainingMoveToGroup.Group.Id));
+            unionToEdit.TrainingIDs.Remove(trainingMoveToGroup.Id);
+
             if (trainingMoveToGroup.Group != null && trainingMoveToGroup.Group.Id != 0)
             {
-                var unionToEdit = new TrainingUnionViewModel(unions.First(u => u.Id == trainingMoveToGroup.Group.Id));
-                unionToEdit.TrainingIDs.Remove(trainingMoveToGroup.Id);
                 if (unionToEdit.TrainingIDs.Count != 0)
                     App.Database.SaveTrainingGroup(unionToEdit.Model);
                 else
@@ -402,20 +402,13 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         LoggingService.TrackEvent($"{GetType().Name}: Delete From Group");
 
         var item = (TrainingViewModel)viewCell.BindingContext;
-
-        if (item.Group == null || item.Group.Id == 0)
-        {
-            MessageManager.DisplayAlert(AppResources.Denied, AppResources.GroupingTrainingNotInGroup, AppResources.OkString);
-            return;
-        }
-
         var union = App.Database.GetTrainingGroup(item.Group.Id);
-        var viewModel = new TrainingUnionViewModel(union);
+        var viewModel = new TrainingUnion(union);
         viewModel.TrainingIDs.Remove(item.Id);
 
         if (viewModel.TrainingIDs.Count == 0)
         {
-            App.Database.DeleteTrainingGroup(viewModel.Model.Id);
+            App.Database.DeleteTrainingGroup(item.Group.Id);
         }
         else
         {
@@ -444,18 +437,11 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
     
     private async void LongPressed(Border sender)
     {
-        if (isLongPressPopupOpened)
-        {
-            return;
-        }
-
         LoggingService.TrackEvent($"{GetType().Name}: LongPressed started");
 
         var item = (TrainingViewModel)sender.BindingContext;
 
-        isLongPressPopupOpened = true;
         var action = await MessageManager.DisplayActionSheet(AppResources.ChoseAction, AppResources.CancelString, AppResources.RemoveString, AppResources.Duplicate, item.Group == null ? AppResources.TrainingToGroupString : AppResources.TrainingUnGroupString.Fill(item.Group.Name));
-        isLongPressPopupOpened = false;
         LoggingService.TrackEvent($"{GetType().Name}: LongPressed finished with {action}");
         if (action == AppResources.CancelString)
         {
@@ -476,7 +462,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
 
         if (action == AppResources.TrainingToGroupString)
         {
-            AddToGroup(sender);
+            await AddToGroupAsync(sender);
             return;
         }
 

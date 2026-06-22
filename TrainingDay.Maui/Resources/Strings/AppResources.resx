@@ -267,9 +267,6 @@ Increase body temperature, activate the muscles and joints, and prepare the card
   <data name="GroupingEnterNameofGroup" xml:space="preserve">
     <value>Enter group`s name</value>
   </data>
-  <data name="GroupingTrainingNotInGroup" xml:space="preserve">
-    <value>Workout already in Default group</value>
-  </data>
   <data name="HalfYearString" xml:space="preserve">
     <value>Half year</value>
   </data>

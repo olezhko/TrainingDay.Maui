@@ -119,7 +119,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         ///
         ///Suitable post-workout activities:
         ///• Easy jogging that gradually transitions into walking (walking in place is also acceptable).
-        ///• Light activity on a stationary bicycle, elliptical trainer, or steppe [rest of string was truncated]&quot;;.
+        ///• Light activity on a stationary bicycle, elliptical trainer, or st [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string AdviceAfterTrainingMessage {
             get {
@@ -134,7 +134,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         ///• Helps prevent injuries during training.
         ///• Increases blood circulation, delivering more oxygen and nutrients to the muscles.
         ///• Enhances endurance and exercise performance.
-        ///• Prepares muscles [rest of string was truncated]&quot;;.
+        ///• Prepares m [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string AdviceBeforeTrainingMessage {
             get {
@@ -571,15 +571,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string GroupingEnterNameofGroup {
             get {
                 return ResourceManager.GetString("GroupingEnterNameofGroup", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Workout already in Default group.
-        /// </summary>
-        internal static string GroupingTrainingNotInGroup {
-            get {
-                return ResourceManager.GetString("GroupingTrainingNotInGroup", resourceCulture);
             }
         }
         

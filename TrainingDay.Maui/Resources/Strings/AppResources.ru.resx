@@ -252,9 +252,6 @@
   <data name="GroupingEnterNameofGroup" xml:space="preserve">
     <value>Введите название группы</value>
   </data>
-  <data name="GroupingTrainingNotInGroup" xml:space="preserve">
-    <value>Тренировка уже в основной группе. </value>
-  </data>
   <data name="HalfYearString" xml:space="preserve">
     <value>Полгода</value>
   </data>

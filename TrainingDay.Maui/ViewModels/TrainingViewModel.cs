@@ -12,7 +12,7 @@ namespace TrainingDay.Maui.ViewModels;
 public class TrainingViewModel : BaseViewModel
 {
     public int Id { get; set; }
-    private TrainingUnionViewModel groupName;
+    private TrainingUnion groupName;
     private string _title;
 
     public string Title
@@ -27,7 +27,7 @@ public class TrainingViewModel : BaseViewModel
 
     public string LastImplementedDateTime { get; set; } = AppResources.NotExecutedYet;
 
-    public TrainingUnionViewModel Group
+    public TrainingUnion Group
     {
         get => groupName;
         set
