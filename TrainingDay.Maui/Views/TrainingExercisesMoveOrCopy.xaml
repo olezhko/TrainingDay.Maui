@@ -28,6 +28,6 @@
         </Grid>
 
         <Button VerticalOptions="End" Command="{Binding CreateTrainingFromSelectedExercisesCommand}" Text="{x:Static resx:AppResources.CreateNewString}" 
-            Style="{DynamicResource ActionButton}" Margin="5" TextColor="White" FontSize="Body"/>
+            Style="{DynamicResource ActionButton}" Margin="5" FontSize="Body"/>
     </VerticalStackLayout>
 </ContentPage>

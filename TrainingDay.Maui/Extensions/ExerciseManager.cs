@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.ViewModels;
 
@@ -12,12 +12,12 @@ public class ExerciseManager
         string weightAndReps = default;
         if (tagsList.Contains(ExerciseTags.ExerciseByRepsAndWeight) || tagsList.Contains(ExerciseTags.ExerciseByReps))
         {
-            weightAndReps = JsonConvert.SerializeObject(viewmodel.WeightAndRepsItems);
+            weightAndReps = JsonSerializer.Serialize(viewmodel.WeightAndRepsItems);
         }
 
         if (tagsList.Contains(ExerciseTags.ExerciseByTime))
         {
-            weightAndReps = JsonConvert.SerializeObject((viewmodel.Time, 0));
+            weightAndReps = JsonSerializer.Serialize((viewmodel.Time, 0));
         }
 
         return weightAndReps;
@@ -35,12 +35,12 @@ public class ExerciseManager
             var tagsList = viewmodel.Tags;
             if (tagsList.Contains(ExerciseTags.ExerciseByRepsAndWeight) || tagsList.Contains(ExerciseTags.ExerciseByReps))
             {
-                viewmodel.WeightAndRepsItems = JsonConvert.DeserializeObject<ObservableCollection<WeightAndRepsViewModel>>(value);
+                viewmodel.WeightAndRepsItems = JsonSerializer.Deserialize<ObservableCollection<WeightAndRepsViewModel>>(value);
             }
 
             if (tagsList.Contains(ExerciseTags.ExerciseByTime))
             {
-                var obj = JsonConvert.DeserializeObject<(TimeSpan, double)>(value);
+                var obj = JsonSerializer.Deserialize<(TimeSpan, double)>(value);
                 viewmodel.Time = obj.Item1;
             }
         }

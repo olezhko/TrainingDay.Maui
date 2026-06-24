@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -29,25 +30,36 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
     public TrainingViewModel Training { get; set; }
 
-    public ICommand DeleteExerciseCommand => new Command<TrainingExerciseViewModel>(DeleteExercise);
+    private ICommand _deleteExerciseCommand;
+    public ICommand DeleteExerciseCommand => _deleteExerciseCommand ??= new Command<TrainingExerciseViewModel>(DeleteExercise);
 
-    public ICommand MakeTrainingCommand => new DoOnceCommand(MakeTraining);
+    private ICommand _makeTrainingCommand;
+    public ICommand MakeTrainingCommand => _makeTrainingCommand ??= new DoOnceCommand(MakeTraining);
 
-    public ICommand ItemTappedCommand => new DoOnceCommand<object>(TrainingExerciseTapped);
+    private ICommand _itemTappedCommand;
+    public ICommand ItemTappedCommand => _itemTappedCommand ??= new DoOnceCommand<object>(TrainingExerciseTapped);
 
-    public ICommand ShowTrainingSettingsPageCommand => new Command(ShowTrainingSettingsPage);
+    private ICommand _showTrainingSettingsPageCommand;
+    public ICommand ShowTrainingSettingsPageCommand => _showTrainingSettingsPageCommand ??= new Command(ShowTrainingSettingsPage);
 
-    public ICommand AddExercisesCommand => new DoOnceCommand(AddExercises);
+    private ICommand _addExercisesCommand;
+    public ICommand AddExercisesCommand => _addExercisesCommand ??= new DoOnceCommand(AddExercises);
 
-    public ICommand CancelActionCommand => new Command(() => StopAction());
+    private ICommand _cancelActionCommand;
+    public ICommand CancelActionCommand => _cancelActionCommand ??= new Command(() => StopAction());
 
-    public ICommand StartMoveExerciseCommand => new Command(StartMoveExercises);
+    private ICommand _startMoveExerciseCommand;
+    public ICommand StartMoveExerciseCommand => _startMoveExerciseCommand ??= new Command(StartMoveExercises);
 
-    public ICommand StartActionCommand => new Command(StartAction);
+    private ICommand _startActionCommand;
+    public ICommand StartActionCommand => _startActionCommand ??= new Command(StartAction);
 
-	public TrainingViewModel? SelectedTrainingForCopyOrMove { get; set; } = null;
-    public ICommand AcceptTrainingForMoveOrCopyCommand => new Command(AcceptTrainingForMoveOrCopy);
-    public ICommand CreateTrainingFromSelectedExercisesCommand => new Command(CreateTrainingFromSelectedExercises);
+    public TrainingViewModel? SelectedTrainingForCopyOrMove { get; set; } = null;
+    private ICommand _acceptTrainingForMoveOrCopyCommand;
+    public ICommand AcceptTrainingForMoveOrCopyCommand => _acceptTrainingForMoveOrCopyCommand ??= new Command(AcceptTrainingForMoveOrCopy);
+
+    private ICommand _createTrainingFromSelectedExercisesCommand;
+    public ICommand CreateTrainingFromSelectedExercisesCommand => _createTrainingFromSelectedExercisesCommand ??= new Command(CreateTrainingFromSelectedExercises);
 
     public int ItemId
     {
@@ -268,7 +280,9 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
         if (Settings.IsShowAdvicesOnImplementing)
         {
-            await MessageManager.DisplayAlert(AppResources.AdviceString, AppResources.AdviceBeforeTrainingMessage, AppResources.OkString);
+            await Shell.Current.ShowPopupAsync(
+                PopupBuilders.BuildAdvicePopup(AppResources.AdviceBeforeTrainingMessage)
+            );
         }
 
         LoggingService.TrackEvent($"{GetType().Name}: Training Implementing started");
@@ -562,10 +576,17 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
     }
 
     #region Drag & Drop
-    public ICommand ItemDragged => new Command<TrainingExerciseViewModel>(OnItemDragged);
-    public ICommand ItemDraggedOver => new Command<TrainingExerciseViewModel>(OnItemDraggedOver);
-    public ICommand ItemDragLeave => new Command<TrainingExerciseViewModel>(OnItemDragLeave);
-    public ICommand ItemDropped => new Command<TrainingExerciseViewModel>(i => OnItemDropped(i));
+    private ICommand _itemDragged;
+    public ICommand ItemDragged => _itemDragged ??= new Command<TrainingExerciseViewModel>(OnItemDragged);
+
+    private ICommand _itemDraggedOver;
+    public ICommand ItemDraggedOver => _itemDraggedOver ??= new Command<TrainingExerciseViewModel>(OnItemDraggedOver);
+
+    private ICommand _itemDragLeave;
+    public ICommand ItemDragLeave => _itemDragLeave ??= new Command<TrainingExerciseViewModel>(OnItemDragLeave);
+
+    private ICommand _itemDropped;
+    public ICommand ItemDropped => _itemDropped ??= new Command<TrainingExerciseViewModel>(i => OnItemDropped(i));
     private void OnItemDragged(TrainingExerciseViewModel item)
     {
         Training.Exercises.ForEach(i => i.IsBeingDragged = item == i);

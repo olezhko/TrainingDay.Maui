@@ -240,9 +240,6 @@
   <data name="GroupingEnterNameofGroup" xml:space="preserve">
     <value>Geben Sie den Namen der gruppe ein</value>
   </data>
-  <data name="GroupingTrainingNotInGroup" xml:space="preserve">
-    <value>Trainieren bereits in Default gruppe</value>
-  </data>
   <data name="HalfYearString" xml:space="preserve">
     <value>Halbes Jahr</value>
   </data>
@@ -613,7 +610,10 @@
     <value>Bizeps/Trizeps-Supersätze</value>
   </data>
   <data name="SelectGroup" xml:space="preserve">
-    <value>Gruppe</value>
+    <value>Gruppe...</value>
+  </data>
+  <data name="WorkoutGroupDescriptionString" xml:space="preserve">
+    <value>Wählen Sie eine vorhandene Gruppe oder erstellen Sie eine neue</value>
   </data>
   <data name="AddImage" xml:space="preserve">
     <value>Bild hinzufügen</value>

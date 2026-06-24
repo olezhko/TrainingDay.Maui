@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json;
 using TrainingDay.Common.Extensions;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models;
@@ -12,7 +12,7 @@ namespace TrainingDay.Maui.ViewModels;
 public class TrainingViewModel : BaseViewModel
 {
     public int Id { get; set; }
-    private TrainingUnionViewModel groupName;
+    private TrainingUnion groupName;
     private string _title;
 
     public string Title
@@ -27,7 +27,7 @@ public class TrainingViewModel : BaseViewModel
 
     public string LastImplementedDateTime { get; set; } = AppResources.NotExecutedYet;
 
-    public TrainingUnionViewModel GroupName
+    public TrainingUnion Group
     {
         get => groupName;
         set
@@ -98,7 +98,7 @@ public class TrainingViewModel : BaseViewModel
                 TrainingId = Id,
                 Muscles = MusclesExtensions.ConvertFromListToString(trainingExerciseViewModel.Muscles.ToList()),
                 ExerciseId = trainingExerciseViewModel.ExerciseId,
-                Description = JsonConvert.SerializeObject(trainingExerciseViewModel.Description.Model),
+                Description = JsonSerializer.Serialize(trainingExerciseViewModel.Description.Model),
                 Name = trainingExerciseViewModel.Name,
                 SuperSetNum = trainingExerciseViewModel.SuperSetNum,
 

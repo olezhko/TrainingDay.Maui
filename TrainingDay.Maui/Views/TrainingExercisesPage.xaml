@@ -38,12 +38,11 @@
                     ItemsUpdatingScrollMode="KeepScrollOffset" VerticalScrollBarVisibility="Never">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:TrainingExerciseViewModel">
-                    <Grid RowDefinitions="auto,*" RowSpacing="0" Padding="0" >
-                        <Border Grid.Row="0" MinimumHeightRequest="80" x:Name="viewCell" Style="{StaticResource BorderCellStyle}" Margin="0,-1,0,0">
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding BindingContext.ItemTappedCommand, Source={x:Reference ItemsListView}}"
+                    <Border Grid.Row="0" MinimumHeightRequest="80" x:Name="viewCell" Style="{StaticResource BorderCellStyle}" Margin="0,-1,0,0">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BindingContext.ItemTappedCommand, Source={x:Reference ItemsListView}}"
                                               CommandParameter="{Binding}"/>
-                                <DropGestureRecognizer
+                            <DropGestureRecognizer
                                     AllowDrop="True"
                                     DragLeaveCommand="{Binding BindingContext.ItemDragLeave, Source={x:Reference ItemsListView}}"
                                     DragLeaveCommandParameter="{Binding}"
@@ -51,69 +50,67 @@
                                     DragOverCommandParameter="{Binding}"
                                     DropCommand="{Binding BindingContext.ItemDropped, Source={x:Reference ItemsListView}}"
                                     DropCommandParameter="{Binding}" />
-                            </Border.GestureRecognizers>
-                            <Grid Padding="0" Margin="5" ColumnSpacing="3">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="70"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="40"/>
-                                </Grid.ColumnDefinitions>
+                        </Border.GestureRecognizers>
+                        <Grid Padding="0" Margin="5" ColumnSpacing="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="70"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="40"/>
+                            </Grid.ColumnDefinitions>
 
-                                <Border Grid.Column="0" HeightRequest="70" WidthRequest="70" VerticalOptions="Center" BackgroundColor="White" Stroke="Transparent">
-                                    <Grid HeightRequest="70" WidthRequest="70">
-                                        <controls:ImageCache x:Name="ImageControl" HeightRequest="70" WidthRequest="70" 
-                                                             CodeNum="{Binding CodeNum}" ExerciseId="{Binding ExerciseId,Mode=TwoWay}">
-                                            <controls:ImageCache.GestureRecognizers>
-                                                <DragGestureRecognizer
+                            <Border Grid.Column="0" HeightRequest="70" WidthRequest="70" VerticalOptions="Center" BackgroundColor="White" Stroke="Transparent">
+                                <Grid HeightRequest="70" WidthRequest="70">
+                                    <controls:ImageCache HeightRequest="70" WidthRequest="70" CodeNum="{Binding CodeNum}" ExerciseId="{Binding ExerciseId,Mode=TwoWay}">
+                                        <controls:ImageCache.GestureRecognizers>
+                                            <DragGestureRecognizer
                                                 CanDrag="True"
                                                 DragStartingCommand="{Binding BindingContext.ItemDragged, Source={x:Reference ItemsListView}}"
                                                 DragStartingCommandParameter="{Binding}" />
-                                            </controls:ImageCache.GestureRecognizers>
-                                        </controls:ImageCache>
+                                        </controls:ImageCache.GestureRecognizers>
+                                    </controls:ImageCache>
 
-                                        <Grid VerticalOptions="End" HeightRequest="15" IsVisible="{Binding SuperSetId,Converter={StaticResource SuperSetMenuConverter}}" >
-                                            <RoundRectangle Stroke="RoyalBlue" CornerRadius="0,0,5,5" Fill="RoyalBlue" />
-                                            <Label HorizontalOptions="Center" FontSize="11" VerticalOptions="End" >
-                                                <Label.FormattedText>
-                                                    <FormattedString>
-                                                        <Span Text="{x:Static resx:AppResources.SuperSetString}" TextColor="White"/>
-                                                        <Span Text=" "/>
-                                                        <Span Text="{Binding SuperSetNum}" TextColor="White"/>
-                                                    </FormattedString>
-                                                </Label.FormattedText>
-                                            </Label>
-                                        </Grid>
+                                    <Grid VerticalOptions="End" HeightRequest="15" IsVisible="{Binding SuperSetId,Converter={StaticResource SuperSetMenuConverter}}" >
+                                        <RoundRectangle Stroke="RoyalBlue" CornerRadius="0,0,5,5" Fill="RoyalBlue" />
+                                        <Label HorizontalOptions="Center" FontSize="11" VerticalOptions="End" >
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{x:Static resx:AppResources.SuperSetString}" TextColor="White"/>
+                                                    <Span Text=" "/>
+                                                    <Span Text="{Binding SuperSetNum}" TextColor="White"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
                                     </Grid>
-                                </Border>
+                                </Grid>
+                            </Border>
 
-                                <CheckBox Grid.Column="2" VerticalOptions="Center" IsChecked="{Binding IsSelected, Mode=TwoWay}" HorizontalOptions="End"
+                            <CheckBox Grid.Column="2" VerticalOptions="Center" IsChecked="{Binding IsSelected, Mode=TwoWay}" HorizontalOptions="End"
                                   IsVisible="{Binding IsCheckBoxVisible}" />
 
-                                <StackLayout Orientation="Vertical" Grid.Column="1" Padding="0" Margin="0" VerticalOptions="Center">
-                                    <Label Text="{Binding Name}" FontSize="17" HorizontalTextAlignment="Center" HorizontalOptions="Fill" VerticalOptions="Start" Margin="0"/>
-                                    <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" Style="{StaticResource MuscleFlexStyle}">
-                                        <BindableLayout.ItemTemplate>
-                                            <DataTemplate x:DataType="models:MuscleViewModel">
-                                                <AbsoluteLayout>
-                                                    <Border Style="{StaticResource MuscleBorderCellStyle}">
-                                                        <Label Text="{Binding Name}" FontSize="11" TextColor="White" LineBreakMode="NoWrap"/>
-                                                    </Border>
-                                                </AbsoluteLayout>
-                                            </DataTemplate>
-                                        </BindableLayout.ItemTemplate>
-                                    </FlexLayout>
-                                </StackLayout>
+                            <VerticalStackLayout Grid.Column="1" Padding="0" Margin="0" VerticalOptions="Center">
+                                <Label Text="{Binding Name}" FontSize="17" HorizontalTextAlignment="Center" HorizontalOptions="Fill" VerticalOptions="Start" Margin="0"/>
+                                <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" Style="{StaticResource MuscleFlexStyle}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="models:MuscleViewModel">
+                                            <AbsoluteLayout>
+                                                <Border Style="{StaticResource MuscleBorderCellStyle}">
+                                                    <Label Text="{Binding Name}" FontSize="11" TextColor="White" LineBreakMode="NoWrap"/>
+                                                </Border>
+                                            </AbsoluteLayout>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </FlexLayout>
+                            </VerticalStackLayout>
 
-                                <ImageButton Grid.Column="2" WidthRequest="30" HeightRequest="30" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="close.png" 
+                            <ImageButton Grid.Column="2" WidthRequest="30" HeightRequest="30" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="close.png" 
                                              Command="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.DeleteExerciseCommand}" CommandParameter="{Binding }" BackgroundColor="Transparent" 
                                              IsVisible="{Binding IsCheckBoxVisible,Converter={StaticResource InverseBooleanConverter}}">
-                                    <ImageButton.Behaviors>
-                                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
-                                    </ImageButton.Behaviors>
-                                </ImageButton>
-                            </Grid>
-                        </Border>
-                    </Grid>
+                                <ImageButton.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
+                                </ImageButton.Behaviors>
+                            </ImageButton>
+                        </Grid>
+                    </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
@@ -149,8 +146,7 @@
                 <Button Grid.Column="0" CornerRadius="20" Text="{x:Static resx:AppResources.CancelString}" Command="{Binding CancelActionCommand}" HorizontalOptions="Fill"
                         TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
                         BackgroundColor="Transparent" BorderColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" BorderWidth="1"/>
-                <Button Grid.Column="1" CornerRadius="20" Text="{Binding ExerciseActionString}" Command="{Binding StartActionCommand}" HorizontalOptions="Fill" Style="{StaticResource ActionButton}"
-                        TextColor="White"/>
+                <Button Grid.Column="1" CornerRadius="20" Text="{Binding ExerciseActionString}" Command="{Binding StartActionCommand}" HorizontalOptions="Fill" Style="{StaticResource ActionButton}"/>
             </Grid>
         </Grid>
         

@@ -88,6 +88,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Set.
+        /// </summary>
+        internal static string AddSet {
+            get {
+                return ResourceManager.GetString("AddSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add workout.
         /// </summary>
         internal static string AddTrainingString {
@@ -106,7 +115,11 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to After workout, the post-workout routine is useful, the post-workout routine allows smoothing the transition from high-intensity work to a state of rest. You thereby reduce the burden on the heart muscle, which has to pump blood intensively, to remove its stagnation from the muscles and provide it with internal organs. Suitable: Easy running, smoothly turning into walking (you can in place). Easy work on a bicycle or elliptical simulator, a stepper with a smooth decrease in intensity up to a stop. Jumping on [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to The post-workout routine helps facilitate a smooth transition from high-intensity exercise to a resting state. It reduces the strain on the heart muscle by gradually decreasing the need for intensive blood circulation, preventing blood pooling in the muscles and supporting normal blood flow to internal organs.
+        ///
+        ///Suitable post-workout activities:
+        ///• Easy jogging that gradually transitions into walking (walking in place is also acceptable).
+        ///• Light activity on a stationary bicycle, elliptical trainer, or st [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string AdviceAfterTrainingMessage {
             get {
@@ -115,7 +128,13 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stretching before workout is a complex of exercises for preparing the body for physical activity, which will help you avoid injuries and conduct the session as efficiently as possible. Stretching speeds up metabolic processes. Stretching before exercise improves blood circulation, which will saturate your muscles with oxygen and nutrients. This will help improve endurance during class. The warmed muscles are better compressed and relax during workout, which means that your strengths will be higher during th [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to Pre-workout stretching is a series of exercises designed to prepare the body for physical activity. It helps reduce the risk of injury and allows you to perform your workout more effectively. Stretching also stimulates metabolic processes and improves overall readiness for exercise.
+        ///
+        ///Benefits of pre-workout stretching:
+        ///• Helps prevent injuries during training.
+        ///• Increases blood circulation, delivering more oxygen and nutrients to the muscles.
+        ///• Enhances endurance and exercise performance.
+        ///• Prepares m [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string AdviceBeforeTrainingMessage {
             get {
@@ -552,15 +571,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string GroupingEnterNameofGroup {
             get {
                 return ResourceManager.GetString("GroupingEnterNameofGroup", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Workout already in Default group.
-        /// </summary>
-        internal static string GroupingTrainingNotInGroup {
-            get {
-                return ResourceManager.GetString("GroupingTrainingNotInGroup", resourceCulture);
             }
         }
         
@@ -1033,6 +1043,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove Set.
+        /// </summary>
+        internal static string RemoveSet {
+            get {
+                return ResourceManager.GetString("RemoveSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         internal static string RemoveString {
@@ -1150,7 +1169,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select group.
+        ///   Looks up a localized string similar to Select group....
         /// </summary>
         internal static string SelectGroup {
             get {
@@ -1607,7 +1626,16 @@ namespace TrainingDay.Maui.Resources.Strings {
                 return ResourceManager.GetString("WorkoutAlmostCreated", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Choose an existing group or create a new one.
+        /// </summary>
+        internal static string WorkoutGroupDescriptionString {
+            get {
+                return ResourceManager.GetString("WorkoutGroupDescriptionString", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Year.
         /// </summary>
@@ -1623,24 +1651,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string YesString {
             get {
                 return ResourceManager.GetString("YesString", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to AddSet.
-        /// </summary>
-        internal static string AddSet {
-            get {
-                return ResourceManager.GetString("AddSet", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to RemoveSet.
-        /// </summary>
-        internal static string RemoveSet {
-            get {
-                return ResourceManager.GetString("RemoveSet", resourceCulture);
             }
         }
     }

@@ -252,9 +252,6 @@
   <data name="GroupingEnterNameofGroup" xml:space="preserve">
     <value>Введите название группы</value>
   </data>
-  <data name="GroupingTrainingNotInGroup" xml:space="preserve">
-    <value>Тренировка уже в основной группе. </value>
-  </data>
   <data name="HalfYearString" xml:space="preserve">
     <value>Полгода</value>
   </data>
@@ -625,7 +622,10 @@
     <value>Бицепс/Трицепс Суперсетами</value>
   </data>
   <data name="SelectGroup" xml:space="preserve">
-    <value>Выберите группу</value>
+    <value>Выберите группу...</value>
+  </data>
+  <data name="WorkoutGroupDescriptionString" xml:space="preserve">
+    <value>Выберите существующую группу или создайте новую</value>
   </data>
   <data name="AddImage" xml:space="preserve">
     <value>Добавить изображение</value>

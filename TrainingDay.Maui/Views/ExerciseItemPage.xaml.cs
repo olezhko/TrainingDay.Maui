@@ -206,7 +206,7 @@ public partial class ExerciseItemPage : ContentPage
         if (action == AppResources.CancelString)
             return;
 
-        var isGranted = await RequestPermissionsAsync();
+        var isGranted = await RequestPermissionsAsync(action);
         if (!isGranted)
         {
             return;
@@ -247,20 +247,25 @@ public partial class ExerciseItemPage : ContentPage
         ExerciseImage.Source = ImageSource.FromStream(() => new MemoryStream(imageData));
     }
 
-    private async Task<bool> RequestPermissionsAsync()
+    private async Task<bool> RequestPermissionsAsync(string action)
     {
-        PermissionStatus statusCamera = await Permissions.CheckStatusAsync<Permissions.Camera>();
-        if (statusCamera != PermissionStatus.Granted)
+        if (action == AppResources.Photo)
         {
-            statusCamera = await Permissions.RequestAsync<Permissions.Camera>();
+            var statusCamera = await Permissions.CheckStatusAsync<Permissions.Camera>();
+            if (statusCamera != PermissionStatus.Granted)
+                statusCamera = await Permissions.RequestAsync<Permissions.Camera>();
+            return statusCamera == PermissionStatus.Granted;
         }
 
-        PermissionStatus statusStorageRead = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
-        if (statusStorageRead != PermissionStatus.Granted)
-        {
-            statusStorageRead = await Permissions.RequestAsync<Permissions.StorageRead>();
-        }
+        // Gallery on Android 13+ (API 33+): system photo picker requires no storage permission
+#if ANDROID
+        if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Tiramisu)
+            return true;
+#endif
 
-        return statusCamera == PermissionStatus.Granted && statusStorageRead == PermissionStatus.Granted;
+        var storageStatus = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
+        if (storageStatus != PermissionStatus.Granted)
+            storageStatus = await Permissions.RequestAsync<Permissions.StorageRead>();
+        return storageStatus == PermissionStatus.Granted;
     }
 }

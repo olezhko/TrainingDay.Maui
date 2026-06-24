@@ -35,8 +35,6 @@ namespace TrainingDay.Maui
                         CanBeDismissedByTappingOutsideOfPopup = true,
                     });
                 })
-                .UseMauiCommunityToolkitMediaElement(isAndroidForegroundServiceEnabled: false)
-
 #if IOS
                 .RegisterFirebaseServices()
 #endif
@@ -71,10 +69,6 @@ namespace TrainingDay.Maui
 
             builder.Services.AddSingleton<IDataService, DataService>();
             builder.Services.AddSingleton<WorkoutService>();
-
-#if DEBUG
-            builder.Logging.AddDebug();
-#endif
 
 #if ANDROID
             builder.Services.AddTransient<IPushNotification, Platforms.Android.PushNotificationService>();

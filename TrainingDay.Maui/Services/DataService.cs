@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using RestSharp;
+﻿using RestSharp;
+using System.Text.Json;
 using TrainingDay.Common.Communication;
 
 namespace TrainingDay.Maui.Services
@@ -55,16 +55,21 @@ namespace TrainingDay.Maui.Services
 			var request = CreateRequest($"/mobileblogs?cultureId={cultureId}&createdFilter={createdQuery}", Method.Get);
 			var response = await _client.ExecuteAsync(request);
 			return response.IsSuccessful
-				? JsonConvert.DeserializeObject<IReadOnlyCollection<BlogResponse>>(response.Content)
+				? JsonSerializer.Deserialize<IReadOnlyCollection<BlogResponse>>(response.Content)
 				: null;
 		}
 
 		public async Task<BlogResponse> GetBlogAsync(int id)
 		{
-			var request = CreateRequest($"/mobileblogs/{id}", Method.Get);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            var request = CreateRequest($"/mobileblogs/{id}", Method.Get);
 			var response = await _client.ExecuteAsync(request);
 			return response.IsSuccessful
-				? JsonConvert.DeserializeObject<BlogResponse>(response.Content)
+				? JsonSerializer.Deserialize<BlogResponse>(response.Content, options)
 				: null;
 		}
 
@@ -73,7 +78,7 @@ namespace TrainingDay.Maui.Services
 			var request = CreateRequest($"/exercises/query", Method.Post, new { Query = query });
 			var response = await _client.ExecuteAsync(request);
 			return response.IsSuccessful
-				? JsonConvert.DeserializeObject<ExerciseAiResponse>(response.Content)
+				? JsonSerializer.Deserialize<ExerciseAiResponse>(response.Content)
 				: new ExerciseAiResponse([]);
 		}
 
@@ -98,7 +103,7 @@ namespace TrainingDay.Maui.Services
 			var request = CreateRequest($"/YouTubeVideos/{exerciseName}", Method.Get);
 			var response = await _client.ExecuteAsync(request);
 			return response.IsSuccessful
-				? JsonConvert.DeserializeObject<IEnumerable<YoutubeVideoItem>>(response.Content)
+				? JsonSerializer.Deserialize<IEnumerable<YoutubeVideoItem>>(response.Content)
 				: [];
 		}
 	}

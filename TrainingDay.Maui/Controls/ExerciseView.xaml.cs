@@ -1,6 +1,5 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using TrainingDay.Maui.Models;
 using TrainingDay.Maui.ViewModels;
 
 namespace TrainingDay.Maui.Controls;
@@ -8,8 +7,6 @@ namespace TrainingDay.Maui.Controls;
 public partial class ExerciseView : ContentView
 {
     public ICommand DeleteRequestCommand => new Command<WeightAndRepsViewModel>(DeleteRequestWeightAndReps);
-
-    public ObservableCollection<ExerciseVideo> VideoItems { get; set; } = [];
 
     public TrainingExerciseViewModel CurrentExercise
     {

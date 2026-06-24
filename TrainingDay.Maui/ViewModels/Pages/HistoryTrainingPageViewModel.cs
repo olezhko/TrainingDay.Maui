@@ -19,7 +19,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
     public HistoryTrainingPageViewModel()
     {
         LastTrainings = new ObservableCollection<LastTrainingViewModelList>();
-        ItemSelectedCommand = new Command<LastTrainingViewModel>(SelectionChanged);
+        ItemSelectedCommand = new Command<LastTraining>(SelectionChanged);
 
         DaysAndTextLimits.Clear();
         DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.WeekString, 7));
@@ -34,7 +34,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
 
     public INavigation Navigation { get; set; }
 
-    public LastTrainingViewModel SelectedTraining { get; set; }
+    public LastTraining SelectedTraining { get; set; }
 
     public ICommand ItemSelectedCommand { get; set; }
 
@@ -67,7 +67,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
         {
             try
             {
-                var newItem = new LastTrainingViewModel()
+                var newItem = new LastTraining()
                 {
                     ElapsedTime = lastTraining.ElapsedTime,
                     ImplementDateTime = lastTraining.Time,
@@ -91,7 +91,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
         OnPropertyChanged(nameof(LastTrainings));
     }
 
-    private void SelectionChanged(LastTrainingViewModel selected)
+    private void SelectionChanged(LastTraining selected)
     {
         SelectedTraining = selected;
         var trainingExerciseItems = App.Database.GetLastTrainingExerciseItems().Where(item => item.LastTrainingId == SelectedTraining.Id);
@@ -118,7 +118,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
         Navigation.PushAsync(page);
     }
 
-    private void PutItemToListByDate(List<LastTrainingViewModelList> tempLastTrainings, LastTrainingViewModel newItem)
+    private void PutItemToListByDate(List<LastTrainingViewModelList> tempLastTrainings, LastTraining newItem)
     {
         foreach (var daysAndTextLimit in DaysAndTextLimits)
         {
@@ -130,7 +130,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
         }
     }
 
-    private bool AddLastTraining(LastTrainingViewModel newItem, string daysSectorString, int daysSector, List<LastTrainingViewModelList> tempLastTrainings)
+    private bool AddLastTraining(LastTraining newItem, string daysSectorString, int daysSector, List<LastTrainingViewModelList> tempLastTrainings)
     {
         bool addResult = false;
         if (daysSector == -1 || DateTime.Now - newItem.ImplementDateTime < TimeSpan.FromDays(daysSector))
@@ -234,7 +234,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
     }
 }
 
-public class LastTrainingViewModelList : ObservableCollection<LastTrainingViewModel>
+public class LastTrainingViewModelList : ObservableCollection<LastTraining>
 {
     public string Heading { get; set; }
 }

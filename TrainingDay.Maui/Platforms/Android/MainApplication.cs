@@ -1,10 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
-// Needed for Picking photo/video
+// Needed for gallery on Android 12 and below; API 33+ uses the system photo picker (no permission required)
 [assembly: UsesPermission(Android.Manifest.Permission.ReadExternalStorage, MaxSdkVersion = 32)]
-[assembly: UsesPermission(Android.Manifest.Permission.ReadMediaAudio)]
-[assembly: UsesPermission(Android.Manifest.Permission.ReadMediaImages)]
-[assembly: UsesPermission(Android.Manifest.Permission.ReadMediaVideo)]
 
 // Needed for Taking photo/video
 [assembly: UsesPermission(Android.Manifest.Permission.Camera)]

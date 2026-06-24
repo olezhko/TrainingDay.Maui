@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using SQLite;
+﻿using SQLite;
+using System.Text.Json;
 using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.Models.Database;
@@ -50,7 +50,7 @@ public class Repository
             database.CreateTable<ImageEntity>();
             database.CreateTable<BlogEntity>();
 
-            var initExercises = await ResourceExtension.LoadResource<BaseExercise>("exercises", Settings.GetLanguage().TwoLetterISOLanguageName);
+            var initExercises = await ResourceExtension.LoadResourceAsync<BaseExercise>("exercises", Settings.GetLanguage().TwoLetterISOLanguageName);
             var dbExercises = GetExerciseItems();
 
             foreach (var exercise in initExercises)
@@ -112,7 +112,7 @@ public class Repository
 			}
 
 			dbExercise.DifficultType = newExercise.DifficultLevel;
-			dbExercise.Description = JsonConvert.SerializeObject(newExercise.Description);
+			dbExercise.Description = JsonSerializer.Serialize(newExercise.Description);
 			dbExercise.MusclesString = newExercise.MusclesString;
 			dbExercise.Name = newExercise.Name;
 			dbExercise.TagsValue = ExerciseExtensions.ConvertTagStringToInt(newExercise.Tags);

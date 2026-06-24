@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json;
 using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.Extensions;
@@ -50,7 +50,7 @@ public class ExerciseViewModel : BaseViewModel
         return new ExerciseEntity()
         {
             Id = Id,
-            Description = JsonConvert.SerializeObject(Description?.Model),
+            Description = JsonSerializer.Serialize(Description?.Model),
             Name = Name,
             MusclesString = MusclesExtensions.ConvertFromListToString(Muscles.ToList()),
             TagsValue = ExerciseExtensions.ConvertTagListToInt(Tags),

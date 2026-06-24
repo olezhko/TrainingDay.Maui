@@ -35,7 +35,7 @@ namespace TrainingDay.Maui.ViewModels.Pages
 
 		public async Task LoadSteps()
 		{
-            var steps = await ResourceExtension.LoadResource<WorkoutQuestinariumStep>("questions", 
+            var steps = await ResourceExtension.LoadResourceAsync<WorkoutQuestinariumStep>("questions", 
                 Settings.GetLanguage().TwoLetterISOLanguageName);
             WorkoutQuestinariumStepViewModel? previous = null;
             int index = 0;
