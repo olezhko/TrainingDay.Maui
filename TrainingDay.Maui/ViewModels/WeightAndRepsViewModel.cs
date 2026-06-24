@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.Globalization;
+﻿using System.Globalization;
+using System.Text.Json.Serialization;
 using System.Windows.Input;
 
 namespace TrainingDay.Maui.ViewModels;

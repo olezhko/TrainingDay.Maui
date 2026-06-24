@@ -35,8 +35,6 @@ namespace TrainingDay.Maui
                         CanBeDismissedByTappingOutsideOfPopup = true,
                     });
                 })
-                .UseMauiCommunityToolkitMediaElement(isAndroidForegroundServiceEnabled: false)
-
 #if IOS
                 .RegisterFirebaseServices()
 #endif

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.Extensions;
 
@@ -44,7 +44,7 @@ public class DescriptionViewModel : BaseViewModel
 
         if (jsonString.IsNotNullOrEmpty())
         {
-            var obj = JsonConvert.DeserializeObject<Description>(jsonString);
+            var obj = JsonSerializer.Deserialize<Description>(jsonString);
             model.Advice = obj.Advice;
             model.Execution = obj.Execution;
             model.StartPosition = obj.StartPosition;

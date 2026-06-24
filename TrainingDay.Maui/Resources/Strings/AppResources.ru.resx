@@ -622,7 +622,10 @@
     <value>Бицепс/Трицепс Суперсетами</value>
   </data>
   <data name="SelectGroup" xml:space="preserve">
-    <value>Выберите группу</value>
+    <value>Выберите группу...</value>
+  </data>
+  <data name="WorkoutGroupDescriptionString" xml:space="preserve">
+    <value>Выберите существующую группу или создайте новую</value>
   </data>
   <data name="AddImage" xml:space="preserve">
     <value>Добавить изображение</value>

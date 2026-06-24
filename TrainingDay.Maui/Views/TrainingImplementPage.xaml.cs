@@ -1,8 +1,8 @@
 using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Mvvm.Messaging;
-using Newtonsoft.Json;
 using SkiaSharp.Extended.UI.Controls;
 using System.Collections.ObjectModel;
+using System.Text.Json;
 using System.Windows.Input;
 using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
@@ -237,7 +237,7 @@ public partial class TrainingImplementPage : ContentPage
                     TrainingId = id,
                     Muscles = MusclesExtensions.ConvertFromListToString(trainingExerciseViewModel.Muscles.ToList()),
                     ExerciseId = trainingExerciseViewModel.ExerciseId,
-                    Description = JsonConvert.SerializeObject(trainingExerciseViewModel.Description.Model),
+                    Description = JsonSerializer.Serialize(trainingExerciseViewModel.Description.Model),
                     Name = trainingExerciseViewModel.Name,
                     IsNotFinished = trainingExerciseViewModel.IsNotFinished,
                     IsSkipped = trainingExerciseViewModel.IsSkipped,
@@ -350,7 +350,7 @@ public partial class TrainingImplementPage : ContentPage
         if (Settings.IsShowAdvicesOnImplementing)
         {
             await Shell.Current.ShowPopupAsync(
-                PopupBuilders.CreateAdvicePopup(AppResources.AdviceAfterTrainingMessage)
+                PopupBuilders.BuildAdvicePopup(AppResources.AdviceAfterTrainingMessage)
             );
         }
 

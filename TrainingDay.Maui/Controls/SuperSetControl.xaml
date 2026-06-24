@@ -213,7 +213,7 @@
                 <!--<CarouselView ItemsSource="{Binding VideoItems}" HeightRequest="300" WidthRequest="400" IndicatorView="indicatorView">
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
-                            <toolkit:MediaElement Source="{Binding VideoUrl}" HeightRequest="300" WidthRequest="400" />
+                            <toolkit:MediaElement Source="https://www.youtube.com/embed/q3lX2p_Uy9I" HeightRequest="300" WidthRequest="400" />
                         </DataTemplate>
                     </CarouselView.ItemTemplate>
                 </CarouselView>

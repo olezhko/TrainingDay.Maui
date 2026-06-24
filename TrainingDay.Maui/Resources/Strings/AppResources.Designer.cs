@@ -1169,7 +1169,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select group.
+        ///   Looks up a localized string similar to Select group....
         /// </summary>
         internal static string SelectGroup {
             get {
@@ -1626,7 +1626,16 @@ namespace TrainingDay.Maui.Resources.Strings {
                 return ResourceManager.GetString("WorkoutAlmostCreated", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Choose an existing group or create a new one.
+        /// </summary>
+        internal static string WorkoutGroupDescriptionString {
+            get {
+                return ResourceManager.GetString("WorkoutGroupDescriptionString", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Year.
         /// </summary>

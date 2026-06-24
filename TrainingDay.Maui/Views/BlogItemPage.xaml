@@ -7,13 +7,8 @@
     <ContentPage.BindingContext>
         <model:BlogViewModel/>
     </ContentPage.BindingContext>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <WebView Source="{Binding WebViewDataText}" Grid.Row="0"/>
-        <Label Text="{Binding DateTime}" HorizontalOptions="End" TextColor="{StaticResource Gray300}" Grid.Row="1"/>
+    <Grid RowDefinitions="*,auto">
+        <WebView Source="{Binding WebViewDataText}" Grid.Row="0" />
+        <Label Text="{Binding DateTime}" HorizontalOptions="End" TextColor="{StaticResource Gray300}" Grid.Row="1" />
     </Grid>
 </ContentPage>

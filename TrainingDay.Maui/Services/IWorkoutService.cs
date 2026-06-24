@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using TrainingDay.Common.Communication;
 using TrainingDay.Common.Extensions;
@@ -21,7 +21,7 @@ namespace TrainingDay.Maui.Services
     {
         public async Task UpdateExerciseNameAndDescription()
         {
-            var inits = await ResourceExtension.LoadResource<BaseExercise>("exercises", Settings.GetLanguage().TwoLetterISOLanguageName);
+            var inits = await ResourceExtension.LoadResourceAsync<BaseExercise>("exercises", Settings.GetLanguage().TwoLetterISOLanguageName);
             var exers = App.Database.GetExerciseItems();
             exers.Where(item => item.CodeNum != 0).ForEach(exer =>
             {
@@ -30,7 +30,7 @@ namespace TrainingDay.Maui.Services
                     var init = inits.FirstOrDefault(item => item.CodeNum == exer.CodeNum);
                     if (init != null)
                     {
-                        exer.Description = JsonConvert.SerializeObject(init.Description);
+                        exer.Description = JsonSerializer.Serialize(init.Description);
                         exer.Name = init.Name;
                         App.Database.SaveExerciseItem(exer);
                     }

@@ -637,7 +637,10 @@ Increase body temperature, activate the muscles and joints, and prepare the card
     <value>Biceps/Triceps Supersets</value>
   </data>
   <data name="SelectGroup" xml:space="preserve">
-    <value>Select group</value>
+    <value>Select group...</value>
+  </data>
+  <data name="WorkoutGroupDescriptionString" xml:space="preserve">
+    <value>Choose an existing group or create a new one</value>
   </data>
   <data name="AddImage" xml:space="preserve">
     <value>Add image</value>
