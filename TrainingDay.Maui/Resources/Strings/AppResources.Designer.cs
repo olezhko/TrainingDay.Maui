@@ -233,7 +233,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Coping exercises completed.
+        ///   Looks up a localized string similar to Copying exercises completed.
         /// </summary>
         internal static string CopyExercisesFinishedMessage {
             get {
@@ -746,7 +746,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Moving workouts finished.
+        ///   Looks up a localized string similar to Moving exercises finished.
         /// </summary>
         internal static string MoveExercisesFinishedMessage {
             get {
@@ -800,7 +800,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your filter term of did not match any exercises.
+        ///   Looks up a localized string similar to Your filter term did not match any exercises.
         /// </summary>
         internal static string NoExercisesFilterString {
             get {
@@ -904,15 +904,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string PleaseEnterYourNewWeight {
             get {
                 return ResourceManager.GetString("PleaseEnterYourNewWeight", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Abdominal.
-        /// </summary>
-        internal static string PreparedAbdominalString {
-            get {
-                return ResourceManager.GetString("PreparedAbdominalString", resourceCulture);
             }
         }
         
@@ -1021,24 +1012,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string PreparedWideShoulders {
             get {
                 return ResourceManager.GetString("PreparedWideShoulders", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rate App.
-        /// </summary>
-        internal static string RateAppString {
-            get {
-                return ResourceManager.GetString("RateAppString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Register.
-        /// </summary>
-        internal static string RegisterAction {
-            get {
-                return ResourceManager.GetString("RegisterAction", resourceCulture);
             }
         }
         
@@ -1502,24 +1475,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2 month.
-        /// </summary>
-        internal static string TwoMonthString {
-            get {
-                return ResourceManager.GetString("TwoMonthString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 2 weeks.
-        /// </summary>
-        internal static string TwoWeeksString {
-            get {
-                return ResourceManager.GetString("TwoWeeksString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Index value = {0:0.00}._Read more?.
         /// </summary>
         internal static string WaistHipMessage {
@@ -1626,7 +1581,7 @@ namespace TrainingDay.Maui.Resources.Strings {
                 return ResourceManager.GetString("WorkoutAlmostCreated", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Choose an existing group or create a new one.
         /// </summary>
@@ -1635,7 +1590,7 @@ namespace TrainingDay.Maui.Resources.Strings {
                 return ResourceManager.GetString("WorkoutGroupDescriptionString", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Year.
         /// </summary>

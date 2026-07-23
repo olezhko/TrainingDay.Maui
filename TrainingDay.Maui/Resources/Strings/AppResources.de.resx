@@ -157,10 +157,10 @@
     <value>Letztes Training fortsetzen?</value>
   </data>
   <data name="CopiedString" xml:space="preserve">
-    <value>_Kopieren</value>
+    <value>_Kopie</value>
   </data>
   <data name="CopyExercisesFinishedMessage" xml:space="preserve">
-    <value>Bewältigungsübungen absolviert</value>
+    <value>Kopieren der Übungen abgeschlossen</value>
   </data>
   <data name="CopyString" xml:space="preserve">
     <value>Kopieren</value>
@@ -235,7 +235,7 @@
     <value>Ich habs</value>
   </data>
   <data name="GroupingDefaultName" xml:space="preserve">
-    <value>Default</value>
+    <value>Standard</value>
   </data>
   <data name="GroupingEnterNameofGroup" xml:space="preserve">
     <value>Geben Sie den Namen der gruppe ein</value>
@@ -271,7 +271,7 @@
     <value>Markieren Sie die erforderlichen Übungen und drücken Sie {0}</value>
   </data>
   <data name="Minutes" xml:space="preserve">
-    <value>Minutes</value>
+    <value>Minuten</value>
   </data>
   <data name="MinuteString" xml:space="preserve">
     <value>min</value>
@@ -286,7 +286,7 @@
     <value>TOP Übungen</value>
   </data>
   <data name="MoveExercisesFinishedMessage" xml:space="preserve">
-    <value>Bewegungstraining beendet</value>
+    <value>Verschieben der Übungen abgeschlossen</value>
   </data>
   <data name="MoveString" xml:space="preserve">
     <value>Bewegen</value>
@@ -301,7 +301,7 @@
     <value>Nachrichten</value>
   </data>
   <data name="NoExercisesFilterString" xml:space="preserve">
-    <value>Ihr Filterbegriff von stimmte mit keiner Übung überein</value>
+    <value>Ihr Filterbegriff stimmte mit keiner Übung überein</value>
   </data>
   <data name="NoExercisesNeedAddNewString" xml:space="preserve">
     <value>Keine Übungen. Sie sollten Übung hinzufügen.</value>
@@ -322,7 +322,7 @@
     <value>Ok</value>
   </data>
   <data name="OneMounthString" xml:space="preserve">
-    <value>Berg</value>
+    <value>Monat</value>
   </data>
   <data name="OneTrainingPerWeekCountFormat" xml:space="preserve">
     <value>Maximale Wochen mit Training: {0:0}</value>
@@ -332,9 +332,6 @@
   </data>
   <data name="PleaseEnterYourNewWeight" xml:space="preserve">
     <value>Geben Sie Ihr neues Gewicht ein. Vielleicht hat sich etwas geändert.</value>
-  </data>
-  <data name="PreparedAbdominalString" xml:space="preserve">
-    <value>Abdominal</value>
   </data>
   <data name="PreparedArmsStrength" xml:space="preserve">
     <value>Starke Arme</value>
@@ -362,12 +359,6 @@
   </data>
   <data name="PreparedWideShoulders" xml:space="preserve">
     <value>Breite Schultern</value>
-  </data>
-  <data name="RateAppString" xml:space="preserve">
-    <value>Bewertungs App</value>
-  </data>
-  <data name="RegisterAction" xml:space="preserve">
-    <value>Anmeldung</value>
   </data>
   <data name="RemoveString" xml:space="preserve">
     <value>Entfernen</value>
@@ -439,7 +430,7 @@
     <value>SuperSet</value>
   </data>
   <data name="ThreeMounthString" xml:space="preserve">
-    <value>3 month</value>
+    <value>3 Monate</value>
   </data>
   <data name="TimeString" xml:space="preserve">
     <value>Zeit</value>
@@ -498,17 +489,11 @@
   <data name="TrainingUnGroupString" xml:space="preserve">
     <value>Aus der Gruppe entfernen "{0}"</value>
   </data>
-  <data name="TwoMonthString" xml:space="preserve">
-    <value>2 Monate</value>
-  </data>
-  <data name="TwoWeeksString" xml:space="preserve">
-    <value>2 Wochen</value>
-  </data>
   <data name="WaistHipMessage" xml:space="preserve">
     <value>Indexwert = {0:0.00}._Weiterlesen?</value>
   </data>
   <data name="WaistHipTitle" xml:space="preserve">
-    <value>Waist-Hip Index</value>
+    <value>Taille-Hüft-Index</value>
   </data>
   <data name="WaistString" xml:space="preserve">
     <value>Taille</value>
@@ -535,10 +520,10 @@
     <value>Ja</value>
   </data>
   <data name="Rest" xml:space="preserve">
-    <value>Brechen</value>
+    <value>Pause</value>
   </data>
   <data name="RepetitionsShort" xml:space="preserve">
-    <value>reps</value>
+    <value>Wdh</value>
   </data>
   <data name="MeasureWeight" xml:space="preserve">
     <value>Gewichtseinheit (kg oder Pfund)</value>
@@ -610,7 +595,7 @@
     <value>Bizeps/Trizeps-Supersätze</value>
   </data>
   <data name="SelectGroup" xml:space="preserve">
-    <value>Gruppe...</value>
+    <value>Gruppe wählen...</value>
   </data>
   <data name="WorkoutGroupDescriptionString" xml:space="preserve">
     <value>Wählen Sie eine vorhandene Gruppe oder erstellen Sie eine neue</value>
@@ -640,9 +625,9 @@
     <value>Fotos</value>
   </data>
   <data name="AddSet" xml:space="preserve">
-    <value>Add Set</value>
+    <value>Satz hinzufügen</value>
   </data>
   <data name="RemoveSet" xml:space="preserve">
-    <value>Remove Set</value>
+    <value>Satz entfernen</value>
   </data>
 </root>

@@ -187,7 +187,7 @@ Increase body temperature, activate the muscles and joints, and prepare the card
     <value>_Copy</value>
   </data>
   <data name="CopyExercisesFinishedMessage" xml:space="preserve">
-    <value>Coping exercises completed</value>
+    <value>Copying exercises completed</value>
   </data>
   <data name="CopyString" xml:space="preserve">
     <value>Copy</value>
@@ -313,7 +313,7 @@ Increase body temperature, activate the muscles and joints, and prepare the card
     <value>TOP exercises</value>
   </data>
   <data name="MoveExercisesFinishedMessage" xml:space="preserve">
-    <value>Moving workouts finished</value>
+    <value>Moving exercises finished</value>
   </data>
   <data name="MoveString" xml:space="preserve">
     <value>Move</value>
@@ -328,7 +328,7 @@ Increase body temperature, activate the muscles and joints, and prepare the card
     <value>News</value>
   </data>
   <data name="NoExercisesFilterString" xml:space="preserve">
-    <value>Your filter term of did not match any exercises</value>
+    <value>Your filter term did not match any exercises</value>
   </data>
   <data name="NoExercisesNeedAddNewString" xml:space="preserve">
     <value>No exercises. You should add exercise.</value>
@@ -360,9 +360,6 @@ Increase body temperature, activate the muscles and joints, and prepare the card
   <data name="PleaseEnterYourNewWeight" xml:space="preserve">
     <value>Enter your new weight. Maybe something has changed.</value>
   </data>
-  <data name="PreparedAbdominalString" xml:space="preserve">
-    <value>Abdominal</value>
-  </data>
   <data name="PreparedArmsStrength" xml:space="preserve">
     <value>Strong arms</value>
   </data>
@@ -389,12 +386,6 @@ Increase body temperature, activate the muscles and joints, and prepare the card
   </data>
   <data name="PreparedWideShoulders" xml:space="preserve">
     <value>Wide Shoulders</value>
-  </data>
-  <data name="RateAppString" xml:space="preserve">
-    <value>Rate App</value>
-  </data>
-  <data name="RegisterAction" xml:space="preserve">
-    <value>Register</value>
   </data>
   <data name="RemoveString" xml:space="preserve">
     <value>Delete</value>
@@ -524,12 +515,6 @@ Increase body temperature, activate the muscles and joints, and prepare the card
   </data>
   <data name="TrainingUnGroupString" xml:space="preserve">
     <value>Remove from Group "{0}"</value>
-  </data>
-  <data name="TwoMonthString" xml:space="preserve">
-    <value>2 month</value>
-  </data>
-  <data name="TwoWeeksString" xml:space="preserve">
-    <value>2 weeks</value>
   </data>
   <data name="WaistHipMessage" xml:space="preserve">
     <value>Index value = {0:0.00}._Read more?</value>
