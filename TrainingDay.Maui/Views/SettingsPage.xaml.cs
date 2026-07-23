@@ -88,6 +88,8 @@ public partial class SettingsPage : ContentPage
         _availableLanguages.Add("Русский", new CultureInfo("ru"));
         _availableLanguages.Add("English", new CultureInfo("en"));
         _availableLanguages.Add("Deutsch", new CultureInfo("de"));
+        _availableLanguages.Add("Português", new CultureInfo("pt"));
+        _availableLanguages.Add("Español", new CultureInfo("es"));
 
         foreach (var language in _availableLanguages)
         {

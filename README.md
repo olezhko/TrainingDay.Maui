@@ -36,7 +36,9 @@ Set up customizable notifications to stay consistent with your training schedule
 
 This project empowers users of all levels with a powerful and flexible training tool that adapts to individual needs. Whether you want to build strength, lose weight, or simply stay active, this app provides the structure and tracking you need to succeed.
 
-📲 Get Started
+📝 Release Notes
 
-Download the app and take control of your fitness journey today!
-👉 Download Link
+v1.3.4
+- 🌍 Portuguese & Spanish support — the app is now available in Português and Español, switchable anytime from Settings.
+- 🐛 Localization fixes — corrected mistranslated strings in the German and Russian translations.
+- ❤️ Favourite Exercises — mark any exercise as a favourite from the exercise list or the exercise details screen. Favourited exercises now appear at the top of the exercise list for quicker access.
