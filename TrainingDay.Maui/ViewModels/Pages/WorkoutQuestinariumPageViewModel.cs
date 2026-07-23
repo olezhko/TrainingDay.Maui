@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
 using TrainingDay.Common.Extensions;
@@ -29,8 +30,8 @@ namespace TrainingDay.Maui.ViewModels.Pages
 		{
             _dataService = dataService;
             _workoutService = workoutService;
-            BackOrCancelCommand = new Command(Back);
-            NextOrFinishCommand = new Command(Next);
+            BackOrCancelCommand = new AsyncRelayCommand(Back);
+            NextOrFinishCommand = new AsyncRelayCommand(Next);
 		}
 
 		public async Task LoadSteps()
@@ -74,7 +75,7 @@ namespace TrainingDay.Maui.ViewModels.Pages
             current?.Next = newStep;
         }
 
-        public async void Next()
+        public async Task Next()
 		{
             IsBusy = true;
 
@@ -138,7 +139,7 @@ namespace TrainingDay.Maui.ViewModels.Pages
             }
         }
 
-        public async void Back()
+        public async Task Back()
 		{
             IsBusy = true;
             var back = CurrentStep.Previous;

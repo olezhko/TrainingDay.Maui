@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Common.Extensions;
@@ -28,9 +29,9 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
     public PreparedTrainingsPageViewModel()
     {
         FillTrainings();
-        CreateNewTrainingCommand = new Command(AddNewTraining);
-        NavigateToQuestionsCommnd = new Command(NavigateToQuestions);
-        ItemSelectedCommand = new Command<PreparedTrainingViewModel>(ItemSelected);
+        CreateNewTrainingCommand = new AsyncRelayCommand(AddNewTraining);
+        NavigateToQuestionsCommnd = new AsyncRelayCommand(NavigateToQuestions);
+        ItemSelectedCommand = new AsyncRelayCommand<PreparedTrainingViewModel>(ItemSelected);
     }
 
     private void SubscribeMessages()
@@ -58,12 +59,12 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
         WeakReferenceMessenger.Default.Unregister<ExercisesSelectFinishedMessage>(this);
     }
 
-    private async void NavigateToQuestions()
+    private async Task NavigateToQuestions()
     {
         await Shell.Current.GoToAsync(nameof(WorkoutQuestinariumPage));
     }
 
-    private async void ItemSelected(PreparedTrainingViewModel selectedTraining)
+    private async Task ItemSelected(PreparedTrainingViewModel selectedTraining)
     {
         selectedTraining.CreateTraining.Invoke();
         SaveNewTrainingViewModelToDatabase(selectedTraining.Training, selectedTraining.SuperSets);
@@ -71,7 +72,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
     }
 
     string newTrainingName;
-    private async void AddNewTraining()
+    private async Task AddNewTraining()
     {
         var result = await MessageManager.DisplayPromptAsync(AppResources.CreateNewString, AppResources.EnterTrainingName,
             AppResources.OkString, AppResources.CancelString, AppResources.NameString);

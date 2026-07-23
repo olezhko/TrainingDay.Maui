@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.Input;
 using Microcharts;
 using SkiaSharp;
 using System.Collections.ObjectModel;
@@ -31,7 +32,7 @@ class WeightViewAndSetPageViewModel : BaseViewModel
 {
     public ObservableCollection<BodyControlItem> BodyControlItems { get; set; } = new ObservableCollection<BodyControlItem>();
     public ICommand WeightPeriodChangedCommand { get; set; }
-    public ICommand SaveValueCommand => new Command(SaveCurrentValue);
+    public ICommand SaveValueCommand => new AsyncRelayCommand(SaveCurrentValue);
 
     public BodyControlItem CurrentItem { get; set; }
 
@@ -65,7 +66,7 @@ class WeightViewAndSetPageViewModel : BaseViewModel
         PrepareBodyControlItems(ChartWeightPeriod.Week);
     }
 
-    private async void SaveCurrentValue()
+    private async Task SaveCurrentValue()
     {
         var sender = CurrentItem;
         var type = sender.Type;
@@ -210,8 +211,8 @@ class WeightViewAndSetPageViewModel : BaseViewModel
             TextColor = App.Current.RequestedTheme == AppTheme.Light ? SKColors.Black : SKColors.White,
         }).ToList();
 
-        var minValueEntries = entries.Select(item => item.Value).Min() - 1;
-        var minValueGoals = goalEntries.Select(item => item.Value).Min() - 1;
+        var minValueEntries = entries.Min(item => item.Value) - 1;
+        var minValueGoals = goalEntries.Min(item => item.Value) - 1;
         var minValue = Math.Min(minValueEntries.Value, minValueGoals.Value);
         return new LineChart
         {

@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -24,8 +25,8 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
     {
         this.dataService = dataService;
         ItemsGrouped = new ObservableCollection<Grouping<string, TrainingViewModel>>();
-        AddNewTrainingCommand = new DoOnceCommand(AddNewTraining);
-        ItemSelectedCommand = new DoOnceCommand<Border>(TrainingSelected);
+        AddNewTrainingCommand = new AsyncRelayCommand(AddNewTraining);
+        ItemSelectedCommand = new AsyncRelayCommand<Border>(TrainingSelected);
         SubscribeMessages();
     }
 
@@ -435,7 +436,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
 
     #endregion
     
-    private async void LongPressed(Border sender)
+    private async Task LongPressed(Border sender)
     {
         LoggingService.TrackEvent($"{GetType().Name}: LongPressed started");
 
@@ -485,6 +486,6 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
 
     public Command<object> SelectGroupCommand => new Command<object>(ActivateGroup);
 
-    public ICommand LongPressedEffectCommand => new Command<Border>(LongPressed);
+    public ICommand LongPressedEffectCommand => new AsyncRelayCommand<Border>(LongPressed);
     #endregion
 }

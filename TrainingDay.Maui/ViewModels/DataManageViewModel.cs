@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Text;
 using System.Text.Json;
@@ -24,10 +25,10 @@ public class RepositoryData
 
 public class DataManageViewModel : BaseViewModel
 {
-    public ICommand ExportDataCommand => new Command(ExportData);
-    public ICommand ImportDataCommand => new Command(ImportData);
+    public ICommand ExportDataCommand => new AsyncRelayCommand(ExportData);
+    public ICommand ImportDataCommand => new AsyncRelayCommand(ImportData);
 
-    private async void ImportData()
+    private async Task ImportData()
     {
         IsBusy = true;
 
@@ -144,7 +145,7 @@ public class DataManageViewModel : BaseViewModel
         }
     }
 
-    private async void ExportData()
+    private async Task ExportData()
     {
         IsBusy = true;
         RepositoryData repositoryData = new()

@@ -1,6 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
-using TrainingDay.Maui.Controls;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.Views;
@@ -9,7 +9,7 @@ namespace TrainingDay.Maui.ViewModels.Pages;
 
 public class BlogsPageViewModel : BaseViewModel
 {
-    private DoOnceCommand<BlogViewModel> openBlogCommand;
+    private AsyncRelayCommand<BlogViewModel> openBlogCommand;
     private readonly IDataService dataService;
 
 	public BlogsPageViewModel(IDataService dataService)
@@ -91,7 +91,7 @@ public class BlogsPageViewModel : BaseViewModel
 
     public ObservableCollection<BlogViewModel> BlogsCollection { get; set; }
 
-    public ICommand OpenBlogCommand => openBlogCommand ?? (openBlogCommand = new DoOnceCommand<BlogViewModel>(OpenBlog));
+    public ICommand OpenBlogCommand => openBlogCommand ?? (openBlogCommand = new AsyncRelayCommand<BlogViewModel>(OpenBlog));
 
     #endregion
 }

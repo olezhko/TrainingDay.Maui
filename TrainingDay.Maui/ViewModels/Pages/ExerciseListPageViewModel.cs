@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Common.Extensions;
@@ -27,9 +28,9 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
     public ExerciseListPageViewModel()
     {
         Filter = new FilterModel();
-        ChoseExercisesCommand = new Command(ChoseExercises);
-        ViewFilterWindowCommand = new Command(ViewFilterWindow);
-        CancelCommand = new Command(Cancel);
+        ChoseExercisesCommand = new AsyncRelayCommand(ChoseExercises);
+        ViewFilterWindowCommand = new AsyncRelayCommand(ViewFilterWindow);
+        CancelCommand = new AsyncRelayCommand(Cancel);
         Items = new ObservableCollection<ExerciseListItemViewModel>();
         BaseItems = new ObservableCollection<ExerciseListItemViewModel>();
         UpdateItems();
@@ -62,7 +63,7 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
 
     private void UnsubscribeMessages() => WeakReferenceMessenger.Default.Unregister<FilterAcceptedForExercisesMessage>(this);
 
-    private async void Cancel() => await Shell.Current.GoToAsync("..");
+    private async Task Cancel() => await Shell.Current.GoToAsync("..");
 
     /// <summary>
     /// Если элементы были выбраны путем поиска, а потом сбросили поиск, то оставить их выбранными
@@ -171,6 +172,8 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
 
                 newItems.Add(newItem);
             }
+
+            newItems = new ObservableCollection<ExerciseListItemViewModel>(newItems.OrderByDescending(x => x.IsFavourite));
         }
         catch (Exception e)
         {
@@ -180,14 +183,14 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
         return newItems;
     }
 
-    private async void ViewFilterWindow()
+    private async Task ViewFilterWindow()
     {
         SubscribeMessages();
         Dictionary<string, object> param = new Dictionary<string, object> { { "Filter", Filter } };
         await Shell.Current.GoToAsync(nameof(FilterPage), param);
     }
 
-    private async void ChoseExercises()
+    private async Task ChoseExercises()
     {
         WeakReferenceMessenger.Default.Send(new ExercisesSelectFinishedMessage(GetSelectedItems()));
 

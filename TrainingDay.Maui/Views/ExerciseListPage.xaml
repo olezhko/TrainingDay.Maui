@@ -86,19 +86,13 @@
                             </Border>
 
                             <CheckBox x:Name="SelectCheckBox" IsChecked="{Binding IsSelected}" VerticalOptions="Center" />
-                            <Border StrokeShape="RoundRectangle 5"
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                Margin="0"
-                                Padding="5"
-                                BackgroundColor="White"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center">
+                            <Border StrokeShape="RoundRectangle 5" Grid.Row="0" Grid.Column="1" Margin="0" Padding="5"
+                                BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center">
                                 <controls:ImageCache HeightRequest="60" WidthRequest="60" CodeNum="{Binding CodeNum}" ExerciseId="{Binding Id}" />
                             </Border>
 
                             <StackLayout Grid.Column="2" VerticalOptions="Center">
-                                <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="17" HorizontalOptions="Center" Text="{Binding Name}" />
+                                <Label Text="{Binding Name}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="17" HorizontalOptions="Center"  />
                                 <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" Style="{StaticResource MuscleFlexStyle}">
                                     <BindableLayout.ItemTemplate>
                                         <DataTemplate>
@@ -112,6 +106,19 @@
                                     </BindableLayout.ItemTemplate>
                                 </FlexLayout>
                             </StackLayout>
+
+                            <Label Grid.Column="2" Text="&#x2661;" TextColor="Gray" FontSize="22" Padding="0,0,0,0"
+                                   HorizontalOptions="End" VerticalOptions="Start">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsFavourite}" Value="True">
+                                        <Setter Property="Text" Value="&#x2665;" />
+                                        <Setter Property="TextColor" Value="{StaticResource Main}" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ToggleFavouriteCommand}" />
+                                </Label.GestureRecognizers>
+                            </Label>
                         </Grid>
                     </Border>
                 </DataTemplate>

@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Common.Extensions;
@@ -19,7 +20,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
     public HistoryTrainingPageViewModel()
     {
         LastTrainings = new ObservableCollection<LastTrainingViewModelList>();
-        ItemSelectedCommand = new Command<LastTraining>(SelectionChanged);
+        ItemSelectedCommand = new AsyncRelayCommand<LastTraining>(SelectionChanged);
 
         DaysAndTextLimits.Clear();
         DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.WeekString, 7));
@@ -38,9 +39,9 @@ public class HistoryTrainingPageViewModel : BaseViewModel
 
     public ICommand ItemSelectedCommand { get; set; }
 
-    public ICommand StartAgainCommand => new Command(StartAgainTraining);
+    public ICommand StartAgainCommand => new AsyncRelayCommand(StartAgainTraining);
 
-    public ICommand RemoveLastTrainingCommand => new Command(RemoveLastTraining);
+    public ICommand RemoveLastTrainingCommand => new AsyncRelayCommand(RemoveLastTraining);
 
     public ICommand RemainingItemsThresholdReachedCommand => new Command(RemainingItemsThresholdReached);
 
@@ -91,7 +92,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
         OnPropertyChanged(nameof(LastTrainings));
     }
 
-    private void SelectionChanged(LastTraining selected)
+    private async Task SelectionChanged(LastTraining selected)
     {
         SelectedTraining = selected;
         var trainingExerciseItems = App.Database.GetLastTrainingExerciseItems().Where(item => item.LastTrainingId == SelectedTraining.Id);
@@ -115,7 +116,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
         }
 
         HistoryTrainingExercisesPage page = new HistoryTrainingExercisesPage() { BindingContext = this };
-        Navigation.PushAsync(page);
+        await Navigation.PushAsync(page);
     }
 
     private void PutItemToListByDate(List<LastTrainingViewModelList> tempLastTrainings, LastTraining newItem)
@@ -152,7 +153,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
         return addResult;
     }
 
-    private void StartAgainTraining()
+    private async Task StartAgainTraining()
     {
         int trId = SelectedTraining.TrainingId;
         TrainingViewModel training = new TrainingViewModel();
@@ -170,7 +171,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
             PrepareTrainingViewModel(training);
         }
 
-        Navigation.PushAsync(new TrainingImplementPage() { TrainingItem = training, Title = training.Title });
+        await Navigation.PushAsync(new TrainingImplementPage() { TrainingItem = training, Title = training.Title });
     }
 
     private void PrepareTrainingViewModel(TrainingViewModel vm)
@@ -212,7 +213,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
         }
     }
 
-    private async void RemoveLastTraining()
+    private async Task RemoveLastTraining()
     {
         var result = await MessageManager.DisplayAlert(AppResources.DeleteTraining, SelectedTraining.Title, AppResources.YesString, AppResources.CancelString);
         if (result)

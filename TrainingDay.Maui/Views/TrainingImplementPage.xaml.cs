@@ -1,4 +1,5 @@
 using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using SkiaSharp.Extended.UI.Controls;
 using System.Collections.ObjectModel;
@@ -459,7 +460,7 @@ public partial class TrainingImplementPage : ContentPage
         WeakReferenceMessenger.Default.Unregister<ExercisesSelectFinishedMessage>(this);
     }
 
-    private async void AddExercisesRequest()
+    private async Task AddExercisesRequest()
     {
         SubscribeMessages();
         Dictionary<string, object> param = new Dictionary<string, object> { { "ExistedExercises", TrainingItem.Exercises } };
@@ -544,7 +545,7 @@ public partial class TrainingImplementPage : ContentPage
     }
 
     #region Properties
-    public ICommand AddExercisesCommand => new Command(AddExercisesRequest);
+    public ICommand AddExercisesCommand => new AsyncRelayCommand(AddExercisesRequest);
 
     public string CurrentTime { get; set; }
 

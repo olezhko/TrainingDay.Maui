@@ -1,4 +1,4 @@
-﻿using TrainingDay.Maui.Models.Database;
+using TrainingDay.Maui.Models.Database;
 
 namespace TrainingDay.Maui.ViewModels;
 
@@ -25,5 +25,11 @@ public class ExerciseListItemViewModel : ExerciseViewModel
     public ExerciseListItemViewModel(ExerciseEntity exercise) : base(exercise)
     {
         Id = exercise.Id;
+    }
+
+    protected override void ToggleFavourite()
+    {
+        base.ToggleFavourite();
+        App.Database.SaveExerciseItem(GetExercise());
     }
 }

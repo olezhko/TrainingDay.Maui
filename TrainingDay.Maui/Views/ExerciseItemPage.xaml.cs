@@ -36,7 +36,6 @@ public partial class ExerciseItemPage : ContentPage
         else
         {
             TitleLabel.Text = item.Name;
-            NameLabel.IsVisible = false;
         }
     }
 

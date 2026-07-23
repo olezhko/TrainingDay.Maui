@@ -32,6 +32,13 @@
     <Grid>
         <ScrollView>
             <Grid x:Name="ContentGrid" RowDefinitions="auto,auto,auto,auto,auto,auto" RowSpacing="10">
+
+                <Label
+                    Grid.Row="0"
+                    FontSize="Large"
+                    Text="{Binding Name}" HorizontalTextAlignment="Center"
+                    VerticalOptions="Start" />
+                
                 <Border Grid.Row="0" Style="{StaticResource MaterialBorder}" IsVisible="{Binding IsBase, Converter={StaticResource InverseBooleanConverter}}">
                     <Grid>
                         <Label Text="{x:Static resx:AppResources.NameString}" Style="{StaticResource MaterialLabel}"/>
@@ -39,13 +46,18 @@
                     </Grid>
                 </Border>
 
-                <Label
-                    x:Name="NameLabel"
-                    Grid.Row="0"
-                    FontSize="Large"
-                    IsVisible="{Binding IsBase}"
-                    Text="{Binding Name}" HorizontalTextAlignment="Center"
-                    VerticalOptions="Start" />
+                <Label Grid.Row="0" Text="&#x2661;" TextColor="Gray" FontSize="26"
+                       HorizontalOptions="End" VerticalOptions="Start">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding IsFavourite}" Value="True">
+                            <Setter Property="Text" Value="&#x2665;" />
+                            <Setter Property="TextColor" Value="{StaticResource Main}" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ToggleFavouriteCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
 
                 <Border Padding="20" Grid.Row="1" StrokeDashArray="5,5" StrokeDashOffset="5" StrokeShape="RoundRectangle 20" BackgroundColor="{StaticResource Gray100}">
                     <VerticalStackLayout Spacing="10">
@@ -134,7 +146,7 @@
                                     BackgroundColor="Transparent"
                                     Text="{Binding Description.StartPosition}" />
                                     <Label FontSize="Small" IsVisible="{Binding Source={x:Reference StartingDescEditor}, Path=IsReadOnly}" 
-                                   Text="{Binding Description.StartPosition}" />
+                                        Text="{Binding Description.StartPosition}" />
                                 </Grid>
                             </Border>
 

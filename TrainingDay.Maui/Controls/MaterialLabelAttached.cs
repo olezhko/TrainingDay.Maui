@@ -45,7 +45,7 @@ namespace TrainingDay.Maui.Controls
             }
         }
 
-        private static void ChangeActivate(Label label, bool isCollapse, bool isVisible = true)
+        private static async void ChangeActivate(Label label, bool isCollapse, bool isVisible = true)
         {
             label.IsVisible = isVisible;
             bool _isCollapsed = label.VerticalOptions == LayoutOptions.Start;
@@ -57,8 +57,7 @@ namespace TrainingDay.Maui.Controls
             if (isCollapse)
             {
                 label.VerticalOptions = LayoutOptions.Start;
-                label.ScaleXTo(0.6, 250);
-                label.ScaleYTo(0.6, 250);
+                await Task.WhenAll(label.ScaleXToAsync(0.6, 250), label.ScaleYToAsync(0.6, 250));
                 label.Opacity = 1;
 #if IOS
                 label.Margin = new Thickness(5, -10, 5, 0);
@@ -71,8 +70,7 @@ namespace TrainingDay.Maui.Controls
             else
             {
                 label.VerticalOptions = LayoutOptions.Center;
-                label.ScaleXTo(1, 250);
-                label.ScaleYTo(1, 250);
+                await Task.WhenAll(label.ScaleXToAsync(1, 250), label.ScaleYToAsync(1, 250));
                 label.Opacity = 0.5;
                 label.Margin = new Thickness(5, 0, 5, 0);
             }

@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using CommunityToolkit.Mvvm.Input;
+using System.Windows.Input;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Services;
@@ -116,7 +117,7 @@ public class StatisticsViewModel : BaseViewModel
         return result;
     }
 
-    private async void ShareResults()
+    private async Task ShareResults()
     {
         await MessageManager.DisplayAlert("Share", "ShareResults", "OK");
     }
@@ -167,5 +168,5 @@ public class StatisticsViewModel : BaseViewModel
         set => SetProperty(ref _isLastTrainingsAvailable, value);
     }
 
-    public ICommand ShareResultsCommand => _shareResultsCommand ?? (_shareResultsCommand = new Command(ShareResults));
+    public ICommand ShareResultsCommand => _shareResultsCommand ?? (_shareResultsCommand = new AsyncRelayCommand(ShareResults));
 }

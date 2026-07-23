@@ -7,4 +7,6 @@ public class ExerciseEntity : Common.Models.Exercise
 {
     [PrimaryKey, AutoIncrement, Column("_id")]
     public new int Id { get; set; }
+
+    public bool IsFavourite { get; set; }
 }

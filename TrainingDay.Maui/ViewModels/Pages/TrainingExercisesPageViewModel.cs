@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -31,19 +32,19 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
     public TrainingViewModel Training { get; set; }
 
     private ICommand _deleteExerciseCommand;
-    public ICommand DeleteExerciseCommand => _deleteExerciseCommand ??= new Command<TrainingExerciseViewModel>(DeleteExercise);
+    public ICommand DeleteExerciseCommand => _deleteExerciseCommand ??= new AsyncRelayCommand<TrainingExerciseViewModel>(DeleteExercise);
 
     private ICommand _makeTrainingCommand;
-    public ICommand MakeTrainingCommand => _makeTrainingCommand ??= new DoOnceCommand(MakeTraining);
+    public ICommand MakeTrainingCommand => _makeTrainingCommand ??= new AsyncRelayCommand(MakeTraining);
 
     private ICommand _itemTappedCommand;
-    public ICommand ItemTappedCommand => _itemTappedCommand ??= new DoOnceCommand<object>(TrainingExerciseTapped);
+    public ICommand ItemTappedCommand => _itemTappedCommand ??= new AsyncRelayCommand<object>(TrainingExerciseTapped);
 
     private ICommand _showTrainingSettingsPageCommand;
-    public ICommand ShowTrainingSettingsPageCommand => _showTrainingSettingsPageCommand ??= new Command(ShowTrainingSettingsPage);
+    public ICommand ShowTrainingSettingsPageCommand => _showTrainingSettingsPageCommand ??= new AsyncRelayCommand(ShowTrainingSettingsPage);
 
     private ICommand _addExercisesCommand;
-    public ICommand AddExercisesCommand => _addExercisesCommand ??= new DoOnceCommand(AddExercises);
+    public ICommand AddExercisesCommand => _addExercisesCommand ??= new AsyncRelayCommand(AddExercises);
 
     private ICommand _cancelActionCommand;
     public ICommand CancelActionCommand => _cancelActionCommand ??= new Command(() => StopAction());
@@ -52,14 +53,14 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
     public ICommand StartMoveExerciseCommand => _startMoveExerciseCommand ??= new Command(StartMoveExercises);
 
     private ICommand _startActionCommand;
-    public ICommand StartActionCommand => _startActionCommand ??= new Command(StartAction);
+    public ICommand StartActionCommand => _startActionCommand ??= new AsyncRelayCommand(StartAction);
 
     public TrainingViewModel? SelectedTrainingForCopyOrMove { get; set; } = null;
     private ICommand _acceptTrainingForMoveOrCopyCommand;
-    public ICommand AcceptTrainingForMoveOrCopyCommand => _acceptTrainingForMoveOrCopyCommand ??= new Command(AcceptTrainingForMoveOrCopy);
+    public ICommand AcceptTrainingForMoveOrCopyCommand => _acceptTrainingForMoveOrCopyCommand ??= new AsyncRelayCommand(AcceptTrainingForMoveOrCopy);
 
     private ICommand _createTrainingFromSelectedExercisesCommand;
-    public ICommand CreateTrainingFromSelectedExercisesCommand => _createTrainingFromSelectedExercisesCommand ??= new Command(CreateTrainingFromSelectedExercises);
+    public ICommand CreateTrainingFromSelectedExercisesCommand => _createTrainingFromSelectedExercisesCommand ??= new AsyncRelayCommand(CreateTrainingFromSelectedExercises);
 
     public int ItemId
     {
@@ -184,7 +185,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         LoggingService.TrackEvent($"{GetType().Name}: AddExercises finished");
     }
 
-    private async void DeleteExercise(TrainingExerciseViewModel sender)
+    private async Task DeleteExercise(TrainingExerciseViewModel sender)
     {
         LoggingService.TrackEvent($"{GetType().Name}: DeleteExercise {CurrentAction} started");
         if (CurrentAction == ExerciseCheckBoxAction.SuperSet)
@@ -402,7 +403,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         OnPropertyChanged(nameof(IsExercisesCheckBoxVisible));
     }
 
-    private async void StartAction()
+    private async Task StartAction()
     {
         LoggingService.TrackEvent($"{GetType().Name}: StartAction {CurrentAction} Started");
         if (CurrentAction == ExerciseCheckBoxAction.Copy || CurrentAction == ExerciseCheckBoxAction.Move)
@@ -435,7 +436,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         OnPropertyChanged(nameof(TrainingItems));
     }
 
-    private async void AcceptTrainingForMoveOrCopy()
+    private async Task AcceptTrainingForMoveOrCopy()
     {
         await Shell.Current.GoToAsync("..");
 
@@ -471,7 +472,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         LoggingService.TrackEvent($"{GetType().Name}: AcceptTrainingForMoveOrCopy {CurrentAction} Finished");
     }
 
-    private async void CreateTrainingFromSelectedExercises()
+    private async Task CreateTrainingFromSelectedExercises()
     {
         var result = await MessageManager.DisplayPromptAsync(Resources.Strings.AppResources.CreateNewString, Resources.Strings.AppResources.EnterTrainingName, Resources.Strings.AppResources.OkString, Resources.Strings.AppResources.CancelString, Resources.Strings.AppResources.NameString);
         if (result.IsNotNullOrEmpty())
@@ -528,7 +529,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         await Toast.Make(AppResources.SharedString).Show();
     }
 
-    private async void ShowTrainingSettingsPage()
+    private async Task ShowTrainingSettingsPage()
     {
         LoggingService.TrackEvent($"{GetType().Name}: ShowTrainingSettingsPage");
 

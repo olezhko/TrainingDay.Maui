@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
 using System.Text.Json;
+using System.Windows.Input;
 using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.Extensions;
@@ -19,6 +21,7 @@ public class ExerciseViewModel : BaseViewModel
     private ObservableCollection<MuscleViewModel> muscles;
     private DifficultTypes difficultType;
     private ObservableCollection<ExerciseVideo> videoItems;
+    private bool isFavourite;
 
     public ExerciseViewModel()
     {
@@ -26,14 +29,18 @@ public class ExerciseViewModel : BaseViewModel
         Tags = new List<ExerciseTags> { ExerciseTags.ExerciseByReps };
         VideoItems = new ObservableCollection<ExerciseVideo>();
         Description = new DescriptionViewModel();
+        ToggleFavouriteCommand = new RelayCommand(ToggleFavourite);
     }
 
-    public ExerciseViewModel(Common.Models.Exercise exercise)
+    public ExerciseViewModel(ExerciseEntity exercise)
     {
         LoadExercise(exercise);
+        ToggleFavouriteCommand = new RelayCommand(ToggleFavourite);
     }
 
-    private void LoadExercise(Common.Models.Exercise exercise)
+    protected virtual void ToggleFavourite() => IsFavourite = !IsFavourite;
+
+    private void LoadExercise(ExerciseEntity exercise)
     {
         Id = exercise.Id;
         Tags = [.. ExerciseExtensions.ConvertTagIntToList(exercise.TagsValue)];
@@ -42,6 +49,7 @@ public class ExerciseViewModel : BaseViewModel
         Description = DescriptionViewModel.ConvertFromJson(exercise.Description);
         CodeNum = exercise.CodeNum;
         DifficultType = exercise.DifficultType;
+        IsFavourite = exercise.IsFavourite;
         OnPropertyChanged(nameof(IsBase));
     }
 
@@ -55,7 +63,8 @@ public class ExerciseViewModel : BaseViewModel
             MusclesString = MusclesExtensions.ConvertFromListToString(Muscles.ToList()),
             TagsValue = ExerciseExtensions.ConvertTagListToInt(Tags),
             CodeNum = CodeNum,
-            DifficultType = DifficultType
+            DifficultType = DifficultType,
+            IsFavourite = IsFavourite
         };
     }
 
@@ -102,6 +111,10 @@ public class ExerciseViewModel : BaseViewModel
     public ObservableCollection<MuscleViewModel> Muscles { get => muscles; set => SetProperty(ref muscles, value); }
 
     public DifficultTypes DifficultType { get => difficultType; set => SetProperty(ref difficultType, value); }
+
+    public bool IsFavourite { get => isFavourite; set => SetProperty(ref isFavourite, value); }
+
+    public ICommand ToggleFavouriteCommand { get; }
 
     public ObservableCollection<ExerciseVideo> VideoItems { get => videoItems; set => SetProperty(ref videoItems, value); }
     public byte[] ImageData { get; internal set; }
