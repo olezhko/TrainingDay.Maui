@@ -38,6 +38,9 @@ This project empowers users of all levels with a powerful and flexible training 
 
 📝 Release Notes
 
+v1.3.5
+- 👥 Social Workouts feed — browse workouts shared by other users, view exercise details for each, and like your favourites. Works offline with a cached copy of your last feed.
+
 v1.3.4
 - 🌍 Portuguese & Spanish support — the app is now available in Português and Español, switchable anytime from Settings.
 - 🐛 Localization fixes — corrected mistranslated strings in the German and Russian translations.
