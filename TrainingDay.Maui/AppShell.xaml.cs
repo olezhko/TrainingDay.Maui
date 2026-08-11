@@ -27,6 +27,13 @@ namespace TrainingDay.Maui
 
             Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
             Routing.RegisterRoute(nameof(StatisticsPage), typeof(StatisticsPage));
+
+            Routing.RegisterRoute(nameof(SocialWorkoutsPage), typeof(SocialWorkoutsPage));
+            Routing.RegisterRoute(nameof(SocialWorkoutDetailPage), typeof(SocialWorkoutDetailPage));
+
+            Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
+            Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
+            Routing.RegisterRoute(nameof(ForgotPasswordPage), typeof(ForgotPasswordPage));
         }
     }
 }

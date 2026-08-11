@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
+             xmlns:vm="clr-namespace:TrainingDay.Maui.ViewModels"
+             xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
+             x:Class="TrainingDay.Maui.Views.SocialWorkoutsPage"
+             x:DataType="viewModels:SocialWorkoutsPageViewModel"
+             x:Name="Page">
+
+    <Shell.TitleView>
+        <Label Text="{x:Static resx:AppResources.SocialWorkoutsString}" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
+    </Shell.TitleView>
+
+    <Grid RowDefinitions="Auto,*">
+        <Label Grid.Row="0" Text="{x:Static resx:AppResources.OfflineShowingCachedString}" IsVisible="{Binding IsOffline}"
+               BackgroundColor="#FFA500" TextColor="Black" Padding="8" HorizontalTextAlignment="Center" FontSize="Small"/>
+
+        <RefreshView Grid.Row="1" IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
+            <CollectionView ItemsSource="{Binding Feed}" BackgroundColor="Transparent" SelectionMode="None" VerticalScrollBarVisibility="Always"
+                            RemainingItemsThresholdReachedCommand="{Binding RemainingItemsThresholdReachedCommand}" RemainingItemsThreshold="2">
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout VerticalOptions="Center" Spacing="10">
+                        <Label HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.NoSocialWorkoutsString}" FontSize="Medium"/>
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="5" Orientation="Vertical"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="vm:SocialWorkoutViewModel">
+                        <Border Style="{StaticResource BorderCellStyle}" Padding="10">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:SocialWorkoutsPageViewModel}}, Path=ItemSelectedCommand}"
+                                                       CommandParameter="{Binding .}" NumberOfTapsRequired="1" />
+                            </Border.GestureRecognizers>
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto">
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Name}" FontSize="Medium" FontAttributes="Bold"/>
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding DateFormatted}" FontSize="13" TextColor="Gray"/>
+
+                                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding OwnerNickname}" FontSize="13" TextColor="Gray"/>
+
+                                <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding TopMuscles}" FontSize="Small"/>
+
+                                <StackLayout Grid.Row="3" Grid.Column="0" Orientation="Horizontal" Spacing="5">
+                                    <Label Text="{Binding DurationFormatted}" FontSize="Small"/>
+                                    <Label Text="•" FontSize="Small" TextColor="Gray"/>
+                                    <Label Text="{Binding ExerciseCount}" FontSize="Small"/>
+                                    <Label Text="{x:Static resx:AppResources.ExercisesCountString}" FontSize="Small"/>
+                                </StackLayout>
+
+                                <StackLayout Grid.Row="3" Grid.Column="1" Orientation="Horizontal" Spacing="5">
+                                    <Label Text="♥" FontSize="18" VerticalOptions="Center" TextColor="Gray">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsLikedByMe}" Value="True">
+                                                <Setter Property="TextColor" Value="Red"/>
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    <Label Text="{Binding LikesCount}" FontSize="Small" VerticalOptions="Center"/>
+                                </StackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>

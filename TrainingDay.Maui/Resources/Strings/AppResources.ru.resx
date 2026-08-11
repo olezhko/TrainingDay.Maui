@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Account" xml:space="preserve">
-    <value>Аккаунт</value>
+    <value>Профиль</value>
   </data>
   <data name="Achievements" xml:space="preserve">
     <value>Достижения</value>
@@ -641,5 +641,89 @@
   </data>
   <data name="RemoveSet" xml:space="preserve">
     <value>Удалить</value>
+  </data>
+  <data name="SocialWorkoutsString" xml:space="preserve">
+    <value>Лента</value>
+  </data>
+  <data name="NicknameString" xml:space="preserve">
+    <value>Никнейм</value>
+  </data>
+  <data name="ShareCompletedWorkouts" xml:space="preserve">
+    <value>Делиться завершёнными тренировками</value>
+  </data>
+  <data name="ShareCompletedWorkoutsTip" xml:space="preserve">
+    <value>Если включено, ваши завершённые тренировки будут доступны другим пользователям и могут появиться в ленте 'Социальные тренировки'.</value>
+  </data>
+  <data name="WorkoutAddedSuccessfully" xml:space="preserve">
+    <value>Тренировка успешно добавлена</value>
+  </data>
+  <data name="AddToMyWorkoutsString" xml:space="preserve">
+    <value>Добавить в мои тренировки</value>
+  </data>
+  <data name="NoSocialWorkoutsString" xml:space="preserve">
+    <value>Пока нет опубликованных тренировок</value>
+  </data>
+  <data name="OfflineShowingCachedString" xml:space="preserve">
+    <value>Вы офлайн — показаны сохранённые тренировки</value>
+  </data>
+  <data name="LikesString" xml:space="preserve">
+    <value>Лайки</value>
+  </data>
+  <data name="ExercisesCountString" xml:space="preserve">
+    <value>Упражнения</value>
+  </data>
+  <data name="LoginString" xml:space="preserve">
+    <value>Вход</value>
+  </data>
+  <data name="RegisterString" xml:space="preserve">
+    <value>Создать аккаунт</value>
+  </data>
+  <data name="LogoutString" xml:space="preserve">
+    <value>Выйти</value>
+  </data>
+  <data name="EmailString" xml:space="preserve">
+    <value>Эл. почта</value>
+  </data>
+  <data name="PasswordString" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="RememberMeString" xml:space="preserve">
+    <value>Запомнить меня</value>
+  </data>
+  <data name="ForgotPasswordString" xml:space="preserve">
+    <value>Забыли пароль?</value>
+  </data>
+  <data name="ForgotPasswordPromptString" xml:space="preserve">
+    <value>Введите свой email, и мы вышлем вам новый пароль.</value>
+  </data>
+  <data name="SendResetLinkString" xml:space="preserve">
+    <value>Отправить</value>
+  </data>
+  <data name="ResetLinkSentString" xml:space="preserve">
+    <value>Если аккаунт с таким email существует, новый пароль был отправлен.</value>
+  </data>
+  <data name="ConfirmEmailPromptString" xml:space="preserve">
+    <value>Проверьте почту и подтвердите аккаунт перед входом.</value>
+  </data>
+  <data name="FillAllFieldsString" xml:space="preserve">
+    <value>Пожалуйста, заполните все поля.</value>
+  </data>
+  <data name="GenericErrorString" xml:space="preserve">
+    <value>Что-то пошло не так. Попробуйте ещё раз.</value>
+  </data>
+  <data name="LoggedInAsString" xml:space="preserve">
+    <value>Вы вошли как {0}</value>
+  </data>
+  <data name="LogInToViewFeedString" xml:space="preserve">
+    <value>Войдите, чтобы просматривать и делиться тренировками с сообществом.</value>
+  </data>
+  <data name="LogInRequiredForSharingString" xml:space="preserve">
+    <value>Войдите, чтобы включить никнейм и публикацию тренировок.</value>
+  </data>
+  <data name="DontHaveAccountString" xml:space="preserve">
+    <value>Нет аккаунта? Зарегистрироваться</value>
+  </data>
+  <data name="NickOptionalString" xml:space="preserve">
+    <value>Никнейм (необязательно)</value>
   </data>
 </root>

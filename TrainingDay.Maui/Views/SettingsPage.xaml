@@ -21,9 +21,27 @@
     </Shell.TitleView>
 
     <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Default">
-        <StackLayout Spacing="5">
-            <StackLayout Spacing="10">
+        <VerticalStackLayout Spacing="5">
+            <VerticalStackLayout Spacing="10">
                 <Label Text="{x:Static resx:AppResources.SettingsString}" FontSize="Title" HorizontalOptions="Center"/>
+
+                <StackLayout Spacing="10" Margin="0,10">
+                    <Label x:Name="LoggedInAsLabel" FontSize="Small" TextColor="Gray" HorizontalOptions="Center"/>
+
+                    <StackLayout x:Name="LoggedOutButtons" Orientation="Horizontal" Spacing="10" HorizontalOptions="Center">
+                        <Button Text="{x:Static resx:AppResources.LoginString}" Clicked="LoginButton_Click" Style="{StaticResource ActionButton}" CornerRadius="20"/>
+                        <Button Text="{x:Static resx:AppResources.RegisterString}" Clicked="RegisterButton_Click" Style="{StaticResource ActionButton}" CornerRadius="20"/>
+                    </StackLayout>
+
+                    <Button x:Name="LogoutButton" Text="{x:Static resx:AppResources.LogoutString}" Clicked="LogoutButton_Click" Style="{StaticResource ActionButton}" CornerRadius="20" BackgroundColor="Gray"/>
+                </StackLayout>
+
+                <Border x:Name="NickBorder" Style="{StaticResource MaterialBorder}">
+                    <Grid>
+                        <Label Text="{x:Static resx:AppResources.NicknameString}" Style="{StaticResource MaterialLabel}" controls:MaterialLabelAttached.MaterialControlType="Entry" />
+                        <Entry x:Name="NicknameEntry" BackgroundColor="Transparent" HorizontalOptions="Fill" VerticalOptions="End" Unfocused="NicknameEntry_OnUnfocused"/>
+                    </Grid>
+                </Border>
 
                 <Border Style="{StaticResource MaterialBorder}">
                     <Grid>
@@ -53,7 +71,16 @@
                     <Label Text="{x:Static resx:AppResources.ShowAdvicesOnImplementing}" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
                     <Switch x:Name="ShowAdvicesOnImplementingSwitch" Toggled="ShowAdvicesOnImplementingSwitch_OnToggled" />
                 </StackLayout>
-            </StackLayout>
+
+                <StackLayout Margin="5">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{x:Static resx:AppResources.ShareCompletedWorkouts}" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
+                        <Switch x:Name="ShareCompletedWorkoutsSwitch" Toggled="ShareCompletedWorkoutsSwitch_OnToggled" />
+                    </StackLayout>
+                    <Label Text="{x:Static resx:AppResources.ShareCompletedWorkoutsTip}" FontSize="Small" TextColor="Gray" />
+                    <Label x:Name="LoginRequiredHintLabel" Text="{x:Static resx:AppResources.LogInRequiredForSharingString}" FontSize="Small" TextColor="Gray" />
+                </StackLayout>
+            </VerticalStackLayout>
 
             <VerticalStackLayout Spacing="5" x:DataType="viewModels:DataManageViewModel">
                 <VerticalStackLayout.BindingContext>
@@ -83,6 +110,6 @@
             </Button>
 
             <Label Text="{x:Static ext:ConstantKeys.Version}" FontSize="Small" HorizontalOptions="Center"/>
-        </StackLayout>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

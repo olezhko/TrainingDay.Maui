@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!--
-    Microsoft ResX Schema
-
+  <!-- 
+    Microsoft ResX Schema 
+    
     Version 2.0
-
-    The primary goals of this format is to allow a simple XML format
-    that is mostly human readable. The generation and parsing of the
-    various data types are done through the TypeConverter classes
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
     associated with the data types.
-
+    
     Example:
-
+    
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-
-    There are any number of "resheader" rows that contain simple
+                
+    There are any number of "resheader" rows that contain simple 
     name/value pairs.
-
-    Each data row contains a name, and value. The row also contains a
-    type or mimetype. Type corresponds to a .NET class that support
-    text/value conversion through the TypeConverter architecture.
-    Classes that don't support this are serialized and stored with the
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
     mimetype set.
-
-    The mimetype is used for serialized objects, and tells the
-    ResXResourceReader how to depersist the object. This is currently not
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
     extensible. For a given mimetype the value must be set accordingly:
-
-    Note - application/x-microsoft.net.object.binary.base64 is the format
-    that the ResXResourceWriter will generate, however the reader can
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
     read any of the formats listed below.
-
+    
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-
+    
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array
+    value   : The object must be serialized into a byte array 
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -641,5 +641,89 @@ Los músculos calientes se contraen y relajan mejor durante el entrenamiento, lo
   </data>
   <data name="RemoveSet" xml:space="preserve">
     <value>Eliminar</value>
+  </data>
+  <data name="SocialWorkoutsString" xml:space="preserve">
+    <value>Feed</value>
+  </data>
+  <data name="NicknameString" xml:space="preserve">
+    <value>Apodo</value>
+  </data>
+  <data name="ShareCompletedWorkouts" xml:space="preserve">
+    <value>Compartir mis entrenamientos completados</value>
+  </data>
+  <data name="ShareCompletedWorkoutsTip" xml:space="preserve">
+    <value>Si está activado, tus entrenamientos completados se compartirán con otros usuarios y podrán aparecer en el feed 'Entrenamientos Sociales'.</value>
+  </data>
+  <data name="WorkoutAddedSuccessfully" xml:space="preserve">
+    <value>Entrenamiento añadido con éxito</value>
+  </data>
+  <data name="AddToMyWorkoutsString" xml:space="preserve">
+    <value>Añadir a mis entrenamientos</value>
+  </data>
+  <data name="NoSocialWorkoutsString" xml:space="preserve">
+    <value>Aún no hay entrenamientos compartidos</value>
+  </data>
+  <data name="OfflineShowingCachedString" xml:space="preserve">
+    <value>Estás sin conexión — mostrando entrenamientos guardados</value>
+  </data>
+  <data name="LikesString" xml:space="preserve">
+    <value>Me gusta</value>
+  </data>
+  <data name="ExercisesCountString" xml:space="preserve">
+    <value>Ejercicios</value>
+  </data>
+  <data name="LoginString" xml:space="preserve">
+    <value>Iniciar sesión</value>
+  </data>
+  <data name="RegisterString" xml:space="preserve">
+    <value>Crear cuenta</value>
+  </data>
+  <data name="LogoutString" xml:space="preserve">
+    <value>Cerrar sesión</value>
+  </data>
+  <data name="EmailString" xml:space="preserve">
+    <value>Correo electrónico</value>
+  </data>
+  <data name="PasswordString" xml:space="preserve">
+    <value>Contraseña</value>
+  </data>
+  <data name="RememberMeString" xml:space="preserve">
+    <value>Recordarme</value>
+  </data>
+  <data name="ForgotPasswordString" xml:space="preserve">
+    <value>¿Olvidaste tu contraseña?</value>
+  </data>
+  <data name="ForgotPasswordPromptString" xml:space="preserve">
+    <value>Introduce tu correo y te enviaremos una nueva contraseña.</value>
+  </data>
+  <data name="SendResetLinkString" xml:space="preserve">
+    <value>Enviar</value>
+  </data>
+  <data name="ResetLinkSentString" xml:space="preserve">
+    <value>Si existe una cuenta con ese correo, se ha enviado una nueva contraseña.</value>
+  </data>
+  <data name="ConfirmEmailPromptString" xml:space="preserve">
+    <value>Revisa tu correo para confirmar tu cuenta antes de iniciar sesión.</value>
+  </data>
+  <data name="FillAllFieldsString" xml:space="preserve">
+    <value>Por favor completa todos los campos.</value>
+  </data>
+  <data name="GenericErrorString" xml:space="preserve">
+    <value>Algo salió mal. Inténtalo de nuevo.</value>
+  </data>
+  <data name="LoggedInAsString" xml:space="preserve">
+    <value>Sesión iniciada como {0}</value>
+  </data>
+  <data name="LogInToViewFeedString" xml:space="preserve">
+    <value>Inicia sesión para ver y compartir entrenamientos con la comunidad.</value>
+  </data>
+  <data name="LogInRequiredForSharingString" xml:space="preserve">
+    <value>Inicia sesión para activar el apodo y compartir entrenamientos.</value>
+  </data>
+  <data name="DontHaveAccountString" xml:space="preserve">
+    <value>¿No tienes cuenta? Regístrate</value>
+  </data>
+  <data name="NickOptionalString" xml:space="preserve">
+    <value>Apodo (opcional)</value>
   </data>
 </root>

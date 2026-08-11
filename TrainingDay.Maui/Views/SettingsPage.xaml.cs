@@ -10,14 +10,20 @@ public partial class SettingsPage : ContentPage
 {
     private readonly Dictionary<string, CultureInfo> _availableLanguages = new Dictionary<string, CultureInfo>();
     private WorkoutService workoutService;
+    private readonly IAuthService authService;
+    private readonly IUserSettingsService userSettingsService;
 
-    public SettingsPage(WorkoutService workoutService)
+    public SettingsPage(WorkoutService workoutService, IAuthService authService, IUserSettingsService userSettingsService)
     {
         InitializeComponent();
         this.workoutService = workoutService;
+        this.authService = authService;
+        this.userSettingsService = userSettingsService;
 
         ShowAdvicesOnImplementingSwitch.IsToggled = Settings.IsShowAdvicesOnImplementing;
         ScreenOnImplementedSwitch.IsToggled = Settings.IsDisplayOnImplement;
+        NicknameEntry.Text = Settings.Nickname;
+        ShareCompletedWorkoutsSwitch.IsToggled = Settings.ShareCompletedWorkouts;
 
         FillAvailableLanguage();
         FillAvailableMeasureWeight();
@@ -25,6 +31,52 @@ public partial class SettingsPage : ContentPage
         MeasureWeightPicker.SelectedIndexChanged += MeasureWeightPicker_Changed;
 		DonateButton.IsVisible = DeviceInfo.Platform != DevicePlatform.iOS;
 	}
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        RefreshAuthState();
+
+        if (authService.IsLoggedIn)
+        {
+            var serverSettings = await userSettingsService.GetAsync();
+            if (serverSettings != null)
+            {
+                NicknameEntry.Text = serverSettings.Nickname;
+                ShareCompletedWorkoutsSwitch.IsToggled = serverSettings.ShareCompletedWorkouts;
+            }
+        }
+    }
+
+    private void RefreshAuthState()
+    {
+        var isLoggedIn = authService.IsLoggedIn;
+
+        LoggedInAsLabel.IsVisible = isLoggedIn;
+        LoggedInAsLabel.Text = isLoggedIn ? string.Format(AppResources.LoggedInAsString, Settings.UserEmail) : string.Empty;
+        LoggedOutButtons.IsVisible = !isLoggedIn;
+        LogoutButton.IsVisible = isLoggedIn;
+
+        NickBorder.IsVisible = isLoggedIn;
+        ShareCompletedWorkoutsSwitch.IsEnabled = isLoggedIn;
+        LoginRequiredHintLabel.IsVisible = !isLoggedIn;
+    }
+
+    private async void LoginButton_Click(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(LoginPage));
+    }
+
+    private async void RegisterButton_Click(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(RegisterPage));
+    }
+
+    private async void LogoutButton_Click(object sender, EventArgs e)
+    {
+        await authService.LogoutAsync();
+        RefreshAuthState();
+    }
 
 	private void ScreenOnImplementedSwitch_OnToggled(object sender, ToggledEventArgs e)
     {
@@ -111,6 +163,34 @@ public partial class SettingsPage : ContentPage
     private void ShowAdvicesOnImplementingSwitch_OnToggled(object sender, ToggledEventArgs e)
     {
         Settings.IsShowAdvicesOnImplementing = ShowAdvicesOnImplementingSwitch.IsToggled;
+    }
+
+    private async void NicknameEntry_OnUnfocused(object sender, FocusEventArgs e)
+    {
+        if (!authService.IsLoggedIn)
+        {
+            return;
+        }
+
+        var value = NicknameEntry.Text;
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            NicknameEntry.Text = Settings.Nickname;
+            return;
+        }
+
+        await userSettingsService.UpdateAsync(value.Trim(), ShareCompletedWorkoutsSwitch.IsToggled);
+    }
+
+    private async void ShareCompletedWorkoutsSwitch_OnToggled(object sender, ToggledEventArgs e)
+    {
+        if (!authService.IsLoggedIn)
+        {
+            return;
+        }
+
+        LoggingService.TrackEvent(ShareCompletedWorkoutsSwitch.IsToggled ? "Share Enabled" : "Share Disabled");
+        await userSettingsService.UpdateAsync(NicknameEntry.Text, ShareCompletedWorkoutsSwitch.IsToggled);
     }
 
     private async void OpenStatistics_Click(object sender, EventArgs e)

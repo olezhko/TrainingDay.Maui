@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
+             xmlns:vm="clr-namespace:TrainingDay.Maui.ViewModels"
+             xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
+             xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
+             xmlns:data="clr-namespace:TrainingDay.Common.Models;assembly=TrainingDay.Common"
+             x:Class="TrainingDay.Maui.Views.SocialWorkoutDetailPage"
+             x:DataType="viewModels:SocialWorkoutDetailViewModel"
+             Title="{Binding Workout.Name}"
+             Shell.TabBarIsVisible="False"
+             Padding="5">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="5">
+            <VerticalStackLayout Grid.Column="0" Spacing="2">
+                <Label Text="{Binding Workout.OwnerNickname}" FontSize="Small" TextColor="Gray"/>
+                <Label Text="{Binding Workout.DateFormatted}" FontSize="Small" TextColor="Gray"/>
+                <Label Text="{Binding Workout.DurationFormatted}" FontSize="Small"/>
+            </VerticalStackLayout>
+
+            <StackLayout Grid.Column="1" Orientation="Horizontal" Spacing="5" VerticalOptions="Center">
+                <Label Text="♥" FontSize="24" VerticalOptions="Center" TextColor="Gray">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding Workout.IsLikedByMe}" Value="True">
+                            <Setter Property="TextColor" Value="Red"/>
+                        </DataTrigger>
+                    </Label.Triggers>
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding LikeCommand}" NumberOfTapsRequired="1" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text="{Binding Workout.LikesCount}" FontSize="Small" VerticalOptions="Center"/>
+            </StackLayout>
+        </Grid>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Exercises}" SelectionMode="None">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="5" Orientation="Vertical"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:TrainingExerciseViewModel">
+                    <Border Style="{StaticResource BorderCellStyle}">
+                        <Grid Margin="0" Padding="0" ColumnSpacing="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Border StrokeShape="RoundRectangle 5" Grid.Column="0" Margin="0" Padding="5"
+                                    BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center">
+                                <controls:ImageCache HeightRequest="60" WidthRequest="60" CodeNum="{Binding CodeNum}" ExerciseId="{Binding ExerciseId}" />
+                            </Border>
+
+                            <StackLayout Grid.Column="1" VerticalOptions="Center">
+                                <Label Text="{Binding Name}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="17" HorizontalOptions="Center" Margin="0,0,0,5"/>
+
+                                <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" Style="{StaticResource MuscleFlexStyle}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="vm:MuscleViewModel">
+                                            <!--AbsoluteLayout needed for proper draw muscle label. without it cropped in the end-->
+                                            <AbsoluteLayout>
+                                                <Border Style="{StaticResource MuscleBorderCellStyle}">
+                                                    <Label Text="{Binding Name}" FontSize="11" TextColor="White" LineBreakMode="NoWrap"/>
+                                                </Border>
+                                            </AbsoluteLayout>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </FlexLayout>
+
+                                <FlexLayout AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}" Direction="Row" HorizontalOptions="Center"
+                                    IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByReps}}"
+                                    JustifyContent="Center" VerticalOptions="Center" Wrap="Wrap">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="vm:WeightAndRepsViewModel">
+                                            <Border Stroke="Transparent" StrokeShape="RoundRectangle 10" Padding="5,0"
+                                                    BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}">
+                                                <HorizontalStackLayout HorizontalOptions="Center" Spacing="0">
+                                                    <Label FontSize="12" Margin="5" HorizontalTextAlignment="Center" Text="{Binding Repetitions}" VerticalTextAlignment="Center" />
+                                                    <Label FontSize="12" Text="{x:Static resx:AppResources.RepetitionsShort}" VerticalTextAlignment="Center" />
+                                                </HorizontalStackLayout>
+                                            </Border>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </FlexLayout>
+                                <FlexLayout AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}"
+                                        Direction="Row" HorizontalOptions="Center" JustifyContent="SpaceAround" VerticalOptions="Center" Wrap="Wrap"
+                                        IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByRepsAndWeight}}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="vm:WeightAndRepsViewModel">
+                                            <Border Stroke="Transparent" StrokeShape="RoundRectangle 10" Padding="5,0"
+                                                    BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}">
+                                                <HorizontalStackLayout HorizontalOptions="Center" Spacing="0">
+                                                    <Label FontSize="12" Margin="5" HorizontalTextAlignment="Center" Text="{Binding Weight}" VerticalTextAlignment="Center" />
+                                                    <Label FontSize="12" Text="{Binding Source={x:Static Application.Current},Path=MeasureOfWeight}" VerticalTextAlignment="Center" />
+                                                    <Label FontSize="12" Text="x" VerticalTextAlignment="Center" />
+                                                    <Label FontSize="12" Margin="5" HorizontalTextAlignment="Center" Text="{Binding Repetitions}"
+                                                        VerticalTextAlignment="Center" />
+                                                    <Label FontSize="12" Text="{x:Static resx:AppResources.RepetitionsShort}" VerticalTextAlignment="Center" />
+                                                </HorizontalStackLayout>
+                                            </Border>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </FlexLayout>
+
+                                <Label Margin="0" Padding="0" FontSize="Medium" HorizontalOptions="Center"
+                                    IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}"
+                                    Text="{Binding Time, StringFormat={x:Static resx:AppResources.CurrentTimeString}}" />
+                            </StackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Grid.Row="2" Text="{x:Static resx:AppResources.AddToMyWorkoutsString}" Command="{Binding AddToMyWorkoutsCommand}"
+                CornerRadius="20" Margin="5" HeightRequest="50"/>
+    </Grid>
+</ContentPage>

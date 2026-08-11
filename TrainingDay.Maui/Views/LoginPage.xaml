@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
+             xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
+             xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
+             x:Class="TrainingDay.Maui.Views.LoginPage"
+             x:DataType="viewModels:LoginPageViewModel"
+             Title="{x:Static resx:AppResources.LoginString}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="15" Padding="20" VerticalOptions="Center">
+            <Label Text="{x:Static resx:AppResources.LoginString}" FontSize="Title" HorizontalOptions="Center"/>
+
+            <Border Style="{StaticResource MaterialBorder}">
+                <Grid>
+                    <Label Text="{x:Static resx:AppResources.EmailString}" Style="{StaticResource MaterialLabel}" controls:MaterialLabelAttached.MaterialControlType="Entry" />
+                    <Entry Text="{Binding Email}" Keyboard="Email" BackgroundColor="Transparent" HorizontalOptions="Fill" VerticalOptions="End"/>
+                </Grid>
+            </Border>
+
+            <Border Style="{StaticResource MaterialBorder}">
+                <Grid>
+                    <Label Text="{x:Static resx:AppResources.PasswordString}" Style="{StaticResource MaterialLabel}" controls:MaterialLabelAttached.MaterialControlType="Entry" />
+                    <Entry Text="{Binding Password}" IsPassword="True" BackgroundColor="Transparent" HorizontalOptions="Fill" VerticalOptions="End"/>
+                </Grid>
+            </Border>
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="{x:Static resx:AppResources.RememberMeString}" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
+                <Switch IsToggled="{Binding RememberMe}"/>
+            </StackLayout>
+
+            <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding HasError}" HorizontalTextAlignment="Center"/>
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center"/>
+
+            <Button Text="{x:Static resx:AppResources.LoginString}" Command="{Binding LoginCommand}" Style="{StaticResource ActionButton}" CornerRadius="20"/>
+
+            <Label Text="{x:Static resx:AppResources.ForgotPasswordString}" TextDecorations="Underline" HorizontalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoToForgotPasswordCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
+
+            <Label Text="{x:Static resx:AppResources.DontHaveAccountString}" HorizontalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoToRegisterCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

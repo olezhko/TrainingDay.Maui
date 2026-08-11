@@ -657,4 +657,88 @@ Increase body temperature, activate the muscles and joints, and prepare the card
   <data name="RemoveSet" xml:space="preserve">
     <value>Remove Set</value>
   </data>
+  <data name="SocialWorkoutsString" xml:space="preserve">
+    <value>Feed</value>
+  </data>
+  <data name="NicknameString" xml:space="preserve">
+    <value>Nickname</value>
+  </data>
+  <data name="ShareCompletedWorkouts" xml:space="preserve">
+    <value>Share my completed workouts</value>
+  </data>
+  <data name="ShareCompletedWorkoutsTip" xml:space="preserve">
+    <value>When enabled, your completed workouts will be shared with other users and may appear in the 'Social Workouts' feed.</value>
+  </data>
+  <data name="WorkoutAddedSuccessfully" xml:space="preserve">
+    <value>Workout added successfully</value>
+  </data>
+  <data name="AddToMyWorkoutsString" xml:space="preserve">
+    <value>Add to my workouts</value>
+  </data>
+  <data name="NoSocialWorkoutsString" xml:space="preserve">
+    <value>No shared workouts yet</value>
+  </data>
+  <data name="OfflineShowingCachedString" xml:space="preserve">
+    <value>You're offline — showing cached workouts</value>
+  </data>
+  <data name="LikesString" xml:space="preserve">
+    <value>Likes</value>
+  </data>
+  <data name="ExercisesCountString" xml:space="preserve">
+    <value>Exercises</value>
+  </data>
+  <data name="LoginString" xml:space="preserve">
+    <value>Log In</value>
+  </data>
+  <data name="RegisterString" xml:space="preserve">
+    <value>Create Account</value>
+  </data>
+  <data name="LogoutString" xml:space="preserve">
+    <value>Log Out</value>
+  </data>
+  <data name="EmailString" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="PasswordString" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="RememberMeString" xml:space="preserve">
+    <value>Remember me</value>
+  </data>
+  <data name="ForgotPasswordString" xml:space="preserve">
+    <value>Forgot password?</value>
+  </data>
+  <data name="ForgotPasswordPromptString" xml:space="preserve">
+    <value>Enter your email and we'll send you a new password.</value>
+  </data>
+  <data name="SendResetLinkString" xml:space="preserve">
+    <value>Send reset link</value>
+  </data>
+  <data name="ResetLinkSentString" xml:space="preserve">
+    <value>If an account exists for that email, a new password has been sent.</value>
+  </data>
+  <data name="ConfirmEmailPromptString" xml:space="preserve">
+    <value>Check your email to confirm your account before signing in.</value>
+  </data>
+  <data name="FillAllFieldsString" xml:space="preserve">
+    <value>Please fill in all fields.</value>
+  </data>
+  <data name="GenericErrorString" xml:space="preserve">
+    <value>Something went wrong. Please try again.</value>
+  </data>
+  <data name="LoggedInAsString" xml:space="preserve">
+    <value>Logged in as {0}</value>
+  </data>
+  <data name="LogInToViewFeedString" xml:space="preserve">
+    <value>Log in to view and share workouts with the community.</value>
+  </data>
+  <data name="LogInRequiredForSharingString" xml:space="preserve">
+    <value>Log in to enable nickname and workout sharing.</value>
+  </data>
+  <data name="DontHaveAccountString" xml:space="preserve">
+    <value>Don't have an account? Sign up</value>
+  </data>
+  <data name="NickOptionalString" xml:space="preserve">
+    <value>Nickname (optional)</value>
+  </data>
 </root>

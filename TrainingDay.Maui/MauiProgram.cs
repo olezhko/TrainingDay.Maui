@@ -70,6 +70,20 @@ namespace TrainingDay.Maui
             builder.Services.AddSingleton<IDataService, DataService>();
             builder.Services.AddSingleton<WorkoutService>();
 
+            builder.Services.AddSingleton<IAuthService, AuthService>();
+            builder.Services.AddSingleton<IUserSettingsService, HttpUserSettingsService>();
+
+            builder.Services.AddSingleton<ISocialWorkoutsService, HttpSocialWorkoutsService>();
+            builder.Services.AddSingleton<SocialWorkoutsPageViewModel>();
+            builder.Services.AddSingleton<SocialWorkoutsPage>();
+
+            builder.Services.AddSingleton<LoginPageViewModel>();
+            builder.Services.AddSingleton<LoginPage>();
+            builder.Services.AddSingleton<RegisterPageViewModel>();
+            builder.Services.AddSingleton<RegisterPage>();
+            builder.Services.AddSingleton<ForgotPasswordPageViewModel>();
+            builder.Services.AddSingleton<ForgotPasswordPage>();
+
 #if ANDROID
             builder.Services.AddTransient<IPushNotification, Platforms.Android.PushNotificationService>();
 #endif

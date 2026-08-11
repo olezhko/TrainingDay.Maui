@@ -97,6 +97,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add to my workouts.
+        /// </summary>
+        internal static string AddToMyWorkoutsString {
+            get {
+                return ResourceManager.GetString("AddToMyWorkoutsString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add workout.
         /// </summary>
         internal static string AddTrainingString {
@@ -211,6 +220,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string ChoseAction {
             get {
                 return ResourceManager.GetString("ChoseAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check your email to confirm your account before signing in..
+        /// </summary>
+        internal static string ConfirmEmailPromptString {
+            get {
+                return ResourceManager.GetString("ConfirmEmailPromptString", resourceCulture);
             }
         }
         
@@ -422,6 +440,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t have an account? Sign up.
+        /// </summary>
+        internal static string DontHaveAccountString {
+            get {
+                return ResourceManager.GetString("DontHaveAccountString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Duplicate.
         /// </summary>
         internal static string Duplicate {
@@ -445,6 +472,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string ElapsedTimeString {
             get {
                 return ResourceManager.GetString("ElapsedTimeString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        internal static string EmailString {
+            get {
+                return ResourceManager.GetString("EmailString", resourceCulture);
             }
         }
         
@@ -496,6 +532,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Exercises.
         /// </summary>
+        internal static string ExercisesCountString {
+            get {
+                return ResourceManager.GetString("ExercisesCountString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exercises.
+        /// </summary>
         internal static string ExercisesString {
             get {
                 return ResourceManager.GetString("ExercisesString", resourceCulture);
@@ -508,6 +553,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string ExportData {
             get {
                 return ResourceManager.GetString("ExportData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please fill in all fields..
+        /// </summary>
+        internal static string FillAllFieldsString {
+            get {
+                return ResourceManager.GetString("FillAllFieldsString", resourceCulture);
             }
         }
         
@@ -530,11 +584,38 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter your email and we&apos;ll send you a new password..
+        /// </summary>
+        internal static string ForgotPasswordPromptString {
+            get {
+                return ResourceManager.GetString("ForgotPasswordPromptString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forgot password?.
+        /// </summary>
+        internal static string ForgotPasswordString {
+            get {
+                return ResourceManager.GetString("ForgotPasswordString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gallery.
         /// </summary>
         internal static string Gallery {
             get {
                 return ResourceManager.GetString("Gallery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something went wrong. Please try again..
+        /// </summary>
+        internal static string GenericErrorString {
+            get {
+                return ResourceManager.GetString("GenericErrorString", resourceCulture);
             }
         }
         
@@ -674,6 +755,60 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Likes.
+        /// </summary>
+        internal static string LikesString {
+            get {
+                return ResourceManager.GetString("LikesString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logged in as {0}.
+        /// </summary>
+        internal static string LoggedInAsString {
+            get {
+                return ResourceManager.GetString("LoggedInAsString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log in to enable nickname and workout sharing..
+        /// </summary>
+        internal static string LogInRequiredForSharingString {
+            get {
+                return ResourceManager.GetString("LogInRequiredForSharingString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log In.
+        /// </summary>
+        internal static string LoginString {
+            get {
+                return ResourceManager.GetString("LoginString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log in to view and share workouts with the community..
+        /// </summary>
+        internal static string LogInToViewFeedString {
+            get {
+                return ResourceManager.GetString("LogInToViewFeedString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log Out.
+        /// </summary>
+        internal static string LogoutString {
+            get {
+                return ResourceManager.GetString("LogoutString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to START.
         /// </summary>
         internal static string MakeTrainingString {
@@ -800,6 +935,24 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nickname.
+        /// </summary>
+        internal static string NicknameString {
+            get {
+                return ResourceManager.GetString("NicknameString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nickname (optional).
+        /// </summary>
+        internal static string NickOptionalString {
+            get {
+                return ResourceManager.GetString("NickOptionalString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your filter term did not match any exercises.
         /// </summary>
         internal static string NoExercisesFilterString {
@@ -827,6 +980,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No shared workouts yet.
+        /// </summary>
+        internal static string NoSocialWorkoutsString {
+            get {
+                return ResourceManager.GetString("NoSocialWorkoutsString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         internal static string NoString {
@@ -850,6 +1012,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string NoTrainingsNeedAddNewString {
             get {
                 return ResourceManager.GetString("NoTrainingsNeedAddNewString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You&apos;re offline — showing cached workouts.
+        /// </summary>
+        internal static string OfflineShowingCachedString {
+            get {
+                return ResourceManager.GetString("OfflineShowingCachedString", resourceCulture);
             }
         }
         
@@ -886,6 +1057,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string Or {
             get {
                 return ResourceManager.GetString("Or", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        internal static string PasswordString {
+            get {
+                return ResourceManager.GetString("PasswordString", resourceCulture);
             }
         }
         
@@ -1016,6 +1196,24 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Account.
+        /// </summary>
+        internal static string RegisterString {
+            get {
+                return ResourceManager.GetString("RegisterString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remember me.
+        /// </summary>
+        internal static string RememberMeString {
+            get {
+                return ResourceManager.GetString("RememberMeString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove Set.
         /// </summary>
         internal static string RemoveSet {
@@ -1066,6 +1264,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string Reset {
             get {
                 return ResourceManager.GetString("Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If an account exists for that email, a new password has been sent..
+        /// </summary>
+        internal static string ResetLinkSentString {
+            get {
+                return ResourceManager.GetString("ResetLinkSentString", resourceCulture);
             }
         }
         
@@ -1169,11 +1376,38 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Send reset link.
+        /// </summary>
+        internal static string SendResetLinkString {
+            get {
+                return ResourceManager.GetString("SendResetLinkString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         internal static string SettingsString {
             get {
                 return ResourceManager.GetString("SettingsString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Share my completed workouts.
+        /// </summary>
+        internal static string ShareCompletedWorkouts {
+            get {
+                return ResourceManager.GetString("ShareCompletedWorkouts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When enabled, your completed workouts will be shared with other users and may appear in the &apos;Social Workouts&apos; feed..
+        /// </summary>
+        internal static string ShareCompletedWorkoutsTip {
+            get {
+                return ResourceManager.GetString("ShareCompletedWorkoutsTip", resourceCulture);
             }
         }
         
@@ -1210,6 +1444,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string SkipString {
             get {
                 return ResourceManager.GetString("SkipString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feed.
+        /// </summary>
+        internal static string SocialWorkoutsString {
+            get {
+                return ResourceManager.GetString("SocialWorkoutsString", resourceCulture);
             }
         }
         
@@ -1570,6 +1813,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string WorkoutAddedString {
             get {
                 return ResourceManager.GetString("WorkoutAddedString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Workout added successfully.
+        /// </summary>
+        internal static string WorkoutAddedSuccessfully {
+            get {
+                return ResourceManager.GetString("WorkoutAddedSuccessfully", resourceCulture);
             }
         }
         

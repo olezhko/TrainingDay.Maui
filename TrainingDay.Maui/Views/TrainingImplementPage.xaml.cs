@@ -32,6 +32,8 @@ public partial class TrainingImplementPage : ContentPage
     private readonly IDispatcherTimer _timer;
     private IPushNotification notificator;
     private IDataService dataService;
+    private ISocialWorkoutsService socialWorkoutsService;
+    private IAuthService authService;
     private TrainingViewModel trainingItem;
     private SuperSetViewModel<ImplementTrainingExerciseViewModel> currentSuperSet;
 
@@ -163,6 +165,8 @@ public partial class TrainingImplementPage : ContentPage
         {
             notificator = Handler.MauiContext.Services.GetRequiredService<IPushNotification>();
             dataService = Handler.MauiContext.Services.GetRequiredService<IDataService>();
+            socialWorkoutsService = Handler.MauiContext.Services.GetRequiredService<ISocialWorkoutsService>();
+            authService = Handler.MauiContext.Services.GetRequiredService<IAuthService>();
 
             await LoadVideoItemsAsync(currentSuperSet);
         }
@@ -345,6 +349,7 @@ public partial class TrainingImplementPage : ContentPage
 
         SaveLastTraining();
         SaveChangedExercises();
+        await ShareToSocialFeedIfEnabled();
 
         await ShowConfettiAsync();
 
@@ -441,6 +446,63 @@ public partial class TrainingImplementPage : ContentPage
             }
         }
     }
+    private async Task ShareToSocialFeedIfEnabled()
+    {
+        if (!Settings.ShareCompletedWorkouts || authService?.IsLoggedIn != true || socialWorkoutsService == null)
+        {
+            return;
+        }
+
+        try
+        {
+            var request = new ShareSocialWorkoutRequest
+            {
+                WorkoutName = TrainingItem.Title,
+                Date = _startTrainingDateTime,
+                Duration = DateTime.Now - _startTrainingDateTime + StartTime,
+            };
+
+            foreach (var superSet in Items)
+            {
+                foreach (var item in superSet)
+                {
+                    if (item.IsSkipped)
+                    {
+                        continue;
+                    }
+
+                    var weightAndRepsString = ExerciseManager.ConvertJson(item.Tags, item);
+
+                    if (item.CodeNum > 0)
+                    {
+                        request.BaseExercises.Add(new SocialWorkoutBaseExerciseDto
+                        {
+                            CodeNum = item.CodeNum,
+                            WeightAndRepsString = weightAndRepsString,
+                        });
+                    }
+                    else
+                    {
+                        request.CustomExercises.Add(new SocialWorkoutExerciseDto
+                        {
+                            ExerciseName = item.Name,
+                            MusclesString = [.. item.Muscles.Select(muscle => ((MusclesEnum)muscle.Id).ToString())],
+                            TagsValue = [.. item.Tags.Select(tag => tag.ToString())],
+                            WeightAndRepsString = weightAndRepsString,
+                        });
+                    }
+                }
+            }
+
+            await socialWorkoutsService.ShareWorkoutAsync(request);
+            LoggingService.TrackEvent("Workout Shared");
+        }
+        catch (Exception ex)
+        {
+            LoggingService.TrackError(ex);
+        }
+    }
+
     #endregion
 
     private void SubscribeMessages()

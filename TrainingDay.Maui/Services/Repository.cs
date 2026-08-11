@@ -49,6 +49,7 @@ public class Repository
             database.CreateTable<TrainingUnionEntity>();
             database.CreateTable<ImageEntity>();
             database.CreateTable<BlogEntity>();
+            database.CreateTable<SocialWorkoutCacheEntity>();
 
             var initExercises = await ResourceExtension.LoadResourceAsync<BaseExercise>("exercises", Settings.GetLanguage().TwoLetterISOLanguageName);
             var dbExercises = GetExerciseItems();
@@ -418,4 +419,23 @@ public class Repository
     {
         return [.. (from i in database.Table<BlogEntity>() select i)];
     }
+
+    #region SocialWorkoutsCache
+    public IEnumerable<SocialWorkoutCacheEntity> GetSocialWorkoutCacheItems()
+    {
+        return (from i in database.Table<SocialWorkoutCacheEntity>() select i).OrderByDescending(item => item.Date).ToList();
+    }
+
+    public void SaveSocialWorkoutCacheItems(IEnumerable<SocialWorkoutCacheEntity> items)
+    {
+        database.RunInTransaction(() =>
+        {
+            database.DeleteAll<SocialWorkoutCacheEntity>();
+            foreach (var item in items.Take(10))
+            {
+                database.Insert(item);
+            }
+        });
+    }
+    #endregion
 }

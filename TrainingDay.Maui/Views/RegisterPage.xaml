@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
+             xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
+             xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
+             x:Class="TrainingDay.Maui.Views.RegisterPage"
+             x:DataType="viewModels:RegisterPageViewModel"
+             Title="{x:Static resx:AppResources.RegisterString}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="15" Padding="20" VerticalOptions="Center">
+            <Label Text="{x:Static resx:AppResources.RegisterString}" FontSize="Title" HorizontalOptions="Center"/>
+
+            <Border Style="{StaticResource MaterialBorder}">
+                <Grid>
+                    <Label Text="{x:Static resx:AppResources.EmailString}" Style="{StaticResource MaterialLabel}" controls:MaterialLabelAttached.MaterialControlType="Entry" />
+                    <Entry Text="{Binding Email}" Keyboard="Email" BackgroundColor="Transparent" HorizontalOptions="Fill" VerticalOptions="End"/>
+                </Grid>
+            </Border>
+
+            <Border Style="{StaticResource MaterialBorder}">
+                <Grid>
+                    <Label Text="{x:Static resx:AppResources.PasswordString}" Style="{StaticResource MaterialLabel}" controls:MaterialLabelAttached.MaterialControlType="Entry" />
+                    <Entry Text="{Binding Password}" IsPassword="True" BackgroundColor="Transparent" HorizontalOptions="Fill" VerticalOptions="End"/>
+                </Grid>
+            </Border>
+
+            <Border Style="{StaticResource MaterialBorder}">
+                <Grid>
+                    <Label Text="{x:Static resx:AppResources.NickOptionalString}" Style="{StaticResource MaterialLabel}" controls:MaterialLabelAttached.MaterialControlType="Entry" />
+                    <Entry Text="{Binding Nickname}" BackgroundColor="Transparent" HorizontalOptions="Fill" VerticalOptions="End"/>
+                </Grid>
+            </Border>
+
+            <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding HasError}" HorizontalTextAlignment="Center"/>
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center"/>
+
+            <Button Text="{x:Static resx:AppResources.RegisterString}" Command="{Binding RegisterCommand}" Style="{StaticResource ActionButton}" CornerRadius="20"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
