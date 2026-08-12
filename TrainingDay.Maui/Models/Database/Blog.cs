@@ -7,8 +7,6 @@ public class BlogEntity
     [PrimaryKey, AutoIncrement, Column("_id")]
     public int Id { get; set; }
 
-    public int Guid { get; set; }
-
     /// <summary>
     /// http-content needed to decode
     /// </summary>

@@ -37,10 +37,10 @@ public class BlogsPageViewModel : BaseViewModel
             .Select(item => new BlogViewModel(item))
             .ToList();
 
-        var lastDate = dbBlogs.FirstOrDefault()?.DateTime + TimeSpan.FromSeconds(1);
+        var lastDate = dbBlogs.Count == 0? DateTime.MinValue : dbBlogs.FirstOrDefault()!.DateTime;
         try
         {
-            var newBlogs = await dataService.GetBlogsAsync(lastDate);
+            var newBlogs = await dataService.GetBlogsAsync(lastDate + TimeSpan.FromSeconds(1));
 
             if (newBlogs != null)
             {
@@ -48,7 +48,6 @@ public class BlogsPageViewModel : BaseViewModel
                 {
                     var newBlog = new BlogEntity()
                     {
-                        Guid = item.Guid,
                         Content = item.Content,
                         Published = item.Published,
                         Title = item.Title,
@@ -60,8 +59,9 @@ public class BlogsPageViewModel : BaseViewModel
                 }
             }
         }
-        catch
+        catch(Exception ex)
         {
+            System.Diagnostics.Debug.WriteLine($"Error loading blogs: {ex.Message}");
         }
 
         BlogsCollection = new ObservableCollection<BlogViewModel>(dbBlogs.OrderByDescending(item => item.DateTime));
@@ -76,7 +76,6 @@ public class BlogsPageViewModel : BaseViewModel
         var update = new BlogEntity()
         {
             Id = sender.Id,
-            Guid = sender.Guid,
             Content = blog.Content,
             Published = blog.Published,
             Title = blog.Title,
