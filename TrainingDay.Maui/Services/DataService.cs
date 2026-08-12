@@ -8,7 +8,7 @@ namespace TrainingDay.Maui.Services
 	
     public interface IDataService
 	{
-		Task<IReadOnlyCollection<BlogResponse>> GetBlogsAsync(DateTimeOffset? createdOffset);
+		Task<IReadOnlyCollection<BlogResponse>> GetBlogsAsync(DateTime createdOffset);
 
         Task<BlogResponse> GetBlogAsync(int id);
 		Task<ExerciseAiResponse> GetExercisesByQueryAsync(string query);
@@ -46,11 +46,11 @@ namespace TrainingDay.Maui.Services
 			return request;
 		}
 
-		public async Task<IReadOnlyCollection<BlogResponse>> GetBlogsAsync(DateTimeOffset? createdOffset)
+		public async Task<IReadOnlyCollection<BlogResponse>> GetBlogsAsync(DateTime createdOffset)
 		{
 			var cultureId = Settings.CultureName.Contains("en", StringComparison.OrdinalIgnoreCase) ? 1 : 2;
 
-			string? createdQuery = createdOffset?.ToString("yyyy-MM-dd HH:mm:ss");
+			string createdQuery = createdOffset.ToString("yyyy-MM-dd HH:mm:ss");
 
 			var request = CreateRequest($"/mobileblogs?cultureId={cultureId}&createdFilter={createdQuery}", Method.Get);
 			var response = await _client.ExecuteAsync(request);

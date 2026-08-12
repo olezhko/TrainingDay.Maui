@@ -19,7 +19,6 @@ public class BlogViewModel : BaseViewModel
         Title = item.Title;
         Text = item.Content ??string.Empty;
         DateTime = item.Published;
-        guid = item.Guid;
     }
 
     public int Id

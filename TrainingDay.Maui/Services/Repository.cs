@@ -60,10 +60,24 @@ public class Repository
             }
 
             DeleteUnused(dbExercises);
+
+            DeleteBrokenBlogs();
         }
         catch (Exception e)
         {
             LoggingService.TrackError(e);
+        }
+    }
+
+    private void DeleteBrokenBlogs()
+    {
+        var blogs = GetBlogItems();
+        foreach (var blog in blogs)
+        {
+            if (string.IsNullOrEmpty(blog.Title))
+            {
+                database.Delete<BlogEntity>(blog.Id);
+            }
         }
     }
 

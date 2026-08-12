@@ -50,11 +50,6 @@ public class HttpSocialWorkoutsService : IDisposable, ISocialWorkoutsService
 
     public async Task<IReadOnlyList<SocialWorkoutDto>> GetFeedAsync(int page, int pageSize)
     {
-        if (!await authService.EnsureValidTokenAsync())
-        {
-            return [];
-        }
-
         var request = CreateAuthorizedRequest(string.Empty, Method.Get);
         request.AddQueryParameter("page", page);
         request.AddQueryParameter("pageSize", pageSize);
