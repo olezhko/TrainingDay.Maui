@@ -3,7 +3,6 @@ using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Windows.Input;
 using TrainingDay.Maui.Controls;
 using TrainingDay.Maui.Extensions;
@@ -37,7 +36,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
             #if IOS
             await Plugin.Firebase.CloudMessaging.CrossFirebaseCloudMessaging.Current.CheckIfValidAsync();
             Settings.Token = await Plugin.Firebase.CloudMessaging.CrossFirebaseCloudMessaging.Current.GetTokenAsync();
-            await dataService.SendFirebaseTokenAsync(Settings.Token, CultureInfo.CurrentCulture.Name, TimeZoneInfo.Local.BaseUtcOffset.ToString());
+            await dataService.SendFirebaseTokenAsync(Settings.Token, System.Globalization.CultureInfo.CurrentCulture.Name, TimeZoneInfo.Local.BaseUtcOffset.ToString());
             await dataService.PostActionAsync(Settings.Token, Common.Communication.MobileActions.Enter);
             #endif
         }
@@ -340,7 +339,10 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
             try
             {
                 var unions = App.Database.GetTrainingsGroups();
-                DeleteFromGroup(trainingItem, [.. unions]);
+
+                DeleteFromGroupDatabase(trainingItem, [.. unions]);
+                RemoveFromCurrentGroup(trainingItem);
+
                 var union = unions.FirstOrDefault(un => un.Name == result);
                 if (union != null) // если группа с таким именем уже существует
                 {
@@ -348,20 +350,29 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
                     if (!viewModel.TrainingIDs.Contains(trainingItem.Id))
                     {
                         viewModel.TrainingIDs.Add(trainingItem.Id);// добавляем в список тренировок у группы выбранную тренировку
-                        trainingItem.Group = viewModel;
                         App.Database.SaveTrainingGroup(viewModel.Model);
                     }
+                    trainingItem.Group = viewModel;
+
+                    var existingGroup = ItemsGrouped.FirstOrDefault(g => g.Id == union.Id);
+                    if (existingGroup != null)
+                        AddToGroupUi(existingGroup, trainingItem);
                 }
                 else
                 {
                     var viewModel = new TrainingUnion(new TrainingUnionEntity());
                     viewModel.Name = result;
                     viewModel.TrainingIDs.Add(trainingItem.Id);
+                    viewModel.Id = App.Database.SaveTrainingGroup(viewModel.Model);
                     trainingItem.Group = viewModel;
-                    App.Database.SaveTrainingGroup(viewModel.Model);
 
-                    ItemsGrouped.Add(new Grouping<string, TrainingViewModel>(result, [trainingItem]));
+                    ItemsGrouped.Add(new Grouping<string, TrainingViewModel>(result, [trainingItem])
+                    {
+                        Id = viewModel.Id,
+                    });
                 }
+
+                EnsureGroupSelected();
                 LoggingService.TrackEvent($"{GetType().Name}: AddToGroup with new group FINISHED");
             }
             catch (Exception ex)
@@ -377,8 +388,11 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         await Shell.Current.ClosePopupAsync();
     }
 
-    private void DeleteFromGroup(TrainingViewModel trainingMoveToGroup, List<TrainingUnionEntity> unions)
+    private void DeleteFromGroupDatabase(TrainingViewModel trainingMoveToGroup, List<TrainingUnionEntity> unions)
     {
+        if (trainingMoveToGroup.Group == null)
+            return;
+
         try
         {
             var unionToEdit = new TrainingUnion(unions.First(u => u.Id == trainingMoveToGroup.Group.Id));
@@ -416,8 +430,18 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
             App.Database.SaveTrainingGroup(viewModel.Model);
         }
 
+        RemoveFromCurrentGroup(item);
         item.Group = null;
-        LoadItems();
+
+        var defaultGroup = ItemsGrouped.FirstOrDefault(g => g.Key == AppResources.GroupingDefaultName);
+        if (defaultGroup == null)
+        {
+            defaultGroup = new Grouping<string, TrainingViewModel>(AppResources.GroupingDefaultName, new List<TrainingViewModel>());
+            ItemsGrouped.Insert(0, defaultGroup);
+        }
+        AddToGroupUi(defaultGroup, item);
+
+        EnsureGroupSelected();
 
         Toast.Make(AppResources.SavedString).Show();
     }
@@ -432,6 +456,35 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
             SelectedTrainings.Add(training);
         }
         group.IsSelected = true;
+    }
+
+    private void RemoveFromCurrentGroup(TrainingViewModel item)
+    {
+        var currentGroup = ItemsGrouped.FirstOrDefault(g => g.Contains(item));
+        if (currentGroup == null)
+            return;
+
+        currentGroup.Remove(item);
+        if (currentGroup.IsSelected)
+            SelectedTrainings.Remove(item);
+
+        if (currentGroup.Count == 0)
+            ItemsGrouped.Remove(currentGroup);
+    }
+
+    private void AddToGroupUi(Grouping<string, TrainingViewModel> group, TrainingViewModel item)
+    {
+        group.Add(item);
+        if (group.IsSelected)
+            SelectedTrainings.Add(item);
+    }
+
+    private void EnsureGroupSelected()
+    {
+        if (ItemsGrouped.Any(g => g.IsSelected))
+            return;
+
+        SelectWorkout(ItemsGrouped.ToList());
     }
 
     #endregion
