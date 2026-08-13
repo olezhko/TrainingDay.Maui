@@ -117,7 +117,7 @@ class WeightViewAndSetPageViewModel : BaseViewModel
                 countDaysPeriod = 91;
                 break;
             case ChartWeightPeriod.HalfYear:
-                countDaysPeriod = 183;
+                countDaysPeriod = ConstantKeys.HalfYearDays;
                 break;
             case ChartWeightPeriod.Year:
                 countDaysPeriod = 365;

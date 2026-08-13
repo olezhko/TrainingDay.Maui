@@ -94,13 +94,12 @@ namespace TrainingDay.Maui
 
         private async Task DownloadImagesAsync()
         {
-            int maxCode = 143;
             HttpClient httpClient = new HttpClient();
-            for (int i = 1; i < maxCode; i++)
+            for (int i = 1; i <= ConstantKeys.ExerciseMaxCodeNum; i++)
             {
                 try
                 {
-                    var urlToDownload = @$"https://api.trainingday.space/exercise_images/{i}.jpg";
+                    var urlToDownload = $"{ConstantKeys.ApiBaseUrl}/exercise_images/{i}.jpg";
                     var response = await httpClient.GetByteArrayAsync(urlToDownload);
                     if (response is null)
                         return;

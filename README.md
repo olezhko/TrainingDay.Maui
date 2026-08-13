@@ -42,3 +42,4 @@ v1.3.4
 - 🌍 Portuguese & Spanish support — the app is now available in Português and Español, switchable anytime from Settings.
 - 🐛 Localization fixes — corrected mistranslated strings in the German and Russian translations.
 - ❤️ Favourite Exercises — mark any exercise as a favourite from the exercise list or the exercise details screen. Favourited exercises now appear at the top of the exercise list for quicker access.
+- 🤝 Feed Workouts — browse a feed of workouts shared by other users, like the ones you enjoy, and add them straight to your own trainings. Works offline too, showing your last cached feed when there's no connection.

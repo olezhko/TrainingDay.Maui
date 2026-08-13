@@ -489,8 +489,11 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
 
     #endregion
     
-    private async Task LongPressed(Border sender)
+    private async Task LongPressed(Border? sender)
     {
+        if (sender == null)
+            return;
+
         LoggingService.TrackEvent($"{GetType().Name}: LongPressed started");
 
         var item = (TrainingViewModel)sender.BindingContext;
@@ -537,7 +540,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
 
     public ICommand ItemSelectedCommand { get; set; }
 
-    public Command<object> SelectGroupCommand => new Command<object>(ActivateGroup);
+    public Command<object> ActivateGroupCommand => new(ActivateGroup);
 
     public ICommand LongPressedEffectCommand => new AsyncRelayCommand<Border>(LongPressed);
     #endregion

@@ -42,7 +42,7 @@ All services are registered in `MauiProgram.cs`. ViewModels are also registered 
 
 ### Commands
 
-`DoOnceCommand` and `DoOnceCommand<T>` (`/Controls/`) wrap `ICommand` to prevent concurrent execution — use these for any async button handler instead of plain `Command`.
+`AsyncRelayCommand` and `AsyncRelayCommand<T>` (`CommunityToolkit.Mvvm.Input`) prevent concurrent execution by default — use these for any async button handler instead of plain `Command`.
 
 ### Messaging
 

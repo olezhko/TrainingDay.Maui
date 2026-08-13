@@ -1,5 +1,6 @@
 using RestSharp;
 using System.Text.Json;
+using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models;
 
 namespace TrainingDay.Maui.Services;
@@ -31,7 +32,7 @@ public class AuthService : IDisposable, IAuthService
 
     public AuthService()
     {
-        client = new RestClient(new RestClientOptions("https://api.trainingday.space/api/v1/Auth")
+        client = new RestClient(new RestClientOptions($"{ConstantKeys.ApiBaseUrl}/api/v1/Auth")
         {
             Timeout = TimeSpan.FromSeconds(10)
         });

@@ -1,6 +1,7 @@
 using RestSharp;
 using System.Text.Json;
 using TrainingDay.Common.Models;
+using TrainingDay.Maui.Extensions;
 
 namespace TrainingDay.Maui.Services;
 
@@ -25,7 +26,7 @@ public class HttpSocialWorkoutsService : IDisposable, ISocialWorkoutsService
     public HttpSocialWorkoutsService(IAuthService authService)
     {
         this.authService = authService;
-        client = new RestClient(new RestClientOptions("https://api.trainingday.space/api/v1/SocialWorkouts")
+        client = new RestClient(new RestClientOptions($"{ConstantKeys.ApiBaseUrl}/api/v1/SocialWorkouts")
         {
             Timeout = TimeSpan.FromSeconds(10)
         });

@@ -143,7 +143,7 @@ public partial class TrainingImplementPage : ContentPage
                     VideoUrl = item.VideoUrl
                 }).ToObservableCollection();
             }
-            catch (Exception ex)
+            catch
             {
 
             }

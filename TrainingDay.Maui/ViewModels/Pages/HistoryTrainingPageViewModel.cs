@@ -26,7 +26,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
         DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.WeekString, 7));
         DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.OneMounthString, 31));
         DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.ThreeMounthString, 91));
-        DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.HalfYearString, 182));
+        DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.HalfYearString, ConstantKeys.HalfYearDays));
         DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.YearString, 365));
         DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.MoreThanYearString, -1));
     }

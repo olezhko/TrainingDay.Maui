@@ -183,6 +183,8 @@
         <Setter Property="ClearButtonVisibility" Value="WhileEditing" />
         <Setter Property="PlaceholderColor" Value="Orange" />
         <Setter Property="MinimumHeightRequest" Value="44"/>
+        <Setter Property="IsSpellCheckEnabled" Value="False"/>
+        <Setter Property="IsTextPredictionEnabled" Value="True"/>
         <Setter Property="MinimumWidthRequest" Value="44"/>
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>

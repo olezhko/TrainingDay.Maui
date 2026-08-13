@@ -1,6 +1,7 @@
 using RestSharp;
 using System.Text.Json;
 using TrainingDay.Common.Models;
+using TrainingDay.Maui.Extensions;
 
 namespace TrainingDay.Maui.Services;
 
@@ -21,7 +22,7 @@ public class HttpUserSettingsService : IDisposable, IUserSettingsService
     public HttpUserSettingsService(IAuthService authService)
     {
         this.authService = authService;
-        client = new RestClient(new RestClientOptions("https://api.trainingday.space/api/UserSettings")
+        client = new RestClient(new RestClientOptions($"{ConstantKeys.ApiBaseUrl}/api/UserSettings")
         {
             Timeout = TimeSpan.FromSeconds(10)
         });
