@@ -72,17 +72,16 @@ public partial class FilterPage : ContentPage, IQueryAttributable
     {
         Filter = filter;
         var itemsSource = BindableLayout.GetItemsSource(MusclesListView);
-        SetColor(NoEquipmentFilterButton, filter.IsNoEquipmentFilter);
-        SetColor(BarbellFilterButton, filter.IsBarbellExists);
-        SetColor(DumbbellFilterButton, filter.IsDumbbellExists);
+        NoEquipmentFilterSwitch.IsToggled = filter.IsNoEquipmentFilter;
+        BarbellFilterSwitch.IsToggled = filter.IsBarbellExists;
+        DumbbellFilterSwitch.IsToggled = filter.IsDumbbellExists;
         foreach (MuscleCheckItem item in itemsSource)
         {
-            item.IsChecked = Filter.CurrentMuscles.Contains(item.Muscle);
+            item.IsChecked = Filter.Muscles.Contains(item.Muscle);
         }
 
         SetDifficultyLevel(Filter.DifficultyLevel);
     }
-
 
     List<Tuple<string, string>> newFilterButtonMessages = new List<Tuple<string, string>>();
     int popupIndex = 0;
@@ -181,7 +180,7 @@ public partial class FilterPage : ContentPage, IQueryAttributable
         canvas.Scale(scaleW, scaleH);
         canvas.Clear();
 
-        foreach (var currentMuscle in Filter.CurrentMuscles)
+        foreach (var currentMuscle in Filter.Muscles)
         {
             DrawMuscles(currentMuscle);
         }
@@ -746,11 +745,11 @@ public partial class FilterPage : ContentPage, IQueryAttributable
         {
             if (item.IsChecked)
             {
-                Filter.CurrentMuscles.Add(item.Muscle);
+                Filter.Muscles.Add(item.Muscle);
             }
             else
             {
-                Filter.CurrentMuscles.RemoveAll(itemMuscle => itemMuscle == item.Muscle);
+                Filter.Muscles.RemoveAll(itemMuscle => itemMuscle == item.Muscle);
             }
         }
 
@@ -798,41 +797,17 @@ public partial class FilterPage : ContentPage, IQueryAttributable
     #endregion
 
     #region CheckBoxes
-    private void ChangeNoEquipment_Click(object sender, EventArgs e)
+    private void ChangeNoEquipment_Toggled(object sender, ToggledEventArgs e)
     {
-        Filter.IsNoEquipmentFilter = !Filter.IsNoEquipmentFilter;
-        SetColor(sender, Filter.IsNoEquipmentFilter);
+        Filter.IsNoEquipmentFilter = e.Value;
     }
-    private void ChangeBarbell_Click(object sender, EventArgs e)
+    private void ChangeBarbell_Toggled(object sender, ToggledEventArgs e)
     {
-        Filter.IsBarbellExists = !Filter.IsBarbellExists;
-        SetColor(sender, Filter.IsBarbellExists);
+        Filter.IsBarbellExists = e.Value;
     }
-    private void ChangeDumbbell_Click(object sender, EventArgs e)
+    private void ChangeDumbbell_Toggled(object sender, ToggledEventArgs e)
     {
-        Filter.IsDumbbellExists = !Filter.IsDumbbellExists;
-        SetColor(sender, Filter.IsDumbbellExists);
-    }
-
-    private void SetColor(object sender, bool value)
-    {
-        ImageButton imageButton = sender as ImageButton;
-        imageButton.BackgroundColor = value ? Colors.White : Colors.DimGray;
+        Filter.IsDumbbellExists = e.Value;
     }
     #endregion
-}
-
-
-public class Muscle
-{
-    public MusclesEnum MuscleType { get; private set; }
-    public string Name { get; private set; } // Will be the English description from the enum
-    public SKPath Path { get; private set; }
-
-    public Muscle(MusclesEnum type, string name, SKPath path)
-    {
-        MuscleType = type;
-        Name = name;
-        Path = path;
-    }
 }

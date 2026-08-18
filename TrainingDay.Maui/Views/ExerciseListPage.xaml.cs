@@ -26,7 +26,7 @@ public partial class ExerciseListPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        if (_viewModel.Items.Count == 0 || SearchBar.Text.IsNotNullOrEmpty() || _viewModel.Filter.CurrentMuscles.Count != 0)
+        if (_viewModel.Items.Count == 0 || SearchBar.Text.IsNotNullOrEmpty() || _viewModel.Filter.Muscles.Count != 0)
         {
             _viewModel.UpdateItems();
         }

@@ -382,11 +382,7 @@ public partial class TrainingImplementPage : ContentPage
         Grid.SetColumnSpan(confetti, 3);
         MainGrid.Add(confetti);
 
-        var singleMs = confetti.Duration.TotalMilliseconds;
-        var waitMs = singleMs > 0
-            ? (int)Math.Min(singleMs * confetti.RepeatCount, 5000)
-            : 3700;
-        await Task.Delay(Math.Max(waitMs, 1500));
+        await Task.Delay(2700);
 
         MainGrid.Remove(confetti);
     }

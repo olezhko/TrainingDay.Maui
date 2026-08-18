@@ -237,6 +237,15 @@
   <data name="ExercisesString" xml:space="preserve">
     <value>Упражнения</value>
   </data>
+  <data name="FilterBarbell" xml:space="preserve">
+    <value>Штанга</value>
+  </data>
+  <data name="FilterDumbbell" xml:space="preserve">
+    <value>Гантели</value>
+  </data>
+  <data name="FilterNoEquipment" xml:space="preserve">
+    <value>Без инвентаря</value>
+  </data>
   <data name="FilterString" xml:space="preserve">
     <value>Фильтр</value>
   </data>

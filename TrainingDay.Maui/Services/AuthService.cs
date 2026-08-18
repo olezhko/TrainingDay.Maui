@@ -45,7 +45,7 @@ public class AuthService : IDisposable, IAuthService
 
     public bool IsLoggedIn => Settings.IsLoggedIn;
 
-    private static RestRequest CreateRequest(string resource, Method method, object body = null)
+    private static RestRequest CreateRequest(string resource, Method method, object? body = null)
     {
         var request = new RestRequest(resource, method);
         if (body != null)

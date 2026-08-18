@@ -91,7 +91,7 @@
                                 <controls:ImageCache HeightRequest="60" WidthRequest="60" CodeNum="{Binding CodeNum}" ExerciseId="{Binding Id}" />
                             </Border>
 
-                            <StackLayout Grid.Column="2" VerticalOptions="Center">
+                            <StackLayout Grid.Column="2" VerticalOptions="Center" Margin="0,0,20,0">
                                 <Label Text="{Binding Name}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="17" HorizontalOptions="Center"  />
                                 <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" Style="{StaticResource MuscleFlexStyle}">
                                     <BindableLayout.ItemTemplate>

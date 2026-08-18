@@ -237,6 +237,15 @@ Músculos aquecidos se contraem e relaxam melhor durante o treino, o que signifi
   <data name="ExercisesString" xml:space="preserve">
     <value>Exercícios</value>
   </data>
+  <data name="FilterBarbell" xml:space="preserve">
+    <value>Barra</value>
+  </data>
+  <data name="FilterDumbbell" xml:space="preserve">
+    <value>Halteres</value>
+  </data>
+  <data name="FilterNoEquipment" xml:space="preserve">
+    <value>Sem equipamento</value>
+  </data>
   <data name="FilterString" xml:space="preserve">
     <value>Filtro</value>
   </data>

@@ -21,7 +21,6 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
 {
     public ICommand CreateNewTrainingCommand { get; set; }
     public ICommand NavigateToQuestionsCommnd { get; set; }
-
     public ICommand ItemSelectedCommand { get; set; }
 
     public ObservableCollection<PreparedTrainingViewModel> PreparedTrainingsCollection { get; set; }
