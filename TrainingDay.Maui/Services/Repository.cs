@@ -74,7 +74,7 @@ public class Repository
         var blogs = GetBlogItems();
         foreach (var blog in blogs)
         {
-            if (string.IsNullOrEmpty(blog.Title))
+            if (string.IsNullOrEmpty(blog.Title) || blog.ServerId == 0)
             {
                 database.Delete<BlogEntity>(blog.Id);
             }

@@ -4,8 +4,8 @@ namespace TrainingDay.Maui.ViewModels;
 
 public class BlogViewModel : BaseViewModel
 {
+    private int serverId;
     private int id;
-    private int guid;
     private string title;
     private string text;
     private DateTime dateTime;
@@ -16,6 +16,7 @@ public class BlogViewModel : BaseViewModel
     public BlogViewModel(BlogEntity item)
     {
         id = item.Id;
+        serverId = item.ServerId;
         Title = item.Title;
         Text = item.Content ??string.Empty;
         DateTime = item.Published;
@@ -26,9 +27,9 @@ public class BlogViewModel : BaseViewModel
         get { return id; }
     }
 
-    public int Guid
+    public int ServerId
     {
-        get { return guid; }
+        get { return serverId; }
     }
 
     public bool IsNew

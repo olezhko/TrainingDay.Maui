@@ -20,7 +20,7 @@
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={x:Reference Page}, Path=BindingContext.OpenBlogCommand}" CommandParameter="{Binding }"/>
                         </Border.GestureRecognizers>
-                        <Grid ColumnDefinitions="Auto,*">
+                        <Grid ColumnDefinitions="20,*">
                             <BoxView Grid.Column="0" WidthRequest="10" HeightRequest="10" Color="{StaticResource Main}" CornerRadius="5" IsVisible="{Binding IsNew}"
                                      VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Transparent" Margin="5"/>
 

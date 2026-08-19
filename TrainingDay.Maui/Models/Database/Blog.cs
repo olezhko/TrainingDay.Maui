@@ -16,4 +16,5 @@ public class BlogEntity
     /// </summary>
     public DateTime Published { get; set; }
     public string Title { get; set; }
+    public int ServerId { get; set; }
 }
