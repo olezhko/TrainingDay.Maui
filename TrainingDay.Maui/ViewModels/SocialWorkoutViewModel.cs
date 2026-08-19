@@ -2,6 +2,7 @@ using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models;
+using TrainingDay.Maui.Services;
 using ExerciseEntity = TrainingDay.Maui.Models.Database.ExerciseEntity;
 
 namespace TrainingDay.Maui.ViewModels;
@@ -110,7 +111,7 @@ public class SocialWorkoutViewModel : BaseViewModel
 
     public string DurationFormatted => Duration.ToString(@"hh\:mm\:ss");
 
-    public string DateFormatted => Date.ToString("d");
+    public string DateFormatted => Date.ToString("d", Settings.GetLanguage());
 
     private string topMuscles;
     public string TopMuscles
