@@ -96,14 +96,14 @@ public class TrainingViewModel : BaseViewModel
                 SuperSetId = trainingExerciseViewModel.SuperSetId,
                 OrderNumber = trainingExerciseViewModel.OrderNumber,
                 TrainingId = Id,
-                Muscles = MusclesExtensions.ConvertFromListToString(trainingExerciseViewModel.Muscles.ToList()),
+                Muscles = MuscleViewModelExtensions.ConvertFromListToString(trainingExerciseViewModel.Muscles.ToList()),
                 ExerciseId = trainingExerciseViewModel.ExerciseId,
                 Description = JsonSerializer.Serialize(trainingExerciseViewModel.Description.Model),
                 Name = trainingExerciseViewModel.Name,
                 SuperSetNum = trainingExerciseViewModel.SuperSetNum,
 
                 TagsValue = ExerciseExtensions.ConvertTagListToInt(trainingExerciseViewModel.Tags),
-                WeightAndRepsString = ExerciseManager.ConvertJson(trainingExerciseViewModel.Tags, trainingExerciseViewModel),
+                WeightAndRepsString = TrainingExerciseViewModelExtensions.ConvertJson(trainingExerciseViewModel.Tags, trainingExerciseViewModel),
                 CodeNum = trainingExerciseViewModel.CodeNum,
             });
         }

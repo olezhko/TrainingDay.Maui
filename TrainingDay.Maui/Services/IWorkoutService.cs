@@ -96,7 +96,7 @@ namespace TrainingDay.Maui.Services
 
             }
 
-            return ExerciseManager.ConvertJson(tags, exerciseModel);
+            return TrainingExerciseViewModelExtensions.ConvertJson(tags, exerciseModel);
         }
 
         public static bool TryGetReps(string input, out int number1)

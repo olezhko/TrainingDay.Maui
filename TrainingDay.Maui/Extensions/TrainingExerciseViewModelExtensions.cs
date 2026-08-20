@@ -5,7 +5,7 @@ using TrainingDay.Maui.ViewModels;
 
 namespace TrainingDay.Maui.Extensions;
 
-public class ExerciseManager
+public class TrainingExerciseViewModelExtensions
 {
     public static string ConvertJson(IEnumerable<ExerciseTags> tagsList, TrainingExerciseViewModel viewmodel)
     {

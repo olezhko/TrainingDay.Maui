@@ -38,12 +38,12 @@ public class SocialWorkoutDetailViewModel : BaseViewModel
         var vm = new TrainingExerciseViewModel
         {
             Name = dto.ExerciseName,
-            Muscles = new ObservableCollection<MuscleViewModel>(MusclesExtensions.ConvertFromStringToList(string.Join(",", dto.MusclesString))),
+            Muscles = new ObservableCollection<MuscleViewModel>(MuscleViewModelExtensions.ConvertFromStringToList(string.Join(",", dto.MusclesString))),
             Tags = [.. dto.TagsValue.Select(Enum.Parse<ExerciseTags>)],
             CodeNum = dto.CodeNum,
         };
 
-        ExerciseManager.ConvertJsonBack(vm, dto.WeightAndRepsString);
+        TrainingExerciseViewModelExtensions.ConvertJsonBack(vm, dto.WeightAndRepsString);
 
         return vm;
     }

@@ -62,7 +62,7 @@ public partial class TrainingItemsBasePage : ContentPage
                                 ExerciseId = trainingExerciseSerialize.ExerciseId,
                                 TrainingId = trainingExerciseSerialize.TrainingId,
                                 IsNotFinished = trainingExerciseSerialize.IsNotFinished,
-                                Muscles = new ObservableCollection<MuscleViewModel>(MusclesExtensions.ConvertFromStringToList(trainingExerciseSerialize.Muscles)),
+                                Muscles = new ObservableCollection<MuscleViewModel>(MuscleViewModelExtensions.ConvertFromStringToList(trainingExerciseSerialize.Muscles)),
                                 OrderNumber = trainingExerciseSerialize.OrderNumber,
                                 Name = trainingExerciseSerialize.Name,
                                 SuperSetId = trainingExerciseSerialize.SuperSetId,
@@ -73,7 +73,7 @@ public partial class TrainingItemsBasePage : ContentPage
                                 CodeNum = trainingExerciseSerialize.CodeNum,
                             };
 
-                            ExerciseManager.ConvertJsonBack(item, trainingExerciseSerialize.WeightAndRepsString);
+                            TrainingExerciseViewModelExtensions.ConvertJsonBack(item, trainingExerciseSerialize.WeightAndRepsString);
                             training.AddExercise(item);
                         }
                         catch (Exception e)

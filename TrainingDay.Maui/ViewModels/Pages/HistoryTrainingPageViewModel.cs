@@ -102,7 +102,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
             {
                 Name = trainingExercise.ExerciseName,
                 Muscles = new ObservableCollection<MuscleViewModel>(
-                    MusclesExtensions.ConvertFromStringToList(trainingExercise.MusclesString)),
+                    MuscleViewModelExtensions.ConvertFromStringToList(trainingExercise.MusclesString)),
                 OrderNumber = trainingExercise.OrderNumber,
                 Description = DescriptionViewModel.ConvertFromJson(trainingExercise.Description),
                 TrainingExerciseId = trainingExercise.Id,
@@ -111,7 +111,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
             };
 
             ex.Tags = ExerciseExtensions.ConvertTagIntToList(trainingExercise.TagsValue).ToList();
-            ExerciseManager.ConvertJsonBack(ex, trainingExercise.WeightAndRepsString);
+            TrainingExerciseViewModelExtensions.ConvertJsonBack(ex, trainingExercise.WeightAndRepsString);
             SelectedTraining.Items.Add(ex);
         }
 

@@ -571,7 +571,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
                 OrderNumber = order,
                 Id = item.TrainingExerciseId,
                 SuperSetId = item.SuperSetId,
-                WeightAndRepsString = ExerciseManager.ConvertJson(item.Tags, item),
+                WeightAndRepsString = TrainingExerciseViewModelExtensions.ConvertJson(item.Tags, item),
             });
         }
     }

@@ -240,7 +240,7 @@ public partial class TrainingImplementPage : ContentPage
                     SuperSetId = trainingExerciseViewModel.SuperSetId,
                     OrderNumber = trainingExerciseViewModel.OrderNumber,
                     TrainingId = id,
-                    Muscles = MusclesExtensions.ConvertFromListToString(trainingExerciseViewModel.Muscles.ToList()),
+                    Muscles = MuscleViewModelExtensions.ConvertFromListToString(trainingExerciseViewModel.Muscles.ToList()),
                     ExerciseId = trainingExerciseViewModel.ExerciseId,
                     Description = JsonSerializer.Serialize(trainingExerciseViewModel.Description.Model),
                     Name = trainingExerciseViewModel.Name,
@@ -249,7 +249,7 @@ public partial class TrainingImplementPage : ContentPage
                     SuperSetNum = trainingExerciseViewModel.SuperSetNum,
 
                     TagsValue = ExerciseExtensions.ConvertTagListToInt(trainingExerciseViewModel.Tags),
-                    WeightAndRepsString = ExerciseManager.ConvertJson(trainingExerciseViewModel.Tags, trainingExerciseViewModel),
+                    WeightAndRepsString = TrainingExerciseViewModelExtensions.ConvertJson(trainingExerciseViewModel.Tags, trainingExerciseViewModel),
                     CodeNum = trainingExerciseViewModel.CodeNum,
                 });
             }
@@ -411,12 +411,12 @@ public partial class TrainingImplementPage : ContentPage
                     LastTrainingId = id,
                     OrderNumber = item.OrderNumber,
                     ExerciseName = item.Name,
-                    MusclesString = MusclesExtensions.ConvertFromListToString(item.Muscles.ToList()),
+                    MusclesString = MuscleViewModelExtensions.ConvertFromListToString(item.Muscles.ToList()),
                     Description = item.GetExercise().Description,
                     SuperSetId = item.SuperSetId,
                     TagsValue = ExerciseExtensions.ConvertTagListToInt(item.Tags),
                     CodeNum = item.CodeNum,
-                    WeightAndRepsString = ExerciseManager.ConvertJson(item.Tags, item),
+                    WeightAndRepsString = TrainingExerciseViewModelExtensions.ConvertJson(item.Tags, item),
                 });
             }
         }
@@ -437,7 +437,7 @@ public partial class TrainingImplementPage : ContentPage
                     OrderNumber = order,
                     Id = trainingExerciseViewModel.TrainingExerciseId,
                     SuperSetId = trainingExerciseViewModel.SuperSetId,
-                    WeightAndRepsString = ExerciseManager.ConvertJson(trainingExerciseViewModel.Tags, trainingExerciseViewModel),
+                    WeightAndRepsString = TrainingExerciseViewModelExtensions.ConvertJson(trainingExerciseViewModel.Tags, trainingExerciseViewModel),
                 });
             }
         }
@@ -467,7 +467,7 @@ public partial class TrainingImplementPage : ContentPage
                         continue;
                     }
 
-                    var weightAndRepsString = ExerciseManager.ConvertJson(item.Tags, item);
+                    var weightAndRepsString = TrainingExerciseViewModelExtensions.ConvertJson(item.Tags, item);
 
                     if (item.CodeNum > 0)
                     {

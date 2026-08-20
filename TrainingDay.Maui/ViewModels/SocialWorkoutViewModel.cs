@@ -21,7 +21,7 @@ public class SocialWorkoutViewModel : BaseViewModel
         IsLikedByMe = dto.LikedByMe;
 
         TopMuscles = string.Join(", ", Exercises
-            .SelectMany(item => MusclesExtensions.ConvertFromStringToList(string.Join(",", item.MusclesString)))
+            .SelectMany(item => MuscleViewModelExtensions.ConvertFromStringToList(string.Join(",", item.MusclesString)))
             .GroupBy(muscle => muscle.Id)
             .OrderByDescending(group => group.Count())
             .Take(3)
