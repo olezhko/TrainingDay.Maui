@@ -48,7 +48,8 @@
 
                     <Grid Style="{StaticResource EquipmentRowStyle}">
                         <Image Grid.Column="0" Source="no_equipment.png" />
-                        <Label Grid.Column="1" Text="{x:Static resx:AppResources.FilterNoEquipment}" />
+                        <Label Grid.Column="1" Text="{x:Static resx:AppResources.FilterNoEquipment}" 
+                            TextColor="{AppThemeBinding Dark=White,Light=Black}"/>
                         <Switch x:Name="NoEquipmentFilterSwitch" Grid.Column="2" Toggled="ChangeNoEquipment_Toggled" />
                     </Grid>
 
@@ -56,7 +57,7 @@
 
                     <Grid Style="{StaticResource EquipmentRowStyle}">
                         <Image Grid.Column="0" Source="barbell.png" />
-                        <Label Grid.Column="1" Text="{x:Static resx:AppResources.FilterBarbell}" />
+                        <Label Grid.Column="1" Text="{x:Static resx:AppResources.FilterBarbell}" TextColor="{AppThemeBinding Dark=White,Light=Black}"/>
                         <Switch x:Name="BarbellFilterSwitch" Grid.Column="2" Toggled="ChangeBarbell_Toggled" />
                     </Grid>
 
@@ -64,7 +65,7 @@
 
                     <Grid Style="{StaticResource EquipmentRowStyle}">
                         <Image Grid.Column="0" Source="dumbbell.png" />
-                        <Label Grid.Column="1" Text="{x:Static resx:AppResources.FilterDumbbell}" />
+                        <Label Grid.Column="1" Text="{x:Static resx:AppResources.FilterDumbbell}" TextColor="{AppThemeBinding Dark=White,Light=Black}"/>
                         <Switch x:Name="DumbbellFilterSwitch" Grid.Column="2" Toggled="ChangeDumbbell_Toggled" />
                     </Grid>
                 </VerticalStackLayout>
