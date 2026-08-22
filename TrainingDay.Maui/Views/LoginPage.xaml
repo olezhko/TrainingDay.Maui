@@ -43,7 +43,7 @@
                 </Label.GestureRecognizers>
             </Label>
 
-            <Label Text="{x:Static resx:AppResources.DontHaveAccountString}" HorizontalOptions="Center">
+            <Label Text="{x:Static resx:AppResources.DontHaveAccountString}" HorizontalOptions="Center" TextDecorations="Underline" >
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding GoToRegisterCommand}"/>
                 </Label.GestureRecognizers>

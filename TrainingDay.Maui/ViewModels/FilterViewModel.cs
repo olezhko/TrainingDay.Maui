@@ -13,7 +13,7 @@ public sealed class FilterModel : BaseViewModel
     private int difficultyLevel;
 
     public string? NameFilter { get => nameFilter; set => SetProperty(ref nameFilter, value); }
-    public List<MusclesEnum> CurrentMuscles { get => currentMuscles; set => SetProperty(ref currentMuscles, value); }
+    public List<MusclesEnum> Muscles { get => currentMuscles; set => SetProperty(ref currentMuscles, value); }
 
     public bool IsNoEquipmentFilter { get => isNoEquipmentFilter; set => SetProperty(ref isNoEquipmentFilter, value); }
     public bool IsBarbellExists { get => isBarbellExists; set => SetProperty(ref isBarbellExists, value); }
@@ -22,6 +22,6 @@ public sealed class FilterModel : BaseViewModel
 
     public FilterModel()
     {
-        CurrentMuscles = [];
+        Muscles = [];
     }
 }

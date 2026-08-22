@@ -252,6 +252,15 @@ Increase body temperature, activate the muscles and joints, and prepare the card
   <data name="ExercisesString" xml:space="preserve">
     <value>Exercises</value>
   </data>
+  <data name="FilterBarbell" xml:space="preserve">
+    <value>Barbell</value>
+  </data>
+  <data name="FilterDumbbell" xml:space="preserve">
+    <value>Dumbbell</value>
+  </data>
+  <data name="FilterNoEquipment" xml:space="preserve">
+    <value>No equipment</value>
+  </data>
   <data name="FilterString" xml:space="preserve">
     <value>Filter</value>
   </data>

@@ -292,7 +292,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         await Shell.Current.GoToAsync(nameof(TrainingImplementPage), param);
     }
 
-    private void InitSuperSetMode()
+    private async Task InitSuperSetModeAsync()
     {
         Training.Exercises.ForEach(item =>
         {
@@ -301,7 +301,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
         CurrentAction = ExerciseCheckBoxAction.SuperSet;
 
-        MessageManager.DisplayAlert(AppResources.AdviceString, AppResources.SupersetAdvice, AppResources.OkString);
+        await MessageManager.DisplayAlert(AppResources.AdviceString, AppResources.SupersetAdvice, AppResources.OkString);
 
         PrepareAction(Resources.Strings.AppResources.CreateSuperSetString);
     }
@@ -546,7 +546,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         }
         else if (action == AppResources.SuperSetControl)
         {
-            InitSuperSetMode();
+            await InitSuperSetModeAsync();
         }
         else if (action == AppResources.MoveString)
         {
@@ -571,7 +571,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
                 OrderNumber = order,
                 Id = item.TrainingExerciseId,
                 SuperSetId = item.SuperSetId,
-                WeightAndRepsString = ExerciseManager.ConvertJson(item.Tags, item),
+                WeightAndRepsString = TrainingExerciseViewModelExtensions.ConvertJson(item.Tags, item),
             });
         }
     }

@@ -26,7 +26,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
         DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.WeekString, 7));
         DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.OneMounthString, 31));
         DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.ThreeMounthString, 91));
-        DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.HalfYearString, 182));
+        DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.HalfYearString, ConstantKeys.HalfYearDays));
         DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.YearString, 365));
         DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.MoreThanYearString, -1));
     }
@@ -102,7 +102,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
             {
                 Name = trainingExercise.ExerciseName,
                 Muscles = new ObservableCollection<MuscleViewModel>(
-                    MusclesExtensions.ConvertFromStringToList(trainingExercise.MusclesString)),
+                    MuscleViewModelExtensions.ConvertFromStringToList(trainingExercise.MusclesString)),
                 OrderNumber = trainingExercise.OrderNumber,
                 Description = DescriptionViewModel.ConvertFromJson(trainingExercise.Description),
                 TrainingExerciseId = trainingExercise.Id,
@@ -111,7 +111,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
             };
 
             ex.Tags = ExerciseExtensions.ConvertTagIntToList(trainingExercise.TagsValue).ToList();
-            ExerciseManager.ConvertJsonBack(ex, trainingExercise.WeightAndRepsString);
+            TrainingExerciseViewModelExtensions.ConvertJsonBack(ex, trainingExercise.WeightAndRepsString);
             SelectedTraining.Items.Add(ex);
         }
 

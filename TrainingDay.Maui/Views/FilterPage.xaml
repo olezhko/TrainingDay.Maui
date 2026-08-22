@@ -22,21 +22,53 @@
     </Shell.TitleView>
     <ScrollView>
         <Grid x:Name="MainGrid" RowDefinitions="auto,auto,auto,*" RowSpacing="5" >
-            <Border StrokeShape="RoundRectangle 10" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,5" 
-                    BackgroundColor="DimGray">
-                <Grid ColumnDefinitions="50,1,50,1,50" >
-                    <Grid.Resources>
-                        <Style TargetType="ImageButton">
-                            <Setter Property="HeightRequest" Value="50" />
-                            <Setter Property="WidthRequest" Value="50" />
-                            <Setter Property="BackgroundColor" Value="DimGray" />
-                            <Setter Property="CornerRadius" Value="10" />
+            <Border StrokeShape="RoundRectangle 10" HorizontalOptions="Fill" VerticalOptions="Center" Margin="10,5"
+                    BackgroundColor="Transparent" Padding="10,0">
+                <VerticalStackLayout Spacing="0">
+                    <VerticalStackLayout.Resources>
+                        <Style TargetType="Grid" x:Key="EquipmentRowStyle">
+                            <Setter Property="ColumnDefinitions" Value="52,*,auto" />
+                            <Setter Property="ColumnSpacing" Value="12" />
+                            <Setter Property="Padding" Value="0,10" />
                         </Style>
-                    </Grid.Resources>
-                    <ImageButton x:Name="NoEquipmentFilterButton" Grid.Column="0" Source="no_equipment.png" Clicked="ChangeNoEquipment_Click" />
-                    <ImageButton x:Name="BarbellFilterButton" Grid.Column="2" Source="barbell.png" Clicked="ChangeBarbell_Click" />
-                    <ImageButton x:Name="DumbbellFilterButton" Grid.Column="4" Source="dumbbell.png" Clicked="ChangeDumbbell_Click" />
-                </Grid>
+                        <Style TargetType="Image">
+                            <Setter Property="HeightRequest" Value="44" />
+                            <Setter Property="Aspect" Value="AspectFit" />
+                        </Style>
+                        <Style TargetType="Label">
+                            <Setter Property="FontSize" Value="15" />
+                            <Setter Property="TextColor" Value="White" />
+                            <Setter Property="VerticalOptions" Value="Center" />
+                        </Style>
+                        <Style TargetType="Switch">
+                            <Setter Property="OnColor" Value="{StaticResource Main}" />
+                            <Setter Property="VerticalOptions" Value="Center" />
+                        </Style>
+                    </VerticalStackLayout.Resources>
+
+                    <Grid Style="{StaticResource EquipmentRowStyle}">
+                        <Image Grid.Column="0" Source="no_equipment.png" />
+                        <Label Grid.Column="1" Text="{x:Static resx:AppResources.FilterNoEquipment}" 
+                            TextColor="{AppThemeBinding Dark=White,Light=Black}"/>
+                        <Switch x:Name="NoEquipmentFilterSwitch" Grid.Column="2" Toggled="ChangeNoEquipment_Toggled" />
+                    </Grid>
+
+                    <BoxView HeightRequest="1" Color="#40FFFFFF" />
+
+                    <Grid Style="{StaticResource EquipmentRowStyle}">
+                        <Image Grid.Column="0" Source="barbell.png" />
+                        <Label Grid.Column="1" Text="{x:Static resx:AppResources.FilterBarbell}" TextColor="{AppThemeBinding Dark=White,Light=Black}"/>
+                        <Switch x:Name="BarbellFilterSwitch" Grid.Column="2" Toggled="ChangeBarbell_Toggled" />
+                    </Grid>
+
+                    <BoxView HeightRequest="1" Color="#40FFFFFF" />
+
+                    <Grid Style="{StaticResource EquipmentRowStyle}">
+                        <Image Grid.Column="0" Source="dumbbell.png" />
+                        <Label Grid.Column="1" Text="{x:Static resx:AppResources.FilterDumbbell}" TextColor="{AppThemeBinding Dark=White,Light=Black}"/>
+                        <Switch x:Name="DumbbellFilterSwitch" Grid.Column="2" Toggled="ChangeDumbbell_Toggled" />
+                    </Grid>
+                </VerticalStackLayout>
             </Border>
 
             <Border HeightRequest="1" VerticalOptions="End" Padding="10,0"/>

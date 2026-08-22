@@ -1,6 +1,7 @@
 ﻿using RestSharp;
 using System.Text.Json;
 using TrainingDay.Common.Communication;
+using TrainingDay.Maui.Extensions;
 
 namespace TrainingDay.Maui.Services
 {
@@ -24,7 +25,7 @@ namespace TrainingDay.Maui.Services
 
 		public DataService()
 		{
-            _client = new RestClient(new RestClientOptions("https://api.trainingday.space/api")
+            _client = new RestClient(new RestClientOptions($"{ConstantKeys.ApiBaseUrl}/api")
 			{
 				Timeout= TimeSpan.FromSeconds(2)
 			});

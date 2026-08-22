@@ -126,7 +126,7 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
 
             var baseItems = App.Database.GetExerciseItems();
             var nameFilter = Filter.NameFilter?.Trim();
-            var hasMuscleFilter = Filter.CurrentMuscles?.Count > 0;
+            var hasMuscleFilter = Filter.Muscles?.Count > 0;
             var existedExerciseIds = ExistedExercises?.Select(x => x.ExerciseId).ToHashSet() ?? new HashSet<int>();
             bool checkTags = Filter.IsNoEquipmentFilter || Filter.IsBarbellExists || Filter.IsDumbbellExists;
 
@@ -164,7 +164,7 @@ public class ExerciseListPageViewModel : BaseViewModel, IQueryAttributable
                 if (hasMuscleFilter)
                 {
                     var exerciseMuscles = newItem.Muscles.Select(m => (MusclesEnum)m.Id);
-                    match &= exerciseMuscles.Any(m => Filter.CurrentMuscles!.Contains(m));
+                    match &= exerciseMuscles.Any(m => Filter.Muscles!.Contains(m));
                 }
 
                 if (!match)

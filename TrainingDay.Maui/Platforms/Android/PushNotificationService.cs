@@ -50,10 +50,10 @@ internal class PushNotificationService : IPushNotification
             .SetContentTitle(message.Title)
             .SetContentText(message.Message)
             .SetLargeIcon(BitmapFactory.DecodeResource(Application.Context.Resources, Resource.Drawable.icon))
-            .SetSmallIcon(Resource.Drawable.icon)
+            .SetSmallIcon(Resource.Drawable.small_icon)
             .SetPriority((int)NotificationPriority.Low)
             .SetVisibility((int)NotificationVisibility.Public)
-            .SetOngoing(message.IsDisableSwipe); // disable swipe
+            .SetOngoing(message.IsDisableSwipe);
 
         Notification notification = builder.Build();
         var notificationManager = NotificationManagerCompat.From(Application.Context);

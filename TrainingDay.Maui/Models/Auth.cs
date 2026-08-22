@@ -2,30 +2,30 @@ namespace TrainingDay.Maui.Models;
 
 public class AuthRegisterRequest
 {
-    public string Email { get; set; }
+    public required string Email { get; set; }
 
-    public string Password { get; set; }
+    public required string Password { get; set; }
 
-    public string Nick { get; set; }
+    public string? Nick { get; set; }
 }
 
 public class LoginRequest
 {
-    public string Email { get; set; }
+    public required string Email { get; set; }
 
-    public string Password { get; set; }
+    public required string Password { get; set; }
 
     public bool RememberMe { get; set; }
 }
 
 public class ForgotPasswordRequest
 {
-    public string Email { get; set; }
+    public required string Email { get; set; }
 }
 
 public class RefreshTokenRequest
 {
-    public string RefreshToken { get; set; }
+    public required string RefreshToken { get; set; }
 }
 
 public class LoginResponse

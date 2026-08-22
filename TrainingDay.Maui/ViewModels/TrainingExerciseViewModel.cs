@@ -28,14 +28,14 @@ public class TrainingExerciseViewModel : ExerciseViewModel
             Id = comm.Id;
             TrainingExerciseId = comm.Id;
             ExerciseId = exercise.Id;
-            Muscles = new ObservableCollection<MuscleViewModel>(MusclesExtensions.ConvertFromStringToList(exercise.MusclesString));
+            Muscles = new ObservableCollection<MuscleViewModel>(MuscleViewModelExtensions.ConvertFromStringToList(exercise.MusclesString));
             Name = exercise.Name;
             TrainingId = comm.TrainingId;
             OrderNumber = comm.OrderNumber;
             SuperSetId = comm.SuperSetId;
             Tags = [.. ExerciseExtensions.ConvertTagIntToList(exercise.TagsValue)];
             CodeNum = exercise.CodeNum;
-            ExerciseManager.ConvertJsonBack(this, comm.WeightAndRepsString);
+            TrainingExerciseViewModelExtensions.ConvertJsonBack(this, comm.WeightAndRepsString);
             Description = DescriptionViewModel.ConvertFromJson(exercise.Description);
         }
         catch (Exception e)
@@ -123,7 +123,7 @@ public class TrainingExerciseViewModel : ExerciseViewModel
 
     public TrainingExerciseEntity GetTrainingExerciseComm()
     {
-        string weightAndReps = ExerciseManager.ConvertJson(Tags, this);
+        string weightAndReps = TrainingExerciseViewModelExtensions.ConvertJson(Tags, this);
 
         return new TrainingExerciseEntity()
         {
@@ -143,7 +143,7 @@ public class TrainingExerciseViewModel : ExerciseViewModel
             Id = ExerciseId,
             Description = JsonSerializer.Serialize(Description?.Model),
             Name = Name,
-            MusclesString = MusclesExtensions.ConvertFromListToString([.. Muscles]),
+            MusclesString = MuscleViewModelExtensions.ConvertFromListToString([.. Muscles]),
             TagsValue = ExerciseExtensions.ConvertTagListToInt(Tags),
             CodeNum = CodeNum,
         };

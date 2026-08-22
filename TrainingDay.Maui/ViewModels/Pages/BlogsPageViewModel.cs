@@ -48,6 +48,7 @@ public class BlogsPageViewModel : BaseViewModel
                 {
                     var newBlog = new BlogEntity()
                     {
+                        ServerId = item.Id,
                         Content = item.Content,
                         Published = item.Published,
                         Title = item.Title,
@@ -72,9 +73,10 @@ public class BlogsPageViewModel : BaseViewModel
 
     private async Task OpenBlog(BlogViewModel sender)
     {
-        var blog = await dataService.GetBlogAsync(sender.Guid);
+        var blog = await dataService.GetBlogAsync(sender.ServerId);
         var update = new BlogEntity()
         {
+            ServerId = sender.ServerId,
             Id = sender.Id,
             Content = blog.Content,
             Published = blog.Published,

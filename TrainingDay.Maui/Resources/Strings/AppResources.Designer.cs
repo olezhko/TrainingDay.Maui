@@ -566,6 +566,33 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Barbell.
+        /// </summary>
+        internal static string FilterBarbell {
+            get {
+                return ResourceManager.GetString("FilterBarbell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dumbbell.
+        /// </summary>
+        internal static string FilterDumbbell {
+            get {
+                return ResourceManager.GetString("FilterDumbbell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No equipment.
+        /// </summary>
+        internal static string FilterNoEquipment {
+            get {
+                return ResourceManager.GetString("FilterNoEquipment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter.
         /// </summary>
         internal static string FilterString {

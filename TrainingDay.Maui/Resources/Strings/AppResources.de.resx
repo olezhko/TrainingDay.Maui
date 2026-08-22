@@ -225,6 +225,15 @@
   <data name="ExercisesString" xml:space="preserve">
     <value>Übungen</value>
   </data>
+  <data name="FilterBarbell" xml:space="preserve">
+    <value>Langhantel</value>
+  </data>
+  <data name="FilterDumbbell" xml:space="preserve">
+    <value>Kurzhantel</value>
+  </data>
+  <data name="FilterNoEquipment" xml:space="preserve">
+    <value>Ohne Geräte</value>
+  </data>
   <data name="FilterString" xml:space="preserve">
     <value>Filter</value>
   </data>

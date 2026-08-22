@@ -120,7 +120,7 @@ public class DataManageViewModel : BaseViewModel
 
                 int newId = App.Database.SaveTrainingExerciseItem(item);
             }
-            catch (Exception ex)
+            catch
             {
 
             }

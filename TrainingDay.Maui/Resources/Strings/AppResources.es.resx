@@ -237,6 +237,15 @@ Los músculos calientes se contraen y relajan mejor durante el entrenamiento, lo
   <data name="ExercisesString" xml:space="preserve">
     <value>Ejercicios</value>
   </data>
+  <data name="FilterBarbell" xml:space="preserve">
+    <value>Barra</value>
+  </data>
+  <data name="FilterDumbbell" xml:space="preserve">
+    <value>Mancuerna</value>
+  </data>
+  <data name="FilterNoEquipment" xml:space="preserve">
+    <value>Sin equipo</value>
+  </data>
   <data name="FilterString" xml:space="preserve">
     <value>Filtro</value>
   </data>

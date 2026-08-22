@@ -21,7 +21,6 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
 {
     public ICommand CreateNewTrainingCommand { get; set; }
     public ICommand NavigateToQuestionsCommnd { get; set; }
-
     public ICommand ItemSelectedCommand { get; set; }
 
     public ObservableCollection<PreparedTrainingViewModel> PreparedTrainingsCollection { get; set; }
@@ -151,7 +150,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
             preparedCardioString.Training = new TrainingViewModel()
             {
                 Exercises = PreparedTrainingsPageViewModel.GetExerciseByMuscles(exerciseBase,
-                    MusclesExtensions.SetMuscles(MusclesEnum.Cardio).ToArray()),
+                    MuscleViewModelExtensions.SetMuscles(MusclesEnum.Cardio).ToArray()),
                 Title = AppResources.PreparedCardioString,
             };
         };
@@ -336,7 +335,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
         {
             try
             {
-                var exMuscles = MusclesExtensions.ConvertFromStringToList(baseExercise.MusclesString);
+                var exMuscles = MuscleViewModelExtensions.ConvertFromStringToList(baseExercise.MusclesString);
                 var sub = new List<MuscleViewModel>();
                 foreach (var muscleViewModel in exMuscles)
                 {
@@ -423,7 +422,7 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
                 OrderNumber = order,
                 Id = exercise.TrainingExerciseId,
                 SuperSetId = superSetId,
-                WeightAndRepsString = ExerciseManager.ConvertJson(exercise.Tags, exercise),
+                WeightAndRepsString = TrainingExerciseViewModelExtensions.ConvertJson(exercise.Tags, exercise),
             };
 
             App.Database.SaveTrainingExerciseItem(newTrEx);

@@ -1,6 +1,6 @@
-﻿using TrainingDay.Maui.Converters;
-using TrainingDay.Common;
-using System.Globalization;
+﻿using System.Globalization;
+using TrainingDay.Common.Models;
+using TrainingDay.Maui.Converters;
 
 namespace TrainingDay.Maui.Tests.Converters
 {
