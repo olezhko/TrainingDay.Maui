@@ -661,7 +661,7 @@ Los músculos calientes se contraen y relajan mejor durante el entrenamiento, lo
     <value>Compartir mis entrenamientos completados</value>
   </data>
   <data name="ShareCompletedWorkoutsTip" xml:space="preserve">
-    <value>Si está activado, tus entrenamientos completados se compartirán con otros usuarios y podrán aparecer en el feed 'Entrenamientos Sociales'.</value>
+    <value>Si está activado, tus entrenamientos completados se compartirán con otros usuarios y podrán aparecer en el 'Feed'.</value>
   </data>
   <data name="WorkoutAddedSuccessfully" xml:space="preserve">
     <value>Entrenamiento añadido con éxito</value>

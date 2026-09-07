@@ -661,7 +661,7 @@ Músculos aquecidos se contraem e relaxam melhor durante o treino, o que signifi
     <value>Compartilhar meus treinos concluídos</value>
   </data>
   <data name="ShareCompletedWorkoutsTip" xml:space="preserve">
-    <value>Quando ativado, seus treinos concluídos serão compartilhados com outros usuários e podem aparecer no feed 'Treinos Sociais'.</value>
+    <value>Quando ativado, seus treinos concluídos serão compartilhados com outros usuários e podem aparecer no 'Feed'.</value>
   </data>
   <data name="WorkoutAddedSuccessfully" xml:space="preserve">
     <value>Treino adicionado com sucesso</value>

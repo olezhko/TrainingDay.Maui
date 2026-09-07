@@ -1430,7 +1430,7 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to When enabled, your completed workouts will be shared with other users and may appear in the &apos;Social Workouts&apos; feed..
+        ///   Looks up a localized string similar to When enabled, your completed workouts will be shared with other users and may appear in the &apos;Feed&apos; tab..
         /// </summary>
         internal static string ShareCompletedWorkoutsTip {
             get {

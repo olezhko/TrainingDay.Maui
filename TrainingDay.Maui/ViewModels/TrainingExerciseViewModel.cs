@@ -101,6 +101,7 @@ public class TrainingExerciseViewModel : ExerciseViewModel
         {
             time = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(TimeString));
         }
     }
 

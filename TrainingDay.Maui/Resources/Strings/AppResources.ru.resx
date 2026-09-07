@@ -661,7 +661,7 @@
     <value>Делиться завершёнными тренировками</value>
   </data>
   <data name="ShareCompletedWorkoutsTip" xml:space="preserve">
-    <value>Если включено, ваши завершённые тренировки будут доступны другим пользователям и могут появиться в ленте 'Социальные тренировки'.</value>
+    <value>Если включено, ваши завершённые тренировки будут доступны другим пользователям и могут появиться 'Лента'.</value>
   </data>
   <data name="WorkoutAddedSuccessfully" xml:space="preserve">
     <value>Тренировка успешно добавлена</value>

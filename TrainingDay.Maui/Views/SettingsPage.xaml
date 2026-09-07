@@ -22,7 +22,7 @@
 
     <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Default">
         <VerticalStackLayout Spacing="5">
-            <VerticalStackLayout Spacing="10">
+            <VerticalStackLayout Spacing="5">
                 <Label Text="{x:Static resx:AppResources.SettingsString}" FontSize="Title" HorizontalOptions="Center"/>
 
                 <StackLayout Spacing="10" Margin="0,10">
@@ -59,23 +59,23 @@
                     </Grid>
                 </Border>
 
-                <StackLayout Margin="5">
+                <StackLayout>
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="{x:Static resx:AppResources.ScreenOnWhenImplementing}" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="{x:Static resx:AppResources.ScreenOnWhenImplementing}" FontSize="Medium" HorizontalOptions="StartAndExpand" VerticalOptions="Center" />
                         <Switch x:Name="ScreenOnImplementedSwitch" Toggled="ScreenOnImplementedSwitch_OnToggled" />
                     </StackLayout>
                     <Label Text="{x:Static resx:AppResources.ScreenOnWhenImplementingTip}" FontSize="Small" TextColor="Gray" />
                 </StackLayout>
 
-                <StackLayout Orientation="Horizontal" Margin="5">
-                    <Label Text="{x:Static resx:AppResources.ShowAdvicesOnImplementing}" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
+                <StackLayout Orientation="Horizontal" >
+                    <Label Text="{x:Static resx:AppResources.ShowAdvicesOnImplementing}" FontSize="Medium" HorizontalOptions="StartAndExpand" VerticalOptions="Center" />
                     <Switch x:Name="ShowAdvicesOnImplementingSwitch" Toggled="ShowAdvicesOnImplementingSwitch_OnToggled" />
                 </StackLayout>
 
-                <StackLayout Margin="5">
+                <StackLayout>
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="{x:Static resx:AppResources.ShareCompletedWorkouts}" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
-                        <Switch x:Name="ShareCompletedWorkoutsSwitch" Toggled="ShareCompletedWorkoutsSwitch_OnToggled" />
+                        <Label Text="{x:Static resx:AppResources.ShareCompletedWorkouts}" FontSize="Medium" HorizontalOptions="StartAndExpand" VerticalOptions="Center" />
+                        <Switch x:Name="ShareCompletedWorkoutsSwitch" Toggled="ShareCompletedWorkoutsSwitch_OnToggled" VerticalOptions="Center" />
                     </StackLayout>
                     <Label Text="{x:Static resx:AppResources.ShareCompletedWorkoutsTip}" FontSize="Small" TextColor="Gray" />
                     <Label x:Name="LoginRequiredHintLabel" Text="{x:Static resx:AppResources.LogInRequiredForSharingString}" FontSize="Small" TextColor="Gray" />

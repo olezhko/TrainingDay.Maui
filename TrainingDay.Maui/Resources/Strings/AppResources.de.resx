@@ -649,7 +649,7 @@
     <value>Meine abgeschlossenen Workouts teilen</value>
   </data>
   <data name="ShareCompletedWorkoutsTip" xml:space="preserve">
-    <value>Wenn aktiviert, werden deine abgeschlossenen Workouts mit anderen Nutzern geteilt und können im Feed 'Soziale Workouts' erscheinen.</value>
+    <value>Wenn aktiviert, werden deine abgeschlossenen Workouts mit anderen Nutzern geteilt und können im 'Feed'.</value>
   </data>
   <data name="WorkoutAddedSuccessfully" xml:space="preserve">
     <value>Workout erfolgreich hinzugefügt</value>

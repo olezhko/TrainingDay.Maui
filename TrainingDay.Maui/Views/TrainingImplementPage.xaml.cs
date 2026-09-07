@@ -347,7 +347,7 @@ public partial class TrainingImplementPage : ContentPage
         notificator.Cancel(PushMessagesExtensions.TrainingImplementTimeId);
         Settings.IsTrainingNotFinished = false;
 
-        SaveLastTraining();
+        SaveLastTrainingWithExercises();
         SaveChangedExercises();
         await ShareToSocialFeedIfEnabled();
 
@@ -387,7 +387,7 @@ public partial class TrainingImplementPage : ContentPage
         MainGrid.Remove(confetti);
     }
 
-    private void SaveLastTraining()
+    private void SaveLastTrainingWithExercises()
     {
         var id = App.Database.SaveItem(new LastTraining()
         {

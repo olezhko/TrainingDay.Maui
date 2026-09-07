@@ -676,7 +676,7 @@ Increase body temperature, activate the muscles and joints, and prepare the card
     <value>Share my completed workouts</value>
   </data>
   <data name="ShareCompletedWorkoutsTip" xml:space="preserve">
-    <value>When enabled, your completed workouts will be shared with other users and may appear in the 'Social Workouts' feed.</value>
+    <value>When enabled, your completed workouts will be shared with other users and may appear in the 'Feed' tab.</value>
   </data>
   <data name="WorkoutAddedSuccessfully" xml:space="preserve">
     <value>Workout added successfully</value>

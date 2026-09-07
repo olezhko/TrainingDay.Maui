@@ -7,7 +7,7 @@ using TrainingDay.Maui.ViewModels;
 
 namespace TrainingDay.Maui.Services;
 
-public class Repository
+public class Repository : IRepository
 {
     SQLiteConnection database;
 

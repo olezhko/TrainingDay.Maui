@@ -17,7 +17,7 @@ public class TrainingExerciseViewModelExtensions
 
         if (tagsList.Contains(ExerciseTags.ExerciseByTime))
         {
-            weightAndReps = JsonSerializer.Serialize((viewmodel.Time, 0));
+            weightAndReps = JsonSerializer.Serialize(viewmodel.Time);
         }
 
         return weightAndReps;
@@ -40,8 +40,7 @@ public class TrainingExerciseViewModelExtensions
 
             if (tagsList.Contains(ExerciseTags.ExerciseByTime))
             {
-                var obj = JsonSerializer.Deserialize<(TimeSpan, double)>(value);
-                viewmodel.Time = obj.Item1;
+                viewmodel.Time = JsonSerializer.Deserialize<TimeSpan>(value);
             }
         }
         catch (Exception e)
