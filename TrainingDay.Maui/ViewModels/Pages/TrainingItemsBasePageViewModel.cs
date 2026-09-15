@@ -79,25 +79,29 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
             ItemsGrouped.Add(tempGroup);
         }
 
-        SelectWorkout(tempGroups);
+        SelectGroupAndRefillWorkouts(tempGroups);
     }
 
-    private void SelectWorkout(List<Grouping<string, TrainingViewModel>> tempGroups)
+    private void SelectGroupAndRefillWorkouts(List<Grouping<string, TrainingViewModel>> tempGroups)
     {
         try
         {
             SelectedTrainings.Clear();
-            var defaultGroup = tempGroups.FirstOrDefault(gp => gp.Key == AppResources.GroupingDefaultName);
-            if (defaultGroup is null)
+            var selectedGroup = tempGroups.FirstOrDefault(gp => gp.IsSelected == true);
+            if (selectedGroup == null)
             {
-                defaultGroup = tempGroups.FirstOrDefault();
+                selectedGroup = tempGroups.FirstOrDefault(gp => gp.Key == AppResources.GroupingDefaultName);
+                selectedGroup ??= tempGroups.FirstOrDefault();
             }
 
-            defaultGroup?.IsSelected = true;
-
-            foreach (var item in defaultGroup)
+            if (selectedGroup != null)
             {
-                SelectedTrainings.Add(item);
+                selectedGroup.IsSelected = true;
+
+                foreach (var item in selectedGroup)
+                {
+                    SelectedTrainings.Add(item);
+                }
             }
         }
         catch (Exception e)
@@ -219,7 +223,9 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
                 }
 
                 OnPropertyChanged(nameof(ItemsGrouped));
-                SelectWorkout(ItemsGrouped.ToList());
+
+                SelectGroupAndRefillWorkouts([.. ItemsGrouped]);
+
                 await Toast.Make(AppResources.DeletedString).Show();
             }
         }
@@ -484,7 +490,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         if (ItemsGrouped.Any(g => g.IsSelected))
             return;
 
-        SelectWorkout(ItemsGrouped.ToList());
+        SelectGroupAndRefillWorkouts(ItemsGrouped.ToList());
     }
 
     #endregion
