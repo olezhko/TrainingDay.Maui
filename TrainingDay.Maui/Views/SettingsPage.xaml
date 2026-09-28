@@ -60,23 +60,23 @@
                 </Border>
 
                 <StackLayout>
-                    <StackLayout Orientation="Horizontal">
-                        <Label Text="{x:Static resx:AppResources.ScreenOnWhenImplementing}" FontSize="Medium" HorizontalOptions="StartAndExpand" VerticalOptions="Center" />
-                        <Switch x:Name="ScreenOnImplementedSwitch" Toggled="ScreenOnImplementedSwitch_OnToggled" />
-                    </StackLayout>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="{x:Static resx:AppResources.ScreenOnWhenImplementing}" FontSize="Medium" VerticalOptions="Center" />
+                        <Switch Grid.Column="1" x:Name="ScreenOnImplementedSwitch" Toggled="ScreenOnImplementedSwitch_OnToggled" />
+                    </Grid>
                     <Label Text="{x:Static resx:AppResources.ScreenOnWhenImplementingTip}" FontSize="Small" TextColor="Gray" />
                 </StackLayout>
 
-                <StackLayout Orientation="Horizontal" >
-                    <Label Text="{x:Static resx:AppResources.ShowAdvicesOnImplementing}" FontSize="Medium" HorizontalOptions="StartAndExpand" VerticalOptions="Center" />
-                    <Switch x:Name="ShowAdvicesOnImplementingSwitch" Toggled="ShowAdvicesOnImplementingSwitch_OnToggled" />
-                </StackLayout>
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label Text="{x:Static resx:AppResources.ShowAdvicesOnImplementing}" FontSize="Medium" VerticalOptions="Center" />
+                    <Switch Grid.Column="1" x:Name="ShowAdvicesOnImplementingSwitch" Toggled="ShowAdvicesOnImplementingSwitch_OnToggled" />
+                </Grid>
 
                 <StackLayout>
-                    <StackLayout Orientation="Horizontal">
-                        <Label Text="{x:Static resx:AppResources.ShareCompletedWorkouts}" FontSize="Medium" HorizontalOptions="StartAndExpand" VerticalOptions="Center" />
-                        <Switch x:Name="ShareCompletedWorkoutsSwitch" Toggled="ShareCompletedWorkoutsSwitch_OnToggled" VerticalOptions="Center" />
-                    </StackLayout>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="{x:Static resx:AppResources.ShareCompletedWorkouts}" FontSize="Medium" VerticalOptions="Center" />
+                        <Switch Grid.Column="1" x:Name="ShareCompletedWorkoutsSwitch" Toggled="ShareCompletedWorkoutsSwitch_OnToggled" VerticalOptions="Center" />
+                    </Grid>
                     <Label Text="{x:Static resx:AppResources.ShareCompletedWorkoutsTip}" FontSize="Small" TextColor="Gray" />
                     <Label x:Name="LoginRequiredHintLabel" Text="{x:Static resx:AppResources.LogInRequiredForSharingString}" FontSize="Small" TextColor="Gray" />
                 </StackLayout>

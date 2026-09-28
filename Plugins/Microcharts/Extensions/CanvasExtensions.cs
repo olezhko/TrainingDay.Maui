@@ -22,23 +22,20 @@ namespace Microcharts
 
                 if (hasLabel)
                 {
+                    using (var font = new SKFont(typeface, textSize))
                     using (var paint = new SKPaint
                     {
-                        TextSize = textSize,
                         IsAntialias = true,
                         Color = labelColor,
                         IsStroke = false,
-                        TextAlign = horizontalAlignment,
-                        Typeface = typeface
                     })
                     {
-                        var bounds = new SKRect();
                         var text = label;
-                        paint.MeasureText(text, ref bounds);
+                        font.MeasureText(text, out var bounds, paint);
 
                         var y = point.Y - ((bounds.Top + bounds.Bottom) / 2) - space;
 
-                        canvas.DrawText(text, point.X, y, paint);
+                        canvas.DrawText(text, point.X, y, horizontalAlignment, font, paint);
 
                         var labelBounds = GetAbsolutePositionRect(point.X, y, bounds, horizontalAlignment);
                         totalBounds = labelBounds.Standardized;
@@ -47,24 +44,20 @@ namespace Microcharts
 
                 if (hasValueLabel)
                 {
+                    using (var font = new SKFont(typeface, textSize) { Embolden = true })
                     using (var paint = new SKPaint()
                     {
-                        TextSize = textSize,
                         IsAntialias = true,
-                        FakeBoldText = true,
                         Color = valueColor,
                         IsStroke = false,
-                        TextAlign = horizontalAlignment,
-                        Typeface = typeface
                     })
                     {
-                        var bounds = new SKRect();
                         var text = value;
-                        paint.MeasureText(text, ref bounds);
+                        font.MeasureText(text, out var bounds, paint);
 
                         var y = point.Y - ((bounds.Top + bounds.Bottom) / 2) + space;
 
-                        canvas.DrawText(text, point.X, y, paint);
+                        canvas.DrawText(text, point.X, y, horizontalAlignment, font, paint);
 
                         var valueBounds = GetAbsolutePositionRect(point.X, y, bounds, horizontalAlignment);
 
@@ -143,20 +136,16 @@ namespace Microcharts
         /// </summary>
         /// <param name="canvas">The canvas.</param>
         /// <param name="text">The text to display</param>
-        /// <param name="paint">The paint to use for text and calculations</param>
+        /// <param name="paint">The paint to use for text</param>
+        /// <param name="font">The font to use for text and calculations</param>
         /// <param name="x">The baseLine point x where to vertically draw</param>
         /// <param name="y">The baseLine point y where to vertically draw</param>
+        /// <param name="align">The horizontal alignment of the text</param>
         /// <remarks>https://stackoverflow.com/questions/27631736/meaning-of-top-ascent-baseline-descent-bottom-and-leading-in-androids-font</remarks>
-        public static void DrawTextCenteredVertically(this SKCanvas canvas, string text, SKPaint paint, float x, float y)
-        {
-            var textY = y + (((-paint.FontMetrics.Ascent + paint.FontMetrics.Descent) / 2) - paint.FontMetrics.Descent);
-            canvas.DrawText(text, x, textY, paint);
-        }
-
-        public static void DrawTextCenteredVertically(this SKCanvas canvas, string text, SKPaint paint, SKFont font, float x, float y)
+        public static void DrawTextCenteredVertically(this SKCanvas canvas, string text, SKPaint paint, SKFont font, float x, float y, SKTextAlign align = SKTextAlign.Center)
         {
             var textY = y + (((-font.Metrics.Ascent + font.Metrics.Descent) / 2) - font.Metrics.Descent);
-            canvas.DrawText(text, x, textY, SKTextAlign.Center, font, paint);
+            canvas.DrawText(text, x, textY, align, font, paint);
         }
 
         /// <summary>

@@ -27,21 +27,21 @@ namespace Microcharts
 
         public static SKPath CreateSectorPath(float start, float end, float outerRadius, float innerRadius = 0.0f, float margin = 0.0f)
         {
-            var path = new SKPath();
+            using var builder = new SKPathBuilder();
 
             // if the sector has no size, then it has no path
             if (start == end)
             {
-                return path;
+                return new SKPath();
             }
 
             // the the sector is a full circle, then do that
             if (end - start == 1.0f)
             {
-                path.AddCircle(0, 0, outerRadius, SKPathDirection.Clockwise);
-                path.AddCircle(0, 0, innerRadius, SKPathDirection.Clockwise);
-                path.FillType = SKPathFillType.EvenOdd;
-                return path;
+                builder.AddCircle(0, 0, outerRadius, SKPathDirection.Clockwise);
+                builder.AddCircle(0, 0, innerRadius, SKPathDirection.Clockwise);
+                builder.FillType = SKPathFillType.EvenOdd;
+                return builder.Detach();
             }
 
             // calculate the angles
@@ -64,23 +64,23 @@ namespace Microcharts
             var d = GetCirclePoint(innerRadius, startAngle + offsetr);
 
             // add the points to the path
-            path.MoveTo(a);
-            path.ArcTo(outerRadius, outerRadius, 0, large, SKPathDirection.Clockwise, b.X, b.Y);
-            path.LineTo(c);
+            builder.MoveTo(a);
+            builder.ArcTo(outerRadius, outerRadius, 0, large, SKPathDirection.Clockwise, b.X, b.Y);
+            builder.LineTo(c);
 
             if (innerRadius == 0.0f)
             {
                 // take a short cut
-                path.LineTo(d);
+                builder.LineTo(d);
             }
             else
             {
-                path.ArcTo(innerRadius, innerRadius, 0, large, SKPathDirection.CounterClockwise, d.X, d.Y);
+                builder.ArcTo(innerRadius, innerRadius, 0, large, SKPathDirection.CounterClockwise, d.X, d.Y);
             }
 
-            path.Close();
+            builder.Close();
 
-            return path;
+            return builder.Detach();
         }
 
         #endregion

@@ -27,7 +27,6 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
 
     public PreparedTrainingsPageViewModel()
     {
-        FillTrainings();
         CreateNewTrainingCommand = new AsyncRelayCommand(AddNewTraining);
         NavigateToQuestionsCommnd = new AsyncRelayCommand(NavigateToQuestions);
         ItemSelectedCommand = new AsyncRelayCommand<PreparedTrainingViewModel>(ItemSelected);

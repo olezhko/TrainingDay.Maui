@@ -238,8 +238,8 @@ class WeightViewAndSetPageViewModel : BaseViewModel
                 Color = App.Current.RequestedTheme == AppTheme.Light ? SKColors.Black : SKColors.White,
                 IsAntialias = true,
                 Style = SKPaintStyle.StrokeAndFill,
-                TextSize = 42,
             },
+            YAxisTextFont = new SKFont { Size = 42 },
             YAxisLinesPaint = new SKPaint
             {
                 Color = App.Current.RequestedTheme == AppTheme.Light ? SKColors.Black : SKColors.White,

@@ -26,10 +26,10 @@
                 </Grid>
             </Border>
 
-            <StackLayout Orientation="Horizontal">
-                <Label Text="{x:Static resx:AppResources.RememberMeString}" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
-                <Switch IsToggled="{Binding RememberMe}"/>
-            </StackLayout>
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Text="{x:Static resx:AppResources.RememberMeString}" FontSize="Medium"/>
+                <Switch Grid.Column="1" IsToggled="{Binding RememberMe}"/>
+            </Grid>
 
             <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding HasError}" HorizontalTextAlignment="Center"/>
 

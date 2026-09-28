@@ -38,39 +38,28 @@
         </Grid>
 
         <CollectionView Grid.Row="1" ItemsSource="{Binding PreparedTrainingsCollection}" SelectionMode="Single" >
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="10" VerticalItemSpacing="10" />
+            </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Border Style="{StaticResource BorderCellStyle}" VerticalOptions="Fill" Stroke="Transparent">
+                    <Border Style="{StaticResource BorderCellStyle}" VerticalOptions="Fill" Stroke="Transparent" HeightRequest="280">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:PreparedTrainingsPageViewModel}}, Path=ItemSelectedCommand}"
                             CommandParameter="{Binding .}" NumberOfTapsRequired="1" />
                         </Border.GestureRecognizers>
-                        <Grid Padding="0" VerticalOptions="Fill">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="80" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="20" />
-                            </Grid.ColumnDefinitions>
-                            <Border HeightRequest="80" WidthRequest="80" Padding="0" Margin="0" Stroke="Transparent" StrokeShape="RoundRectangle 10">
-                                <Image Aspect="AspectFit" HeightRequest="80" HorizontalOptions="Start" Source="{Binding TrainingImageUrl}" VerticalOptions="Center" WidthRequest="80" />
+                        <VerticalStackLayout Spacing="8">
+                            <Border HeightRequest="200" Padding="0" Margin="0" Stroke="Transparent" StrokeShape="RoundRectangle 20" >
+                                <Image Aspect="AspectFill" Source="{Binding TrainingImageUrl}" />
                             </Border>
-                            
-                            <Label
-                            Grid.Column="1"
-                            Padding="10,0"
+
+                            <Label MaxLines="2"
                             FontAttributes="Bold"
                             FontSize="Medium"
-                            HorizontalOptions="StartAndExpand"
+                            HorizontalTextAlignment="Center"
                             Text="{Binding Name}"
-                            TextTransform="Uppercase"
-                            VerticalOptions="Center" />
-
-                            <Image Grid.Column="2" WidthRequest="30" HeightRequest="30" HorizontalOptions="Center" VerticalOptions="Center" Source="arrow_left.png" BackgroundColor="Transparent">
-                                <Image.Behaviors>
-                                    <toolkit:IconTintColorBehavior TintColor="LightGray" />
-                                </Image.Behaviors>
-                            </Image>
-                        </Grid>
+                            TextTransform="Uppercase"/>
+                        </VerticalStackLayout>
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

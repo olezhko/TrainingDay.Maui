@@ -89,7 +89,7 @@
                             <Setter Property="IsVisible" Value="True"/>
                         </Style>
                     </ContentView.Style>
-                    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
                         <Label Text="{x:Static resx:AppResources.NoTrainingsNeedAddNewString}" HorizontalTextAlignment="Center" FontSize="20"/>
                         <ImageButton WidthRequest="60" HeightRequest="60" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="add_empty.png"
                                      Command="{Binding AddNewTrainingCommand}" BackgroundColor="Transparent">

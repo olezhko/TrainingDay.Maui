@@ -30,6 +30,8 @@ namespace Microcharts
                 Style = SKPaintStyle.StrokeAndFill,
             };
 
+            YAxisTextFont = new SKFont();
+
             YAxisLinesPaint = new SKPaint
             {
                 Color = SKColors.Black.WithAlpha(0x50),
@@ -151,6 +153,11 @@ namespace Microcharts
         public SKPaint YAxisTextPaint { get; set; }
 
         /// <summary>
+        /// Y Axis Font (text size, typeface)
+        /// </summary>
+        public SKFont YAxisTextFont { get; set; }
+
+        /// <summary>
         /// Y Axis Paint
         /// </summary>
         public SKPaint YAxisLinesPaint { get; set; }
@@ -178,7 +185,7 @@ namespace Microcharts
                 float minValue = MinValue;
 
                 //This function might change the min/max value
-                width = MeasureHelper.CalculateYAxis(ShowYAxisText, ShowYAxisLines, entries, YAxisMaxTicks, YAxisTextPaint, YAxisPosition, width, fixedRange, ref maxValue, ref minValue, out float yAxisXShift, out List<float> yAxisIntervalLabels);
+                width = MeasureHelper.CalculateYAxis(ShowYAxisText, ShowYAxisLines, entries, YAxisMaxTicks, YAxisTextPaint, YAxisTextFont, YAxisPosition, width, fixedRange, ref maxValue, ref minValue, out float yAxisXShift, out List<float> yAxisIntervalLabels);
                 float valRange = maxValue - minValue;
 
                 var firstSerie = Series.FirstOrDefault();
@@ -204,7 +211,7 @@ namespace Microcharts
                 var itemSize = CalculateItemSize(nbItems, width, height, footerHeight + headerHeight + legendHeight);
                 var barSize = CalculateBarSize(itemSize, Series.Count());
                 var origin = CalculateYOrigin(itemSize.Height, headerWithLegendHeight, maxValue, minValue, valRange);
-                DrawHelper.DrawYAxis(ShowYAxisText, ShowYAxisLines, YAxisPosition, YAxisTextPaint, YAxisLinesPaint, Margin, AnimationProgress, 
+                DrawHelper.DrawYAxis(ShowYAxisText, ShowYAxisLines, YAxisPosition, YAxisTextPaint, YAxisTextFont, YAxisLinesPaint, Margin, AnimationProgress, 
                     maxValue, valRange, canvas, width, yAxisXShift, yAxisIntervalLabels, headerHeight, itemSize, origin);
 
                 int nbSeries = series.Count();
@@ -363,19 +370,17 @@ namespace Microcharts
             }
 
             currentWidthUsed += Margin + SerieLabelTextSize + Margin;
+            using (var font = new SKFont(Typeface, SerieLabelTextSize))
             using (var paint = new SKPaint())
             {
-                paint.TextSize = SerieLabelTextSize;
                 paint.IsAntialias = true;
                 paint.Color = lblColor;
                 paint.IsStroke = false;
-                paint.Typeface = Typeface;
 
-                var bounds = new SKRect();
-                paint.MeasureText(serie.Name, ref bounds);
+                font.MeasureText(serie.Name, out var bounds, paint);
                 //Vertical center align the text to the legend color box
                 float textYPosition = rect.Bottom - ((rect.Bottom - rect.Top) / 2) + (bounds.Height / 2);
-                canvas.DrawText(serie.Name, currentWidthUsed, textYPosition, paint);
+                canvas.DrawText(serie.Name, currentWidthUsed, textYPosition, SKTextAlign.Left, font, paint);
                 currentWidthUsed += bounds.Width;
             }
 
@@ -428,9 +433,8 @@ namespace Microcharts
         private Dictionary<ChartEntry, SKRect> MeasureValueLabels()
         {
             var dict = new Dictionary<ChartEntry, SKRect>();
-            using (var paint = new SKPaint())
+            using (var font = new SKFont { Size = ValueLabelTextSize })
             {
-                paint.TextSize = ValueLabelTextSize;
                 foreach (var e in entries)
                 {
                     SKRect bounds;
@@ -440,8 +444,7 @@ namespace Microcharts
                     }
                     else
                     {
-                        bounds = new SKRect();
-                        paint.MeasureText(e.ValueLabel, ref bounds);
+                        font.MeasureText(e.ValueLabel, out bounds);
                     }
 
                     dict.Add(e, bounds);

@@ -240,7 +240,7 @@ public class Repository : IRepository
     #region TrainingExerciseComm Methods
     public IEnumerable<TrainingExerciseEntity> GetTrainingExerciseItems()
     {
-        return (from i in database.Table<TrainingExerciseEntity>() select i).ToList();
+        return (from i in database.Table<TrainingExerciseEntity>() select i);
     }
 
     public int DeleteTrainingExerciseItem(int id)
@@ -259,21 +259,19 @@ public class Repository : IRepository
         return GetLastInsertId();
     }
 
-    public List<TrainingExerciseViewModel> GetTrainingExerciseItemByTrainingId(int trainingId)
+    public List<TrainingExerciseViewModel> GetTrainingExercisesByTrainingId(int trainingId)
     {
-        List<TrainingExerciseViewModel> items = new List<TrainingExerciseViewModel>();
-        var allItems = GetTrainingExerciseItems();
+        var items = new List<TrainingExerciseViewModel>();
+
+        var allItems = (from i in database.Table<TrainingExerciseEntity>() select i)
+            .Where(item => item.TrainingId == trainingId)
+            .OrderBy(a => a.OrderNumber);
 
         foreach (var trainingExerciseComm in allItems)
         {
-            if (trainingExerciseComm.TrainingId == trainingId)
-            {
-                items.Add(new TrainingExerciseViewModel(GetExerciseItem(trainingExerciseComm.ExerciseId), trainingExerciseComm));
-            }
+            items.Add(new TrainingExerciseViewModel(GetExerciseItem(trainingExerciseComm.ExerciseId), trainingExerciseComm));
         }
 
-
-        items = new List<TrainingExerciseViewModel>(items.OrderBy(a => a.OrderNumber));
         return items;
     }
 

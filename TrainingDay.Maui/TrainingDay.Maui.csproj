@@ -29,27 +29,27 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
-		<ApplicationVersion>375</ApplicationVersion>
-		<ApplicationDisplayVersion>1.3.3.15</ApplicationDisplayVersion>
+		<ApplicationVersion>376</ApplicationVersion>
+		<ApplicationDisplayVersion>1.3.4.1</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-ios|AnyCPU'">
 		<CreatePackage>false</CreatePackage>
 		<ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
-		<ApplicationVersion>375</ApplicationVersion>
-		<ApplicationDisplayVersion>1.3.3.15</ApplicationDisplayVersion>
+		<ApplicationVersion>376</ApplicationVersion>
+		<ApplicationDisplayVersion>1.3.4.1</ApplicationDisplayVersion>
 		<EnableSGenConc>True</EnableSGenConc>
 		<SkipStaticLibraryValidation>true</SkipStaticLibraryValidation>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
-		<ApplicationVersion>375</ApplicationVersion>
-		<ApplicationDisplayVersion>1.3.3.15</ApplicationDisplayVersion>
+		<ApplicationVersion>376</ApplicationVersion>
+		<ApplicationDisplayVersion>1.3.4.1</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-ios|AnyCPU'">
-		<ApplicationVersion>375</ApplicationVersion>
-		<ApplicationDisplayVersion>1.3.3.15</ApplicationDisplayVersion>
+		<ApplicationVersion>376</ApplicationVersion>
+		<ApplicationDisplayVersion>1.3.4.1</ApplicationDisplayVersion>
 		<CreatePackage>false</CreatePackage>
 		<CodesignProvision>TrainingDayPublish</CodesignProvision>
 		<CodesignKey>Apple Distribution: Oleg Ladyka (36WMJT4QLC)</CodesignKey>
@@ -135,15 +135,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui" Version="14.0.0" />
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.41" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="10.0.41" />
-		<PackageReference Include="RestSharp" Version="112.1.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="15.0.1" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.110" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="10.0.110" />
+		<PackageReference Include="RestSharp" Version="114.0.0" />
 		<PackageReference Include="SentinelAnalytics.MAUI" Version="1.0.7" />
 		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="3.0.0" />
-		<PackageReference Include="SkiaSharp.Views" Version="3.119.4" />
-		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.119.4" />
+		<PackageReference Include="SkiaSharp.Views" Version="4.152.1" />
+		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="4.152.1" />
 		<PackageReference Include="SourceGear.sqlite3" Version="3.50.4.5" />
 		<PackageReference Include="sqlite-net-e" Version="1.11.0" />
   </ItemGroup>

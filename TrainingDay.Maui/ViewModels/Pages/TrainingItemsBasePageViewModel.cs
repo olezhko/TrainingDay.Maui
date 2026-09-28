@@ -253,7 +253,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
 
         // save every exercise
         int order = 0;
-        var exercises = App.Database.GetTrainingExerciseItemByTrainingId(training.Id);
+        var exercises = App.Database.GetTrainingExercisesByTrainingId(training.Id);
         foreach (var item in exercises)
         {
             // save order numbers

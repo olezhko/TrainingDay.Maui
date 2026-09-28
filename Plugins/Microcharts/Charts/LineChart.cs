@@ -210,12 +210,12 @@ namespace Microcharts
                         using (var shader = CreateXGradient(points, s.Entries, s.Color))
                             paint.Shader = shader;
 
-                    var path = new SKPath();
+                    using var builder = new SKPathBuilder();
                     if (s.IsFullLine)
                     {
                         var y = points[0].Y;
-                        path.MoveTo(new SKPoint(50, y));
-                        path.LineTo(new SKPoint(canvas.LocalClipBounds.Width, y));
+                        builder.MoveTo(new SKPoint(50, y));
+                        builder.LineTo(new SKPoint(canvas.LocalClipBounds.Width, y));
                     }
                     else
                     {
@@ -230,7 +230,7 @@ namespace Microcharts
 
                             if (isFirst)
                             {
-                                path.MoveTo(points[i]);
+                                builder.MoveTo(points[i]);
                                 isFirst = false;
                             }
 
@@ -248,15 +248,16 @@ namespace Microcharts
                                 }
 
                                 var cubicInfo = CalculateCubicInfo(points, i, next, itemSize);
-                                path.CubicTo(cubicInfo.control, cubicInfo.nextControl, cubicInfo.nextPoint);
+                                builder.CubicTo(cubicInfo.control, cubicInfo.nextControl, cubicInfo.nextPoint);
                             }
                             else if (lineMode == LineMode.Straight)
                             {
-                                path.LineTo(points[i]);
+                                builder.LineTo(points[i]);
                             }
                         }
                     }
 
+                    using var path = builder.Detach();
                     canvas.DrawPath(path, paint);
                 }
             }
@@ -279,7 +280,7 @@ namespace Microcharts
                     {
                         paint.Shader = EnableYFadeOutGradient ? SKShader.CreateCompose(shaderY, shaderX, SKBlendMode.SrcOut) : shaderX;
 
-                        var path = new SKPath();
+                        using var builder = new SKPathBuilder();
 
                         var isFirst = true;
                         var entries = serie.Entries;
@@ -292,8 +293,8 @@ namespace Microcharts
 
                             if(isFirst)
                             {
-                                path.MoveTo(points[i].X, origin);
-                                path.LineTo(points[i]);
+                                builder.MoveTo(points[i].X, origin);
+                                builder.LineTo(points[i]);
                                 isFirst = false;
                             }
 
@@ -312,18 +313,19 @@ namespace Microcharts
                                 }
 
                                 var cubicInfo = CalculateCubicInfo(points, i, next, itemSize);
-                                path.CubicTo(cubicInfo.control, cubicInfo.nextControl, cubicInfo.nextPoint);
+                                builder.CubicTo(cubicInfo.control, cubicInfo.nextControl, cubicInfo.nextPoint);
                                 lastPoint = cubicInfo.nextPoint;
                             }
                             else if (lineMode == LineMode.Straight)
                             {
-                                path.LineTo(points[i]);
+                                builder.LineTo(points[i]);
                                 lastPoint = points[i];
                             }
                         }
 
-                        path.LineTo(lastPoint.X, origin);
-                        path.Close();
+                        builder.LineTo(lastPoint.X, origin);
+                        builder.Close();
+                        using var path = builder.Detach();
                         canvas.DrawPath(path, paint);
                     }
                 }
