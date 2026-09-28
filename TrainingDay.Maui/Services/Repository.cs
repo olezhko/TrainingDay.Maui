@@ -1,9 +1,10 @@
 ﻿using SQLite;
 using System.Text.Json;
 using TrainingDay.Common.Extensions;
+using System.Collections.Concurrent;
 using TrainingDay.Common.Models;
+using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Database;
-using TrainingDay.Maui.ViewModels;
 
 namespace TrainingDay.Maui.Services;
 
@@ -85,7 +86,6 @@ public class Repository : IRepository
     private void DeleteUnused(IEnumerable<ExerciseEntity> dbExercises)
     {
         var dbGroups = dbExercises.GroupBy(item => item.CodeNum).ToList();
-        var trEx = GetTrainingExerciseItems();
 
         foreach (var group in dbGroups)
         {
@@ -102,7 +102,7 @@ public class Repository : IRepository
                 {
                     var idForDelete = group.ElementAt(i).Id;
 
-                    var itemsToFix = trEx.Where(comm => comm.ExerciseId == idForDelete);
+                    var itemsToFix = GetTrainingExerciseItemsByExerciseId(idForDelete);
                     foreach (var item in itemsToFix)
                     {
                         item.ExerciseId = etalon.Id;
@@ -240,7 +240,12 @@ public class Repository : IRepository
     #region TrainingExerciseComm Methods
     public IEnumerable<TrainingExerciseEntity> GetTrainingExerciseItems()
     {
-        return (from i in database.Table<TrainingExerciseEntity>() select i);
+        return database.Table<TrainingExerciseEntity>();
+    }
+
+    public IEnumerable<TrainingExerciseEntity> GetTrainingExerciseItemsByExerciseId(int exerciseId)
+    {
+        return database.Table<TrainingExerciseEntity>().Where(item => item.ExerciseId == exerciseId);
     }
 
     public int DeleteTrainingExerciseItem(int id)
@@ -259,32 +264,33 @@ public class Repository : IRepository
         return GetLastInsertId();
     }
 
-    public List<TrainingExerciseViewModel> GetTrainingExercisesByTrainingId(int trainingId)
+    public List<TrainingExerciseData> GetTrainingExercisesByTrainingId(int trainingId)
     {
-        var items = new List<TrainingExerciseViewModel>();
-
-        var allItems = (from i in database.Table<TrainingExerciseEntity>() select i)
+        var trainingExercises = database.Table<TrainingExerciseEntity>()
             .Where(item => item.TrainingId == trainingId)
-            .OrderBy(a => a.OrderNumber);
+            .OrderBy(item => item.OrderNumber)
+            .ToList();
 
-        foreach (var trainingExerciseComm in allItems)
+        if (trainingExercises.Count == 0)
         {
-            items.Add(new TrainingExerciseViewModel(GetExerciseItem(trainingExerciseComm.ExerciseId), trainingExerciseComm));
+            return [];
         }
 
-        return items;
+        var exerciseIds = trainingExercises.Select(item => item.ExerciseId).Distinct().ToList();
+        var exercises = database.Table<ExerciseEntity>()
+            .Where(item => exerciseIds.Contains(item.Id))
+            .ToDictionary(item => item.Id);
+
+        // rows pointing to a deleted exercise are skipped
+        return trainingExercises
+            .Where(item => exercises.ContainsKey(item.ExerciseId))
+            .Select(item => new TrainingExerciseData(item, exercises[item.ExerciseId]))
+            .ToList();
     }
 
     public void DeleteTrainingExerciseItemByTrainingId(int trainingId)
     {
-        var allItems = GetTrainingExerciseItems();
-        foreach (var trainingExerciseComm in allItems)
-        {
-            if (trainingExerciseComm.TrainingId == trainingId)
-            {
-                DeleteTrainingExerciseItem(trainingExerciseComm.Id);
-            }
-        }
+        database.Table<TrainingExerciseEntity>().Delete(item => item.TrainingId == trainingId);
     }
     #endregion
 
@@ -347,25 +353,27 @@ public class Repository : IRepository
 
     public void DeleteSuperSetsByTrainingId(int trainingId)
     {
-        var allItems = GetSuperSetItems();
-        foreach (var item in allItems)
-        {
-            if (item.TrainingId == trainingId)
-            {
-                DeleteTrainingExerciseItem(item.Id);
-            }
-        }
+        database.Table<SuperSetEntity>().Delete(item => item.TrainingId == trainingId);
     }
     #endregion
 
     #region Image
+    // image bytes by url (null = no image), so list cells don't hit SQLite on every scroll
+    private readonly ConcurrentDictionary<string, byte[]?> imageDataCache = new();
+
     public ImageEntity GetImage(string imageUrl)
     {
         return database.Find<ImageEntity>(a => a.Url == imageUrl);
     }
 
+    public bool TryGetCachedImageData(string imageUrl, out byte[]? data) => imageDataCache.TryGetValue(imageUrl, out data);
+
+    public byte[]? GetImageData(string imageUrl) => imageDataCache.GetOrAdd(imageUrl, url => GetImage(url)?.Data);
+
     public int SaveImage(ImageEntity item)
     {
+        imageDataCache.TryRemove(item.Url, out _);
+
         if (item.Id != 0)
         {
             database.Update(item);
@@ -417,14 +425,7 @@ public class Repository : IRepository
 
     public void DeleteTrainingExerciseItemByExerciseId(int itemExerciseId)
     {
-        var allItems = GetTrainingExerciseItems();
-        foreach (var trainingExerciseComm in allItems)
-        {
-            if (trainingExerciseComm.ExerciseId == itemExerciseId)
-            {
-                DeleteTrainingExerciseItem(trainingExerciseComm.Id);
-            }
-        }
+        database.Table<TrainingExerciseEntity>().Delete(item => item.ExerciseId == itemExerciseId);
     }
 
     public IEnumerable<BlogEntity> GetBlogItems()

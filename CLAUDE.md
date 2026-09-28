@@ -36,6 +36,18 @@ dotnet publish TrainingDay.Maui/TrainingDay.Maui.csproj -c Release -f net10.0-io
 - **Settings** (`/Extensions/Settings.cs`) — static wrapper around `Preferences` for key-value app config
 - Database file name and other constants live in `ConstantKeys` (`/Extensions/ConstantKeys.cs`)
 
+### Layering Rules
+
+Dependencies point one way only: **Views / Controls → ViewModels → Services / Data (Repository, DataService) → Models**.
+
+- `Services/`, `Data/` and `Models/` must never reference `Views/`, `Controls/` or `ViewModels/` (no `using TrainingDay.Maui.Controls` in the repository, etc.).
+- Caching, invalidation and other data concerns belong in the data/service layer; controls and views only consume them.
+- If a lower layer needs to notify the UI, expose an event / message (`WeakReferenceMessenger`) or a method the UI calls — don't call UI types directly.
+
+### Coding Rules
+
+- **No tuples** — neither `System.Tuple<...>` nor value tuples (`(A a, B b)`, `Item1`/`Item2`, `return (x, y)`). Use a named `record` instead (e.g. `TrainingExerciseWithExercise`, `MeasureWeightOption`). A type used only inside one class can be a `private sealed record` nested in it; shared ones go in `Models/`.
+
 ### Dependency Injection
 
 All services are registered in `MauiProgram.cs`. ViewModels are also registered there and resolved via constructor injection into pages.

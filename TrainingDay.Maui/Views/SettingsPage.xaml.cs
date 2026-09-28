@@ -119,19 +119,15 @@ public partial class SettingsPage : ContentPage
 
     private void FillAvailableMeasureWeight()
     {
-        List<Tuple<MeasureWeightTypes, string>> items =
-        [
-            new Tuple<MeasureWeightTypes, string>(MeasureWeightTypes.Kilograms, AppResources.KilogramsString),
-            new Tuple<MeasureWeightTypes, string>(MeasureWeightTypes.Lbs, AppResources.LbsString),
-        ];
+        var items = MeasureWeightOption.GetAll().ToList();
 
-        foreach (var measureWeightType in items)
+        foreach (var measureWeightOption in items)
         {
-            MeasureWeightPicker.Items.Add(measureWeightType.Item2);
+            MeasureWeightPicker.Items.Add(measureWeightOption.Name);
         }
 
         MeasureWeightTypes current = (MeasureWeightTypes)Settings.WeightMeasureType;
-        int index = items.FindIndex(0, item => item.Item1 == current);
+        int index = items.FindIndex(0, item => item.Type == current);
         MeasureWeightPicker.SelectedIndex = index;
     }
 

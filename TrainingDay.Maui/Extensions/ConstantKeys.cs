@@ -7,6 +7,6 @@ public static class ConstantKeys
     public const string ApiBaseUrl = "https://api.trainingday.space";
     public const int HalfYearDays = 183;
 
-    public static string Version => "1.3.3";
+    public static string Version => "1.3.4";
     public const int ExerciseMaxCodeNum = 144;
 }

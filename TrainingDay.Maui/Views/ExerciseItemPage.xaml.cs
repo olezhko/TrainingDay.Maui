@@ -89,12 +89,14 @@ public partial class ExerciseItemPage : ContentPage
         ExerciseViewModel ex = BindingContext as ExerciseViewModel;
         if (ex.LoadId != 0)
         {
-            var trainingIdsWithThisExercise = App.Database.GetTrainingExerciseItems()
-                .Where(comm => comm.ExerciseId == ex.LoadId)
+            var trainingIdsWithThisExercise = App.Database.GetTrainingExerciseItemsByExerciseId(ex.LoadId)
                 .Select(item => item.TrainingId)
-                .Distinct();
+                .ToHashSet();
 
-            var trainings = App.Database.GetTrainingItems().Where(item => trainingIdsWithThisExercise.Contains(item.Id)).Select(training => training.Title);
+            var trainings = App.Database.GetTrainingItems()
+                .Where(item => trainingIdsWithThisExercise.Contains(item.Id))
+                .Select(training => training.Title)
+                .ToList();
             StringBuilder questionBuilder = new ();
             if (trainings.Any())
             {

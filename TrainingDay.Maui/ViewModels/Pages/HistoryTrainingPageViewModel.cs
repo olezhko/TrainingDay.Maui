@@ -15,7 +15,10 @@ namespace TrainingDay.Maui.ViewModels.Pages;
 public class HistoryTrainingPageViewModel : BaseViewModel
 {
     private IOrderedEnumerable<LastTrainingEntity> baseItems;
-    private static readonly List<Tuple<string, int>> DaysAndTextLimits = new List<Tuple<string, int>>();
+    private static readonly List<HistoryPeriod> DaysAndTextLimits = new List<HistoryPeriod>();
+
+    // heading of the history group and max age of a training in days (-1 = no limit)
+    private sealed record HistoryPeriod(string Heading, int Days);
 
     public HistoryTrainingPageViewModel()
     {
@@ -23,12 +26,12 @@ public class HistoryTrainingPageViewModel : BaseViewModel
         ItemSelectedCommand = new AsyncRelayCommand<LastTraining>(SelectionChanged);
 
         DaysAndTextLimits.Clear();
-        DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.WeekString, 7));
-        DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.OneMounthString, 31));
-        DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.ThreeMounthString, 91));
-        DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.HalfYearString, ConstantKeys.HalfYearDays));
-        DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.YearString, 365));
-        DaysAndTextLimits.Add(new Tuple<string, int>(AppResources.MoreThanYearString, -1));
+        DaysAndTextLimits.Add(new HistoryPeriod(AppResources.WeekString, 7));
+        DaysAndTextLimits.Add(new HistoryPeriod(AppResources.OneMounthString, 31));
+        DaysAndTextLimits.Add(new HistoryPeriod(AppResources.ThreeMounthString, 91));
+        DaysAndTextLimits.Add(new HistoryPeriod(AppResources.HalfYearString, ConstantKeys.HalfYearDays));
+        DaysAndTextLimits.Add(new HistoryPeriod(AppResources.YearString, 365));
+        DaysAndTextLimits.Add(new HistoryPeriod(AppResources.MoreThanYearString, -1));
     }
 
     public ObservableCollection<LastTrainingViewModelList> LastTrainings { get; set; }
@@ -123,7 +126,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
     {
         foreach (var daysAndTextLimit in DaysAndTextLimits)
         {
-            var result = AddLastTraining(newItem, daysAndTextLimit.Item1, daysAndTextLimit.Item2, tempLastTrainings);
+            var result = AddLastTraining(newItem, daysAndTextLimit.Heading, daysAndTextLimit.Days, tempLastTrainings);
             if (result)
             {
                 break;

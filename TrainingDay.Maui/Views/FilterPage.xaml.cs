@@ -83,20 +83,22 @@ public partial class FilterPage : ContentPage, IQueryAttributable
         SetDifficultyLevel(Filter.DifficultyLevel);
     }
 
-    List<Tuple<string, string>> newFilterButtonMessages = new List<Tuple<string, string>>();
+    private sealed record FilterTip(string Text, string Image);
+
+    List<FilterTip> newFilterButtonMessages = new List<FilterTip>();
     int popupIndex = 0;
     private async Task ShowPopups()
     {
-        newFilterButtonMessages.Add(new Tuple<string, string>(AppResources.WithoutEquipment, "no_equipment.png"));
-        newFilterButtonMessages.Add(new Tuple<string, string>(AppResources.WithBarbell, "barbell.png"));
-        newFilterButtonMessages.Add(new Tuple<string, string>(AppResources.WithDumbbell, "dumbbell.png"));
+        newFilterButtonMessages.Add(new FilterTip(AppResources.WithoutEquipment, "no_equipment.png"));
+        newFilterButtonMessages.Add(new FilterTip(AppResources.WithBarbell, "barbell.png"));
+        newFilterButtonMessages.Add(new FilterTip(AppResources.WithDumbbell, "dumbbell.png"));
 
         await ShowPopup();
     }
 
     private async Task ShowPopup()
     {
-        Tuple<string, string> textImageTuple = newFilterButtonMessages[popupIndex];
+        FilterTip tip = newFilterButtonMessages[popupIndex];
 
         var style = App.Current.Resources["PopupLayout"] as Style;
         var view = new VerticalStackLayout() { Spacing = 5, Style = style };
@@ -104,11 +106,11 @@ public partial class FilterPage : ContentPage, IQueryAttributable
         {
             HeightRequest = 100,
             WidthRequest = 100,
-            Source = textImageTuple.Item2
+            Source = tip.Image
         });
         view.Children.Add(new Label()
         {
-            Text = textImageTuple.Item1,
+            Text = tip.Text,
             HorizontalOptions = LayoutOptions.Center,
             HorizontalTextAlignment = TextAlignment.Center,
         });

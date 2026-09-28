@@ -232,13 +232,7 @@ namespace TrainingDay.Maui
 
         private static string GetMeasureOfWeight()
         {
-            List<Tuple<MeasureWeightTypes, string>> items =
-            [
-                new Tuple<MeasureWeightTypes, string>(MeasureWeightTypes.Kilograms, AppResources.KilogramsString),
-                new Tuple<MeasureWeightTypes, string>(MeasureWeightTypes.Lbs, AppResources.LbsString),
-            ];
-
-            return items.FirstOrDefault(item => (int)item.Item1 == Settings.WeightMeasureType)!.Item2;
+            return MeasureWeightOption.GetAll().First(item => (int)item.Type == Settings.WeightMeasureType).Name;
         }
     }
 }

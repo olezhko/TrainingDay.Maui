@@ -1,9 +1,9 @@
-﻿using TrainingDay.Maui.Models.Database;
-
-namespace TrainingDay.Maui.Controls;
+﻿namespace TrainingDay.Maui.Controls;
 
 public class ImageCache : Image
 {
+    private string? currentKey;
+
     public ImageCache()
     {
         BackgroundColor = Colors.White;
@@ -31,28 +31,44 @@ public class ImageCache : Image
 
     public void OnImageUrlChanged() => LoadImage();
 
-    private void LoadImage()
+    private async void LoadImage()
     {
-        Source = "workouts.png";
-
         try
         {
             string key = CodeNum != 0 ? CodeNum.ToString() : $"new_{ExerciseId}";
-
+            currentKey = key;
             BackgroundColor = Colors.Transparent;
 
-            var imageSource = App.Database.GetImage(key);
-
-            if (imageSource != null)
+            if (App.Database.TryGetCachedImageData(key, out var cached))
             {
-                Behaviors.Clear();
-                Source = ImageSource.FromStream(() => Stream(imageSource));
+                ApplyImage(cached);
+                return;
             }
+
+            Source = "workouts.png";
+
+            var data = await Task.Run(() => App.Database.GetImageData(key));
+
+            // cell was recycled for another exercise while loading
+            if (key != currentKey)
+                return;
+
+            ApplyImage(data);
         }
         catch
         {
         }
     }
 
-    private Stream Stream(ImageEntity data) => new MemoryStream(data.Data);
+    private void ApplyImage(byte[]? data)
+    {
+        if (data == null)
+        {
+            Source = "workouts.png";
+            return;
+        }
+
+        Behaviors.Clear();
+        Source = ImageSource.FromStream(() => new MemoryStream(data));
+    }
 }
