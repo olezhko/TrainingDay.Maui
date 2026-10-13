@@ -77,8 +77,7 @@
                         <Label Text="{x:Static resx:AppResources.ShareCompletedWorkouts}" FontSize="Medium" VerticalOptions="Center" />
                         <Switch Grid.Column="1" x:Name="ShareCompletedWorkoutsSwitch" Toggled="ShareCompletedWorkoutsSwitch_OnToggled" VerticalOptions="Center" />
                     </Grid>
-                    <Label Text="{x:Static resx:AppResources.ShareCompletedWorkoutsTip}" FontSize="Small" TextColor="Gray" />
-                    <Label x:Name="LoginRequiredHintLabel" Text="{x:Static resx:AppResources.LogInRequiredForSharingString}" FontSize="Small" TextColor="Gray" />
+                    <Label Text="{x:Static resx:AppResources.ShareCompletedWorkoutsTip}" FontSize="Small" TextColor="Gray" />                
                 </StackLayout>
             </VerticalStackLayout>
 

@@ -58,8 +58,6 @@ public partial class SettingsPage : ContentPage
         LogoutButton.IsVisible = isLoggedIn;
 
         NickBorder.IsVisible = isLoggedIn;
-        ShareCompletedWorkoutsSwitch.IsEnabled = isLoggedIn;
-        LoginRequiredHintLabel.IsVisible = !isLoggedIn;
     }
 
     private async void LoginButton_Click(object sender, EventArgs e)
@@ -180,12 +178,15 @@ public partial class SettingsPage : ContentPage
 
     private async void ShareCompletedWorkoutsSwitch_OnToggled(object sender, ToggledEventArgs e)
     {
+        LoggingService.TrackEvent(ShareCompletedWorkoutsSwitch.IsToggled ? "Share Enabled" : "Share Disabled");
+
+        // Logged-out users keep the setting locally; logged-in users store it on the server (cached locally on success).
         if (!authService.IsLoggedIn)
         {
+            Settings.ShareCompletedWorkouts = ShareCompletedWorkoutsSwitch.IsToggled;
             return;
         }
 
-        LoggingService.TrackEvent(ShareCompletedWorkoutsSwitch.IsToggled ? "Share Enabled" : "Share Disabled");
         await userSettingsService.UpdateAsync(NicknameEntry.Text, ShareCompletedWorkoutsSwitch.IsToggled);
     }
 

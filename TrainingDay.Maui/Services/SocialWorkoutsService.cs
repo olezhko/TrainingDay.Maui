@@ -39,12 +39,10 @@ public class HttpSocialWorkoutsService : IDisposable, ISocialWorkoutsService
 
     public async Task ShareWorkoutAsync(ShareSocialWorkoutRequest workout)
     {
-        if (!await authService.EnsureValidTokenAsync())
-        {
-            return;
-        }
-
-        var request = CreateAuthorizedRequest(string.Empty, Method.Post);
+        // Logged-out users (or an expired session that can't be refreshed) share as the server's Anonymous user.
+        var request = await authService.EnsureValidTokenAsync()
+            ? CreateAuthorizedRequest(string.Empty, Method.Post)
+            : new RestRequest(string.Empty, Method.Post);
         request.AddJsonBody(workout);
         await client.ExecuteAsync(request);
     }

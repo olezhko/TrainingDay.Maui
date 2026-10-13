@@ -726,9 +726,6 @@ Los músculos calientes se contraen y relajan mejor durante el entrenamiento, lo
   <data name="LogInToViewFeedString" xml:space="preserve">
     <value>Inicia sesión para ver y compartir entrenamientos con la comunidad.</value>
   </data>
-  <data name="LogInRequiredForSharingString" xml:space="preserve">
-    <value>Inicia sesión para activar el apodo y compartir entrenamientos.</value>
-  </data>
   <data name="DontHaveAccountString" xml:space="preserve">
     <value>¿No tienes cuenta? Regístrate</value>
   </data>

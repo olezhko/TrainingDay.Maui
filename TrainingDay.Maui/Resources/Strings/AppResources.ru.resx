@@ -726,9 +726,6 @@
   <data name="LogInToViewFeedString" xml:space="preserve">
     <value>Войдите, чтобы просматривать и делиться тренировками с сообществом.</value>
   </data>
-  <data name="LogInRequiredForSharingString" xml:space="preserve">
-    <value>Войдите, чтобы включить никнейм и публикацию тренировок.</value>
-  </data>
   <data name="DontHaveAccountString" xml:space="preserve">
     <value>Нет аккаунта? Зарегистрироваться</value>
   </data>

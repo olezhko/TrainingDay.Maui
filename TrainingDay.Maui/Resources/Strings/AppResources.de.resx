@@ -714,9 +714,6 @@
   <data name="LogInToViewFeedString" xml:space="preserve">
     <value>Melden Sie sich an, um Workouts der Community zu sehen und zu teilen.</value>
   </data>
-  <data name="LogInRequiredForSharingString" xml:space="preserve">
-    <value>Melden Sie sich an, um Spitzname und Workout-Freigabe zu aktivieren.</value>
-  </data>
   <data name="DontHaveAccountString" xml:space="preserve">
     <value>Noch kein Konto? Registrieren</value>
   </data>

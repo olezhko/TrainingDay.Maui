@@ -726,9 +726,6 @@ Músculos aquecidos se contraem e relaxam melhor durante o treino, o que signifi
   <data name="LogInToViewFeedString" xml:space="preserve">
     <value>Entre para ver e compartilhar treinos com a comunidade.</value>
   </data>
-  <data name="LogInRequiredForSharingString" xml:space="preserve">
-    <value>Entre para ativar o apelido e o compartilhamento de treinos.</value>
-  </data>
   <data name="DontHaveAccountString" xml:space="preserve">
     <value>Não tem uma conta? Cadastre-se</value>
   </data>

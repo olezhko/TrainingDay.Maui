@@ -741,9 +741,6 @@ Increase body temperature, activate the muscles and joints, and prepare the card
   <data name="LogInToViewFeedString" xml:space="preserve">
     <value>Log in to view and share workouts with the community.</value>
   </data>
-  <data name="LogInRequiredForSharingString" xml:space="preserve">
-    <value>Log in to enable nickname and workout sharing.</value>
-  </data>
   <data name="DontHaveAccountString" xml:space="preserve">
     <value>Don't have an account? Sign up</value>
   </data>

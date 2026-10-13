@@ -800,15 +800,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Log in to enable nickname and workout sharing..
-        /// </summary>
-        internal static string LogInRequiredForSharingString {
-            get {
-                return ResourceManager.GetString("LogInRequiredForSharingString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Log In.
         /// </summary>
         internal static string LoginString {

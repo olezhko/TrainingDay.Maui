@@ -33,7 +33,6 @@ public partial class TrainingImplementPage : ContentPage
     private IPushNotification notificator;
     private IDataService dataService;
     private ISocialWorkoutsService socialWorkoutsService;
-    private IAuthService authService;
     private TrainingViewModel trainingItem;
     private SuperSetViewModel<ImplementTrainingExerciseViewModel> currentSuperSet;
 
@@ -166,8 +165,6 @@ public partial class TrainingImplementPage : ContentPage
             notificator = Handler.MauiContext.Services.GetRequiredService<IPushNotification>();
             dataService = Handler.MauiContext.Services.GetRequiredService<IDataService>();
             socialWorkoutsService = Handler.MauiContext.Services.GetRequiredService<ISocialWorkoutsService>();
-            authService = Handler.MauiContext.Services.GetRequiredService<IAuthService>();
-
             await LoadVideoItemsAsync(currentSuperSet);
         }
     }
@@ -444,7 +441,7 @@ public partial class TrainingImplementPage : ContentPage
     }
     private async Task ShareToSocialFeedIfEnabled()
     {
-        if (!Settings.ShareCompletedWorkouts || authService?.IsLoggedIn != true || socialWorkoutsService == null)
+        if (!Settings.ShareCompletedWorkouts || socialWorkoutsService == null)
         {
             return;
         }
