@@ -8,7 +8,6 @@ namespace TrainingDay.Maui.Views;
 [QueryProperty(nameof(Item),"Item")]
 public partial class TrainingExerciseItemPage : ContentPage
 {
-    private bool isSaved;
     private TrainingExerciseViewModel item;
 
     public TrainingExerciseViewModel Item
@@ -28,23 +27,11 @@ public partial class TrainingExerciseItemPage : ContentPage
         TitleLabel.Text = AppResources.Editing;
     }
 
-    // if we make changes, but after press back, changes is saved
-    protected override void OnDisappearing()
-    {
-        if (isSaved)
-        {
-            return;
-        }
-
-        base.OnDisappearing();
-    }
-
     private async void Save_clicked(object sender, EventArgs e)
     {
         if (!ExerciseView.CurrentExercise.Name.IsNotNullOrEmpty())
             return;
 
-        isSaved = true;
         ExerciseView.CurrentExercise.Time = TimeSpan.TryParse(ExerciseView.CurrentExercise.TimeString, out var newTime) ? newTime : TimeSpan.Zero;
         App.Database.SaveTrainingExerciseItem(ExerciseView.CurrentExercise.GetTrainingExerciseComm());
 

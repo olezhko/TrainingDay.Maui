@@ -471,10 +471,10 @@ Crash-recovery deserialization and manual entity reconstruction done in the page
 
 ## 15. Bugs Found In Passing (not strictly "clean code," but surfaced by the audit)
 
-### BUG-01 — Views/WeightViewAndSetPage.xaml.cs:45
+### BUG-01 — Views/WeightViewAndSetPage.xaml.cs:45 — ✅ FIXED
 `vm.BodyControlItems.Any(item => item.Type == WeightType.Waist) && vm.BodyControlItems.Any(item => item.Type == WeightType.Waist)` checks `Waist` twice — the second check should be `WeightType.Hip` (matching `.First(item => item.Type == WeightType.Hip)` two lines below). Risks `InvalidOperationException` if no Hip entry exists.
 
-### BUG-02 — Views/TrainingExerciseItemPage.xaml.cs:32-40
+### BUG-02 — Views/TrainingExerciseItemPage.xaml.cs:32-40 — ✅ FIXED
 `OnDisappearing` skips calling `base.OnDisappearing()` when `isSaved` is true — inverted logic plus a vague comment makes intent unclear; worth a correctness review.
 
 ### BUG-03 — Views/ExerciseListPage.xaml.cs:63-76

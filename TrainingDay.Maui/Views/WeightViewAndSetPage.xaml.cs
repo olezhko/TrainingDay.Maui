@@ -42,11 +42,11 @@ public partial class WeightViewAndSetPage : ContentPage
         try
         {
             double coef = -1;
-            if (vm.BodyControlItems.Any(item => item.Type == WeightType.Waist) && vm.BodyControlItems.Any(item => item.Type == WeightType.Waist))
+            var waist = vm.BodyControlItems.FirstOrDefault(item => item.Type == WeightType.Waist);
+            var hips = vm.BodyControlItems.FirstOrDefault(item => item.Type == WeightType.Hip);
+            if (waist != null && hips != null && hips.CurrentValue > 0)
             {
-                var waist = vm.BodyControlItems.First(item => item.Type == WeightType.Waist).CurrentValue;
-                var hips = vm.BodyControlItems.First(item => item.Type == WeightType.Hip).CurrentValue;
-                coef = waist / hips;
+                coef = waist.CurrentValue / hips.CurrentValue;
             }
 
             StringBuilder sb = new StringBuilder();
