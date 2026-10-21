@@ -8,6 +8,22 @@
              xmlns:data="clr-namespace:TrainingDay.Common.Models;assembly=TrainingDay.Common" xmlns:models="clr-namespace:TrainingDay.Maui.Models"
              x:Class="TrainingDay.Maui.Controls.ExerciseView"
              x:Name="View">
+    <ContentView.Resources>
+        <DataTemplate x:Key="RepsItemTemplate" x:DataType="viewModels:WeightAndRepsViewModel">
+            <controls:RepsAndWeightControl Margin="0" IsOnlyReps="True" Padding="0"
+                    DeleteRequestCommand="{Binding Source={x:Reference View}, Path=DeleteRequestCommand}"
+                    HorizontalOptions="Start" VerticalOptions="Start" Value="{Binding}"
+                    WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type FlexLayout}}, Path=Width, Converter={StaticResource HalfValueConverter}, ConverterParameter=3}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="RepsAndWeightItemTemplate" x:DataType="viewModels:WeightAndRepsViewModel">
+            <controls:RepsAndWeightControl Margin="0" Padding="0"
+                    DeleteRequestCommand="{Binding Source={x:Reference View}, Path=DeleteRequestCommand}"
+                    HorizontalOptions="Start" VerticalOptions="Start" Value="{Binding}"
+                    WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type FlexLayout}}, Path=Width, Converter={StaticResource HalfValueConverter}, ConverterParameter=2}"/>
+        </DataTemplate>
+    </ContentView.Resources>
+
     <Grid x:Name="MainGrid" RowSpacing="3" x:DataType="viewModels:TrainingExerciseViewModel">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -30,10 +46,19 @@
         </Border>
 
         <StackLayout Grid.Row="2" Spacing="0" Margin="5,0">
-            <StackLayout Padding="0" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByReps}}"
-                         Orientation="Vertical">
+            <!-- Sets: reps only (3 per row) or reps + weight (2 per row) -->
+            <StackLayout Padding="0" Orientation="Vertical" IsVisible="{Binding IsTrackedBySets}">
                 <StackLayout Orientation="Horizontal" VerticalOptions="Start" Spacing="10">
-                    <Label FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Start" Text="{x:Static resx:AppResources.RepsString}" VerticalTextAlignment="Center" />
+                    <Label FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Start" VerticalTextAlignment="Center">
+                        <Label.Triggers>
+                            <DataTrigger Binding="{Binding HasWeight}" TargetType="Label" Value="False">
+                                <Setter Property="Text" Value="{x:Static resx:AppResources.RepsString}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding HasWeight}" TargetType="Label" Value="True">
+                                <Setter Property="Text" Value="{x:Static resx:AppResources.RepsAndWeightString}" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
 
                     <ImageButton WidthRequest="40" HeightRequest="40" Padding="0" Source="add_empty.png" Clicked="AddWeightAndRepsItem_Clicked" BackgroundColor="Transparent">
                         <ImageButton.Behaviors>
@@ -44,42 +69,14 @@
 
                 <FlexLayout AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}"
                         Direction="Row" JustifyContent="Start" VerticalOptions="Start" Wrap="Wrap">
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate x:DataType="viewModels:WeightAndRepsViewModel">
-                            <controls:RepsAndWeightControl Margin="0" IsOnlyReps="True" Padding="0"
-                                    DeleteRequestCommand="{Binding Source={x:Reference View}, Path=DeleteRequestCommand}"
-                                    HorizontalOptions="Start" VerticalOptions="Start" Value="{Binding}" 
-                                    WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type FlexLayout}}, Path=Width, Converter={StaticResource HalfValueConverter}, ConverterParameter=3}"/>
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                </FlexLayout>
-            </StackLayout>
-
-            <StackLayout Padding="0" Margin="0"
-                         IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByRepsAndWeight}}"
-            Orientation="Vertical">
-                <StackLayout Orientation="Horizontal" VerticalOptions="Start" Spacing="10">
-                    <Label FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Start" Text="{x:Static resx:AppResources.RepsAndWeightString}" VerticalTextAlignment="Center" />
-                    <ImageButton WidthRequest="40" HeightRequest="40" Padding="0" Source="add_empty.png" Clicked="AddWeightAndRepsItem_Clicked" BackgroundColor="Transparent">
-                        <ImageButton.Behaviors>
-                            <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
-                        </ImageButton.Behaviors>
-                    </ImageButton>
-                </StackLayout>
-
-                <FlexLayout AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}"
-                        Direction="Row" JustifyContent="Start" VerticalOptions="Start" Wrap="Wrap">
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate x:DataType="viewModels:WeightAndRepsViewModel">
-                            <controls:RepsAndWeightControl Margin="0"
-                                Padding="0"
-                                DeleteRequestCommand="{Binding Source={x:Reference View}, Path=DeleteRequestCommand}"
-                                HorizontalOptions="Start"
-                                VerticalOptions="Start"
-                                WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type FlexLayout}}, Path=Width, Converter={StaticResource HalfValueConverter}, ConverterParameter=2}"
-                                Value="{Binding}" />
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
+                    <FlexLayout.Triggers>
+                        <DataTrigger Binding="{Binding HasWeight}" TargetType="FlexLayout" Value="False">
+                            <Setter Property="BindableLayout.ItemTemplate" Value="{StaticResource RepsItemTemplate}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding HasWeight}" TargetType="FlexLayout" Value="True">
+                            <Setter Property="BindableLayout.ItemTemplate" Value="{StaticResource RepsAndWeightItemTemplate}" />
+                        </DataTrigger>
+                    </FlexLayout.Triggers>
                 </FlexLayout>
             </StackLayout>
 

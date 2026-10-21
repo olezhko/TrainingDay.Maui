@@ -319,7 +319,6 @@ public class StepProgressBar : Grid
     private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
     {
         if (args.NewItems != null) AddItems(args.NewItems);
-        //if (args.OldItems != null) RemoveItems(args.OldItems);
     }
 
     private static event EventHandler<NotifyCollectionChangedEventArgs> CollectionChanged;

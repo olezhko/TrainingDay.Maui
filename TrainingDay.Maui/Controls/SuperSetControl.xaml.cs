@@ -1,15 +1,25 @@
 using System.Collections.ObjectModel;
-using System.Windows.Input;
+using System.ComponentModel;
+using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.ViewModels;
 
 namespace TrainingDay.Maui.Controls;
 
 public partial class SuperSetControl : ContentView
 {
+    private static readonly TimeSpan AutoAdvanceDelay = TimeSpan.FromMilliseconds(350);
+
+    private ObservableCollection<ImplementTrainingExerciseViewModel> trackedItems;
+    private string statusMessage = string.Empty;
+    private string roundText = string.Empty;
+    private IReadOnlyList<ImplementTrainingExerciseViewModel> itemsBefore = [];
+    private IReadOnlyList<ImplementTrainingExerciseViewModel> itemsAfter = [];
 
     public SuperSetControl()
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
+        Loaded += (_, _) => TrackItems(SuperSetItems);
+        Unloaded += (_, _) => TrackItems(null);
     }
 
     #region Properties
@@ -32,99 +42,217 @@ public partial class SuperSetControl : ContentView
         set { SetValue(CurrentItemProperty, value); }
     }
 
-    public static readonly BindableProperty IsNextAvailableProperty =
-        BindableProperty.Create("IsNextAvailable", typeof(bool), typeof(SuperSetControl), false);
+    public static readonly BindableProperty AutoAdvanceProperty =
+        BindableProperty.Create("AutoAdvance", typeof(bool), typeof(SuperSetControl), true);
 
-    public static readonly BindableProperty IsPrevAvailableProperty =
-        BindableProperty.Create("IsPrevAvailable", typeof(bool), typeof(SuperSetControl), false);
-
-    public bool IsNextAvailable
+    /// <summary>
+    /// When a set is finished, switch to the next superset exercise that still has unfinished sets.
+    /// </summary>
+    public bool AutoAdvance
     {
-        get { return (bool)GetValue(IsNextAvailableProperty); }
-        set { SetValue(IsNextAvailableProperty, value); }
+        get { return (bool)GetValue(AutoAdvanceProperty); }
+        set { SetValue(AutoAdvanceProperty, value); }
     }
 
-    public bool IsPrevAvailable
+    public bool IsSuperSet => SuperSetItems?.Count > 1;
+
+    public string HeaderText => string.Format(AppResources.SuperSetExercisesCount, SuperSetItems?.Count ?? 0);
+
+    public string RoundText
     {
-        get { return (bool)GetValue(IsPrevAvailableProperty); }
-        set { SetValue(IsPrevAvailableProperty, value); }
+        get => roundText;
+        private set
+        {
+            roundText = value;
+            OnPropertyChanged();
+        }
     }
 
-    public ICommand PreviousCommand => new Command(MovePrev);
-    public ICommand NextCommand => new Command(MoveNext);
-    public ICommand DeleteRequestCommand => new Command<WeightAndRepsViewModel>(DeleteRequestWeightAndReps);
-    public ICommand AddRequestCommand => new Command(AddRequestWeightAndReps);
+    public IReadOnlyList<ImplementTrainingExerciseViewModel> ItemsBefore
+    {
+        get => itemsBefore;
+        private set
+        {
+            itemsBefore = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public IReadOnlyList<ImplementTrainingExerciseViewModel> ItemsAfter
+    {
+        get => itemsAfter;
+        private set
+        {
+            itemsAfter = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string StatusMessage
+    {
+        get => statusMessage;
+        private set
+        {
+            statusMessage = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(HasStatusMessage));
+        }
+    }
+
+    public bool HasStatusMessage => !string.IsNullOrEmpty(StatusMessage);
+
     #endregion
-
-    private int currentIndex = 0;
-    private void MoveNext()
-    {
-        var index = currentIndex;
-        Move(index + 1);
-    }
-
-    private void MovePrev()
-    {
-        var index = currentIndex;
-        Move(index - 1);
-    }
-
-    private void Move(int index)
-    {
-        currentIndex = index;
-        CurrentItem = SuperSetItems[index];
-        UpdateMoveProps(index);
-    }
-
-    private void UpdateMoveProps(int index)
-    {
-        IsNextAvailable = true;
-        IsPrevAvailable = true;
-
-        if (index <= 0)
-            IsPrevAvailable = false;
-
-        if (index >= SuperSetItems.Count - 1)
-            IsNextAvailable = false;
-    }
 
     private static void SourcePropertyChanged(BindableObject bindable, object oldValue, object newValue)
     {
-        var control = bindable as SuperSetControl;
-        var items = (ObservableCollection<ImplementTrainingExerciseViewModel>)newValue;
-        control.SourceChanged(items);
+        var control = (SuperSetControl)bindable;
+        control.SourceChanged((ObservableCollection<ImplementTrainingExerciseViewModel>)newValue);
     }
 
-    private void SourceChanged(ObservableCollection<ImplementTrainingExerciseViewModel> newValue)
+    private void SourceChanged(ObservableCollection<ImplementTrainingExerciseViewModel> items)
     {
-        Move(0);
+        TrackItems(items);
+
+        if (items != null)
+        {
+            for (int i = 0; i < items.Count; i++)
+            {
+                items[i].SuperSetLetter = ((char)('A' + i)).ToString();
+            }
+        }
+
+        OnPropertyChanged(nameof(IsSuperSet));
+        OnPropertyChanged(nameof(HeaderText));
+        StatusMessage = string.Empty;
+        CurrentItem = items?.FirstOrDefault();
+        UpdatePinnedItems();
+        UpdateRoundText();
     }
 
     private static void CurrentItemPropertyChanged(BindableObject bindable, object oldValue, object newValue)
     {
-        var control = bindable as SuperSetControl;
-        var index = control.SuperSetItems.IndexOf(control.CurrentItem);
-        control.currentIndex = index;
-        control.UpdateMoveProps(index);
+        ((SuperSetControl)bindable).UpdatePinnedItems();
     }
 
-    private void DeleteRequestWeightAndReps(WeightAndRepsViewModel sender)
+    private void TrackItems(ObservableCollection<ImplementTrainingExerciseViewModel> items)
     {
-        var item = CurrentItem;
-        item.WeightAndRepsItems.Remove(sender);
+        if (trackedItems != null)
+        {
+            foreach (var item in trackedItems)
+            {
+                item.SetFinished -= OnSetFinished;
+                item.PropertyChanged -= OnItemPropertyChanged;
+            }
+        }
+
+        trackedItems = items;
+        if (items == null)
+            return;
+
+        foreach (var item in items)
+        {
+            item.SetFinished += OnSetFinished;
+            item.PropertyChanged += OnItemPropertyChanged;
+        }
     }
 
-    private void AddRequestWeightAndReps()
+    private void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        var item = CurrentItem;
-        if (item.WeightAndRepsItems.Count == 0)
+        if (e.PropertyName == nameof(ImplementTrainingExerciseViewModel.FinishedSetsCount))
         {
-            item.WeightAndRepsItems.Add(new WeightAndRepsViewModel(0, 15));
+            UpdateRoundText();
         }
-        else
+    }
+
+    private void OnPinnedExerciseTapped(object sender, TappedEventArgs e)
+    {
+        if (sender is BindableObject { BindingContext: ImplementTrainingExerciseViewModel item })
         {
-            var last = item.WeightAndRepsItems.Last();
-            item.WeightAndRepsItems.Add(new WeightAndRepsViewModel(last.Weight, last.Repetitions));
+            StatusMessage = string.Empty;
+            Select(item);
         }
+    }
+
+    private void OnSetFinished(object sender, WeightAndRepsViewModel set)
+    {
+        var items = SuperSetItems;
+        var current = CurrentItem;
+        if (!AutoAdvance || !IsSuperSet || !ReferenceEquals(sender, current))
+            return;
+
+        var currentIndex = items.IndexOf(current);
+        var next = FindNextWithUnfinishedSets(items, currentIndex);
+        if (next == null)
+        {
+            StatusMessage = AppResources.SuperSetAllSetsDone;
+            return;
+        }
+
+        var nextIndex = items.IndexOf(next);
+        var format = nextIndex <= currentIndex ? AppResources.SuperSetRoundDone : AppResources.SuperSetNextUp;
+        var message = string.Format(format, next.SuperSetLetter, next.FirstUnfinishedSetNumber);
+
+        // Short delay so the user sees the set turn green before the card switches.
+        Dispatcher.DispatchDelayed(AutoAdvanceDelay, () =>
+        {
+            if (!set.IsFinished || !ReferenceEquals(CurrentItem, current))
+                return;
+
+            StatusMessage = message;
+            Select(next);
+        });
+    }
+
+    private static ImplementTrainingExerciseViewModel FindNextWithUnfinishedSets(IList<ImplementTrainingExerciseViewModel> items, int currentIndex)
+    {
+        for (int offset = 1; offset <= items.Count; offset++)
+        {
+            var candidate = items[(currentIndex + offset) % items.Count];
+            if (candidate.HasUnfinishedSets)
+                return candidate;
+        }
+
+        return null;
+    }
+
+    private void Select(ImplementTrainingExerciseViewModel item)
+    {
+        if (ReferenceEquals(item, CurrentItem))
+            return;
+
+        CurrentItem = item;
+
+        ActiveCard.Opacity = 0;
+        _ = ActiveScroll.ScrollToAsync(0, 0, false);
+        _ = ActiveCard.FadeToAsync(1, 200);
+    }
+
+    private void UpdatePinnedItems()
+    {
+        var items = SuperSetItems;
+        var index = items == null || CurrentItem == null ? -1 : items.IndexOf(CurrentItem);
+        if (index < 0)
+        {
+            ItemsBefore = [];
+            ItemsAfter = [];
+            return;
+        }
+
+        ItemsBefore = items.Take(index).ToList();
+        ItemsAfter = items.Skip(index + 1).ToList();
+    }
+
+    private void UpdateRoundText()
+    {
+        var withSets = SuperSetItems?.Where(item => item.HasSets).ToList() ?? [];
+        if (withSets.Count == 0)
+        {
+            RoundText = string.Empty;
+            return;
+        }
+
+        var rounds = withSets.Max(item => item.SetsCount);
+        var round = Math.Min(withSets.Min(item => item.FinishedSetsCount) + 1, rounds);
+        RoundText = string.Format(AppResources.SuperSetRound, round, rounds);
     }
 }

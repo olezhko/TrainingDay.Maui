@@ -9,7 +9,7 @@
              x:Name="Page">
 
     <Shell.TitleView>
-        <Label Text="{x:Static resx:AppResources.SocialWorkoutsString}" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
+        <Label Text="{x:Static resx:AppResources.SocialWorkoutsString}" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold" Margin="10,0" />
     </Shell.TitleView>
 
     <Grid RowDefinitions="Auto,*">

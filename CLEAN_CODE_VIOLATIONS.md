@@ -10,7 +10,7 @@ Audit of `TrainingDay.Maui/` (Services, Extensions, Models, ViewModels, Views, C
 - **`Controls/StepProgressBar.cs:325`** — `static` `CollectionChanged` event subscribed to by every instance, never unsubscribed: confirmed memory leak *and* cross-instance event cross-talk (also `PERFORMANCE_ISSUES.md` SVC-03).
 - **Inconsistent error handling** everywhere: `LoggingService.TrackError`, bare `Console.WriteLine`/`Debug.WriteLine`, and fully silent `catch { }` are used interchangeably for the same kind of failure across all three layers.
 - **Duplicated request/save/delete boilerplate** across `Services/*.cs` and `Repository.cs`, and duplicated business logic across `ViewModels/Pages/*.cs`.
-- **`Data/` folder is dead code** — `SqliteRepository.cs` references an undefined field and would not compile; excluded from the build entirely.
+- ~~**`Data/` folder is dead code** — `SqliteRepository.cs` references an undefined field and would not compile; excluded from the build entirely.~~ ✅ Removed (DEAD-01).
 
 ---
 
@@ -281,34 +281,41 @@ Nested `while`+`if`+`if` inside `AcceptTrainingForMoveOrCopy` mutating state acr
 
 ## 8. Dead Code / Commented-Out Code / Redundant Logic
 
-### DEAD-01 — Data/SqliteRepository.cs:11 — **does not compile**
+### DEAD-01 — Data/SqliteRepository.cs:11 — **does not compile** — ✅ FIXED
 `_database = database;` references an undefined identifier (`database` doesn't exist; the ctor param is `filename`, itself unused). The entire `Data/` folder (`IEntity.cs`, `IRepository.cs`, `SqliteRepository.cs`) is excluded from the build via `<Compile Remove="Data\**" />` and is unreferenced anywhere else — dead scaffolding.
+*Fix:* deleted the `Data/` folder and its `Remove="Data\**"` entries from the csproj.
 
-### DEAD-02 — Extensions/ResizeImageExtension.cs:35-36
+### DEAD-02 — Extensions/ResizeImageExtension.cs:35-36 — ✅ FIXED
 Stale commented-out lines (`//var newHeight = height;`, `//create a 24bit RGB image`).
 
-### DEAD-03 — Extensions/TrainingExerciseViewModelExtensions.cs:30
+### DEAD-03 — Extensions/TrainingExerciseViewModelExtensions.cs:30 — ✅ FIXED
 `value.Length < 0` can never be true — dead branch left over from a refactor.
+*Fix:* the guard is now just `string.IsNullOrWhiteSpace(value)`.
 
-### DEAD-04 — Extensions/StringExtensions.cs:5-13
+### DEAD-04 — Extensions/StringExtensions.cs:5-13 — ✅ FIXED
 Custom `Contains(this string, string, StringComparison)` reimplements the BCL overload (available since .NET Core 2.0) with different validation behavior — redundant and a hidden behavioral trap.
+*Fix:* removed. It was never actually called — the BCL instance method always wins over an extension method with the same signature.
 
-### DEAD-05 — Extensions/StringExtensions.cs:20-23
+### DEAD-05 — Extensions/StringExtensions.cs:20-23 — ✅ FIXED
 `IsNullOrEmptyOrWhiteSpace` ORs `IsNullOrEmpty` with `IsNullOrWhiteSpace` — the first check is fully subsumed by the second; dead/no-op logic.
+*Fix:* removed — it had no callers.
 
-### DEAD-06 — ViewModels/Pages/TrainingExercisesPageViewModel.cs:240
+### DEAD-06 — ViewModels/Pages/TrainingExercisesPageViewModel.cs:240 — ✅ FIXED
 `selectedExercise.IsSelected = selectedExercise.IsSelected;` — self-assignment no-op, likely meant to toggle.
+*Fix:* removed the no-op branch; behavior unchanged (selection in action mode is done by the item's two-way bound CheckBox). Not changed to a toggle, because a tap on the CheckBox may also raise the item tap and would then undo the selection.
 
-### DEAD-07 — ViewModels/Pages/StatisticsViewModel.cs:120-123,171
+### DEAD-07 — ViewModels/Pages/StatisticsViewModel.cs:120-123,171 — ✅ FIXED
 `ShareResultsCommand` only shows a placeholder alert — sharing was never implemented.
+*Fix:* removed the command, its backing field and method, and the commented-out toolbar item in `StatisticsPage.xaml` that was its only binding.
 
-### DEAD-08 — Controls/StepProgressBar.cs:322
+### DEAD-08 — Controls/StepProgressBar.cs:322 — ✅ FIXED
 `//if (args.OldItems != null) RemoveItems(args.OldItems);` — commented-out call to a method that doesn't exist; old items are never removed, so stale buttons/separators accumulate on collection removals.
+*Fix:* removed the commented-out line. The only `ItemsSource` (`TrainingImplementPage.Items`) is never removed from, so no `RemoveItems` is needed today; implement it if removals are ever added.
 
-### DEAD-09 — Controls/LongPressedEffect.cs:93,101
+### DEAD-09 — Controls/LongPressedEffect.cs:93,101 — ✅ FIXED
 Leftover `Console.WriteLine("Invoking click command")` / `"Invoking long click command"` debug statements in production code.
 
-### DEAD-10 — Controls/LongPressedEffect.cs:145-151
+### DEAD-10 — Controls/LongPressedEffect.cs:145-151 — ✅ FIXED
 `OnDetached()` sets `_attached = false;` twice — once inside `#if __IOS__`, once unconditionally after — redundant/confused cleanup.
 
 ---

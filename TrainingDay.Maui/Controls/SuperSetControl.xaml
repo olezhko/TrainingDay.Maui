@@ -7,219 +7,244 @@
              xmlns:data="clr-namespace:TrainingDay.Common.Models;assembly=TrainingDay.Common"
              x:Class="TrainingDay.Maui.Controls.SuperSetControl"
              x:Name="Self">
-    <Grid RowDefinitions="auto,*" RowSpacing="5">
-        <Grid MinimumHeightRequest="40" ColumnDefinitions="20,*,20">
-            <ImageButton Source="arrow_right.png" Grid.Column="0" BackgroundColor="Transparent" Command="{Binding Source={x:Reference Self}, Path=PreviousCommand}"
-                    WidthRequest="20" HeightRequest="20" VerticalOptions="Start" IsVisible="{Binding Source={x:Reference Self}, Path=IsPrevAvailable}"/>
-
-            <Label Grid.Column="0" Text="{Binding Source={x:Reference Self}, Path=CurrentItem.Name}" VerticalOptions="Start" Grid.ColumnSpan="3" Margin="20,0"
-                   HorizontalOptions="Fill" HorizontalTextAlignment="Center" FontSize="25" TextColor="{AppThemeBinding Light=Black,Dark=White}" />
-
-            <ImageButton Source="arrow_left.png" Grid.Column="2" BackgroundColor="Transparent" Command="{Binding Source={x:Reference Self}, Path=NextCommand}"
-                    WidthRequest="20" HeightRequest="20" VerticalOptions="Start" IsVisible="{Binding Source={x:Reference Self}, Path=IsNextAvailable}" />
-        </Grid>
-
-        <ScrollView Grid.Row="1" Orientation="Vertical">
-            <VerticalStackLayout BindingContext="{Binding Source={x:Reference Self}, Path=CurrentItem}" Spacing="5">
-                <Border Padding="5" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" 
-                    Stroke="Transparent" Margin="5,0">
-                    <controls:ImageCache HeightRequest="200" WidthRequest="200" CodeNum="{Binding CodeNum}" />
-                </Border>
-
-                <StackLayout Spacing="0">
-                    <Border StrokeShape="RoundRectangle 20" Padding="10" HorizontalOptions="Center" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByReps}}"
-                           BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}">
-                        <Grid RowDefinitions="auto, auto">
-                            <Grid ColumnDefinitions="auto, *, auto" ColumnSpacing="10" HorizontalOptions="Center">
-                                <VerticalStackLayout Grid.Column="0">
-                                    <Grid>
-                                        <Image Source="add_empty.png" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="30" >
-                                            <Image.Behaviors>
-                                                <toolkit:IconTintColorBehavior TintColor="LimeGreen" />
-                                                <toolkit:TouchBehavior PressedScale="1.3" PressedOpacity="0.5" PressedAnimationDuration="250"
-                                                    PressedAnimationEasing="{x:Static Easing.CubicInOut}"/>
-                                            </Image.Behaviors>
-                                        </Image>
-                                        <Button Command="{Binding AddSetCommand}" BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="30" WidthRequest="30"/>
-                                    </Grid>
-                                    
-                                    <Label Text="{x:Static resx:AppResources.AddSet}" FontSize="10" HorizontalOptions="Center" />
-                                </VerticalStackLayout>
-
-                                <VerticalStackLayout Grid.Column="2">
-                                    <Grid>
-                                        <Image Source="minus_cirlce.png" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="30" >
-                                            <Image.Behaviors>
-                                                <toolkit:IconTintColorBehavior TintColor="Red" />
-                                                <toolkit:TouchBehavior PressedScale="1.3" PressedOpacity="0.5" PressedAnimationDuration="250"
-                                                    PressedAnimationEasing="{x:Static Easing.CubicInOut}"/>
-                                            </Image.Behaviors>
-                                        </Image>
-                                        <Button Command="{Binding RemoveSetCommand}" BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="30" WidthRequest="30"/>
-                                    </Grid>
-                                    
-                                    <Label Text="{x:Static resx:AppResources.RemoveSet}" FontSize="10" HorizontalOptions="Center" />
-                                </VerticalStackLayout>
-                            </Grid>
-                            <CollectionView Grid.Row="1" HorizontalOptions="Center" ItemsSource="{Binding WeightAndRepsItems}" HeightRequest="90" VerticalOptions="Center">
-                                <CollectionView.ItemsLayout>
-                                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5"/>
-                                </CollectionView.ItemsLayout>
-                                <CollectionView.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid RowDefinitions="auto,45" RowSpacing="2">
-                                            <Border BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
-                                            <Entry Margin="0" FontSize="Medium" Keyboard="Numeric" MaxLength="3" Text="{Binding Repetitions, Mode=TwoWay}" MinimumWidthRequest="70" HorizontalTextAlignment="Center" />
-
-                                            <Border Grid.Row="1" Stroke="Transparent" StrokeShape="RoundRectangle 20" HeightRequest="40" WidthRequest="40" VerticalOptions="Center" HorizontalOptions="Center" >
-                                                <Border.Style>
-                                                    <Style TargetType="Border">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding IsFinished}" TargetType="Border" Value="True">
-                                                                <Setter Property="Background" Value="Green" />
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding IsFinished}" TargetType="Border" Value="False">
-                                                                <Setter Property="Background" Value="Transparent" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Border.Style>
-                                            </Border>
-
-                                            <ImageButton Grid.Row="1" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" HorizontalOptions="Center" CornerRadius="17" Background="Transparent"
-                                                IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}" Source="save.png" VerticalOptions="Center" WidthRequest="35">
-                                                <ImageButton.Behaviors>
-                                                    <toolkit:IconTintColorBehavior TintColor="LightGray" />
-                                                </ImageButton.Behaviors>
-                                            </ImageButton>
-                                        </Grid>
-                                    </DataTemplate>
-                                </CollectionView.ItemTemplate>
-                            </CollectionView>
-                        </Grid>
+    <ContentView.Resources>
+        <!-- Collapsed exercise of the superset, pinned above or below the active one -->
+        <DataTemplate x:Key="PinnedExerciseTemplate">
+            <Border StrokeShape="RoundRectangle 12" StrokeThickness="1" Padding="12,8" MinimumHeightRequest="56"
+                    Stroke="{AppThemeBinding Light=#DDDDDD, Dark=#3A3A3A}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}"
+                    SemanticProperties.Description="{Binding Name}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnPinnedExerciseTapped"/>
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="30,*,auto" ColumnSpacing="12">
+                    <Border WidthRequest="30" HeightRequest="30" StrokeShape="RoundRectangle 15" Stroke="Transparent" VerticalOptions="Center">
+                        <Border.Triggers>
+                            <DataTrigger Binding="{Binding AreAllSetsFinished}" TargetType="Border" Value="False">
+                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#E0E0E0, Dark=#3A3A3A}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding AreAllSetsFinished}" TargetType="Border" Value="True">
+                                <Setter Property="BackgroundColor" Value="Green" />
+                            </DataTrigger>
+                        </Border.Triggers>
+                        <Label Text="{Binding SuperSetLetter}" FontAttributes="Bold" FontSize="14" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Label.Triggers>
+                                <DataTrigger Binding="{Binding AreAllSetsFinished}" TargetType="Label" Value="True">
+                                    <Setter Property="TextColor" Value="White" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
                     </Border>
 
-					<Border StrokeShape="RoundRectangle 20" Padding="10" HorizontalOptions="Center" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByRepsAndWeight}}"
-                           BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}">
-                        <Grid RowDefinitions="auto, auto">
-                            <Grid ColumnDefinitions="auto, *, auto" ColumnSpacing="10" HorizontalOptions="Center">
-                                <VerticalStackLayout Grid.Column="0">
-                                    <Grid>
-                                        <Image Source="add_empty.png" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="30" >
-                                            <Image.Behaviors>
-                                                <toolkit:IconTintColorBehavior TintColor="LimeGreen" />
-                                            </Image.Behaviors>
-                                        </Image>
-                                        <Button Command="{Binding AddSetCommand}" BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="30" WidthRequest="30"/>
-                                    </Grid>
-                                    
-                                    <Label Text="{x:Static resx:AppResources.AddSet}" FontSize="10" HorizontalOptions="Center" />
-                                </VerticalStackLayout>
+                    <Label Grid.Column="1" Text="{Binding Name}" FontSize="15" MaxLines="2" LineBreakMode="TailTruncation" VerticalOptions="Center"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}" />
 
-                                <VerticalStackLayout Grid.Column="2">
-                                    <Grid>
-                                        <Image Source="minus_cirlce.png" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="30" >
-                                            <Image.Behaviors>
-                                                <toolkit:IconTintColorBehavior TintColor="Red" />
-                                            </Image.Behaviors>
-                                        </Image>
-                                        <Button Command="{Binding RemoveSetCommand}" BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="30" WidthRequest="30"/>
+                    <VerticalStackLayout Grid.Column="2" Spacing="5" VerticalOptions="Center" IsVisible="{Binding HasSets}">
+                        <Label Text="{Binding SetsProgress}" FontSize="13" TextColor="Gray" HorizontalOptions="End" />
+                        <HorizontalStackLayout Spacing="3" HorizontalOptions="End" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Ellipse WidthRequest="6" HeightRequest="6">
+                                        <Ellipse.Style>
+                                            <Style TargetType="Ellipse">
+                                                <Setter Property="Fill" Value="{AppThemeBinding Light=#C8C8C8, Dark=#4A4A4A}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsFinished}" TargetType="Ellipse" Value="True">
+                                                        <Setter Property="Fill" Value="{StaticResource Main}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Ellipse.Style>
+                                    </Ellipse>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </ContentView.Resources>
+
+    <Grid RowDefinitions="auto,auto,*,auto" RowSpacing="6">
+        <!-- Superset summary -->
+        <Grid ColumnDefinitions="*,auto" Margin="4,0" IsVisible="{Binding Source={x:Reference Self}, Path=IsSuperSet}">
+            <Label Text="{Binding Source={x:Reference Self}, Path=HeaderText}" FontSize="12" FontAttributes="Bold" TextTransform="Uppercase" TextColor="Gray" />
+            <Label Grid.Column="1" Text="{Binding Source={x:Reference Self}, Path=RoundText}" FontSize="12" FontAttributes="Bold" TextTransform="Uppercase" TextColor="Gray" />
+        </Grid>
+
+        <!-- Exercises before the active one -->
+        <VerticalStackLayout Grid.Row="1" Spacing="6"
+                             BindableLayout.ItemsSource="{Binding Source={x:Reference Self}, Path=ItemsBefore}"
+                             BindableLayout.ItemTemplate="{StaticResource PinnedExerciseTemplate}" />
+
+        <!-- Active exercise -->
+        <Border x:Name="ActiveCard" Grid.Row="2" StrokeShape="RoundRectangle 16" Padding="0" BackgroundColor="Transparent">
+            <Border.Triggers>
+                <DataTrigger Binding="{Binding Source={x:Reference Self}, Path=IsSuperSet}" TargetType="Border" Value="False">
+                    <Setter Property="Stroke" Value="Transparent" />
+                    <Setter Property="StrokeThickness" Value="0" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Source={x:Reference Self}, Path=IsSuperSet}" TargetType="Border" Value="True">
+                    <Setter Property="Stroke" Value="{StaticResource Main}" />
+                    <Setter Property="StrokeThickness" Value="1.5" />
+                </DataTrigger>
+            </Border.Triggers>
+
+            <Grid RowDefinitions="auto,auto,*" BindingContext="{Binding Source={x:Reference Self}, Path=CurrentItem}">
+                <Grid ColumnDefinitions="auto,*" ColumnSpacing="12" Padding="12,10,12,6">
+                    <Border WidthRequest="32" HeightRequest="32" StrokeShape="RoundRectangle 16" Stroke="Transparent" BackgroundColor="{StaticResource Main}"
+                            VerticalOptions="Start" Margin="0,2,0,0" IsVisible="{Binding Source={x:Reference Self}, Path=IsSuperSet}">
+                        <Label Text="{Binding SuperSetLetter}" FontAttributes="Bold" FontSize="15" TextColor="Black" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <Label Grid.Column="1" Text="{Binding Name}" FontSize="22" FontAttributes="Bold" VerticalOptions="Center"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                </Grid>
+
+                <Border Grid.Row="1" Margin="12,0,12,6" Padding="12,6" StrokeShape="RoundRectangle 14" Stroke="Transparent" HorizontalOptions="Start"
+                        BackgroundColor="{AppThemeBinding Light=#FFF3D6, Dark=#3A2A00}"
+                        IsVisible="{Binding Source={x:Reference Self}, Path=HasStatusMessage}">
+                    <Label Text="{Binding Source={x:Reference Self}, Path=StatusMessage}" FontSize="13" FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=#7A4B00, Dark=#FFCC66}" />
+                </Border>
+
+                <ScrollView x:Name="ActiveScroll" Grid.Row="2" Orientation="Vertical">
+                    <VerticalStackLayout Spacing="5" Padding="0,0,0,10">
+                        <Border Padding="5" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center"
+                            Stroke="Transparent" Margin="5,0">
+                            <controls:ImageCache HeightRequest="160" WidthRequest="160" CodeNum="{Binding CodeNum}" />
+                        </Border>
+
+                        <StackLayout Spacing="0">
+                            <!-- Sets: reps, plus weight when the exercise is tracked by reps and weight -->
+                            <Border StrokeShape="RoundRectangle 20" Padding="10" HorizontalOptions="Center" IsVisible="{Binding IsTrackedBySets}"
+                                   BackgroundColor="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark={StaticResource ListItemBackgroundColor}}">
+                                <Grid RowDefinitions="auto, auto">
+                                    <Grid ColumnDefinitions="auto, *, auto" ColumnSpacing="10" HorizontalOptions="Center">
+                                        <VerticalStackLayout Grid.Column="0">
+                                            <Grid>
+                                                <Image Source="add_empty.png" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="30" >
+                                                    <Image.Behaviors>
+                                                        <toolkit:IconTintColorBehavior TintColor="LimeGreen" />
+                                                        <toolkit:TouchBehavior PressedScale="1.3" PressedOpacity="0.5" PressedAnimationDuration="250"
+                                                            PressedAnimationEasing="{x:Static Easing.CubicInOut}"/>
+                                                    </Image.Behaviors>
+                                                </Image>
+                                                <Button Command="{Binding AddSetCommand}" BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="44" WidthRequest="44"/>
+                                            </Grid>
+
+                                            <Label Text="{x:Static resx:AppResources.AddSet}" FontSize="10" HorizontalOptions="Center" />
+                                        </VerticalStackLayout>
+
+                                        <VerticalStackLayout Grid.Column="2">
+                                            <Grid>
+                                                <Image Source="minus_cirlce.png" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="30" >
+                                                    <Image.Behaviors>
+                                                        <toolkit:IconTintColorBehavior TintColor="Red" />
+                                                        <toolkit:TouchBehavior PressedScale="1.3" PressedOpacity="0.5" PressedAnimationDuration="250"
+                                                            PressedAnimationEasing="{x:Static Easing.CubicInOut}"/>
+                                                    </Image.Behaviors>
+                                                </Image>
+                                                <Button Command="{Binding RemoveSetCommand}" BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="44" WidthRequest="44"/>
+                                            </Grid>
+
+                                            <Label Text="{x:Static resx:AppResources.RemoveSet}" FontSize="10" HorizontalOptions="Center" />
+                                        </VerticalStackLayout>
                                     </Grid>
-                                    
-                                    <Label Text="{x:Static resx:AppResources.RemoveSet}" FontSize="10" HorizontalOptions="Center" />
-                                </VerticalStackLayout>
-                            </Grid>
-                            <CollectionView Grid.Row="1" HorizontalOptions="Center" ItemsSource="{Binding WeightAndRepsItems}" HeightRequest="140" VerticalOptions="Center">
-                                <CollectionView.ItemsLayout>
-                                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5"/>
-                                </CollectionView.ItemsLayout>
-                                <CollectionView.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid RowDefinitions="auto,auto,auto" RowSpacing="2" VerticalOptions="Center">
-                                            <Border BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
-                                            <Border Grid.Row="2" BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
-                                            <Entry Margin="0" FontSize="Medium" Keyboard="Numeric" MaxLength="3" Text="{Binding Repetitions, Mode=TwoWay}" HorizontalTextAlignment="Center" MinimumWidthRequest="70"/>
-                                            <ImageButton Grid.Row="1" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" HorizontalOptions="Center" CornerRadius="17"
-                                                    IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}" Source="save.png" VerticalOptions="Fill" WidthRequest="35">
-                                                <ImageButton.Behaviors>
-                                                    <toolkit:IconTintColorBehavior TintColor="LightGray" />
-                                                </ImageButton.Behaviors>
-                                                <ImageButton.Style>
-                                                    <Style TargetType="ImageButton">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding IsFinished}" TargetType="ImageButton" Value="True">
-                                                                <Setter Property="BackgroundColor" Value="Green" />
-                                                            </DataTrigger>
+                                    <CollectionView Grid.Row="1" HorizontalOptions="Center" ItemsSource="{Binding WeightAndRepsItems}" VerticalOptions="Center">
+                                        <CollectionView.Triggers>
+                                            <DataTrigger Binding="{Binding HasWeight}" TargetType="CollectionView" Value="False">
+                                                <Setter Property="HeightRequest" Value="90" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding HasWeight}" TargetType="CollectionView" Value="True">
+                                                <Setter Property="HeightRequest" Value="140" />
+                                            </DataTrigger>
+                                        </CollectionView.Triggers>
+                                        <CollectionView.ItemsLayout>
+                                            <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5"/>
+                                        </CollectionView.ItemsLayout>
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid RowDefinitions="auto,45,auto" RowSpacing="2" VerticalOptions="Center">
+                                                    <Border BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
+                                                    <Entry Margin="0" FontSize="Medium" Keyboard="Numeric" MaxLength="3" Text="{Binding Repetitions, Mode=TwoWay}" HorizontalTextAlignment="Center" MinimumWidthRequest="70"/>
+
+                                                    <ImageButton Grid.Row="1" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" WidthRequest="35" CornerRadius="17"
+                                                            HorizontalOptions="Center" VerticalOptions="Center" Source="save.png"
+                                                            IsVisible="{Binding Source={x:Static Application.Current}, Path=IsTrainingNotFinished}">
+                                                        <ImageButton.Behaviors>
+                                                            <toolkit:IconTintColorBehavior TintColor="LightGray" />
+                                                        </ImageButton.Behaviors>
+                                                        <ImageButton.Triggers>
                                                             <DataTrigger Binding="{Binding IsFinished}" TargetType="ImageButton" Value="False">
                                                                 <Setter Property="BackgroundColor" Value="Transparent" />
                                                             </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </ImageButton.Style>
-                                            </ImageButton>
-                                            <Entry Grid.Row="2" Margin="0" FontSize="Medium" Keyboard="Numeric"
-                                                   IsVisible="{Binding Source={x:Reference Self}, Path=IsOnlyReps, Converter={StaticResource InverseBooleanConverter}}"
-                                                    MaxLength="4" Text="{Binding WeightString, Mode=TwoWay}" MinimumWidthRequest="70" HorizontalTextAlignment="Center" />
-                                        </Grid>
-                                    </DataTemplate>
-                                </CollectionView.ItemTemplate>
-                            </CollectionView>
-                        </Grid>
-                    </Border>
-                    
-                    <Border Style="{StaticResource MaterialBorder}"
-                            IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}" Margin="0,5">
-                        <Grid ColumnDefinitions="Auto,*,auto">
-                            <Label Text="{x:Static resx:AppResources.TimeString}" TextColor="{StaticResource Main}" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" FontAttributes="Bold"/>
-                            <Label Grid.Column="1" HorizontalOptions="Fill" Margin="30,0,0,0" Text="{Binding Time, StringFormat='{}{0:hh\\:mm\\:ss}', Mode=TwoWay}" HorizontalTextAlignment="Start" 
-                                VerticalOptions="Center"/>
-                            <Button Grid.Column="2" Command="{Binding StartCalculatingTimeCommand}" CornerRadius="10" 
-                                VerticalOptions="Start" Padding="10" 
-                                BackgroundColor="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}" 
-                                TextColor="{AppThemeBinding Dark=White, Light=White}" FontAttributes="Bold">
-                                <Button.Style>
-                                    <Style TargetType="Button">
-                                        <Setter Property="Text" Value="{x:Static resx:AppResources.MakeTrainingString}" />
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsTimeCalculating}" TargetType="Button" Value="True">
-                                                <Setter Property="Text" Value="{x:Static resx:AppResources.StopString}" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style>
-                            </Button>
-                        </Grid>
-                    </Border>
-                </StackLayout>
+                                                            <DataTrigger Binding="{Binding IsFinished}" TargetType="ImageButton" Value="True">
+                                                                <Setter Property="BackgroundColor" Value="Green" />
+                                                            </DataTrigger>
+                                                        </ImageButton.Triggers>
+                                                    </ImageButton>
 
-                <StackLayout x:Name="DescriptionGrid" Margin="0">
-                    <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.StartPosition}" TextColor="DodgerBlue" VerticalTextAlignment="Center" 
-                        IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
-                    <Label FontSize="Small" Text="{Binding Description.StartPosition}" 
-                        IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
+                                                    <Grid Grid.Row="2" IsVisible="{Binding Source={x:Reference ActiveScroll}, Path=BindingContext.HasWeight}">
+                                                        <Border BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
+                                                        <Entry Margin="0" FontSize="Medium" Keyboard="Numeric" MaxLength="4" Text="{Binding WeightString, Mode=TwoWay}" HorizontalTextAlignment="Center" MinimumWidthRequest="70" />
+                                                    </Grid>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </Grid>
+                            </Border>
 
-                    <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Execution}" TextColor="LimeGreen" VerticalTextAlignment="Center" 
-                        IsVisible="{Binding Description.Execution, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
-                    <Label FontSize="Small" Text="{Binding Description.Execution}" 
-                        IsVisible="{Binding Description.Execution, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
+                            <Border Style="{StaticResource MaterialBorder}"
+                                    IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}" Margin="0,5">
+                                <Grid ColumnDefinitions="Auto,*,auto">
+                                    <Label Text="{x:Static resx:AppResources.TimeString}" TextColor="{StaticResource Main}" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" FontAttributes="Bold"/>
+                                    <Label Grid.Column="1" HorizontalOptions="Fill" Margin="30,0,0,0" Text="{Binding Time, StringFormat='{}{0:hh\\:mm\\:ss}', Mode=TwoWay}" HorizontalTextAlignment="Start"
+                                        VerticalOptions="Center"/>
+                                    <Button Grid.Column="2" Command="{Binding StartCalculatingTimeCommand}" CornerRadius="10"
+                                        VerticalOptions="Start" Padding="10"
+                                        BackgroundColor="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}"
+                                        TextColor="{AppThemeBinding Dark=White, Light=White}" FontAttributes="Bold">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Setter Property="Text" Value="{x:Static resx:AppResources.MakeTrainingString}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsTimeCalculating}" TargetType="Button" Value="True">
+                                                        <Setter Property="Text" Value="{x:Static resx:AppResources.StopString}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </Grid>
+                            </Border>
+                        </StackLayout>
 
-                    <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Advice}" TextColor="Orange" VerticalTextAlignment="Center" 
-                        IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
+                        <StackLayout x:Name="DescriptionGrid" Margin="10,0">
+                            <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.StartPosition}" TextColor="DodgerBlue" VerticalTextAlignment="Center"
+                                IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
+                            <Label FontSize="Small" Text="{Binding Description.StartPosition}"
+                                IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
 
-                    <Label FontSize="Small" Text="{Binding Description.Advice}" 
-                        IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
-                </StackLayout>
+                            <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Execution}" TextColor="LimeGreen" VerticalTextAlignment="Center"
+                                IsVisible="{Binding Description.Execution, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
+                            <Label FontSize="Small" Text="{Binding Description.Execution}"
+                                IsVisible="{Binding Description.Execution, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
 
-                <!--<CarouselView ItemsSource="{Binding VideoItems}" HeightRequest="300" WidthRequest="400" IndicatorView="indicatorView">
-                    <CarouselView.ItemTemplate>
-                        <DataTemplate>
-                            <toolkit:MediaElement Source="https://www.youtube.com/embed/q3lX2p_Uy9I" HeightRequest="300" WidthRequest="400" />
-                        </DataTemplate>
-                    </CarouselView.ItemTemplate>
-                </CarouselView>
+                            <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Advice}" TextColor="Orange" VerticalTextAlignment="Center"
+                                IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
 
-                <IndicatorView x:Name="indicatorView" ItemsSource="{Binding VideoItems}" HorizontalOptions="Center"/>-->
-            </VerticalStackLayout>
-        </ScrollView>
+                            <Label FontSize="Small" Text="{Binding Description.Advice}"
+                                IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
+                        </StackLayout>
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Grid>
+        </Border>
+
+        <!-- Exercises after the active one -->
+        <VerticalStackLayout Grid.Row="3" Spacing="6"
+                             BindableLayout.ItemsSource="{Binding Source={x:Reference Self}, Path=ItemsAfter}"
+                             BindableLayout.ItemTemplate="{StaticResource PinnedExerciseTemplate}" />
     </Grid>
 </ContentView>

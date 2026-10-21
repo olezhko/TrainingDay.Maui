@@ -732,4 +732,19 @@ Los músculos calientes se contraen y relajan mejor durante el entrenamiento, lo
   <data name="NickOptionalString" xml:space="preserve">
     <value>Apodo (opcional)</value>
   </data>
+  <data name="SuperSetExercisesCount" xml:space="preserve">
+    <value>Superserie · {0} ejercicios</value>
+  </data>
+  <data name="SuperSetRound" xml:space="preserve">
+    <value>Ronda {0} de {1}</value>
+  </data>
+  <data name="SuperSetNextUp" xml:space="preserve">
+    <value>Siguiente: {0}, serie {1}</value>
+  </data>
+  <data name="SuperSetRoundDone" xml:space="preserve">
+    <value>Ronda completada · descansa y luego {0}, serie {1}</value>
+  </data>
+  <data name="SuperSetAllSetsDone" xml:space="preserve">
+    <value>Todas las series completadas</value>
+  </data>
 </root>

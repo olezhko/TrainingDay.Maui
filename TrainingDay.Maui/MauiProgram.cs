@@ -44,10 +44,6 @@ namespace TrainingDay.Maui
                     fonts.AddFont("Inter-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("Inter-Semibold.ttf", "OpenSansSemibold");
                 })
-                .ConfigureEffects(effects =>
-                {
-                    effects.Add<LongPressedEffect, LongPressedPlatformEffect>();
-                })
                 .ConfigureMauiHandlers(handlers =>
                 {
 #if IOS

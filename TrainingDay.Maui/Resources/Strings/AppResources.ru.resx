@@ -732,4 +732,19 @@
   <data name="NickOptionalString" xml:space="preserve">
     <value>Никнейм (необязательно)</value>
   </data>
+  <data name="SuperSetExercisesCount" xml:space="preserve">
+    <value>Суперсет · упражнений: {0}</value>
+  </data>
+  <data name="SuperSetRound" xml:space="preserve">
+    <value>Круг {0} из {1}</value>
+  </data>
+  <data name="SuperSetNextUp" xml:space="preserve">
+    <value>Далее: {0}, подход {1}</value>
+  </data>
+  <data name="SuperSetRoundDone" xml:space="preserve">
+    <value>Круг завершён · отдых, затем {0}, подход {1}</value>
+  </data>
+  <data name="SuperSetAllSetsDone" xml:space="preserve">
+    <value>Все подходы выполнены</value>
+  </data>
 </root>

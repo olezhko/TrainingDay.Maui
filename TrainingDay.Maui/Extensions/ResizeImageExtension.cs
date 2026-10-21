@@ -32,8 +32,6 @@ public static class ResizeImageService
         UIKit.UIImageOrientation orientation = originalImage.Orientation;
 
         var newHeight = originalImage.CGImage.Height * width / originalImage.CGImage.Width;
-        //var newHeight = height;
-        //create a 24bit RGB image
         using (CoreGraphics.CGBitmapContext context = new CoreGraphics.CGBitmapContext(IntPtr.Zero,
                                              (int)width, (int)newHeight, 8,
                                              4 * (int)width, CoreGraphics.CGColorSpace.CreateDeviceRGB(),

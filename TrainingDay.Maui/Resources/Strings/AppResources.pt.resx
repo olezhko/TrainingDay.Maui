@@ -732,4 +732,19 @@ Músculos aquecidos se contraem e relaxam melhor durante o treino, o que signifi
   <data name="NickOptionalString" xml:space="preserve">
     <value>Apelido (opcional)</value>
   </data>
+  <data name="SuperSetExercisesCount" xml:space="preserve">
+    <value>Supersérie · {0} exercícios</value>
+  </data>
+  <data name="SuperSetRound" xml:space="preserve">
+    <value>Rodada {0} de {1}</value>
+  </data>
+  <data name="SuperSetNextUp" xml:space="preserve">
+    <value>Próximo: {0}, série {1}</value>
+  </data>
+  <data name="SuperSetRoundDone" xml:space="preserve">
+    <value>Rodada concluída · descanse e depois {0}, série {1}</value>
+  </data>
+  <data name="SuperSetAllSetsDone" xml:space="preserve">
+    <value>Todas as séries concluídas</value>
+  </data>
 </root>

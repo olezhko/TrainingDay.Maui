@@ -231,16 +231,9 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         }
 
         TappedExerciseIndex = Training.Exercises.IndexOf(selectedExercise);
-        if (CurrentAction != ExerciseCheckBoxAction.None) // when we in action, tapped equals changing selected
+        if (CurrentAction != ExerciseCheckBoxAction.None) // while selecting for an action, the item's checkbox handles selection
         {
-            if (CurrentAction == ExerciseCheckBoxAction.SuperSet)
-            {
-                if (selectedExercise!.SuperSetId == 0)
-                {
-                    selectedExercise.IsSelected = selectedExercise.IsSelected;
-                }
-            }
-
+            IsBusy = false;
             return;
         }
         

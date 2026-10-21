@@ -27,7 +27,7 @@ public class TrainingExerciseViewModelExtensions
     {
         try
         {
-            if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value) || value.Length < 0)
+            if (string.IsNullOrWhiteSpace(value))
             {
                 return;
             }

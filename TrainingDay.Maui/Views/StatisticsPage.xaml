@@ -10,10 +10,6 @@
     <ContentPage.BindingContext>
         <viewModels:StatisticsViewModel/>
     </ContentPage.BindingContext>
-    <ContentPage.ToolbarItems>
-        <!--<ToolbarItem IconImageSource="share" Command="{Binding ShareResultsCommand}"/>-->
-    </ContentPage.ToolbarItems>
-    
     <Grid>
         <Label HorizontalTextAlignment="Center" VerticalOptions="Start" Text="{x:Static resx:AppResources.NoLastTrainings}" FontSize="Medium" IsVisible="{Binding IsLastTrainingsAvailable, Converter={StaticResource InverseBooleanConverter}}"/>
 

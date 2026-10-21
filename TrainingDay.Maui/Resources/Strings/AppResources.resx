@@ -747,4 +747,19 @@ Increase body temperature, activate the muscles and joints, and prepare the card
   <data name="NickOptionalString" xml:space="preserve">
     <value>Nickname (optional)</value>
   </data>
+  <data name="SuperSetExercisesCount" xml:space="preserve">
+    <value>Superset · {0} exercises</value>
+  </data>
+  <data name="SuperSetRound" xml:space="preserve">
+    <value>Round {0} of {1}</value>
+  </data>
+  <data name="SuperSetNextUp" xml:space="preserve">
+    <value>Next up: {0}, set {1}</value>
+  </data>
+  <data name="SuperSetRoundDone" xml:space="preserve">
+    <value>Round done · rest, then {0}, set {1}</value>
+  </data>
+  <data name="SuperSetAllSetsDone" xml:space="preserve">
+    <value>All sets done</value>
+  </data>
 </root>

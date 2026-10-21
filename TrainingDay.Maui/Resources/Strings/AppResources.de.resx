@@ -720,4 +720,19 @@
   <data name="NickOptionalString" xml:space="preserve">
     <value>Spitzname (optional)</value>
   </data>
+  <data name="SuperSetExercisesCount" xml:space="preserve">
+    <value>Supersatz · {0} Übungen</value>
+  </data>
+  <data name="SuperSetRound" xml:space="preserve">
+    <value>Runde {0} von {1}</value>
+  </data>
+  <data name="SuperSetNextUp" xml:space="preserve">
+    <value>Als Nächstes: {0}, Satz {1}</value>
+  </data>
+  <data name="SuperSetRoundDone" xml:space="preserve">
+    <value>Runde geschafft · Pause, dann {0}, Satz {1}</value>
+  </data>
+  <data name="SuperSetAllSetsDone" xml:space="preserve">
+    <value>Alle Sätze erledigt</value>
+  </data>
 </root>

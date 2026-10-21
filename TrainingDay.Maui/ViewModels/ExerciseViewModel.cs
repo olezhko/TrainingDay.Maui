@@ -100,9 +100,17 @@ public class ExerciseViewModel : BaseViewModel
         {
             _tags = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(IsTrackedBySets));
+            OnPropertyChanged(nameof(HasWeight));
         }
     }
 
+    /// <summary>
+    /// Exercise is tracked by sets of repetitions (with or without weight).
+    /// </summary>
+    public bool IsTrackedBySets => Tags != null && (Tags.Contains(ExerciseTags.ExerciseByReps) || Tags.Contains(ExerciseTags.ExerciseByRepsAndWeight));
+
+    public bool HasWeight => Tags?.Contains(ExerciseTags.ExerciseByRepsAndWeight) == true;
 
     public DescriptionViewModel Description { get => _descriptionItem; set => SetProperty(ref _descriptionItem, value); }
 

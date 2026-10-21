@@ -5,6 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:TrainingDay.Maui.Converters"
     xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
+    xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
+    xmlns:vm="clr-namespace:TrainingDay.Maui.ViewModels"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
     
     <converters:ExerciseTagExistsConverter x:Key="ExerciseTagExistsConverter"/>
@@ -173,6 +175,15 @@
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
+        <Setter Property="Keyboard">
+            <Setter.Value>
+                <Keyboard x:FactoryMethod="Create">
+                    <x:Arguments>
+                        <KeyboardFlags>CapitalizeSentence</KeyboardFlags>
+                    </x:Arguments>
+                </Keyboard>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style TargetType="Entry">
@@ -197,6 +208,15 @@
                     </VisualState>
                 </VisualStateGroup>
             </VisualStateGroupList>
+        </Setter>
+        <Setter Property="Keyboard">
+            <Setter.Value>
+                <Keyboard x:FactoryMethod="Create">
+                    <x:Arguments>
+                        <KeyboardFlags>CapitalizeSentence</KeyboardFlags>
+                    </x:Arguments>
+                </Keyboard>
+            </Setter.Value>
         </Setter>
     </Style>
 
@@ -485,4 +505,28 @@
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FrameBackground" Value="{AppThemeBinding Light={StaticResource ListItemBackgroundColorLight}, Dark=Gray}" />
     </Style>
+
+    <!-- Read-only set chips ("12 reps" / "40 kg x 12 reps"), used in history and social workout lists -->
+    <DataTemplate x:Key="RepsChipTemplate" x:DataType="vm:WeightAndRepsViewModel">
+        <Border Stroke="Transparent" StrokeShape="RoundRectangle 10" Padding="5,0"
+                BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}">
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="0">
+                <Label FontSize="12" Margin="5" HorizontalTextAlignment="Center" Text="{Binding Repetitions}" VerticalTextAlignment="Center" />
+                <Label FontSize="12" Text="{x:Static resx:AppResources.RepetitionsShort}" VerticalTextAlignment="Center" />
+            </HorizontalStackLayout>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="RepsAndWeightChipTemplate" x:DataType="vm:WeightAndRepsViewModel">
+        <Border Stroke="Transparent" StrokeShape="RoundRectangle 10" Padding="5,0"
+                BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}">
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="0">
+                <Label FontSize="12" Margin="5" HorizontalTextAlignment="Center" Text="{Binding Weight}" VerticalTextAlignment="Center" />
+                <Label FontSize="12" Text="{Binding Source={x:Static Application.Current}, Path=MeasureOfWeight, x:DataType={x:Null}}" VerticalTextAlignment="Center" />
+                <Label FontSize="12" Text="x" VerticalTextAlignment="Center" />
+                <Label FontSize="12" Margin="5" HorizontalTextAlignment="Center" Text="{Binding Repetitions}" VerticalTextAlignment="Center" />
+                <Label FontSize="12" Text="{x:Static resx:AppResources.RepetitionsShort}" VerticalTextAlignment="Center" />
+            </HorizontalStackLayout>
+        </Border>
+    </DataTemplate>
 </ResourceDictionary>

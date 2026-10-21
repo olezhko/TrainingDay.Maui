@@ -1536,6 +1536,51 @@ namespace TrainingDay.Maui.Resources.Strings {
                 return ResourceManager.GetString("SuperSetString", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Superset · {0} exercises.
+        /// </summary>
+        internal static string SuperSetExercisesCount {
+            get {
+                return ResourceManager.GetString("SuperSetExercisesCount", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Round {0} of {1}.
+        /// </summary>
+        internal static string SuperSetRound {
+            get {
+                return ResourceManager.GetString("SuperSetRound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Next up: {0}, set {1}.
+        /// </summary>
+        internal static string SuperSetNextUp {
+            get {
+                return ResourceManager.GetString("SuperSetNextUp", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Round done · rest, then {0}, set {1}.
+        /// </summary>
+        internal static string SuperSetRoundDone {
+            get {
+                return ResourceManager.GetString("SuperSetRoundDone", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to All sets done.
+        /// </summary>
+        internal static string SuperSetAllSetsDone {
+            get {
+                return ResourceManager.GetString("SuperSetAllSetsDone", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Target Muscles.
