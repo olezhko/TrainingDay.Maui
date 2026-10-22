@@ -153,10 +153,10 @@
                                     <CollectionView Grid.Row="1" HorizontalOptions="Center" ItemsSource="{Binding WeightAndRepsItems}" VerticalOptions="Center">
                                         <CollectionView.Triggers>
                                             <DataTrigger Binding="{Binding HasWeight}" TargetType="CollectionView" Value="False">
-                                                <Setter Property="HeightRequest" Value="90" />
+                                                <Setter Property="HeightRequest" Value="100" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding HasWeight}" TargetType="CollectionView" Value="True">
-                                                <Setter Property="HeightRequest" Value="140" />
+                                                <Setter Property="HeightRequest" Value="150" />
                                             </DataTrigger>
                                         </CollectionView.Triggers>
                                         <CollectionView.ItemsLayout>
@@ -166,7 +166,7 @@
                                             <DataTemplate>
                                                 <Grid RowDefinitions="auto,45,auto" RowSpacing="2" VerticalOptions="Center">
                                                     <Border BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
-                                                    <Entry Margin="0" FontSize="Medium" Keyboard="Numeric" MaxLength="3" Text="{Binding Repetitions, Mode=TwoWay}" HorizontalTextAlignment="Center" MinimumWidthRequest="70"/>
+                                                    <Entry Margin="0" FontSize="Medium" Keyboard="Numeric" MaxLength="3" Text="{Binding Repetitions}" HorizontalTextAlignment="Center" MinimumWidthRequest="70"/>
 
                                                     <ImageButton Grid.Row="1" Margin="0" Command="{Binding ChangeFinishedCommand}" HeightRequest="35" WidthRequest="35" CornerRadius="17"
                                                             HorizontalOptions="Center" VerticalOptions="Center" Source="save.png"
@@ -186,7 +186,7 @@
 
                                                     <Grid Grid.Row="2" IsVisible="{Binding Source={x:Reference ActiveScroll}, Path=BindingContext.HasWeight}">
                                                         <Border BackgroundColor="{AppThemeBinding Light={StaticResource ContentPageBackgroundColorLight}, Dark={StaticResource ContentPageBackgroundColor}}"/>
-                                                        <Entry Margin="0" FontSize="Medium" Keyboard="Numeric" MaxLength="4" Text="{Binding WeightString, Mode=TwoWay}" HorizontalTextAlignment="Center" MinimumWidthRequest="70" />
+                                                        <Entry Margin="0" FontSize="Medium" Keyboard="Numeric" MaxLength="4" Text="{Binding WeightString}" HorizontalTextAlignment="Center" MinimumWidthRequest="70" />
                                                     </Grid>
                                                 </Grid>
                                             </DataTemplate>
@@ -199,7 +199,7 @@
                                     IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}" Margin="0,5">
                                 <Grid ColumnDefinitions="Auto,*,auto">
                                     <Label Text="{x:Static resx:AppResources.TimeString}" TextColor="{StaticResource Main}" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" FontAttributes="Bold"/>
-                                    <Label Grid.Column="1" HorizontalOptions="Fill" Margin="30,0,0,0" Text="{Binding Time, StringFormat='{}{0:hh\\:mm\\:ss}', Mode=TwoWay}" HorizontalTextAlignment="Start"
+                                    <Label Grid.Column="1" HorizontalOptions="Fill" Margin="30,0,0,0" Text="{Binding Time, StringFormat='{}{0:hh\\:mm\\:ss}'}" HorizontalTextAlignment="Start"
                                         VerticalOptions="Center"/>
                                     <Button Grid.Column="2" Command="{Binding StartCalculatingTimeCommand}" CornerRadius="10"
                                         VerticalOptions="Start" Padding="10"

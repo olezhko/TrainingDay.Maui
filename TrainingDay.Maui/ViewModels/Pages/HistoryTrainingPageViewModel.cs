@@ -46,7 +46,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
 
     public ICommand RemoveLastTrainingCommand => new AsyncRelayCommand(RemoveLastTraining);
 
-    public ICommand RemainingItemsThresholdReachedCommand => new Command(RemainingItemsThresholdReached);
+    public ICommand RemainingItemsThresholdReachedCommand => new RelayCommand(RemainingItemsThresholdReached);
 
     private int _itemTreshold;
 

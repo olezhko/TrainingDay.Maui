@@ -23,7 +23,7 @@
                 FontSize="Medium"
                 Keyboard="Numeric"
                 MaxLength="3"
-                Text="{Binding Repetitions, Mode=TwoWay}"
+                Text="{Binding Repetitions}"
                 MinimumWidthRequest="60" />
             
             <Entry
@@ -33,7 +33,7 @@
                 Keyboard="Numeric"
                 IsVisible="{Binding Source={x:Reference Self}, Path=IsOnlyReps, Converter={StaticResource InverseBooleanConverter}}"
                 MaxLength="4"
-                Text="{Binding WeightString, Mode=TwoWay}"
+                Text="{Binding WeightString}"
                 MinimumWidthRequest="60" />
 
             <BoxView

@@ -11,16 +11,16 @@
     <ContentView.Resources>
         <DataTemplate x:Key="RepsItemTemplate" x:DataType="viewModels:WeightAndRepsViewModel">
             <controls:RepsAndWeightControl Margin="0" IsOnlyReps="True" Padding="0"
-                    DeleteRequestCommand="{Binding Source={x:Reference View}, Path=DeleteRequestCommand}"
+                    DeleteRequestCommand="{Binding Source={x:Reference View}, Path=DeleteRequestCommand, x:DataType=controls:ExerciseView}"
                     HorizontalOptions="Start" VerticalOptions="Start" Value="{Binding}"
-                    WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type FlexLayout}}, Path=Width, Converter={StaticResource HalfValueConverter}, ConverterParameter=3}"/>
+                    WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type FlexLayout}}, Path=Width, Converter={StaticResource HalfValueConverter}, ConverterParameter=3, x:DataType=FlexLayout}"/>
         </DataTemplate>
 
         <DataTemplate x:Key="RepsAndWeightItemTemplate" x:DataType="viewModels:WeightAndRepsViewModel">
             <controls:RepsAndWeightControl Margin="0" Padding="0"
-                    DeleteRequestCommand="{Binding Source={x:Reference View}, Path=DeleteRequestCommand}"
+                    DeleteRequestCommand="{Binding Source={x:Reference View}, Path=DeleteRequestCommand, x:DataType=controls:ExerciseView}"
                     HorizontalOptions="Start" VerticalOptions="Start" Value="{Binding}"
-                    WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type FlexLayout}}, Path=Width, Converter={StaticResource HalfValueConverter}, ConverterParameter=2}"/>
+                    WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type FlexLayout}}, Path=Width, Converter={StaticResource HalfValueConverter}, ConverterParameter=2, x:DataType=FlexLayout}"/>
         </DataTemplate>
     </ContentView.Resources>
 

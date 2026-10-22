@@ -17,9 +17,10 @@ namespace TrainingDay.Maui
 {
     public partial class App : Application
     {
-        private IPushNotification notificationService;
-        private IDataService dataService;
-        
+        private readonly IPushNotification notificationService;
+        private readonly IDataService dataService;
+        private bool isStarted;
+
         private static Repository database;
         private static object lockBase = new object();
         public static Options Options;
@@ -39,11 +40,15 @@ namespace TrainingDay.Maui
         public string MeasureOfWeight { get; set; }
         public ToolTipManager ToolTipManager { get; set; }
 
-        public App()
+        public App(IPushNotification notificationService, IDataService dataService)
         {
+            this.notificationService = notificationService;
+            this.dataService = dataService;
+
             InitializeComponent();
             LocalizationResourceManager.Instance.SetCulture(Settings.GetLanguage());
             ToolTipManager = new ToolTipManager();
+            MeasureOfWeight = GetMeasureOfWeight();
 
             AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
             {
@@ -65,12 +70,23 @@ namespace TrainingDay.Maui
             };
         }
 
-        protected override Window CreateWindow(IActivationState? activationState) => new Window(new AppShell());
-
-        protected override void OnStart()
+        protected override Window CreateWindow(IActivationState? activationState)
         {
-            base.OnStart();
-            Settings.IsLightTheme = App.Current.RequestedTheme == AppTheme.Light;
+            var window = new Window(new AppShell());
+            window.Created += OnWindowCreated;
+            return window;
+        }
+
+        private void OnWindowCreated(object? sender, EventArgs e)
+        {
+            // Android can create the native window again (activity recreated), but the startup work must run once per process
+            if (isStarted)
+            {
+                return;
+            }
+
+            isStarted = true;
+            Settings.IsLightTheme = RequestedTheme == AppTheme.Light;
 
 #if     DEBUG
             SentinelTracker.Initialize(ConstantKeys.SentinelTrackerProjectId, false);
@@ -79,10 +95,6 @@ namespace TrainingDay.Maui
 #endif
 
             Settings.LastDatabaseSyncDateTime = Settings.LastDatabaseSyncDateTime.IsNotNullOrEmpty() ? Settings.LastDatabaseSyncDateTime : DateTime.Now.ToString(Settings.GetLanguage());
-
-            notificationService = Handler.MauiContext.Services.GetRequiredService<IPushNotification>();
-            dataService = Handler.MauiContext.Services.GetRequiredService<IDataService>();
-            MeasureOfWeight = GetMeasureOfWeight();
 
             Dispatcher.Dispatch(async () =>
             {

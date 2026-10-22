@@ -47,10 +47,10 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
     public ICommand AddExercisesCommand => _addExercisesCommand ??= new AsyncRelayCommand(AddExercises);
 
     private ICommand _cancelActionCommand;
-    public ICommand CancelActionCommand => _cancelActionCommand ??= new Command(() => StopAction());
+    public ICommand CancelActionCommand => _cancelActionCommand ??= new RelayCommand(() => StopAction());
 
     private ICommand _startMoveExerciseCommand;
-    public ICommand StartMoveExerciseCommand => _startMoveExerciseCommand ??= new Command(StartMoveExercises);
+    public ICommand StartMoveExerciseCommand => _startMoveExerciseCommand ??= new RelayCommand(StartMoveExercises);
 
     private ICommand _startActionCommand;
     public ICommand StartActionCommand => _startActionCommand ??= new AsyncRelayCommand(StartAction);
@@ -571,16 +571,16 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
     #region Drag & Drop
     private ICommand _itemDragged;
-    public ICommand ItemDragged => _itemDragged ??= new Command<TrainingExerciseViewModel>(OnItemDragged);
+    public ICommand ItemDragged => _itemDragged ??= new RelayCommand<TrainingExerciseViewModel>(OnItemDragged);
 
     private ICommand _itemDraggedOver;
-    public ICommand ItemDraggedOver => _itemDraggedOver ??= new Command<TrainingExerciseViewModel>(OnItemDraggedOver);
+    public ICommand ItemDraggedOver => _itemDraggedOver ??= new RelayCommand<TrainingExerciseViewModel>(OnItemDraggedOver);
 
     private ICommand _itemDragLeave;
-    public ICommand ItemDragLeave => _itemDragLeave ??= new Command<TrainingExerciseViewModel>(OnItemDragLeave);
+    public ICommand ItemDragLeave => _itemDragLeave ??= new RelayCommand<TrainingExerciseViewModel>(OnItemDragLeave);
 
     private ICommand _itemDropped;
-    public ICommand ItemDropped => _itemDropped ??= new Command<TrainingExerciseViewModel>(i => OnItemDropped(i));
+    public ICommand ItemDropped => _itemDropped ??= new RelayCommand<TrainingExerciseViewModel>(i => OnItemDropped(i));
     private void OnItemDragged(TrainingExerciseViewModel item)
     {
         Training.Exercises.ForEach(i => i.IsBeingDragged = item == i);

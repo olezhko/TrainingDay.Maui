@@ -31,7 +31,7 @@
                     <DataTemplate x:DataType="vm:SocialWorkoutViewModel">
                         <Border Style="{StaticResource BorderCellStyle}" Padding="10">
                             <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:SocialWorkoutsPageViewModel}}, Path=ItemSelectedCommand}"
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:SocialWorkoutsPageViewModel}}, Path=ItemSelectedCommand, x:DataType=viewModels:SocialWorkoutsPageViewModel}"
                                                        CommandParameter="{Binding .}" NumberOfTapsRequired="1" />
                             </Border.GestureRecognizers>
                             <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto">

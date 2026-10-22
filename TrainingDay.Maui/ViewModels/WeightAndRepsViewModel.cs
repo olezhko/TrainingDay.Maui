@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using CommunityToolkit.Mvvm.Input;
+using System.Globalization;
 using System.Text.Json.Serialization;
 using System.Windows.Input;
 
@@ -21,7 +22,7 @@ public class WeightAndRepsViewModel : BaseViewModel
     }
 
     [JsonIgnore]
-    public ICommand ChangeFinishedCommand => new Command(ChangeFinished);
+    public ICommand ChangeFinishedCommand => new RelayCommand(ChangeFinished);
 
     [JsonIgnore]
     private int repetitions;

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows.Input;
@@ -101,14 +102,14 @@ public class ImplementTrainingExerciseViewModel : TrainingExerciseViewModel
         }
     }
 
-    public ICommand AddSetCommand => new Command(() =>
+    public ICommand AddSetCommand => new RelayCommand(() =>
     {
         var lastItem = WeightAndRepsItems.LastOrDefault() ?? new WeightAndRepsViewModel(0,15);
         WeightAndRepsItems.Add(new WeightAndRepsViewModel(lastItem.Weight, lastItem.Repetitions));
         IsNotFinished = true;
     });
 
-    public ICommand RemoveSetCommand => new Command(() =>
+    public ICommand RemoveSetCommand => new RelayCommand(() =>
     {
         if (WeightAndRepsItems.Count == 0)
             return;
@@ -116,7 +117,7 @@ public class ImplementTrainingExerciseViewModel : TrainingExerciseViewModel
         WeightAndRepsItems.RemoveAt(WeightAndRepsItems.Count - 1);
     });
 
-    public ICommand StartCalculatingTimeCommand => new Command(StartCalculateTime);
+    public ICommand StartCalculatingTimeCommand => new RelayCommand(StartCalculateTime);
     private void StartCalculateTime()
     {
         if (IsTimeCalculating)

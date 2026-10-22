@@ -30,7 +30,7 @@
         <Border Style="{StaticResource MaterialBorder}">
             <Grid>
                 <Label Text="{x:Static resx:AppResources.NameString}" Style="{StaticResource MaterialLabel}"/>
-                <Entry Text="{Binding Training.Title, Mode=TwoWay}" HorizontalOptions="Fill" FontSize="22" VerticalOptions="End"/>
+                <Entry Text="{Binding Training.Title}" HorizontalOptions="Fill" FontSize="22" VerticalOptions="End"/>
             </Grid>
         </Border>
 
@@ -40,15 +40,15 @@
                 <DataTemplate x:DataType="models:TrainingExerciseViewModel">
                     <Border Grid.Row="0" MinimumHeightRequest="80" x:Name="viewCell" Style="{StaticResource BorderCellStyle}" Margin="0,-1,0,0">
                         <Border.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding BindingContext.ItemTappedCommand, Source={x:Reference ItemsListView}}"
+                            <TapGestureRecognizer Command="{Binding ItemTappedCommand, Source={RelativeSource AncestorType={x:Type viewModels:TrainingExercisesPageViewModel}}, x:DataType=viewModels:TrainingExercisesPageViewModel}"
                                               CommandParameter="{Binding}"/>
                             <DropGestureRecognizer
                                     AllowDrop="True"
-                                    DragLeaveCommand="{Binding BindingContext.ItemDragLeave, Source={x:Reference ItemsListView}}"
+                                    DragLeaveCommand="{Binding ItemDragLeave, Source={RelativeSource AncestorType={x:Type viewModels:TrainingExercisesPageViewModel}}, x:DataType=viewModels:TrainingExercisesPageViewModel}"
                                     DragLeaveCommandParameter="{Binding}"
-                                    DragOverCommand="{Binding BindingContext.ItemDraggedOver, Source={x:Reference ItemsListView}}"
+                                    DragOverCommand="{Binding ItemDraggedOver, Source={RelativeSource AncestorType={x:Type viewModels:TrainingExercisesPageViewModel}}, x:DataType=viewModels:TrainingExercisesPageViewModel}"
                                     DragOverCommandParameter="{Binding}"
-                                    DropCommand="{Binding BindingContext.ItemDropped, Source={x:Reference ItemsListView}}"
+                                    DropCommand="{Binding ItemDropped, Source={RelativeSource AncestorType={x:Type viewModels:TrainingExercisesPageViewModel}}, x:DataType=viewModels:TrainingExercisesPageViewModel}"
                                     DropCommandParameter="{Binding}" />
                         </Border.GestureRecognizers>
                         <Grid Padding="0" Margin="5" ColumnSpacing="3">
@@ -64,7 +64,7 @@
                                         <controls:ImageCache.GestureRecognizers>
                                             <DragGestureRecognizer
                                                 CanDrag="True"
-                                                DragStartingCommand="{Binding BindingContext.ItemDragged, Source={x:Reference ItemsListView}}"
+                                                DragStartingCommand="{Binding ItemDragged, Source={RelativeSource AncestorType={x:Type viewModels:TrainingExercisesPageViewModel}}, x:DataType=viewModels:TrainingExercisesPageViewModel}"
                                                 DragStartingCommandParameter="{Binding}" />
                                         </controls:ImageCache.GestureRecognizers>
                                     </controls:ImageCache>
@@ -84,7 +84,7 @@
                                 </Grid>
                             </Border>
 
-                            <CheckBox Grid.Column="2" VerticalOptions="Center" IsChecked="{Binding IsSelected, Mode=TwoWay}" HorizontalOptions="End"
+                            <CheckBox Grid.Column="2" VerticalOptions="Center" IsChecked="{Binding IsSelected}" HorizontalOptions="End"
                                   IsVisible="{Binding IsCheckBoxVisible}" />
 
                             <VerticalStackLayout Grid.Column="1" Padding="0" Margin="0" VerticalOptions="Center">
@@ -103,7 +103,7 @@
                             </VerticalStackLayout>
 
                             <ImageButton Grid.Column="2" WidthRequest="30" HeightRequest="30" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="close.png" 
-                                             Command="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.DeleteExerciseCommand}" CommandParameter="{Binding }" BackgroundColor="Transparent" 
+                                             Command="{Binding DeleteExerciseCommand, Source={RelativeSource AncestorType={x:Type viewModels:TrainingExercisesPageViewModel}}, x:DataType=viewModels:TrainingExercisesPageViewModel}" CommandParameter="{Binding }" BackgroundColor="Transparent" 
                                              IsVisible="{Binding IsCheckBoxVisible,Converter={StaticResource InverseBooleanConverter}}">
                                 <ImageButton.Behaviors>
                                     <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />

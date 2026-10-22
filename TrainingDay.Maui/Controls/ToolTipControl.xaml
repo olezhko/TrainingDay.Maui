@@ -4,17 +4,17 @@
              x:Class="TrainingDay.Maui.Controls.ToolTipControl" x:Name="Self" HorizontalOptions="Start" VerticalOptions="Start">
 	<Border x:Name="frame" StrokeShape="RoundRectangle 10" Padding="10" Margin="0" BackgroundColor="{Binding Source={x:Reference Self}, Path=FrameBackground}">
         <StackLayout Spacing="0">
-            <Label Text="{Binding Source={x:Reference Self}, Path=Title, Mode=TwoWay}" FontSize="Medium" FontAttributes="Bold" VerticalTextAlignment="Center"/>
+            <Label Text="{Binding Source={x:Reference Self}, Path=Title}" FontSize="Medium" FontAttributes="Bold" VerticalTextAlignment="Center"/>
             <Grid x:Name="StackLayout" Margin="0" Padding="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="1" Text="{Binding Source={x:Reference Self}, Path=Text, Mode=TwoWay}" FontSize="Small" FontAttributes="Bold" LineBreakMode="WordWrap" VerticalTextAlignment="Center"/>
+                <Label Grid.Column="1" Text="{Binding Source={x:Reference Self}, Path=Text}" FontSize="Small" FontAttributes="Bold" LineBreakMode="WordWrap" VerticalTextAlignment="Center"/>
             </Grid>
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="End" Spacing="10">
-                <Label Text="{Binding Source={x:Reference Self}, Path=SkipText, Mode=TwoWay}" TextDecorations="Underline" FontSize="Small" VerticalOptions="Center">
+                <Label Text="{Binding Source={x:Reference Self}, Path=SkipText}" TextDecorations="Underline" FontSize="Small" VerticalOptions="Center">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="Skip_Tapped"/>
                     </Label.GestureRecognizers>
@@ -23,7 +23,7 @@
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Tapped="NeverShow_Tapped"/>
                     </Border.GestureRecognizers>
-                    <Label Text="{Binding Source={x:Reference Self}, Path=NeverShowText, Mode=TwoWay}" FontSize="Small"/>
+                    <Label Text="{Binding Source={x:Reference Self}, Path=NeverShowText}" FontSize="Small"/>
                 </Border>
             </StackLayout>
         </StackLayout>

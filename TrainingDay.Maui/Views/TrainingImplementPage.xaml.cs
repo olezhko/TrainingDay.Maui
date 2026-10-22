@@ -27,7 +27,12 @@ namespace TrainingDay.Maui.Views;
 [QueryProperty(nameof(StartTime), "StartTime")]
 public partial class TrainingImplementPage : ContentPage
 {
+    // the real save happens when the app goes to background; this is only a fallback in case the app crashes
+    private const int SaveEveryTicks = 15;
+
     private readonly DateTime _startTrainingDateTime;
+    private Window? watchedWindow;
+    private int ticksSinceSave;
     private bool enabledTimer;
     private readonly IDispatcherTimer _timer;
     private IPushNotification notificator;
@@ -113,9 +118,43 @@ public partial class TrainingImplementPage : ContentPage
             StepProgressBarControl.NextElement(FirstIndexIsNotFinished());
         }
 
+        WatchWindow();
+
         await ToolTipCancelImplementingTraining.Show();
 
         _timer.Start();
+    }
+
+    private void WatchWindow()
+    {
+        if (watchedWindow != null || Window == null)
+        {
+            return;
+        }
+
+        watchedWindow = Window;
+        watchedWindow.Stopped += OnWindowStopped;
+        watchedWindow.Destroying += OnWindowStopped; // Android back button can skip Stopped
+    }
+
+    private void StopWatchingWindow()
+    {
+        if (watchedWindow == null)
+        {
+            return;
+        }
+
+        watchedWindow.Stopped -= OnWindowStopped;
+        watchedWindow.Destroying -= OnWindowStopped;
+        watchedWindow = null;
+    }
+
+    private void OnWindowStopped(object? sender, EventArgs e)
+    {
+        if (enabledTimer)
+        {
+            SaveNotFinishedTraining(TrainingItem.Title, TrainingItem.Id);
+        }
     }
 
     private async Task LoadVideoItemsAsync(SuperSetViewModel<ImplementTrainingExerciseViewModel> item)
@@ -196,8 +235,12 @@ public partial class TrainingImplementPage : ContentPage
         }
 
         UpdateExerciseTime();
-        // save to restore if not finish
-        SaveNotFinishedTraining(TrainingItem.Title, TrainingItem.Id);
+        // save to restore if not finish; the first tick saves too, so the file exists before the restore check can see IsTrainingNotFinished
+        if (ticksSinceSave++ % SaveEveryTicks == 0)
+        {
+            SaveNotFinishedTraining(TrainingItem.Title, TrainingItem.Id);
+        }
+
         UpdateNotifyTimer();
 
         if (!enabledTimer)
@@ -318,6 +361,7 @@ public partial class TrainingImplementPage : ContentPage
         catch (Exception ex)
         {
             LoggingService.TrackError(ex);
+            StopWatchingWindow();
             await Shell.Current.GoToAsync("..");
         }
     }
@@ -341,6 +385,7 @@ public partial class TrainingImplementPage : ContentPage
     private async Task FinishAndSave()
     {
         enabledTimer = false;
+        StopWatchingWindow();
         notificator.Cancel(PushMessagesExtensions.TrainingImplementTimeId);
         Settings.IsTrainingNotFinished = false;
 
@@ -548,6 +593,7 @@ public partial class TrainingImplementPage : ContentPage
         if (result)
         {
             enabledTimer = false;
+            StopWatchingWindow();
             notificator.Cancel(PushMessagesExtensions.TrainingImplementTimeId);
             Settings.IsTrainingNotFinished = false;
 

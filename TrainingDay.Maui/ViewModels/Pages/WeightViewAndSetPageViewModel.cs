@@ -38,7 +38,7 @@ class WeightViewAndSetPageViewModel : BaseViewModel
 
     public WeightViewAndSetPageViewModel()
     {
-        WeightPeriodChangedCommand = new Command<object>(obj => PrepareBodyControlItems((ChartWeightPeriod)obj));
+        WeightPeriodChangedCommand = new RelayCommand<object>(obj => PrepareBodyControlItems((ChartWeightPeriod)obj));
         BodyControlItems.Add(new BodyControlItem(new List<WeightNoteEntity>())
         {
             Name = AppResources.WeightString,

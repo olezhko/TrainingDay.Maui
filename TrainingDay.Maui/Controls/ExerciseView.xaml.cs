@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Maui.ViewModels;
@@ -6,7 +7,7 @@ namespace TrainingDay.Maui.Controls;
 
 public partial class ExerciseView : ContentView
 {
-    public ICommand DeleteRequestCommand => new Command<WeightAndRepsViewModel>(DeleteRequestWeightAndReps);
+    public ICommand DeleteRequestCommand => new RelayCommand<WeightAndRepsViewModel>(DeleteRequestWeightAndReps);
 
     public TrainingExerciseViewModel CurrentExercise
     {
