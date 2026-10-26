@@ -13,28 +13,12 @@ public partial class WeightViewAndSetPage : ContentPage
         InitializeComponent();
         vm = new WeightViewAndSetPageViewModel();
         BindingContext = vm;
-
-        var md = App.Current.Resources.MergedDictionaries.First();
-        inactiveColor = App.Current.RequestedTheme == AppTheme.Dark ? (Color)md["ContentPageBackgroundColor"] : (Color)md["ContentPageBackgroundColorLight"];
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
         vm?.OnAppearing();
-        lastPeriodButton = WeekPeriodButton;
-    }
-
-    Color inactiveColor;
-    Button lastPeriodButton;
-    private void SetPeriod_Click(object sender, EventArgs args)
-    {
-        lastPeriodButton?.BackgroundColor = inactiveColor;
-        lastPeriodButton = sender as Button;
-
-        ChartWeightPeriod period = (ChartWeightPeriod)Enum.Parse(typeof(ChartWeightPeriod), lastPeriodButton.AutomationId);
-        vm.WeightPeriodChangedCommand.Execute(period);
-        lastPeriodButton.BackgroundColor = Colors.Orange;
     }
 
     private async void ShowInfo_Click(object sender, EventArgs e)

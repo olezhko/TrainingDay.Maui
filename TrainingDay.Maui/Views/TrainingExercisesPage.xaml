@@ -9,16 +9,20 @@
              x:Class="TrainingDay.Maui.Views.TrainingExercisesPage">
 
     <Shell.TitleView>
-        <Grid ColumnDefinitions="*,auto, auto" Padding="10,2" ColumnSpacing="10">
-            <Label Grid.Column="0" Text="{x:Static resx:AppResources.TrainingString}" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
+        <Grid Style="{StaticResource PageTitleViewStyle}" ColumnDefinitions="*,auto, auto">
+            <Label Style="{StaticResource PageTitleStyle}" Grid.Column="0" Text="{x:Static resx:AppResources.TrainingString}"/>
 
-            <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="add_empty.png" Command="{Binding AddExercisesCommand}">
+            <ImageButton Style="{StaticResource HeaderIconButtonStyle}" Grid.Column="1" Source="add_empty.png" Command="{Binding AddExercisesCommand}"
+                         SemanticProperties.Description="{x:Static resx:AppResources.AddExercisesString}"
+                         ToolTipProperties.Text="{x:Static resx:AppResources.AddExercisesString}">
                 <ImageButton.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>
             </ImageButton>
 
-            <ImageButton Grid.Column="2" WidthRequest="30" HeightRequest="30" Source="settings.png" Command="{Binding ShowTrainingSettingsPageCommand}">
+            <ImageButton Style="{StaticResource HeaderIconButtonStyle}" Grid.Column="2" Source="settings.png" Command="{Binding ShowTrainingSettingsPageCommand}"
+                         SemanticProperties.Description="{x:Static resx:AppResources.SettingsString}"
+                         ToolTipProperties.Text="{x:Static resx:AppResources.SettingsString}">
                 <ImageButton.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>
@@ -153,16 +157,12 @@
         <controls:ToolTipControl Grid.Row="1" 
                               Text="{x:Static resx:AppResources.ToolTipHoldImageExercises}" Title="{x:Static resx:AppResources.SettingsString}" 
                               NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipHoldImageExercises,Mode=TwoWay}" 
-                              AttachedControl="ItemsListView" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}" Position="Center"
-                              ParentHeight="{Binding Source={x:Reference Container},Path=Height}"
-                              ParentWidth="{Binding Source={x:Reference Container},Path=Width}"/>
+                              AttachedControl="ItemsListView" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}" Position="Center"/>
 
         <controls:ToolTipControl Grid.Row="1" 
                               Text="{x:Static resx:AppResources.ToolTipStartWorkout}" Title="{x:Static resx:AppResources.Execution}" 
                               NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipStartWorkout,Mode=TwoWay}" 
-                              AttachedControl="ControlGrid" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}" Position="Center"
-                              ParentHeight="{Binding Source={x:Reference Container},Path=Height}"
-                              ParentWidth="{Binding Source={x:Reference Container},Path=Width}"/>
+                              AttachedControl="ControlGrid" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}" Position="Center"/>
 
     </controls:TooltipControlContainer>
 </ContentPage>

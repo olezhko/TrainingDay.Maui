@@ -22,7 +22,10 @@ namespace TrainingDay.Maui.ViewModels.Pages
 			set => SetProperty(ref currentStep, value);
 		}
 
-        public int CurrentStepIndex { get; set; } = 1;
+        /// <summary>
+        /// Zero-based index of the current wizard step.
+        /// </summary>
+        public int CurrentStepIndex { get; set; }
         public ICommand BackOrCancelCommand { get; set; }
         public ICommand NextOrFinishCommand { get; set; }
 

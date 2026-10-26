@@ -4,11 +4,13 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using TrainingDay.Common.Extensions;
 using TrainingDay.Maui.Controls;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Models.Messages;
+using TrainingDay.Maui.Models.Serialize;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.Views;
@@ -17,69 +19,178 @@ namespace TrainingDay.Maui.ViewModels.Pages;
 
 public class TrainingItemsBasePageViewModel : BaseViewModel
 {
-    private readonly IDataService dataService;
-    private ObservableCollection<Grouping<string, TrainingViewModel>> itemsGrouped;
+    private static readonly TimeSpan UndoDuration = TimeSpan.FromSeconds(5);
+    private const int SummaryMusclesCount = 2;
 
-    public TrainingItemsBasePageViewModel(IDataService dataService)
+    private readonly HashSet<int> pendingDeleteIds = [];
+    private ObservableCollection<Grouping<string, TrainingViewModel>> itemsGrouped;
+    private bool isLoaded;
+    private string weeklySummary = string.Empty;
+    private bool hasUnfinishedTraining;
+    private string unfinishedTrainingTitle = string.Empty;
+    private string unfinishedTrainingElapsed = string.Empty;
+
+    public TrainingItemsBasePageViewModel()
     {
-        this.dataService = dataService;
         ItemsGrouped = new ObservableCollection<Grouping<string, TrainingViewModel>>();
+        ItemsGrouped.CollectionChanged += (_, _) => UpdateViewState();
+        SelectedTrainings.CollectionChanged += (_, _) => UpdateViewState();
+
         AddNewTrainingCommand = new AsyncRelayCommand(AddNewTraining);
-        ItemSelectedCommand = new AsyncRelayCommand<Border>(TrainingSelected);
+        CreateOwnTrainingCommand = new AsyncRelayCommand(CreateOwnTraining);
+        AiPlanCommand = new AsyncRelayCommand(() => Shell.Current.GoToAsync(nameof(WorkoutQuestinariumPage)));
+        ShowHistoryCommand = new AsyncRelayCommand(() => Shell.Current.GoToAsync(nameof(HistoryTrainingPage)));
+        ItemSelectedCommand = new AsyncRelayCommand<TrainingViewModel>(TrainingSelected);
+        StartTrainingCommand = new AsyncRelayCommand<TrainingViewModel>(StartTraining);
+        MoreActionsCommand = new AsyncRelayCommand<TrainingViewModel>(ShowTrainingActions);
+        LongPressedEffectCommand = new AsyncRelayCommand<TrainingViewModel>(LongPressed);
+        DeleteTrainingCommand = new AsyncRelayCommand<TrainingViewModel>(DeleteTrainingWithUndo, AsyncRelayCommandOptions.AllowConcurrentExecutions);
+        DuplicateTrainingCommand = new RelayCommand<TrainingViewModel>(DuplicateSelectedTraining);
+        ActivateGroupCommand = new RelayCommand<Grouping<string, TrainingViewModel>>(ActivateGroup);
+        GroupLongPressedCommand = new AsyncRelayCommand<Grouping<string, TrainingViewModel>>(ShowGroupActions);
+        CreateGroupCommand = new AsyncRelayCommand(CreateEmptyGroup);
+        ResumeUnfinishedCommand = new AsyncRelayCommand(ResumeUnfinishedTraining);
+        DiscardUnfinishedCommand = new AsyncRelayCommand(DiscardUnfinishedTraining);
         SubscribeMessages();
     }
 
-    private async Task UpdateFirebaseToken()
+    #region Load
+    private sealed record TrainingsPageData(
+        List<Grouping<string, TrainingViewModel>> Groups,
+        int TrainingsCount,
+        int WorkoutsThisWeek,
+        TrainingSerialize? UnfinishedTraining);
+
+    public async Task LoadItemsAsync(bool isOverride = false)
     {
+        TrainingsPageData data;
         try
         {
-            #if IOS
-            await Plugin.Firebase.CloudMessaging.CrossFirebaseCloudMessaging.Current.CheckIfValidAsync();
-            Settings.Token = await Plugin.Firebase.CloudMessaging.CrossFirebaseCloudMessaging.Current.GetTokenAsync();
-            await dataService.SendFirebaseTokenAsync(Settings.Token, System.Globalization.CultureInfo.CurrentCulture.Name, TimeZoneInfo.Local.BaseUtcOffset.ToString());
-            await dataService.PostActionAsync(Settings.Token, Common.Communication.MobileActions.Enter);
-            #endif
+            var excludedIds = pendingDeleteIds.ToHashSet();
+            data = await Task.Run(() => ReadPageData(excludedIds));
         }
-        catch
+        catch (Exception e)
         {
+            LoggingService.TrackError(e);
+            return;
         }
-    }
 
-    public void LoadItems(bool isOverride = false)
-    {
-        Shell.Current.Dispatcher.Dispatch(async () =>
-        {
-            await UpdateFirebaseToken();
-        });
-
-        var trainingsItems = App.Database.GetTrainingItems();
+        WeeklySummary = AppResources.WorkoutsThisWeekFormat.Fill(data.WorkoutsThisWeek);
+        ApplyUnfinishedTraining(data.UnfinishedTraining);
 
         var existCount = ItemsGrouped.Count;
-        if (isOverride && ItemsGrouped.Any() && existCount == trainingsItems.Count())
+        if (isOverride && ItemsGrouped.Any() && existCount == data.TrainingsCount)
         {
+            MarkLoaded();
             return;
         }
 
         ItemsGrouped.Clear();
         SelectedTrainings.Clear();
 
-        if (!trainingsItems.Any())
-            return;
+        foreach (var group in data.Groups)
+        {
+            ItemsGrouped.Add(group);
+        }
 
-        List<Grouping<string, TrainingViewModel>> tempGroups = new List<Grouping<string, TrainingViewModel>>();
-        var trainingsGroups = App.Database.GetTrainingsGroups();
-        var lastTrainings = App.Database.GetLastTrainingItems();
+        SelectGroupAndRefillWorkouts(data.Groups);
+        MarkLoaded();
+    }
+
+    /// <summary>
+    /// All DB/file reads of the page in one place, so they can run off the UI thread.
+    /// </summary>
+    private static TrainingsPageData ReadPageData(HashSet<int> excludedIds)
+    {
+        var trainingsItems = App.Database.GetTrainingItems().Where(t => !excludedIds.Contains(t.Id)).ToList();
+        var trainingsGroups = App.Database.GetTrainingsGroups().ToList();
+        var lastTrainings = App.Database.GetLastTrainingItems().ToList();
+
+        var lastTimeByTraining = lastTrainings
+            .GroupBy(item => item.TrainingId)
+            .ToDictionary(g => g.Key, g => g.Max(item => item.Time));
+
+        var exercisesById = App.Database.GetExerciseItems().ToDictionary(e => e.Id);
+        var exercisesByTraining = App.Database.GetTrainingExerciseItems()
+            .GroupBy(item => item.TrainingId)
+            .ToDictionary(g => g.Key, g => g.Select(item => exercisesById.GetValueOrDefault(item.ExerciseId)).ToList());
+
+        var now = DateTime.Now;
+        var culture = Settings.GetLanguage();
+        var tempGroups = new List<Grouping<string, TrainingViewModel>>();
         foreach (var training in trainingsItems)
         {
-            FillGroupedTraining(training, trainingsGroups, lastTrainings, tempGroups);
+            var item = new TrainingViewModel(training);
+            if (lastTimeByTraining.TryGetValue(training.Id, out var lastTime))
+            {
+                item.LastImplementedDateTime = lastTime.ToRelativeDateString(now, culture);
+            }
+
+            item.Summary = BuildSummary(exercisesByTraining.GetValueOrDefault(training.Id));
+            FillGroupedTraining(item, trainingsGroups, tempGroups);
         }
 
-        foreach (var tempGroup in tempGroups)
+        // groups created from the "+" chip have no workouts yet but must stay visible
+        foreach (var union in trainingsGroups.Where(u => new TrainingUnion(u).TrainingIDs.Count == 0))
         {
-            ItemsGrouped.Add(tempGroup);
+            if (tempGroups.All(g => g.Id != union.Id))
+            {
+                tempGroups.Add(new Grouping<string, TrainingViewModel>(union.Name, []) { Id = union.Id });
+            }
         }
 
-        SelectGroupAndRefillWorkouts(tempGroups);
+        foreach (var group in tempGroups)
+        {
+            MarkNextUp(group, lastTimeByTraining);
+        }
+
+        var weekStart = now.Date.AddDays(-(((int)now.DayOfWeek - (int)culture.DateTimeFormat.FirstDayOfWeek + 7) % 7));
+        var workoutsThisWeek = lastTrainings.Count(item => item.Time >= weekStart);
+
+        return new TrainingsPageData(tempGroups, trainingsItems.Count, workoutsThisWeek, ReadUnfinishedTraining());
+    }
+
+    private static string BuildSummary(List<ExerciseEntity?>? exercises)
+    {
+        if (exercises == null || exercises.Count == 0)
+        {
+            return AppResources.ExercisesShortCountFormat.Fill(0);
+        }
+
+        var topMuscles = exercises
+            .Where(e => e != null)
+            .SelectMany(e => MuscleViewModelExtensions.ConvertFromStringToList(e!.MusclesString))
+            .GroupBy(m => m.Id)
+            .OrderByDescending(g => g.Count())
+            .Take(SummaryMusclesCount)
+            .Select(g => g.First().Name)
+            .ToList();
+
+        var count = AppResources.ExercisesShortCountFormat.Fill(exercises.Count);
+        return topMuscles.Count == 0 ? count : $"{count} · {string.Join(", ", topMuscles)}";
+    }
+
+    /// <summary>
+    /// In a group with several workouts, the one not done for the longest time (never done first) is the next one.
+    /// </summary>
+    private static void MarkNextUp(Grouping<string, TrainingViewModel> group, Dictionary<int, DateTime> lastTimeByTraining)
+    {
+        if (group.Count < 2 || !group.Any(t => lastTimeByTraining.ContainsKey(t.Id)))
+        {
+            return;
+        }
+
+        var next = group.MinBy(t => lastTimeByTraining.GetValueOrDefault(t.Id, DateTime.MinValue));
+        if (next != null)
+        {
+            next.IsNextUp = true;
+        }
+    }
+
+    private void MarkLoaded()
+    {
+        isLoaded = true;
+        UpdateViewState();
     }
 
     private void SelectGroupAndRefillWorkouts(List<Grouping<string, TrainingViewModel>> tempGroups)
@@ -114,28 +225,16 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         }
     }
 
-    private void FillGroupedTraining(TrainingEntity training, 
-        IEnumerable<TrainingUnionEntity> unions, 
-        IEnumerable<LastTrainingEntity> lastTrainings,
+    private static void FillGroupedTraining(TrainingViewModel item,
+        IEnumerable<TrainingUnionEntity> unions,
         List<Grouping<string, TrainingViewModel>> tempGroups)
     {
-        var lastTraining = lastTrainings
-            .Where(item => item.TrainingId == training.Id)
-            .OrderByDescending(item => item.Time)
-            .FirstOrDefault();
-
-        var trainingUnion = unions.FirstOrDefault(union => new TrainingUnion(union).TrainingIDs.Contains(training.Id));
+        var trainingUnion = unions.FirstOrDefault(union => new TrainingUnion(union).TrainingIDs.Contains(item.Id));
         if (trainingUnion != null) // union exist
         {
-            var group = tempGroups.FirstOrDefault(item => item.Id == trainingUnion.Id);
+            var group = tempGroups.FirstOrDefault(gr => gr.Id == trainingUnion.Id);
             if (group != null)
             {
-                var item = new TrainingViewModel(training);
-                if (lastTraining != null)
-                {
-                    item.LastImplementedDateTime = lastTraining.Time.ToString(Settings.GetLanguage());
-                }
-
                 item.Group = group.First().Group;
                 group.Add(item);
             }
@@ -145,11 +244,6 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
                 {
                     Id = trainingUnion.Id,
                 });
-                var item = new TrainingViewModel(training);
-                if (lastTraining != null)
-                {
-                    item.LastImplementedDateTime = lastTraining.Time.ToString(Settings.GetLanguage());
-                }
 
                 item.Group = new TrainingUnion(trainingUnion);
                 tempGroups.Last().Add(item);
@@ -157,10 +251,6 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         }
         else
         {
-            var item = new TrainingViewModel(training);
-            if (lastTraining != null)
-                item.LastImplementedDateTime = lastTraining.Time.ToString(Settings.GetLanguage());
-
             Grouping<string, TrainingViewModel> defaultGroup = tempGroups.FirstOrDefault(gp => gp.Key == AppResources.GroupingDefaultName);
             if (defaultGroup == null)
             {
@@ -176,12 +266,19 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         }
     }
 
+    private void UpdateViewState()
+    {
+        OnPropertyChanged(nameof(HasNoTrainings));
+        OnPropertyChanged(nameof(IsSelectedGroupEmpty));
+    }
+    #endregion
+
     private void SubscribeMessages()
     {
         UnsubscribeMessages();
-        WeakReferenceMessenger.Default.Register<IncomingTrainingAddedMessage>(this, async (r, args) =>
+        WeakReferenceMessenger.Default.Register<IncomingTrainingAddedMessage>(this, (r, args) =>
         {
-            LoadItems();
+            MainThread.BeginInvokeOnMainThread(async () => await LoadItemsAsync());
             LoggingService.TrackEvent($"TrainingItemsBasePageViewModel: Added Incoming Training");
         });
     }
@@ -197,36 +294,150 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         await Shell.Current.GoToAsync(nameof(PreparedTrainingsPage));
     }
 
-    private async void DeleteSelectedTraining(Border viewCell)
+    private async Task CreateOwnTraining()
+    {
+        LoggingService.TrackEvent($"{GetType().Name}: CreateOwnTraining Button Clicked");
+        await Shell.Current.GoToAsync($"{nameof(PreparedTrainingsPage)}?{PreparedTrainingsPage.StartCustomQueryKey}=true");
+    }
+
+    private async Task TrainingSelected(TrainingViewModel? item)
+    {
+        if (item == null)
+            return;
+
+        LoggingService.TrackEvent($"{GetType().Name}: TrainingSelected Clicked");
+        await Shell.Current.GoToAsync($"{nameof(TrainingExercisesPage)}?{nameof(TrainingExercisesPageViewModel.ItemId)}={item.Id}");
+    }
+
+    private async Task StartTraining(TrainingViewModel? item)
+    {
+        if (item == null)
+            return;
+
+        LoggingService.TrackEvent($"{GetType().Name}: StartTraining from card");
+        var training = await Task.Run(() => TrainingViewModel.LoadWithExercises(item.Id));
+        if (training.Exercises.Count == 0)
+        {
+            await Toast.Make(AppResources.NoExercisesNeedAddNewString, CommunityToolkit.Maui.Core.ToastDuration.Long).Show();
+            return;
+        }
+
+        if (Settings.IsShowAdvicesOnImplementing)
+        {
+            await Shell.Current.ShowPopupAsync(
+                PopupBuilders.BuildAdvicePopup(AppResources.AdviceBeforeTrainingMessage)
+            );
+        }
+
+        Dictionary<string, object> param = new Dictionary<string, object> { { "TrainingItem", training } };
+        await Shell.Current.GoToAsync(nameof(TrainingImplementPage), param);
+    }
+
+    #region Delete with undo
+    private async Task DeleteTrainingWithUndo(TrainingViewModel? item)
+    {
+        if (item == null)
+            return;
+
+        var group = ItemsGrouped.FirstOrDefault(gr => gr.Contains(item));
+        if (group == null)
+            return;
+
+        LoggingService.TrackEvent($"{GetType().Name}: DeleteSelectedTraining Clicked");
+
+        var groupIndex = ItemsGrouped.IndexOf(group);
+        var itemIndex = group.IndexOf(item);
+        var wasSelected = group.IsSelected;
+
+        pendingDeleteIds.Add(item.Id);
+        group.Remove(item);
+        var groupRemoved = group.Count == 0 && group.Id == 0;
+        if (groupRemoved)
+        {
+            ItemsGrouped.Remove(group);
+        }
+
+        if (wasSelected)
+        {
+            SelectedTrainings.Remove(item);
+        }
+
+        EnsureGroupSelected();
+        UpdateViewState();
+
+        var undoRequested = new TaskCompletionSource<bool>();
+        var snackbar = Snackbar.Make(
+            AppResources.TrainingDeletedFormat.Fill(item.Title),
+            () => undoRequested.TrySetResult(true),
+            AppResources.UndoString,
+            UndoDuration);
+        await snackbar.Show();
+
+        var completed = await Task.WhenAny(undoRequested.Task, Task.Delay(UndoDuration + TimeSpan.FromMilliseconds(500)));
+        pendingDeleteIds.Remove(item.Id);
+
+        if (completed == undoRequested.Task)
+        {
+            LoggingService.TrackEvent($"{GetType().Name}: DeleteSelectedTraining Undone");
+            RestoreDeletedTraining(item, group, groupIndex, itemIndex, groupRemoved);
+            return;
+        }
+
+        CommitDeleteTraining(item);
+    }
+
+    private void RestoreDeletedTraining(TrainingViewModel item, Grouping<string, TrainingViewModel> group, int groupIndex, int itemIndex, bool groupRemoved)
+    {
+        // the page was reloaded meanwhile, the group objects are stale
+        if (!groupRemoved && !ItemsGrouped.Contains(group))
+        {
+            _ = LoadItemsAsync();
+            return;
+        }
+
+        if (groupRemoved)
+        {
+            ItemsGrouped.Insert(Math.Min(groupIndex, ItemsGrouped.Count), group);
+        }
+
+        group.Insert(Math.Min(itemIndex, group.Count), item);
+        if (group.IsSelected)
+        {
+            RefillSelectedTrainings(group);
+        }
+
+        UpdateViewState();
+    }
+
+    private void CommitDeleteTraining(TrainingViewModel item)
     {
         try
         {
-            LoggingService.TrackEvent($"{GetType().Name}: DeleteSelectedTraining Clicked");
-            var item = (TrainingViewModel)viewCell.BindingContext;
-            var result = await MessageManager.DisplayAlert(AppResources.DeleteTraining, item.Title, AppResources.OkString, AppResources.CancelString);
-            if (result)
+            LoggingService.TrackEvent($"{GetType().Name}: DeleteSelectedTraining Approved");
+            item.DeleteTrainingsItemsFromBase();
+
+            if (item.Group != null && item.Group.Id != 0)
             {
-                LoggingService.TrackEvent($"{GetType().Name}: DeleteSelectedTraining Clicked Approved");
-                
-                item.DeleteTrainingsItemsFromBase();
-
-                var group = ItemsGrouped.FirstOrDefault(gr => gr.Contains(item));
-                group.Remove(item);
-
-                if (group.Count == 0)
+                var union = App.Database.GetTrainingsGroups().FirstOrDefault(u => u.Id == item.Group.Id);
+                if (union != null)
                 {
-                    ItemsGrouped.Remove(group);
-                    var groups = App.Database.GetTrainingsGroups();
-                    var gr = groups.FirstOrDefault(a => a.Name == group.Key);
-                    if (gr != null)
-                        App.Database.DeleteTrainingGroup(gr.Id);
+                    var viewModel = new TrainingUnion(union);
+                    viewModel.TrainingIDs.Remove(item.Id);
+                    if (viewModel.TrainingIDs.Count == 0)
+                    {
+                        App.Database.DeleteTrainingGroup(viewModel.Id);
+                        var emptyGroup = ItemsGrouped.FirstOrDefault(g => g.Id == viewModel.Id && g.Count == 0);
+                        if (emptyGroup != null)
+                        {
+                            ItemsGrouped.Remove(emptyGroup);
+                            EnsureGroupSelected();
+                        }
+                    }
+                    else
+                    {
+                        App.Database.SaveTrainingGroup(viewModel.Model);
+                    }
                 }
-
-                OnPropertyChanged(nameof(ItemsGrouped));
-
-                SelectGroupAndRefillWorkouts([.. ItemsGrouped]);
-
-                await Toast.Make(AppResources.DeletedString).Show();
             }
         }
         catch (Exception e)
@@ -234,18 +445,14 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
             LoggingService.TrackError(e);
         }
     }
+    #endregion
 
-    private async Task TrainingSelected(Border viewCell)
+    private void DuplicateSelectedTraining(TrainingViewModel? training)
     {
-        LoggingService.TrackEvent($"{GetType().Name}: TrainingSelected Clicked");
-        var item = (TrainingViewModel)viewCell.BindingContext;
-        await Shell.Current.GoToAsync($"{nameof(TrainingExercisesPage)}?{nameof(TrainingExercisesPageViewModel.ItemId)}={item.Id}");
-    }
+        if (training == null)
+            return;
 
-    private void DuplicateSelectedTraining(Border viewCell)
-    {
         LoggingService.TrackEvent($"{GetType().Name}: DuplicateSelectedTraining Clicked");
-        var training = (TrainingViewModel)viewCell.BindingContext;
         int id = App.Database.SaveTrainingItem(new TrainingEntity()
         {
             Title = training.Title + AppResources.CopiedString,
@@ -271,15 +478,13 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
 
         Toast.Make(AppResources.SavedString).Show();
 
-        LoadItems();
+        _ = LoadItemsAsync();
     }
 
     #region grouping
-    private async Task AddToGroupAsync(Border viewCell)
+    private async Task AddToGroupAsync(TrainingViewModel item)
     {
         LoggingService.TrackEvent($"{GetType().Name}: AddToGroup started");
-
-        var item = (TrainingViewModel)viewCell.BindingContext;
 
         var result = await Shell.Current.ShowPopupAsync(
             PopupBuilders.BuildWorkoutGroupsPopup(async accept =>
@@ -314,18 +519,32 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
                     App.Database.DeleteTrainingGroup(vm.Id);
             }
 
-            if (id != 0)
+            RemoveFromCurrentGroup(TrainingMoveToGroup);
+            TrainingMoveToGroup.Group = null;
+
+            var union = id != 0 ? unions.FirstOrDefault(un => un.Id == id) : null;
+            if (union != null)
             {
-                var union = unions.FirstOrDefault(un => un.Id == id);
-                if (union != null)
+                var viewModel = new TrainingUnion(union);
+                viewModel.TrainingIDs.Add(TrainingMoveToGroup.Id);
+                TrainingMoveToGroup.Group = viewModel;
+                App.Database.SaveTrainingGroup(viewModel.Model);
+
+                var targetGroup = ItemsGrouped.FirstOrDefault(g => g.Id == union.Id);
+                if (targetGroup == null)
                 {
-                    var viewModel = new TrainingUnion(union);
-                    viewModel.TrainingIDs.Add(TrainingMoveToGroup.Id);
-                    TrainingMoveToGroup.Group = viewModel;
-                    App.Database.SaveTrainingGroup(viewModel.Model);
+                    targetGroup = new Grouping<string, TrainingViewModel>(union.Name, []) { Id = union.Id };
+                    ItemsGrouped.Add(targetGroup);
                 }
+
+                AddToGroupUi(targetGroup, TrainingMoveToGroup);
+            }
+            else
+            {
+                AddToGroupUi(GetOrCreateDefaultGroup(), TrainingMoveToGroup);
             }
 
+            EnsureGroupSelected();
             LoggingService.TrackEvent($"{GetType().Name}: AddToGroup finsihed");
             await Toast.Make(AppResources.SavedString).Show();
         }
@@ -395,6 +614,117 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         await Shell.Current.ClosePopupAsync();
     }
 
+    private async Task CreateEmptyGroup()
+    {
+        LoggingService.TrackEvent($"{GetType().Name}: Create empty group STARTED");
+        string result = await Shell.Current.DisplayPromptAsync(AppResources.NewGroupString, AppResources.GroupingEnterNameofGroup, AppResources.OkString, AppResources.CancelString, placeholder: AppResources.NameString);
+        if (string.IsNullOrWhiteSpace(result))
+            return;
+
+        try
+        {
+            var existing = ItemsGrouped.FirstOrDefault(g => g.Key == result);
+            if (existing == null)
+            {
+                var viewModel = new TrainingUnion(new TrainingUnionEntity()) { Name = result };
+                viewModel.Id = App.Database.SaveTrainingGroup(viewModel.Model);
+                existing = new Grouping<string, TrainingViewModel>(result, []) { Id = viewModel.Id };
+                ItemsGrouped.Add(existing);
+            }
+
+            ActivateGroup(existing);
+            LoggingService.TrackEvent($"{GetType().Name}: Create empty group FINISHED");
+        }
+        catch (Exception ex)
+        {
+            LoggingService.TrackError(ex);
+        }
+    }
+
+    private async Task ShowGroupActions(Grouping<string, TrainingViewModel>? group)
+    {
+        // the default group is virtual (not stored in DB), it can't be renamed or deleted
+        if (group == null || group.Id == 0)
+            return;
+
+        PerformLongPressHaptic();
+        var action = await MessageManager.DisplayActionSheet(group.Key, AppResources.CancelString, AppResources.RenameString, AppResources.DeleteGroupString);
+        if (action == AppResources.RenameString)
+        {
+            await RenameGroup(group);
+        }
+        else if (action == AppResources.DeleteGroupString)
+        {
+            await DeleteGroup(group);
+        }
+    }
+
+    private async Task RenameGroup(Grouping<string, TrainingViewModel> group)
+    {
+        string result = await Shell.Current.DisplayPromptAsync(AppResources.RenameString, AppResources.GroupingEnterNameofGroup, AppResources.OkString, AppResources.CancelString, placeholder: AppResources.NameString, initialValue: group.Key);
+        if (string.IsNullOrWhiteSpace(result) || result == group.Key)
+            return;
+
+        try
+        {
+            var union = App.Database.GetTrainingGroup(group.Id);
+            union.Name = result;
+            App.Database.SaveTrainingGroup(union);
+
+            group.Key = result;
+            foreach (var training in group.Where(t => t.Group != null))
+            {
+                training.Group!.Name = result;
+            }
+
+            LoggingService.TrackEvent($"{GetType().Name}: Group renamed");
+        }
+        catch (Exception ex)
+        {
+            LoggingService.TrackError(ex);
+        }
+    }
+
+    private async Task DeleteGroup(Grouping<string, TrainingViewModel> group)
+    {
+        var confirmed = await MessageManager.DisplayAlert(AppResources.DeleteGroupString,
+            AppResources.DeleteGroupQuestionFormat.Fill(group.Key, AppResources.GroupingDefaultName),
+            AppResources.RemoveString, AppResources.CancelString);
+        if (!confirmed)
+            return;
+
+        try
+        {
+            App.Database.DeleteTrainingGroup(group.Id);
+
+            var trainings = group.ToList();
+            ItemsGrouped.Remove(group);
+            if (trainings.Count > 0)
+            {
+                var defaultGroup = GetOrCreateDefaultGroup();
+                foreach (var training in trainings)
+                {
+                    training.Group = null;
+                    defaultGroup.Add(training);
+                }
+            }
+
+            if (group.IsSelected)
+            {
+                group.IsSelected = false;
+                SelectedTrainings.Clear();
+            }
+
+            EnsureGroupSelected();
+            UpdateViewState();
+            LoggingService.TrackEvent($"{GetType().Name}: Group deleted");
+        }
+        catch (Exception ex)
+        {
+            LoggingService.TrackError(ex);
+        }
+    }
+
     private void DeleteFromGroupDatabase(TrainingViewModel trainingMoveToGroup, List<TrainingUnionEntity> unions)
     {
         if (trainingMoveToGroup.Group == null)
@@ -419,11 +749,10 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         }
     }
 
-    private void DeleteFromGroup(Border viewCell)
+    private void DeleteFromGroup(TrainingViewModel item)
     {
         LoggingService.TrackEvent($"{GetType().Name}: Delete From Group");
 
-        var item = (TrainingViewModel)viewCell.BindingContext;
         var union = App.Database.GetTrainingGroup(item.Group.Id);
         var viewModel = new TrainingUnion(union);
         viewModel.TrainingIDs.Remove(item.Id);
@@ -440,29 +769,42 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         RemoveFromCurrentGroup(item);
         item.Group = null;
 
-        var defaultGroup = ItemsGrouped.FirstOrDefault(g => g.Key == AppResources.GroupingDefaultName);
-        if (defaultGroup == null)
-        {
-            defaultGroup = new Grouping<string, TrainingViewModel>(AppResources.GroupingDefaultName, new List<TrainingViewModel>());
-            ItemsGrouped.Insert(0, defaultGroup);
-        }
-        AddToGroupUi(defaultGroup, item);
+        AddToGroupUi(GetOrCreateDefaultGroup(), item);
 
         EnsureGroupSelected();
 
         Toast.Make(AppResources.SavedString).Show();
     }
 
-    private void ActivateGroup(object item)
+    private Grouping<string, TrainingViewModel> GetOrCreateDefaultGroup()
     {
-        var group = item as Grouping<string, TrainingViewModel>;
-        SelectedTrainings.Clear();
+        var defaultGroup = ItemsGrouped.FirstOrDefault(g => g.Key == AppResources.GroupingDefaultName);
+        if (defaultGroup == null)
+        {
+            defaultGroup = new Grouping<string, TrainingViewModel>(AppResources.GroupingDefaultName, new List<TrainingViewModel>());
+            ItemsGrouped.Insert(0, defaultGroup);
+        }
+
+        return defaultGroup;
+    }
+
+    private void ActivateGroup(Grouping<string, TrainingViewModel>? group)
+    {
+        if (group == null)
+            return;
+
         ItemsGrouped.ForEach(item => item.IsSelected = false);
+        group.IsSelected = true;
+        RefillSelectedTrainings(group);
+    }
+
+    private void RefillSelectedTrainings(Grouping<string, TrainingViewModel> group)
+    {
+        SelectedTrainings.Clear();
         foreach (var training in group)
         {
             SelectedTrainings.Add(training);
         }
-        group.IsSelected = true;
     }
 
     private void RemoveFromCurrentGroup(TrainingViewModel item)
@@ -484,6 +826,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         group.Add(item);
         if (group.IsSelected)
             SelectedTrainings.Add(item);
+        UpdateViewState();
     }
 
     private void EnsureGroupSelected()
@@ -495,15 +838,128 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
     }
 
     #endregion
-    
-    private async Task LongPressed(Border? sender)
+
+    #region Unfinished training
+    private static string UnfinishedTrainingFileName => Path.Combine(FileSystem.CacheDirectory, ConstantKeys.NotFinishedTrainingName);
+
+    private static TrainingSerialize? ReadUnfinishedTraining()
     {
-        if (sender == null)
+        try
+        {
+            if (Settings.IsTrainingNotFinished && File.Exists(UnfinishedTrainingFileName))
+            {
+                return DataManageViewModel.LoadFromFile(UnfinishedTrainingFileName);
+            }
+        }
+        catch (Exception e)
+        {
+            LoggingService.TrackError(e);
+        }
+
+        return null;
+    }
+
+    private void ApplyUnfinishedTraining(TrainingSerialize? training)
+    {
+        HasUnfinishedTraining = training != null;
+        if (training == null)
+            return;
+
+        UnfinishedTrainingTitle = AppResources.UnfinishedTrainingFormat.Fill(training.Title);
+        UnfinishedTrainingElapsed = string.IsNullOrEmpty(Settings.IsTrainingNotFinishedTime)
+            ? string.Empty
+            : AppResources.ElapsedTimeFormat.Fill(Settings.IsTrainingNotFinishedTime);
+    }
+
+    private async Task ResumeUnfinishedTraining()
+    {
+        var trainingSerialize = await Task.Run(ReadUnfinishedTraining);
+        HasUnfinishedTraining = false;
+        if (trainingSerialize == null)
+            return;
+
+        Settings.IsTrainingNotFinished = false;
+
+        TrainingViewModel training = new TrainingViewModel();
+        training.Title = trainingSerialize.Title;
+        training.Id = trainingSerialize.Id;
+        foreach (var trainingExerciseSerialize in trainingSerialize.Items)
+        {
+            try
+            {
+                var item = new ImplementTrainingExerciseViewModel()
+                {
+                    TrainingExerciseId = trainingExerciseSerialize.TrainingExerciseId,
+                    ExerciseId = trainingExerciseSerialize.ExerciseId,
+                    TrainingId = trainingExerciseSerialize.TrainingId,
+                    IsNotFinished = trainingExerciseSerialize.IsNotFinished,
+                    Muscles = new ObservableCollection<MuscleViewModel>(MuscleViewModelExtensions.ConvertFromStringToList(trainingExerciseSerialize.Muscles)),
+                    OrderNumber = trainingExerciseSerialize.OrderNumber,
+                    Name = trainingExerciseSerialize.Name,
+                    SuperSetId = trainingExerciseSerialize.SuperSetId,
+                    SuperSetNum = trainingExerciseSerialize.SuperSetNum,
+                    IsSkipped = trainingExerciseSerialize.IsSkipped,
+                    Tags = ExerciseExtensions.ConvertTagIntToList(trainingExerciseSerialize.TagsValue).ToList(),
+                    Description = DescriptionViewModel.ConvertFromJson(trainingExerciseSerialize.Description),
+                    CodeNum = trainingExerciseSerialize.CodeNum,
+                };
+
+                TrainingExerciseViewModelExtensions.ConvertJsonBack(item, trainingExerciseSerialize.WeightAndRepsString);
+                training.AddExercise(item);
+            }
+            catch (Exception e)
+            {
+                LoggingService.TrackError(e);
+            }
+        }
+
+        if (!TimeSpan.TryParse(Settings.IsTrainingNotFinishedTime, out var startTime))
+        {
+            startTime = TimeSpan.Zero;
+        }
+
+        LoggingService.TrackEvent($"{GetType().Name}: Unfinished training resumed");
+        Dictionary<string, object> param = new Dictionary<string, object> { { "TrainingItem", training }, { "StartTime", startTime } };
+        await Shell.Current.GoToAsync(nameof(TrainingImplementPage), param);
+    }
+
+    private async Task DiscardUnfinishedTraining()
+    {
+        var confirmed = await MessageManager.DisplayAlert(AppResources.DiscardUnfinishedTrainingQuestion, UnfinishedTrainingTitle,
+            AppResources.DiscardString, AppResources.CancelString);
+        if (!confirmed)
+            return;
+
+        Settings.IsTrainingNotFinished = false;
+        HasUnfinishedTraining = false;
+        try
+        {
+            File.Delete(UnfinishedTrainingFileName);
+        }
+        catch (Exception e)
+        {
+            LoggingService.TrackError(e);
+        }
+
+        LoggingService.TrackEvent($"{GetType().Name}: Unfinished training discarded");
+    }
+    #endregion
+
+    private async Task LongPressed(TrainingViewModel? item)
+    {
+        if (item == null)
+            return;
+
+        PerformLongPressHaptic();
+        await ShowTrainingActions(item);
+    }
+
+    private async Task ShowTrainingActions(TrainingViewModel? item)
+    {
+        if (item == null)
             return;
 
         LoggingService.TrackEvent($"{GetType().Name}: LongPressed started");
-
-        var item = (TrainingViewModel)sender.BindingContext;
 
         var action = await MessageManager.DisplayActionSheet(AppResources.ChoseAction, AppResources.CancelString, AppResources.RemoveString, AppResources.Duplicate, item.Group == null ? AppResources.TrainingToGroupString : AppResources.TrainingUnGroupString.Fill(item.Group.Name));
         LoggingService.TrackEvent($"{GetType().Name}: LongPressed finished with {action}");
@@ -514,26 +970,38 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
 
         if (action == AppResources.RemoveString)
         {
-            DeleteSelectedTraining(sender);
+            await DeleteTrainingWithUndo(item);
             return;
         }
 
         if (action == AppResources.Duplicate)
         {
-            DuplicateSelectedTraining(sender);
+            DuplicateSelectedTraining(item);
             return;
         }
 
         if (action == AppResources.TrainingToGroupString)
         {
-            await AddToGroupAsync(sender);
+            await AddToGroupAsync(item);
             return;
         }
 
         if (item.Group != null && action == AppResources.TrainingUnGroupString.Fill(item.Group.Name))
         {
-            DeleteFromGroup(sender);
+            DeleteFromGroup(item);
             return;
+        }
+    }
+
+    private static void PerformLongPressHaptic()
+    {
+        try
+        {
+            HapticFeedback.Default.Perform(HapticFeedbackType.LongPress);
+        }
+        catch (Exception e)
+        {
+            LoggingService.TrackError(e);
         }
     }
 
@@ -543,12 +1011,46 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
 
     public ObservableCollection<TrainingViewModel> SelectedTrainings { get; set; } = new ObservableCollection<TrainingViewModel>();
 
-    public ICommand AddNewTrainingCommand { get; set; }
+    public bool HasNoTrainings => isLoaded && ItemsGrouped.All(g => g.Count == 0);
 
-    public ICommand ItemSelectedCommand { get; set; }
+    public bool IsSelectedGroupEmpty => isLoaded && !HasNoTrainings && SelectedTrainings.Count == 0;
 
-    public Command<object> ActivateGroupCommand => new(ActivateGroup);
+    public string WeeklySummary { get => weeklySummary; set => SetProperty(ref weeklySummary, value); }
 
-    public ICommand LongPressedEffectCommand => new AsyncRelayCommand<Border>(LongPressed);
+    public bool HasUnfinishedTraining { get => hasUnfinishedTraining; set => SetProperty(ref hasUnfinishedTraining, value); }
+
+    public string UnfinishedTrainingTitle { get => unfinishedTrainingTitle; set => SetProperty(ref unfinishedTrainingTitle, value); }
+
+    public string UnfinishedTrainingElapsed { get => unfinishedTrainingElapsed; set => SetProperty(ref unfinishedTrainingElapsed, value); }
+
+    public ICommand AddNewTrainingCommand { get; }
+
+    public ICommand CreateOwnTrainingCommand { get; }
+
+    public ICommand AiPlanCommand { get; }
+
+    public ICommand ShowHistoryCommand { get; }
+
+    public ICommand ItemSelectedCommand { get; }
+
+    public ICommand StartTrainingCommand { get; }
+
+    public ICommand MoreActionsCommand { get; }
+
+    public ICommand LongPressedEffectCommand { get; }
+
+    public ICommand DeleteTrainingCommand { get; }
+
+    public ICommand DuplicateTrainingCommand { get; }
+
+    public ICommand ActivateGroupCommand { get; }
+
+    public ICommand GroupLongPressedCommand { get; }
+
+    public ICommand CreateGroupCommand { get; }
+
+    public ICommand ResumeUnfinishedCommand { get; }
+
+    public ICommand DiscardUnfinishedCommand { get; }
     #endregion
 }

@@ -6,13 +6,25 @@
              x:Class="TrainingDay.Maui.Views.WorkoutQuestinariumPage"
              Shell.TabBarIsVisible="False"
              Title="{x:Static resx:AppResources.LetsBuildYourWorkout}">
+
+    <Shell.TitleView>
+        <Grid Style="{StaticResource PageTitleViewStyle}">
+            <Label Style="{StaticResource PageTitleStyle}" Text="{x:Static resx:AppResources.LetsBuildYourWorkout}"/>
+        </Grid>
+    </Shell.TitleView>
+
     <Grid RowDefinitions="auto,*,auto,auto" RowSpacing="5" Margin="5">
 
         <ActivityIndicator IsRunning="True" IsVisible="{Binding IsBusy}" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="150" HeightRequest="150"
                            />
 
-        <controls:StepBar x:Name="Steps" Grid.Row="0" StepCount="6" CurrentStep="{Binding CurrentStepIndex}" FinishedColor="{StaticResource Primary}" UnfinishedColor="{StaticResource Gray500}" 
-                          HorizontalOptions="Fill" Margin="5,0"/>
+        <!-- Wizard look: filled circles, earlier steps and their lines in the accent colour, not tappable -->
+        <controls:StepProgressBar Grid.Row="0" StepCount="6" StepSelected="{Binding CurrentStepIndex, Mode=OneWay}"
+                                  CompletePreviousSteps="True" StepCanTouch="False" StepSize="40" LineThickness="2"
+                                  StepColor="Transparent" StepTextColor="White"
+                                  SteppedColor="{StaticResource Primary}" FinishedColor="{StaticResource Primary}" FinishedLineColor="{StaticResource Primary}"
+                                  UnfinishedColor="{StaticResource Gray500}" LineColor="{StaticResource Gray500}"
+                                  HorizontalOptions="Fill" Margin="5,0"/>
 
         <VerticalStackLayout Grid.Row="1" BindingContext="{Binding CurrentStep}" Margin="10"
                              IsVisible="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}">

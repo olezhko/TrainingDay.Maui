@@ -37,7 +37,7 @@
                     </Border>
 
                     <Label Grid.Column="1" Text="{Binding Name}" FontSize="15" MaxLines="2" LineBreakMode="TailTruncation" VerticalOptions="Center"
-                           TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}" HorizontalTextAlignment="Center" HorizontalOptions="Center"/>
 
                     <VerticalStackLayout Grid.Column="2" Spacing="5" VerticalOptions="Center" IsVisible="{Binding HasSets}">
                         <Label Text="{Binding SetsProgress}" FontSize="13" TextColor="Gray" HorizontalOptions="End" />
@@ -96,8 +96,7 @@
                             VerticalOptions="Start" Margin="0,2,0,0" IsVisible="{Binding Source={x:Reference Self}, Path=IsSuperSet}">
                         <Label Text="{Binding SuperSetLetter}" FontAttributes="Bold" FontSize="15" TextColor="Black" HorizontalOptions="Center" VerticalOptions="Center" />
                     </Border>
-                    <Label Grid.Column="1" Text="{Binding Name}" FontSize="22" FontAttributes="Bold" VerticalOptions="Center"
-                           TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                    <Label Grid.Column="1" Text="{Binding Name}" FontSize="22" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </Grid>
 
                 <Border Grid.Row="1" Margin="12,0,12,6" Padding="12,6" StrokeShape="RoundRectangle 14" Stroke="Transparent" HorizontalOptions="Start"

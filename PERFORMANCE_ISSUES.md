@@ -7,11 +7,11 @@ _Last rescan: 2026-09-28._
 | | Count |
 |---|---|
 | Original issues | 38 |
-| ✅ Fixed | 10 (VM-06, VM-07, VM-10, VM-15, XAML-01, DATA-01, DATA-03, DATA-04, DATA-05, DATA-12) |
+| ✅ Fixed | 11 (VM-06, VM-07, VM-10, VM-15, XAML-01, DATA-01, DATA-03, DATA-04, DATA-05, DATA-12, SVC-03) |
 | 🟡 Partially addressed (still open) | 2 (DATA-02, VM-08) |
-| ❌ Still open | 29 |
+| ❌ Still open | 28 |
 | 🆕 New issues found in rescan | 21 (1 fixed) |
-| **Total open** | **49** |
+| **Total open** | **48** |
 
 Line numbers were refreshed for all open issues. Status markers: ✅ fixed · 🟡 partially fixed · ❌ open · 🆕 new.
 
@@ -71,9 +71,8 @@ _Remaining:_ index on `Url`, duplicate loads per bind, and full-resolution decod
 **Rescan note:** every launch re-downloads **all** images in full (no ETag / `If-Modified-Since`, change detection only compares byte length). The loop runs from `Dispatcher.Dispatch`, so the 142 `GetImage` / `SaveImage` calls run synchronously on the UI thread.
 **Fix:** Use `static readonly HttpClient`, parallel `Task.WhenAll` (bounded), add `CancellationToken`, use conditional requests or a server-side version manifest, and do the DB work on a background thread.
 
-### ❌ SVC-03 — Controls/StepProgressBar.cs:325
-A static event holds instance references, causing an unbounded memory leak. Instances subscribe at line 69 and never unsubscribe; the static relay is at lines 298–331.
-**Fix:** Use instance-level event subscription with proper unsubscribe on detach.
+### ✅ SVC-03 — Controls/StepProgressBar.cs — FIXED
+The static relay event is gone. Each control subscribes to its own `ItemsSource` collection and unsubscribes when `ItemsSource` changes.
 
 ### ❌ DATA-08 — Repository.cs:38
 `async void InitBasic` — startup race condition, exceptions silently swallowed.

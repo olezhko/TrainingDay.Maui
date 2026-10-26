@@ -114,7 +114,7 @@ Browse and multi-select exercises to add to a training. Has a search bar and a f
 DB: reads `ExerciseEntity`.
 
 ### FilterPage
-**ViewModel:** `FilterViewModel`  
+**ViewModel:** `FilterPageViewModel`  
 Filter exercises by equipment (none / barbell / dumbbell), difficulty, and muscles. Muscle selection uses a body image map plus tag buttons. Sends `FilterAcceptedForExercisesMessage` on save.
 
 ### TrainingImplementPage
@@ -174,7 +174,6 @@ DB: reads `TrainingEntity`; writes `TrainingExerciseEntity`.
 
 - **Synchronous DB on UI thread** — `LoadData`/`LoadItems` calls in ViewModels block rendering; wrap with `Task.Run()`
 - **N+1 queries** — `Repository.cs:247` loads all training exercises then queries each exercise individually; should use a JOIN or single WHERE clause
-- **Memory leak in StepProgressBar** — static event subscription at line 311 holds instance references; needs explicit unsubscription
 - **Missing DB transactions** — batch inserts/updates should be wrapped in `RunInTransaction`
 
 ## Platform-Specific Code

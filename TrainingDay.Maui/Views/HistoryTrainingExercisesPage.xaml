@@ -3,23 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TrainingDay.Maui.Views.HistoryTrainingExercisesPage"
              xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
+             xmlns:vm="clr-namespace:TrainingDay.Maui.ViewModels"
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:data="clr-namespace:TrainingDay.Common.Models;assembly=TrainingDay.Common"
+             x:DataType="viewModels:HistoryTrainingPageViewModel"
+             Title="{Binding SelectedTraining.Title}"
              Shell.TabBarIsVisible="False"
-             Padding="5">
+             BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}">
+    <!-- BindingContext is the history page's view model, set by whoever pushes this page -->
+
+    <ContentPage.Resources>
+        <toolkit:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />
+    </ContentPage.Resources>
+
     <Shell.TitleView>
-        <Grid ColumnDefinitions="*,auto, auto" ColumnSpacing="10" Margin="10,0">
-            <Label Grid.Column="0" Text="{Binding SelectedTraining.Title}" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
+        <Grid Style="{StaticResource PageTitleViewStyle}" ColumnDefinitions="*,auto">
+            <Label Style="{StaticResource PageTitleStyle}" Grid.Column="0" Text="{Binding SelectedTraining.Title}"/>
 
-            <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="renew.png" Command="{Binding StartAgainCommand}">
-                <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
-                </ImageButton.Behaviors>
-            </ImageButton>
-
-            <ImageButton Grid.Column="2" WidthRequest="30" HeightRequest="30" Source="remove.png" Command="{Binding RemoveLastTrainingCommand}">
+            <ImageButton Style="{StaticResource HeaderIconButtonStyle}" Grid.Column="1" Source="remove.png" Command="{Binding RemoveLastTrainingCommand}"
+                         SemanticProperties.Description="{x:Static resx:AppResources.RemoveString}"
+                         ToolTipProperties.Text="{x:Static resx:AppResources.RemoveString}">
                 <ImageButton.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>
@@ -27,54 +32,90 @@
         </Grid>
     </Shell.TitleView>
 
-    <ContentPage.BindingContext>
-        <viewModels:HistoryTrainingPageViewModel />
-    </ContentPage.BindingContext>
+    <Grid RowDefinitions="*,Auto">
+        <CollectionView Grid.Row="0" ItemsSource="{Binding SelectedTraining.Items}" SelectionMode="None" Margin="10,0">
+            <!-- Summary card scrolls with the list so exercises get the full height -->
+            <CollectionView.Header>
+                <Border Style="{StaticResource BorderCellStyle}" Padding="14,12" Margin="0,10,0,10">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding SelectedTraining.Title}" FontSize="20" FontAttributes="Bold"/>
 
-    <CollectionView ItemsSource="{Binding SelectedTraining.Items}" SelectionMode="None">
-        <CollectionView.ItemsLayout>
-            <LinearItemsLayout ItemSpacing="5" Orientation="Vertical"/>
-        </CollectionView.ItemsLayout>
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Border Style="{StaticResource BorderCellStyle}">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="70" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                        <Label Text="{Binding SelectedTraining.DateText}" FontSize="13"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}"/>
 
-                        <Border Padding="5" BackgroundColor="White" StrokeShape="RoundRectangle 5" HorizontalOptions="Center" VerticalOptions="Center" Stroke="Transparent">
-                            <controls:ImageCache HeightRequest="60" CodeNum="{Binding CodeNum}" WidthRequest="60" BackgroundColor="Transparent" 
-                                                 ExerciseId="{Binding ExerciseId}"/>
-                        </Border>
-
-                        <StackLayout Grid.Column="1">
-                            <Label HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="17" HorizontalOptions="Center" Text="{Binding Name}"
-                                    VerticalTextAlignment="Center" Margin="0,0,0,5"/>
-
-                            <!-- Sets: reps only or reps + weight -->
-                            <FlexLayout AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}" Direction="Row" HorizontalOptions="Center"
-                                IsVisible="{Binding IsTrackedBySets}" VerticalOptions="Center" Wrap="Wrap">
-                                <FlexLayout.Triggers>
-                                    <DataTrigger Binding="{Binding HasWeight}" TargetType="FlexLayout" Value="False">
-                                        <Setter Property="JustifyContent" Value="Center" />
-                                        <Setter Property="BindableLayout.ItemTemplate" Value="{StaticResource RepsChipTemplate}" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding HasWeight}" TargetType="FlexLayout" Value="True">
-                                        <Setter Property="JustifyContent" Value="SpaceAround" />
-                                        <Setter Property="BindableLayout.ItemTemplate" Value="{StaticResource RepsAndWeightChipTemplate}" />
-                                    </DataTrigger>
-                                </FlexLayout.Triggers>
-                            </FlexLayout>
-
-                            <Label Margin="0" Padding="0" FontSize="Medium" HorizontalOptions="Center"
-                                IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}"
-                                Text="{Binding Time, StringFormat={x:Static resx:AppResources.CurrentTimeString}}" />
-                        </StackLayout>
-                    </Grid>
+                        <HorizontalStackLayout Spacing="6">
+                            <Label Text="⏱" FontSize="13" VerticalOptions="Center"/>
+                            <Label Text="{Binding SelectedTraining.DurationText}" FontSize="13" VerticalOptions="Center"/>
+                            <Label Text="·" FontSize="13" VerticalOptions="Center"
+                                   IsVisible="{Binding SelectedTraining.ExerciseCountText, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+                                   TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}"/>
+                            <Label Text="{Binding SelectedTraining.ExerciseCountText}" FontSize="13" VerticalOptions="Center"
+                                   IsVisible="{Binding SelectedTraining.ExerciseCountText, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
                 </Border>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+            </CollectionView.Header>
+            <CollectionView.Footer>
+                <ContentView HeightRequest="10"/>
+            </CollectionView.Footer>
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="8" Orientation="Vertical"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:TrainingExerciseViewModel">
+                    <Border Style="{StaticResource BorderCellStyle}">
+                        <Grid Margin="0" Padding="0" ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Border StrokeShape="RoundRectangle 10" Stroke="Transparent" Grid.Column="0" Margin="0" Padding="5"
+                                    BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center">
+                                <controls:ImageCache HeightRequest="60" WidthRequest="60" CodeNum="{Binding CodeNum}" ExerciseId="{Binding ExerciseId}" />
+                            </Border>
+
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="6">
+                                <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" MaxLines="2" LineBreakMode="TailTruncation" HorizontalTextAlignment="Center"/>
+
+                                <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" Style="{StaticResource MuscleFlexStyle}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="vm:MuscleViewModel">
+                                            <!--AbsoluteLayout needed for proper draw muscle label. without it cropped in the end-->
+                                            <AbsoluteLayout>
+                                                <Border Style="{StaticResource MuscleBorderCellStyle}">
+                                                    <Label Text="{Binding Name}" FontSize="11" TextColor="White" LineBreakMode="NoWrap"/>
+                                                </Border>
+                                            </AbsoluteLayout>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </FlexLayout>
+
+                                <!-- Sets: reps only or reps + weight -->
+                                <FlexLayout AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}" Direction="Row"
+                                    IsVisible="{Binding IsTrackedBySets}" JustifyContent="Start" Wrap="Wrap">
+                                    <FlexLayout.Triggers>
+                                        <DataTrigger Binding="{Binding HasWeight}" TargetType="FlexLayout" Value="False">
+                                            <Setter Property="BindableLayout.ItemTemplate" Value="{StaticResource RepsChipTemplate}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding HasWeight}" TargetType="FlexLayout" Value="True">
+                                            <Setter Property="BindableLayout.ItemTemplate" Value="{StaticResource RepsAndWeightChipTemplate}" />
+                                        </DataTrigger>
+                                    </FlexLayout.Triggers>
+                                </FlexLayout>
+
+                                <Label Margin="0" Padding="0" FontSize="14"
+                                    IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}"
+                                    Text="{Binding Time, StringFormat={x:Static resx:AppResources.CurrentTimeString}}" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Primary action as a sticky button instead of an icon next to Delete -->
+        <Button Grid.Row="1" Text="{x:Static resx:AppResources.StartAgainString}" Command="{Binding StartAgainCommand}"
+                Style="{StaticResource ActionButton}" CornerRadius="20" Margin="10,5,10,10" HeightRequest="50" FontSize="Body"/>
+    </Grid>
 </ContentPage>

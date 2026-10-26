@@ -197,6 +197,34 @@ public partial class TrainingImplementPage : ContentPage
         HandlerChanged -= OnHandlerChanged;
     }
 
+    protected override void OnNavigatedFrom(NavigatedFromEventArgs args)
+    {
+        base.OnNavigatedFrom(args);
+
+        // the page left the stack (finish, cancel, error, iOS swipe back) - nothing is left to resume;
+        // only an app killed mid-workout keeps the unfinished state
+        if (args.NavigationType is NavigationType.Pop or NavigationType.PopToRoot or NavigationType.Remove)
+        {
+            enabledTimer = false;
+            StopWatchingWindow();
+            ClearNotFinishedTraining();
+        }
+    }
+
+    private static void ClearNotFinishedTraining()
+    {
+        Settings.IsTrainingNotFinished = false;
+        Settings.IsTrainingNotFinishedTime = string.Empty;
+        try
+        {
+            File.Delete(Path.Combine(FileSystem.CacheDirectory, ConstantKeys.NotFinishedTrainingName));
+        }
+        catch (Exception e)
+        {
+            LoggingService.TrackError(e);
+        }
+    }
+
     private async void OnHandlerChanged(object sender, EventArgs e)
     {
         if (Handler != null)
@@ -236,7 +264,7 @@ public partial class TrainingImplementPage : ContentPage
 
         UpdateExerciseTime();
         // save to restore if not finish; the first tick saves too, so the file exists before the restore check can see IsTrainingNotFinished
-        if (ticksSinceSave++ % SaveEveryTicks == 0)
+        if (enabledTimer && ticksSinceSave++ % SaveEveryTicks == 0)
         {
             SaveNotFinishedTraining(TrainingItem.Title, TrainingItem.Id);
         }
@@ -362,6 +390,7 @@ public partial class TrainingImplementPage : ContentPage
         {
             LoggingService.TrackError(ex);
             StopWatchingWindow();
+            ClearNotFinishedTraining();
             await Shell.Current.GoToAsync("..");
         }
     }
@@ -387,7 +416,7 @@ public partial class TrainingImplementPage : ContentPage
         enabledTimer = false;
         StopWatchingWindow();
         notificator.Cancel(PushMessagesExtensions.TrainingImplementTimeId);
-        Settings.IsTrainingNotFinished = false;
+        ClearNotFinishedTraining();
 
         SaveLastTrainingWithExercises();
         SaveChangedExercises();
@@ -595,7 +624,7 @@ public partial class TrainingImplementPage : ContentPage
             enabledTimer = false;
             StopWatchingWindow();
             notificator.Cancel(PushMessagesExtensions.TrainingImplementTimeId);
-            Settings.IsTrainingNotFinished = false;
+            ClearNotFinishedTraining();
 
             Shell.SetNavBarIsVisible(this, true);
             await Shell.Current.GoToAsync("..");

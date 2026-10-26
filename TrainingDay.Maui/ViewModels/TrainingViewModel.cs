@@ -27,6 +27,22 @@ public class TrainingViewModel : BaseViewModel
 
     public string LastImplementedDateTime { get; set; } = AppResources.NotExecutedYet;
 
+    /// <summary>
+    /// Short card subtitle, e.g. "Exercises: 8 · Chest, Triceps".
+    /// </summary>
+    public string Summary { get; set; } = string.Empty;
+
+    public bool HasSummary => !string.IsNullOrEmpty(Summary);
+
+    private bool isNextUp;
+    public bool IsNextUp { get => isNextUp; set => SetProperty(ref isNextUp, value); }
+
+    public string AccessibilityDescription => string.Join(". ",
+        new[] { Title, IsNextUp ? AppResources.NextUpString : null, AppResources.LastImplementedFormatString.Fill(LastImplementedDateTime), Summary }
+            .Where(part => !string.IsNullOrEmpty(part)));
+
+    public string StartAccessibilityDescription => AppResources.StartTrainingFormat.Fill(Title);
+
     public TrainingUnion? Group
     {
         get => groupName;
@@ -51,6 +67,50 @@ public class TrainingViewModel : BaseViewModel
     {
         Title = tr.Title;
         Id = tr.Id;
+    }
+
+    /// <summary>
+    /// Loads a training with its exercises in order. Synchronous DB access — call off the UI thread.
+    /// </summary>
+    public static TrainingViewModel LoadWithExercises(int id)
+    {
+        var vm = new TrainingViewModel(App.Database.GetTrainingItem(id));
+        var trainingExerciseItems = App.Database.GetTrainingExerciseItems();
+        var exerciseItems = App.Database.GetExerciseItems();
+        var trainingExercises = trainingExerciseItems.Where(ex => ex.TrainingId == vm.Id);
+        var unOrderedItems = trainingExercises.Where(a => a.OrderNumber < 0);
+
+        trainingExercises = trainingExercises.OrderBy(a => a.OrderNumber).Where(a => a.OrderNumber >= 0).ToList();
+        int index = 0;
+        foreach (var trainingExercise in trainingExercises)
+        {
+            var exercise = exerciseItems.First(ex => ex.Id == trainingExercise.ExerciseId);
+            var trEx = new TrainingExerciseViewModel(exercise, trainingExercise)
+            {
+                TrainingExerciseId = trainingExercise.Id,
+            };
+            index++;
+
+            vm.AddExercise(trEx);
+        }
+
+        foreach (var trainingExercise in unOrderedItems)
+        {
+            if (trainingExercise.OrderNumber == -1)
+            {
+                trainingExercise.OrderNumber = index;
+                App.Database.SaveTrainingExerciseItem(trainingExercise);
+            }
+            var exercise = exerciseItems.First(ex => ex.Id == trainingExercise.ExerciseId);
+            var trEx = new TrainingExerciseViewModel(exercise, trainingExercise)
+            {
+                TrainingExerciseId = trainingExercise.Id,
+            };
+            index++;
+            vm.AddExercise(trEx);
+        }
+
+        return vm;
     }
 
     private ObservableCollection<SuperSetViewModel<TrainingExerciseViewModel>> PrepareSuperSets()

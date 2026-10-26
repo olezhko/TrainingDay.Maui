@@ -314,15 +314,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Days.
-        /// </summary>
-        internal static string Days {
-            get {
-                return ResourceManager.GetString("Days", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Deleted.
         /// </summary>
         internal static string DeletedString {
@@ -431,15 +422,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Different finished exercises: {0:0.0}%.
-        /// </summary>
-        internal static string DistinctExercisesPercentFormat {
-            get {
-                return ResourceManager.GetString("DistinctExercisesPercentFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Don&apos;t have an account? Sign up.
         /// </summary>
         internal static string DontHaveAccountString {
@@ -526,15 +508,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string ExerciseInTrainings {
             get {
                 return ResourceManager.GetString("ExerciseInTrainings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Exercises.
-        /// </summary>
-        internal static string ExercisesCountString {
-            get {
-                return ResourceManager.GetString("ExercisesCountString", resourceCulture);
             }
         }
         
@@ -881,15 +854,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Most often day: {0:0}.
-        /// </summary>
-        internal static string MostOftenDayFormat {
-            get {
-                return ResourceManager.GetString("MostOftenDayFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to TOP exercises.
         /// </summary>
         internal static string MostPopularExercises {
@@ -1057,15 +1021,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string OneMounthString {
             get {
                 return ResourceManager.GetString("OneMounthString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Maximum weeks with workout: {0:0}.
-        /// </summary>
-        internal static string OneTrainingPerWeekCountFormat {
-            get {
-                return ResourceManager.GetString("OneTrainingPerWeekCountFormat", resourceCulture);
             }
         }
         
@@ -1718,33 +1673,6 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Finished exercises: {0:0}.
-        /// </summary>
-        internal static string TotalExercisesFormat {
-            get {
-                return ResourceManager.GetString("TotalExercisesFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Time spent:.
-        /// </summary>
-        internal static string TotalTimeSpent {
-            get {
-                return ResourceManager.GetString("TotalTimeSpent", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Finished workouts: {0:0}.
-        /// </summary>
-        internal static string TotalTrainingsFormat {
-            get {
-                return ResourceManager.GetString("TotalTrainingsFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Workouts.
         /// </summary>
         internal static string TrainingsBaseString {
@@ -1921,6 +1849,460 @@ namespace TrainingDay.Maui.Resources.Strings {
         internal static string YesString {
             get {
                 return ResourceManager.GetString("YesString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Today.
+        /// </summary>
+        internal static string RelativeToday {
+            get {
+                return ResourceManager.GetString("RelativeToday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yesterday.
+        /// </summary>
+        internal static string RelativeYesterday {
+            get {
+                return ResourceManager.GetString("RelativeYesterday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exercises: {0}.
+        /// </summary>
+        internal static string ExercisesShortCountFormat {
+            get {
+                return ResourceManager.GetString("ExercisesShortCountFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next up.
+        /// </summary>
+        internal static string NextUpString {
+            get {
+                return ResourceManager.GetString("NextUpString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start workout {0}.
+        /// </summary>
+        internal static string StartTrainingFormat {
+            get {
+                return ResourceManager.GetString("StartTrainingFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to More actions.
+        /// </summary>
+        internal static string MoreActionsString {
+            get {
+                return ResourceManager.GetString("MoreActionsString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Undo.
+        /// </summary>
+        internal static string UndoString {
+            get {
+                return ResourceManager.GetString("UndoString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to "{0}" deleted.
+        /// </summary>
+        internal static string TrainingDeletedFormat {
+            get {
+                return ResourceManager.GetString("TrainingDeletedFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename.
+        /// </summary>
+        internal static string RenameString {
+            get {
+                return ResourceManager.GetString("RenameString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete group.
+        /// </summary>
+        internal static string DeleteGroupString {
+            get {
+                return ResourceManager.GetString("DeleteGroupString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Workouts from "{0}" will move to "{1}"..
+        /// </summary>
+        internal static string DeleteGroupQuestionFormat {
+            get {
+                return ResourceManager.GetString("DeleteGroupQuestionFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New group.
+        /// </summary>
+        internal static string NewGroupString {
+            get {
+                return ResourceManager.GetString("NewGroupString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This group is empty. Tap ⋮ on a workout to move it here..
+        /// </summary>
+        internal static string EmptyGroupHint {
+            get {
+                return ResourceManager.GetString("EmptyGroupHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My workouts.
+        /// </summary>
+        internal static string MyWorkoutsTitle {
+            get {
+                return ResourceManager.GetString("MyWorkoutsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This week: {0}.
+        /// </summary>
+        internal static string WorkoutsThisWeekFormat {
+            get {
+                return ResourceManager.GetString("WorkoutsThisWeekFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No workouts yet.
+        /// </summary>
+        internal static string NoTrainingsYetTitle {
+            get {
+                return ResourceManager.GetString("NoTrainingsYetTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick a ready-made plan or build your own..
+        /// </summary>
+        internal static string NoTrainingsYetSubtitle {
+            get {
+                return ResourceManager.GetString("NoTrainingsYetSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ready-made plans.
+        /// </summary>
+        internal static string ReadyMadePlansString {
+            get {
+                return ResourceManager.GetString("ReadyMadePlansString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create my own.
+        /// </summary>
+        internal static string CreateOwnTrainingString {
+            get {
+                return ResourceManager.GetString("CreateOwnTrainingString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AI plan.
+        /// </summary>
+        internal static string AiPlanString {
+            get {
+                return ResourceManager.GetString("AiPlanString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unfinished: {0}.
+        /// </summary>
+        internal static string UnfinishedTrainingFormat {
+            get {
+                return ResourceManager.GetString("UnfinishedTrainingFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Elapsed {0}.
+        /// </summary>
+        internal static string ElapsedTimeFormat {
+            get {
+                return ResourceManager.GetString("ElapsedTimeFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resume.
+        /// </summary>
+        internal static string ResumeString {
+            get {
+                return ResourceManager.GetString("ResumeString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discard.
+        /// </summary>
+        internal static string DiscardString {
+            get {
+                return ResourceManager.GetString("DiscardString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discard the unfinished workout?.
+        /// </summary>
+        internal static string DiscardUnfinishedTrainingQuestion {
+            get {
+                return ResourceManager.GetString("DiscardUnfinishedTrainingQuestion", resourceCulture);
+            }
+        }        
+        /// <summary>
+        ///   Looks up a localized string similar to No measurements yet.
+        /// </summary>
+        internal static string NoMeasurementsTitle {
+            get {
+                return ResourceManager.GetString("NoMeasurementsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your current value above to start tracking your progress..
+        /// </summary>
+        internal static string NoMeasurementsHint {
+            get {
+                return ResourceManager.GetString("NoMeasurementsHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} for the period.
+        /// </summary>
+        internal static string PeriodChangeFormat {
+            get {
+                return ResourceManager.GetString("PeriodChangeFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} to goal.
+        /// </summary>
+        internal static string ToGoalFormat {
+            get {
+                return ResourceManager.GetString("ToGoalFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Goal reached!.
+        /// </summary>
+        internal static string GoalReachedString {
+            get {
+                return ResourceManager.GetString("GoalReachedString", resourceCulture);
+            }
+        }        
+        /// <summary>
+        ///   Looks up a localized string similar to Log in to like workouts and support their authors..
+        /// </summary>
+        internal static string LoginToLikeString {
+            get {
+                return ResourceManager.GetString("LoginToLikeString", resourceCulture);
+            }
+        }        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} exercise.
+        /// </summary>
+        internal static string ExerciseCountOne {
+            get {
+                return ResourceManager.GetString("ExerciseCountOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} exercises.
+        /// </summary>
+        internal static string ExerciseCountFew {
+            get {
+                return ResourceManager.GetString("ExerciseCountFew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} exercises.
+        /// </summary>
+        internal static string ExerciseCountMany {
+            get {
+                return ResourceManager.GetString("ExerciseCountMany", resourceCulture);
+            }
+        }        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} day ago.
+        /// </summary>
+        internal static string RelativeDaysAgoOne {
+            get {
+                return ResourceManager.GetString("RelativeDaysAgoOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} days ago.
+        /// </summary>
+        internal static string RelativeDaysAgoFew {
+            get {
+                return ResourceManager.GetString("RelativeDaysAgoFew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} days ago.
+        /// </summary>
+        internal static string RelativeDaysAgoMany {
+            get {
+                return ResourceManager.GetString("RelativeDaysAgoMany", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} week ago.
+        /// </summary>
+        internal static string RelativeWeeksAgoOne {
+            get {
+                return ResourceManager.GetString("RelativeWeeksAgoOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} weeks ago.
+        /// </summary>
+        internal static string RelativeWeeksAgoFew {
+            get {
+                return ResourceManager.GetString("RelativeWeeksAgoFew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} weeks ago.
+        /// </summary>
+        internal static string RelativeWeeksAgoMany {
+            get {
+                return ResourceManager.GetString("RelativeWeeksAgoMany", resourceCulture);
+            }
+        }        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string SaveString {
+            get {
+                return ResourceManager.GetString("SaveString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply filter.
+        /// </summary>
+        internal static string ApplyFilterString {
+            get {
+                return ResourceManager.GetString("ApplyFilterString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Workouts.
+        /// </summary>
+        internal static string StatWorkoutsCaption {
+            get {
+                return ResourceManager.GetString("StatWorkoutsCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exercises done.
+        /// </summary>
+        internal static string StatExercisesCaption {
+            get {
+                return ResourceManager.GetString("StatExercisesCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time spent.
+        /// </summary>
+        internal static string StatTimeCaption {
+            get {
+                return ResourceManager.GetString("StatTimeCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exercise variety.
+        /// </summary>
+        internal static string StatVarietyCaption {
+            get {
+                return ResourceManager.GetString("StatVarietyCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Best streak, weeks.
+        /// </summary>
+        internal static string StatWeekStreakCaption {
+            get {
+                return ResourceManager.GetString("StatWeekStreakCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Favourite day.
+        /// </summary>
+        internal static string StatFavoriteDayCaption {
+            get {
+                return ResourceManager.GetString("StatFavoriteDayCaption", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Equipment.
+        /// </summary>
+        internal static string EquipmentString {
+            get {
+                return ResourceManager.GetString("EquipmentString", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Start again.
+        /// </summary>
+        internal static string StartAgainString {
+            get {
+                return ResourceManager.GetString("StartAgainString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add exercises.
+        /// </summary>
+        internal static string AddExercisesString {
+            get {
+                return ResourceManager.GetString("AddExercisesString", resourceCulture);
             }
         }
     }

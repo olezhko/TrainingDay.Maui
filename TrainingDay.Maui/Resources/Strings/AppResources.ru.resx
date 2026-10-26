@@ -192,9 +192,6 @@
   <data name="DateTimeFormat" xml:space="preserve">
     <value>{0:dd.MM.yyyy HH:mm:ss}</value>
   </data>
-  <data name="Days" xml:space="preserve">
-    <value>Дней</value>
-  </data>
   <data name="DeletedString" xml:space="preserve">
     <value>Удалено</value>
   </data>
@@ -209,9 +206,6 @@
   </data>
   <data name="Denied" xml:space="preserve">
     <value>Отказано</value>
-  </data>
-  <data name="DistinctExercisesPercentFormat" xml:space="preserve">
-    <value>Процент различных упражнений: {0:0.0}%</value>
   </data>
   <data name="Duplicate" xml:space="preserve">
     <value>Дублировать</value>
@@ -300,9 +294,6 @@
   <data name="MoreThanYearString" xml:space="preserve">
     <value>Больше года</value>
   </data>
-  <data name="MostOftenDayFormat" xml:space="preserve">
-    <value>Самый частый день: {0:0}</value>
-  </data>
   <data name="MostPopularExercises" xml:space="preserve">
     <value>ТОП упражнений</value>
   </data>
@@ -344,9 +335,6 @@
   </data>
   <data name="OneMounthString" xml:space="preserve">
     <value>Месяц</value>
-  </data>
-  <data name="OneTrainingPerWeekCountFormat" xml:space="preserve">
-    <value>Максимум подрят недель с тренировками: {0:0}</value>
   </data>
   <data name="Or" xml:space="preserve">
     <value>или</value>
@@ -488,15 +476,6 @@
   </data>
   <data name="ToolTipTapHoldTraining" xml:space="preserve">
     <value>Нажмите и удерживайте на тренировке, чтобы увидеть настройки.</value>
-  </data>
-  <data name="TotalExercisesFormat" xml:space="preserve">
-    <value>Выполненных упражнений: {0:0}</value>
-  </data>
-  <data name="TotalTimeSpent" xml:space="preserve">
-    <value>Затраченное время:</value>
-  </data>
-  <data name="TotalTrainingsFormat" xml:space="preserve">
-    <value>Выполненных тренировок: {0:0}</value>
   </data>
   <data name="TrainingsBaseString" xml:space="preserve">
     <value>Тренировки</value>
@@ -678,9 +657,6 @@
   <data name="LikesString" xml:space="preserve">
     <value>Лайки</value>
   </data>
-  <data name="ExercisesCountString" xml:space="preserve">
-    <value>Упражнения</value>
-  </data>
   <data name="LoginString" xml:space="preserve">
     <value>Вход</value>
   </data>
@@ -746,5 +722,158 @@
   </data>
   <data name="SuperSetAllSetsDone" xml:space="preserve">
     <value>Все подходы выполнены</value>
+  </data>
+  <data name="RelativeToday" xml:space="preserve">
+    <value>Сегодня</value>
+  </data>
+  <data name="RelativeYesterday" xml:space="preserve">
+    <value>Вчера</value>
+  </data>
+  <data name="ExercisesShortCountFormat" xml:space="preserve">
+    <value>Упражнений: {0}</value>
+  </data>
+  <data name="NextUpString" xml:space="preserve">
+    <value>Следующая</value>
+  </data>
+  <data name="StartTrainingFormat" xml:space="preserve">
+    <value>Начать тренировку {0}</value>
+  </data>
+  <data name="MoreActionsString" xml:space="preserve">
+    <value>Другие действия</value>
+  </data>
+  <data name="UndoString" xml:space="preserve">
+    <value>Отменить</value>
+  </data>
+  <data name="TrainingDeletedFormat" xml:space="preserve">
+    <value>«{0}» удалена</value>
+  </data>
+  <data name="RenameString" xml:space="preserve">
+    <value>Переименовать</value>
+  </data>
+  <data name="DeleteGroupString" xml:space="preserve">
+    <value>Удалить группу</value>
+  </data>
+  <data name="DeleteGroupQuestionFormat" xml:space="preserve">
+    <value>Тренировки из «{0}» будут перемещены в «{1}».</value>
+  </data>
+  <data name="NewGroupString" xml:space="preserve">
+    <value>Новая группа</value>
+  </data>
+  <data name="EmptyGroupHint" xml:space="preserve">
+    <value>Группа пуста. Нажмите ⋮ у тренировки, чтобы переместить её сюда.</value>
+  </data>
+  <data name="MyWorkoutsTitle" xml:space="preserve">
+    <value>Мои тренировки</value>
+  </data>
+  <data name="WorkoutsThisWeekFormat" xml:space="preserve">
+    <value>На этой неделе: {0}</value>
+  </data>
+  <data name="NoTrainingsYetTitle" xml:space="preserve">
+    <value>Пока нет тренировок</value>
+  </data>
+  <data name="NoTrainingsYetSubtitle" xml:space="preserve">
+    <value>Выберите готовую программу или создайте свою.</value>
+  </data>
+  <data name="ReadyMadePlansString" xml:space="preserve">
+    <value>Готовые программы</value>
+  </data>
+  <data name="CreateOwnTrainingString" xml:space="preserve">
+    <value>Создать свою</value>
+  </data>
+  <data name="AiPlanString" xml:space="preserve">
+    <value>План от ИИ</value>
+  </data>
+  <data name="UnfinishedTrainingFormat" xml:space="preserve">
+    <value>Не завершена: {0}</value>
+  </data>
+  <data name="ElapsedTimeFormat" xml:space="preserve">
+    <value>Прошло {0}</value>
+  </data>
+  <data name="ResumeString" xml:space="preserve">
+    <value>Продолжить</value>
+  </data>
+  <data name="DiscardString" xml:space="preserve">
+    <value>Сбросить</value>
+  </data>
+  <data name="DiscardUnfinishedTrainingQuestion" xml:space="preserve">
+    <value>Сбросить незавершённую тренировку?</value>
+  </data>
+  <data name="NoMeasurementsTitle" xml:space="preserve">
+    <value>Пока нет замеров</value>
+  </data>
+  <data name="NoMeasurementsHint" xml:space="preserve">
+    <value>Введите текущее значение выше, чтобы начать отслеживать прогресс.</value>
+  </data>
+  <data name="PeriodChangeFormat" xml:space="preserve">
+    <value>{0} за период</value>
+  </data>
+  <data name="ToGoalFormat" xml:space="preserve">
+    <value>{0} до цели</value>
+  </data>
+  <data name="GoalReachedString" xml:space="preserve">
+    <value>Цель достигнута!</value>
+  </data>
+  <data name="LoginToLikeString" xml:space="preserve">
+    <value>Войдите, чтобы ставить лайки тренировкам и поддерживать их авторов.</value>
+  </data>
+  <data name="ExerciseCountOne" xml:space="preserve">
+    <value>{0} упражнение</value>
+  </data>
+  <data name="ExerciseCountFew" xml:space="preserve">
+    <value>{0} упражнения</value>
+  </data>
+  <data name="ExerciseCountMany" xml:space="preserve">
+    <value>{0} упражнений</value>
+  </data>
+  <data name="RelativeDaysAgoOne" xml:space="preserve">
+    <value>{0} день назад</value>
+  </data>
+  <data name="RelativeDaysAgoFew" xml:space="preserve">
+    <value>{0} дня назад</value>
+  </data>
+  <data name="RelativeDaysAgoMany" xml:space="preserve">
+    <value>{0} дней назад</value>
+  </data>
+  <data name="RelativeWeeksAgoOne" xml:space="preserve">
+    <value>{0} неделю назад</value>
+  </data>
+  <data name="RelativeWeeksAgoFew" xml:space="preserve">
+    <value>{0} недели назад</value>
+  </data>
+  <data name="RelativeWeeksAgoMany" xml:space="preserve">
+    <value>{0} недель назад</value>
+  </data>
+  <data name="SaveString" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="ApplyFilterString" xml:space="preserve">
+    <value>Применить фильтр</value>
+  </data>
+  <data name="StartAgainString" xml:space="preserve">
+    <value>Начать заново</value>
+  </data>
+  <data name="AddExercisesString" xml:space="preserve">
+    <value>Добавить упражнения</value>
+  </data>
+  <data name="EquipmentString" xml:space="preserve">
+    <value>Оборудование</value>
+  </data>
+  <data name="StatWorkoutsCaption" xml:space="preserve">
+    <value>Тренировок</value>
+  </data>
+  <data name="StatExercisesCaption" xml:space="preserve">
+    <value>Упражнений выполнено</value>
+  </data>
+  <data name="StatTimeCaption" xml:space="preserve">
+    <value>Затрачено времени</value>
+  </data>
+  <data name="StatVarietyCaption" xml:space="preserve">
+    <value>Разнообразие упражнений</value>
+  </data>
+  <data name="StatWeekStreakCaption" xml:space="preserve">
+    <value>Лучшая серия, недель</value>
+  </data>
+  <data name="StatFavoriteDayCaption" xml:space="preserve">
+    <value>Любимый день</value>
   </data>
 </root>

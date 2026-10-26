@@ -1,4 +1,6 @@
-﻿using TrainingDay.Maui.Extensions;
+﻿using System.Globalization;
+using TrainingDay.Maui.Extensions;
+using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Services;
 
@@ -8,74 +10,99 @@ public class StatisticsViewModel : BaseViewModel
 {
     private int _totalTrainings;
     private int _totalExercises;
-    private string _totalTime;
+    private string _totalTime = string.Empty;
     private double _distinctExercisesPercent;
     private int _oneTrainingPerWeekCount;
-    private string _mostOftenDay;
-    private string _top1ExerciseName;
-    private string _top2ExerciseName;
-    private string _top3ExerciseName;
-    private bool _isShowTopExercisesBlock;
+    private string _mostOftenDay = string.Empty;
+    private TopExercise? _top1Exercise;
+    private TopExercise? _top2Exercise;
+    private TopExercise? _top3Exercise;
     private bool _isLastTrainingsAvailable;
+    private bool _isEmpty;
 
-    public void LoadData()
+    private sealed record StatisticsSnapshot(
+        int TotalTrainings,
+        int TotalExercises,
+        string TotalTime,
+        double DistinctExercisesPercent,
+        int OneTrainingPerWeekCount,
+        string MostOftenDay,
+        IReadOnlyList<TopExercise> TopExercises);
+
+    public async Task LoadDataAsync()
     {
         IsBusy = true;
+        try
+        {
+            // Reads the whole history; keep it off the UI thread
+            var snapshot = await Task.Run(BuildSnapshot);
 
-        var lastTrainings = App.Database.GetLastTrainingItems();
-        if (!lastTrainings.Any())
+            IsLastTrainingsAvailable = snapshot != null;
+            IsEmpty = snapshot == null;
+            if (snapshot == null)
+                return;
+
+            TotalTrainings = snapshot.TotalTrainings;
+            TotalExercises = snapshot.TotalExercises;
+            TotalTime = snapshot.TotalTime;
+            DistinctExercisesPercent = snapshot.DistinctExercisesPercent;
+            OneTrainingPerWeekCount = snapshot.OneTrainingPerWeekCount;
+            MostOftenDay = snapshot.MostOftenDay;
+            Top1Exercise = snapshot.TopExercises.ElementAtOrDefault(0);
+            Top2Exercise = snapshot.TopExercises.ElementAtOrDefault(1);
+            Top3Exercise = snapshot.TopExercises.ElementAtOrDefault(2);
+            OnPropertyChanged(nameof(IsShowTopExercisesBlock));
+        }
+        catch (Exception ex)
+        {
+            LoggingService.TrackError(ex);
+        }
+        finally
         {
             IsBusy = false;
-            return;
         }
-
-        IsLastTrainingsAvailable = true;
-        var lastExercises = App.Database.GetLastTrainingExerciseItems();
-        var exercises = App.Database.GetExerciseItems();
-
-        TotalTrainings = lastTrainings.Count();
-        TotalExercises = lastExercises.Count();
-        var duration = TimeSpan.FromSeconds(lastTrainings.Select(item => item.ElapsedTime)
-            .Sum(span => span.TotalSeconds));
-
-        TotalTime = $"{Resources.Strings.AppResources.TotalTimeSpent} {duration:%d} {Resources.Strings.AppResources.Days} {duration:%h} {Resources.Strings.AppResources.Hours} {duration:%m} {Resources.Strings.AppResources.Minutes} {duration:%s} {Resources.Strings.AppResources.Seconds}";
-
-        DistinctExercisesPercent = (double)lastExercises.Select(item => item.ExerciseName).Distinct().Count() / exercises.Count() * 100;
-        OneTrainingPerWeekCount = CalculateMaxOneTrainingPerWeekCount(lastTrainings);
-
-        var culture = new System.Globalization.CultureInfo(Settings.CultureName);
-        MostOftenDay = culture.DateTimeFormat.GetDayName(lastTrainings
-            .Select(item => item.Time.DayOfWeek)
-            .GroupBy(s => s).Select(group => new
-            {
-                DayOfWeek = group.Key,
-                Count = group.Count()
-            })
-            .OrderBy(x => x.DayOfWeek)
-            .First().DayOfWeek).FirstCharToUpper();
-
-        if (lastExercises.Count() >= 3)
-        {
-            var exercisesByCount = lastExercises
-                .Select(item => item.ExerciseName)
-                .GroupBy(s => s).Select(group => new
-                {
-                    Name = group.Key,
-                    Count = group.Count()
-                })
-                .OrderByDescending(x => x.Count)
-                .Take(3).ToArray();
-
-            Top1ExerciseName = exercisesByCount[0].Name;
-            Top2ExerciseName = exercisesByCount[1].Name;
-            Top3ExerciseName = exercisesByCount[2].Name;
-            IsShowTopExercisesBlock = true;
-        }
-
-        IsBusy = false;
     }
 
-    private int CalculateMaxOneTrainingPerWeekCount(IEnumerable<LastTrainingEntity> trainings)
+    private static StatisticsSnapshot? BuildSnapshot()
+    {
+        var lastTrainings = App.Database.GetLastTrainingItems().ToList();
+        if (lastTrainings.Count == 0)
+            return null;
+
+        var lastExercises = App.Database.GetLastTrainingExerciseItems().ToList();
+        var exercisesCount = App.Database.GetExerciseItems().Count();
+
+        var duration = TimeSpan.FromSeconds(lastTrainings.Sum(item => item.ElapsedTime.TotalSeconds));
+
+        // History keeps names of deleted / renamed exercises too, so the ratio can pass 100%
+        var distinctDone = lastExercises.Select(item => item.ExerciseName).Distinct().Count();
+        var distinctPercent = exercisesCount == 0 ? 0 : Math.Min(100, (double)distinctDone / exercisesCount * 100);
+
+        var culture = new CultureInfo(Settings.CultureName);
+        var mostOftenDay = lastTrainings
+            .GroupBy(item => item.Time.DayOfWeek)
+            .OrderByDescending(group => group.Count())
+            .ThenBy(group => group.Key)
+            .First().Key;
+
+        var topExercises = lastExercises
+            .GroupBy(item => item.ExerciseName)
+            .Select(group => new TopExercise(group.Key, group.Count()))
+            .OrderByDescending(item => item.Count)
+            .Take(3)
+            .ToList();
+
+        return new StatisticsSnapshot(
+            lastTrainings.Count,
+            lastExercises.Count,
+            duration.ToShortDurationString(),
+            distinctPercent,
+            CalculateMaxOneTrainingPerWeekCount(lastTrainings),
+            culture.DateTimeFormat.GetDayName(mostOftenDay).FirstCharToUpper(),
+            topExercises);
+    }
+
+    private static int CalculateMaxOneTrainingPerWeekCount(IEnumerable<LastTrainingEntity> trainings)
     {
         int result = 0;
         if (!trainings.Any())
@@ -87,7 +114,7 @@ public class StatisticsViewModel : BaseViewModel
         DateTime currentWeekStart = sortedTrainings[0].Time.Date;
         DateTime currentWeekEnd = currentWeekStart.AddDays(7);
         int tempResult = 0;
-        foreach (var training in trainings)
+        foreach (var training in sortedTrainings)
         {
             if (training.Time < currentWeekStart)
             {
@@ -130,33 +157,38 @@ public class StatisticsViewModel : BaseViewModel
         set => SetProperty(ref _mostOftenDay, value);
     }
 
-    public string Top1ExerciseName
+    public TopExercise? Top1Exercise
     {
-        get => _top1ExerciseName;
-        set => SetProperty(ref _top1ExerciseName, value);
+        get => _top1Exercise;
+        set => SetProperty(ref _top1Exercise, value);
     }
 
-    public string Top2ExerciseName
+    public TopExercise? Top2Exercise
     {
-        get => _top2ExerciseName;
-        set => SetProperty(ref _top2ExerciseName, value);
+        get => _top2Exercise;
+        set => SetProperty(ref _top2Exercise, value);
     }
 
-    public string Top3ExerciseName
+    public TopExercise? Top3Exercise
     {
-        get => _top3ExerciseName;
-        set => SetProperty(ref _top3ExerciseName, value);
+        get => _top3Exercise;
+        set => SetProperty(ref _top3Exercise, value);
     }
 
-    public bool IsShowTopExercisesBlock
-    {
-        get => _isShowTopExercisesBlock;
-        set => SetProperty(ref _isShowTopExercisesBlock, value);
-    }
+    public bool IsShowTopExercisesBlock => Top1Exercise != null;
 
     public bool IsLastTrainingsAvailable
     {
         get => _isLastTrainingsAvailable;
         set => SetProperty(ref _isLastTrainingsAvailable, value);
+    }
+
+    /// <summary>
+    /// True only after loading found no history, so the empty state doesn't flash while loading.
+    /// </summary>
+    public bool IsEmpty
+    {
+        get => _isEmpty;
+        set => SetProperty(ref _isEmpty, value);
     }
 }

@@ -2,105 +2,149 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
-             xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="TrainingDay.Maui.Views.StatisticsPage"
-             Title="{x:Static resx:AppResources.Achievements}" Padding="10">
+             x:DataType="viewModels:StatisticsViewModel"
+             Title="{x:Static resx:AppResources.Achievements}"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}">
+
+    <Shell.TitleView>
+        <Grid Style="{StaticResource PageTitleViewStyle}">
+            <Label Style="{StaticResource PageTitleStyle}" Text="{x:Static resx:AppResources.Achievements}"/>
+        </Grid>
+    </Shell.TitleView>
+
     <ContentPage.BindingContext>
         <viewModels:StatisticsViewModel/>
     </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <toolkit:IsNotNullConverter x:Key="IsNotNullConverter" />
+
+        <Style TargetType="Border" x:Key="StatTileStyle" BasedOn="{StaticResource BorderCellStyle}">
+            <Setter Property="Padding" Value="14,12" />
+        </Style>
+        <Style TargetType="Label" x:Key="StatValueStyle">
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="TextColor" Value="{StaticResource Main}" />
+            <Setter Property="MaxLines" Value="1" />
+            <Setter Property="LineBreakMode" Value="TailTruncation" />
+        </Style>
+        <Style TargetType="Label" x:Key="StatCaptionStyle">
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="MaxLines" Value="2" />
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" />
+        </Style>
+        <Style TargetType="Grid" x:Key="TopExerciseRowStyle">
+            <Setter Property="ColumnDefinitions" Value="32,*,auto" />
+            <Setter Property="ColumnSpacing" Value="12" />
+            <Setter Property="MinimumHeightRequest" Value="40" />
+        </Style>
+    </ContentPage.Resources>
+
     <Grid>
-        <Label HorizontalTextAlignment="Center" VerticalOptions="Start" Text="{x:Static resx:AppResources.NoLastTrainings}" FontSize="Medium" IsVisible="{Binding IsLastTrainingsAvailable, Converter={StaticResource InverseBooleanConverter}}"/>
+        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" VerticalOptions="Center"/>
 
-        <StackLayout Spacing="10" IsVisible="{Binding IsLastTrainingsAvailable}">
-            <StackLayout Orientation="Horizontal" Spacing="10">
-                <Image Source="medal.png" WidthRequest="30" HeightRequest="30">
-                    <Image.Behaviors>
-                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Dark=White, Light=Black}" />
-                    </Image.Behaviors>
-                </Image>
-                <Label Text="{Binding TotalTrainings,StringFormat={x:Static resx:AppResources.TotalTrainingsFormat}}" VerticalOptions="Center"/>
-            </StackLayout>
-
-            <StackLayout Orientation="Horizontal" Spacing="10">
-                <Image Source="medal.png" WidthRequest="30" HeightRequest="30">
-                    <Image.Behaviors>
-                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Dark=White, Light=Black}" />
-                    </Image.Behaviors>
-                </Image>
-                <Label Text="{Binding TotalExercises,StringFormat={x:Static resx:AppResources.TotalExercisesFormat}}" VerticalOptions="Center"/>
-            </StackLayout>
-
-            <StackLayout Orientation="Horizontal" Spacing="10">
-                <Image Source="medal.png" WidthRequest="30" HeightRequest="30">
-                    <Image.Behaviors>
-                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Dark=White, Light=Black}" />
-                    </Image.Behaviors>
-                </Image>
-                <Label Text="{Binding TotalTime}" VerticalOptions="Center"/>
-            </StackLayout>
-
-            <StackLayout Orientation="Horizontal" Spacing="10">
-                <Image Source="medal.png" WidthRequest="30" HeightRequest="30">
-                    <Image.Behaviors>
-                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Dark=White, Light=Black}" />
-                    </Image.Behaviors>
-                </Image>
-                <Label Text="{Binding DistinctExercisesPercent,StringFormat={x:Static resx:AppResources.DistinctExercisesPercentFormat}}" VerticalOptions="Center"/>
-            </StackLayout>
-
-            <StackLayout Orientation="Horizontal" Spacing="10">
-                <Image Source="medal.png" WidthRequest="30" HeightRequest="30">
-                    <Image.Behaviors>
-                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Dark=White, Light=Black}" />
-                    </Image.Behaviors>
-                </Image>
-                <Label Text="{Binding OneTrainingPerWeekCount,StringFormat={x:Static resx:AppResources.OneTrainingPerWeekCountFormat}}" VerticalOptions="Center"/>
-            </StackLayout>
-
-            <StackLayout Orientation="Horizontal" Spacing="10">
-                <Image Source="medal.png" WidthRequest="30" HeightRequest="30">
-                    <Image.Behaviors>
-                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Dark=White, Light=Black}" />
-                    </Image.Behaviors>
-                </Image>
-                <Label Text="{Binding MostOftenDay,StringFormat={x:Static resx:AppResources.MostOftenDayFormat}}" VerticalOptions="Center"/>
-            </StackLayout>
-
-            <Border BackgroundColor="{AppThemeBinding Dark={StaticResource ListItemBackgroundColor}, Light={StaticResource ListItemBackgroundColorLight}}"
-                IsVisible="{Binding IsShowTopExercisesBlock}" Stroke="Transparent" Padding="10" StrokeShape="RoundRectangle 20" >
-                <StackLayout Spacing="10">
-                    <Label FontSize="Title" Text="{x:Static resx:AppResources.MostPopularExercises}" HorizontalTextAlignment="Center"/>
-
-                    <StackLayout Orientation="Horizontal" Spacing="10">
-                        <Image WidthRequest="30" HeightRequest="30" Source="champion.png" >
-                            <Image.Behaviors>
-                                <toolkit:IconTintColorBehavior TintColor="{StaticResource Main}" />
-                            </Image.Behaviors>
-                        </Image>
-                        <Label Text="{Binding Top1ExerciseName}" VerticalOptions="Center"/>
-                    </StackLayout>
-
-                    <StackLayout Orientation="Horizontal" Spacing="10">
-                        <Image WidthRequest="30" HeightRequest="30" Source="champion.png" >
-                            <Image.Behaviors>
-                                <toolkit:IconTintColorBehavior TintColor="Silver" />
-                            </Image.Behaviors>
-                        </Image>
-                        <Label Text="{Binding Top2ExerciseName}" VerticalOptions="Center"/>
-                    </StackLayout>
-
-                    <StackLayout Orientation="Horizontal" Spacing="10">
-                        <Image WidthRequest="30" HeightRequest="30" Source="champion.png" >
-                            <Image.Behaviors>
-                                <toolkit:IconTintColorBehavior TintColor="#CD7F32" />
-                            </Image.Behaviors>
-                        </Image>
-                        <Label Text="{Binding Top3ExerciseName}" VerticalOptions="Center"/>
-                    </StackLayout>
-                </StackLayout>
+        <!-- Empty state -->
+        <VerticalStackLayout IsVisible="{Binding IsEmpty}" VerticalOptions="Center" Spacing="16" Padding="20">
+            <Border HorizontalOptions="Center" Stroke="Transparent" StrokeShape="RoundRectangle 40">
+                <Image Source="no_last_trainings.png" />
             </Border>
-        </StackLayout>
+            <Label HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.NoLastTrainings}" FontSize="Medium"/>
+        </VerticalStackLayout>
+
+        <ScrollView IsVisible="{Binding IsLastTrainingsAvailable}">
+            <VerticalStackLayout Padding="10" Spacing="10">
+                <!-- Key numbers as tiles: the value first, what it means underneath -->
+                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+                    <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource StatTileStyle}">
+                        <VerticalStackLayout Spacing="2">
+                            <Label Style="{StaticResource StatValueStyle}" Text="{Binding TotalTrainings}"/>
+                            <Label Style="{StaticResource StatCaptionStyle}" Text="{x:Static resx:AppResources.StatWorkoutsCaption}"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource StatTileStyle}">
+                        <VerticalStackLayout Spacing="2">
+                            <Label Style="{StaticResource StatValueStyle}" Text="{Binding TotalTime}"/>
+                            <Label Style="{StaticResource StatCaptionStyle}" Text="{x:Static resx:AppResources.StatTimeCaption}"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource StatTileStyle}">
+                        <VerticalStackLayout Spacing="2">
+                            <Label Style="{StaticResource StatValueStyle}" Text="{Binding TotalExercises}"/>
+                            <Label Style="{StaticResource StatCaptionStyle}" Text="{x:Static resx:AppResources.StatExercisesCaption}"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatTileStyle}">
+                        <VerticalStackLayout Spacing="2">
+                            <Label Style="{StaticResource StatValueStyle}" Text="{Binding DistinctExercisesPercent, StringFormat='{0:0}%'}"/>
+                            <Label Style="{StaticResource StatCaptionStyle}" Text="{x:Static resx:AppResources.StatVarietyCaption}"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource StatTileStyle}">
+                        <VerticalStackLayout Spacing="2">
+                            <Label Style="{StaticResource StatValueStyle}" Text="{Binding OneTrainingPerWeekCount}"/>
+                            <Label Style="{StaticResource StatCaptionStyle}" Text="{x:Static resx:AppResources.StatWeekStreakCaption}"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource StatTileStyle}">
+                        <VerticalStackLayout Spacing="2">
+                            <Label Style="{StaticResource StatValueStyle}" Text="{Binding MostOftenDay}"/>
+                            <Label Style="{StaticResource StatCaptionStyle}" Text="{x:Static resx:AppResources.StatFavoriteDayCaption}"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- Top exercises: gold / silver / bronze, each with how many times it was done -->
+                <Border Style="{StaticResource StatTileStyle}" IsVisible="{Binding IsShowTopExercisesBlock}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{x:Static resx:AppResources.MostPopularExercises}" FontSize="13" FontAttributes="Bold" TextTransform="Uppercase"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}"
+                               SemanticProperties.HeadingLevel="Level2"/>
+
+                        <Grid Style="{StaticResource TopExerciseRowStyle}" IsVisible="{Binding Top1Exercise, Converter={StaticResource IsNotNullConverter}}">
+                            <Image Source="champion.png" WidthRequest="28" HeightRequest="28" VerticalOptions="Center">
+                                <Image.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="{StaticResource Main}" />
+                                </Image.Behaviors>
+                            </Image>
+                            <Label Grid.Column="1" Text="{Binding Top1Exercise.Name}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="TailTruncation"/>
+                            <Label Grid.Column="2" Text="{Binding Top1Exercise.Count, StringFormat='{0}×'}" FontSize="15" VerticalOptions="Center"
+                                   TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}"/>
+                        </Grid>
+
+                        <Grid Style="{StaticResource TopExerciseRowStyle}" IsVisible="{Binding Top2Exercise, Converter={StaticResource IsNotNullConverter}}">
+                            <Image Source="champion.png" WidthRequest="28" HeightRequest="28" VerticalOptions="Center">
+                                <Image.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="Silver" />
+                                </Image.Behaviors>
+                            </Image>
+                            <Label Grid.Column="1" Text="{Binding Top2Exercise.Name}" FontSize="16" VerticalOptions="Center" LineBreakMode="TailTruncation"/>
+                            <Label Grid.Column="2" Text="{Binding Top2Exercise.Count, StringFormat='{0}×'}" FontSize="15" VerticalOptions="Center"
+                                   TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}"/>
+                        </Grid>
+
+                        <Grid Style="{StaticResource TopExerciseRowStyle}" IsVisible="{Binding Top3Exercise, Converter={StaticResource IsNotNullConverter}}">
+                            <Image Source="champion.png" WidthRequest="28" HeightRequest="28" VerticalOptions="Center">
+                                <Image.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="#CD7F32" />
+                                </Image.Behaviors>
+                            </Image>
+                            <Label Grid.Column="1" Text="{Binding Top3Exercise.Name}" FontSize="16" VerticalOptions="Center" LineBreakMode="TailTruncation"/>
+                            <Label Grid.Column="2" Text="{Binding Top3Exercise.Count, StringFormat='{0}×'}" FontSize="15" VerticalOptions="Center"
+                                   TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
     </Grid>
 </ContentPage>

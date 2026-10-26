@@ -180,9 +180,6 @@
   <data name="DateTimeFormat" xml:space="preserve">
     <value>{0}</value>
   </data>
-  <data name="Days" xml:space="preserve">
-    <value>Tage</value>
-  </data>
   <data name="DeletedString" xml:space="preserve">
     <value>Gelöscht</value>
   </data>
@@ -197,9 +194,6 @@
   </data>
   <data name="Denied" xml:space="preserve">
     <value>Bestritten</value>
-  </data>
-  <data name="DistinctExercisesPercentFormat" xml:space="preserve">
-    <value>Prozentsatz verschiedener Übungen: {0:0.0}%</value>
   </data>
   <data name="Duplicate" xml:space="preserve">
     <value>Duplikat</value>
@@ -288,9 +282,6 @@
   <data name="MoreThanYearString" xml:space="preserve">
     <value>Mehr als Jahr</value>
   </data>
-  <data name="MostOftenDayFormat" xml:space="preserve">
-    <value>Am häufigsten Tag: {0:0}</value>
-  </data>
   <data name="MostPopularExercises" xml:space="preserve">
     <value>TOP Übungen</value>
   </data>
@@ -332,9 +323,6 @@
   </data>
   <data name="OneMounthString" xml:space="preserve">
     <value>Monat</value>
-  </data>
-  <data name="OneTrainingPerWeekCountFormat" xml:space="preserve">
-    <value>Maximale Wochen mit Training: {0:0}</value>
   </data>
   <data name="Or" xml:space="preserve">
     <value>oder</value>
@@ -476,15 +464,6 @@
   </data>
   <data name="ToolTipTapHoldTraining" xml:space="preserve">
     <value>Halten Sie ein Training gedrückt, um die Einstellungen anzuzeigen.</value>
-  </data>
-  <data name="TotalExercisesFormat" xml:space="preserve">
-    <value>Abgeschlossenen Übungen: {0:0}</value>
-  </data>
-  <data name="TotalTimeSpent" xml:space="preserve">
-    <value>Verstrichene zeit:</value>
-  </data>
-  <data name="TotalTrainingsFormat" xml:space="preserve">
-    <value>Abgeschlossenen trainingseinheiten: {0:0}</value>
   </data>
   <data name="TrainingsBaseString" xml:space="preserve">
     <value>Trainiereneinheiten</value>
@@ -666,9 +645,6 @@
   <data name="LikesString" xml:space="preserve">
     <value>Gefällt mir</value>
   </data>
-  <data name="ExercisesCountString" xml:space="preserve">
-    <value>Übungen</value>
-  </data>
   <data name="LoginString" xml:space="preserve">
     <value>Anmelden</value>
   </data>
@@ -734,5 +710,158 @@
   </data>
   <data name="SuperSetAllSetsDone" xml:space="preserve">
     <value>Alle Sätze erledigt</value>
+  </data>
+  <data name="RelativeToday" xml:space="preserve">
+    <value>Heute</value>
+  </data>
+  <data name="RelativeYesterday" xml:space="preserve">
+    <value>Gestern</value>
+  </data>
+  <data name="ExercisesShortCountFormat" xml:space="preserve">
+    <value>Übungen: {0}</value>
+  </data>
+  <data name="NextUpString" xml:space="preserve">
+    <value>Als Nächstes</value>
+  </data>
+  <data name="StartTrainingFormat" xml:space="preserve">
+    <value>Training {0} starten</value>
+  </data>
+  <data name="MoreActionsString" xml:space="preserve">
+    <value>Weitere Aktionen</value>
+  </data>
+  <data name="UndoString" xml:space="preserve">
+    <value>Rückgängig</value>
+  </data>
+  <data name="TrainingDeletedFormat" xml:space="preserve">
+    <value>„{0}“ gelöscht</value>
+  </data>
+  <data name="RenameString" xml:space="preserve">
+    <value>Umbenennen</value>
+  </data>
+  <data name="DeleteGroupString" xml:space="preserve">
+    <value>Gruppe löschen</value>
+  </data>
+  <data name="DeleteGroupQuestionFormat" xml:space="preserve">
+    <value>Trainings aus „{0}“ werden nach „{1}“ verschoben.</value>
+  </data>
+  <data name="NewGroupString" xml:space="preserve">
+    <value>Neue Gruppe</value>
+  </data>
+  <data name="EmptyGroupHint" xml:space="preserve">
+    <value>Diese Gruppe ist leer. Tippe bei einem Training auf ⋮, um es hierher zu verschieben.</value>
+  </data>
+  <data name="MyWorkoutsTitle" xml:space="preserve">
+    <value>Meine Trainings</value>
+  </data>
+  <data name="WorkoutsThisWeekFormat" xml:space="preserve">
+    <value>Diese Woche: {0}</value>
+  </data>
+  <data name="NoTrainingsYetTitle" xml:space="preserve">
+    <value>Noch keine Trainings</value>
+  </data>
+  <data name="NoTrainingsYetSubtitle" xml:space="preserve">
+    <value>Wähle einen fertigen Plan oder erstelle deinen eigenen.</value>
+  </data>
+  <data name="ReadyMadePlansString" xml:space="preserve">
+    <value>Fertige Pläne</value>
+  </data>
+  <data name="CreateOwnTrainingString" xml:space="preserve">
+    <value>Eigenes erstellen</value>
+  </data>
+  <data name="AiPlanString" xml:space="preserve">
+    <value>KI-Plan</value>
+  </data>
+  <data name="UnfinishedTrainingFormat" xml:space="preserve">
+    <value>Nicht beendet: {0}</value>
+  </data>
+  <data name="ElapsedTimeFormat" xml:space="preserve">
+    <value>Dauer {0}</value>
+  </data>
+  <data name="ResumeString" xml:space="preserve">
+    <value>Fortsetzen</value>
+  </data>
+  <data name="DiscardString" xml:space="preserve">
+    <value>Verwerfen</value>
+  </data>
+  <data name="DiscardUnfinishedTrainingQuestion" xml:space="preserve">
+    <value>Unbeendetes Training verwerfen?</value>
+  </data>
+  <data name="NoMeasurementsTitle" xml:space="preserve">
+    <value>Noch keine Messungen</value>
+  </data>
+  <data name="NoMeasurementsHint" xml:space="preserve">
+    <value>Gib oben deinen aktuellen Wert ein, um deinen Fortschritt zu verfolgen.</value>
+  </data>
+  <data name="PeriodChangeFormat" xml:space="preserve">
+    <value>{0} im Zeitraum</value>
+  </data>
+  <data name="ToGoalFormat" xml:space="preserve">
+    <value>noch {0} bis zum Ziel</value>
+  </data>
+  <data name="GoalReachedString" xml:space="preserve">
+    <value>Ziel erreicht!</value>
+  </data>
+  <data name="LoginToLikeString" xml:space="preserve">
+    <value>Melde dich an, um Workouts zu liken und ihre Autoren zu unterstützen.</value>
+  </data>
+  <data name="ExerciseCountOne" xml:space="preserve">
+    <value>{0} Übung</value>
+  </data>
+  <data name="ExerciseCountFew" xml:space="preserve">
+    <value>{0} Übungen</value>
+  </data>
+  <data name="ExerciseCountMany" xml:space="preserve">
+    <value>{0} Übungen</value>
+  </data>
+  <data name="RelativeDaysAgoOne" xml:space="preserve">
+    <value>vor {0} Tag</value>
+  </data>
+  <data name="RelativeDaysAgoFew" xml:space="preserve">
+    <value>vor {0} Tagen</value>
+  </data>
+  <data name="RelativeDaysAgoMany" xml:space="preserve">
+    <value>vor {0} Tagen</value>
+  </data>
+  <data name="RelativeWeeksAgoOne" xml:space="preserve">
+    <value>vor {0} Woche</value>
+  </data>
+  <data name="RelativeWeeksAgoFew" xml:space="preserve">
+    <value>vor {0} Wochen</value>
+  </data>
+  <data name="RelativeWeeksAgoMany" xml:space="preserve">
+    <value>vor {0} Wochen</value>
+  </data>
+  <data name="SaveString" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="ApplyFilterString" xml:space="preserve">
+    <value>Filter anwenden</value>
+  </data>
+  <data name="StartAgainString" xml:space="preserve">
+    <value>Erneut starten</value>
+  </data>
+  <data name="AddExercisesString" xml:space="preserve">
+    <value>Übungen hinzufügen</value>
+  </data>
+  <data name="EquipmentString" xml:space="preserve">
+    <value>Ausrüstung</value>
+  </data>
+  <data name="StatWorkoutsCaption" xml:space="preserve">
+    <value>Trainings</value>
+  </data>
+  <data name="StatExercisesCaption" xml:space="preserve">
+    <value>Übungen absolviert</value>
+  </data>
+  <data name="StatTimeCaption" xml:space="preserve">
+    <value>Trainingszeit</value>
+  </data>
+  <data name="StatVarietyCaption" xml:space="preserve">
+    <value>Übungsvielfalt</value>
+  </data>
+  <data name="StatWeekStreakCaption" xml:space="preserve">
+    <value>Beste Serie, Wochen</value>
+  </data>
+  <data name="StatFavoriteDayCaption" xml:space="preserve">
+    <value>Lieblingstag</value>
   </data>
 </root>

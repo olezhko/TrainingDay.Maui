@@ -18,6 +18,9 @@ public enum ToolTipPosition
 
 public partial class ToolTipControl : ContentView
 {
+    private const double CenterSideMargin = 50;
+    private const double MinimumWidth = 120;
+
     private View innerView;
 
     public ToolTipControl()
@@ -31,8 +34,9 @@ public partial class ToolTipControl : ContentView
     {
         if (!NeverShow)
         {
-            AttachedControl.IsVisible = true;
+            (Parent as TooltipControlContainer)?.SetChildVisible(AttachedControl, true);
             IsVisible = true;
+            SafeCalculatePosition();
             await frame.FadeToAsync(1, 500);
         }
     }
@@ -57,16 +61,46 @@ public partial class ToolTipControl : ContentView
 
     private void ToolTipControl_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
+        if (IsLayoutProperty(e.PropertyName))
+        {
+            SafeCalculatePosition();
+        }
+    }
+
+    private static bool IsLayoutProperty(string? propertyName)
+    {
+        return propertyName == "Width" || propertyName == "Height" || propertyName == "WidthRequest" || propertyName == "HeightRequest"
+               || propertyName == "Y" || propertyName == "X" || propertyName == "EmptyView";
+    }
+
+    protected override void OnParentChanging(ParentChangingEventArgs args)
+    {
+        base.OnParentChanging(args);
+        if (args.OldParent is VisualElement oldParent)
+        {
+            oldParent.SizeChanged -= Parent_SizeChanged;
+        }
+
+        if (args.NewParent is VisualElement newParent)
+        {
+            newParent.SizeChanged += Parent_SizeChanged;
+        }
+    }
+
+    private void Parent_SizeChanged(object? sender, EventArgs e)
+    {
+        SafeCalculatePosition();
+    }
+
+    private void SafeCalculatePosition()
+    {
         try
         {
-            if (e.PropertyName == "Width" || e.PropertyName == "Height" || e.PropertyName == "WidthRequest" || e.PropertyName == "HeightRequest"
-                || e.PropertyName == "Y" || e.PropertyName == "X" || e.PropertyName == "EmptyView")
-            {
-                CalculatePosition(innerView);
-            }
+            CalculatePosition();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            LoggingService.TrackError(ex);
         }
     }
 
@@ -81,48 +115,108 @@ public partial class ToolTipControl : ContentView
         NeverShow = true;
     }
 
-    private void CalculatePosition(View control)
+    /// <summary>
+    /// Places the tooltip relative to <see cref="AttachedControl"/>, in the parent's coordinates.
+    /// Uses TranslationX/Y (no layout pass, so Auto rows don't grow) and keeps the tooltip inside the parent.
+    /// </summary>
+    private void CalculatePosition()
     {
-        if (control == null || Width == -1 || Height == -1)
+        if (innerView == null || Parent is not VisualElement parent || Width <= 0 || Height <= 0 || innerView.Width < 0)
         {
             return;
         }
 
+        var controlPosition = GetPositionIn(innerView, parent);
+        if (controlPosition == null)
+        {
+            return;
+        }
+
+        // the parent's content area, in the parent's coordinates
+        var padding = (parent as Layout)?.Padding ?? Thickness.Zero;
+        var area = new Rect(padding.Left, padding.Top,
+            parent.Width - padding.HorizontalThickness, parent.Height - padding.VerticalThickness);
+        if (area.Width <= 0 || area.Height <= 0)
+        {
+            return;
+        }
+
+        var control = new Rect(controlPosition.Value, new Size(innerView.Width, innerView.Height));
+        double spacing = Spacing;
+        double maxWidth = area.Width - 2 * spacing;
+        double x;
+        double y;
+
         switch (Position)
         {
             case ToolTipPosition.Bottom:
-                Margin = new Thickness(control.X, control.Y, 0, 0);
+                x = control.Left;
+                y = control.Bottom + spacing;
                 break;
             case ToolTipPosition.Right:
-                Margin = new Thickness(control.X, control.Y, 0, 0);
+                maxWidth = area.Right - control.Right - 2 * spacing;
+                x = control.Right + spacing;
+                y = control.Center.Y - Height / 2;
                 break;
             case ToolTipPosition.Left:
-                Margin = new Thickness(
-                    Spacing,
-                    control.Y + (control.Height / 2.0) + (Height / 2.0) > ParentHeight ? ParentHeight - Height - Spacing : control.Y + (control.Height / 2.0) - (Height / 2.0) - Spacing,
-                    0, 0);
-                if (Margin.Left + Width > control.X - Spacing)
-                {
-                    WidthRequest = control.X - Spacing - Margin.Left;
-                }
-
+                maxWidth = control.Left - area.Left - 2 * spacing;
+                x = control.Left - spacing - Width;
+                y = control.Center.Y - Height / 2;
                 break;
             case ToolTipPosition.TopLeft:
-                Margin = new Thickness(0, control.Y - Spacing - Height - control.Height, 0, 0);
-                break;
-            case ToolTipPosition.TopRight:
-                Margin = new Thickness(ParentWidth - ParentWidth / 2, control.Y - Spacing - Height - control.Height, 0, 0);
+                x = area.Left + spacing;
+                y = control.Top - spacing - Height;
                 break;
             case ToolTipPosition.TopCenter:
-                Margin = new Thickness(ParentWidth / 2 - Width / 2, control.Y - Spacing - Height - control.Height, ParentWidth / 2 - Width / 2, 0);
+                x = area.Center.X - Width / 2;
+                y = control.Top - spacing - Height;
+                break;
+            case ToolTipPosition.TopRight:
+                x = area.Right - spacing - Width;
+                y = control.Top - spacing - Height;
                 break;
             case ToolTipPosition.Start:
-                Margin = new Thickness(control.X, control.Y, 0, 0);
+                x = control.Left;
+                y = control.Top;
                 break;
-            case ToolTipPosition.Center:
-                Margin = new Thickness(50, ParentHeight / 2, 50, 0);
+            default: // Center of the parent
+                maxWidth = area.Width - 2 * CenterSideMargin;
+                x = area.Center.X - Width / 2;
+                y = area.Center.Y - Height / 2;
                 break;
         }
+
+        // only the width is constrained; the height follows the wrapped text, so this converges after one re-measure
+        var maximumWidth = Math.Max(MinimumWidth, maxWidth);
+        if (Math.Abs(MaximumWidthRequest - maximumWidth) > 0.5)
+        {
+            MaximumWidthRequest = maximumWidth;
+        }
+
+        x = Math.Clamp(x, area.Left + spacing, Math.Max(area.Left + spacing, area.Right - spacing - Width));
+        y = Math.Clamp(y, area.Top + spacing, Math.Max(area.Top + spacing, area.Bottom - spacing - Height));
+
+        // X/Y is where the grid laid the tooltip out (its cell origin); translate from there
+        TranslationX = x - X;
+        TranslationY = y - Y;
+    }
+
+    /// <summary>
+    /// Position of <paramref name="element"/> in the coordinates of <paramref name="ancestor"/>; null when it is not a descendant.
+    /// </summary>
+    private static Point? GetPositionIn(VisualElement element, Element ancestor)
+    {
+        double x = 0;
+        double y = 0;
+        Element? current = element;
+        while (current is VisualElement visual && current != ancestor)
+        {
+            x += visual.X + visual.TranslationX;
+            y += visual.Y + visual.TranslationY;
+            current = visual.Parent;
+        }
+
+        return current == ancestor ? new Point(x, y) : null;
     }
 
     private static void LinkToLinksPreviewControl(ToolTipControl control, View view)
@@ -131,22 +225,13 @@ public partial class ToolTipControl : ContentView
             return;
 
         control.innerView = view;
-        System.ComponentModel.PropertyChangedEventHandler properyChanged = (object sender, System.ComponentModel.PropertyChangedEventArgs e) =>
+        view.PropertyChanged += (sender, e) =>
         {
-            if (e.PropertyName == "Width" || e.PropertyName == "Height" || e.PropertyName == "WidthRequest" || e.PropertyName == "HeightRequest"
-                || e.PropertyName == "Y" || e.PropertyName == "X" || e.PropertyName == "EmptyView")
+            if (IsLayoutProperty(e.PropertyName))
             {
-                try
-                {
-                    control.CalculatePosition((View)sender);
-                }
-                catch (Exception)
-                {
-                    LoggingService.TrackError(new Exception($"Error calculating position for ToolTipControl. {sender.GetType().Name}")); 
-                }
+                control.SafeCalculatePosition();
             }
         };
-        view.PropertyChanged += properyChanged;
     }
 
     private static void NeverShowPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
@@ -246,22 +331,6 @@ public partial class ToolTipControl : ContentView
     {
         get { return (ToolTipPosition)GetValue(PositionProperty); }
         set { SetValue(PositionProperty, value); }
-    }
-
-    public static readonly BindableProperty ParentHeightProperty =
-        BindableProperty.Create("ParentHeight", typeof(double), typeof(ToolTipControl), 0.0);
-    public double ParentHeight
-    {
-        get { return (double)GetValue(ParentHeightProperty); }
-        set { SetValue(ParentHeightProperty, value); }
-    }
-
-    public static readonly BindableProperty ParentWidthProperty =
-        BindableProperty.Create("ParentWidth", typeof(double), typeof(ToolTipControl), 0.0);
-    public double ParentWidth
-    {
-        get { return (double)GetValue(ParentWidthProperty); }
-        set { SetValue(ParentWidthProperty, value); }
     }
 
     #endregion

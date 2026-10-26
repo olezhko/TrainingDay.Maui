@@ -10,10 +10,12 @@
              HideSoftInputOnTapped="True"
              Padding="5">
     <Shell.TitleView>
-        <Grid ColumnDefinitions="*, auto" Padding="10,0" ColumnSpacing="10">
-            <Label Grid.Column="0" Text="{x:Static resx:AppResources.ExercisesString}" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
+        <Grid Style="{StaticResource PageTitleViewStyle}" ColumnDefinitions="*, auto">
+            <Label Style="{StaticResource PageTitleStyle}" Grid.Column="0" Text="{x:Static resx:AppResources.ExercisesString}"/>
 
-            <ImageButton x:Name="AddToolbarItem" Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="add_empty.png" Clicked="AddExercisesButton_Clicked">
+            <ImageButton Style="{StaticResource HeaderIconButtonStyle}" x:Name="AddToolbarItem" Grid.Column="1" Source="add_empty.png" Clicked="AddExercisesButton_Clicked"
+                         SemanticProperties.Description="{x:Static resx:AppResources.AddExercisesString}"
+                         ToolTipProperties.Text="{x:Static resx:AppResources.AddExercisesString}">
                 <ImageButton.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>

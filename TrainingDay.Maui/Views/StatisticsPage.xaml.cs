@@ -4,17 +4,17 @@ namespace TrainingDay.Maui.Views;
 
 public partial class StatisticsPage : ContentPage
 {
-    private StatisticsViewModel viewModel;
+    private readonly StatisticsViewModel viewModel;
 
     public StatisticsPage()
     {
         InitializeComponent();
-        viewModel = BindingContext as StatisticsViewModel;
+        viewModel = (StatisticsViewModel)BindingContext;
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
-        viewModel.LoadData();
+        await viewModel.LoadDataAsync();
     }
 }

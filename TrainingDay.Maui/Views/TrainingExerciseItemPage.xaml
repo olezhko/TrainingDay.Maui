@@ -7,10 +7,12 @@
              HideSoftInputOnTapped="True"
              x:Class="TrainingDay.Maui.Views.TrainingExerciseItemPage">
     <Shell.TitleView>
-        <Grid ColumnDefinitions="*,auto" ColumnSpacing="10" Margin="10,0">
-            <Label x:Name="TitleLabel" Grid.Column="0" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
+        <Grid Style="{StaticResource PageTitleViewStyle}" ColumnDefinitions="*,auto">
+            <Label Style="{StaticResource PageTitleStyle}" x:Name="TitleLabel" Grid.Column="0"/>
 
-            <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="save.png" Clicked="Save_clicked">
+            <ImageButton Style="{StaticResource HeaderIconButtonStyle}" Grid.Column="1" Source="save.png" Clicked="Save_clicked"
+                         SemanticProperties.Description="{x:Static resx:AppResources.SaveString}"
+                         ToolTipProperties.Text="{x:Static resx:AppResources.SaveString}">
                 <ImageButton.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>

@@ -8,16 +8,36 @@
              Shell.NavBarIsVisible="True"
              x:Class="TrainingDay.Maui.Views.TrainingItemsBasePage"
              x:Name="Page">
-    <Shell.TitleView>
-        <Grid ColumnDefinitions="*, auto, auto" ColumnSpacing="10" Margin="10,0">
-            <Label Grid.Column="0" Text="TrainingDay" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
+    <ContentPage.Resources>
+        <Color x:Key="SecondaryTextColorLight">#404040</Color>
+        <Color x:Key="SecondaryTextColorDark">#ACACAC</Color>
+        <Style x:Key="SecondaryTextStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="Small"/>
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource SecondaryTextColorLight}, Dark={StaticResource SecondaryTextColorDark}}"/>
+        </Style>
+    </ContentPage.Resources>
 
-            <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="train_hist.png" Clicked="ShowHistory_Click">
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*, auto, auto" Style="{StaticResource PageTitleViewStyle}">
+            <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" Spacing="0">
+                <Label Text="{x:Static resx:AppResources.MyWorkoutsTitle}" Style="{StaticResource PageTitleStyle}"/>
+                <Label Text="{Binding WeeklySummary}" Style="{StaticResource SecondaryTextStyle}" FontSize="Caption"/>
+            </VerticalStackLayout>
+
+            <ImageButton Grid.Column="1" Style="{StaticResource HeaderIconButtonStyle}" Source="train_hist.png"
+                         Command="{Binding ShowHistoryCommand}"
+                         SemanticProperties.Description="{x:Static resx:AppResources.HistoryTrainings}"
+                         ToolTipProperties.Text="{x:Static resx:AppResources.HistoryTrainings}">
                 <ImageButton.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>
             </ImageButton>
-            <ImageButton Grid.Column="2" WidthRequest="30" HeightRequest="30" Source="add_empty.png" Command="{Binding AddNewTrainingCommand}">
+            <!-- on Android "add" lives in the floating action button -->
+            <ImageButton Grid.Column="2" Style="{StaticResource HeaderIconButtonStyle}" Source="add_empty.png"
+                         IsVisible="{OnPlatform Default=True, Android=False}"
+                         Command="{Binding AddNewTrainingCommand}"
+                         SemanticProperties.Description="{x:Static resx:AppResources.AddTrainingString}"
+                         ToolTipProperties.Text="{x:Static resx:AppResources.AddTrainingString}">
                 <ImageButton.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>
@@ -25,89 +45,209 @@
         </Grid>
     </Shell.TitleView>
 
-    <controls:TooltipControlContainer x:Name="Container" RowSpacing="5" Margin="-5" Padding="5">
+    <controls:TooltipControlContainer x:Name="Container" RowSpacing="5" Margin="-5" Padding="5" >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <CollectionView ItemsSource="{Binding ItemsGrouped}" VerticalOptions="Start" HeightRequest="50">
+        <!-- Unfinished workout banner -->
+        <Grid Grid.Row="0" IsVisible="{Binding HasUnfinishedTraining}">
+            <Border Style="{StaticResource BorderCellStyle}" Stroke="{StaticResource Main}" StrokeThickness="1.5" >
+                <Grid ColumnDefinitions="*, auto, auto" ColumnSpacing="8">
+                    <VerticalStackLayout VerticalOptions="Center">
+                        <Label Text="{Binding UnfinishedTrainingTitle}" FontSize="Body" FontAttributes="Bold" LineBreakMode="TailTruncation"/>
+                        <Label Text="{Binding UnfinishedTrainingElapsed}" Style="{StaticResource SecondaryTextStyle}"/>
+                    </VerticalStackLayout>
+                    <Button Grid.Column="1" Text="{x:Static resx:AppResources.DiscardString}" Style="{StaticResource SecondActionButton}"
+                        HeightRequest="44" Padding="12,0" VerticalOptions="Center"
+                        Command="{Binding DiscardUnfinishedCommand}"/>
+                    <Button Grid.Column="2" Text="{x:Static resx:AppResources.ResumeString}" CornerRadius="15"
+                        BackgroundColor="{StaticResource Main}" TextColor="Black" FontAttributes="Bold"
+                        HeightRequest="44" Padding="12,0" VerticalOptions="Center"
+                        Command="{Binding ResumeUnfinishedCommand}"/>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Group chips; hidden while there is only one group -->
+        <CollectionView Grid.Row="1" ItemsSource="{Binding ItemsGrouped}" HeightRequest="44" HorizontalScrollBarVisibility="Never">
             <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="5"/>
+                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="6"/>
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Button Text="{Binding Key}" CornerRadius="25" HeightRequest="50" FontSize="Medium" Padding="30,0"
-                            Command="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.ActivateGroupCommand}"
-                            CommandParameter="{Binding }" >
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="BackgroundColor" Value="{StaticResource Gray500}"/>
+                    <Border x:Name="chip" HeightRequest="36" Padding="14,0" StrokeShape="RoundRectangle 18" StrokeThickness="1"
+                            VerticalOptions="Center" SemanticProperties.Description="{Binding Key}">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="BackgroundColor" Value="Transparent"/>
+                                <Setter Property="Stroke" Value="{StaticResource Gray400}"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsSelected}" Value="True" TargetType="Button">
+                                    <DataTrigger Binding="{Binding IsSelected}" Value="True" TargetType="Border">
                                         <Setter Property="BackgroundColor" Value="{StaticResource Main}"/>
+                                        <Setter Property="Stroke" Value="{StaticResource Main}"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </Button.Style>
-                    </Button>
+                        </Border.Style>
+                        <Border.Behaviors>
+                            <toolkit:TouchBehavior
+                                PressedOpacity="0.7"
+                                Command="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.ActivateGroupCommand}"
+                                CommandParameter="{Binding Source={x:Reference chip}, Path=BindingContext}"
+                                LongPressCommand="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.GroupLongPressedCommand}"
+                                LongPressCommandParameter="{Binding Source={x:Reference chip}, Path=BindingContext}"/>
+                        </Border.Behaviors>
+                        <Label VerticalOptions="Center" FontSize="Body">
+                            <Label.Style>
+                                <Style TargetType="Label">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsSelected}" Value="True" TargetType="Label">
+                                            <Setter Property="TextColor" Value="Black"/>
+                                            <Setter Property="FontAttributes" Value="Bold"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding Key}"/>
+                                    <Span Text="{Binding Count, StringFormat=' {0}'}"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
+            <CollectionView.Footer>
+                <ImageButton Source="add_empty.png" Command="{Binding CreateGroupCommand}" HeightRequest="36" WidthRequest="36" Margin="3,0,0,0" VerticalOptions="Center"
+                             SemanticProperties.Description="{x:Static resx:AppResources.NewGroupString}" ToolTipProperties.Text="{x:Static resx:AppResources.NewGroupString}"/>
+            </CollectionView.Footer>
         </CollectionView>
 
-        <CollectionView x:Name="ItemsListView" Grid.Row="1" ItemsSource="{Binding SelectedTrainings}" BackgroundColor="Transparent" >
+        <CollectionView x:Name="ItemsListView" Grid.Row="2" ItemsSource="{Binding SelectedTrainings}" BackgroundColor="Transparent">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Border x:Name="viewCell" Style="{StaticResource BorderCellStyle}">
-                        <Border.Behaviors>
-                            <toolkit:TouchBehavior
-                                Command="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.ItemSelectedCommand}"
-                                CommandParameter="{Binding Source={x:Reference viewCell}}"
-                                LongPressCommand="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.LongPressedEffectCommand}"
-                                LongPressCommandParameter="{Binding Source={x:Reference viewCell}}"/>
-                        </Border.Behaviors>
-                        <StackLayout>
-                            <Label Text="{Binding Title}" FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="Center"/>
-                            <Label Text="{Binding LastImplementedDateTime,StringFormat={x:Static resx:AppResources.LastImplementedFormatString}}" FontSize="13" VerticalOptions="Center" HorizontalTextAlignment="Center" TextColor="Gray"/>
-                        </StackLayout>
+                    <Border x:Name="viewCell" Style="{StaticResource BorderCellStyle}" Padding="0">
+                        <Grid ColumnDefinitions="*, auto, auto">
+                            <!-- tap = edit, long press = actions; kept apart from the buttons so their taps don't open the card -->
+                            <Grid Grid.Column="0" Padding="14,10,4,10" RowDefinitions="auto, auto, auto" RowSpacing="2" BackgroundColor="Transparent"
+                                      SemanticProperties.Description="{Binding AccessibilityDescription}">
+                                <Grid.Behaviors>
+                                    <toolkit:TouchBehavior
+                                            PressedOpacity="0.6"
+                                            Command="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.ItemSelectedCommand}"
+                                            CommandParameter="{Binding Source={x:Reference viewCell}, Path=BindingContext}"
+                                            LongPressCommand="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.LongPressedEffectCommand}"
+                                            LongPressCommandParameter="{Binding Source={x:Reference viewCell}, Path=BindingContext}"/>
+                                </Grid.Behaviors>
+
+                                <Grid ColumnDefinitions="*, auto" ColumnSpacing="6">
+                                    <Label Text="{Binding Title}" FontSize="Medium" FontAttributes="Bold" LineBreakMode="TailTruncation" VerticalOptions="Center"/>
+                                    <Border Grid.Column="1" IsVisible="{Binding IsNextUp}" BackgroundColor="{StaticResource Main}" Stroke="Transparent"
+                                                StrokeShape="RoundRectangle 8" Padding="8,2" VerticalOptions="Center">
+                                        <Label Text="{x:Static resx:AppResources.NextUpString}" FontSize="Caption" FontAttributes="Bold" TextColor="Black"/>
+                                    </Border>
+                                </Grid>
+                                <Label Grid.Row="1" Text="{Binding Summary}" IsVisible="{Binding HasSummary}" Style="{StaticResource SecondaryTextStyle}" LineBreakMode="TailTruncation"/>
+                                <Label Grid.Row="2" Text="{Binding LastImplementedDateTime, StringFormat={x:Static resx:AppResources.LastImplementedFormatString}}" Style="{StaticResource SecondaryTextStyle}"/>
+                            </Grid>
+
+                            <!-- Start workout -->
+                            <Grid Grid.Column="1" WidthRequest="48" HeightRequest="48" VerticalOptions="Center"
+                                      SemanticProperties.Description="{Binding StartAccessibilityDescription}"
+                                      ToolTipProperties.Text="{x:Static resx:AppResources.MakeTrainingString}">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.StartTrainingCommand}"
+                                                              CommandParameter="{Binding .}"/>
+                                </Grid.GestureRecognizers>
+                                <Border WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 20" Stroke="Transparent"
+                                            BackgroundColor="{StaticResource Main}" HorizontalOptions="Center" VerticalOptions="Center" InputTransparent="True">
+                                    <Path Data="M0,0 L12,7 L0,14 Z" Fill="Black" HorizontalOptions="Center" VerticalOptions="Center" Margin="3,0,0,0"/>
+                                </Border>
+                            </Grid>
+
+                            <!-- More actions (same menu as long press) -->
+                            <Grid Grid.Column="2" WidthRequest="40" HeightRequest="48" VerticalOptions="Center" Margin="0,0,4,0"
+                                      SemanticProperties.Description="{x:Static resx:AppResources.MoreActionsString}"
+                                      ToolTipProperties.Text="{x:Static resx:AppResources.MoreActionsString}">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.MoreActionsCommand}"
+                                                              CommandParameter="{Binding .}"/>
+                                </Grid.GestureRecognizers>
+                                <VerticalStackLayout Spacing="3" HorizontalOptions="Center" VerticalOptions="Center" InputTransparent="True">
+                                    <Ellipse WidthRequest="4" HeightRequest="4" Fill="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"/>
+                                    <Ellipse WidthRequest="4" HeightRequest="4" Fill="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"/>
+                                    <Ellipse WidthRequest="4" HeightRequest="4" Fill="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Grid>
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
             <CollectionView.EmptyView>
                 <ContentView>
-                    <ContentView.Style>
-                        <Style TargetType="ContentView">
-                            <Style.Triggers>
-                                <DataTrigger TargetType="ContentView" Binding="{Binding ItemsGrouped.Count,Converter={StaticResource IsNoItemsConverter}}" Value="True">
-                                    <Setter Property="IsVisible" Value="False"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                            <Setter Property="IsVisible" Value="True"/>
-                        </Style>
-                    </ContentView.Style>
-                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                        <Label Text="{x:Static resx:AppResources.NoTrainingsNeedAddNewString}" HorizontalTextAlignment="Center" FontSize="20"/>
-                        <ImageButton WidthRequest="60" HeightRequest="60" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="add_empty.png"
-                                     Command="{Binding AddNewTrainingCommand}" BackgroundColor="Transparent">
-                            <ImageButton.Behaviors>
-                                <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
-                            </ImageButton.Behaviors>
-                        </ImageButton>
-                    </StackLayout>
+                    <Grid>
+                        <!-- no workouts at all -->
+                        <VerticalStackLayout IsVisible="{Binding HasNoTrainings}" VerticalOptions="Center" Spacing="12" Padding="24,0">
+                            <Label Text="{x:Static resx:AppResources.NoTrainingsYetTitle}" FontSize="Title" FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center" SemanticProperties.HeadingLevel="Level2"/>
+                            <Label Text="{x:Static resx:AppResources.NoTrainingsYetSubtitle}" Style="{StaticResource SecondaryTextStyle}"
+                                   FontSize="Body" HorizontalTextAlignment="Center" Margin="0,0,0,8"/>
+                            <Button Text="{x:Static resx:AppResources.ReadyMadePlansString}" HeightRequest="48" CornerRadius="15"
+                                    Command="{Binding AddNewTrainingCommand}"/>
+                            <Button Text="{x:Static resx:AppResources.CreateOwnTrainingString}" HeightRequest="48" Style="{StaticResource SecondActionButton}"
+                                    Command="{Binding CreateOwnTrainingCommand}"/>
+                            <Button Text="{x:Static resx:AppResources.AiPlanString}" HeightRequest="48" Style="{StaticResource SecondActionButton}"
+                                    Command="{Binding AiPlanCommand}"/>
+                        </VerticalStackLayout>
+
+                        <!-- selected group has no workouts -->
+                        <Label IsVisible="{Binding IsSelectedGroupEmpty}" Text="{x:Static resx:AppResources.EmptyGroupHint}"
+                               Style="{StaticResource SecondaryTextStyle}" FontSize="Body"
+                               HorizontalTextAlignment="Center" VerticalOptions="Center" Padding="24,0"/>
+                    </Grid>
                 </ContentView>
             </CollectionView.EmptyView>
         </CollectionView>
 
-        <controls:ToolTipControl x:Name="ToolTipTapHoldTraining" Text="{x:Static resx:AppResources.ToolTipTapHoldTraining}" Title="{x:Static resx:AppResources.SettingsString}" 
-                                NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipTapHoldTraining,Mode=TwoWay}" 
-                                AttachedControl="ItemsListView" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}" 
-                                Position="Center"
-                                ParentHeight="{Binding Source={x:Reference Container},Path=Height}" Grid.Row="1"
-                                ParentWidth="{Binding Source={x:Reference Container},Path=Width}"/>
+        <!-- Floating "add workout" button (Android) -->
+        <Border Grid.Row="2" WidthRequest="56" HeightRequest="56" Margin="0,0,16,16"
+                HorizontalOptions="End" VerticalOptions="End"
+                StrokeShape="RoundRectangle 28" Stroke="Transparent" BackgroundColor="{StaticResource Main}"
+                SemanticProperties.Description="{x:Static resx:AppResources.AddTrainingString}">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="IsVisible" Value="{OnPlatform Default=False, Android=True}"/>
+                    <Style.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding HasNoTrainings}" Value="True">
+                            <Setter Property="IsVisible" Value="False"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <Border.Shadow>
+                <Shadow Brush="Black" Opacity="0.3" Radius="8" Offset="0,3"/>
+            </Border.Shadow>
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding AddNewTrainingCommand}"/>
+            </Border.GestureRecognizers>
+            <Image Source="add.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center" InputTransparent="True">
+                <Image.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="Black" />
+                </Image.Behaviors>
+            </Image>
+        </Border>
+
+        <controls:ToolTipControl x:Name="ToolTipTapHoldTraining" Text="{x:Static resx:AppResources.ToolTipTapHoldTraining}" Title="{x:Static resx:AppResources.SettingsString}"
+                                NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipTapHoldTraining,Mode=TwoWay}"
+                                AttachedControl="ItemsListView" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}"
+                                Position="Center" Grid.Row="2"/>
 
     </controls:TooltipControlContainer>
 </ContentPage>

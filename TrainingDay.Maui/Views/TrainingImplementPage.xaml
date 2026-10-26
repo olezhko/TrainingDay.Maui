@@ -77,9 +77,7 @@ x:Class="TrainingDay.Maui.Views.TrainingImplementPage"
 
         <controls:ToolTipControl x:Name="ToolTipCancelImplementingTraining" Text="{x:Static resx:AppResources.ToolTipCancelImplementingTraining}" Title="{x:Static resx:AppResources.Execution}" Grid.ColumnSpan="3" Grid.RowSpan="3"
                                      NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipWorkingCancel,Mode=TwoWay}"
-                                     AttachedControl="CancelButton" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}" Position="TopLeft"
-                                     ParentHeight="{Binding Source={x:Reference MainGrid},Path=Height}"
-                                     ParentWidth="{Binding Source={x:Reference MainGrid},Path=Width}">
+                                     AttachedControl="CancelButton" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}" Position="TopLeft">
             <controls:ToolTipControl.EmptyView>
                 <Border Stroke="Transparent" StrokeShape="RoundRectangle 15" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Red" HeightRequest="30" WidthRequest="30" Padding="0" Margin="0">
                     <Image Source="close.png" >
@@ -92,9 +90,7 @@ x:Class="TrainingDay.Maui.Views.TrainingImplementPage"
         </controls:ToolTipControl>
         <controls:ToolTipControl Text="{x:Static resx:AppResources.ToolTipSkipExercise}" Title="{x:Static resx:AppResources.Execution}" Grid.ColumnSpan="3" Grid.RowSpan="3"
                                          NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipWorkingSkip,Mode=TwoWay}"
-                                         AttachedControl="SkipButton" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}"
-                                         ParentHeight="{Binding Source={x:Reference MainGrid},Path=Height}" Position="TopLeft" 
-                                         ParentWidth="{Binding Source={x:Reference MainGrid},Path=Width}">
+                                         AttachedControl="SkipButton" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}" Position="TopLeft">
             <controls:ToolTipControl.EmptyView>
                 <Border Stroke="Transparent" StrokeShape="RoundRectangle 15"  VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="DimGray" HeightRequest="30" WidthRequest="30" Padding="0" Margin="0">
                     <Image Source="skip.png" />
@@ -103,9 +99,7 @@ x:Class="TrainingDay.Maui.Views.TrainingImplementPage"
         </controls:ToolTipControl>
         <controls:ToolTipControl Text="{x:Static resx:AppResources.ToolTipFinishExercise}" Title="{x:Static resx:AppResources.Execution}" Grid.ColumnSpan="3" Grid.RowSpan="3"
                                          NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipWorkingReady,Mode=TwoWay}"
-                                         AttachedControl="FinishButton" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}"
-                                         ParentHeight="{Binding Source={x:Reference MainGrid},Path=Height}" Position="TopLeft"
-                                         ParentWidth="{Binding Source={x:Reference MainGrid},Path=Width}">
+                                         AttachedControl="FinishButton" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}" Position="TopLeft">
             <controls:ToolTipControl.EmptyView>
                 <Border Stroke="Transparent" StrokeShape="RoundRectangle 15" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Green" HeightRequest="30" WidthRequest="30" Padding="0" Margin="0">
                     <Image Source="save.png" >

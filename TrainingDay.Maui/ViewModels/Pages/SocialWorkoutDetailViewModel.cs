@@ -23,15 +23,17 @@ public class SocialWorkoutDetailViewModel : BaseViewModel
         Workout = workout;
         this.socialWorkoutsService = socialWorkoutsService;
         Exercises = new ObservableCollection<TrainingExerciseViewModel>(workout.Exercises.Select(CreateExerciseViewModel));
+        AddToMyWorkoutsCommand = new AsyncRelayCommand(AddToMyWorkouts);
+        LikeCommand = new AsyncRelayCommand(() => Workout.ToggleLikeAsync(socialWorkoutsService));
     }
 
     public SocialWorkoutViewModel Workout { get; }
 
     public ObservableCollection<TrainingExerciseViewModel> Exercises { get; }
 
-    public ICommand AddToMyWorkoutsCommand => new AsyncRelayCommand(AddToMyWorkouts);
+    public ICommand AddToMyWorkoutsCommand { get; }
 
-    public ICommand LikeCommand => new AsyncRelayCommand(ToggleLike);
+    public ICommand LikeCommand { get; }
 
     private static TrainingExerciseViewModel CreateExerciseViewModel(SocialWorkoutExerciseDisplay dto)
     {
@@ -98,37 +100,7 @@ public class SocialWorkoutDetailViewModel : BaseViewModel
         catch (Exception ex)
         {
             LoggingService.TrackError(ex);
-        }
-    }
-
-    private async Task ToggleLike()
-    {
-        try
-        {
-            if (Workout.IsLikedByMe)
-            {
-                var result = await socialWorkoutsService.UnlikeAsync(Workout.ServerId);
-                if (result)
-                {
-                    Workout.IsLikedByMe = false;
-                    Workout.LikesCount--;
-                    LoggingService.TrackEvent("Workout Unliked");
-                }
-            }
-            else
-            {
-                var result = await socialWorkoutsService.LikeAsync(Workout.ServerId);
-                if (result)
-                {
-                    Workout.IsLikedByMe = true;
-                    Workout.LikesCount++;
-                    LoggingService.TrackEvent("Workout Liked");
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            LoggingService.TrackError(ex);
+            await Toast.Make(AppResources.GenericErrorString).Show();
         }
     }
 }

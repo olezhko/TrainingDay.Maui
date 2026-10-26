@@ -83,51 +83,8 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
     #region Load
     private async Task LoadItemIdAsync(int id)
     {
-        var trVm = await Task.Run(() =>
-        {
-            var vm = new TrainingViewModel(App.Database.GetTrainingItem(id));
-            PrepareTrainingViewModel(vm);
-            return vm;
-        });
+        var trVm = await Task.Run(() => TrainingViewModel.LoadWithExercises(id));
         Load(trVm);
-    }
-
-    private static void PrepareTrainingViewModel(TrainingViewModel vm)
-    {
-        var trainingExerciseItems = App.Database.GetTrainingExerciseItems();
-        var exerciseItems = App.Database.GetExerciseItems();
-        var trainingExercises = trainingExerciseItems.Where(ex => ex.TrainingId == vm.Id);
-        var unOrderedItems = trainingExercises.Where(a => a.OrderNumber < 0);
-
-        trainingExercises = trainingExercises.OrderBy(a => a.OrderNumber).Where(a => a.OrderNumber >= 0).ToList();
-        int index = 0;
-        foreach (var trainingExercise in trainingExercises)
-        {
-            var exercise = exerciseItems.First(ex => ex.Id == trainingExercise.ExerciseId);
-            var trEx = new TrainingExerciseViewModel(exercise, trainingExercise)
-            {
-                TrainingExerciseId = trainingExercise.Id,
-            };
-            index++;
-
-            vm.AddExercise(trEx);
-        }
-
-        foreach (var trainingExercise in unOrderedItems)
-        {
-            if (trainingExercise.OrderNumber == -1)
-            {
-                trainingExercise.OrderNumber = index;
-                App.Database.SaveTrainingExerciseItem(trainingExercise);
-            }
-            var exercise = exerciseItems.First(ex => ex.Id == trainingExercise.ExerciseId);
-            var trEx = new TrainingExerciseViewModel(exercise, trainingExercise)
-            {
-                TrainingExerciseId = trainingExercise.Id,
-            };
-            index++;
-            vm.AddExercise(trEx);
-        }
     }
 
     private void Load(TrainingViewModel trVm)

@@ -1,58 +1,28 @@
 using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Extensions;
-using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Maui.Controls.Shapes;
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
-using System.Collections.ObjectModel;
-using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
-using TrainingDay.Maui.Models;
-using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
-using TrainingDay.Maui.ViewModels;
+using TrainingDay.Maui.ViewModels.Pages;
 
 namespace TrainingDay.Maui.Views;
 
-public partial class FilterPage : ContentPage, IQueryAttributable
+public partial class FilterPage : ContentPage
 {
-    public FilterModel Filter { get; set; }
+    private readonly FilterPageViewModel viewModel;
 
     public FilterPage()
     {
         InitializeComponent();
 
-        Filter = new FilterModel();
-        var itemsMuscles = new ObservableCollection<MuscleCheckItem>();
-
-        var muscleItems = Enum.GetValues<MusclesEnum>();
-        for (int i = 0; i < muscleItems.Length; i++)
-        {
-            var newItem = new MuscleCheckItem()
-            {
-                Text = ExerciseExtensions.GetEnumDescription(muscleItems[i], Settings.GetLanguage()),
-                Muscle = muscleItems[i],
-            };
-            newItem.PropertyChanged += NewItem_PropertyChanged;
-            itemsMuscles.Add(newItem);
-        }
-
-        BindingContext = this;
-        BindableLayout.SetItemsSource(MusclesListView, itemsMuscles);
-
-        DifficultyLevelLabel.Text = $"{AppResources.Difficulty}: {GetDifficultyLevelLabel(0)}";
+        BindingContext = viewModel = new FilterPageViewModel();
+        viewModel.PropertyChanged += ViewModel_PropertyChanged;
 
         if (!Settings.IsUserKnownExerciseFilters)
             ShowPopups();
-    }
-
-    public void ApplyQueryAttributes(IDictionary<string, object> query)
-    {
-        if (query.TryGetValue("Filter", out var filterObj) && filterObj is FilterModel filter)
-        {
-            SetMuscleFilter(filter);
-        }
     }
 
     protected override void OnAppearing()
@@ -65,22 +35,13 @@ public partial class FilterPage : ContentPage, IQueryAttributable
 
         SkiaView.WidthRequest = MuscleImage.WidthRequest;
         SkiaView.HeightRequest = MuscleImage.HeightRequest;
-        MainGrid.RowDefinitions[2].Height = MuscleImage.HeightRequest;
+        MainGrid.RowDefinitions[5].Height = MuscleImage.HeightRequest;
     }
 
-    private void SetMuscleFilter(FilterModel filter)
+    private void ViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
-        Filter = filter;
-        var itemsSource = BindableLayout.GetItemsSource(MusclesListView);
-        NoEquipmentFilterSwitch.IsToggled = filter.IsNoEquipmentFilter;
-        BarbellFilterSwitch.IsToggled = filter.IsBarbellExists;
-        DumbbellFilterSwitch.IsToggled = filter.IsDumbbellExists;
-        foreach (MuscleCheckItem item in itemsSource)
-        {
-            item.IsChecked = Filter.Muscles.Contains(item.Muscle);
-        }
-
-        SetDifficultyLevel(Filter.DifficultyLevel);
+        if (e.PropertyName == nameof(FilterPageViewModel.SelectedMuscles))
+            SkiaView.InvalidateSurface();
     }
 
     private sealed record FilterTip(string Text, string Image);
@@ -182,7 +143,7 @@ public partial class FilterPage : ContentPage, IQueryAttributable
         canvas.Scale(scaleW, scaleH);
         canvas.Clear();
 
-        foreach (var currentMuscle in Filter.Muscles)
+        foreach (var currentMuscle in viewModel.SelectedMuscles)
         {
             DrawMuscles(currentMuscle);
         }
@@ -748,86 +709,6 @@ public partial class FilterPage : ContentPage, IQueryAttributable
             builder.LineTo(new SKPoint(x * scaleX, y * scaleY));
         }
         builder.LineTo(new SKPoint(stX * scaleX, stY * scaleY));
-    }
-    #endregion
-
-    private void MusclesListView_OnItemTapped(object sender, TappedEventArgs args)
-    {
-        var item = sender as Border;
-        MuscleCheckItem send = item.BindingContext as MuscleCheckItem;
-        send.IsChecked = !send.IsChecked;
-    }
-
-    private void NewItem_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-    {
-        var item = sender as MuscleCheckItem;
-        if (e.PropertyName == nameof(MuscleCheckItem.IsChecked))
-        {
-            if (item.IsChecked)
-            {
-                Filter.Muscles.Add(item.Muscle);
-            }
-            else
-            {
-                Filter.Muscles.RemoveAll(itemMuscle => itemMuscle == item.Muscle);
-            }
-        }
-
-        SkiaView.InvalidateSurface();
-    }
-
-    private async void AcceptFilter_Click(object sender, EventArgs e)
-    {
-        MusclesListView.IsVisible = false;
-        await Shell.Current.GoToAsync("..");
-        WeakReferenceMessenger.Default.Send(new FilterAcceptedForExercisesMessage(Filter));
-    }
-
-    #region DifficultyLevel
-    private void RatingView_RatingChanged(object sender, CommunityToolkit.Maui.Core.RatingChangedEventArgs e)
-    {
-        SetDifficultyLevel((int)Math.Round(e.Rating));
-    }
-
-    private string GetDifficultyLevelLabel(object value)
-    {
-        if (value is int difficultyLevel)
-        {
-            return difficultyLevel switch
-            {
-                1 => AppResources.DifficultyEasy,
-                2 => AppResources.DifficultyMedium,
-                3 => AppResources.DifficultyHard,
-                _ => AppResources.DifficultyAny
-            };
-        }
-        return AppResources.DifficultyAny;
-    }
-
-    private void SetDifficultyLevel(int newValue)
-    {
-        Filter.DifficultyLevel = newValue;
-        DifficultyLevelLabel.Text = $"{AppResources.Difficulty}: {GetDifficultyLevelLabel(Filter.DifficultyLevel)}";
-    }
-
-    private void ResetDifficulty_Click(object sender, EventArgs e)
-    {
-        SetDifficultyLevel(0);
-    }
-    #endregion
-
-    #region CheckBoxes
-    private void ChangeNoEquipment_Toggled(object sender, ToggledEventArgs e)
-    {
-        Filter.IsNoEquipmentFilter = e.Value;
-    }
-    private void ChangeBarbell_Toggled(object sender, ToggledEventArgs e)
-    {
-        Filter.IsBarbellExists = e.Value;
-    }
-    private void ChangeDumbbell_Toggled(object sender, ToggledEventArgs e)
-    {
-        Filter.IsDumbbellExists = e.Value;
     }
     #endregion
 }

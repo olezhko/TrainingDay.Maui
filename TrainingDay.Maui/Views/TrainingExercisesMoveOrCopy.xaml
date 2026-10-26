@@ -5,6 +5,13 @@
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              x:Class="TrainingDay.Maui.Views.TrainingExercisesMoveOrCopy"
              Title="{Binding ExerciseActionString}">
+
+    <Shell.TitleView>
+        <Grid Style="{StaticResource PageTitleViewStyle}">
+            <Label Style="{StaticResource PageTitleStyle}" Text="{Binding ExerciseActionString}"/>
+        </Grid>
+    </Shell.TitleView>
+
     <VerticalStackLayout BackgroundColor="Transparent" VerticalOptions="Center" Margin="5" >
         <CollectionView x:Name="GroupCollection" ItemsSource="{Binding TrainingItems}" IsVisible="{Binding TrainingItems, Converter={StaticResource IsNoItemsConverter}}"
                         SelectionChanged="GroupCollection_SelectionChanged" SelectionMode="Single">

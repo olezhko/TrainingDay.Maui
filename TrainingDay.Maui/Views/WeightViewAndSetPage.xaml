@@ -5,15 +5,17 @@
              xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
              xmlns:charts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
-             xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
-             x:Class="TrainingDay.Maui.Views.WeightViewAndSetPage" Padding="5"
+             x:Class="TrainingDay.Maui.Views.WeightViewAndSetPage"
+             BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}"
              HideSoftInputOnTapped="True"
              x:Name="Page">
     <Shell.TitleView>
-        <Grid ColumnDefinitions="*,auto" ColumnSpacing="10" Margin="10,0">
-            <Label Grid.Column="0" Text="{x:Static resx:AppResources.WeightControlString}" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
+        <Grid Style="{StaticResource PageTitleViewStyle}" ColumnDefinitions="*,auto">
+            <Label Style="{StaticResource PageTitleStyle}" Grid.Column="0" Text="{x:Static resx:AppResources.WeightControlString}"/>
 
-            <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="info.png" Clicked="ShowInfo_Click">
+            <ImageButton Style="{StaticResource HeaderIconButtonStyle}" Grid.Column="1" Source="info.png" Clicked="ShowInfo_Click"
+                         SemanticProperties.Description="{x:Static resx:AppResources.WaistHipTitle}"
+                         ToolTipProperties.Text="{x:Static resx:AppResources.WaistHipTitle}">
                 <ImageButton.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>
@@ -21,71 +23,173 @@
         </Grid>
     </Shell.TitleView>
 
-    <ContentPage.BindingContext>
-        <viewModels:WeightViewAndSetPageViewModel/>
-    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <Style TargetType="Button" x:Key="PeriodButton">
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="0,8"/>
+            <Setter Property="MinimumHeightRequest" Value="40"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="LineBreakMode" Value="TailTruncation"/>
+        </Style>
+    </ContentPage.Resources>
 
-    <Grid Padding="2" RowDefinitions="auto, *, auto">
+    <Grid Padding="10" RowSpacing="10" RowDefinitions="auto,auto,*">
 
-        <Border Style="{StaticResource MaterialBorder}">
-            <Grid ColumnDefinitions="*,*,*,*,*" ColumnSpacing="5">
-                <Button x:Name="WeekPeriodButton" Grid.Column="0" CornerRadius="5" Padding="0" LineBreakMode="TailTruncation" BackgroundColor="Orange"
-                        TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"
-                        Clicked="SetPeriod_Click" AutomationId="0" Text="{x:Static resx:AppResources.WeekString}"/>
-
-                <Button Padding="0,10" Grid.Column="1" CornerRadius="5" BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}" LineBreakMode="TailTruncation"
-                            Clicked="SetPeriod_Click" AutomationId="1" Text="{x:Static resx:AppResources.OneMounthString}" TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"/>
-                <Button Padding="0,10" Grid.Column="2" CornerRadius="5" BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}" LineBreakMode="TailTruncation"
-                            Clicked="SetPeriod_Click" AutomationId="2" Text="{x:Static resx:AppResources.ThreeMounthString}" TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"/>
-                <Button Padding="0,10" Grid.Column="3" CornerRadius="5" BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}" LineBreakMode="TailTruncation"
-                            Clicked="SetPeriod_Click" AutomationId="3" Text="{x:Static resx:AppResources.HalfYearString}" TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"/>
-                <Button Padding="0,10" Grid.Column="4" CornerRadius="5" BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}" LineBreakMode="TailTruncation"
-                            Clicked="SetPeriod_Click" AutomationId="4" Text="{x:Static resx:AppResources.YearString}" TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"/>
+        <!-- Period selector: highlight is driven by SelectedPeriod so it survives re-appearing and theme changes -->
+        <Border Style="{StaticResource BorderCellStyle}" Padding="4" StrokeShape="RoundRectangle 14">
+            <Grid ColumnDefinitions="*,*,*,*,*" ColumnSpacing="4">
+                <Button Grid.Column="0" Style="{StaticResource PeriodButton}" Text="{x:Static resx:AppResources.WeekString}"
+                        Command="{Binding WeightPeriodChangedCommand}" CommandParameter="{x:Static viewModels:ChartWeightPeriod.Week}">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding SelectedPeriod}" Value="{x:Static viewModels:ChartWeightPeriod.Week}">
+                            <Setter Property="BackgroundColor" Value="{StaticResource Main}"/>
+                            <Setter Property="TextColor" Value="{StaticResource White}"/>
+                            <Setter Property="FontAttributes" Value="Bold"/>
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Button Grid.Column="1" Style="{StaticResource PeriodButton}" Text="{x:Static resx:AppResources.OneMounthString}"
+                        Command="{Binding WeightPeriodChangedCommand}" CommandParameter="{x:Static viewModels:ChartWeightPeriod.Month}">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding SelectedPeriod}" Value="{x:Static viewModels:ChartWeightPeriod.Month}">
+                            <Setter Property="BackgroundColor" Value="{StaticResource Main}"/>
+                            <Setter Property="TextColor" Value="{StaticResource White}"/>
+                            <Setter Property="FontAttributes" Value="Bold"/>
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Button Grid.Column="2" Style="{StaticResource PeriodButton}" Text="{x:Static resx:AppResources.ThreeMounthString}"
+                        Command="{Binding WeightPeriodChangedCommand}" CommandParameter="{x:Static viewModels:ChartWeightPeriod.ThreeMonth}">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding SelectedPeriod}" Value="{x:Static viewModels:ChartWeightPeriod.ThreeMonth}">
+                            <Setter Property="BackgroundColor" Value="{StaticResource Main}"/>
+                            <Setter Property="TextColor" Value="{StaticResource White}"/>
+                            <Setter Property="FontAttributes" Value="Bold"/>
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Button Grid.Column="3" Style="{StaticResource PeriodButton}" Text="{x:Static resx:AppResources.HalfYearString}"
+                        Command="{Binding WeightPeriodChangedCommand}" CommandParameter="{x:Static viewModels:ChartWeightPeriod.HalfYear}">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding SelectedPeriod}" Value="{x:Static viewModels:ChartWeightPeriod.HalfYear}">
+                            <Setter Property="BackgroundColor" Value="{StaticResource Main}"/>
+                            <Setter Property="TextColor" Value="{StaticResource White}"/>
+                            <Setter Property="FontAttributes" Value="Bold"/>
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Button Grid.Column="4" Style="{StaticResource PeriodButton}" Text="{x:Static resx:AppResources.YearString}"
+                        Command="{Binding WeightPeriodChangedCommand}" CommandParameter="{x:Static viewModels:ChartWeightPeriod.Year}">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding SelectedPeriod}" Value="{x:Static viewModels:ChartWeightPeriod.Year}">
+                            <Setter Property="BackgroundColor" Value="{StaticResource Main}"/>
+                            <Setter Property="TextColor" Value="{StaticResource White}"/>
+                            <Setter Property="FontAttributes" Value="Bold"/>
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
             </Grid>
         </Border>
 
-        <CarouselView x:Name="BodyControlView" Grid.Row="1" IndicatorView="indicatorView" ItemsSource="{Binding BodyControlItems}"
-                      CurrentItem="{Binding CurrentItem}" VerticalOptions="Fill" Loop="False" 
+        <!-- Metric tabs: Weight / Waist / Hips are visible and tappable instead of relying on swipe + dots -->
+        <HorizontalStackLayout Grid.Row="1" HorizontalOptions="Center" Spacing="8" BindableLayout.ItemsSource="{Binding BodyControlItems}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <Border Padding="16,8" StrokeShape="RoundRectangle 18" StrokeThickness="1" BackgroundColor="Transparent"
+                            Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={x:Reference Page}, Path=BindingContext.SelectItemCommand}" CommandParameter="{Binding .}"/>
+                        </Border.GestureRecognizers>
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                <Setter Property="BackgroundColor" Value="{StaticResource Main}"/>
+                                <Setter Property="Stroke" Value="{StaticResource Main}"/>
+                            </DataTrigger>
+                        </Border.Triggers>
+                        <Label Text="{Binding Name}" FontSize="14"
+                               TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                                    <Setter Property="TextColor" Value="{StaticResource White}"/>
+                                    <Setter Property="FontAttributes" Value="Bold"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </Border>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </HorizontalStackLayout>
+
+        <CarouselView Grid.Row="2" ItemsSource="{Binding BodyControlItems}" CurrentItem="{Binding CurrentItem, Mode=TwoWay}"
+                      Loop="False" VerticalOptions="Fill"
                       IsVisible="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}">
             <CarouselView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Padding="5" RowDefinitions="auto,auto,*">
-                        <Label Grid.Row="0" HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="{Binding Name}" FontSize="Large"/>
-                        <Grid Grid.Row="1" ColumnDefinitions="*,*,auto" ColumnSpacing="5">
-                            <Border Grid.Column="0" Style="{StaticResource MaterialBorder}" StrokeShape="RoundRectangle 20"
-                                    Padding="10" BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}">
+                    <Grid RowDefinitions="auto,auto,*" RowSpacing="10">
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                            <Border Grid.Column="0" Style="{StaticResource BorderCellStyle}" Padding="12,8">
                                 <VerticalStackLayout>
-                                    <Label Text="{x:Static resx:AppResources.CurrentString}" TextColor="Orange"/>
-                                    <Entry Text="{Binding CurrentValueString}" HorizontalOptions="Fill" FontSize="17" VerticalOptions="End" Keyboard="Numeric"
-                                           HorizontalTextAlignment="Start">
-                                        <Entry.Behaviors>
-                                            <toolkit:EventToCommandBehavior EventName="Unfocused" Command="{Binding Source={x:Reference Page}, 
-                                            Path=BindingContext.SaveValueCommand}" />
-                                        </Entry.Behaviors>
-                                    </Entry>
+                                    <Label Text="{x:Static resx:AppResources.CurrentString}" TextColor="{StaticResource Main}" FontSize="13"/>
+                                    <Grid ColumnDefinitions="*,auto">
+                                        <Entry Text="{Binding CurrentValueString}" Placeholder="0" FontSize="22" FontAttributes="Bold"
+                                               Keyboard="Numeric" ReturnType="Done" HorizontalOptions="Fill" HorizontalTextAlignment="Start">
+                                            <Entry.Behaviors>
+                                                <toolkit:EventToCommandBehavior EventName="Unfocused" CommandParameter="{Binding .}"
+                                                                                Command="{Binding Source={x:Reference Page}, Path=BindingContext.SaveCurrentValueCommand}"/>
+                                                <toolkit:EventToCommandBehavior EventName="Completed" CommandParameter="{Binding .}"
+                                                                                Command="{Binding Source={x:Reference Page}, Path=BindingContext.SaveCurrentValueCommand}"/>
+                                            </Entry.Behaviors>
+                                        </Entry>
+                                        <Label Grid.Column="1" Text="{Binding Unit}" IsVisible="{Binding HasUnit}" VerticalOptions="Center"
+                                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}"/>
+                                    </Grid>
                                 </VerticalStackLayout>
                             </Border>
 
-                            <Border Grid.Column="1" Style="{StaticResource MaterialBorder}" StrokeShape="RoundRectangle 20" Padding="10" BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}">
+                            <Border Grid.Column="1" Style="{StaticResource BorderCellStyle}" Padding="12,8">
                                 <VerticalStackLayout>
-                                    <Label Text="{x:Static resx:AppResources.GoalString}" TextColor="Orange"/>
-                                    <Entry Text="{Binding GoalValueString}" HorizontalOptions="Fill" FontSize="17" VerticalOptions="End" Keyboard="Numeric"
-                                           HorizontalTextAlignment="Start">
-                                        <Entry.Behaviors>
-                                            <toolkit:EventToCommandBehavior EventName="Unfocused" Command="{Binding Source={x:Reference Page}, 
-                                            Path=BindingContext.SaveValueCommand}"/>
-                                        </Entry.Behaviors>
-                                    </Entry>
+                                    <Label Text="{x:Static resx:AppResources.GoalString}" TextColor="Goldenrod" FontSize="13"/>
+                                    <Grid ColumnDefinitions="*,auto">
+                                        <Entry Text="{Binding GoalValueString}" Placeholder="0" FontSize="22" FontAttributes="Bold"
+                                               Keyboard="Numeric" ReturnType="Done" HorizontalOptions="Fill" HorizontalTextAlignment="Start">
+                                            <Entry.Behaviors>
+                                                <toolkit:EventToCommandBehavior EventName="Unfocused" CommandParameter="{Binding .}"
+                                                                                Command="{Binding Source={x:Reference Page}, Path=BindingContext.SaveGoalValueCommand}"/>
+                                                <toolkit:EventToCommandBehavior EventName="Completed" CommandParameter="{Binding .}"
+                                                                                Command="{Binding Source={x:Reference Page}, Path=BindingContext.SaveGoalValueCommand}"/>
+                                            </Entry.Behaviors>
+                                        </Entry>
+                                        <Label Grid.Column="1" Text="{Binding Unit}" IsVisible="{Binding HasUnit}" VerticalOptions="Center"
+                                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}"/>
+                                    </Grid>
                                 </VerticalStackLayout>
                             </Border>
                         </Grid>
-                        <charts:ChartView Grid.Row="2" Chart="{Binding Chart}" VerticalOptions="Fill" />
+
+                        <!-- Progress summary -->
+                        <HorizontalStackLayout Grid.Row="1" Spacing="16" HorizontalOptions="Center">
+                            <Label Text="{Binding ChangeText}" IsVisible="{Binding HasChange}" FontSize="14"
+                                   TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
+                            <Label Text="{Binding GoalProgressText}" IsVisible="{Binding HasGoalProgress}" FontSize="14" TextColor="Goldenrod"/>
+                        </HorizontalStackLayout>
+
+                        <Border Grid.Row="2" Style="{StaticResource BorderCellStyle}" Padding="5">
+                            <Grid>
+                                <charts:ChartView Chart="{Binding Chart}" IsVisible="{Binding HasChart}" VerticalOptions="Fill" />
+
+                                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="6" Padding="20"
+                                                     IsVisible="{Binding HasChart, Converter={StaticResource InverseBooleanConverter}}">
+                                    <Label Text="{x:Static resx:AppResources.NoMeasurementsTitle}" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                    <Label Text="{x:Static resx:AppResources.NoMeasurementsHint}" FontSize="14" HorizontalTextAlignment="Center"
+                                           TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
                     </Grid>
                 </DataTemplate>
             </CarouselView.ItemTemplate>
         </CarouselView>
-
-        <IndicatorView Grid.Row="2" x:Name="indicatorView" IndicatorSize="{OnPlatform Android='9', iOS='10'}" MaximumVisible="6" HideSingle="True" ItemsSource="{Binding BodyControlItems}" IndicatorColor="DimGray" 
-                       SelectedIndicatorColor="Orange" VerticalOptions="Fill" HorizontalOptions="Center" Margin="0,0,0,5"/>
     </Grid>
 </ContentPage>
