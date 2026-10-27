@@ -876,4 +876,7 @@ Músculos aquecidos se contraem e relaxam melhor durante o treino, o que signifi
   <data name="StatFavoriteDayCaption" xml:space="preserve">
     <value>Dia favorito</value>
   </data>
+  <data name="FavouriteString" xml:space="preserve">
+    <value>Favorito</value>
+  </data>
 </root>

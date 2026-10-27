@@ -891,4 +891,7 @@ Increase body temperature, activate the muscles and joints, and prepare the card
   <data name="StatFavoriteDayCaption" xml:space="preserve">
     <value>Favourite day</value>
   </data>
+  <data name="FavouriteString" xml:space="preserve">
+    <value>Favourite</value>
+  </data>
 </root>

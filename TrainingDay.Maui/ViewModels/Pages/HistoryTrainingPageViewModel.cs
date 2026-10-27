@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Common.Extensions;
 using TrainingDay.Maui.Extensions;
+using TrainingDay.Maui.Mappers;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Resources.Strings;
@@ -123,21 +124,7 @@ public class HistoryTrainingPageViewModel : BaseViewModel
         var trainingExerciseItems = App.Database.GetLastTrainingExerciseItems().Where(item => item.LastTrainingId == SelectedTraining.Id);
         foreach (var trainingExercise in trainingExerciseItems)
         {
-            var ex = new TrainingExerciseViewModel()
-            {
-                Name = trainingExercise.ExerciseName,
-                Muscles = new ObservableCollection<MuscleViewModel>(
-                    MuscleViewModelExtensions.ConvertFromStringToList(trainingExercise.MusclesString)),
-                OrderNumber = trainingExercise.OrderNumber,
-                Description = DescriptionViewModel.ConvertFromJson(trainingExercise.Description),
-                TrainingExerciseId = trainingExercise.Id,
-                SuperSetId = trainingExercise.SuperSetId,
-                CodeNum = trainingExercise.CodeNum,
-            };
-
-            ex.Tags = ExerciseExtensions.ConvertTagIntToList(trainingExercise.TagsValue).ToList();
-            TrainingExerciseViewModelExtensions.ConvertJsonBack(ex, trainingExercise.WeightAndRepsString);
-            SelectedTraining.Items.Add(ex);
+            SelectedTraining.Items.Add(TrainingExerciseMapper.FromLastTrainingExercise(trainingExercise));
         }
 
         HistoryTrainingExercisesPage page = new HistoryTrainingExercisesPage() { BindingContext = this };
@@ -173,51 +160,11 @@ public class HistoryTrainingPageViewModel : BaseViewModel
         }
         else
         {
-            training = new TrainingViewModel(App.Database.GetTrainingItem(trId));
-            PrepareTrainingViewModel(training);
+            training = TrainingViewModel.LoadWithExercises(trId);
         }
 
         needsReload = true;
         await Navigation.PushAsync(new TrainingImplementPage() { TrainingItem = training, Title = training.Title });
-    }
-
-    private void PrepareTrainingViewModel(TrainingViewModel vm)
-    {
-        var trainingExerciseItems = App.Database.GetTrainingExerciseItems();
-        var exerciseItems = App.Database.GetExerciseItems();
-        var trainingExercises = trainingExerciseItems.Where(ex => ex.TrainingId == vm.Id);
-        var unOrderedItems = trainingExercises.Where(a => a.OrderNumber < 0);
-
-        trainingExercises = trainingExercises.OrderBy(a => a.OrderNumber).Where(a => a.OrderNumber >= 0).ToList();
-        int index = 0;
-        foreach (var trainingExercise in trainingExercises)
-        {
-            var exercise = exerciseItems.First(ex => ex.Id == trainingExercise.ExerciseId);
-            var trEx = new TrainingExerciseViewModel(exercise, trainingExercise)
-            {
-                TrainingExerciseId = trainingExercise.Id,
-            };
-            index++;
-
-            vm.AddExercise(trEx);
-        }
-
-        foreach (var trainingExercise in unOrderedItems)
-        {
-            if (trainingExercise.OrderNumber == -1)
-            {
-                trainingExercise.OrderNumber = index;
-                App.Database.SaveTrainingExerciseItem(trainingExercise);
-            }
-
-            var exercise = exerciseItems.First(ex => ex.Id == trainingExercise.ExerciseId);
-            var trEx = new TrainingExerciseViewModel(exercise, trainingExercise)
-            {
-                TrainingExerciseId = trainingExercise.Id,
-            };
-            index++;
-            vm.AddExercise(trEx);
-        }
     }
 
     private async Task RemoveLastTraining()

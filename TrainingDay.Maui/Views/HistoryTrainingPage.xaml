@@ -21,10 +21,6 @@
         <viewModels:HistoryTrainingPageViewModel/>
     </ContentPage.BindingContext>
 
-    <ContentPage.Resources>
-        <toolkit:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />
-    </ContentPage.Resources>
-
     <CollectionView ItemsSource="{Binding LastTrainings}" IsGrouped="True" BackgroundColor="Transparent" SelectionMode="None" Margin="10,0"
                     RemainingItemsThresholdReachedCommand="{Binding RemainingItemsThresholdReachedCommand}" RemainingItemsThreshold="3">
         <CollectionView.EmptyView>

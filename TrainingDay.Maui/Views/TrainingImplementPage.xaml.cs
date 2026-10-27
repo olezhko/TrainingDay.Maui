@@ -8,8 +8,9 @@ using System.Windows.Input;
 using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.Controls;
+using TrainingDay.Maui.Controls.PopUp;
 using TrainingDay.Maui.Extensions;
-using TrainingDay.Maui.Mapper;
+using TrainingDay.Maui.Mappers;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Models.Notifications;
@@ -18,8 +19,6 @@ using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels;
 using LastTraining = TrainingDay.Maui.Models.Database.LastTrainingEntity;
-using LastTrainingExercise = TrainingDay.Maui.Models.Database.LastTrainingExerciseEntity;
-using TrainingExerciseComm = TrainingDay.Maui.Models.Database.TrainingExerciseEntity;
 
 namespace TrainingDay.Maui.Views;
 
@@ -82,7 +81,8 @@ public partial class TrainingImplementPage : ContentPage
 
         HandlerChanged += OnHandlerChanged;
 
-        if (StepProgressBarControl.ItemsSource == null)
+        var isFirstAppearing = StepProgressBarControl.ItemsSource == null;
+        if (isFirstAppearing)
         {
             Items = TrainingItem.ExercisesBySuperSet
                 .Select(MapBaseSuperSetToImplementMapper.Map)
@@ -123,6 +123,32 @@ public partial class TrainingImplementPage : ContentPage
         await ToolTipCancelImplementingTraining.Show();
 
         _timer.Start();
+
+        if (isFirstAppearing)
+        {
+            await RequestNotificationPermissionAsync();
+        }
+    }
+
+    /// <summary>
+    /// The workout timer is shown as a notification; Android 13+ blocks it until the user allows notifications.
+    /// </summary>
+    private static async Task RequestNotificationPermissionAsync()
+    {
+#if ANDROID
+        try
+        {
+            var status = await Permissions.CheckStatusAsync<Permissions.PostNotifications>();
+            if (status != PermissionStatus.Granted)
+                await Permissions.RequestAsync<Permissions.PostNotifications>();
+        }
+        catch (Exception ex)
+        {
+            LoggingService.TrackError(ex);
+        }
+#else
+        await Task.CompletedTask;
+#endif
     }
 
     private void WatchWindow()
@@ -153,7 +179,7 @@ public partial class TrainingImplementPage : ContentPage
     {
         if (enabledTimer)
         {
-            SaveNotFinishedTraining(TrainingItem.Title, TrainingItem.Id);
+            SaveNotFinishedTraining(TrainingItem);
         }
     }
 
@@ -266,7 +292,7 @@ public partial class TrainingImplementPage : ContentPage
         // save to restore if not finish; the first tick saves too, so the file exists before the restore check can see IsTrainingNotFinished
         if (enabledTimer && ticksSinceSave++ % SaveEveryTicks == 0)
         {
-            SaveNotFinishedTraining(TrainingItem.Title, TrainingItem.Id);
+            SaveNotFinishedTraining(TrainingItem);
         }
 
         UpdateNotifyTimer();
@@ -287,43 +313,12 @@ public partial class TrainingImplementPage : ContentPage
 #endif
     }
 
-    private void SaveNotFinishedTraining(string title, int id)
+    private void SaveNotFinishedTraining(TrainingViewModel trainingViewModel)
     {
         Settings.IsTrainingNotFinishedTime = CurrentTime;
         var filename = Path.Combine(FileSystem.CacheDirectory, ConstantKeys.NotFinishedTrainingName);
 
-        TrainingSerialize serialize = new()
-        {
-            Title = Title,
-            Id = id
-        };
-
-        foreach (var item in Items)
-        {
-            foreach (var trainingExerciseViewModel in item.SuperSetItems)
-            {
-                serialize.Items.Add(new TrainingExerciseSerialize()
-                {
-                    TrainingExerciseId = trainingExerciseViewModel.TrainingExerciseId,
-                    SuperSetId = trainingExerciseViewModel.SuperSetId,
-                    OrderNumber = trainingExerciseViewModel.OrderNumber,
-                    TrainingId = id,
-                    Muscles = MuscleViewModelExtensions.ConvertFromListToString(trainingExerciseViewModel.Muscles.ToList()),
-                    ExerciseId = trainingExerciseViewModel.ExerciseId,
-                    Description = JsonSerializer.Serialize(trainingExerciseViewModel.Description.Model),
-                    Name = trainingExerciseViewModel.Name,
-                    IsNotFinished = trainingExerciseViewModel.IsNotFinished,
-                    IsSkipped = trainingExerciseViewModel.IsSkipped,
-                    SuperSetNum = trainingExerciseViewModel.SuperSetNum,
-
-                    TagsValue = ExerciseExtensions.ConvertTagListToInt(trainingExerciseViewModel.Tags),
-                    WeightAndRepsString = TrainingExerciseViewModelExtensions.ConvertJson(trainingExerciseViewModel.Tags, trainingExerciseViewModel),
-                    CodeNum = trainingExerciseViewModel.CodeNum,
-                });
-            }
-        }
-
-        DataManageViewModel.SaveToFile(serialize, filename);
+        trainingViewModel.SaveToFile(filename);
     }
 
     private void UpdateNotifyTimer()
@@ -477,18 +472,7 @@ public partial class TrainingImplementPage : ContentPage
                     continue;
                 }
 
-                App.Database.SaveLastTrainingExerciseItem(new LastTrainingExercise()
-                {
-                    LastTrainingId = id,
-                    OrderNumber = item.OrderNumber,
-                    ExerciseName = item.Name,
-                    MusclesString = MuscleViewModelExtensions.ConvertFromListToString(item.Muscles.ToList()),
-                    Description = item.GetExercise().Description,
-                    SuperSetId = item.SuperSetId,
-                    TagsValue = ExerciseExtensions.ConvertTagListToInt(item.Tags),
-                    CodeNum = item.CodeNum,
-                    WeightAndRepsString = TrainingExerciseViewModelExtensions.ConvertJson(item.Tags, item),
-                });
+                App.Database.SaveLastTrainingExerciseItem(TrainingExerciseMapper.ToLastTrainingExercise(item, id));
             }
         }
     }
@@ -501,15 +485,7 @@ public partial class TrainingImplementPage : ContentPage
             foreach (var trainingExerciseViewModel in superSet)
             {
                 order++;
-                App.Database.SaveTrainingExerciseItem(new TrainingExerciseComm()
-                {
-                    ExerciseId = trainingExerciseViewModel.ExerciseId,
-                    TrainingId = TrainingItem.Id,
-                    OrderNumber = order,
-                    Id = trainingExerciseViewModel.TrainingExerciseId,
-                    SuperSetId = trainingExerciseViewModel.SuperSetId,
-                    WeightAndRepsString = TrainingExerciseViewModelExtensions.ConvertJson(trainingExerciseViewModel.Tags, trainingExerciseViewModel),
-                });
+                App.Database.SaveTrainingExerciseItem(TrainingExerciseMapper.ToEntity(trainingExerciseViewModel, TrainingItem.Id, order));
             }
         }
     }
@@ -538,7 +514,7 @@ public partial class TrainingImplementPage : ContentPage
                         continue;
                     }
 
-                    var weightAndRepsString = TrainingExerciseViewModelExtensions.ConvertJson(item.Tags, item);
+                    var weightAndRepsString = TrainingExerciseMapper.ToWeightAndRepsString(item);
 
                     if (item.CodeNum > 0)
                     {
@@ -609,7 +585,7 @@ public partial class TrainingImplementPage : ContentPage
             exerciseItem.TrainingId = TrainingItem.Id;
             exerciseItem.OrderNumber = Items.Count - 1;
             TrainingItem.AddExercise(exerciseItem);
-            var id = App.Database.SaveTrainingExerciseItem(exerciseItem.GetTrainingExerciseComm());
+            var id = App.Database.SaveTrainingExerciseItem(TrainingExerciseMapper.ToEntity(exerciseItem));
             exerciseItem.TrainingExerciseId = id;
         }
 

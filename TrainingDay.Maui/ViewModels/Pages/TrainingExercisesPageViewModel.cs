@@ -1,11 +1,14 @@
 ﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using TrainingDay.Maui.Controls;
+using TrainingDay.Maui.Controls.PopUp;
 using TrainingDay.Maui.Extensions;
+using TrainingDay.Maui.Mappers;
+using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Resources.Strings;
@@ -132,7 +135,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         {
             exerciseItem.TrainingId = Training.Id;
             exerciseItem.OrderNumber = orderNumber;
-            var id = App.Database.SaveTrainingExerciseItem(exerciseItem.GetTrainingExerciseComm());
+            var id = App.Database.SaveTrainingExerciseItem(TrainingExerciseMapper.ToEntity(exerciseItem));
             exerciseItem.TrainingExerciseId = id;
             Training.AddExercise(exerciseItem);
             OnPropertyChanged(nameof(Training.Exercises));
@@ -159,7 +162,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
                     sender.SuperSetNum = 0;
                     sender.IsCheckBoxVisible = true;
                     CheckSuperSetExist(id);
-                    App.Database.SaveTrainingExerciseItem(sender.GetTrainingExerciseComm());
+                    App.Database.SaveTrainingExerciseItem(TrainingExerciseMapper.ToEntity(sender));
                 }
             }
         }
@@ -216,7 +219,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
             item.SuperSetId = 0;
             item.SuperSetNum = 0;
             item.IsCheckBoxVisible = true;
-            App.Database.SaveTrainingExerciseItem(item.GetTrainingExerciseComm());
+            App.Database.SaveTrainingExerciseItem(TrainingExerciseMapper.ToEntity(item));
             App.Database.DeleteSuperSetItem(supersetId);
         }
     }
@@ -279,7 +282,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
                 trainingExerciseViewModel.SuperSetId = id;
                 trainingExerciseViewModel.SuperSetNum = superSetNum;
                 trainingExerciseViewModel.IsSelected = false;
-                App.Database.SaveTrainingExerciseItem(trainingExerciseViewModel.GetTrainingExerciseComm());
+                App.Database.SaveTrainingExerciseItem(TrainingExerciseMapper.ToEntity(trainingExerciseViewModel));
             }
         }
     }
@@ -360,8 +363,15 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         {
             UpdateTrainingListToMoveOrCopy();
 
-            var param = new Dictionary<string, object> { { "Context", this } };
-            await Shell.Current.GoToAsync(nameof(TrainingExercisesMoveOrCopy), param);
+            // Dismissing the popup keeps the selection mode, so the user can pick again or cancel from the page
+            await Shell.Current.ShowPopupAsync(new MoveOrCopyExercisesPopup { BindingContext = this }, new PopupOptions
+            {
+                Shape = new Microsoft.Maui.Controls.Shapes.RoundRectangle
+                {
+                    CornerRadius = new CornerRadius(20),
+                    StrokeThickness = 0,
+                },
+            });
         }
         else
         {
@@ -388,7 +398,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
     private async Task AcceptTrainingForMoveOrCopy()
     {
-        await Shell.Current.GoToAsync("..");
+        await Shell.Current.ClosePopupAsync();
 
         var selectedItems = Training.Exercises.Where(item => item.IsSelected).Select(item => item.Clone()).ToList();
         if (SelectedTrainingForCopyOrMove != null && SelectedTrainingForCopyOrMove.Id != 0)
@@ -396,7 +406,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
             while (selectedItems.Count != 0)
             {
                 var model = selectedItems[0];
-                var ex1 = model.GetTrainingExerciseComm();
+                var ex1 = TrainingExerciseMapper.ToEntity(model);
                 if (CurrentAction == ExerciseCheckBoxAction.Move)
                 {
                     App.Database.DeleteTrainingExerciseItem(ex1.Id);
@@ -424,11 +434,11 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
 
     private async Task CreateTrainingFromSelectedExercises()
     {
+        await Shell.Current.ClosePopupAsync();
+
         var result = await MessageManager.DisplayPromptAsync(Resources.Strings.AppResources.CreateNewString, Resources.Strings.AppResources.EnterTrainingName, Resources.Strings.AppResources.OkString, Resources.Strings.AppResources.CancelString, Resources.Strings.AppResources.NameString);
         if (result.IsNotNullOrEmpty())
         {
-            await Shell.Current.GoToAsync("..");
-
             var id = App.Database.SaveTrainingItem(new TrainingEntity()
             {
                 Title = result,
@@ -438,7 +448,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
             while (selectedItems.Count != 0)
             {
                 var model = selectedItems[0];
-                var ex1 = model.GetTrainingExerciseComm();
+                var ex1 = TrainingExerciseMapper.ToEntity(model);
                 if (CurrentAction == ExerciseCheckBoxAction.Move)
                 {
                     App.Database.DeleteTrainingExerciseItem(ex1.Id);
@@ -483,29 +493,36 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
     {
         LoggingService.TrackEvent($"{GetType().Name}: ShowTrainingSettingsPage");
 
-        var action = await Shell.Current.DisplayActionSheetAsync(AppResources.ChoseAction, AppResources.CancelString, null, 
-            AppResources.ShareTrainingString, 
-            AppResources.SuperSetControl, 
-            AppResources.MoveString, 
-            AppResources.CopyString);
+        var action = await MessageManager.DisplayActionSheet(AppResources.ChoseAction, AppResources.CancelString,
+            new ActionSheetOption<TrainingSettingsAction>(TrainingSettingsAction.Share, AppResources.ShareTrainingString),
+            new ActionSheetOption<TrainingSettingsAction>(TrainingSettingsAction.SuperSet, AppResources.SuperSetControl),
+            new ActionSheetOption<TrainingSettingsAction>(TrainingSettingsAction.Move, AppResources.MoveString),
+            new ActionSheetOption<TrainingSettingsAction>(TrainingSettingsAction.Copy, AppResources.CopyString));
 
         LoggingService.TrackEvent($"{GetType().Name}: ShowTrainingSettingsPage finished with {action}");
-        if(action == AppResources.ShareTrainingString)
+        switch (action)
         {
-            ShareTraining();
+            case TrainingSettingsAction.Share:
+                ShareTraining();
+                break;
+            case TrainingSettingsAction.SuperSet:
+                await InitSuperSetModeAsync();
+                break;
+            case TrainingSettingsAction.Move:
+                StartMoveExercises();
+                break;
+            case TrainingSettingsAction.Copy:
+                StartCopyExercise();
+                break;
         }
-        else if (action == AppResources.SuperSetControl)
-        {
-            await InitSuperSetModeAsync();
-        }
-        else if (action == AppResources.MoveString)
-        {
-            StartMoveExercises();
-        }
-        else if (action == AppResources.CopyString)
-        {
-            StartCopyExercise();
-        }
+    }
+
+    private enum TrainingSettingsAction
+    {
+        Share,
+        SuperSet,
+        Move,
+        Copy,
     }
 
     private void SaveNewExerciseOrder()
@@ -514,15 +531,7 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         foreach (var item in Training.Exercises)
         {
             order++;
-            App.Database.SaveTrainingExerciseItem(new TrainingExerciseEntity()
-            {
-                ExerciseId = item.ExerciseId,
-                TrainingId = Training.Id,
-                OrderNumber = order,
-                Id = item.TrainingExerciseId,
-                SuperSetId = item.SuperSetId,
-                WeightAndRepsString = TrainingExerciseViewModelExtensions.ConvertJson(item.Tags, item),
-            });
+            App.Database.SaveTrainingExerciseItem(TrainingExerciseMapper.ToEntity(item, Training.Id, order));
         }
     }
 

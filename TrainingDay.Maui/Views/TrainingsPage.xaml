@@ -6,7 +6,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              Shell.NavBarIsVisible="True"
-             x:Class="TrainingDay.Maui.Views.TrainingItemsBasePage"
+             x:Class="TrainingDay.Maui.Views.TrainingsPage"
              x:Name="Page">
     <ContentPage.Resources>
         <Color x:Key="SecondaryTextColorLight">#404040</Color>
@@ -78,47 +78,44 @@
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Border x:Name="chip" HeightRequest="36" Padding="14,0" StrokeShape="RoundRectangle 18" StrokeThickness="1"
-                            VerticalOptions="Center" SemanticProperties.Description="{Binding Key}">
-                        <Border.Style>
-                            <Style TargetType="Border">
-                                <Setter Property="BackgroundColor" Value="Transparent"/>
-                                <Setter Property="Stroke" Value="{StaticResource Gray400}"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsSelected}" Value="True" TargetType="Border">
-                                        <Setter Property="BackgroundColor" Value="{StaticResource Main}"/>
-                                        <Setter Property="Stroke" Value="{StaticResource Main}"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Border.Style>
-                        <Border.Behaviors>
+                    <!-- TouchBehavior sits on a background-less wrapper: it caches the background of the element it is attached to
+                         when attaching and restores it later, which would keep a chip that started selected orange forever -->
+                    <Grid x:Name="chip" VerticalOptions="Center" SemanticProperties.Description="{Binding Key}">
+                        <Grid.Behaviors>
                             <toolkit:TouchBehavior
                                 PressedOpacity="0.7"
                                 Command="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.ActivateGroupCommand}"
                                 CommandParameter="{Binding Source={x:Reference chip}, Path=BindingContext}"
                                 LongPressCommand="{Binding Source={x:Reference ItemsListView}, Path=BindingContext.GroupLongPressedCommand}"
                                 LongPressCommandParameter="{Binding Source={x:Reference chip}, Path=BindingContext}"/>
-                        </Border.Behaviors>
-                        <Label VerticalOptions="Center" FontSize="Body">
-                            <Label.Style>
-                                <Style TargetType="Label">
+                        </Grid.Behaviors>
+                        <Border HeightRequest="36" Padding="14,0" StrokeShape="RoundRectangle 18" StrokeThickness="1">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="BackgroundColor" Value="Transparent"/>
+                                    <Setter Property="Stroke" Value="{StaticResource Gray400}"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsSelected}" Value="True" TargetType="Label">
-                                            <Setter Property="TextColor" Value="Black"/>
-                                            <Setter Property="FontAttributes" Value="Bold"/>
+                                        <DataTrigger Binding="{Binding IsSelected}" Value="True" TargetType="Border">
+                                            <Setter Property="BackgroundColor" Value="{StaticResource Main}"/>
+                                            <Setter Property="Stroke" Value="{StaticResource Main}"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
-                            </Label.Style>
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{Binding Key}"/>
-                                    <Span Text="{Binding Count, StringFormat=' {0}'}"/>
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                    </Border>
+                            </Border.Style>
+                            <Label Text="{Binding Key}" VerticalOptions="Center" FontSize="Body">
+                                <Label.Style>
+                                    <Style TargetType="Label">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsSelected}" Value="True" TargetType="Label">
+                                                <Setter Property="TextColor" Value="Black"/>
+                                                <Setter Property="FontAttributes" Value="Bold"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Label.Style>
+                            </Label>
+                        </Border>
+                    </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
             <CollectionView.Footer>

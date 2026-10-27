@@ -26,7 +26,7 @@
                     <Grid VerticalOptions="Center" HorizontalOptions="Center" Padding="30">
                         <ActivityIndicator IsRunning="{Binding IsInitialLoading}" IsVisible="{Binding IsInitialLoading}" Color="{StaticResource Main}"
                                            WidthRequest="40" HeightRequest="40"/>
-                        <VerticalStackLayout Spacing="8" IsVisible="{Binding IsInitialLoading, Converter={StaticResource InverseBooleanConverter}}">
+                        <VerticalStackLayout Spacing="8" IsVisible="{Binding IsInitialLoading, Converter={StaticResource InvertedBoolConverter}}">
                             <Label HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.NoSocialWorkoutsString}" FontSize="18" FontAttributes="Bold"/>
                         </VerticalStackLayout>
                     </Grid>

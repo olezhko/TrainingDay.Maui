@@ -21,8 +21,6 @@
     </ContentPage.BindingContext>
 
     <ContentPage.Resources>
-        <toolkit:IsNotNullConverter x:Key="IsNotNullConverter" />
-
         <Style TargetType="Border" x:Key="StatTileStyle" BasedOn="{StaticResource BorderCellStyle}">
             <Setter Property="Padding" Value="14,12" />
         </Style>

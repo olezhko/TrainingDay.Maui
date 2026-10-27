@@ -2280,6 +2280,15 @@ namespace TrainingDay.Maui.Resources.Strings {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Favourite.
+        /// </summary>
+        internal static string FavouriteString {
+            get {
+                return ResourceManager.GetString("FavouriteString", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Equipment.
         /// </summary>
         internal static string EquipmentString {

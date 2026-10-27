@@ -876,4 +876,7 @@
   <data name="StatFavoriteDayCaption" xml:space="preserve">
     <value>Любимый день</value>
   </data>
+  <data name="FavouriteString" xml:space="preserve">
+    <value>Избранное</value>
+  </data>
 </root>

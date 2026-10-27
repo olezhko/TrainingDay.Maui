@@ -10,7 +10,7 @@ public partial class RepsAndWeightControl : ContentView
 		InitializeComponent();
 	}
 
-    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(WeightAndRepsViewModel), typeof(RepsAndWeightControl), new WeightAndRepsViewModel(5, 15), defaultBindingMode: BindingMode.TwoWay);
+    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(WeightAndRepsViewModel), typeof(RepsAndWeightControl), defaultBindingMode: BindingMode.TwoWay, defaultValueCreator: _ => WeightAndRepsViewModel.CreateDefault());
     public WeightAndRepsViewModel Value
     {
         get { return (WeightAndRepsViewModel)GetValue(ValueProperty); }

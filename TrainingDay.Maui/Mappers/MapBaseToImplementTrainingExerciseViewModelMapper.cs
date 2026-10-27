@@ -1,7 +1,6 @@
-﻿using System.Collections.ObjectModel;
-using TrainingDay.Maui.ViewModels;
+﻿using TrainingDay.Maui.ViewModels;
 
-namespace TrainingDay.Maui.Mapper
+namespace TrainingDay.Maui.Mappers
 {
     public static class MapBaseSuperSetToImplementMapper
     {

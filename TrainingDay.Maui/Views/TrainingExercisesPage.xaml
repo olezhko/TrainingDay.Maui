@@ -73,7 +73,14 @@
                                         </controls:ImageCache.GestureRecognizers>
                                     </controls:ImageCache>
 
-                                    <Grid VerticalOptions="End" HeightRequest="15" IsVisible="{Binding SuperSetId,Converter={StaticResource SuperSetMenuConverter}}" >
+                                    <Grid VerticalOptions="End" HeightRequest="15">
+                                        <Grid.IsVisible>
+                                            <Binding Path="SuperSetId" Converter="{StaticResource IsNotEqualConverter}">
+                                                <Binding.ConverterParameter>
+                                                    <x:Int32>0</x:Int32>
+                                                </Binding.ConverterParameter>
+                                            </Binding>
+                                        </Grid.IsVisible>
                                         <RoundRectangle Stroke="RoyalBlue" CornerRadius="0,0,5,5" Fill="RoyalBlue" />
                                         <Label HorizontalOptions="Center" FontSize="11" VerticalOptions="End" >
                                             <Label.FormattedText>
@@ -108,7 +115,7 @@
 
                             <ImageButton Grid.Column="2" WidthRequest="30" HeightRequest="30" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="close.png" 
                                              Command="{Binding DeleteExerciseCommand, Source={RelativeSource AncestorType={x:Type viewModels:TrainingExercisesPageViewModel}}, x:DataType=viewModels:TrainingExercisesPageViewModel}" CommandParameter="{Binding }" BackgroundColor="Transparent" 
-                                             IsVisible="{Binding IsCheckBoxVisible,Converter={StaticResource InverseBooleanConverter}}">
+                                             IsVisible="{Binding IsCheckBoxVisible,Converter={StaticResource InvertedBoolConverter}}">
                                 <ImageButton.Behaviors>
                                     <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                                 </ImageButton.Behaviors>
@@ -128,7 +135,7 @@
                             <Setter TargetName="ExerciseActionGrid" Property="IsVisible" Value="False"/>
                         </VisualState.Setters>
                         <VisualState.StateTriggers>
-                            <StateTrigger IsActive="{Binding IsExercisesCheckBoxVisible, Converter={StaticResource InverseBooleanConverter}}"/>
+                            <StateTrigger IsActive="{Binding IsExercisesCheckBoxVisible, Converter={StaticResource InvertedBoolConverter}}"/>
                         </VisualState.StateTriggers>
                     </VisualState>
                     <VisualState Name="StateB">

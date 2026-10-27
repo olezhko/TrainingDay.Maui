@@ -3,14 +3,14 @@ using TrainingDay.Maui.ViewModels.Pages;
 
 namespace TrainingDay.Maui.Views;
 
-public partial class TrainingItemsBasePage : ContentPage
+public partial class TrainingsPage : ContentPage
 {
-    private readonly TrainingItemsBasePageViewModel _vm;
+    private readonly TrainingsPageViewModel _vm;
 
-    public TrainingItemsBasePage()
+    public TrainingsPage()
     {
         InitializeComponent();
-        BindingContext = _vm = new TrainingItemsBasePageViewModel();
+        BindingContext = _vm = new TrainingsPageViewModel();
 
         NavigationPage.SetBackButtonTitle(this, AppResources.TrainingsBaseString);
     }
@@ -18,7 +18,7 @@ public partial class TrainingItemsBasePage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await _vm.LoadItemsAsync(true);
+        await _vm.LoadItemsAsync();
 
         if (!_vm.ItemsGrouped.Any())
         {

@@ -1,10 +1,9 @@
 ﻿using CommunityToolkit.Maui.Extensions;
 using Microsoft.Maui.Controls.Shapes;
-using System.Collections.ObjectModel;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Resources.Strings;
 
-namespace TrainingDay.Maui.Controls
+namespace TrainingDay.Maui.Controls.PopUp
 {
     public static class PopupBuilders
     {
@@ -46,6 +45,7 @@ namespace TrainingDay.Maui.Controls
         }
 
         internal static View BuildWorkoutGroupsPopup(
+            IReadOnlyList<TrainingUnionEntity> trainingsGroups,
             Action<TrainingUnionEntity> acceptGroup,
             Action createNewGroup)
         {
@@ -105,8 +105,7 @@ namespace TrainingDay.Maui.Controls
                 }
             };
 
-            var trainingsGroups = new ObservableCollection<TrainingUnionEntity>(App.Database.GetTrainingsGroups());
-            if (!trainingsGroups.Any())
+            if (trainingsGroups.Count == 0)
             {
                 return verticalStack;
             }
@@ -114,7 +113,7 @@ namespace TrainingDay.Maui.Controls
             Picker selectPicker = new()
             {
                 Title = AppResources.SelectGroup,
-                ItemsSource = trainingsGroups,
+                ItemsSource = trainingsGroups.ToList(),
                 FontSize = 14,
                 ItemDisplayBinding = new Binding { Path = "Name" },
                 HorizontalOptions = LayoutOptions.Fill,

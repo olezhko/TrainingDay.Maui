@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels"
+             xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              x:Class="TrainingDay.Maui.Controls.RepsAndWeightControl"
              x:Name="Self">
     <ContentView.BindingContext>
@@ -31,7 +32,7 @@
                 Margin="5,0,0,0"
                 FontSize="Medium"
                 Keyboard="Numeric"
-                IsVisible="{Binding Source={x:Reference Self}, Path=IsOnlyReps, Converter={StaticResource InverseBooleanConverter}}"
+                IsVisible="{Binding Source={x:Reference Self}, Path=IsOnlyReps, Converter={StaticResource InvertedBoolConverter}}"
                 MaxLength="4"
                 Text="{Binding WeightString}"
                 MinimumWidthRequest="60" />
@@ -39,12 +40,13 @@
             <BoxView
                 Grid.Column="1"
                 HeightRequest="40"
-                IsVisible="{Binding Source={x:Reference Self}, Path=IsOnlyReps, Converter={StaticResource InverseBooleanConverter}}"
+                IsVisible="{Binding Source={x:Reference Self}, Path=IsOnlyReps, Converter={StaticResource InvertedBoolConverter}}"
                 VerticalOptions="Center"
                 WidthRequest="2"
                 Color="{DynamicResource SeparatorColor}" />
 
-            <ImageButton Grid.Column="3" Margin="0" CornerRadius="17" Clicked="DeleteButton_Clicked" HeightRequest="34" WidthRequest="34" HorizontalOptions="Center" Source="remove.png" VerticalOptions="Fill">
+            <ImageButton Grid.Column="3" Margin="0" CornerRadius="17" Clicked="DeleteButton_Clicked" HeightRequest="34" WidthRequest="34" HorizontalOptions="Center" Source="remove.png" VerticalOptions="Fill"
+                         SemanticProperties.Description="{x:Static resx:AppResources.RemoveSet}">
                 <ImageButton.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Dark=White,Light=Black}" />
                 </ImageButton.Behaviors>

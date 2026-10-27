@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
+             xmlns:vm="clr-namespace:TrainingDay.Maui.ViewModels"
+             xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
+             x:Class="TrainingDay.Maui.Controls.PopUp.MoveOrCopyExercisesPopup"
+             x:DataType="pages:TrainingExercisesPageViewModel">
+    <!-- Destination picker for bulk move/copy of selected exercises. BindingContext is the training exercises page view model -->
+    <VerticalStackLayout Style="{StaticResource PopupLayout}" Spacing="12" Padding="20" WidthRequest="320">
+        <Label Text="{Binding ExerciseActionString}" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center"
+               SemanticProperties.HeadingLevel="Level1"/>
+
+        <ScrollView MaximumHeightRequest="340" IsVisible="{Binding TrainingItems, Converter={StaticResource IsListNotNullOrEmptyConverter}}">
+            <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding TrainingItems}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="vm:TrainingViewModel">
+                        <Border Style="{StaticResource BorderCellStyle}" Padding="14,0" MinimumHeightRequest="50"
+                                SemanticProperties.Description="{Binding Title}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Training_Tapped" CommandParameter="{Binding}"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="{Binding Title}" FontSize="16" VerticalOptions="Center" HorizontalTextAlignment="Center"
+                                   MaxLines="2" LineBreakMode="TailTruncation"/>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Grid ColumnDefinitions="*,Auto,*" ColumnSpacing="10" IsVisible="{Binding TrainingItems, Converter={StaticResource IsListNotNullOrEmptyConverter}}">
+            <BoxView HeightRequest="1" VerticalOptions="Center" Color="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}"/>
+            <Label Grid.Column="1" Text="{x:Static resx:AppResources.Or}" FontSize="14" VerticalOptions="Center"
+                   TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}"/>
+            <BoxView Grid.Column="2" HeightRequest="1" VerticalOptions="Center" Color="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}"/>
+        </Grid>
+
+        <Button Style="{StaticResource ActionButton}" Text="{x:Static resx:AppResources.CreateNewString}" HeightRequest="44" FontSize="15"
+                Command="{Binding CreateTrainingFromSelectedExercisesCommand}"/>
+
+        <Button Style="{StaticResource SecondActionButton}" Text="{x:Static resx:AppResources.CancelString}" HeightRequest="44" FontSize="15"
+                Clicked="Cancel_Clicked"/>
+    </VerticalStackLayout>
+</ContentView>

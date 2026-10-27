@@ -3,12 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              Shell.TabBarIsVisible="False"
              HideSoftInputOnTapped="True"
              x:Class="TrainingDay.Maui.Views.TrainingExerciseItemPage">
     <Shell.TitleView>
         <Grid Style="{StaticResource PageTitleViewStyle}" ColumnDefinitions="*,auto">
-            <Label Style="{StaticResource PageTitleStyle}" x:Name="TitleLabel" Grid.Column="0"/>
+            <Label Style="{StaticResource PageTitleStyle}" Grid.Column="0" Text="{x:Static resx:AppResources.Editing}"/>
 
             <ImageButton Style="{StaticResource HeaderIconButtonStyle}" Grid.Column="1" Source="save.png" Clicked="Save_clicked"
                          SemanticProperties.Description="{x:Static resx:AppResources.SaveString}"
@@ -20,17 +21,21 @@
         </Grid>
     </Shell.TitleView>
 
-    <ScrollView Orientation="Vertical">
-        <Grid>
-            <controls:ExerciseView x:Name="ExerciseView" ImageTappedEvent="ExerciseView_OnImageTappedEvent" />
+    <Grid>
+        <ScrollView Orientation="Vertical">
+            <controls:ExerciseView x:Name="ExerciseView" Margin="5,5,5,15" ImageTappedEvent="ExerciseView_OnImageTappedEvent" />
+        </ScrollView>
 
-            <Border HeightRequest="250" WidthRequest="250" IsVisible="False" x:Name="ImageFrame" VerticalOptions="Center" HorizontalOptions="Center">
-                <Image x:Name="FullscreenImage">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="FullscreenImageTapped"/>
-                    </Image.GestureRecognizers>
-                </Image>
+        <!-- Enlarged image: covers the whole screen (outside the ScrollView), tap anywhere to close -->
+        <Grid x:Name="ImageFrame" IsVisible="False" BackgroundColor="#B3000000" Margin="-5">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="FullscreenImageTapped"/>
+            </Grid.GestureRecognizers>
+
+            <Border StrokeShape="RoundRectangle 20" Stroke="Transparent" BackgroundColor="White" Padding="10" Margin="20"
+                    HorizontalOptions="Center" VerticalOptions="Center">
+                <Image x:Name="FullscreenImage" Aspect="AspectFit" WidthRequest="320" HeightRequest="320"/>
             </Border>
         </Grid>
-    </ScrollView>
+    </Grid>
 </ContentPage>

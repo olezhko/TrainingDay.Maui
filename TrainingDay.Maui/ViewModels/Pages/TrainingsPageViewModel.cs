@@ -5,8 +5,9 @@ using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Common.Extensions;
-using TrainingDay.Maui.Controls;
+using TrainingDay.Maui.Controls.PopUp;
 using TrainingDay.Maui.Extensions;
+using TrainingDay.Maui.Mappers;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Models.Messages;
@@ -17,7 +18,7 @@ using TrainingDay.Maui.Views;
 
 namespace TrainingDay.Maui.ViewModels.Pages;
 
-public class TrainingItemsBasePageViewModel : BaseViewModel
+public class TrainingsPageViewModel : BaseViewModel
 {
     private static readonly TimeSpan UndoDuration = TimeSpan.FromSeconds(5);
     private const int SummaryMusclesCount = 2;
@@ -30,7 +31,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
     private string unfinishedTrainingTitle = string.Empty;
     private string unfinishedTrainingElapsed = string.Empty;
 
-    public TrainingItemsBasePageViewModel()
+    public TrainingsPageViewModel()
     {
         ItemsGrouped = new ObservableCollection<Grouping<string, TrainingViewModel>>();
         ItemsGrouped.CollectionChanged += (_, _) => UpdateViewState();
@@ -57,11 +58,10 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
     #region Load
     private sealed record TrainingsPageData(
         List<Grouping<string, TrainingViewModel>> Groups,
-        int TrainingsCount,
         int WorkoutsThisWeek,
         TrainingSerialize? UnfinishedTraining);
 
-    public async Task LoadItemsAsync(bool isOverride = false)
+    public async Task LoadItemsAsync()
     {
         TrainingsPageData data;
         try
@@ -78,11 +78,13 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         WeeklySummary = AppResources.WorkoutsThisWeekFormat.Fill(data.WorkoutsThisWeek);
         ApplyUnfinishedTraining(data.UnfinishedTraining);
 
-        var existCount = ItemsGrouped.Count;
-        if (isOverride && ItemsGrouped.Any() && existCount == data.TrainingsCount)
+        // always rebuild: cards show per-training data (last performed, next up) that changes without the count changing
+        var selectedGroupId = ItemsGrouped.FirstOrDefault(g => g.IsSelected)?.Id;
+        var groupToKeep = data.Groups.FirstOrDefault(g => g.Id == selectedGroupId);
+        if (groupToKeep != null)
         {
-            MarkLoaded();
-            return;
+            data.Groups.ForEach(g => g.IsSelected = false);
+            groupToKeep.IsSelected = true;
         }
 
         ItemsGrouped.Clear();
@@ -147,7 +149,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         var weekStart = now.Date.AddDays(-(((int)now.DayOfWeek - (int)culture.DateTimeFormat.FirstDayOfWeek + 7) % 7));
         var workoutsThisWeek = lastTrainings.Count(item => item.Time >= weekStart);
 
-        return new TrainingsPageData(tempGroups, trainingsItems.Count, workoutsThisWeek, ReadUnfinishedTraining());
+        return new TrainingsPageData(tempGroups, workoutsThisWeek, ReadUnfinishedTraining());
     }
 
     private static string BuildSummary(List<ExerciseEntity?>? exercises)
@@ -279,7 +281,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         WeakReferenceMessenger.Default.Register<IncomingTrainingAddedMessage>(this, (r, args) =>
         {
             MainThread.BeginInvokeOnMainThread(async () => await LoadItemsAsync());
-            LoggingService.TrackEvent($"TrainingItemsBasePageViewModel: Added Incoming Training");
+            LoggingService.TrackEvent($"TrainingsPageViewModel: Added Incoming Training");
         });
     }
 
@@ -465,14 +467,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         foreach (var item in exercises)
         {
             // save order numbers
-            App.Database.SaveTrainingExerciseItem(new TrainingExerciseEntity()
-            {
-                ExerciseId = item.ExerciseId,
-                TrainingId = id,
-                OrderNumber = order,
-                SuperSetId = item.SuperSetId,
-                WeightAndRepsString = TrainingExerciseViewModelExtensions.ConvertJson(item.Tags, item),
-            });
+            App.Database.SaveTrainingExerciseItem(TrainingExerciseMapper.ToNewEntity(item, id, order));
             order++;
         }
 
@@ -486,8 +481,9 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
     {
         LoggingService.TrackEvent($"{GetType().Name}: AddToGroup started");
 
+        var trainingsGroups = await Task.Run(() => App.Database.GetTrainingsGroups().ToList());
         var result = await Shell.Current.ShowPopupAsync(
-            PopupBuilders.BuildWorkoutGroupsPopup(async accept =>
+            PopupBuilders.BuildWorkoutGroupsPopup(trainingsGroups, async accept =>
                 {
                     await GroupSelected(item, accept.Id);
                 }, async () => await CreateNewGroup(item)
@@ -648,15 +644,25 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
             return;
 
         PerformLongPressHaptic();
-        var action = await MessageManager.DisplayActionSheet(group.Key, AppResources.CancelString, AppResources.RenameString, AppResources.DeleteGroupString);
-        if (action == AppResources.RenameString)
+        var action = await MessageManager.DisplayActionSheet(group.Key, AppResources.CancelString,
+            new ActionSheetOption<GroupAction>(GroupAction.Rename, AppResources.RenameString),
+            new ActionSheetOption<GroupAction>(GroupAction.Delete, AppResources.DeleteGroupString));
+
+        switch (action)
         {
-            await RenameGroup(group);
+            case GroupAction.Rename:
+                await RenameGroup(group);
+                break;
+            case GroupAction.Delete:
+                await DeleteGroup(group);
+                break;
         }
-        else if (action == AppResources.DeleteGroupString)
-        {
-            await DeleteGroup(group);
-        }
+    }
+
+    private enum GroupAction
+    {
+        Rename,
+        Delete,
     }
 
     private async Task RenameGroup(Grouping<string, TrainingViewModel> group)
@@ -887,25 +893,7 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
         {
             try
             {
-                var item = new ImplementTrainingExerciseViewModel()
-                {
-                    TrainingExerciseId = trainingExerciseSerialize.TrainingExerciseId,
-                    ExerciseId = trainingExerciseSerialize.ExerciseId,
-                    TrainingId = trainingExerciseSerialize.TrainingId,
-                    IsNotFinished = trainingExerciseSerialize.IsNotFinished,
-                    Muscles = new ObservableCollection<MuscleViewModel>(MuscleViewModelExtensions.ConvertFromStringToList(trainingExerciseSerialize.Muscles)),
-                    OrderNumber = trainingExerciseSerialize.OrderNumber,
-                    Name = trainingExerciseSerialize.Name,
-                    SuperSetId = trainingExerciseSerialize.SuperSetId,
-                    SuperSetNum = trainingExerciseSerialize.SuperSetNum,
-                    IsSkipped = trainingExerciseSerialize.IsSkipped,
-                    Tags = ExerciseExtensions.ConvertTagIntToList(trainingExerciseSerialize.TagsValue).ToList(),
-                    Description = DescriptionViewModel.ConvertFromJson(trainingExerciseSerialize.Description),
-                    CodeNum = trainingExerciseSerialize.CodeNum,
-                };
-
-                TrainingExerciseViewModelExtensions.ConvertJsonBack(item, trainingExerciseSerialize.WeightAndRepsString);
-                training.AddExercise(item);
+                training.AddExercise(TrainingExerciseMapper.FromSerialize(trainingExerciseSerialize));
             }
             catch (Exception e)
             {
@@ -961,36 +949,39 @@ public class TrainingItemsBasePageViewModel : BaseViewModel
 
         LoggingService.TrackEvent($"{GetType().Name}: LongPressed started");
 
-        var action = await MessageManager.DisplayActionSheet(AppResources.ChoseAction, AppResources.CancelString, AppResources.RemoveString, AppResources.Duplicate, item.Group == null ? AppResources.TrainingToGroupString : AppResources.TrainingUnGroupString.Fill(item.Group.Name));
+        var groupOption = item.Group == null
+            ? new ActionSheetOption<TrainingAction>(TrainingAction.AddToGroup, AppResources.TrainingToGroupString)
+            : new ActionSheetOption<TrainingAction>(TrainingAction.RemoveFromGroup, AppResources.TrainingUnGroupString.Fill(item.Group.Name));
+
+        var action = await MessageManager.DisplayActionSheet(AppResources.ChoseAction, AppResources.CancelString,
+            new ActionSheetOption<TrainingAction>(TrainingAction.Remove, AppResources.RemoveString),
+            new ActionSheetOption<TrainingAction>(TrainingAction.Duplicate, AppResources.Duplicate),
+            groupOption);
         LoggingService.TrackEvent($"{GetType().Name}: LongPressed finished with {action}");
-        if (action == AppResources.CancelString)
-        {
-            return;
-        }
 
-        if (action == AppResources.RemoveString)
+        switch (action)
         {
-            await DeleteTrainingWithUndo(item);
-            return;
+            case TrainingAction.Remove:
+                await DeleteTrainingWithUndo(item);
+                break;
+            case TrainingAction.Duplicate:
+                DuplicateSelectedTraining(item);
+                break;
+            case TrainingAction.AddToGroup:
+                await AddToGroupAsync(item);
+                break;
+            case TrainingAction.RemoveFromGroup:
+                DeleteFromGroup(item);
+                break;
         }
+    }
 
-        if (action == AppResources.Duplicate)
-        {
-            DuplicateSelectedTraining(item);
-            return;
-        }
-
-        if (action == AppResources.TrainingToGroupString)
-        {
-            await AddToGroupAsync(item);
-            return;
-        }
-
-        if (item.Group != null && action == AppResources.TrainingUnGroupString.Fill(item.Group.Name))
-        {
-            DeleteFromGroup(item);
-            return;
-        }
+    private enum TrainingAction
+    {
+        Remove,
+        Duplicate,
+        AddToGroup,
+        RemoveFromGroup,
     }
 
     private static void PerformLongPressHaptic()

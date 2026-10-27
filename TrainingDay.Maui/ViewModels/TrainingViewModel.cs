@@ -2,6 +2,7 @@
 using System.Text.Json;
 using TrainingDay.Common.Extensions;
 using TrainingDay.Maui.Extensions;
+using TrainingDay.Maui.Mappers;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Models.Serialize;
@@ -150,22 +151,7 @@ public class TrainingViewModel : BaseViewModel
         };
         foreach (var trainingExerciseViewModel in Exercises)
         {
-            serialize.Items.Add(new TrainingExerciseSerialize()
-            {
-                TrainingExerciseId = trainingExerciseViewModel.TrainingExerciseId,
-                SuperSetId = trainingExerciseViewModel.SuperSetId,
-                OrderNumber = trainingExerciseViewModel.OrderNumber,
-                TrainingId = Id,
-                Muscles = MuscleViewModelExtensions.ConvertFromListToString(trainingExerciseViewModel.Muscles.ToList()),
-                ExerciseId = trainingExerciseViewModel.ExerciseId,
-                Description = JsonSerializer.Serialize(trainingExerciseViewModel.Description.Model),
-                Name = trainingExerciseViewModel.Name,
-                SuperSetNum = trainingExerciseViewModel.SuperSetNum,
-
-                TagsValue = ExerciseExtensions.ConvertTagListToInt(trainingExerciseViewModel.Tags),
-                WeightAndRepsString = TrainingExerciseViewModelExtensions.ConvertJson(trainingExerciseViewModel.Tags, trainingExerciseViewModel),
-                CodeNum = trainingExerciseViewModel.CodeNum,
-            });
+            serialize.Items.Add(TrainingExerciseMapper.ToSerialize(trainingExerciseViewModel, Id));
         }
 
         DataManageViewModel.SaveToFile(serialize, filename);

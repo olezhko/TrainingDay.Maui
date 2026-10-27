@@ -14,10 +14,6 @@
              BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}">
     <!-- BindingContext is the history page's view model, set by whoever pushes this page -->
 
-    <ContentPage.Resources>
-        <toolkit:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />
-    </ContentPage.Resources>
-
     <Shell.TitleView>
         <Grid Style="{StaticResource PageTitleViewStyle}" ColumnDefinitions="*,auto">
             <Label Style="{StaticResource PageTitleStyle}" Grid.Column="0" Text="{Binding SelectedTraining.Title}"/>

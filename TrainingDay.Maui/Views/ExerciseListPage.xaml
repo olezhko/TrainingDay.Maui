@@ -44,7 +44,7 @@
         </Grid>
 
         <ActivityIndicator Grid.Row="1" IsVisible="{Binding IsBusy}" IsRunning="True"/>
-        <CollectionView x:Name="ExercisesListView" Grid.Row="1" BackgroundColor="Transparent" IsVisible="{Binding IsBusy,Converter={StaticResource InverseBooleanConverter}}"
+        <CollectionView x:Name="ExercisesListView" Grid.Row="1" BackgroundColor="Transparent" IsVisible="{Binding IsBusy,Converter={StaticResource InvertedBoolConverter}}"
                         ItemsSource="{Binding Items}" ItemsUpdatingScrollMode="KeepScrollOffset" SelectionMode="Single" VerticalScrollBarVisibility="Always">
             <CollectionView.EmptyView>
                 <StackLayout VerticalOptions="Center">

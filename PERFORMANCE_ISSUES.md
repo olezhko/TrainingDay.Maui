@@ -7,11 +7,11 @@ _Last rescan: 2026-09-28._
 | | Count |
 |---|---|
 | Original issues | 38 |
-| ✅ Fixed | 11 (VM-06, VM-07, VM-10, VM-15, XAML-01, DATA-01, DATA-03, DATA-04, DATA-05, DATA-12, SVC-03) |
-| 🟡 Partially addressed (still open) | 2 (DATA-02, VM-08) |
-| ❌ Still open | 28 |
-| 🆕 New issues found in rescan | 21 (1 fixed) |
-| **Total open** | **48** |
+| ✅ Fixed | 13 (VM-01, VM-06, VM-07, VM-10, VM-15, XAML-01, XAML-04, DATA-01, DATA-03, DATA-04, DATA-05, DATA-12, SVC-03) |
+| 🟡 Partially addressed (still open) | 3 (DATA-02, VM-04, VM-08) |
+| ❌ Still open | 25 |
+| 🆕 New issues found in rescan | 21 (1 fixed; VM-17, XAML-07, UI-01 partially) |
+| **Total open** | **46** |
 
 Line numbers were refreshed for all open issues. Status markers: ✅ fixed · 🟡 partially fixed · ❌ open · 🆕 new.
 
@@ -19,20 +19,20 @@ Line numbers were refreshed for all open issues. Status markers: ✅ fixed · �
 
 ## HIGH SEVERITY
 
-### ❌ VM-01 — StatisticsViewModel.cs:24
-`LoadData()` runs 3 synchronous DB reads on UI thread.
-**Fix:** Use `async Task` + `Task.Run` for all DB calls.
+### ✅ VM-01 — StatisticsViewModel.cs — FIXED
+`LoadDataAsync()` builds all statistics inside `Task.Run` and applies the results on the UI thread.
 
 ### ❌ VM-02 — WeightViewAndSetPageViewModel.cs:143
 Sync DB + chart rebuild on UI thread in `PrepareBodyControlItems`.
 **Fix:** Offload to `Task.Run`.
 
-### ❌ VM-03 — TrainingItemsBasePageViewModel.cs:48
+### ❌ VM-03 — TrainingsPageViewModel.cs:48
 `LoadItems()` — 3 sync DB reads on UI thread.
 **Fix:** Convert to `async Task`, wrap DB calls with `Task.Run`.
 
-### ❌ VM-04 — HistoryTrainingPageViewModel.cs:56
+### 🟡 VM-04 — HistoryTrainingPageViewModel.cs:65
 Sync DB + full ObservableCollection rebuild on UI thread.
+**Progress:** the list is no longer rebuilt on every `OnAppearing`; it reloads only on first show, after a delete or after "Start again". Paging appends to the existing groups instead of creating new ones. The reload itself still reads the DB synchronously.
 **Fix:** Offload DB read to `Task.Run`, batch collection updates.
 
 ### ❌ VM-05 — HistoryTrainingPageViewModel.cs:98
@@ -48,7 +48,7 @@ _Follow-up:_ it now runs on **every** appearance — see VM-21.
 - `select * from TrainingExerciseComm where TrainingId = ? order by OrderNumber`
 - `select * from Exercises where _id in (...)`
 
-It returns `(TrainingExerciseEntity, ExerciseEntity)` pairs, and the caller (`TrainingItemsBasePageViewModel.DuplicateSelectedTraining`) builds the `TrainingExerciseViewModel`s, which removes the Repository → ViewModels dependency. Rows pointing to a deleted exercise are skipped (previously `Get<ExerciseEntity>` threw and aborted the duplicate). SQL translation was verified against sqlite-net-e 1.11.
+It returns `(TrainingExerciseEntity, ExerciseEntity)` pairs, and the caller (`TrainingsPageViewModel.DuplicateSelectedTraining`) builds the `TrainingExerciseViewModel`s, which removes the Repository → ViewModels dependency. Rows pointing to a deleted exercise are skipped (previously `Get<ExerciseEntity>` threw and aborted the duplicate). SQL translation was verified against sqlite-net-e 1.11.
 
 ### 🟡 DATA-02 — TrainingExercisesPageViewModel.cs:95, HistoryTrainingPageViewModel.cs:177
 `PrepareTrainingViewModel` is duplicated in 2 ViewModels. Each copy does a full table scan, filters in RAM, and calls `exerciseItems.First(...)` per row (O(n·m)).
@@ -167,7 +167,7 @@ HTTP calls have no `CancellationToken`, so requests continue after navigation.
 Saving a custom exercise with an image **always inserts a new `ImageEntity`** (Id = 0), even when one exists for `new_{id}`. The images table grows on every save, and `Find` returns the oldest row, so a stale image is shown. Deleting an exercise never deletes its image.
 **Fix:** Look up the existing row and update it; delete the image in `Remove_clicked`.
 
-### 🆕 NET-01 — TrainingItemsBasePageViewModel.cs:50-53
+### 🆕 NET-01 — TrainingsPageViewModel.cs:50-53
 `LoadItems()` runs on every appearance of the main tab. Each call dispatches `UpdateFirebaseToken()`, which on iOS makes 4 network calls (`CheckIfValidAsync`, `GetTokenAsync`, `SendFirebaseTokenAsync`, `PostActionAsync(Enter)`). This duplicates the work `App.OnStart` already does and inflates the "Enter" analytics.
 **Fix:** Run once per app session (or on token refresh), not per page appearance.
 
@@ -180,7 +180,7 @@ Each search keystroke calls `UpdateItems()`, with no debounce. Every call:
 The list is also hidden while `IsBusy`, so it flickers on every keystroke.
 **Fix:** Debounce (~300 ms) with a `CancellationTokenSource`; filter the already-loaded `BaseItems` in memory instead of hitting the DB; keep the list visible during filtering.
 
-### 🆕 VM-18 — TrainingItemsBasePageViewModel.cs:117-127
+### 🆕 VM-18 — TrainingsPageViewModel.cs:117-127
 `FillGroupedTraining` creates `new TrainingUnion(union)` (JSON-deserializing `TrainingIDsString`) for **every union for every training**, which is O(T·U) JSON parses. It also runs `lastTrainings.Where(...).OrderByDescending(...)` per training (O(T·L)) and calls `Settings.GetLanguage()` (new `CultureInfo`, see SVC-02) per item.
 **Fix:** Precompute `Dictionary<int trainingId, TrainingUnion>` and `Dictionary<int trainingId, DateTime lastTime>` once per load.
 
@@ -197,7 +197,7 @@ Multi-row writes are not wrapped in `RunInTransaction`, so each row is a separat
 - `App.xaml.cs:164` — `IncomingTraining`
 - `PreparedTrainingsPageViewModel.cs:383` — `SaveNewTrainingViewModelToDatabase`
 - `IWorkoutService.cs:45` — `CreateWorkoutAsync`
-- `TrainingItemsBasePageViewModel.cs:245` — `DuplicateSelectedTraining`
+- `TrainingsPageViewModel.cs:245` — `DuplicateSelectedTraining`
 - `TrainingExercisesPageViewModel.cs:309/439/475` — `CreateSuperSet`, `AcceptTrainingForMoveOrCopy`, `CreateTrainingFromSelectedExercises`
 - `HistoryTrainingPageViewModel.cs:216` — `RemoveLastTraining` (N deletes; use `DELETE ... WHERE LastTrainingId = ?`)
 - `Repository.cs:72/85` — `DeleteBrokenBlogs`, `DeleteUnused`
@@ -205,16 +205,15 @@ Multi-row writes are not wrapped in `RunInTransaction`, so each row is a separat
 **Fix:** Wrap each in `RunInTransaction`; replace delete loops with single `DELETE ... WHERE`.
 
 ### 🆕 XAML-07 — Compiled bindings missing on most pages
-Only 8 XAML files declare `x:DataType`. The busiest list pages use slower reflection-based bindings for every cell:
-- TrainingItemsBasePage
+Only 13 XAML files declare `x:DataType`. These busy pages still use slower reflection-based bindings for every cell:
+- TrainingsPage
 - ExerciseListPage
-- HistoryTrainingPage
-- HistoryTrainingExercisesPage
 - BlogsPage
 - PreparedTrainingsPage
-- StatisticsPage
 - WeightViewAndSetPage
 - SuperSetControl
+
+**Progress:** HistoryTrainingPage, HistoryTrainingExercisesPage, StatisticsPage and FilterPage now use compiled bindings.
 
 **Fix:** Add `x:DataType` to pages and `DataTemplate`s (enable XC0022/XC0025 warnings).
 
@@ -237,8 +236,8 @@ The LINQ chain in `GetSuperSetNum` is repeated on every `AddExercise` call, whic
 ### ✅ VM-15 — HistoryTrainingPageViewModel.cs:18 — FIXED
 The list is now `static readonly` and is `Clear()`ed before re-adding, so it no longer grows unboundedly.
 
-### ❌ XAML-04 — StatisticsPage.xaml:20
-8 hand-written StackLayout blocks should use BindableLayout.
+### ✅ XAML-04 — StatisticsPage.xaml — FIXED
+The 8 identical medal + label blocks were replaced by a 2-column grid of stat tiles and a top-3 card.
 
 ### ❌ XAML-05 — TrainingExercisesPage.xaml:37
 Unused `SelectionMode="Single"` overhead, because taps are handled by a gesture recognizer. The same applies to ExerciseListPage.xaml:46.
@@ -258,15 +257,13 @@ String interpolation `$"..."` inside `StringBuilder.Append` defeats the purpose 
 
 ### 🆕 VM-17 — Commands allocated per property access (remaining sites)
 Same anti-pattern as the fixed VM-07:
-- WeightViewAndSetPageViewModel.cs:35
-- TrainingItemsBasePageViewModel.cs:549-551
-- HistoryTrainingPageViewModel.cs:42-46
-- SocialWorkoutsPageViewModel.cs:40-46
+- TrainingsPageViewModel.cs:549-551
 - DataManageViewModel.cs:40-41
 - Controls/SuperSetControl.xaml.cs:53-56
 - Views/TrainingImplementPage.xaml.cs:606
 
 **Fix:** `_cmd ??= new ...` or initialize in constructor.
+**Progress:** WeightViewAndSetPageViewModel, HistoryTrainingPageViewModel and SocialWorkoutsPageViewModel now create their commands once.
 
 ### 🆕 VM-21 — PreparedTrainingsPageViewModel.cs:90
 `FillTrainings()` now runs on every `OnAppearing`. Each run re-reads the full `Exercises` table and rebuilds 12 template VMs + 12 embedded `ImageSource`s. The collection is then assigned without raising `PropertyChanged`.
@@ -280,9 +277,10 @@ Each refresh or next page synchronously reads the whole `Exercises` table on the
 A `CollectionView` is nested inside a `ScrollView` (line 22). It cannot virtualize and measures all items.
 **Fix:** Use `BindableLayout` on a `VerticalStackLayout` for the small set list.
 
-### 🆕 UI-01 — Views/FilterPage.xaml.cs:737
-`DrawStringImplement` re-parses coordinate strings (`Split` + `Convert.ToSingle`) and rebuilds every `SKPath` on each paint. `SetMuscleFilter` toggles each muscle item, and each toggle calls `InvalidateSurface` (~20×).
-**Fix:** Pre-parse points once (static `SKPoint[]`), cache paths per scale, suspend invalidation while bulk-setting.
+### 🆕 UI-01 — Views/FilterPage.xaml.cs:699
+`DrawStringImplement` re-parses coordinate strings (`Split` + `Convert.ToSingle`) and rebuilds every `SKPath` on each paint.
+**Progress:** loading a filter now redraws once (`FilterPageViewModel` raises a single `SelectedMuscles` change) instead of once per muscle (~20×).
+**Fix:** Pre-parse points once (static `SKPoint[]`), cache paths per scale.
 
 ### 🆕 UI-02 — Views/TrainingImplementPage.xaml.cs:212
 `PlaySound()` creates a new Android `Ringtone` on every tick during the last 10 s of rest, without stopping or releasing the previous one.
@@ -307,7 +305,7 @@ All pages and ViewModels are registered as singletons, so their visual trees and
 ## Non-performance bugs noticed during rescan
 
 - **DATA-14** (above) — duplicate image rows, so a stale image is shown.
-- `StatisticsViewModel.cs:57` — "most often day" orders by `DayOfWeek` instead of by count, so it always returns the earliest weekday present.
+- ~~`StatisticsViewModel.cs:57` — "most often day" orders by `DayOfWeek` instead of by count, so it always returns the earliest weekday present.~~ ✅ Fixed: it now orders by count.
 - `TrainingExercisesPageViewModel.cs:312-315` — `CreateSuperSet` shows the "need ≥ 2 exercises" alert but has no `return`, so it still creates the superset.
 - `ExerciseListPage.xaml.cs:23/48` — `SearchButtonPressed` is subscribed in the constructor but unsubscribed in `OnDisappearing`, so it stops working after the first navigation away. The same happens in `TrainingImplementPage.xaml.cs:47/158` for `StepProgressBarControl.PropertyChanged`.
 - `SocialWorkoutsService.cs:52` — `GetFeedAsync` doesn't call `EnsureValidTokenAsync()`, unlike the other authorized calls.
@@ -319,5 +317,5 @@ All pages and ViewModels are registered as singletons, so their visual trees and
 1. **TrainingImplementPage timer (IMPL-01)** — full serialize + file write every second during workouts → persist on change / throttle
 2. **ImageCache (DATA-05 + DATA-13)** — 2–3 unindexed sync DB hits per scroll cell → single load + index + in-memory cache
 3. **Repository query shape (DATA-02, DATA-11)** — remaining full-table scans and missing FK indexes
-4. **All LoadData/LoadItems ViewModels (VM-01…05)** — sync DB on UI thread → `Task.Run`
+4. **All LoadData/LoadItems ViewModels (VM-02…05; VM-01 done)** — sync DB on UI thread → `Task.Run`
 5. **Missing transactions (DATA-09/10, CS-04, DATA-15)** → `RunInTransaction` / single `DELETE ... WHERE`

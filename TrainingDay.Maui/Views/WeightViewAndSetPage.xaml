@@ -124,7 +124,7 @@
 
         <CarouselView Grid.Row="2" ItemsSource="{Binding BodyControlItems}" CurrentItem="{Binding CurrentItem, Mode=TwoWay}"
                       Loop="False" VerticalOptions="Fill"
-                      IsVisible="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}">
+                      IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}">
             <CarouselView.ItemTemplate>
                 <DataTemplate>
                     <Grid RowDefinitions="auto,auto,*" RowSpacing="10">
@@ -180,7 +180,7 @@
                                 <charts:ChartView Chart="{Binding Chart}" IsVisible="{Binding HasChart}" VerticalOptions="Fill" />
 
                                 <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="6" Padding="20"
-                                                     IsVisible="{Binding HasChart, Converter={StaticResource InverseBooleanConverter}}">
+                                                     IsVisible="{Binding HasChart, Converter={StaticResource InvertedBoolConverter}}">
                                     <Label Text="{x:Static resx:AppResources.NoMeasurementsTitle}" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
                                     <Label Text="{x:Static resx:AppResources.NoMeasurementsHint}" FontSize="14" HorizontalTextAlignment="Center"
                                            TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}"/>

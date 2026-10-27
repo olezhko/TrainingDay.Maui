@@ -13,7 +13,6 @@
              x:DataType="pages:FilterPageViewModel">
 
     <ContentPage.Resources>
-        <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
         <Style TargetType="Label" x:Key="FilterSectionHeaderStyle">
             <Setter Property="FontSize" Value="13" />
             <Setter Property="FontAttributes" Value="Bold" />
