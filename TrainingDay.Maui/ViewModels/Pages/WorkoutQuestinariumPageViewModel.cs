@@ -14,7 +14,7 @@ namespace TrainingDay.Maui.ViewModels.Pages
 	{
 		private WorkoutQuestinariumStepViewModel currentStep;
         private readonly IDataService _dataService;
-        private readonly IWorkoutService _workoutService;
+        private readonly WorkoutService _workoutService;
 
         public WorkoutQuestinariumStepViewModel CurrentStep
 		{
@@ -22,11 +22,14 @@ namespace TrainingDay.Maui.ViewModels.Pages
 			set => SetProperty(ref currentStep, value);
 		}
 
-        public int CurrentStepIndex { get; set; } = 1;
+        /// <summary>
+        /// Zero-based index of the current wizard step.
+        /// </summary>
+        public int CurrentStepIndex { get; set; }
         public ICommand BackOrCancelCommand { get; set; }
         public ICommand NextOrFinishCommand { get; set; }
 
-        public WorkoutQuestinariumPageViewModel(IDataService dataService, IWorkoutService workoutService)
+        public WorkoutQuestinariumPageViewModel(IDataService dataService, WorkoutService workoutService)
 		{
             _dataService = dataService;
             _workoutService = workoutService;

@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Common.Communication;
 using TrainingDay.Maui.Extensions;
+using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
@@ -31,14 +32,47 @@ public enum ChartWeightPeriod
 class WeightViewAndSetPageViewModel : BaseViewModel
 {
     public ObservableCollection<BodyControlItem> BodyControlItems { get; set; } = new ObservableCollection<BodyControlItem>();
-    public ICommand WeightPeriodChangedCommand { get; set; }
-    public ICommand SaveValueCommand => new AsyncRelayCommand(SaveCurrentValue);
+    public ICommand WeightPeriodChangedCommand { get; }
+    public ICommand SaveCurrentValueCommand { get; }
+    public ICommand SaveGoalValueCommand { get; }
+    public ICommand SelectItemCommand { get; }
 
-    public BodyControlItem CurrentItem { get; set; }
+    private ChartWeightPeriod selectedPeriod = ChartWeightPeriod.Week;
+    public ChartWeightPeriod SelectedPeriod
+    {
+        get => selectedPeriod;
+        set => SetProperty(ref selectedPeriod, value);
+    }
+
+    private BodyControlItem currentItem;
+    public BodyControlItem CurrentItem
+    {
+        get => currentItem;
+        set
+        {
+            if (value == null || !SetProperty(ref currentItem, value))
+            {
+                return;
+            }
+
+            foreach (var item in BodyControlItems)
+            {
+                item.IsSelected = item == value;
+            }
+        }
+    }
 
     public WeightViewAndSetPageViewModel()
     {
-        WeightPeriodChangedCommand = new RelayCommand<object>(obj => PrepareBodyControlItems((ChartWeightPeriod)obj));
+        WeightPeriodChangedCommand = new RelayCommand<ChartWeightPeriod>(period =>
+        {
+            SelectedPeriod = period;
+            PrepareBodyControlItems(period);
+        });
+        SaveCurrentValueCommand = new AsyncRelayCommand<BodyControlItem>(SaveCurrentValue);
+        SaveGoalValueCommand = new AsyncRelayCommand<BodyControlItem>(SaveGoalValue);
+        SelectItemCommand = new RelayCommand<BodyControlItem>(item => CurrentItem = item);
+
         BodyControlItems.Add(new BodyControlItem(new List<WeightNoteEntity>())
         {
             Name = AppResources.WeightString,
@@ -59,46 +93,73 @@ class WeightViewAndSetPageViewModel : BaseViewModel
             GoalValue = Settings.HipGoal,
             Type = WeightType.Hip,
         });
+
+        CurrentItem = BodyControlItems[0];
     }
 
     public void OnAppearing()
     {
-        PrepareBodyControlItems(ChartWeightPeriod.Week);
+        BodyControlItems[0].Unit = MeasureWeightOption.GetAll().First(item => (int)item.Type == Settings.WeightMeasureType).Name;
+        PrepareBodyControlItems(SelectedPeriod);
     }
 
-    private async Task SaveCurrentValue()
+    private async Task SaveCurrentValue(BodyControlItem item)
     {
-        var sender = CurrentItem;
-        var type = sender.Type;
-        switch (type)
+        if (item == null || item.CurrentValue <= 0 || item.CurrentValue == item.ChartItems.LastOrDefault()?.Weight)
         {
-            case WeightType.Weight:
-                Settings.WeightGoal = BodyControlItems.First(item => item.Type == type).GoalValue;
-                break;
-            case WeightType.Waist:
-                Settings.WaistGoal = BodyControlItems.First(item => item.Type == type).GoalValue;
-                break;
-            case WeightType.Hip:
-                Settings.HipGoal = BodyControlItems.First(item => item.Type == type).GoalValue;
-                break;
+            return;
         }
 
         WeightNoteEntity note = new WeightNoteEntity
         {
             Date = DateTime.Now,
-            Weight = sender.CurrentValue,
-            Type = (int)sender.Type,
+            Weight = item.CurrentValue,
+            Type = (int)item.Type,
         };
         App.Database.SaveWeightNotesItem(note);
 
-        sender.ChartItems.Add(note);
-        sender.Chart = PrepareChart(sender.GoalValue, sender.ChartItems);
+        item.ChartItems.Add(note);
+        item.UpdateSummary();
+        item.Chart = PrepareChart(item.GoalValue, item.ChartItems);
         await Toast.Make(AppResources.SavedString).Show();
 
-		var dataService = IPlatformApplication.Current.Services.GetService<IDataService>();
+        var dataService = IPlatformApplication.Current.Services.GetService<IDataService>();
         await dataService.PostActionAsync(Settings.Token, MobileActions.Weight);
+    }
 
-		OnPropertyChanged(nameof(BodyControlItems));
+    private async Task SaveGoalValue(BodyControlItem item)
+    {
+        if (item == null || item.GoalValue < 0 || item.GoalValue == GetGoal(item.Type))
+        {
+            return;
+        }
+
+        switch (item.Type)
+        {
+            case WeightType.Weight:
+                Settings.WeightGoal = item.GoalValue;
+                break;
+            case WeightType.Waist:
+                Settings.WaistGoal = item.GoalValue;
+                break;
+            case WeightType.Hip:
+                Settings.HipGoal = item.GoalValue;
+                break;
+        }
+
+        item.Chart = PrepareChart(item.GoalValue, item.ChartItems);
+        await Toast.Make(AppResources.SavedString).Show();
+    }
+
+    private static double GetGoal(WeightType type)
+    {
+        return type switch
+        {
+            WeightType.Weight => Settings.WeightGoal,
+            WeightType.Waist => Settings.WaistGoal,
+            WeightType.Hip => Settings.HipGoal,
+            _ => 0,
+        };
     }
 
     private int GetDaysByPeriod(ChartWeightPeriod period)
@@ -211,9 +272,27 @@ class WeightViewAndSetPageViewModel : BaseViewModel
             TextColor = App.Current.RequestedTheme == AppTheme.Light ? SKColors.Black : SKColors.White,
         }).ToList();
 
-        var minValueEntries = entries.Min(item => item.Value) - 1;
-        var minValueGoals = goalEntries.Min(item => item.Value) - 1;
-        var minValue = Math.Min(minValueEntries.Value, minValueGoals.Value);
+        var minValue = entries.Min(item => item.Value.Value) - 1;
+        var series = new List<ChartSerie>
+        {
+            new ChartSerie
+            {
+                Color = SKColors.Green,
+                Entries = entries,
+            },
+        };
+
+        if (goal > 0)
+        {
+            minValue = Math.Min(minValue, (float)goal - 1);
+            series.Add(new ChartSerie
+            {
+                Color = SKColors.Gold,
+                Entries = goalEntries,
+                IsFullLine = true,
+            });
+        }
+
         return new LineChart
         {
             IsAnimated = false,
@@ -247,20 +326,7 @@ class WeightViewAndSetPageViewModel : BaseViewModel
                 Style = SKPaintStyle.Stroke,
             },
             LabelColor = App.Current.RequestedTheme == AppTheme.Light ? SKColors.Black : SKColors.White,
-            Series = new List<ChartSerie>()
-                {
-                    new ChartSerie()
-                    {
-                        Color = SKColors.Green,
-                        Entries = entries,
-                    },
-                    new ChartSerie()
-                    {
-                        Color = SKColors.Gold,
-                        Entries = goalEntries,
-                        IsFullLine = true,
-                    },
-                },
+            Series = series,
         };
     }
 }

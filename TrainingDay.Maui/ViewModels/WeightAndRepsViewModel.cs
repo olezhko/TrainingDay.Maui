@@ -7,7 +7,13 @@ namespace TrainingDay.Maui.ViewModels;
 
 public class WeightAndRepsViewModel : BaseViewModel
 {
+    public const double DefaultWeight = 0;
+    public const int DefaultRepetitions = 15;
+
     public WeightAndRepsViewModel() { }
+
+    /// <summary>A new set with the app-wide default weight and repetitions.</summary>
+    public static WeightAndRepsViewModel CreateDefault() => new(DefaultWeight, DefaultRepetitions);
 
     public WeightAndRepsViewModel(double weight, int repetitions)
     {

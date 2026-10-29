@@ -56,14 +56,14 @@ namespace TrainingDay.Maui
             builder.Services.AddSingleton<BlogsPageViewModel>();
             builder.Services.AddSingleton<BlogsPage>();
 
-            builder.Services.AddSingleton<TrainingItemsBasePageViewModel>();
-            builder.Services.AddSingleton<TrainingItemsBasePage>();
+            builder.Services.AddSingleton<TrainingsPageViewModel>();
+            builder.Services.AddSingleton<TrainingsPage>();
 
             builder.Services.AddSingleton<TrainingExercisesPageViewModel>();
             builder.Services.AddSingleton<TrainingExercisesPage>();
-            builder.Services.AddSingleton<TrainingExercisesMoveOrCopy>();
 
             builder.Services.AddSingleton<IDataService, DataService>();
+            builder.Services.AddSingleton<IExerciseImageService>(_ => new ExerciseImageService(App.Database));
             builder.Services.AddSingleton<WorkoutService>();
 
             builder.Services.AddSingleton<IAuthService, AuthService>();

@@ -2,7 +2,10 @@
 
 public class TooltipControlContainer : Grid
 {
+    private sealed record HiddenChildState(double Opacity, bool InputTransparent);
+
     private List<ToolTipControl> nextToolTipControls = new List<ToolTipControl>();
+    private readonly Dictionary<VisualElement, HiddenChildState> hiddenChildren = new Dictionary<VisualElement, HiddenChildState>();
     private int currentToolTip;
 
     public TooltipControlContainer()
@@ -35,7 +38,7 @@ public class TooltipControlContainer : Grid
             }
             else
             {
-                nextToolTipControls.First().AttachedControl.IsVisible = true;
+                SetChildVisible(nextToolTipControls.First().AttachedControl, true);
             }
         }
     }
@@ -63,13 +66,37 @@ public class TooltipControlContainer : Grid
     {
         foreach (Element child in Children)
         {
-            if (child is VisualElement visualElement)
+            if (child is VisualElement visualElement && visualElement.GetType() != typeof(ToolTipControl))
             {
-                if (visualElement.GetType() != typeof(ToolTipControl))
-                {
-                    visualElement.IsVisible = isVisible;
-                }
+                SetChildVisible(visualElement, isVisible);
             }
+        }
+    }
+
+    /// <summary>
+    /// Hides a child behind the tooltip with Opacity + InputTransparent, never IsVisible:
+    /// setting IsVisible from code would drop the child's own IsVisible binding or style trigger.
+    /// </summary>
+    internal void SetChildVisible(VisualElement? child, bool isVisible)
+    {
+        if (child == null)
+        {
+            return;
+        }
+
+        if (isVisible)
+        {
+            if (hiddenChildren.Remove(child, out var state))
+            {
+                child.Opacity = state.Opacity;
+                child.InputTransparent = state.InputTransparent;
+            }
+        }
+        else if (!hiddenChildren.ContainsKey(child))
+        {
+            hiddenChildren[child] = new HiddenChildState(child.Opacity, child.InputTransparent);
+            child.Opacity = 0;
+            child.InputTransparent = true;
         }
     }
 }

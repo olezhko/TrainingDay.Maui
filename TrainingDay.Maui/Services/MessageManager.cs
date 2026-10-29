@@ -1,4 +1,6 @@
-﻿namespace TrainingDay.Maui.Services;
+﻿using TrainingDay.Maui.Models;
+
+namespace TrainingDay.Maui.Services;
 
 public static class MessageManager
 {
@@ -12,9 +14,13 @@ public static class MessageManager
         return await Shell.Current.DisplayAlertAsync(title, message, okString, cancelString);
     }
 
-    public static async Task<string> DisplayActionSheet(string title, string cancelString, params string[] buttons)
+    /// <summary>Shows an action sheet and returns the chosen action code, or null when cancelled/dismissed.
+    /// Callers branch on the code, never on the localized label.</summary>
+    public static async Task<TAction?> DisplayActionSheet<TAction>(string title, string cancelString, params ActionSheetOption<TAction>[] options)
+        where TAction : struct, Enum
     {
-        return await Shell.Current.DisplayActionSheetAsync(title, cancelString, null, buttons);
+        var chosenText = await Shell.Current.DisplayActionSheetAsync(title, cancelString, null, options.Select(option => option.Text).ToArray());
+        return options.FirstOrDefault(option => option.Text == chosenText)?.Action;
     }
 
     public static async Task<string> DisplayPromptAsync(string title, string message, string okString, string cancelString, string placeholder)

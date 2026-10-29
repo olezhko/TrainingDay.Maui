@@ -3,6 +3,7 @@ using System.Text.Json;
 using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.Extensions;
+using TrainingDay.Maui.Mappers;
 using TrainingDay.Maui.Services;
 using ExerciseEntity = TrainingDay.Maui.Models.Database.ExerciseEntity;
 using TrainingExerciseEntity = TrainingDay.Maui.Models.Database.TrainingExerciseEntity;
@@ -122,21 +123,6 @@ public class TrainingExerciseViewModel : ExerciseViewModel
         }
     }
 
-    public TrainingExerciseEntity GetTrainingExerciseComm()
-    {
-        string weightAndReps = TrainingExerciseViewModelExtensions.ConvertJson(Tags, this);
-
-        return new TrainingExerciseEntity()
-        {
-            ExerciseId = ExerciseId,
-            WeightAndRepsString = weightAndReps,
-            TrainingId = TrainingId,
-            Id = TrainingExerciseId,
-            OrderNumber = OrderNumber,
-            SuperSetId = SuperSetId,
-        };
-    }
-
     public override ExerciseEntity GetExercise()
     {
         return new ExerciseEntity()
@@ -152,7 +138,7 @@ public class TrainingExerciseViewModel : ExerciseViewModel
 
     public TrainingExerciseViewModel Clone()
     {
-        return new TrainingExerciseViewModel(GetExercise(), GetTrainingExerciseComm());
+        return new TrainingExerciseViewModel(GetExercise(), TrainingExerciseMapper.ToEntity(this));
     }
 
     private bool isBeingDragged;
@@ -194,9 +180,9 @@ public class TrainingExerciseViewModel : ExerciseViewModel
             weightAndReps = JsonSerializer.Serialize(
                 new List<WeightAndRepsViewModel>
                 {
-                    new WeightAndRepsViewModel(0,15),
-                    new WeightAndRepsViewModel(0,15),
-                    new WeightAndRepsViewModel(0,15),
+                    WeightAndRepsViewModel.CreateDefault(),
+                    WeightAndRepsViewModel.CreateDefault(),
+                    WeightAndRepsViewModel.CreateDefault(),
                 }
             );
         }

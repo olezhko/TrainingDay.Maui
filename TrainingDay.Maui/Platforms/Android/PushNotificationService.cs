@@ -40,7 +40,9 @@ internal class PushNotificationService : IPushNotification
         var pendingIntentFlag = message.IsUpdateCurrent ? PendingIntentFlags.UpdateCurrent : PendingIntentFlags.OneShot;
         if (Build.VERSION.SdkInt >= BuildVersionCodes.S)
         {
+#pragma warning disable CA1416 // Validate platform compatibility
             pendingIntentFlag = PendingIntentFlags.Mutable;
+#pragma warning restore CA1416 // Validate platform compatibility
         }
 
         PendingIntent pendingIntent = PendingIntent.GetActivity(Application.Context, 0, intent, pendingIntentFlag);
@@ -50,7 +52,7 @@ internal class PushNotificationService : IPushNotification
             .SetContentTitle(message.Title)
             .SetContentText(message.Message)
             .SetLargeIcon(BitmapFactory.DecodeResource(Application.Context.Resources, Resource.Drawable.icon))
-            .SetSmallIcon(Resource.Drawable.small_icon)
+            .SetSmallIcon(Resource.Drawable.ic_stat_notification)
             .SetPriority((int)NotificationPriority.Low)
             .SetVisibility((int)NotificationVisibility.Public)
             .SetOngoing(message.IsDisableSwipe);

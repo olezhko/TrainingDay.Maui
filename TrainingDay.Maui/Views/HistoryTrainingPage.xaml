@@ -2,52 +2,77 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
-             xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
+             xmlns:models="clr-namespace:TrainingDay.Maui.Models"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="TrainingDay.Maui.Views.HistoryTrainingPage"
+             x:DataType="viewModels:HistoryTrainingPageViewModel"
              Title="{x:Static resx:AppResources.HistoryTrainings}"
-             Shell.TabBarIsVisible="False">
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}">
+
+    <Shell.TitleView>
+        <Grid Style="{StaticResource PageTitleViewStyle}">
+            <Label Style="{StaticResource PageTitleStyle}" Text="{x:Static resx:AppResources.HistoryTrainings}"/>
+        </Grid>
+    </Shell.TitleView>
+
     <ContentPage.BindingContext>
         <viewModels:HistoryTrainingPageViewModel/>
     </ContentPage.BindingContext>
 
-    <CollectionView ItemsSource="{Binding LastTrainings}" IsGrouped="true" BackgroundColor="Transparent" SelectionMode="Single" VerticalScrollBarVisibility="Always"
-                    RemainingItemsThresholdReachedCommand="{Binding RemainingItemsThresholdReachedCommand}" RemainingItemsThreshold="{Binding ItemTreshold}">
+    <CollectionView ItemsSource="{Binding LastTrainings}" IsGrouped="True" BackgroundColor="Transparent" SelectionMode="None" Margin="10,0"
+                    RemainingItemsThresholdReachedCommand="{Binding RemainingItemsThresholdReachedCommand}" RemainingItemsThreshold="3">
         <CollectionView.EmptyView>
-            <VerticalStackLayout VerticalOptions="Center" Spacing="10">
-                <Border VerticalOptions="Center" HorizontalOptions="Center" Stroke="Transparent">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="40,40,40,40" />
-                    </Border.StrokeShape>
+            <VerticalStackLayout VerticalOptions="Center" Spacing="16" Padding="20">
+                <Border VerticalOptions="Center" HorizontalOptions="Center" Stroke="Transparent" StrokeShape="RoundRectangle 40">
                     <Image Source="no_last_trainings.png" />
                 </Border>
-                <Label HorizontalTextAlignment="Center" VerticalOptions="Start" Text="{x:Static resx:AppResources.NoLastTrainings}" FontSize="Medium"/>
-                <Button Text="{x:Static resx:AppResources.BackToWorkouts}" WidthRequest="200" CornerRadius="25" Clicked="BackToWorkouts_Clicked" HeightRequest="50"/>
+                <Label HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.NoLastTrainings}" FontSize="Medium"/>
+                <Button Text="{x:Static resx:AppResources.BackToWorkouts}" Clicked="BackToWorkouts_Clicked"
+                        Style="{StaticResource ActionButton}" CornerRadius="20" HeightRequest="50" FontSize="Body" HorizontalOptions="Center" Padding="30,0"/>
             </VerticalStackLayout>
         </CollectionView.EmptyView>
         <CollectionView.GroupHeaderTemplate>
-            <DataTemplate>
-                <Label Text="{Binding Heading}" TextColor="Orange" FontSize="Large" FontAttributes="Bold" Padding="2"/>
+            <DataTemplate x:DataType="viewModels:LastTrainingViewModelList">
+                <Label Text="{Binding Heading}" TextColor="{StaticResource Main}" FontSize="13" FontAttributes="Bold" TextTransform="Uppercase"
+                       Margin="4,16,4,8" SemanticProperties.HeadingLevel="Level2"/>
             </DataTemplate>
         </CollectionView.GroupHeaderTemplate>
+        <CollectionView.Footer>
+            <ContentView HeightRequest="10"/>
+        </CollectionView.Footer>
         <CollectionView.ItemsLayout>
-            <LinearItemsLayout ItemSpacing="5" Orientation="Vertical"/>
+            <LinearItemsLayout ItemSpacing="8" Orientation="Vertical"/>
         </CollectionView.ItemsLayout>
         <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Grid>
-                    <Border Style="{StaticResource BorderCellStyle}">
-                        <Border.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HistoryTrainingPageViewModel}}, Path=ItemSelectedCommand}"
-                            CommandParameter="{Binding .}" NumberOfTapsRequired="1" />
-                        </Border.GestureRecognizers>
-                        <StackLayout Orientation="Vertical" VerticalOptions="Center">
-                            <Label Text="{Binding Title,StringFormat={x:Static resx:AppResources.NameFormatString}}" FontSize="Medium" FontAttributes="Bold"/>
-                            <Label Text="{Binding ElapsedTime,StringFormat={x:Static resx:AppResources.ElapsedTimeString}}" FontSize="Medium"/>
-                            <Label Text="{Binding ImplementDateTime,StringFormat={x:Static resx:AppResources.DateTimeFormat}}" FontSize="13" HorizontalTextAlignment="End" TextColor="Gray"/>
-                        </StackLayout>
-                    </Border>
-                </Grid>
+            <DataTemplate x:DataType="models:LastTraining">
+                <Border Style="{StaticResource BorderCellStyle}" Padding="14,12">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ItemSelectedCommand, Source={RelativeSource AncestorType={x:Type viewModels:HistoryTrainingPageViewModel}}, x:DataType=viewModels:HistoryTrainingPageViewModel}"
+                                              CommandParameter="{Binding .}" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="4" ColumnSpacing="10">
+                        <Label Grid.Row="0" Text="{Binding Title}" FontSize="16" FontAttributes="Bold" MaxLines="2" LineBreakMode="TailTruncation"/>
+
+                        <Label Grid.Row="1" Text="{Binding DateText}" FontSize="13"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}"/>
+
+                        <HorizontalStackLayout Grid.Row="2" Spacing="6">
+                            <Label Text="⏱" FontSize="13" VerticalOptions="Center"/>
+                            <Label Text="{Binding DurationText}" FontSize="13" VerticalOptions="Center"/>
+                            <Label Text="·" FontSize="13" VerticalOptions="Center"
+                                   IsVisible="{Binding ExerciseCountText, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+                                   TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}"/>
+                            <Label Text="{Binding ExerciseCountText}" FontSize="13" VerticalOptions="Center"
+                                   IsVisible="{Binding ExerciseCountText, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"/>
+                        </HorizontalStackLayout>
+
+                        <!-- Chevron: the card opens the workout details -->
+                        <Label Grid.Column="1" Grid.RowSpan="3" Text="›" FontSize="26" VerticalOptions="Center"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray500}}"/>
+                    </Grid>
+                </Border>
             </DataTemplate>
         </CollectionView.ItemTemplate>
     </CollectionView>

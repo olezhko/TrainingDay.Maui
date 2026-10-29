@@ -5,6 +5,7 @@ using System.Windows.Input;
 using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.Extensions;
+using TrainingDay.Maui.Mappers;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Resources.Strings;
@@ -13,7 +14,6 @@ using TrainingDay.Maui.Views;
 using ExerciseEntity = TrainingDay.Maui.Models.Database.ExerciseEntity;
 using SuperSet = TrainingDay.Maui.Models.Database.SuperSetEntity;
 using Training = TrainingDay.Maui.Models.Database.TrainingEntity;
-using TrainingExerciseComm = TrainingDay.Maui.Models.Database.TrainingExerciseEntity;
 
 namespace TrainingDay.Maui.ViewModels.Pages;
 
@@ -414,15 +414,8 @@ public sealed class PreparedTrainingsPageViewModel : BaseViewModel
                 }
             }
 
-            var newTrEx = new TrainingExerciseComm()
-            {
-                ExerciseId = exercise.ExerciseId,
-                TrainingId = id,
-                OrderNumber = order,
-                Id = exercise.TrainingExerciseId,
-                SuperSetId = superSetId,
-                WeightAndRepsString = TrainingExerciseViewModelExtensions.ConvertJson(exercise.Tags, exercise),
-            };
+            var newTrEx = TrainingExerciseMapper.ToEntity(exercise, id, order);
+            newTrEx.SuperSetId = superSetId;
 
             App.Database.SaveTrainingExerciseItem(newTrEx);
             order++;

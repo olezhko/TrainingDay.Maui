@@ -6,59 +6,100 @@
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              x:Class="TrainingDay.Maui.Views.SocialWorkoutsPage"
              x:DataType="viewModels:SocialWorkoutsPageViewModel"
+             BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}"
              x:Name="Page">
 
     <Shell.TitleView>
-        <Label Text="{x:Static resx:AppResources.SocialWorkoutsString}" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold" Margin="10,0" />
+        <Grid Style="{StaticResource PageTitleViewStyle}">
+            <Label Style="{StaticResource PageTitleStyle}" Text="{x:Static resx:AppResources.SocialWorkoutsString}" />
+        </Grid>
     </Shell.TitleView>
 
     <Grid RowDefinitions="Auto,*">
         <Label Grid.Row="0" Text="{x:Static resx:AppResources.OfflineShowingCachedString}" IsVisible="{Binding IsOffline}"
-               BackgroundColor="#FFA500" TextColor="Black" Padding="8" HorizontalTextAlignment="Center" FontSize="Small"/>
+               BackgroundColor="{StaticResource Main}" TextColor="Black" Padding="8" HorizontalTextAlignment="Center" FontSize="13"/>
 
-        <RefreshView Grid.Row="1" IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
-            <CollectionView ItemsSource="{Binding Feed}" BackgroundColor="Transparent" SelectionMode="None" VerticalScrollBarVisibility="Always"
+        <RefreshView Grid.Row="1" IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}" RefreshColor="{StaticResource Main}">
+            <CollectionView ItemsSource="{Binding Feed}" BackgroundColor="Transparent" SelectionMode="None" Margin="10,0"
                             RemainingItemsThresholdReachedCommand="{Binding RemainingItemsThresholdReachedCommand}" RemainingItemsThreshold="2">
                 <CollectionView.EmptyView>
-                    <VerticalStackLayout VerticalOptions="Center" Spacing="10">
-                        <Label HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.NoSocialWorkoutsString}" FontSize="Medium"/>
-                    </VerticalStackLayout>
+                    <Grid VerticalOptions="Center" HorizontalOptions="Center" Padding="30">
+                        <ActivityIndicator IsRunning="{Binding IsInitialLoading}" IsVisible="{Binding IsInitialLoading}" Color="{StaticResource Main}"
+                                           WidthRequest="40" HeightRequest="40"/>
+                        <VerticalStackLayout Spacing="8" IsVisible="{Binding IsInitialLoading, Converter={StaticResource InvertedBoolConverter}}">
+                            <Label HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.NoSocialWorkoutsString}" FontSize="18" FontAttributes="Bold"/>
+                        </VerticalStackLayout>
+                    </Grid>
                 </CollectionView.EmptyView>
+                <CollectionView.Header>
+                    <ContentView HeightRequest="10"/>
+                </CollectionView.Header>
+                <CollectionView.Footer>
+                    <Grid Padding="0,10,0,20">
+                        <ActivityIndicator IsRunning="{Binding IsLoadingMore}" IsVisible="{Binding IsLoadingMore}" Color="{StaticResource Main}"
+                                           WidthRequest="28" HeightRequest="28" HorizontalOptions="Center"/>
+                    </Grid>
+                </CollectionView.Footer>
                 <CollectionView.ItemsLayout>
-                    <LinearItemsLayout ItemSpacing="5" Orientation="Vertical"/>
+                    <LinearItemsLayout ItemSpacing="10" Orientation="Vertical"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="vm:SocialWorkoutViewModel">
-                        <Border Style="{StaticResource BorderCellStyle}" Padding="10">
+                        <Border Style="{StaticResource BorderCellStyle}" Padding="14,12">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:SocialWorkoutsPageViewModel}}, Path=ItemSelectedCommand, x:DataType=viewModels:SocialWorkoutsPageViewModel}"
-                                                       CommandParameter="{Binding .}" NumberOfTapsRequired="1" />
+                                                      CommandParameter="{Binding .}" NumberOfTapsRequired="1" />
                             </Border.GestureRecognizers>
-                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto">
-                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Name}" FontSize="Medium" FontAttributes="Bold"/>
-                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding DateFormatted}" FontSize="13" TextColor="Gray"/>
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="4" ColumnSpacing="10">
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Name}" FontSize="17" FontAttributes="Bold"
+                                       MaxLines="2" LineBreakMode="TailTruncation"/>
 
-                                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding OwnerNickname}" FontSize="13" TextColor="Gray"/>
+                                <!-- Author · relative date -->
+                                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" FontSize="13" LineBreakMode="TailTruncation"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding OwnerNickname}" FontAttributes="Bold"
+                                                  TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
+                                            <Span Text="  ·  " TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}"/>
+                                            <Span Text="{Binding DateFormatted}" TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
 
-                                <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding TopMuscles}" FontSize="Small"/>
+                                <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding TopMuscles}" IsVisible="{Binding HasTopMuscles}"
+                                       FontSize="13" TextColor="{StaticResource Main}" LineBreakMode="TailTruncation"/>
 
-                                <StackLayout Grid.Row="3" Grid.Column="0" Orientation="Horizontal" Spacing="5">
-                                    <Label Text="{Binding DurationFormatted}" FontSize="Small"/>
-                                    <Label Text="•" FontSize="Small" TextColor="Gray"/>
-                                    <Label Text="{Binding ExerciseCount}" FontSize="Small"/>
-                                    <Label Text="{x:Static resx:AppResources.ExercisesCountString}" FontSize="Small"/>
-                                </StackLayout>
+                                <HorizontalStackLayout Grid.Row="3" Grid.Column="0" Spacing="6" VerticalOptions="Center">
+                                    <Label Text="⏱" FontSize="13" VerticalOptions="Center"/>
+                                    <Label Text="{Binding DurationFormatted}" FontSize="13" VerticalOptions="Center"/>
+                                    <Label Text="·" FontSize="13" VerticalOptions="Center"
+                                           TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}"/>
+                                    <Label Text="{Binding ExerciseCountText}" FontSize="13" VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
 
-                                <StackLayout Grid.Row="3" Grid.Column="1" Orientation="Horizontal" Spacing="5">
-                                    <Label Text="♥" FontSize="18" VerticalOptions="Center" TextColor="Gray">
-                                        <Label.Triggers>
-                                            <DataTrigger TargetType="Label" Binding="{Binding IsLikedByMe}" Value="True">
-                                                <Setter Property="TextColor" Value="Red"/>
-                                            </DataTrigger>
-                                        </Label.Triggers>
-                                    </Label>
-                                    <Label Text="{Binding LikesCount}" FontSize="Small" VerticalOptions="Center"/>
-                                </StackLayout>
+                                <!-- Like: tappable from the feed with a 44pt hit target -->
+                                <Border Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" VerticalOptions="End" Padding="12,6" MinimumHeightRequest="44"
+                                        StrokeShape="RoundRectangle 22" StrokeThickness="1" BackgroundColor="Transparent"
+                                        Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}"
+                                        SemanticProperties.Description="{x:Static resx:AppResources.LikesString}">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:SocialWorkoutsPageViewModel}}, Path=LikeCommand, x:DataType=viewModels:SocialWorkoutsPageViewModel}"
+                                                              CommandParameter="{Binding .}" NumberOfTapsRequired="1" />
+                                    </Border.GestureRecognizers>
+                                    <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                                        <Label Text="♡" FontSize="18" VerticalOptions="Center"
+                                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsLikedByMe}" Value="True">
+                                                    <Setter Property="Text" Value="♥"/>
+                                                    <Setter Property="TextColor" Value="#E53935"/>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                        <Label Text="{Binding LikesCount}" FontSize="14" VerticalOptions="Center"/>
+                                    </HorizontalStackLayout>
+                                </Border>
                             </Grid>
                         </Border>
                     </DataTemplate>

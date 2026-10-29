@@ -1,7 +1,12 @@
-﻿namespace TrainingDay.Maui.Controls;
+﻿using TrainingDay.Maui.Services;
+
+namespace TrainingDay.Maui.Controls;
 
 public class ImageCache : Image
 {
+    // controls are created by XAML, so the service is resolved from the app container instead of injected
+    private static IExerciseImageService ImageService => IPlatformApplication.Current!.Services.GetRequiredService<IExerciseImageService>();
+
     private string? currentKey;
 
     public ImageCache()
@@ -35,11 +40,12 @@ public class ImageCache : Image
     {
         try
         {
-            string key = CodeNum != 0 ? CodeNum.ToString() : $"new_{ExerciseId}";
+            var imageService = ImageService;
+            string key = imageService.GetImageKey(CodeNum, ExerciseId);
             currentKey = key;
             BackgroundColor = Colors.Transparent;
 
-            if (App.Database.TryGetCachedImageData(key, out var cached))
+            if (imageService.TryGetCachedImageData(key, out var cached))
             {
                 ApplyImage(cached);
                 return;
@@ -47,7 +53,7 @@ public class ImageCache : Image
 
             Source = "workouts.png";
 
-            var data = await Task.Run(() => App.Database.GetImageData(key));
+            var data = await imageService.GetImageDataAsync(key);
 
             // cell was recycled for another exercise while loading
             if (key != currentKey)

@@ -6,16 +6,28 @@
              x:Class="TrainingDay.Maui.Views.WorkoutQuestinariumPage"
              Shell.TabBarIsVisible="False"
              Title="{x:Static resx:AppResources.LetsBuildYourWorkout}">
+
+    <Shell.TitleView>
+        <Grid Style="{StaticResource PageTitleViewStyle}">
+            <Label Style="{StaticResource PageTitleStyle}" Text="{x:Static resx:AppResources.LetsBuildYourWorkout}"/>
+        </Grid>
+    </Shell.TitleView>
+
     <Grid RowDefinitions="auto,*,auto,auto" RowSpacing="5" Margin="5">
 
         <ActivityIndicator IsRunning="True" IsVisible="{Binding IsBusy}" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="150" HeightRequest="150"
                            />
 
-        <controls:StepBar x:Name="Steps" Grid.Row="0" StepCount="6" CurrentStep="{Binding CurrentStepIndex}" FinishedColor="{StaticResource Primary}" UnfinishedColor="{StaticResource Gray500}" 
-                          HorizontalOptions="Fill" Margin="5,0"/>
+        <!-- Wizard look: filled circles, earlier steps and their lines in the accent colour, not tappable -->
+        <controls:StepProgressBar Grid.Row="0" StepCount="6" StepSelected="{Binding CurrentStepIndex, Mode=OneWay}"
+                                  CompletePreviousSteps="True" StepCanTouch="False" StepSize="40" LineThickness="2"
+                                  StepColor="Transparent" StepTextColor="White"
+                                  SteppedColor="{StaticResource Primary}" FinishedColor="{StaticResource Primary}" FinishedLineColor="{StaticResource Primary}"
+                                  UnfinishedColor="{StaticResource Gray500}" LineColor="{StaticResource Gray500}"
+                                  HorizontalOptions="Fill" Margin="5,0"/>
 
         <VerticalStackLayout Grid.Row="1" BindingContext="{Binding CurrentStep}" Margin="10"
-                             IsVisible="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}">
+                             IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}">
             <Label Text="{Binding Title}" FontSize="20" FontAttributes="Bold"/>
             <CollectionView ItemsSource="{Binding Variants}">
                 <CollectionView.ItemTemplate>
@@ -26,7 +38,7 @@
                                 <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked}" VerticalOptions="Center" HorizontalOptions="Start"/>
                             </Grid>
                             <RadioButton VerticalOptions="Center" Content="{Binding Title}"
-                                         IsVisible="{Binding IsMultiple, Converter={StaticResource InverseBooleanConverter}}" IsChecked="{Binding IsChecked}">
+                                         IsVisible="{Binding IsMultiple, Converter={StaticResource InvertedBoolConverter}}" IsChecked="{Binding IsChecked}">
                                 <RadioButton.Style>
                                     <Style TargetType="RadioButton">
                                         <Style.Triggers>
@@ -47,7 +59,7 @@
             <Button Grid.Column="0" Command="{Binding BackOrCancelCommand}" BackgroundColor="Transparent" 
                     TextColor="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}" 
                     BorderColor="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}" 
-                    BorderWidth="1" IsEnabled="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}"> 
+                    BorderWidth="1" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"> 
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Text" Value="{x:Static resx:AppResources.Back}" />
@@ -61,7 +73,7 @@
             </Button>
             <Button Grid.Column="1"
                     Command="{Binding NextOrFinishCommand}" 
-                    IsEnabled="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}">
+                    IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Text" Value="{x:Static resx:AppResources.Next}" />

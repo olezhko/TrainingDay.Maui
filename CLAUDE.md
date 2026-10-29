@@ -62,7 +62,7 @@ Cross-ViewModel communication uses `WeakReferenceMessenger` from `CommunityToolk
 
 ### Localization
 
-`LocalizationResourceManager` (`/Extensions/`) is a singleton that drives runtime culture switching. String resources are `.resx` files under `/Resources/Languages/` (English, Russian, German).
+`LocalizationResourceManager` (`/Extensions/`) is a singleton that drives runtime culture switching. String resources are `.resx` files under `/Resources/Strings/` (English, Russian, German, Spanish, Portuguese); `AppResources.Designer.cs` is maintained by hand.
 
 ## Key Dependencies
 
@@ -83,8 +83,8 @@ Cross-ViewModel communication uses `WeakReferenceMessenger` from `CommunityToolk
 
 ## Pages
 
-### TrainingItemsBasePage
-**ViewModel:** `TrainingItemsBasePageViewModel`  
+### TrainingsPage
+**ViewModel:** `TrainingsPageViewModel`  
 Main dashboard. Lists all user-created trainings grouped by category (tabs). Long-press a training for context menu (delete, duplicate, move). Navigates to `PreparedTrainingsPage` to add new trainings and to `TrainingExercisesPage` to edit an existing one.  
 DB: reads `TrainingEntity`, `LastTrainingEntity` (last performed date).
 
@@ -95,7 +95,7 @@ DB: reads `ExerciseEntity`; writes `TrainingEntity`, `TrainingExerciseEntity`, `
 
 ### TrainingExercisesPage
 **ViewModel:** `TrainingExercisesPageViewModel`  
-Edit a training's exercise list. Supports drag-to-reorder, bulk select for copy/move/superset, inline name editing. Navigates to `ExerciseListPage` to pick exercises and to `TrainingExercisesMoveOrCopy` for bulk move/copy. "Make Training" button starts the workout.  
+Edit a training's exercise list. Supports drag-to-reorder, bulk select for copy/move/superset, inline name editing. Navigates to `ExerciseListPage` to pick exercises and opens `MoveOrCopyExercisesPopup` for bulk move/copy. "Make Training" button starts the workout.  
 DB: reads/writes `TrainingEntity`, `TrainingExerciseEntity`; messaging: `ExercisesSelectFinishedMessage`.
 
 ### TrainingExerciseItemPage
@@ -114,7 +114,7 @@ Browse and multi-select exercises to add to a training. Has a search bar and a f
 DB: reads `ExerciseEntity`.
 
 ### FilterPage
-**ViewModel:** `FilterViewModel`  
+**ViewModel:** `FilterPageViewModel`  
 Filter exercises by equipment (none / barbell / dumbbell), difficulty, and muscles. Muscle selection uses a body image map plus tag buttons. Sends `FilterAcceptedForExercisesMessage` on save.
 
 ### TrainingImplementPage
@@ -129,7 +129,7 @@ DB: reads `LastTrainingEntity` with threshold-based pagination.
 
 ### HistoryTrainingExercisesPage
 **ViewModel:** `HistoryTrainingPageViewModel` (shared)  
-Detail view for a completed workout. Shows all exercises with recorded results. Toolbar: "Start Again" (re-creates a new training from the history entry) and delete (removes the history record).  
+Detail view for a completed workout. Shows a summary card and all exercises with recorded results. Sticky "Start Again" button (re-creates a new training from the history entry); toolbar delete removes the history record.  
 DB: reads `LastTrainingExerciseEntity`; deletes `LastTrainingEntity`.
 
 ### StatisticsPage
@@ -154,7 +154,7 @@ DB: writes `BlogEntity`. API: `GetBlogAsync`.
 
 ### SettingsPage
 **ViewModel:** `DataManageViewModel` (for import/export)  
-App configuration: language (en/ru/de, triggers app restart), weight unit (kg/lbs), keep-screen-on toggle, show-exercise-advice toggle. Also exposes data export and import. Toolbar button navigates to `StatisticsPage`. Android-only donate link.  
+App configuration: language (en/ru/de/es/pt, triggers app restart), weight unit (kg/lbs), keep-screen-on toggle, show-exercise-advice toggle. Also exposes data export and import. Toolbar button navigates to `StatisticsPage`. Android-only donate link.  
 Calls: `UpdateExerciseNameAndDescription()` on language change.
 
 ### WorkoutQuestinariumPage
@@ -162,8 +162,9 @@ Calls: `UpdateExerciseNameAndDescription()` on language change.
 6-step wizard that collects user preferences (goals, equipment, frequency, etc.) and calls the remote API to generate a personalised training plan. Each step renders either radio buttons (single choice) or checkboxes (multiple choice). Step progress shown in `StepProgressBar`.  
 API: `GetExercisesByQueryAsync`, creates training via `CreateWorkoutAsync`. DB: writes `TrainingEntity`, `TrainingExerciseEntity`.
 
-### TrainingExercisesMoveOrCopy
-Destination picker shown as a modal when bulk-moving or bulk-copying exercises. Lists existing trainings; also has a "Create New" option. Used internally from `TrainingExercisesPageViewModel`.  
+### MoveOrCopyExercisesPopup (popup, not a page)
+**Control:** `Controls/PopUp/MoveOrCopyExercisesPopup.xaml`, BindingContext `TrainingExercisesPageViewModel`  
+Destination picker shown via `Shell.Current.ShowPopupAsync` when bulk-moving or bulk-copying exercises. Lists existing trainings; also has "Create New" and "Cancel". Dismissing it keeps the page's selection mode.  
 DB: reads `TrainingEntity`; writes `TrainingExerciseEntity`.
 
 ---
@@ -174,7 +175,6 @@ DB: reads `TrainingEntity`; writes `TrainingExerciseEntity`.
 
 - **Synchronous DB on UI thread** — `LoadData`/`LoadItems` calls in ViewModels block rendering; wrap with `Task.Run()`
 - **N+1 queries** — `Repository.cs:247` loads all training exercises then queries each exercise individually; should use a JOIN or single WHERE clause
-- **Memory leak in StepProgressBar** — static event subscription at line 311 holds instance references; needs explicit unsubscription
 - **Missing DB transactions** — batch inserts/updates should be wrapped in `RunInTransaction`
 
 ## Platform-Specific Code

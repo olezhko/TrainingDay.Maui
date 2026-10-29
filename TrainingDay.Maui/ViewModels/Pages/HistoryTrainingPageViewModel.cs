@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TrainingDay.Common.Extensions;
 using TrainingDay.Maui.Extensions;
+using TrainingDay.Maui.Mappers;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Resources.Strings;
@@ -14,8 +15,13 @@ namespace TrainingDay.Maui.ViewModels.Pages;
 
 public class HistoryTrainingPageViewModel : BaseViewModel
 {
-    private IOrderedEnumerable<LastTrainingEntity> baseItems;
-    private static readonly List<HistoryPeriod> DaysAndTextLimits = new List<HistoryPeriod>();
+    private const int PageSize = 10;
+
+    private readonly List<HistoryPeriod> daysAndTextLimits;
+    private List<LastTrainingEntity> baseItems = [];
+    private Dictionary<int, int> exerciseCounts = [];
+    private int loadedCount;
+    private bool needsReload = true;
 
     // heading of the history group and max age of a training in days (-1 = no limit)
     private sealed record HistoryPeriod(string Heading, int Days);
@@ -24,14 +30,19 @@ public class HistoryTrainingPageViewModel : BaseViewModel
     {
         LastTrainings = new ObservableCollection<LastTrainingViewModelList>();
         ItemSelectedCommand = new AsyncRelayCommand<LastTraining>(SelectionChanged);
+        StartAgainCommand = new AsyncRelayCommand(StartAgainTraining);
+        RemoveLastTrainingCommand = new AsyncRelayCommand(RemoveLastTraining);
+        RemainingItemsThresholdReachedCommand = new RelayCommand(LoadNextPage);
 
-        DaysAndTextLimits.Clear();
-        DaysAndTextLimits.Add(new HistoryPeriod(AppResources.WeekString, 7));
-        DaysAndTextLimits.Add(new HistoryPeriod(AppResources.OneMounthString, 31));
-        DaysAndTextLimits.Add(new HistoryPeriod(AppResources.ThreeMounthString, 91));
-        DaysAndTextLimits.Add(new HistoryPeriod(AppResources.HalfYearString, ConstantKeys.HalfYearDays));
-        DaysAndTextLimits.Add(new HistoryPeriod(AppResources.YearString, 365));
-        DaysAndTextLimits.Add(new HistoryPeriod(AppResources.MoreThanYearString, -1));
+        daysAndTextLimits =
+        [
+            new HistoryPeriod(AppResources.WeekString, 7),
+            new HistoryPeriod(AppResources.OneMounthString, 31),
+            new HistoryPeriod(AppResources.ThreeMounthString, 91),
+            new HistoryPeriod(AppResources.HalfYearString, ConstantKeys.HalfYearDays),
+            new HistoryPeriod(AppResources.YearString, 365),
+            new HistoryPeriod(AppResources.MoreThanYearString, -1),
+        ];
     }
 
     public ObservableCollection<LastTrainingViewModelList> LastTrainings { get; set; }
@@ -40,37 +51,46 @@ public class HistoryTrainingPageViewModel : BaseViewModel
 
     public LastTraining SelectedTraining { get; set; }
 
-    public ICommand ItemSelectedCommand { get; set; }
+    public ICommand ItemSelectedCommand { get; }
 
-    public ICommand StartAgainCommand => new AsyncRelayCommand(StartAgainTraining);
+    public ICommand StartAgainCommand { get; }
 
-    public ICommand RemoveLastTrainingCommand => new AsyncRelayCommand(RemoveLastTraining);
+    public ICommand RemoveLastTrainingCommand { get; }
 
-    public ICommand RemainingItemsThresholdReachedCommand => new RelayCommand(RemainingItemsThresholdReached);
+    public ICommand RemainingItemsThresholdReachedCommand { get; }
 
-    private int _itemTreshold;
-
-    public int ItemTreshold
+    /// <summary>
+    /// Reloads the list on first show and after something changed it (delete, new workout);
+    /// otherwise coming back from the details keeps the scroll position and loaded pages.
+    /// </summary>
+    public void LoadItemsIfNeeded()
     {
-        get => _itemTreshold;
-        set => SetProperty(ref _itemTreshold, value);
+        if (!needsReload)
+            return;
+
+        needsReload = false;
+        LastTrainings.Clear();
+        loadedCount = 0;
+        baseItems = App.Database.GetLastTrainingItems().OrderByDescending(item => item.Time).ToList();
+        exerciseCounts = App.Database.GetLastTrainingExerciseItems()
+            .GroupBy(item => item.LastTrainingId)
+            .ToDictionary(group => group.Key, group => group.Count());
+
+        LoadNextPage();
     }
 
-    public void LoadItems(int page = 1)
+    private void LoadNextPage()
     {
-        if (page == 1)
-        {
-            ItemTreshold = 1;
-            LastTrainings.Clear();
-            baseItems = App.Database.GetLastTrainingItems().OrderByDescending(item => item.Time);
-        }
+        if (loadedCount >= baseItems.Count)
+            return;
 
-        List<LastTrainingViewModelList> tempLastTrainings = new List<LastTrainingViewModelList>();
-        var newItems = baseItems.Skip((page - 1) * 10).Take(10).ToList();
-        foreach (var lastTraining in newItems)
+        var culture = Settings.GetLanguage();
+        var now = DateTime.Now;
+        foreach (var lastTraining in baseItems.Skip(loadedCount).Take(PageSize))
         {
             try
             {
+                var exerciseCount = exerciseCounts.GetValueOrDefault(lastTraining.Id);
                 var newItem = new LastTraining()
                 {
                     ElapsedTime = lastTraining.ElapsedTime,
@@ -78,9 +98,14 @@ public class HistoryTrainingPageViewModel : BaseViewModel
                     Title = lastTraining.Title,
                     Id = lastTraining.Id,
                     TrainingId = lastTraining.TrainingId,
+                    DateText = $"{lastTraining.Time.ToRelativeDateString(now, culture)} · {lastTraining.Time.ToString("t", culture)}",
+                    DurationText = lastTraining.ElapsedTime.ToShortDurationString(),
+                    ExerciseCountText = exerciseCount > 0
+                        ? exerciseCount.ToPluralString(culture, AppResources.ExerciseCountOne, AppResources.ExerciseCountFew, AppResources.ExerciseCountMany)
+                        : string.Empty,
                 };
 
-                PutItemToListByDate(tempLastTrainings, newItem);
+                PutItemToListByDate(newItem, now);
             }
             catch (Exception ex)
             {
@@ -88,72 +113,37 @@ public class HistoryTrainingPageViewModel : BaseViewModel
             }
         }
 
-        foreach (var tempLastTraining in tempLastTrainings)
-        {
-            LastTrainings.Add(tempLastTraining);
-        }
-        OnPropertyChanged(nameof(LastTrainings));
+        loadedCount += PageSize;
     }
 
     private async Task SelectionChanged(LastTraining selected)
     {
         SelectedTraining = selected;
+        // Items are filled on every open; start clean so reopening doesn't duplicate exercises
+        SelectedTraining.Items.Clear();
         var trainingExerciseItems = App.Database.GetLastTrainingExerciseItems().Where(item => item.LastTrainingId == SelectedTraining.Id);
         foreach (var trainingExercise in trainingExerciseItems)
         {
-            var ex = new TrainingExerciseViewModel()
-            {
-                Name = trainingExercise.ExerciseName,
-                Muscles = new ObservableCollection<MuscleViewModel>(
-                    MuscleViewModelExtensions.ConvertFromStringToList(trainingExercise.MusclesString)),
-                OrderNumber = trainingExercise.OrderNumber,
-                Description = DescriptionViewModel.ConvertFromJson(trainingExercise.Description),
-                TrainingExerciseId = trainingExercise.Id,
-                SuperSetId = trainingExercise.SuperSetId,
-                CodeNum = trainingExercise.CodeNum,
-            };
-
-            ex.Tags = ExerciseExtensions.ConvertTagIntToList(trainingExercise.TagsValue).ToList();
-            TrainingExerciseViewModelExtensions.ConvertJsonBack(ex, trainingExercise.WeightAndRepsString);
-            SelectedTraining.Items.Add(ex);
+            SelectedTraining.Items.Add(TrainingExerciseMapper.FromLastTrainingExercise(trainingExercise));
         }
 
         HistoryTrainingExercisesPage page = new HistoryTrainingExercisesPage() { BindingContext = this };
         await Navigation.PushAsync(page);
     }
 
-    private void PutItemToListByDate(List<LastTrainingViewModelList> tempLastTrainings, LastTraining newItem)
+    private void PutItemToListByDate(LastTraining newItem, DateTime now)
     {
-        foreach (var daysAndTextLimit in DaysAndTextLimits)
-        {
-            var result = AddLastTraining(newItem, daysAndTextLimit.Heading, daysAndTextLimit.Days, tempLastTrainings);
-            if (result)
-            {
-                break;
-            }
-        }
-    }
+        var period = daysAndTextLimits.First(limit => limit.Days == -1 || now - newItem.ImplementDateTime < TimeSpan.FromDays(limit.Days));
 
-    private bool AddLastTraining(LastTraining newItem, string daysSectorString, int daysSector, List<LastTrainingViewModelList> tempLastTrainings)
-    {
-        bool addResult = false;
-        if (daysSector == -1 || DateTime.Now - newItem.ImplementDateTime < TimeSpan.FromDays(daysSector))
+        // Items arrive newest first, so a period's group is always the last one; reuse it across pages instead of repeating the heading
+        var group = LastTrainings.LastOrDefault();
+        if (group?.Heading != period.Heading)
         {
-            var index = tempLastTrainings.FirstOrDefault(a => a.Heading == daysSectorString);
-            if (index != null)
-            {
-                index.Add(newItem);
-                addResult = true;
-            }
-            else
-            {
-                tempLastTrainings.Add(new LastTrainingViewModelList { Heading = daysSectorString });
-                tempLastTrainings.Last().Add(newItem);
-                addResult = true;
-            }
+            group = new LastTrainingViewModelList { Heading = period.Heading };
+            LastTrainings.Add(group);
         }
 
-        return addResult;
+        group.Add(newItem);
     }
 
     private async Task StartAgainTraining()
@@ -170,50 +160,11 @@ public class HistoryTrainingPageViewModel : BaseViewModel
         }
         else
         {
-            training = new TrainingViewModel(App.Database.GetTrainingItem(trId));
-            PrepareTrainingViewModel(training);
+            training = TrainingViewModel.LoadWithExercises(trId);
         }
 
+        needsReload = true;
         await Navigation.PushAsync(new TrainingImplementPage() { TrainingItem = training, Title = training.Title });
-    }
-
-    private void PrepareTrainingViewModel(TrainingViewModel vm)
-    {
-        var trainingExerciseItems = App.Database.GetTrainingExerciseItems();
-        var exerciseItems = App.Database.GetExerciseItems();
-        var trainingExercises = trainingExerciseItems.Where(ex => ex.TrainingId == vm.Id);
-        var unOrderedItems = trainingExercises.Where(a => a.OrderNumber < 0);
-
-        trainingExercises = trainingExercises.OrderBy(a => a.OrderNumber).Where(a => a.OrderNumber >= 0).ToList();
-        int index = 0;
-        foreach (var trainingExercise in trainingExercises)
-        {
-            var exercise = exerciseItems.First(ex => ex.Id == trainingExercise.ExerciseId);
-            var trEx = new TrainingExerciseViewModel(exercise, trainingExercise)
-            {
-                TrainingExerciseId = trainingExercise.Id,
-            };
-            index++;
-
-            vm.AddExercise(trEx);
-        }
-
-        foreach (var trainingExercise in unOrderedItems)
-        {
-            if (trainingExercise.OrderNumber == -1)
-            {
-                trainingExercise.OrderNumber = index;
-                App.Database.SaveTrainingExerciseItem(trainingExercise);
-            }
-
-            var exercise = exerciseItems.First(ex => ex.Id == trainingExercise.ExerciseId);
-            var trEx = new TrainingExerciseViewModel(exercise, trainingExercise)
-            {
-                TrainingExerciseId = trainingExercise.Id,
-            };
-            index++;
-            vm.AddExercise(trEx);
-        }
     }
 
     private async Task RemoveLastTraining()
@@ -227,14 +178,10 @@ public class HistoryTrainingPageViewModel : BaseViewModel
                 App.Database.DeleteLastTrainingExercise(trainingExerciseViewModel.TrainingExerciseId);
             }
 
+            needsReload = true;
             await Toast.Make(AppResources.DeletedString).Show();
             await Shell.Current.GoToAsync("..");
         }
-    }
-
-    private void RemainingItemsThresholdReached()
-    {
-        LoadItems(++ItemTreshold);
     }
 }
 

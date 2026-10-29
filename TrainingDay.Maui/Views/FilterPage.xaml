@@ -2,184 +2,202 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels"
+             xmlns:pages="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              Shell.TabBarIsVisible="False"
-             x:Class="TrainingDay.Maui.Views.FilterPage">
+             BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}"
+             x:Class="TrainingDay.Maui.Views.FilterPage"
+             x:DataType="pages:FilterPageViewModel">
+
+    <ContentPage.Resources>
+        <Style TargetType="Label" x:Key="FilterSectionHeaderStyle">
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="TextTransform" Value="Uppercase" />
+            <Setter Property="Margin" Value="14,14,14,6" />
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" />
+            <Setter Property="SemanticProperties.HeadingLevel" Value="Level2" />
+        </Style>
+        <Style TargetType="Grid" x:Key="EquipmentRowStyle">
+            <Setter Property="ColumnDefinitions" Value="44,*,auto" />
+            <Setter Property="ColumnSpacing" Value="12" />
+            <Setter Property="Padding" Value="0,8" />
+            <Setter Property="MinimumHeightRequest" Value="56" />
+        </Style>
+        <Style TargetType="BoxView" x:Key="RowSeparatorStyle">
+            <Setter Property="HeightRequest" Value="1" />
+            <Setter Property="Margin" Value="56,0,0,0" />
+            <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}" />
+        </Style>
+    </ContentPage.Resources>
 
     <Shell.TitleView>
-        <Grid ColumnDefinitions="*,auto" ColumnSpacing="10" Margin="10,0">
-            <Label Grid.Column="0" Text="{x:Static resx:AppResources.FilterString}" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
+        <Grid Style="{StaticResource PageTitleViewStyle}" ColumnDefinitions="*,auto">
+            <Label Style="{StaticResource PageTitleStyle}" Grid.Column="0" Text="{x:Static resx:AppResources.FilterString}"/>
 
-            <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="save.png" Clicked="AcceptFilter_Click">
-                <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
-                </ImageButton.Behaviors>
-            </ImageButton>
+            <!-- Clears every criterion at once; disabled when nothing is set -->
+            <Button Grid.Column="1" Text="{x:Static resx:AppResources.Reset}" Command="{Binding ResetAllCommand}"
+                    BackgroundColor="Transparent" TextColor="{StaticResource Primary}" Padding="10,0" MinimumHeightRequest="44"
+                    VerticalOptions="Center" IsEnabled="{Binding HasActiveFilters}"/>
         </Grid>
     </Shell.TitleView>
-    <ScrollView>
-        <Grid x:Name="MainGrid" RowDefinitions="auto,auto,auto,*" RowSpacing="5" >
-            <Border StrokeShape="RoundRectangle 10" HorizontalOptions="Fill" VerticalOptions="Center" Margin="10,5"
-                    BackgroundColor="Transparent" Padding="10,0">
-                <VerticalStackLayout Spacing="0">
-                    <VerticalStackLayout.Resources>
-                        <Style TargetType="Grid" x:Key="EquipmentRowStyle">
-                            <Setter Property="ColumnDefinitions" Value="52,*,auto" />
-                            <Setter Property="ColumnSpacing" Value="12" />
-                            <Setter Property="Padding" Value="0,10" />
-                        </Style>
-                        <Style TargetType="Image">
-                            <Setter Property="HeightRequest" Value="44" />
-                            <Setter Property="Aspect" Value="AspectFit" />
-                        </Style>
-                        <Style TargetType="Label">
-                            <Setter Property="FontSize" Value="15" />
-                            <Setter Property="TextColor" Value="White" />
-                            <Setter Property="VerticalOptions" Value="Center" />
-                        </Style>
-                        <Style TargetType="Switch">
-                            <Setter Property="OnColor" Value="{StaticResource Main}" />
-                            <Setter Property="VerticalOptions" Value="Center" />
-                        </Style>
-                    </VerticalStackLayout.Resources>
 
-                    <Grid Style="{StaticResource EquipmentRowStyle}">
-                        <Image Grid.Column="0" Source="no_equipment.png" />
-                        <Label Grid.Column="1" Text="{x:Static resx:AppResources.FilterNoEquipment}" 
-                            TextColor="{AppThemeBinding Dark=White,Light=Black}"/>
-                        <Switch x:Name="NoEquipmentFilterSwitch" Grid.Column="2" Toggled="ChangeNoEquipment_Toggled" />
+    <Grid RowDefinitions="*,auto">
+        <ScrollView Grid.Row="0">
+            <Grid x:Name="MainGrid" RowDefinitions="auto,auto,auto,auto,auto,auto,auto" Padding="0,0,0,10">
+                <!-- Equipment -->
+                <Label Grid.Row="0" Style="{StaticResource FilterSectionHeaderStyle}" Text="{x:Static resx:AppResources.EquipmentString}"/>
+                <Border Grid.Row="1" Style="{StaticResource BorderCellStyle}" Margin="10,0" Padding="14,4">
+                    <VerticalStackLayout Spacing="0">
+                        <Grid Style="{StaticResource EquipmentRowStyle}">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleEquipmentCommand}" CommandParameter="{x:Static pages:EquipmentFilterKind.NoEquipment}" />
+                            </Grid.GestureRecognizers>
+                            <Image Grid.Column="0" Source="no_equipment.png" HeightRequest="40" Aspect="AspectFit" />
+                            <Label Grid.Column="1" Text="{x:Static resx:AppResources.FilterNoEquipment}" FontSize="16" VerticalOptions="Center"/>
+                            <Switch Grid.Column="2" OnColor="{StaticResource Main}" VerticalOptions="Center"
+                                    IsToggled="{Binding Filter.IsNoEquipmentFilter}"
+                                    SemanticProperties.Description="{x:Static resx:AppResources.FilterNoEquipment}"/>
+                        </Grid>
+
+                        <BoxView Style="{StaticResource RowSeparatorStyle}" />
+
+                        <Grid Style="{StaticResource EquipmentRowStyle}">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleEquipmentCommand}" CommandParameter="{x:Static pages:EquipmentFilterKind.Barbell}" />
+                            </Grid.GestureRecognizers>
+                            <Image Grid.Column="0" Source="barbell.png" HeightRequest="40" Aspect="AspectFit" />
+                            <Label Grid.Column="1" Text="{x:Static resx:AppResources.FilterBarbell}" FontSize="16" VerticalOptions="Center"/>
+                            <Switch Grid.Column="2" OnColor="{StaticResource Main}" VerticalOptions="Center"
+                                    IsToggled="{Binding Filter.IsBarbellExists}"
+                                    SemanticProperties.Description="{x:Static resx:AppResources.FilterBarbell}"/>
+                        </Grid>
+
+                        <BoxView Style="{StaticResource RowSeparatorStyle}" />
+
+                        <Grid Style="{StaticResource EquipmentRowStyle}">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleEquipmentCommand}" CommandParameter="{x:Static pages:EquipmentFilterKind.Dumbbell}" />
+                            </Grid.GestureRecognizers>
+                            <Image Grid.Column="0" Source="dumbbell.png" HeightRequest="40" Aspect="AspectFit" />
+                            <Label Grid.Column="1" Text="{x:Static resx:AppResources.FilterDumbbell}" FontSize="16" VerticalOptions="Center"/>
+                            <Switch Grid.Column="2" OnColor="{StaticResource Main}" VerticalOptions="Center"
+                                    IsToggled="{Binding Filter.IsDumbbellExists}"
+                                    SemanticProperties.Description="{x:Static resx:AppResources.FilterDumbbell}"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Difficulty -->
+                <Label Grid.Row="2" Style="{StaticResource FilterSectionHeaderStyle}" Text="{x:Static resx:AppResources.Difficulty}"/>
+                <Border Grid.Row="3" Style="{StaticResource BorderCellStyle}" Margin="10,0" Padding="14,6">
+                    <Grid ColumnDefinitions="*,auto,auto" ColumnSpacing="10" MinimumHeightRequest="48">
+                        <Label Grid.Column="0" Text="{Binding DifficultyText}" FontSize="16" VerticalOptions="Center" />
+
+                        <toolkit:RatingView Grid.Column="1" VerticalOptions="Center"
+                             EmptyShapeColor="Transparent"
+                             FillColor="{StaticResource Main}"
+                             FillOption ="Shape"
+                             IsReadOnly="False"
+                             ShapeDiameter="34"
+                             MaximumRating="3"
+                             Rating="{Binding Filter.DifficultyLevel, Mode=TwoWay}"
+                             Shape="Star"
+                             ShapeBorderColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"
+                             ShapeBorderThickness="1"
+                             Spacing="4"
+                             SemanticProperties.Description="{x:Static resx:AppResources.Difficulty}" />
+
+                        <!-- Only offered when a level is chosen; "Any" needs no reset -->
+                        <Button Grid.Column="2" Text="✕" FontSize="16" IsVisible="{Binding HasDifficulty}"
+                                WidthRequest="40" HeightRequest="40" Padding="0" CornerRadius="20" VerticalOptions="Center"
+                                BackgroundColor="Transparent" TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}"
+                                SemanticProperties.Description="{x:Static resx:AppResources.Reset}"
+                                ToolTipProperties.Text="{x:Static resx:AppResources.Reset}"
+                                Command="{Binding ResetDifficultyCommand}"/>
                     </Grid>
+                </Border>
 
-                    <BoxView HeightRequest="1" Color="#40FFFFFF" />
+                <!-- Muscles -->
+                <Label Grid.Row="4" Style="{StaticResource FilterSectionHeaderStyle}" Text="{x:Static resx:AppResources.TargetMuscles}"/>
 
-                    <Grid Style="{StaticResource EquipmentRowStyle}">
-                        <Image Grid.Column="0" Source="barbell.png" />
-                        <Label Grid.Column="1" Text="{x:Static resx:AppResources.FilterBarbell}" TextColor="{AppThemeBinding Dark=White,Light=Black}"/>
-                        <Switch x:Name="BarbellFilterSwitch" Grid.Column="2" Toggled="ChangeBarbell_Toggled" />
-                    </Grid>
+                <Image
+                    x:Name="MuscleImage"
+                    Grid.Row="5"
+                    Aspect="AspectFit"
+                    HeightRequest="514"
+                    HorizontalOptions="Fill"
+                    Source="muscle.png"
+                    VerticalOptions="Start"
+                    WidthRequest="496" />
+                <skia:SKCanvasView
+                    x:Name="SkiaView"
+                    Grid.Row="5"
+                    PaintSurface="OnPaintSurface"
+                    VerticalOptions="Start" />
 
-                    <BoxView HeightRequest="1" Color="#40FFFFFF" />
+                <FlexLayout
+                    x:Name="MusclesListView"
+                    Grid.Row="6"
+                    Margin="10,4,10,0"
+                    BindableLayout.ItemsSource="{Binding Muscles}"
+                    IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                    AlignContent="Start"
+                    AlignItems="Center"
+                    Direction="Row"
+                    JustifyContent="Center"
+                    Wrap="Wrap">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="viewModels:MuscleCheckItem">
+                            <AbsoluteLayout>
+                                <!-- Chip: outlined when off, filled with the accent colour when on -->
+                                <Border StrokeShape="RoundRectangle 16" StrokeThickness="1" Margin="1,2" Padding="12,7" MinimumHeightRequest="34"
+                                    BackgroundColor="Transparent"
+                                    Stroke="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray500}}"
+                                    SemanticProperties.Description="{Binding Text}">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ToggleMuscleCommand, Source={RelativeSource AncestorType={x:Type pages:FilterPageViewModel}}, x:DataType=pages:FilterPageViewModel}"
+                              CommandParameter="{Binding .}" />
+                                    </Border.GestureRecognizers>
+                                    <Border.Triggers>
+                                        <DataTrigger Binding="{Binding IsChecked}" TargetType="Border" Value="True">
+                                            <Setter Property="BackgroundColor" Value="{StaticResource Main}" />
+                                            <Setter Property="Stroke" Value="{StaticResource Main}" />
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <Label FontSize="14" Text="{Binding Text}" LineBreakMode="NoWrap" 
+                                        TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}">
+                                        <Label.Triggers>
+                                            <DataTrigger Binding="{Binding IsChecked}" TargetType="Label" Value="True">
+                                                <Setter Property="TextColor" Value="White" />
+                                                <Setter Property="FontAttributes" Value="Bold" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                </Border>
+                            </AbsoluteLayout>
+                            
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
 
-                    <Grid Style="{StaticResource EquipmentRowStyle}">
-                        <Image Grid.Column="0" Source="dumbbell.png" />
-                        <Label Grid.Column="1" Text="{x:Static resx:AppResources.FilterDumbbell}" TextColor="{AppThemeBinding Dark=White,Light=Black}"/>
-                        <Switch x:Name="DumbbellFilterSwitch" Grid.Column="2" Toggled="ChangeDumbbell_Toggled" />
-                    </Grid>
-                </VerticalStackLayout>
-            </Border>
-
-            <Border HeightRequest="1" VerticalOptions="End" Padding="10,0"/>
-            <Border Grid.Row="1" HeightRequest="1" VerticalOptions="End" Padding="10,0"/>
-
-            <Grid Grid.Row="1" ColumnDefinitions="*,auto,auto" VerticalOptions="Start" Margin="5" ColumnSpacing="10">
-                <Label x:Name="DifficultyLevelLabel" VerticalOptions="Center" />
-
-                <toolkit:RatingView Grid.Column="1" VerticalOptions="Center"
-                     EmptyShapeColor="Transparent"
-                     FillColor="{StaticResource Main}"
-                     FillOption ="Shape"
-                     IsReadOnly="False"
-                     ShapeDiameter="37"
-                     MaximumRating="3"
-                     Rating="{Binding Filter.DifficultyLevel, Mode=TwoWay}"
-                     RatingChanged="RatingView_RatingChanged"
-                     Shape="Star"
-                     ShapeBorderColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"
-                     ShapeBorderThickness="1"
-                     Spacing="3" />
-
-                <Button Text="{x:Static resx:AppResources.Reset}" Grid.Column="2" BackgroundColor="Transparent" TextColor="{StaticResource Primary}"
-                        Clicked="ResetDifficulty_Click"/>
+                <controls:ToolTipControl
+                    Title="{x:Static resx:AppResources.FilterString}"
+                    Grid.Row="5"
+                    AttachedControl="MusclesListView"
+                    NeverShow="{Binding Source={x:Static Application.Current}, Path=ToolTipManager.ToolTipFilterMuscle, Mode=TwoWay, x:DataType={x:Null}}"
+                    NeverShowText="{x:Static resx:AppResources.GotItString}"
+                    Position="Center"
+                    SkipText="{x:Static resx:AppResources.SkipString}"
+                    Text="{x:Static resx:AppResources.ToolTipFilterMuscle}" />
             </Grid>
-            
-            <Image
-            x:Name="MuscleImage"
-            Grid.Row="2"
-            Aspect="AspectFit"
-            HeightRequest="514"
-            HorizontalOptions="Fill"
-            Source="muscle.png"
-            VerticalOptions="Start"
-            WidthRequest="496" />
-            <skia:SKCanvasView
-            x:Name="SkiaView"
-            Grid.Row="2"
-            PaintSurface="OnPaintSurface"
-            VerticalOptions="Start" />
+        </ScrollView>
 
-            <FlexLayout
-            x:Name="MusclesListView"
-            Grid.Row="3"
-            AlignContent="Stretch"
-            AlignItems="Center"
-            Direction="Row"
-            HorizontalOptions="Center"
-            JustifyContent="Center"
-            VerticalOptions="Center"
-            Wrap="Wrap">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate>
-                        <Border Stroke="White" StrokeShape="RoundRectangle 5" Margin="1" Padding="10,5">
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="MusclesListView_OnItemTapped" />
-                            </Border.GestureRecognizers>
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Style.Triggers>
-                                        <DataTrigger
-                                        Binding="{Binding IsChecked}"
-                                        TargetType="Border"
-                                        Value="True">
-                                            <Setter Property="BackgroundColor" Value="White" />
-                                        </DataTrigger>
-                                        <DataTrigger
-                                        Binding="{Binding IsChecked}"
-                                        TargetType="Border"
-                                        Value="False">
-                                            <Setter Property="BackgroundColor" Value="DimGray" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
-                            <Label FontSize="Default" Text="{Binding Text}" LineBreakMode="NoWrap">
-                                <Label.Style>
-                                    <Style TargetType="Label">
-                                        <Style.Triggers>
-                                            <DataTrigger
-                                            Binding="{Binding IsChecked}"
-                                            TargetType="Label"
-                                            Value="True">
-                                                <Setter Property="TextColor" Value="Black" />
-                                            </DataTrigger>
-                                            <DataTrigger
-                                            Binding="{Binding IsChecked}"
-                                            TargetType="Label"
-                                            Value="False">
-                                                <Setter Property="TextColor" Value="LightGray" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Label.Style>
-                            </Label>
-                        </Border>
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </FlexLayout>
-
-            <controls:ToolTipControl
-                Title="{x:Static resx:AppResources.FilterString}"
-                Grid.Row="2"
-                AttachedControl="MusclesListView"
-                NeverShow="{Binding Source={x:Static Application.Current}, Path=ToolTipManager.ToolTipFilterMuscle, Mode=TwoWay}"
-                NeverShowText="{x:Static resx:AppResources.GotItString}"
-                ParentHeight="{Binding Source={x:Reference MusclesListView}, Path=Height}"
-                ParentWidth="{Binding Source={x:Reference MusclesListView}, Path=Width}"
-                Position="Center"
-                SkipText="{x:Static resx:AppResources.SkipString}"
-                Text="{x:Static resx:AppResources.ToolTipFilterMuscle}" />
-        </Grid>
-    </ScrollView>
+        <!-- Sticky primary action, styled like the other pages' main buttons -->
+        <Button Grid.Row="1" Text="{x:Static resx:AppResources.ApplyFilterString}" Command="{Binding ApplyCommand}"
+                Style="{StaticResource ActionButton}" CornerRadius="20" Margin="10,5,10,10" HeightRequest="50" FontSize="Body"/>
+    </Grid>
 </ContentPage>

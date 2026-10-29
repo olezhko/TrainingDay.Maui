@@ -7,6 +7,13 @@
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              x:Class="TrainingDay.Maui.Views.PreparedTrainingsPage"
              Title="{x:Static resx:AppResources.AddTrainingString}">
+
+    <Shell.TitleView>
+        <Grid Style="{StaticResource PageTitleViewStyle}">
+            <Label Style="{StaticResource PageTitleStyle}" Text="{x:Static resx:AppResources.AddTrainingString}"/>
+        </Grid>
+    </Shell.TitleView>
+
     <ContentPage.BindingContext>
         <viewModels:PreparedTrainingsPageViewModel />
     </ContentPage.BindingContext>
@@ -70,8 +77,6 @@
 
         <!--<controls:ToolTipControl Text="Click this button to answer some questions and application will create workout for you" Title="{x:Static resx:AppResources.HelperString}" 
                               NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipLetsBuildYourWorkout,Mode=TwoWay}" 
-                              AttachedControl="LetsBuildYourWorkoutButton" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}" Position="Center"
-                              ParentHeight="{Binding Source={x:Reference Container},Path=Height}" Grid.RowSpan="3"
-                              ParentWidth="{Binding Source={x:Reference Container},Path=Width}"/>-->
+                              AttachedControl="LetsBuildYourWorkoutButton" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}" Position="Center" Grid.RowSpan="3"/>-->
     </controls:TooltipControlContainer>
 </ContentPage>

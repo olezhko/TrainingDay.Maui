@@ -1,5 +1,6 @@
 using CommunityToolkit.Maui.Alerts;
 using TrainingDay.Maui.Extensions;
+using TrainingDay.Maui.Mappers;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.ViewModels;
 
@@ -24,7 +25,6 @@ public partial class TrainingExerciseItemPage : ContentPage
     public TrainingExerciseItemPage()
     {
         InitializeComponent();
-        TitleLabel.Text = AppResources.Editing;
     }
 
     private async void Save_clicked(object sender, EventArgs e)
@@ -33,7 +33,7 @@ public partial class TrainingExerciseItemPage : ContentPage
             return;
 
         ExerciseView.CurrentExercise.Time = TimeSpan.TryParse(ExerciseView.CurrentExercise.TimeString, out var newTime) ? newTime : TimeSpan.Zero;
-        App.Database.SaveTrainingExerciseItem(ExerciseView.CurrentExercise.GetTrainingExerciseComm());
+        App.Database.SaveTrainingExerciseItem(TrainingExerciseMapper.ToEntity(ExerciseView.CurrentExercise));
 
 		await Toast.Make(AppResources.SavedString).Show();
 		await Shell.Current.GoToAsync("..");

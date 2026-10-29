@@ -35,26 +35,26 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
-		<ApplicationVersion>379</ApplicationVersion>
-		<ApplicationDisplayVersion>1.3.4.4</ApplicationDisplayVersion>
+		<ApplicationVersion>383</ApplicationVersion>
+		<ApplicationDisplayVersion>1.3.4.8</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-ios|AnyCPU'">
 		<CreatePackage>false</CreatePackage>
-		<ApplicationVersion>379</ApplicationVersion>
-		<ApplicationDisplayVersion>1.3.4.4</ApplicationDisplayVersion>
+		<ApplicationVersion>383</ApplicationVersion>
+		<ApplicationDisplayVersion>1.3.4.8</ApplicationDisplayVersion>
 		<EnableSGenConc>True</EnableSGenConc>
 		<SkipStaticLibraryValidation>true</SkipStaticLibraryValidation>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
-		<ApplicationVersion>379</ApplicationVersion>
-		<ApplicationDisplayVersion>1.3.4.4</ApplicationDisplayVersion>
+		<ApplicationVersion>383</ApplicationVersion>
+		<ApplicationDisplayVersion>1.3.4.8</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-ios|AnyCPU'">
-		<ApplicationVersion>379</ApplicationVersion>
-		<ApplicationDisplayVersion>1.3.4.4</ApplicationDisplayVersion>
+		<ApplicationVersion>383</ApplicationVersion>
+		<ApplicationDisplayVersion>1.3.4.8</ApplicationDisplayVersion>
 		<CreatePackage>false</CreatePackage>
 		<CodesignProvision>TrainingDayPublish</CodesignProvision>
 		<CodesignKey>Apple Distribution: Oleg Ladyka (36WMJT4QLC)</CodesignKey>
@@ -127,7 +127,6 @@
   </ItemGroup>
 
 	<ItemGroup>
-	  <MauiImage Include="Platforms\Android\Resources\drawable\small_icon.png" />
 	  <MauiImage Include="Resources\Raw\confetti.json" />
 	</ItemGroup>
 
@@ -230,16 +229,13 @@
 		<MauiXaml Update="Views\TrainingExerciseItemPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\TrainingExercisesMoveOrCopy.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
 		<MauiXaml Update="Views\TrainingExercisesPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\TrainingImplementPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Views\TrainingItemsBasePage.xaml">
+		<MauiXaml Update="Views\TrainingsPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Views\WeightViewAndSetPage.xaml">

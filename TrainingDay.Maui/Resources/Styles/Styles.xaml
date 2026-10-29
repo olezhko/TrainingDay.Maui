@@ -11,12 +11,14 @@
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
     
     <converters:ExerciseTagExistsConverter x:Key="ExerciseTagExistsConverter"/>
-    <converters:SuperSetMenuConverter x:Key="SuperSetMenuConverter"/>
     <converters:HalfValueConverter x:Key="HalfValueConverter"/>
-    <converters:IsNoItemsConverter x:Key="IsNoItemsConverter"/>
-    <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
-    <converters:IsEmptyStringConverter x:Key="IsEmptyStringConverter"/>
+    <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
+    <toolkit:IsListNotNullOrEmptyConverter x:Key="IsListNotNullOrEmptyConverter"/>
+    <toolkit:IsNotEqualConverter x:Key="IsNotEqualConverter"/>
     <toolkit:IsNullConverter x:Key="IsNullConverter" />
+    <toolkit:IsNotNullConverter x:Key="IsNotNullConverter" />
+    <toolkit:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />
+    <toolkit:VariableMultiValueConverter x:Key="AnyTrueConverter" ConditionType="Any" />
 
     <Style TargetType="CollectionView" ApplyToDerivedTypes="True">
         <Setter Property="ItemsLayout">
@@ -466,6 +468,30 @@
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
+    </Style>
+
+    <!-- Page header (Shell.TitleView): every page uses the same layout, title text and 44pt icon buttons -->
+    <Style TargetType="Grid" x:Key="PageTitleViewStyle">
+        <Setter Property="Margin" Value="10,0,4,0"/>
+        <Setter Property="ColumnSpacing" Value="0"/>
+        <Setter Property="VerticalOptions" Value="Fill"/>
+    </Style>
+
+    <Style TargetType="Label" x:Key="PageTitleStyle">
+        <Setter Property="FontSize" Value="Large"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="LineBreakMode" Value="TailTruncation"/>
+        <Setter Property="MaxLines" Value="1"/>
+        <Setter Property="SemanticProperties.HeadingLevel" Value="Level1"/>
+    </Style>
+
+    <Style TargetType="ImageButton" x:Key="HeaderIconButtonStyle">
+        <Setter Property="WidthRequest" Value="44"/>
+        <Setter Property="HeightRequest" Value="44"/>
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
     </Style>
 
     <Style TargetType="VerticalStackLayout" x:Key="PopupLayout">

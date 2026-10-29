@@ -16,7 +16,7 @@ public partial class HistoryTrainingPage : ContentPage
         base.OnAppearing();
         var vm = BindingContext as HistoryTrainingPageViewModel;
         vm.Navigation = Navigation;
-        vm.LoadItems();
+        vm.LoadItemsIfNeeded();
     }
 
     private async void BackToWorkouts_Clicked(object sender, EventArgs e)
