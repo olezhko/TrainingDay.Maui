@@ -102,7 +102,7 @@
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
-                            <Label Text="{Binding Key}" VerticalOptions="Center" FontSize="Body">
+                            <Label Text="{Binding Key}" TextTransform="Uppercase" VerticalOptions="Center" FontSize="Body">
                                 <Label.Style>
                                     <Style TargetType="Label">
                                         <Style.Triggers>
@@ -120,7 +120,11 @@
             </CollectionView.ItemTemplate>
             <CollectionView.Footer>
                 <ImageButton Source="add_empty.png" Command="{Binding CreateGroupCommand}" HeightRequest="36" WidthRequest="36" Margin="3,0,0,0" VerticalOptions="Center"
-                             SemanticProperties.Description="{x:Static resx:AppResources.NewGroupString}" ToolTipProperties.Text="{x:Static resx:AppResources.NewGroupString}"/>
+                             SemanticProperties.Description="{x:Static resx:AppResources.NewGroupString}" ToolTipProperties.Text="{x:Static resx:AppResources.NewGroupString}">
+                    <ImageButton.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
+                    </ImageButton.Behaviors>
+                </ImageButton>
             </CollectionView.Footer>
         </CollectionView>
 
@@ -201,7 +205,7 @@
                             <Button Text="{x:Static resx:AppResources.CreateOwnTrainingString}" HeightRequest="48" Style="{StaticResource SecondActionButton}"
                                     Command="{Binding CreateOwnTrainingCommand}"/>
                             <Button Text="{x:Static resx:AppResources.AiPlanString}" HeightRequest="48" Style="{StaticResource SecondActionButton}"
-                                    Command="{Binding AiPlanCommand}"/>
+                                    Command="{Binding AiPlanCommand}" IsVisible="False"/>
                         </VerticalStackLayout>
 
                         <!-- selected group has no workouts -->

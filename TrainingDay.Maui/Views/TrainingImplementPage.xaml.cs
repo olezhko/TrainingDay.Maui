@@ -3,22 +3,19 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using SkiaSharp.Extended.UI.Controls;
 using System.Collections.ObjectModel;
-using System.Text.Json;
 using System.Windows.Input;
-using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.Controls;
 using TrainingDay.Maui.Controls.PopUp;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Mappers;
 using TrainingDay.Maui.Models;
+using TrainingDay.Maui.Models.Database;
 using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Models.Notifications;
-using TrainingDay.Maui.Models.Serialize;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
 using TrainingDay.Maui.ViewModels;
-using LastTraining = TrainingDay.Maui.Models.Database.LastTrainingEntity;
 
 namespace TrainingDay.Maui.Views;
 
@@ -365,6 +362,11 @@ public partial class TrainingImplementPage : ContentPage
     #region Finish
     private async void FinishButtonClicked(object sender, TappedEventArgs e)
     {
+        if (!enabledTimer)
+        {
+            return; // already finishing (confetti is playing)
+        }
+
         try
         {
             Items[StepProgressBarControl.StepSelected].ForEach(item => item.IsNotFinished = false);
@@ -413,24 +415,42 @@ public partial class TrainingImplementPage : ContentPage
         notificator.Cancel(PushMessagesExtensions.TrainingImplementTimeId);
         ClearNotFinishedTraining();
 
-        SaveLastTrainingWithExercises();
-        SaveChangedExercises();
-        await ShareToSocialFeedIfEnabled();
+        // confetti starts right away; DB writes run off the UI thread meanwhile, sharing never blocks the finish
+        var confettiTask = ShowConfettiAsync();
+        var elapsedTime = DateTime.Now - _startTrainingDateTime + StartTime;
+        await Task.Run(() => App.Database.RunInTransaction(() =>
+        {
+            SaveLastTrainingWithExercises(elapsedTime);
+            SaveChangedExercises();
+        }));
+        _ = ShareToSocialFeedIfEnabled(elapsedTime);
 
-        await ShowConfettiAsync();
+        await confettiTask;
 
         if (Settings.IsShowAdvicesOnImplementing)
         {
             await Shell.Current.ShowPopupAsync(
-                PopupBuilders.BuildAdvicePopup(AppResources.AdviceAfterTrainingMessage)
-            );
+                PopupBuilders.BuildAdvicePopup(AppResources.AdviceAfterTrainingMessage),
+                PopupBuilders.DefaultPopupOptions);
         }
 
         notificator.Cancel(PushMessagesExtensions.TrainingNotificationId);
         Shell.SetNavBarIsVisible(this, true);
         await Shell.Current.GoToAsync("//workouts");
 
-        await dataService.PostActionAsync(Settings.Token, Common.Communication.MobileActions.Workout);
+        _ = PostWorkoutActionAsync();
+    }
+
+    private async Task PostWorkoutActionAsync()
+    {
+        try
+        {
+            await dataService.PostActionAsync(Settings.Token, Common.Communication.MobileActions.Workout);
+        }
+        catch (Exception ex)
+        {
+            LoggingService.TrackError(ex);
+        }
     }
 
     private async Task ShowConfettiAsync()
@@ -440,7 +460,7 @@ public partial class TrainingImplementPage : ContentPage
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Fill,
             Source = new SKFileLottieImageSource { File = "confetti.json" },
-            RepeatCount = 3,
+            RepeatCount = 0,
             RepeatMode = SKLottieRepeatMode.Restart,
             IsAnimationEnabled = true,
         };
@@ -448,16 +468,16 @@ public partial class TrainingImplementPage : ContentPage
         Grid.SetColumnSpan(confetti, 3);
         MainGrid.Add(confetti);
 
-        await Task.Delay(2700);
+        await Task.Delay(1500);
 
         MainGrid.Remove(confetti);
     }
 
-    private void SaveLastTrainingWithExercises()
+    private void SaveLastTrainingWithExercises(TimeSpan elapsedTime)
     {
-        var id = App.Database.SaveItem(new LastTraining()
+        var id = App.Database.SaveItem(new LastTrainingEntity()
         {
-            ElapsedTime = DateTime.Now - _startTrainingDateTime + StartTime,
+            ElapsedTime = elapsedTime,
             Time = _startTrainingDateTime,
             Title = TrainingItem.Title,
             TrainingId = TrainingItem.Id,
@@ -489,7 +509,8 @@ public partial class TrainingImplementPage : ContentPage
             }
         }
     }
-    private async Task ShareToSocialFeedIfEnabled()
+
+    private async Task ShareToSocialFeedIfEnabled(TimeSpan elapsedTime)
     {
         if (!Settings.ShareCompletedWorkouts || socialWorkoutsService == null)
         {
@@ -502,7 +523,7 @@ public partial class TrainingImplementPage : ContentPage
             {
                 WorkoutName = TrainingItem.Title,
                 Date = _startTrainingDateTime,
-                Duration = DateTime.Now - _startTrainingDateTime + StartTime,
+                Duration = elapsedTime,
             };
 
             foreach (var superSet in Items)
@@ -579,14 +600,15 @@ public partial class TrainingImplementPage : ContentPage
         foreach (var exerciseItem in selectedItems)
         {
             var newSuperSet = new SuperSetViewModel<ImplementTrainingExerciseViewModel>() { TrainingId = TrainingItem.Id };
-            newSuperSet.Add(MapBaseSuperSetToImplementMapper.Map(exerciseItem));
+            var superSetExercise = MapBaseSuperSetToImplementMapper.Map(exerciseItem);
+            newSuperSet.Add(superSetExercise);
 
             Items.Add(newSuperSet);
-            exerciseItem.TrainingId = TrainingItem.Id;
-            exerciseItem.OrderNumber = Items.Count - 1;
-            TrainingItem.AddExercise(exerciseItem);
-            var id = App.Database.SaveTrainingExerciseItem(TrainingExerciseMapper.ToEntity(exerciseItem));
-            exerciseItem.TrainingExerciseId = id;
+            superSetExercise.TrainingId = TrainingItem.Id;
+            superSetExercise.OrderNumber = Items.Count - 1;
+            TrainingItem.AddExercise(superSetExercise);
+            var id = App.Database.SaveTrainingExerciseItem(TrainingExerciseMapper.ToEntity(superSetExercise));
+            superSetExercise.TrainingExerciseId = id;
         }
 
         OnPropertyChanged(nameof(Items));

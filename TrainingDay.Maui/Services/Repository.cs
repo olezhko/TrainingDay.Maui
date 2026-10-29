@@ -450,6 +450,11 @@ public class Repository : IRepository
         return GetLastInsertId();
     }
 
+    public void RunInTransaction(Action action)
+    {
+        database.RunInTransaction(action);
+    }
+
     public void DeleteTrainingExerciseItemByExerciseId(int itemExerciseId)
     {
         database.Table<TrainingExerciseEntity>().Delete(item => item.ExerciseId == itemExerciseId);

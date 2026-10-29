@@ -40,7 +40,9 @@ internal class PushNotificationService : IPushNotification
         var pendingIntentFlag = message.IsUpdateCurrent ? PendingIntentFlags.UpdateCurrent : PendingIntentFlags.OneShot;
         if (Build.VERSION.SdkInt >= BuildVersionCodes.S)
         {
+#pragma warning disable CA1416 // Validate platform compatibility
             pendingIntentFlag = PendingIntentFlags.Mutable;
+#pragma warning restore CA1416 // Validate platform compatibility
         }
 
         PendingIntent pendingIntent = PendingIntent.GetActivity(Application.Context, 0, intent, pendingIntentFlag);

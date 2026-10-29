@@ -235,8 +235,8 @@ public sealed class TrainingExercisesPageViewModel : BaseViewModel
         if (Settings.IsShowAdvicesOnImplementing)
         {
             await Shell.Current.ShowPopupAsync(
-                PopupBuilders.BuildAdvicePopup(AppResources.AdviceBeforeTrainingMessage)
-            );
+                PopupBuilders.BuildAdvicePopup(AppResources.AdviceBeforeTrainingMessage),
+                PopupBuilders.DefaultPopupOptions);
         }
 
         LoggingService.TrackEvent($"{GetType().Name}: Training Implementing started");

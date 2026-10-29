@@ -327,8 +327,8 @@ public class TrainingsPageViewModel : BaseViewModel
         if (Settings.IsShowAdvicesOnImplementing)
         {
             await Shell.Current.ShowPopupAsync(
-                PopupBuilders.BuildAdvicePopup(AppResources.AdviceBeforeTrainingMessage)
-            );
+                PopupBuilders.BuildAdvicePopup(AppResources.AdviceBeforeTrainingMessage),
+                PopupBuilders.DefaultPopupOptions);
         }
 
         Dictionary<string, object> param = new Dictionary<string, object> { { "TrainingItem", training } };
@@ -482,13 +482,12 @@ public class TrainingsPageViewModel : BaseViewModel
         LoggingService.TrackEvent($"{GetType().Name}: AddToGroup started");
 
         var trainingsGroups = await Task.Run(() => App.Database.GetTrainingsGroups().ToList());
-        var result = await Shell.Current.ShowPopupAsync(
-            PopupBuilders.BuildWorkoutGroupsPopup(trainingsGroups, async accept =>
-                {
-                    await GroupSelected(item, accept.Id);
-                }, async () => await CreateNewGroup(item)
-            )
-        );
+        await Shell.Current.ShowPopupAsync(
+            PopupBuilders.BuildWorkoutGroupsPopup(
+                trainingsGroups,
+                accept => GroupSelected(item, accept.Id),
+                () => CreateNewGroup(item)),
+            PopupBuilders.DefaultPopupOptions);
     }
 
     private async Task GroupSelected(TrainingViewModel TrainingMoveToGroup, int id)

@@ -2,18 +2,20 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
+             xmlns:models="clr-namespace:TrainingDay.Maui.ViewModels"
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              x:Class="TrainingDay.Maui.Views.ExerciseListPage"
+             x:DataType="viewModels:ExerciseListPageViewModel"
              Shell.TabBarIsVisible="False"
              HideSoftInputOnTapped="True"
-             Padding="5">
+             Padding="10,5">
     <Shell.TitleView>
         <Grid Style="{StaticResource PageTitleViewStyle}" ColumnDefinitions="*, auto">
             <Label Style="{StaticResource PageTitleStyle}" Grid.Column="0" Text="{x:Static resx:AppResources.ExercisesString}"/>
 
-            <ImageButton Style="{StaticResource HeaderIconButtonStyle}" x:Name="AddToolbarItem" Grid.Column="1" Source="add_empty.png" Clicked="AddExercisesButton_Clicked"
+            <ImageButton Style="{StaticResource HeaderIconButtonStyle}" Grid.Column="1" Source="add_empty.png" Command="{Binding AddNewExerciseCommand}"
                          SemanticProperties.Description="{x:Static resx:AppResources.AddExercisesString}"
                          ToolTipProperties.Text="{x:Static resx:AppResources.AddExercisesString}">
                 <ImageButton.Behaviors>
@@ -22,82 +24,103 @@
             </ImageButton>
         </Grid>
     </Shell.TitleView>
-    
-    <ContentPage.BindingContext>
-        <viewModels:ExerciseListPageViewModel />
-    </ContentPage.BindingContext>
-    <Grid RowDefinitions="50,*,auto">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-            </Grid.ColumnDefinitions>
-            <SearchBar x:Name="SearchBar" Placeholder="{x:Static resx:AppResources.SearchByNameString}" Text="{Binding Filter.NameFilter}" 
-                       TextChanged="SearchBar_OnTextChanged" SearchButtonPressed="SearchButtonPressed" ReturnType="Done"/>
 
-            <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="filter.png"
-                    Command="{Binding ViewFilterWindowCommand}" BackgroundColor="Transparent">
-                <ImageButton.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
-                </ImageButton.Behaviors>
-            </ImageButton>
-        </Grid>
+    <Grid RowDefinitions="auto,*,auto" RowSpacing="8">
+        <!-- search + filter -->
+        <Grid ColumnDefinitions="*,48" ColumnSpacing="6">
+            <Border Style="{StaticResource BorderCellStyle}" Padding="0" StrokeShape="RoundRectangle 14" HeightRequest="48">
+                <SearchBar x:Name="SearchBar" Placeholder="{x:Static resx:AppResources.SearchByNameString}" Text="{Binding Filter.NameFilter}"
+                           BackgroundColor="Transparent" VerticalOptions="Center"
+                           TextChanged="SearchBar_OnTextChanged" SearchButtonPressed="SearchButtonPressed" ReturnType="Done"/>
+            </Border>
 
-        <ActivityIndicator Grid.Row="1" IsVisible="{Binding IsBusy}" IsRunning="True"/>
-        <CollectionView x:Name="ExercisesListView" Grid.Row="1" BackgroundColor="Transparent" IsVisible="{Binding IsBusy,Converter={StaticResource InvertedBoolConverter}}"
-                        ItemsSource="{Binding Items}" ItemsUpdatingScrollMode="KeepScrollOffset" SelectionMode="Single" VerticalScrollBarVisibility="Always">
-            <CollectionView.EmptyView>
-                <StackLayout VerticalOptions="Center">
-                    <Border VerticalOptions="Center" HorizontalOptions="Center" Stroke="Transparent">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="40,40,40,40" />
-                        </Border.StrokeShape>
-                        <Image Source="no_exercises.png" />
-                    </Border>
-
-                    <Label FontSize="20" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.NoExercisesFilterString}" VerticalOptions="Fill" />
-
-                    <ImageButton Grid.Column="1" WidthRequest="60" HeightRequest="60" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="add_empty.png"
-                        Clicked="AddExercisesButton_Clicked" BackgroundColor="Transparent">
+            <Border Grid.Column="1" Style="{StaticResource BorderCellStyle}" Padding="0" StrokeShape="RoundRectangle 14" HeightRequest="48" WidthRequest="48">
+                <Grid>
+                    <ImageButton WidthRequest="26" HeightRequest="26" Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Source="filter.png"
+                                 Command="{Binding ViewFilterWindowCommand}" BackgroundColor="Transparent"
+                                 SemanticProperties.Description="{x:Static resx:AppResources.FilterString}"
+                                 ToolTipProperties.Text="{x:Static resx:AppResources.FilterString}">
                         <ImageButton.Behaviors>
                             <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                         </ImageButton.Behaviors>
                     </ImageButton>
-                </StackLayout>
+                    <!-- active filter indicator -->
+                    <Ellipse Fill="{StaticResource Main}" WidthRequest="10" HeightRequest="10" Margin="0,8,8,0"
+                             HorizontalOptions="End" VerticalOptions="Start" InputTransparent="True" IsVisible="{Binding IsFilterActive}"/>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <ActivityIndicator Grid.Row="1" IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" HorizontalOptions="Center" VerticalOptions="Center"
+                           Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"/>
+
+        <CollectionView x:Name="ExercisesListView" Grid.Row="1" BackgroundColor="Transparent" IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                        ItemsSource="{Binding Items}" ItemsUpdatingScrollMode="KeepScrollOffset" SelectionMode="None" VerticalScrollBarVisibility="Never">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="8" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="12" Padding="20">
+                    <Border HorizontalOptions="Center" Stroke="Transparent" StrokeShape="RoundRectangle 40">
+                        <Image Source="no_exercises.png" HeightRequest="160" Aspect="AspectFit"/>
+                    </Border>
+
+                    <!-- nothing matches the search / filter -->
+                    <Label FontSize="18" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.NoExercisesFilterString}"
+                           IsVisible="{Binding IsAnyFilterApplied}"/>
+                    <Button Text="{x:Static resx:AppResources.Reset}" Command="{Binding ResetFilterCommand}" Style="{StaticResource SecondActionButton}"
+                            HorizontalOptions="Center" Padding="30,0" IsVisible="{Binding IsAnyFilterApplied}"/>
+
+                    <!-- no exercises at all -->
+                    <Label FontSize="18" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.NoExercisesNeedAddNewString}"
+                           IsVisible="{Binding IsAnyFilterApplied, Converter={StaticResource InvertedBoolConverter}}"/>
+                    <Button Text="{x:Static resx:AppResources.AddExercisesString}" Command="{Binding AddNewExerciseCommand}" Style="{StaticResource ActionButton}"
+                            HorizontalOptions="Center" Padding="30,0" IsVisible="{Binding IsAnyFilterApplied, Converter={StaticResource InvertedBoolConverter}}"/>
+                </VerticalStackLayout>
             </CollectionView.EmptyView>
+
             <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Border Style="{StaticResource BorderCellStyle}" >
+                <DataTemplate x:DataType="models:ExerciseListItemViewModel">
+                    <Border Style="{StaticResource BorderCellStyle}" StrokeThickness="2" Padding="8">
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+                            </DataTrigger>
+                        </Border.Triggers>
                         <Border.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="ListView_OnItemTapped"/>
+                            <!-- tapping the row selects; tapping the image opens the exercise -->
+                            <TapGestureRecognizer Command="{Binding ToggleSelectionCommand, Source={RelativeSource AncestorType={x:Type viewModels:ExerciseListPageViewModel}}, x:DataType=viewModels:ExerciseListPageViewModel}"
+                                                  CommandParameter="{Binding}"/>
                         </Border.GestureRecognizers>
-                        <Grid Margin="0" Padding="0" ColumnSpacing="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="30" />
-                                <ColumnDefinition Width="70" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
 
-                            <Border StrokeShape="RoundRectangle 10" Grid.Column="0" Padding="0" BackgroundColor="Green" HorizontalOptions="Center" IsVisible="{Binding IsExerciseExistsInWorkout}"
-                                VerticalOptions="Start" WidthRequest="20" Stroke="Transparent" HeightRequest="20" >
-                                <Image HeightRequest="20" Source="save.png" WidthRequest="20" >
-                                    <Image.Behaviors>
-                                        <toolkit:IconTintColorBehavior TintColor="White" />
-                                    </Image.Behaviors>
-                                </Image>
-                            </Border>
+                        <Grid ColumnDefinitions="72,*,auto" ColumnSpacing="10">
+                            <Grid WidthRequest="72" HeightRequest="72" VerticalOptions="Center">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding OpenExerciseCommand, Source={RelativeSource AncestorType={x:Type viewModels:ExerciseListPageViewModel}}, x:DataType=viewModels:ExerciseListPageViewModel}"
+                                                          CommandParameter="{Binding}"/>
+                                </Grid.GestureRecognizers>
+                                <Border StrokeShape="RoundRectangle 12" Stroke="Transparent" BackgroundColor="White" Padding="4">
+                                    <controls:ImageCache HeightRequest="64" WidthRequest="64" CodeNum="{Binding CodeNum}" ExerciseId="{Binding Id}" />
+                                </Border>
 
-                            <CheckBox x:Name="SelectCheckBox" IsChecked="{Binding IsSelected}" VerticalOptions="Center" />
-                            <Border StrokeShape="RoundRectangle 5" Grid.Row="0" Grid.Column="1" Margin="0" Padding="5"
-                                BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center">
-                                <controls:ImageCache HeightRequest="60" WidthRequest="60" CodeNum="{Binding CodeNum}" ExerciseId="{Binding Id}" />
-                            </Border>
+                                <!-- already in the workout -->
+                                <Border StrokeShape="RoundRectangle 11" Stroke="Transparent" WidthRequest="22" HeightRequest="22" Padding="3" Margin="-4"
+                                        HorizontalOptions="Start" VerticalOptions="Start" InputTransparent="True" BackgroundColor="Green"
+                                        IsVisible="{Binding IsExerciseExistsInWorkout}">
+                                    <Image Source="save.png">
+                                        <Image.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="White" />
+                                        </Image.Behaviors>
+                                    </Image>
+                                </Border>
+                            </Grid>
 
-                            <StackLayout Grid.Column="2" VerticalOptions="Center" Margin="0,0,20,0">
-                                <Label Text="{Binding Name}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="17" HorizontalOptions="Center"  />
-                                <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" Style="{StaticResource MuscleFlexStyle}">
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                                <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" MaxLines="2" LineBreakMode="TailTruncation"/>
+                                <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" Style="{StaticResource MuscleFlexStyle}" JustifyContent="Start">
                                     <BindableLayout.ItemTemplate>
-                                        <DataTemplate>
+                                        <DataTemplate x:DataType="models:MuscleViewModel">
                                             <!--AbsoluteLayout needed for proper draw muscle label. without it cropped in the end-->
                                             <AbsoluteLayout>
                                                 <Border Style="{StaticResource MuscleBorderCellStyle}">
@@ -107,32 +130,36 @@
                                         </DataTemplate>
                                     </BindableLayout.ItemTemplate>
                                 </FlexLayout>
-                            </StackLayout>
+                            </VerticalStackLayout>
 
-                            <Label Grid.Column="2" Text="&#x2661;" TextColor="Gray" FontSize="22" Padding="0,0,0,0"
-                                   HorizontalOptions="End" VerticalOptions="Start">
-                                <Label.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding IsFavourite}" Value="True">
-                                        <Setter Property="Text" Value="&#x2665;" />
-                                        <Setter Property="TextColor" Value="{StaticResource Main}" />
-                                    </DataTrigger>
-                                </Label.Triggers>
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding ToggleFavouriteCommand}" />
-                                </Label.GestureRecognizers>
-                            </Label>
+                            <Grid Grid.Column="2" RowDefinitions="*,*" WidthRequest="44">
+                                <Label Text="&#x2661;" TextColor="Gray" FontSize="24" HorizontalOptions="Center" VerticalOptions="Center"
+                                       WidthRequest="44" HeightRequest="40" HorizontalTextAlignment="Center" VerticalTextAlignment="Center">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsFavourite}" Value="True">
+                                            <Setter Property="Text" Value="&#x2665;" />
+                                            <Setter Property="TextColor" Value="{StaticResource Main}" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ToggleFavouriteCommand}" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+
+                                <CheckBox Grid.Row="1" IsChecked="{Binding IsSelected}" HorizontalOptions="Center" VerticalOptions="Center"
+                                          Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"/>
+                            </Grid>
                         </Grid>
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <Grid Grid.Row="2" ColumnSpacing="10" ColumnDefinitions="*,*" Padding="0,5">
-            <Button Grid.Column="0" Command="{Binding CancelCommand}" CornerRadius="20" Text="{x:Static resx:AppResources.CancelString}" TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
-                    BackgroundColor="Transparent" BorderColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" BorderWidth="1"/>
+        <Grid Grid.Row="2" ColumnSpacing="10" ColumnDefinitions="*,*" Padding="0,0,0,5">
+            <Button Grid.Column="0" Command="{Binding CancelCommand}" Text="{x:Static resx:AppResources.CancelString}" Style="{StaticResource SecondActionButton}" CornerRadius="20"/>
 
-            <Button CornerRadius="20" Grid.Column="1" Command="{Binding ChoseExercisesCommand}"
-                    CommandParameter="{Binding}" Text="{x:Static resx:AppResources.SelectString}" />
+            <Button Grid.Column="1" Command="{Binding ChoseExercisesCommand}" Text="{Binding SelectButtonText}" IsEnabled="{Binding HasSelection}"
+                    Style="{StaticResource ActionButton}" CornerRadius="20"/>
         </Grid>
     </Grid>
 </ContentPage>
