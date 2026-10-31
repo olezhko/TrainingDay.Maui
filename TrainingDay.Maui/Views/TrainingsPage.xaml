@@ -118,14 +118,6 @@
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-            <CollectionView.Footer>
-                <ImageButton Source="add_empty.png" Command="{Binding CreateGroupCommand}" HeightRequest="36" WidthRequest="36" Margin="3,0,0,0" VerticalOptions="Center"
-                             SemanticProperties.Description="{x:Static resx:AppResources.NewGroupString}" ToolTipProperties.Text="{x:Static resx:AppResources.NewGroupString}">
-                    <ImageButton.Behaviors>
-                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
-                    </ImageButton.Behaviors>
-                </ImageButton>
-            </CollectionView.Footer>
         </CollectionView>
 
         <CollectionView x:Name="ItemsListView" Grid.Row="2" ItemsSource="{Binding SelectedTrainings}" BackgroundColor="Transparent">
@@ -200,12 +192,10 @@
                                    HorizontalTextAlignment="Center" SemanticProperties.HeadingLevel="Level2"/>
                             <Label Text="{x:Static resx:AppResources.NoTrainingsYetSubtitle}" Style="{StaticResource SecondaryTextStyle}"
                                    FontSize="Body" HorizontalTextAlignment="Center" Margin="0,0,0,8"/>
-                            <Button Text="{x:Static resx:AppResources.ReadyMadePlansString}" HeightRequest="48" CornerRadius="15"
-                                    Command="{Binding AddNewTrainingCommand}"/>
-                            <Button Text="{x:Static resx:AppResources.CreateOwnTrainingString}" HeightRequest="48" Style="{StaticResource SecondActionButton}"
-                                    Command="{Binding CreateOwnTrainingCommand}"/>
+                            <Button Text="{x:Static resx:AppResources.CreateNewString}" HeightRequest="48" Style="{StaticResource ActionButton}"
+                                    Command="{Binding AddNewTrainingCommand}" />
                             <Button Text="{x:Static resx:AppResources.AiPlanString}" HeightRequest="48" Style="{StaticResource SecondActionButton}"
-                                    Command="{Binding AiPlanCommand}" IsVisible="False"/>
+                                    Command="{Binding AiPlanCommand}"/>
                         </VerticalStackLayout>
 
                         <!-- selected group has no workouts -->
@@ -224,7 +214,7 @@
                 SemanticProperties.Description="{x:Static resx:AppResources.AddTrainingString}">
             <Border.Style>
                 <Style TargetType="Border">
-                    <Setter Property="IsVisible" Value="{OnPlatform Default=False, Android=True}"/>
+                    <Setter Property="IsVisible" Value="True"/>
                     <Style.Triggers>
                         <DataTrigger TargetType="Border" Binding="{Binding HasNoTrainings}" Value="True">
                             <Setter Property="IsVisible" Value="False"/>

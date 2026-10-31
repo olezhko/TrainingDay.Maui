@@ -4,7 +4,6 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using TrainingDay.Common.Extensions;
 using TrainingDay.Maui.Controls.PopUp;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Mappers;
@@ -38,7 +37,6 @@ public class TrainingsPageViewModel : BaseViewModel
         SelectedTrainings.CollectionChanged += (_, _) => UpdateViewState();
 
         AddNewTrainingCommand = new AsyncRelayCommand(AddNewTraining);
-        CreateOwnTrainingCommand = new AsyncRelayCommand(CreateOwnTraining);
         AiPlanCommand = new AsyncRelayCommand(() => Shell.Current.GoToAsync(nameof(WorkoutQuestinariumPage)));
         ShowHistoryCommand = new AsyncRelayCommand(() => Shell.Current.GoToAsync(nameof(HistoryTrainingPage)));
         ItemSelectedCommand = new AsyncRelayCommand<TrainingViewModel>(TrainingSelected);
@@ -49,7 +47,6 @@ public class TrainingsPageViewModel : BaseViewModel
         DuplicateTrainingCommand = new RelayCommand<TrainingViewModel>(DuplicateSelectedTraining);
         ActivateGroupCommand = new RelayCommand<Grouping<string, TrainingViewModel>>(ActivateGroup);
         GroupLongPressedCommand = new AsyncRelayCommand<Grouping<string, TrainingViewModel>>(ShowGroupActions);
-        CreateGroupCommand = new AsyncRelayCommand(CreateEmptyGroup);
         ResumeUnfinishedCommand = new AsyncRelayCommand(ResumeUnfinishedTraining);
         DiscardUnfinishedCommand = new AsyncRelayCommand(DiscardUnfinishedTraining);
         SubscribeMessages();
@@ -294,12 +291,6 @@ public class TrainingsPageViewModel : BaseViewModel
     {
         LoggingService.TrackEvent($"{GetType().Name}: AddNewTraining Button Clicked");
         await Shell.Current.GoToAsync(nameof(PreparedTrainingsPage));
-    }
-
-    private async Task CreateOwnTraining()
-    {
-        LoggingService.TrackEvent($"{GetType().Name}: CreateOwnTraining Button Clicked");
-        await Shell.Current.GoToAsync($"{nameof(PreparedTrainingsPage)}?{PreparedTrainingsPage.StartCustomQueryKey}=true");
     }
 
     private async Task TrainingSelected(TrainingViewModel? item)
@@ -609,33 +600,6 @@ public class TrainingsPageViewModel : BaseViewModel
         await Shell.Current.ClosePopupAsync();
     }
 
-    private async Task CreateEmptyGroup()
-    {
-        LoggingService.TrackEvent($"{GetType().Name}: Create empty group STARTED");
-        string result = await Shell.Current.DisplayPromptAsync(AppResources.NewGroupString, AppResources.GroupingEnterNameofGroup, AppResources.OkString, AppResources.CancelString, placeholder: AppResources.NameString);
-        if (string.IsNullOrWhiteSpace(result))
-            return;
-
-        try
-        {
-            var existing = ItemsGrouped.FirstOrDefault(g => g.Key == result);
-            if (existing == null)
-            {
-                var viewModel = new TrainingUnion(new TrainingUnionEntity()) { Name = result };
-                viewModel.Id = App.Database.SaveTrainingGroup(viewModel.Model);
-                existing = new Grouping<string, TrainingViewModel>(result, []) { Id = viewModel.Id };
-                ItemsGrouped.Add(existing);
-            }
-
-            ActivateGroup(existing);
-            LoggingService.TrackEvent($"{GetType().Name}: Create empty group FINISHED");
-        }
-        catch (Exception ex)
-        {
-            LoggingService.TrackError(ex);
-        }
-    }
-
     private async Task ShowGroupActions(Grouping<string, TrainingViewModel>? group)
     {
         // the default group is virtual (not stored in DB), it can't be renamed or deleted
@@ -885,9 +849,11 @@ public class TrainingsPageViewModel : BaseViewModel
 
         Settings.IsTrainingNotFinished = false;
 
-        TrainingViewModel training = new TrainingViewModel();
-        training.Title = trainingSerialize.Title;
-        training.Id = trainingSerialize.Id;
+        TrainingViewModel training = new TrainingViewModel
+        {
+            Title = trainingSerialize.Title,
+            Id = trainingSerialize.Id
+        };
         foreach (var trainingExerciseSerialize in trainingSerialize.Items)
         {
             try
@@ -900,13 +866,8 @@ public class TrainingsPageViewModel : BaseViewModel
             }
         }
 
-        if (!TimeSpan.TryParse(Settings.IsTrainingNotFinishedTime, out var startTime))
-        {
-            startTime = TimeSpan.Zero;
-        }
-
         LoggingService.TrackEvent($"{GetType().Name}: Unfinished training resumed");
-        Dictionary<string, object> param = new Dictionary<string, object> { { "TrainingItem", training }, { "StartTime", startTime } };
+        Dictionary<string, object> param = new Dictionary<string, object> { { "TrainingItem", training }};
         await Shell.Current.GoToAsync(nameof(TrainingImplementPage), param);
     }
 
@@ -1014,8 +975,6 @@ public class TrainingsPageViewModel : BaseViewModel
     public string UnfinishedTrainingElapsed { get => unfinishedTrainingElapsed; set => SetProperty(ref unfinishedTrainingElapsed, value); }
 
     public ICommand AddNewTrainingCommand { get; }
-
-    public ICommand CreateOwnTrainingCommand { get; }
 
     public ICommand AiPlanCommand { get; }
 

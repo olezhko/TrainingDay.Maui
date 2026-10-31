@@ -20,12 +20,12 @@ using TrainingDay.Maui.ViewModels;
 namespace TrainingDay.Maui.Views;
 
 [QueryProperty(nameof(TrainingItem), "TrainingItem")]
-[QueryProperty(nameof(StartTime), "StartTime")]
 public partial class TrainingImplementPage : ContentPage
 {
     // the real save happens when the app goes to background; this is only a fallback in case the app crashes
     private const int SaveEveryTicks = 15;
 
+    private readonly TimeSpan _previousElapsedTime;
     private readonly DateTime _startTrainingDateTime;
     private Window? watchedWindow;
     private int ticksSinceSave;
@@ -42,17 +42,26 @@ public partial class TrainingImplementPage : ContentPage
         InitializeComponent();
         Items = new ObservableCollection<SuperSetViewModel<ImplementTrainingExerciseViewModel>>();
         BindingContext = this;
-        _startTrainingDateTime = DateTime.Now;
         enabledTimer = true;
         StepProgressBarControl.PropertyChanged += StepProgressBarControl_PropertyChanged;
         StepProgressBarControl.CurrentItemChanged += StepProgressBarControl_CurrentItemChanged;
         Settings.IsTrainingNotFinished = true;
 
         _timer = Shell.Current.Dispatcher.CreateTimer();
-        _timer.Tick += _timer_Tick;
+        _timer.Tick += Timer_Tick;
         _timer.Interval = TimeSpan.FromSeconds(1);
 
         RestPicker.TextColor = App.Current.RequestedTheme == AppTheme.Light ? Colors.Black : Colors.White;
+
+        if (!TimeSpan.TryParse(Settings.IsTrainingNotFinishedTime, out var startTime))
+        {
+            _previousElapsedTime = TimeSpan.Zero;
+        }
+        else
+        {
+            _previousElapsedTime = startTime;
+        }
+        _startTrainingDateTime = DateTime.Now;
     }
 
     private async void StepProgressBarControl_CurrentItemChanged(object? sender, StepProgressBarCurrentItemChangedEventArgs e)
@@ -121,10 +130,7 @@ public partial class TrainingImplementPage : ContentPage
 
         _timer.Start();
 
-        if (isFirstAppearing)
-        {
-            await RequestNotificationPermissionAsync();
-        }
+        await RequestNotificationPermissionAsync();
     }
 
     /// <summary>
@@ -132,20 +138,9 @@ public partial class TrainingImplementPage : ContentPage
     /// </summary>
     private static async Task RequestNotificationPermissionAsync()
     {
-#if ANDROID
-        try
-        {
-            var status = await Permissions.CheckStatusAsync<Permissions.PostNotifications>();
-            if (status != PermissionStatus.Granted)
-                await Permissions.RequestAsync<Permissions.PostNotifications>();
-        }
-        catch (Exception ex)
-        {
-            LoggingService.TrackError(ex);
-        }
-#else
-        await Task.CompletedTask;
-#endif
+        var status = await Permissions.CheckStatusAsync<Permissions.PostNotifications>();
+        if (status != PermissionStatus.Granted)
+            await Permissions.RequestAsync<Permissions.PostNotifications>();
     }
 
     private void WatchWindow()
@@ -182,17 +177,18 @@ public partial class TrainingImplementPage : ContentPage
 
     private async Task LoadVideoItemsAsync(SuperSetViewModel<ImplementTrainingExerciseViewModel> item)
     {
+        if (dataService == null)
+        {
+            return;
+        }
+
         IsVideoLoading = true;
+
         foreach (var exercise in item.SuperSetItems)
         {
             if (exercise.VideoItems.Any())
             {
                 continue;
-            }
-
-            if (dataService == null)
-            {
-                return;
             }
 
             try
@@ -262,9 +258,9 @@ public partial class TrainingImplementPage : ContentPage
     protected override bool OnBackButtonPressed() => true; // cancel back button
 
     #region Timer
-    private void _timer_Tick(object? sender, EventArgs e)
+    private void Timer_Tick(object? sender, EventArgs e)
     {
-        CurrentTime = (DateTime.Now - _startTrainingDateTime + StartTime).ToString(@"hh\:mm\:ss");
+        CurrentTime = GetElapsedTime().ToString(@"hh\:mm\:ss");
         OnPropertyChanged(nameof(CurrentTime));
 
         if (isStartRest && RestPicker.Value > TimeSpan.FromSeconds(0))
@@ -280,7 +276,8 @@ public partial class TrainingImplementPage : ContentPage
                 RestPicker.TextColor = App.Current.RequestedTheme == AppTheme.Light ? Colors.Black : Colors.White;
             }
         }
-        else {
+        else
+        {
             RestOrDoSwitch.IsToggled = false;
             isStartRest = false;
         }
@@ -298,6 +295,11 @@ public partial class TrainingImplementPage : ContentPage
         {
             _timer.Stop();
         }
+    }
+
+    private TimeSpan GetElapsedTime()
+    {
+        return DateTime.Now - _startTrainingDateTime + _previousElapsedTime;
     }
 
     private void PlaySound()
@@ -417,7 +419,7 @@ public partial class TrainingImplementPage : ContentPage
 
         // confetti starts right away; DB writes run off the UI thread meanwhile, sharing never blocks the finish
         var confettiTask = ShowConfettiAsync();
-        var elapsedTime = DateTime.Now - _startTrainingDateTime + StartTime;
+        var elapsedTime = GetElapsedTime();
         await Task.Run(() => App.Database.RunInTransaction(() =>
         {
             SaveLastTrainingWithExercises(elapsedTime);
@@ -676,8 +678,6 @@ public partial class TrainingImplementPage : ContentPage
     public ICommand AddExercisesCommand => new AsyncRelayCommand(AddExercisesRequest);
 
     public string CurrentTime { get; set; }
-
-    public TimeSpan StartTime { get; set; }
 
     public ObservableCollection<SuperSetViewModel<ImplementTrainingExerciseViewModel>> Items { get; set; }
 

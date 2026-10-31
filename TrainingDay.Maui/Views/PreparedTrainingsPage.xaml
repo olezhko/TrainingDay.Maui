@@ -19,30 +19,28 @@
     </ContentPage.BindingContext>
 
     <controls:TooltipControlContainer x:Name="Container" RowSpacing="0" RowDefinitions="auto,*,Auto" BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}">
-		<Grid x:Name="LetsBuildYourWorkoutButton">
-            <ContentView BackgroundColor="Transparent" Margin="5" IsVisible="False">
-                <ContentView.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding NavigateToQuestionsCommnd}" />
-                </ContentView.GestureRecognizers>
-                
-                <Border StrokeShape="RoundRectangle 20" Padding="0" Margin="0" BackgroundColor="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}">
-                    <HorizontalStackLayout HorizontalOptions="Center" HeightRequest="40">
-                        <Image Source="ai.png" 
+        <ContentView BackgroundColor="Transparent" Margin="5">
+            <ContentView.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NavigateToQuestionsCommnd}" />
+            </ContentView.GestureRecognizers>
+
+            <Border StrokeShape="RoundRectangle 20" Padding="0" Margin="0" BackgroundColor="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}">
+                <HorizontalStackLayout HorizontalOptions="Center" HeightRequest="40">
+                    <Image Source="ai.png" 
                             HorizontalOptions="Start" 
                             VerticalOptions="Center" 
                             HeightRequest="40" 
                             WidthRequest="40">
-                            <Image.Behaviors>
-                                <toolkit:IconTintColorBehavior TintColor="White" />
-                            </Image.Behaviors>
-                        </Image>
-                        <Label Text="{x:Static resx:AppResources.LetsBuildYourWorkout}" 
+                        <Image.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="White" />
+                        </Image.Behaviors>
+                    </Image>
+                    <Label Text="{x:Static resx:AppResources.LetsBuildYourWorkout}" 
                             VerticalOptions="Center" 
                             TextColor="White"/>
-                    </HorizontalStackLayout>
-                </Border>
-            </ContentView>
-        </Grid>
+                </HorizontalStackLayout>
+            </Border>
+        </ContentView>
 
         <CollectionView Grid.Row="1" ItemsSource="{Binding PreparedTrainingsCollection}" SelectionMode="Single" >
             <CollectionView.ItemsLayout>
@@ -75,8 +73,5 @@
         <Button Grid.Row="2" Margin="5" Command="{Binding CreateNewTrainingCommand}" CornerRadius="20"
             Style="{DynamicResource ActionButton}" Text="{x:Static resx:AppResources.CreateNewString}" FontSize="Body"/>
 
-        <!--<controls:ToolTipControl Text="Click this button to answer some questions and application will create workout for you" Title="{x:Static resx:AppResources.HelperString}" 
-                              NeverShow="{Binding Source={x:Static Application.Current},Path=ToolTipManager.ToolTipLetsBuildYourWorkout,Mode=TwoWay}" 
-                              AttachedControl="LetsBuildYourWorkoutButton" SkipText="{x:Static resx:AppResources.SkipString}" NeverShowText="{x:Static resx:AppResources.GotItString}" Position="Center" Grid.RowSpan="3"/>-->
     </controls:TooltipControlContainer>
 </ContentPage>

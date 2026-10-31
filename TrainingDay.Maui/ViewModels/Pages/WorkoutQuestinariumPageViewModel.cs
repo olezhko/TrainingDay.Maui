@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
 using TrainingDay.Common.Extensions;
@@ -39,8 +38,7 @@ namespace TrainingDay.Maui.ViewModels.Pages
 
 		public async Task LoadSteps()
 		{
-            var steps = await ResourceExtension.LoadResourceAsync<WorkoutQuestinariumStep>("questions", 
-                Settings.GetLanguage().TwoLetterISOLanguageName);
+            var steps = await ResourceExtension.LoadResourceAsync<WorkoutQuestinariumStep>("questions", Settings.GetLanguage().TwoLetterISOLanguageName);
             WorkoutQuestinariumStepViewModel? previous = null;
             int index = 0;
             foreach (var step in steps)
@@ -161,4 +159,3 @@ namespace TrainingDay.Maui.ViewModels.Pages
         private static async Task NavigateToHome() => await Shell.Current.GoToAsync("//workouts");
     }
 }
-
