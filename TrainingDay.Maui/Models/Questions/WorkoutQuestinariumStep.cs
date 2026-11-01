@@ -1,12 +1,10 @@
-﻿namespace TrainingDay.Maui.Models.Questions
-{
-	public record WorkoutQuestinariumStep(
-		string Title,
-		string Instruction,
-		bool IsMultiple,
-		int Number,
-		IEnumerable<Variant> Answers);
-}
+﻿namespace TrainingDay.Maui.Models.Questions;
 
-public record Variant(string Answer, string Option);
+public sealed record WorkoutQuestinariumStep(
+    string Title,
+    string Instruction,
+    bool IsMultiple,
+    int Number,
+    IEnumerable<Variant> Answers);
 
+public sealed record Variant(string Answer, string Option);

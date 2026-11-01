@@ -558,6 +558,15 @@ Increase body temperature, activate the muscles and joints, and prepare the card
   <data name="LetsBuildYourWorkout" xml:space="preserve">
     <value>Let’s Build Your Workout</value>
   </data>
+  <data name="StepOfFormat" xml:space="preserve">
+    <value>Step {0} of {1}</value>
+  </data>
+  <data name="ChooseOneAnswer" xml:space="preserve">
+    <value>Choose one</value>
+  </data>
+  <data name="ChooseOneOrMoreAnswers" xml:space="preserve">
+    <value>Choose one or more</value>
+  </data>
   <data name="PreparedMorningWorkout" xml:space="preserve">
     <value>Morning Workout</value>
   </data>

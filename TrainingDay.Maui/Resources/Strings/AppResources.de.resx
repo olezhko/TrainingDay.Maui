@@ -531,6 +531,15 @@
   <data name="LetsBuildYourWorkout" xml:space="preserve">
     <value>Übungsauswahl starten</value>
   </data>
+  <data name="StepOfFormat" xml:space="preserve">
+    <value>Schritt {0} von {1}</value>
+  </data>
+  <data name="ChooseOneAnswer" xml:space="preserve">
+    <value>Wähle eine Option</value>
+  </data>
+  <data name="ChooseOneOrMoreAnswers" xml:space="preserve">
+    <value>Wähle eine oder mehrere Optionen</value>
+  </data>
   <data name="PreparedMorningWorkout" xml:space="preserve">
     <value>Morgentraining</value>
   </data>

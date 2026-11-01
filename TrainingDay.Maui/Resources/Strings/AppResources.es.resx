@@ -543,6 +543,15 @@ Los músculos calientes se contraen y relajan mejor durante el entrenamiento, lo
   <data name="LetsBuildYourWorkout" xml:space="preserve">
     <value>Comenzar la selección de ejercicios</value>
   </data>
+  <data name="StepOfFormat" xml:space="preserve">
+    <value>Paso {0} de {1}</value>
+  </data>
+  <data name="ChooseOneAnswer" xml:space="preserve">
+    <value>Elige una opción</value>
+  </data>
+  <data name="ChooseOneOrMoreAnswers" xml:space="preserve">
+    <value>Elige una o más opciones</value>
+  </data>
   <data name="PreparedMorningWorkout" xml:space="preserve">
     <value>Gimnasia matutina</value>
   </data>

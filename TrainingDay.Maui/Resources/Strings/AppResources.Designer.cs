@@ -753,7 +753,34 @@ namespace TrainingDay.Maui.Resources.Strings {
                 return ResourceManager.GetString("LetsBuildYourWorkout", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Step {0} of {1}.
+        /// </summary>
+        internal static string StepOfFormat {
+            get {
+                return ResourceManager.GetString("StepOfFormat", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Choose one.
+        /// </summary>
+        internal static string ChooseOneAnswer {
+            get {
+                return ResourceManager.GetString("ChooseOneAnswer", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Choose one or more.
+        /// </summary>
+        internal static string ChooseOneOrMoreAnswers {
+            get {
+                return ResourceManager.GetString("ChooseOneOrMoreAnswers", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Likes.
         /// </summary>

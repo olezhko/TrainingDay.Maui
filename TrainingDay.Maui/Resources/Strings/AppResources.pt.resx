@@ -543,6 +543,15 @@ Músculos aquecidos se contraem e relaxam melhor durante o treino, o que signifi
   <data name="LetsBuildYourWorkout" xml:space="preserve">
     <value>Iniciar seleção de exercícios</value>
   </data>
+  <data name="StepOfFormat" xml:space="preserve">
+    <value>Passo {0} de {1}</value>
+  </data>
+  <data name="ChooseOneAnswer" xml:space="preserve">
+    <value>Escolha uma opção</value>
+  </data>
+  <data name="ChooseOneOrMoreAnswers" xml:space="preserve">
+    <value>Escolha uma ou mais opções</value>
+  </data>
   <data name="PreparedMorningWorkout" xml:space="preserve">
     <value>Ginástica matinal</value>
   </data>

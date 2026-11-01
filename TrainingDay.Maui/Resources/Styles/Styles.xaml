@@ -19,6 +19,7 @@
     <toolkit:IsNotNullConverter x:Key="IsNotNullConverter" />
     <toolkit:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />
     <toolkit:VariableMultiValueConverter x:Key="AnyTrueConverter" ConditionType="Any" />
+    <toolkit:VariableMultiValueConverter x:Key="AllTrueConverter" ConditionType="All" />
 
     <Style TargetType="CollectionView" ApplyToDerivedTypes="True">
         <Setter Property="ItemsLayout">

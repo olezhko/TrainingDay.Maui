@@ -65,6 +65,7 @@ namespace TrainingDay.Maui
             builder.Services.AddSingleton<IDataService, DataService>();
             builder.Services.AddSingleton<IExerciseImageService>(_ => new ExerciseImageService(App.Database));
             builder.Services.AddSingleton<WorkoutService>();
+            builder.Services.AddSingleton<IWorkoutQuestinariumService>(_ => new WorkoutQuestinariumService(App.Database));
 
             builder.Services.AddSingleton<IAuthService, AuthService>();
             builder.Services.AddSingleton<IUserSettingsService, HttpUserSettingsService>();

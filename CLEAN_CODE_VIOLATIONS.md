@@ -3,10 +3,12 @@
 Audit of `TrainingDay.Maui/` (Services, Extensions, Models, ViewModels, Views, Controls, Converters, Platforms) against standard clean-code principles: naming, method/class size & cohesion, DRY, error handling, encapsulation, and MVVM separation. Complements `PERFORMANCE_ISSUES.md` — items that are purely performance-related (sync DB on UI thread, N+1 queries, missing transactions) are only cross-referenced here, not re-explained, unless they also represent a distinct clean-code smell (e.g. a god class, a bug hidden by duplicated code).
 
 ## Summary
+_Last rescan: 2026-10-31._ 140 items listed: ✅ 45 fixed, 🟡 4 partially fixed, 91 open. Fixed in this rescan: LM-06, LM-10, GOD-02, GOD-03, NAME-13, DUP-04, DUP-06, DUP-08, DUP-09, DUP-11, DUP-14, PARAM-05, CATCH-07, CATCH-09, CATCH-12, ASYNC-02, MVVM-04, BUG-03. New: DEAD-11 (AI-request path left unused by the local questionnaire). Line numbers were refreshed for items that moved.
+
 ~130 violations found across 3 layers (Services/Extensions/Models, ViewModels, Views/Controls/Converters/Platforms) and 12 categories. The most structurally significant:
 
-- **`Repository.cs`** — unabstracted god object for 10+ entity types, ~9x copy-pasted save boilerplate, a real bug (`DeleteSuperSetsByTrainingId` deletes from the wrong table — also `PERFORMANCE_ISSUES.md` DATA-04).
-- **`TrainingImplementPage.xaml.cs`** — 625-line code-behind god class with no ViewModel, mixing UI, direct SQLite writes, timers, and business rules. (`FilterPage` had the same problem; its state and logic now live in `FilterPageViewModel`, only the muscle-map drawing is left in code-behind.)
+- **`Repository.cs`** — unabstracted god object for 10+ entity types, ~9x copy-pasted save boilerplate. (The wrong-table bug in `DeleteSuperSetsByTrainingId` is fixed — `PERFORMANCE_ISSUES.md` DATA-04.)
+- **`TrainingImplementPage.xaml.cs`** — 695-line code-behind god class with no ViewModel, mixing UI, direct SQLite writes, timers, and business rules. (`FilterPage` had the same problem; its state and logic now live in `FilterPageViewModel`, only the muscle-map drawing is left in code-behind.)
 - ~~**`Controls/StepProgressBar.cs:325`** — `static` `CollectionChanged` event subscribed to by every instance, never unsubscribed: confirmed memory leak *and* cross-instance event cross-talk (also `PERFORMANCE_ISSUES.md` SVC-03).~~ ✅ Fixed (STATIC-01).
 - **Inconsistent error handling** everywhere: `LoggingService.TrackError`, bare `Console.WriteLine`/`Debug.WriteLine`, and fully silent `catch { }` are used interchangeably for the same kind of failure across all three layers.
 - **Duplicated request/save/delete boilerplate** across `Services/*.cs` and `Repository.cs`, and duplicated business logic across `ViewModels/Pages/*.cs`.
@@ -16,11 +18,11 @@ Audit of `TrainingDay.Maui/` (Services, Extensions, Models, ViewModels, Views, C
 
 ## 1. Long Methods / Multi-Responsibility Methods
 
-### LM-01 — Services/Repository.cs:38
+### LM-01 — Services/Repository.cs:66
 `async void InitBasic()` mixes table creation, resource loading, exercise upsert, and blog cleanup in one method. (Also `PERFORMANCE_ISSUES.md` DATA-08 for the `async void` race.)
 
-### LM-02 — Services/IWorkoutService.cs:73
-`CreateWeightAndReps` builds a throwaway `TrainingExerciseViewModel` just to serialize it; mixes tag branching, regex parsing, and JSON conversion.
+### LM-02 — Mappers/TrainingExerciseMapper.cs:135
+`ToWeightAndRepsString(int tagsValue, ExerciseQueryResponse)` (moved here from `IWorkoutService.CreateWeightAndReps`) builds a throwaway `TrainingExerciseViewModel` just to serialize it; mixes tag branching, regex parsing, and JSON conversion. Its only caller is the now-unused `WorkoutService.CreateWorkoutAsync` (see DEAD-11).
 
 ### LM-03 — ViewModels/Pages/PreparedTrainingsPageViewModel.cs:91-302
 `FillTrainings()` — ~210 lines hardcoding 12 near-identical training templates via copy-pasted lambdas.
@@ -31,21 +33,23 @@ Audit of `TrainingDay.Maui/` (Services, Extensions, Models, ViewModels, Views, C
 ### LM-05 — ViewModels/DataManageViewModel.cs:53-146
 `SetRepositoryData()` — ~90 lines sequentially importing 7 entity types with ad hoc id-remapping dictionaries, no transaction.
 
-### LM-06 — ViewModels/Pages/ExerciseListPageViewModel.cs:119-184
+### LM-06 — ViewModels/Pages/ExerciseListPageViewModel.cs:119-184 — ✅ FIXED
 `LoadItems()` — ~65 lines combining name/tag/difficulty/muscle filtering via accumulated `match &= ...` boolean flags.
+*Fix:* loading (`LoadItemsAsync`) and filtering (`ApplyFilter` + `IsMatch` with early returns) are now separate methods.
 
-### LM-07 — ViewModels/Pages/TrainingsPageViewModel.cs:333-389
+### LM-07 — ViewModels/Pages/TrainingsPageViewModel.cs:545
 `CreateNewGroup()` — ~55 lines mixing prompt display, DB lookup/creation, UI collection updates, and error handling.
 
 ### LM-08 — ViewModels/Pages/StatisticsViewModel.cs:66-103 — 🟡 PARTIAL
 `LoadData()` computes six unrelated statistics inline in ~55 lines with direct synchronous DB access (also `PERFORMANCE_ISSUES.md` VM-01).
 *Progress:* split into `LoadDataAsync` (UI state) and `BuildSnapshot` (runs off the UI thread, returns a `StatisticsSnapshot` record). `BuildSnapshot` still computes all six statistics in one ~40-line method.
 
-### LM-09 — Views/TrainingImplementPage.xaml.cs:303-368
+### LM-09 — Views/TrainingImplementPage.xaml.cs:365-515
 `FinishButtonClicked`→`FinishAndSave` chain: timer teardown, DB writes, social-feed sharing, confetti animation, popup, navigation — all in one flow with no ViewModel to delegate to.
 
-### LM-10 — Views/TrainingsPage.xaml.cs:38-91
+### LM-10 — Views/TrainingsPage.xaml.cs:38-91 — ✅ FIXED
 `IsStartNotFinishedTraining` mixes file I/O, JSON deserialization, manual entity→ViewModel mapping (14+ fields), confirmation dialog, and navigation.
+*Fix:* removed from the page (now 28 lines). `TrainingsPageViewModel` reads the unfinished workout off the UI thread (`ReadUnfinishedTraining`, :814) and shows it via `ApplyUnfinishedTraining` (:831).
 
 ### LM-11 — Views/FilterPage.xaml.cs:189-253
 `DrawMuscles` is an 18-case switch dispatching to 18 near-identical `DrawXxx` methods spanning ~500 lines of hardcoded path-coordinate data — should be a data table, not code.
@@ -57,22 +61,23 @@ Audit of `TrainingDay.Maui/` (Services, Extensions, Models, ViewModels, Views, C
 ### GOD-01 — Services/Repository.cs:10-455
 Owns CRUD for 10+ unrelated entities (exercises, trainings, weight notes, last-trainings, super-sets, images, blogs, social-workout cache, training groups) with zero shared abstraction; every method is fully synchronous.
 
-### GOD-02 — Services/Repository.cs:262-278
+### GOD-02 — Services/Repository.cs:262-278 — ✅ FIXED
 `GetTrainingExerciseItemByTrainingId` — N+1 query, loads full table then queries per-row. (`PERFORMANCE_ISSUES.md` DATA-01.)
+*Fix:* now 2 queries regardless of size (see DATA-01).
 
-### GOD-03 — Services/Repository.cs:350-360 — **BUG**
+### GOD-03 — Services/Repository.cs:350-360 — **BUG** — ✅ FIXED (see `PERFORMANCE_ISSUES.md` DATA-04)
 `DeleteSuperSetsByTrainingId` loops `SuperSetEntity` items but calls `DeleteTrainingExerciseItem(item.Id)` instead of `DeleteSuperSetItem(item.Id)` — deletes rows from the wrong table. Root cause: copy-pasted "load all, filter, delete" boilerplate with no reuse. (`PERFORMANCE_ISSUES.md` DATA-04.)
 
-### GOD-04 — ViewModels/Pages/TrainingExercisesPageViewModel.cs (631 lines)
+### GOD-04 — ViewModels/Pages/TrainingExercisesPageViewModel.cs (590 lines)
 ~14 commands mixing training loading, exercise CRUD, superset creation, move/copy workflow, drag-and-drop reordering, and file sharing.
 
-### GOD-05 — ViewModels/Pages/TrainingsPageViewModel.cs (546 lines)
-Mixes training list loading/grouping, Firebase push-token registration, group CRUD, duplicate/delete workflows, and action-sheet routing.
+### GOD-05 — ViewModels/Pages/TrainingsPageViewModel.cs (1005 lines — grew from 546)
+Mixes training list loading/grouping, unfinished-workout recovery, weekly summary, group CRUD, duplicate/delete workflows, and action-sheet routing. (Firebase push-token registration has moved out.)
 
-### GOD-06 — ViewModels/Pages/PreparedTrainingsPageViewModel.cs (431 lines)
+### GOD-06 — ViewModels/Pages/PreparedTrainingsPageViewModel.cs (423 lines)
 Combines 200+ lines of static training-template data with DB import/save logic in the same class.
 
-### GOD-07 — Views/TrainingImplementPage.xaml.cs (625 lines, no ViewModel)
+### GOD-07 — Views/TrainingImplementPage.xaml.cs (695 lines, no ViewModel)
 Owns timer/stopwatch logic, push-notification scheduling, direct SQLite writes, file-based crash-recovery serialization, social-feed sharing, confetti UI, and step navigation. CLAUDE.md itself flags this as "code-behind heavy."
 
 ### GOD-08 — Views/FilterPage.xaml.cs (714 lines) — 🟡 PARTIAL
@@ -83,10 +88,10 @@ Sets `BindingContext = this` and owns all filter state directly instead of using
 
 ## 3. Poor / Unclear Naming
 
-### NAME-01 — Services/Repository.cs:118
+### NAME-01 — Services/Repository.cs:145
 `AddorUpdateExercise` — inconsistent casing (should be `AddOrUpdateExercise`); mixed tabs/spaces indentation inside the method (lines 120-141).
 
-### NAME-02 — Services/IWorkoutService.cs:102-137
+### NAME-02 — Mappers/TrainingExerciseMapper.cs:163 (moved from IWorkoutService.cs)
 `TryGetReps(string input, out int number1)` — parameter named `number1`, a `number2` local computed but never meaningfully used, a captured regex group discarded.
 
 ### NAME-03 — Extensions/ResizeImageExtension.cs:5
@@ -123,8 +128,9 @@ Class is named `IsNoItemsConverter` but `Convert` returns `true` when `count > 0
 ### NAME-12 — Converters/HalfValueConverter.cs:7-17
 Name implies halving a value; logic actually divides by an arbitrary `offset` and subtracts a magic `4` — name doesn't describe the transform.
 
-### NAME-13 — Controls/ToolTipControl.xaml.cs:134
+### NAME-13 — Controls/ToolTipControl.xaml.cs:134 — ✅ FIXED
 Local delegate `properyChanged` — misspelled ("property").
+*Fix:* the delegate is now an inline lambda (:228); the missing unsubscribe is still tracked in STATIC-03.
 
 ---
 
@@ -139,23 +145,23 @@ Inconsistent hardcoded HTTP timeouts (2s vs 10s) with no shared constant.
 ### MAGIC-03 — Extensions/PushMessagesExtensions.cs:41-51
 Notification IDs `100`–`105` as separate static properties instead of a named enum.
 
-### MAGIC-04 — Services/Repository.cs:448
+### MAGIC-04 — Services/Repository.cs:479
 `items.Take(10)` — undocumented cache-size limit as a bare literal.
 
 ### MAGIC-05 — Extensions/ConstantKeys.cs:10-11
-`Version => "1.3.3"` and `ExerciseMaxCodeNum = 144` will silently drift out of sync with the actual csproj version / exercise resource data.
+`Version => "1.3.4"` and `ExerciseMaxCodeNum = 144` will silently drift out of sync with the actual csproj version / exercise resource data.
 
 ### MAGIC-06 — ViewModels/Pages/PreparedTrainingsPageViewModel.cs (10 call sites)
 Exercise `CodeNum` values hardcoded as bare int literals across ~12 templates.
 
-### MAGIC-07 — ViewModels/BodyControlItem.cs:71,85
+### MAGIC-07 — ViewModels/BodyControlItem.cs:100,115
 `value > 100 ? 3 : 4` — unexplained field-length thresholds.
 
 ### MAGIC-08 — ViewModels/Pages/WeightViewAndSetPageViewModel.cs:220-241
 Chart config literals (`LabelTextSize = 42`, `LineSize = 5`, `PointSize = 20`, `Margin = 30`) unexplained.
 
-### MAGIC-09 — ViewModels/Pages/ExerciseListPageViewModel.cs:200 & WorkoutQuestinariumPageViewModel.cs:158
-Route `"//workouts"` hardcoded independently in two files.
+### MAGIC-09 — ViewModels/Pages/ExerciseListPageViewModel.cs:263, WorkoutQuestinariumPageViewModel.cs:163 & Views/TrainingImplementPage.xaml.cs:441
+Route `"//workouts"` hardcoded independently in three files (the questionnaire now navigates to `//workouts/TrainingExercisesPage?ItemId=…`).
 
 ### MAGIC-10 — Multiple ViewModels
 Shell query-param dictionary keys (`"ExistedExercises"`, `"Item"`, `"Context"`, `"TrainingItem"`, `"Filter"`) hardcoded and repeated across `TrainingExercisesPageViewModel.cs`, `ExerciseListPageViewModel.cs`, `BlogsPageViewModel.cs`, `SocialWorkoutsPageViewModel.cs` — no shared constants.
@@ -172,8 +178,8 @@ Branches compare localized `DisplayActionSheetAsync` result strings against `App
 Button size `45`, corner radius `20`, separator-width formula `(45 + 2)`, threshold `15` — unexplained repeated pixel values.
 *Fix:* size is the `StepSize` property (corner radius derived from it); spacing and minimum line width are the `HeaderSpacing` / `MinLineWidth` constants.
 
-### MAGIC-14 — Views/TrainingImplementPage.xaml.cs:186,385,582
-`TimeSpan.FromSeconds(10)` warning threshold, `Task.Delay(2700)` confetti duration, `restSeconds = 120` default — unexplained literals.
+### MAGIC-14 — Views/TrainingImplementPage.xaml.cs:269,473,654
+`TimeSpan.FromSeconds(10)` warning threshold, `Task.Delay(1500)` confetti duration, `restSeconds = 120` default — unexplained literals.
 
 ### MAGIC-15 — Converters/HalfValueConverter.cs:11,16
 `0.00001` epsilon and `- 4` offset have no named constant or comment.
@@ -186,13 +192,13 @@ Parameter compared against literal `"inverse"` string instead of a typed/bool pa
 Default `WeightAndRepsViewModel` values inconsistently hardcoded — `(0, 15)` in two files, `(5, 15)` in a third.
 *Fix:* `WeightAndRepsViewModel.DefaultWeight = 0` / `DefaultRepetitions = 15` plus `CreateDefault()` factory, used by `ExerciseView`, `ImplementTrainingExerciseViewModel`, `TrainingExerciseViewModel` and `RepsAndWeightControl` (via `defaultValueCreator`, so instances are no longer shared across controls). `WorkoutService` also falls back to `DefaultRepetitions` (was `5`) when the generated rep count can't be parsed.
 
-### MAGIC-18 — Views/ExerciseItemPage.xaml.cs:218,229,241
+### MAGIC-18 — Views/ExerciseItemPage.xaml.cs:220,231,243
 `CompressionQuality = 85` (duplicated) and `ResizeImage(imageData, 600, 600, false)` unexplained.
 
 ### MAGIC-19 — Platforms/Android/MyFirebaseMessagingService.cs:115 & PushNotificationService.cs:28
 `"pushData"` key literal duplicated across two files.
 
-### MAGIC-20 — Views/FilterPage.xaml.cs:159-160,44,105-106,139
+### MAGIC-20 — Views/FilterPage.xaml.cs:122-123 and the onboarding popup code
 `imageSourceSizeWidth/Height` (496/514), popup image size `100x100`, `CornerRadius(20,20,20,20)` unexplained.
 
 ---
@@ -208,63 +214,69 @@ Identical private `CreateAuthorizedRequest(resource, method)` duplicated — 4 n
 ### DUP-03 — Services/Repository.cs (9 methods)
 "If Id != 0 Update else Insert" save pattern copy-pasted ~9× (`SaveWeightNotesItem`, `SaveLastTrainingItem`, `SaveLastTrainingExerciseItem`, `SaveExerciseItem`, `SaveTrainingExerciseItem`, `SaveTrainingItem`, `SaveSuperSetItem`, `SaveImage`, `SaveTrainingGroup`) — a generic `SaveItem<T>` already exists at line 408 but isn't reused.
 
-### DUP-04 — Services/Repository.cs:280-290,350-360,420-430
+### DUP-04 — Services/Repository.cs:280-290,350-360,420-430 — ✅ FIXED
 "Load full table, filter by FK, delete" duplicated 3× instead of a parameterized helper or SQL `WHERE` — root cause of the GOD-03 bug.
+*Fix:* each is now a single `Table<T>().Delete(predicate)` (`PERFORMANCE_ISSUES.md` DATA-03 / DATA-04).
 
 ### DUP-05 — Models/Database/*.cs (8 files)
 Every DB entity re-declares `public new int Id { get; set; }` to shadow the base class's `Id`, identical across 8 files instead of a shared base/interface.
 
-### DUP-06 — ViewModels/Pages/TrainingExercisesPageViewModel.cs:95-131 & HistoryTrainingPageViewModel.cs:177-214
+### DUP-06 — ViewModels/Pages/TrainingExercisesPageViewModel.cs:95-131 & HistoryTrainingPageViewModel.cs:177-214 — ✅ FIXED
 `PrepareTrainingViewModel()` copy-pasted verbatim (including the N+1 pattern) in both files. (`PERFORMANCE_ISSUES.md` DATA-02.)
+*Fix:* both now call the shared `TrainingViewModel.LoadWithExercises(id)` (:76). Its full-scan query shape is still tracked in DATA-02.
 
-### DUP-07 — ViewModels/Pages/TrainingExercisesPageViewModel.cs:439-473 & 475-513
+### DUP-07 — ViewModels/Pages/TrainingExercisesPageViewModel.cs:~400-440 & ~442-473
 `AcceptTrainingForMoveOrCopy()` and `CreateTrainingFromSelectedExercises()` share near-identical while-loops differing only in destination training id.
 
-### DUP-08 — ViewModels/Pages/PreparedTrainingsPageViewModel.cs:330-360 & 362-382
+### DUP-08 — ViewModels/Pages/PreparedTrainingsPageViewModel.cs:330-360 & 362-382 — ✅ FIXED
 `GetExerciseByMuscles()` and `GetExercisesByCodeNum()` share near-identical try/catch/iterate/add structure.
+*Fix:* `GetExerciseByMuscles()` was removed; only `GetExercisesByCodeNum()` remains.
 
-### DUP-09 — ViewModels/Pages/TrainingsPageViewModel.cs:129-137,144-151,156-158
+### DUP-09 — ViewModels/Pages/TrainingsPageViewModel.cs:129-137,144-151,156-158 — ✅ FIXED
 `if (lastTraining != null) item.LastImplementedDateTime = ...` repeated 3× inside `FillGroupedTraining()`.
+*Fix:* set once in `ReadPageData` (:122-126) from a precomputed last-time dictionary.
 
 ### DUP-10 — ViewModels/BodyControlItem.cs:15-24,29-38 & WeightAndRepsViewModel.cs:57-63
 `double.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, ...)` pattern copy-pasted 3×.
 
-### DUP-11 — Controls/ExerciseView.xaml.cs:28-40 & SuperSetControl.xaml.cs:117-129
+### DUP-11 — Controls/ExerciseView.xaml.cs:28-40 & SuperSetControl.xaml.cs:117-129 — ✅ FIXED
 `AddWeightAndRepsItem_Clicked`/`AddRequestWeightAndReps` and paired delete handlers near-identical across two controls.
+*Fix:* `SuperSetControl` no longer has its own add/delete handlers (sets are added/removed by `ImplementTrainingExerciseViewModel.AddSetCommand` / `RemoveSetCommand`); only `ExerciseView` keeps its handlers.
 
-### DUP-12 — Views/ExerciseItemPage.xaml.cs:180-193 & ViewModels/Pages/FilterPageViewModel.cs:70-76
+### DUP-12 — Views/ExerciseItemPage.xaml.cs:185 & ViewModels/Pages/FilterPageViewModel.cs:70-76
 `GetDifficultyLevelLabel` duplicated line-for-line (identical switch expression) in two files. The FilterPage copy moved to `FilterPageViewModel.DifficultyText`, still duplicated.
 
 ### DUP-13 — Platforms/Android/MyFirebaseMessagingService.cs:108-148 & PushNotificationService.cs:21-61
 Nearly identical Intent/PendingIntent/`NotificationCompat.Builder` construction duplicated across two classes, plus a duplicated static field `webContentList` declared separately in both — with inconsistent icon resources (`Resource.Drawable.main` vs `icon`/`small_icon`), suggesting the copies have already drifted.
 
-### DUP-14 — Controls/ToolTipControl.xaml.cs:93-98,119-121
+### DUP-14 — Controls/ToolTipControl.xaml.cs:93-98,119-121 — ✅ FIXED
 `ToolTipPosition.Bottom`, `.Right`, `.Start` cases in `CalculatePosition` have identical bodies.
+*Fix:* each case now computes its own position (:152-185).
 
 ### DUP-15 — Controls/StepProgressBar.cs:110-137 — ✅ FIXED
 `unselectedCircleStyle` and `selectedCircleStyle` share nearly all setters — candidate for a shared base style.
 *Fix:* both styles removed; one `UpdateVisuals()` sets each step's look from its state.
 
-### DUP-16 — Views/ExerciseItemPage.xaml.cs:195-247
+### DUP-16 — Views/ExerciseItemPage.xaml.cs:200-280
 Two near-duplicate permission/media-picker branches inside `Button_Clicked`.
 
 ---
 
 ## 6. Deep Nesting / High Complexity
 
-### NEST-01 — Services/Repository.cs:85-116
+### NEST-01 — Services/Repository.cs:113
 `DeleteUnused` nests `GroupBy` → `foreach` → `for` → `foreach` four levels deep to dedupe exercises and re-point references — untested, migration-like logic running on every app start.
 
 ### NEST-02 — Services/AuthService.cs:103-157
 `EnsureValidTokenAsync` — 4 sequential early-return guards plus a lock; the "is session usable" check is itself duplicated at two line ranges within the method.
 
-### NEST-03 — ViewModels/Pages/TrainingExercisesPageViewModel.cs:446-467
+### NEST-03 — ViewModels/Pages/TrainingExercisesPageViewModel.cs:406
 Nested `while`+`if`+`if` inside `AcceptTrainingForMoveOrCopy` mutating state across three levels.
 
 ### NEST-04 — Views/FilterPage.xaml.cs:189-252
 18-branch switch dispatching to per-muscle draw methods — better modeled as a data lookup table.
 
-### NEST-05 — Views/ExerciseItemPage.xaml.cs:195-247
+### NEST-05 — Views/ExerciseItemPage.xaml.cs:200-280
 `Button_Clicked` mixes action-sheet selection, two near-duplicate permission/picker branches, and image resizing in one tangled linear method.
 
 ---
@@ -277,16 +289,18 @@ Nested `while`+`if`+`if` inside `AcceptTrainingForMoveOrCopy` mutating state acr
 ### PARAM-02 — Models/Notifications/PushMessage.cs:13-17
 `IsUpdateCurrent`, `IsSilent`, `IsDisableSwipe` — three independent booleans on one DTO (low severity, plain data object).
 
-### PARAM-03 — ViewModels/Pages/TrainingsPageViewModel.cs:113-117
+### PARAM-03 — ViewModels/Pages/TrainingsPageViewModel.cs:227 — 🟡 PARTIAL
 `FillGroupedTraining(TrainingEntity, IEnumerable<TrainingUnionEntity>, IEnumerable<LastTrainingEntity>, List<Grouping<...>>)` — 4 params including a list mutated in place.
+*Progress:* now 3 params (`TrainingViewModel`, unions, groups); the groups list is still mutated in place.
 
-### PARAM-04 — ViewModels/Pages/PreparedTrainingsPageViewModel.cs:304-309
+### PARAM-04 — ViewModels/Pages/PreparedTrainingsPageViewModel.cs:303
 `CreatePreparedTraining` — 5 params including a `Func<>` builder delegate and an optional list.
 
-### PARAM-05 — ViewModels/Pages/TrainingsPageViewModel.cs:48
+### PARAM-05 — ViewModels/Pages/TrainingsPageViewModel.cs:48 — ✅ FIXED
 `LoadItems(bool isOverride = false)` — unclear flag controlling reload short-circuit.
+*Fix:* replaced by parameterless `LoadItemsAsync()` that always rebuilds.
 
-### PARAM-06 — ViewModels/Pages/TrainingExercisesPageViewModel.cs:370
+### PARAM-06 — ViewModels/Pages/TrainingExercisesPageViewModel.cs:323
 `StopAction(bool result = false)` — generic bool name hides "action succeeded, show toast" semantics.
 
 ---
@@ -330,20 +344,24 @@ Leftover `Console.WriteLine("Invoking click command")` / `"Invoking long click c
 ### DEAD-10 — Controls/LongPressedEffect.cs:145-151 — ✅ FIXED
 `OnDetached()` sets `_attached = false;` twice — once inside `#if __IOS__`, once unconditionally after — redundant/confused cleanup.
 
+### DEAD-11 — Services/WorkoutService.cs:42, Services/DataService.cs:77, Mappers/TrainingExerciseMapper.cs:135-195 — 🆕
+Since the workout questionnaire builds workouts locally (`WorkoutQuestinariumService`), the AI-request path has no callers: `WorkoutService.CreateWorkoutAsync`, `IDataService.GetExercisesByQueryAsync` (`/exercises/query`), and `TrainingExerciseMapper.ToWeightAndRepsString(int, ExerciseQueryResponse)` + `TryGetReps` (LM-02, NAME-02, CATCH-04).
+*Note:* kept on purpose while the API path is paused ("for now"); delete it, or wire it back, once that decision is final.
+
 ---
 
 ## 9. Empty or Swallowed Catch Blocks
 
-### CATCH-01 — Services/Repository.cs:29-33
+### CATCH-01 — Services/Repository.cs:57-61
 Constructor catches all exceptions from DB-path setup, logs via `Console.WriteLine`, leaves `database` null — object is broken with no clear signal why.
 
-### CATCH-02 — Services/Repository.cs:301-308
+### CATCH-02 — Services/Repository.cs:336-338
 `GetTrainingItem` catches and silently returns `new TrainingEntity()` on *any* failure, masking real errors as an empty training.
 
-### CATCH-03 — Services/IWorkoutService.cs:38-41
+### CATCH-03 — Services/WorkoutService.cs:35-38
 Per-exercise loop in `UpdateExerciseNameAndDescription` only `Console.WriteLine`s, silently skipping failed exercises.
 
-### CATCH-04 — Services/IWorkoutService.cs:94-97
+### CATCH-04 — Mappers/TrainingExerciseMapper.cs:156-159 (moved from IWorkoutService.cs; unused, see DEAD-11)
 `catch (Exception) { }` — fully swallows parsing errors, no logging.
 
 ### CATCH-05 — Extensions/MuscleViewModelExtensions.cs:42-45 & 70-73
@@ -352,28 +370,31 @@ Per-exercise loop in `UpdateExerciseNameAndDescription` only `Console.WriteLine`
 ### CATCH-06 — Extensions/TrainingExerciseViewModelExtensions.cs:47-50
 `Console.WriteLine(e)` instead of `LoggingService`.
 
-### CATCH-07 — ViewModels/Pages/TrainingsPageViewModel.cs:43-45
+### CATCH-07 — ViewModels/Pages/TrainingsPageViewModel.cs:43-45 — ✅ FIXED
 `catch { }` in `UpdateFirebaseToken()` — silently swallows all exceptions.
+*Fix:* `UpdateFirebaseToken()` was removed from the view model (`PERFORMANCE_ISSUES.md` NET-01).
 
-### CATCH-08 — ViewModels/DataManageViewModel.cs:123-126
+### CATCH-08 — ViewModels/DataManageViewModel.cs:164-167
 `catch { }` inside the `TrainingExercises` import loop — silently drops import failures.
 
-### CATCH-09 — ViewModels/Pages/WorkoutQuestinariumPageViewModel.cs:117-120
+### CATCH-09 — ViewModels/Pages/WorkoutQuestinariumPageViewModel.cs:117-120 — ✅ FIXED
 `catch (Exception) { }` in `PrepareRequest()` — silently swallows AI-request build errors.
+*Fix:* `PrepareRequest()` was removed. Workout creation errors are logged with `LoggingService.TrackError` and the user sees an alert.
 
-### CATCH-10 — Views/TrainingImplementPage.xaml.cs:146-149
+### CATCH-10 — Views/TrainingImplementPage.xaml.cs:~203 (in `LoadVideoItemsAsync`)
 `catch { }` in `LoadVideoItemsAsync` — discards all video-fetch failures.
 
-### CATCH-11 — Controls/ImageCache.cs:52-54
+### CATCH-11 — Controls/ImageCache.cs:64-66
 `catch { }` in `LoadImage()` — discards DB/stream failures.
 
-### CATCH-12 — Controls/ToolTipControl.xaml.cs:68-70
+### CATCH-12 — Controls/ToolTipControl.xaml.cs:68-70 — ✅ FIXED
 `catch (Exception) { }` in `ToolTipControl_PropertyChanged` — discards position-recalculation errors.
+*Fix:* now logs via `LoggingService.TrackError` (:101-103).
 
-### CATCH-13 — Views/WeightViewAndSetPage.xaml.cs:60-63
+### CATCH-13 — Views/WeightViewAndSetPage.xaml.cs:46
 `Console.WriteLine(exception)` only — no `LoggingService`, no user feedback.
 
-### CATCH-14 — Platforms/Android/LoadActivity.cs:35-38
+### CATCH-14 — Platforms/Android/LoadActivity.cs:37
 `Console.WriteLine(ex)` for file-content load failures — not surfaced or logged via `LoggingService`.
 
 ### CATCH-15 — Platforms/Android/MyFirebaseMessagingService.cs:55-58
@@ -390,23 +411,25 @@ Across all three layers, error handling is split inconsistently between `Logging
 
 ## 11. Improper Async Patterns
 
-### ASYNC-01 — Services/Repository.cs:38
+### ASYNC-01 — Services/Repository.cs:66
 `async void InitBasic()` — exceptions during startup are unobservable. (`PERFORMANCE_ISSUES.md` DATA-08.)
 
-### ASYNC-02 — ViewModels/Pages/TrainingsPageViewModel.cs:196
+### ASYNC-02 — ViewModels/Pages/TrainingsPageViewModel.cs:196 — ✅ FIXED
 `async void DeleteSelectedTraining(Border viewCell)`.
+*Fix:* `TrainingsPageViewModel` has no `async void` methods left.
 
-### ASYNC-03 — ViewModels/Pages/TrainingExercisesPageViewModel.cs:515
+### ASYNC-03 — ViewModels/Pages/TrainingExercisesPageViewModel.cs:475
 `async void ShareTraining()`, invoked fire-and-forget from `ShowTrainingSettingsPage`.
 
 ### ASYNC-04 — ViewModels/Pages/BlogsPageViewModel.cs:21
 Public `async void LoadItems()` — exceptions will crash the app instead of being catchable. (`PERFORMANCE_ISSUES.md` VM-09.)
 
-### ASYNC-05 — ViewModels/Pages/SocialWorkoutsPageViewModel.cs:48
+### ASYNC-05 — ViewModels/Pages/SocialWorkoutsPageViewModel.cs:72
 `async void OnAppearing()`.
 
-### ASYNC-06 — ViewModels/Pages/ExerciseListPageViewModel.cs:102-104
+### ASYNC-06 — ViewModels/Pages/ExerciseListPageViewModel.cs:75, :121 — 🟡 PARTIAL
 Public sync `UpdateItems()` wraps `async void LoadItemsAsync()` — awaitability is lost entirely at the call boundary.
+*Progress:* `UpdateItems()` now only filters in memory. `LoadItemsAsync()` is still `async void`, fired from the constructor.
 
 ---
 
@@ -416,16 +439,16 @@ Public sync `UpdateItems()` wraps `async void LoadItemsAsync()` — awaitability
 `CollectionChanged` is declared `static`, but every `StepProgressBar` instance subscribes an instance handler in its constructor and never unsubscribes. Every instance ever constructed is kept alive for the app's lifetime. Worse: because the event is static, a collection change on *any* instance's `ItemsSource` fires the handler on *every* `StepProgressBar` ever created, including ones on pages already navigated away from. (`PERFORMANCE_ISSUES.md` SVC-03.)
 *Fix:* each control subscribes its own handler to its own `ItemsSource` and unsubscribes when `ItemsSource` changes.
 
-### STATIC-02 — Views/TrainingImplementPage.xaml.cs:48,158
+### STATIC-02 — Views/TrainingImplementPage.xaml.cs:47,215
 `StepProgressBarControl.CurrentItemChanged +=` subscribed in the constructor but never unsubscribed (only `PropertyChanged` is unsubscribed in `OnDisappearing`).
 
-### STATIC-03 — Controls/ToolTipControl.xaml.cs:149
-`view.PropertyChanged += properyChanged;` in `LinkToLinksPreviewControl` has no matching unsubscribe.
+### STATIC-03 — Controls/ToolTipControl.xaml.cs:228
+`view.PropertyChanged += (sender, e) => ...` in `LinkToLinksPreviewControl` has no matching unsubscribe.
 
 ### STATIC-04 — Controls/MaterialLabelAttached.cs:40,100-111,126-139
 `Loaded`, `Focused`/`Unfocused`/`TextChanged`/`SelectedIndexChanged` all subscribed via anonymous lambdas with no unsubscription — handlers accumulate if the attached property toggles repeatedly.
 
-### STATIC-05 — Controls/ImageCache.cs:10
+### STATIC-05 — Controls/ImageCache.cs:15
 `Loaded += ImageCache_Loaded;` never unsubscribed (lower severity — `Loaded` typically fires once).
 
 ### STATIC-06 — Extensions/PushMessagesExtensions.cs:41-63
@@ -454,19 +477,20 @@ Page sets `BindingContext = this` and manages all filter state itself, even thou
 ### MVVM-02 — Views/TrainingImplementPage.xaml.cs (whole file)
 No ViewModel at all — rest-timer countdown, workout-completion logic, and social-sharing payload construction (`ShareToSocialFeedIfEnabled`, lines 445-500) live entirely in code-behind.
 
-### MVVM-03 — Views/ExerciseItemPage.xaml.cs:87-118
+### MVVM-03 — Views/ExerciseItemPage.xaml.cs:90-118
 `Remove_clicked` builds a confirmation message by directly querying the DB for trainings referencing the exercise — this cross-entity rule belongs in `ExerciseViewModel`.
 
-### MVVM-04 — Views/TrainingsPage.xaml.cs:38-91
+### MVVM-04 — Views/TrainingsPage.xaml.cs:38-91 — ✅ FIXED
 Crash-recovery deserialization and manual entity reconstruction done in the page instead of a ViewModel/service.
+*Fix:* moved into `TrainingsPageViewModel` (see LM-10).
 
-### MVVM-05 — Views/TrainingImplementPage.xaml.cs:392,409,433,541
-`App.Database.SaveItem`, `SaveLastTrainingExerciseItem`, `SaveTrainingExerciseItem` called directly from the page.
+### MVVM-05 — Views/TrainingImplementPage.xaml.cs:423,480,497,510,612
+`App.Database.SaveItem`, `SaveLastTrainingExerciseItem`, `SaveTrainingExerciseItem` called directly from the page (the finish save now runs in one transaction off the UI thread, but still from the page).
 
-### MVVM-06 — Views/ExerciseItemPage.xaml.cs:63,68,92,97,109,110
+### MVVM-06 — Views/ExerciseItemPage.xaml.cs:66,71,95,99,114,115
 `App.Database.SaveExerciseItem`, `SaveImage`, `GetTrainingExerciseItems`, `GetTrainingItems`, `DeleteExerciseItem`, `DeleteTrainingExerciseItemByExerciseId` all called directly from code-behind.
 
-### MVVM-07 — Views/TrainingExerciseItemPage.xaml.cs:49
+### MVVM-07 — Views/TrainingExerciseItemPage.xaml.cs:36
 `App.Database.SaveTrainingExerciseItem(...)` called directly in `Save_clicked`.
 
 ### MVVM-08 — Views/TrainingExercisesPage.xaml.cs:29
@@ -484,11 +508,11 @@ Crash-recovery deserialization and manual entity reconstruction done in the page
 
 ## 14. Overly Long Files
 
-### FILE-01 — Services/Repository.cs — 455 lines (see GOD-01)
-### FILE-02 — ViewModels/Pages/TrainingExercisesPageViewModel.cs — 631 lines (see GOD-04)
-### FILE-03 — ViewModels/Pages/TrainingsPageViewModel.cs — 546 lines (see GOD-05)
-### FILE-04 — Views/FilterPage.xaml.cs — 813 lines (see GOD-08)
-### FILE-05 — Views/TrainingImplementPage.xaml.cs — 625 lines (see GOD-07)
+### FILE-01 — Services/Repository.cs — 485 lines (see GOD-01)
+### FILE-02 — ViewModels/Pages/TrainingExercisesPageViewModel.cs — 590 lines (see GOD-04)
+### FILE-03 — ViewModels/Pages/TrainingsPageViewModel.cs — 1005 lines (see GOD-05)
+### FILE-04 — Views/FilterPage.xaml.cs — 714 lines (see GOD-08)
+### FILE-05 — Views/TrainingImplementPage.xaml.cs — 695 lines (see GOD-07)
 
 ---
 
@@ -500,8 +524,9 @@ Crash-recovery deserialization and manual entity reconstruction done in the page
 ### BUG-02 — Views/TrainingExerciseItemPage.xaml.cs:32-40 — ✅ FIXED
 `OnDisappearing` skips calling `base.OnDisappearing()` when `isSaved` is true — inverted logic plus a vague comment makes intent unclear; worth a correctness review.
 
-### BUG-03 — Views/ExerciseListPage.xaml.cs:63-76
+### BUG-03 — Views/ExerciseListPage.xaml.cs:63-76 — ✅ FIXED
 Uses `.First()` + catch-`Exception` as control flow to detect "item not in list" instead of `FirstOrDefault`/`TryGetValue`; the delete/update branch always runs even after the `Added` case is already handled above.
+*Fix:* exercise changes are now handled in `ExerciseListPageViewModel.OnExerciseChanged` via `ExerciseChangedMessage`; the page code-behind has no `.First()`/catch logic left.
 
 ---
 

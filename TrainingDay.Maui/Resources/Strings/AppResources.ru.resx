@@ -543,6 +543,15 @@
   <data name="LetsBuildYourWorkout" xml:space="preserve">
     <value>Начать подбор упражнений</value>
   </data>
+  <data name="StepOfFormat" xml:space="preserve">
+    <value>Шаг {0} из {1}</value>
+  </data>
+  <data name="ChooseOneAnswer" xml:space="preserve">
+    <value>Выберите один вариант</value>
+  </data>
+  <data name="ChooseOneOrMoreAnswers" xml:space="preserve">
+    <value>Выберите один или несколько вариантов</value>
+  </data>
   <data name="PreparedMorningWorkout" xml:space="preserve">
     <value>Утренняя зарядка</value>
   </data>

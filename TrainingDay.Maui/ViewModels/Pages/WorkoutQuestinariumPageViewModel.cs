@@ -1,37 +1,61 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using System.Text;
 using System.Windows.Input;
 using TrainingDay.Common.Extensions;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models.Questions;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
+using TrainingDay.Maui.Views;
 
 namespace TrainingDay.Maui.ViewModels.Pages
 {
 	public class WorkoutQuestinariumPageViewModel : BaseViewModel
 	{
-		private WorkoutQuestinariumStepViewModel currentStep;
-        private readonly IDataService _dataService;
-        private readonly WorkoutService _workoutService;
+		private WorkoutQuestinariumStepViewModel? currentStep;
+        private int stepCount;
+        private readonly IWorkoutQuestinariumService _workoutQuestinariumService;
 
-        public WorkoutQuestinariumStepViewModel CurrentStep
+        public WorkoutQuestinariumStepViewModel? CurrentStep
 		{
 			get => currentStep;
-			set => SetProperty(ref currentStep, value);
+			set
+            {
+                if (SetProperty(ref currentStep, value))
+                {
+                    OnPropertyChanged(nameof(CurrentStepIndex));
+                    OnPropertyChanged(nameof(StepCounterText));
+                    OnPropertyChanged(nameof(IsFirstStep));
+                    OnPropertyChanged(nameof(IsLastStep));
+                }
+            }
 		}
+
+        public int StepCount
+        {
+            get => stepCount;
+            set
+            {
+                if (SetProperty(ref stepCount, value))
+                {
+                    OnPropertyChanged(nameof(StepCounterText));
+                }
+            }
+        }
 
         /// <summary>
         /// Zero-based index of the current wizard step.
         /// </summary>
-        public int CurrentStepIndex { get; set; }
+        public int CurrentStepIndex => CurrentStep?.Index ?? 0;
+        public string StepCounterText => string.Format(AppResources.StepOfFormat, CurrentStepIndex + 1, StepCount);
+        public bool IsFirstStep => CurrentStep?.Previous is null;
+        public bool IsLastStep => CurrentStep?.Next is null;
+
         public ICommand BackOrCancelCommand { get; set; }
         public ICommand NextOrFinishCommand { get; set; }
 
-        public WorkoutQuestinariumPageViewModel(IDataService dataService, WorkoutService workoutService)
+        public WorkoutQuestinariumPageViewModel(IWorkoutQuestinariumService workoutQuestinariumService)
 		{
-            _dataService = dataService;
-            _workoutService = workoutService;
+            _workoutQuestinariumService = workoutQuestinariumService;
             BackOrCancelCommand = new AsyncRelayCommand(Back);
             NextOrFinishCommand = new AsyncRelayCommand(Next);
 		}
@@ -39,123 +63,115 @@ namespace TrainingDay.Maui.ViewModels.Pages
 		public async Task LoadSteps()
 		{
             var steps = await ResourceExtension.LoadResourceAsync<WorkoutQuestinariumStep>("questions", Settings.GetLanguage().TwoLetterISOLanguageName);
+            WorkoutQuestinariumStepViewModel? first = null;
             WorkoutQuestinariumStepViewModel? previous = null;
             int index = 0;
-            foreach (var step in steps)
+            foreach (var step in steps.Where(item => item.Answers?.Any() == true))
             {
                 var newStep = new WorkoutQuestinariumStepViewModel()
                 {
                     Title = step.Title,
                     Number = step.Number,
+                    Index = index,
+                    IsMultiple = step.IsMultiple,
                     Instruction = step.Instruction,
                     Variants = step.Answers.Select(item => new WorkoutQuestinariumVariantViewModel()
                     {
                         Title = item.Answer,
                         Option = item.Option,
                         IsMultiple = step.IsMultiple,
-                        QuestionNumber = step.Number.ToString()
                     }).ToObservableCollection(),
                 };
 
                 newStep.Variants[0].IsChecked = true;
 
-                CurrentStep ??= newStep;
-
+                first ??= newStep;
                 InsertAfter(previous, newStep);
                 index++;
                 previous = newStep;
             }
 
-            InsertAfter(previous, null);
+            StepCount = index;
+            CurrentStep = first;
         }
 
-        private void InsertAfter(WorkoutQuestinariumStepViewModel current, 
-            WorkoutQuestinariumStepViewModel newStep)
+        private static void InsertAfter(WorkoutQuestinariumStepViewModel? current, WorkoutQuestinariumStepViewModel newStep)
         {
-            newStep?.Previous = current;
+            newStep.Previous = current;
             current?.Next = newStep;
         }
 
         public async Task Next()
 		{
-            IsBusy = true;
+            if (CurrentStep is null || !CurrentStep.HasSelection)
+            {
+                return;
+            }
 
-            CurrentStepIndex++;
-            OnPropertyChanged(nameof(CurrentStepIndex));
-            var next = CurrentStep.Next;
-			if (next is not null)
+            if (CurrentStep.Next is not null)
 			{
-				CurrentStep = next;
-                IsBusy = false;
+				CurrentStep = CurrentStep.Next;
 				return;
             }
 
-			await PrepareRequest();
-            IsBusy = false;
-            await NavigateToHome();
+			await CreateWorkout();
         }
 
-        private async Task PrepareRequest()
+        private async Task CreateWorkout()
         {
+            var options = new Dictionary<WorkoutQuestion, IReadOnlyCollection<string>>();
+            for (var step = CurrentStep; step is not null; step = step.Previous)
+            {
+                options[(WorkoutQuestion)step.Number] = step.Variants.Where(item => item.IsChecked).Select(item => item.Option).ToList();
+            }
+
+            var nameOfWorkout = await Shell.Current.DisplayPromptAsync(AppResources.WorkoutAlmostCreated, AppResources.EnterTrainingName,
+                AppResources.OkString, AppResources.CancelString, AppResources.NameString, maxLength: 50, keyboard: Keyboard.Text);
+
+            // Cancelled: stay on the last step so the answers are not lost.
+            if (nameOfWorkout is null)
+            {
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(nameOfWorkout))
+            {
+                nameOfWorkout = AppResources.NameString;
+            }
+
+            int trainingId = 0;
+            IsBusy = true;
             try
             {
-                StringBuilder sb = new StringBuilder();
-                var step = CurrentStep;
-                while (true)
-                {
-                    if (step is null)
-                    {
-                        break;
-                    }
-
-                    sb.Append($"{step.Title} ");
-                    sb.Append($"{string.Join(" or ", step.Variants.Where(item => item.IsChecked).Select(item => item.Option))}. ");
-                    step = step.Previous;
-                }
-
-                await SendRequest(sb.ToString());
+                trainingId = await _workoutQuestinariumService.CreateWorkoutAsync(nameOfWorkout.Trim(), WorkoutQuestinariumAnswers.Parse(options), CancellationToken.None);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
+                LoggingService.TrackError(e);
             }
             finally
             {
                 IsBusy = false;
             }
-        }
 
-        private async Task SendRequest(string message)
-        {
-            var response = await _dataService.GetExercisesByQueryAsync(message);
-            if (response.Exercises.Any())
+            if (trainingId == 0)
             {
-                var nameOfWorkout = await Shell.Current.DisplayPromptAsync(AppResources.WorkoutAlmostCreated, AppResources.EnterTrainingName, 
-                    AppResources.OkString, AppResources.CancelString, AppResources.NameString, maxLength: 50, keyboard: Keyboard.Text);
-
-                if (nameOfWorkout is not null)
-                {
-                    await _workoutService.CreateWorkoutAsync(nameOfWorkout, response.Exercises, CancellationToken.None);
-                }
+                await MessageManager.DisplayAlert(AppResources.LetsBuildYourWorkout, AppResources.GenericErrorString, AppResources.OkString);
+                return;
             }
+
+            await Shell.Current.GoToAsync($"//workouts/{nameof(TrainingExercisesPage)}?{nameof(TrainingExercisesPageViewModel.ItemId)}={trainingId}");
         }
 
         public async Task Back()
 		{
-            IsBusy = true;
-            var back = CurrentStep.Previous;
-            CurrentStepIndex--;
-            OnPropertyChanged(nameof(CurrentStepIndex));
-            if (back is not null)
+            if (CurrentStep?.Previous is not null)
             {
-                CurrentStep = back;
-                IsBusy = false;
+                CurrentStep = CurrentStep.Previous;
                 return;
             }
 
-            await NavigateToHome();
+            await Shell.Current.GoToAsync("..");
         }
-
-        private static async Task NavigateToHome() => await Shell.Current.GoToAsync("//workouts");
     }
 }
