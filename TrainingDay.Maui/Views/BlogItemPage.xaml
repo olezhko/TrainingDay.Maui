@@ -4,6 +4,13 @@
              xmlns:model="clr-namespace:TrainingDay.Maui.ViewModels"
              x:Class="TrainingDay.Maui.Views.BlogItemPage"
              Title="{Binding Title}">
+
+    <Shell.TitleView>
+        <Grid Style="{StaticResource PageTitleViewStyle}">
+            <Label Style="{StaticResource PageTitleStyle}" Text="{Binding Title}"/>
+        </Grid>
+    </Shell.TitleView>
+
     <ContentPage.BindingContext>
         <model:BlogViewModel/>
     </ContentPage.BindingContext>

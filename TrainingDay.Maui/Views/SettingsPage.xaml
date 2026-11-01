@@ -9,10 +9,12 @@
              x:Class="TrainingDay.Maui.Views.SettingsPage"
              Title="{x:Static resx:AppResources.Account}" Padding="5">
     <Shell.TitleView>
-        <Grid ColumnDefinitions="*,auto" ColumnSpacing="10" Margin="10,0">
-            <Label Grid.Column="0" Text="{x:Static resx:AppResources.Account}" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
+        <Grid Style="{StaticResource PageTitleViewStyle}" ColumnDefinitions="*,auto">
+            <Label Style="{StaticResource PageTitleStyle}" Grid.Column="0" Text="{x:Static resx:AppResources.Account}"/>
 
-            <ImageButton Grid.Column="1" WidthRequest="30" HeightRequest="30" Source="star.png" Clicked="OpenStatistics_Click">
+            <ImageButton Style="{StaticResource HeaderIconButtonStyle}" Grid.Column="1" Source="star.png" Clicked="OpenStatistics_Click"
+                         SemanticProperties.Description="{x:Static resx:AppResources.Achievements}"
+                         ToolTipProperties.Text="{x:Static resx:AppResources.Achievements}">
                 <ImageButton.Behaviors>
                     <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                 </ImageButton.Behaviors>

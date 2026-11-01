@@ -137,7 +137,7 @@ namespace TrainingDay.Maui.Platforms.Android
                 .SetContentTitle(message.Title)
                 .SetContentText(message.Message)
                 .SetLargeIcon(BitmapFactory.DecodeResource(Application.Context.Resources, Resource.Drawable.main))
-                .SetSmallIcon(Resource.Drawable.main)
+                .SetSmallIcon(Resource.Drawable.ic_stat_notification)
                 .SetPriority((int)NotificationPriority.Low)
                 .SetVisibility((int)NotificationVisibility.Public)
                 .SetOngoing(message.IsDisableSwipe); // disable swipe

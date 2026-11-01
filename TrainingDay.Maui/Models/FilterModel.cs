@@ -1,9 +1,9 @@
-﻿using TrainingDay.Common.Models;
-using TrainingDay.Maui.ViewModels;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using TrainingDay.Common.Models;
 
 namespace TrainingDay.Maui.Models;
 
-public sealed class FilterModel : BaseViewModel
+public sealed class FilterModel : ObservableObject
 {
     private string? nameFilter = null;
     private List<MusclesEnum> currentMuscles;
@@ -24,4 +24,14 @@ public sealed class FilterModel : BaseViewModel
     {
         Muscles = [];
     }
+
+    public FilterModel Clone() => new()
+    {
+        NameFilter = NameFilter,
+        Muscles = [.. Muscles],
+        IsNoEquipmentFilter = IsNoEquipmentFilter,
+        IsBarbellExists = IsBarbellExists,
+        IsDumbbellExists = IsDumbbellExists,
+        DifficultyLevel = DifficultyLevel,
+    };
 }

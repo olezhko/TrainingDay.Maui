@@ -6,7 +6,15 @@ namespace TrainingDay.Maui.Models;
 public class Grouping<K, T> : ObservableCollection<T>
 {
     public int Id { get; set; }
-    public K Key { get; private set; }
+    private K key;
+    public K Key
+    {
+        get => key; set
+        {
+            key = value;
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(Key)));
+        }
+    }
 
     private bool isSelected = false;
     public bool IsSelected

@@ -19,6 +19,11 @@ public class SocialWorkoutsPageViewModel : BaseViewModel
     {
         this.socialWorkoutsService = socialWorkoutsService;
         Feed = new ObservableCollection<SocialWorkoutViewModel>();
+        RefreshCommand = new AsyncRelayCommand(Refresh);
+        RemainingItemsThresholdReachedCommand = new AsyncRelayCommand(LoadNextPage);
+        ItemSelectedCommand = new AsyncRelayCommand<SocialWorkoutViewModel>(OpenDetail);
+        LikeCommand = new AsyncRelayCommand<SocialWorkoutViewModel>(item => item?.ToggleLikeAsync(socialWorkoutsService) ?? Task.CompletedTask);
+        GoToLoginCommand = new AsyncRelayCommand(() => Shell.Current.GoToAsync(nameof(LoginPage)));
     }
 
     public ObservableCollection<SocialWorkoutViewModel> Feed { get; }
@@ -37,13 +42,32 @@ public class SocialWorkoutsPageViewModel : BaseViewModel
         set => SetProperty(ref isRefreshing, value);
     }
 
-    public ICommand RefreshCommand => new AsyncRelayCommand(Refresh);
+    private bool isLoadingMore;
+    public bool IsLoadingMore
+    {
+        get => isLoadingMore;
+        set => SetProperty(ref isLoadingMore, value);
+    }
 
-    public ICommand RemainingItemsThresholdReachedCommand => new AsyncRelayCommand(LoadNextPage);
+    private bool isInitialLoading;
+    /// <summary>
+    /// True only while the feed is empty and the first page is loading — shows a spinner instead of the "no workouts" text.
+    /// </summary>
+    public bool IsInitialLoading
+    {
+        get => isInitialLoading;
+        set => SetProperty(ref isInitialLoading, value);
+    }
 
-    public ICommand ItemSelectedCommand => new AsyncRelayCommand<SocialWorkoutViewModel>(OpenDetail);
+    public ICommand RefreshCommand { get; }
 
-    public ICommand GoToLoginCommand => new AsyncRelayCommand(() => Shell.Current.GoToAsync(nameof(LoginPage)));
+    public ICommand RemainingItemsThresholdReachedCommand { get; }
+
+    public ICommand ItemSelectedCommand { get; }
+
+    public ICommand LikeCommand { get; }
+
+    public ICommand GoToLoginCommand { get; }
 
     public async void OnAppearing()
     {
@@ -67,7 +91,7 @@ public class SocialWorkoutsPageViewModel : BaseViewModel
         }
 
         IsBusy = true;
-        IsRefreshing = true;
+        IsInitialLoading = Feed.Count == 0;
         page = 1;
 
         try
@@ -100,6 +124,7 @@ public class SocialWorkoutsPageViewModel : BaseViewModel
         {
             IsBusy = false;
             IsRefreshing = false;
+            IsInitialLoading = false;
         }
     }
 
@@ -124,6 +149,7 @@ public class SocialWorkoutsPageViewModel : BaseViewModel
         }
 
         IsBusy = true;
+        IsLoadingMore = true;
         try
         {
             var nextPage = page + 1;
@@ -145,6 +171,7 @@ public class SocialWorkoutsPageViewModel : BaseViewModel
         finally
         {
             IsBusy = false;
+            IsLoadingMore = false;
         }
     }
 

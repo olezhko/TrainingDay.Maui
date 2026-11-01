@@ -31,7 +31,7 @@ public partial class ExerciseView : ContentView
         var item = (TrainingExerciseViewModel)BindingContext;
         if (item.WeightAndRepsItems.Count == 0)
         {
-            item.WeightAndRepsItems.Add(new WeightAndRepsViewModel(0, 15));
+            item.WeightAndRepsItems.Add(WeightAndRepsViewModel.CreateDefault());
         }
         else
         {

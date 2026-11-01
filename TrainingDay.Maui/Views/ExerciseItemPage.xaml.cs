@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.Extensions;
+using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Messages;
 using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
@@ -37,6 +38,8 @@ public partial class ExerciseItemPage : ContentPage
         {
             TitleLabel.Text = item.Name;
         }
+
+        DifficultyLevelLabel.Text = $"{AppResources.Difficulty}: {GetDifficultyLevelLabel((int)item.DifficultType)}";
     }
 
     private async void Save_clicked(object sender, EventArgs e)
@@ -196,23 +199,20 @@ public partial class ExerciseItemPage : ContentPage
 
     private async void Button_Clicked(object sender, EventArgs e)
     {
-        var action = await Shell.Current.DisplayActionSheetAsync(
-           AppResources.AddImage,
-           AppResources.CancelString,
-           null,
-           AppResources.Gallery,
-           AppResources.Photo);
+        var action = await MessageManager.DisplayActionSheet(AppResources.AddImage, AppResources.CancelString,
+            new ActionSheetOption<ImageSourceAction>(ImageSourceAction.Gallery, AppResources.Gallery),
+            new ActionSheetOption<ImageSourceAction>(ImageSourceAction.Photo, AppResources.Photo));
 
         FileResult? result = null;
-        if (action == AppResources.CancelString)
+        if (action == null)
             return;
 
-        var isGranted = await RequestPermissionsAsync(action);
+        var isGranted = await RequestPermissionsAsync(action.Value);
         if (!isGranted)
         {
             return;
         }
-        if (action == AppResources.Gallery)
+        if (action == ImageSourceAction.Gallery)
         {
             var files = await MediaPicker.PickPhotosAsync(new MediaPickerOptions
             {
@@ -223,7 +223,7 @@ public partial class ExerciseItemPage : ContentPage
             result = files.FirstOrDefault();
         }
 
-        if (action == AppResources.Photo)
+        if (action == ImageSourceAction.Photo)
         {
             result = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions
             {
@@ -248,9 +248,15 @@ public partial class ExerciseItemPage : ContentPage
         ExerciseImage.Source = ImageSource.FromStream(() => new MemoryStream(imageData));
     }
 
-    private async Task<bool> RequestPermissionsAsync(string action)
+    private enum ImageSourceAction
     {
-        if (action == AppResources.Photo)
+        Gallery,
+        Photo,
+    }
+
+    private async Task<bool> RequestPermissionsAsync(ImageSourceAction action)
+    {
+        if (action == ImageSourceAction.Photo)
         {
             var statusCamera = await Permissions.CheckStatusAsync<Permissions.Camera>();
             if (statusCamera != PermissionStatus.Granted)

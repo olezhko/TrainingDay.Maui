@@ -7,7 +7,9 @@
              x:Name="Page">
 
 	<Shell.TitleView>
-        <Label Text="{x:Static resx:AppResources.NewsString}" FontSize="Title" VerticalOptions="Center" FontAttributes="Bold"/>
+        <Grid Style="{StaticResource PageTitleViewStyle}">
+            <Label Style="{StaticResource PageTitleStyle}" Text="{x:Static resx:AppResources.NewsString}"/>
+        </Grid>
     </Shell.TitleView>
 
     <Grid>

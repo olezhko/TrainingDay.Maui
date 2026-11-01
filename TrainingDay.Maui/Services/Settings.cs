@@ -11,6 +11,18 @@ public static class Settings
         set => Preferences.Set(nameof(WeightGoal), value);
     }
 
+    public static double WaistGoal
+    {
+        get => Preferences.Get(nameof(WaistGoal), 0.0);
+        set => Preferences.Set(nameof(WaistGoal), value);
+    }
+
+    public static double HipGoal
+    {
+        get => Preferences.Get(nameof(HipGoal), 0.0);
+        set => Preferences.Set(nameof(HipGoal), value);
+    }
+
     public static bool IsDisplayOnImplement
     {
         get => Preferences.Get(nameof(IsDisplayOnImplement), true);
@@ -33,18 +45,6 @@ public static class Settings
     {
         get => Preferences.Get(nameof(Token), string.Empty);
         set => Preferences.Set(nameof(Token), value);
-    }
-
-    public static double WaistGoal
-    {
-        get => Preferences.Get(nameof(WaistGoal), 0.0);
-        set => Preferences.Set(nameof(WaistGoal), value);
-    }
-
-    public static double HipGoal
-    {
-        get => Preferences.Get(nameof(HipGoal), 0.0);
-        set => Preferences.Set(nameof(HipGoal), value);
     }
 
     public static string LastDatabaseSyncDateTime

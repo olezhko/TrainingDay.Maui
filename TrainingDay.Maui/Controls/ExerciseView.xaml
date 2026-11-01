@@ -24,32 +24,42 @@
         </DataTemplate>
     </ContentView.Resources>
 
-    <Grid x:Name="MainGrid" RowSpacing="3" x:DataType="viewModels:TrainingExerciseViewModel">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <VerticalStackLayout Spacing="10" x:DataType="viewModels:TrainingExerciseViewModel">
+        <!-- Summary card: image, name, target muscles -->
+        <Border Style="{StaticResource BorderCellStyle}" Padding="14">
+            <VerticalStackLayout Spacing="10">
+                <Border StrokeShape="RoundRectangle 15" Stroke="Transparent" Padding="5" BackgroundColor="White" HorizontalOptions="Center">
+                    <controls:ImageCache x:Name="ImageControl" HeightRequest="110" WidthRequest="110" CodeNum="{Binding CodeNum}" ExerciseId="{Binding ExerciseId,Mode=TwoWay}"
+                                         SemanticProperties.Description="{Binding Name}">
+                        <controls:ImageCache.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="ImageTapped" />
+                        </controls:ImageCache.GestureRecognizers>
+                    </controls:ImageCache>
+                </Border>
 
-        <Label Grid.Row="0" x:Name="NameLabel" FontSize="Large" HorizontalTextAlignment="Center" Text="{Binding Name}" 
-               VerticalOptions="Start" />
+                <Label Text="{Binding Name}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Center"
+                       SemanticProperties.HeadingLevel="Level2"/>
 
-        <Border Grid.Row="1" Padding="5" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center" Stroke="Transparent">
-            <controls:ImageCache x:Name="ImageControl" HeightRequest="100" CodeNum="{Binding CodeNum}" WidthRequest="100" ExerciseId="{Binding ExerciseId,Mode=TwoWay}">
-                <controls:ImageCache.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="ImageTapped" />
-                </controls:ImageCache.GestureRecognizers>
-            </controls:ImageCache>
+                <FlexLayout BindableLayout.ItemsSource="{Binding Muscles}" Style="{StaticResource MuscleFlexStyle}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="viewModels:MuscleViewModel">
+                            <!--AbsoluteLayout needed for proper draw muscle label. without it cropped in the end-->
+                            <AbsoluteLayout>
+                                <Border Style="{StaticResource MuscleBorderCellStyle}">
+                                    <Label Text="{Binding Name}" FontSize="12" TextColor="White" LineBreakMode="NoWrap"/>
+                                </Border>
+                            </AbsoluteLayout>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+            </VerticalStackLayout>
         </Border>
 
-        <StackLayout Grid.Row="2" Spacing="0" Margin="5,0">
-            <!-- Sets: reps only (3 per row) or reps + weight (2 per row) -->
-            <StackLayout Padding="0" Orientation="Vertical" IsVisible="{Binding IsTrackedBySets}">
-                <StackLayout Orientation="Horizontal" VerticalOptions="Start" Spacing="10">
-                    <Label FontAttributes="Bold" FontSize="Medium" HorizontalOptions="Start" VerticalTextAlignment="Center">
+        <!-- Sets: reps only (3 per row) or reps + weight (2 per row) -->
+        <Border Style="{StaticResource BorderCellStyle}" IsVisible="{Binding IsTrackedBySets}">
+            <VerticalStackLayout Spacing="6">
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label FontAttributes="Bold" FontSize="17" VerticalTextAlignment="Center" Margin="4,0,0,0">
                         <Label.Triggers>
                             <DataTrigger Binding="{Binding HasWeight}" TargetType="Label" Value="False">
                                 <Setter Property="Text" Value="{x:Static resx:AppResources.RepsString}" />
@@ -60,12 +70,14 @@
                         </Label.Triggers>
                     </Label>
 
-                    <ImageButton WidthRequest="40" HeightRequest="40" Padding="0" Source="add_empty.png" Clicked="AddWeightAndRepsItem_Clicked" BackgroundColor="Transparent">
+                    <ImageButton Grid.Column="1" Style="{StaticResource HeaderIconButtonStyle}" Source="add_empty.png" Clicked="AddWeightAndRepsItem_Clicked"
+                                 SemanticProperties.Description="{x:Static resx:AppResources.AddSet}"
+                                 ToolTipProperties.Text="{x:Static resx:AppResources.AddSet}">
                         <ImageButton.Behaviors>
                             <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light=Black, Dark=White}" />
                         </ImageButton.Behaviors>
                     </ImageButton>
-                </StackLayout>
+                </Grid>
 
                 <FlexLayout AlignContent="Start" AlignItems="Center" BindableLayout.ItemsSource="{Binding WeightAndRepsItems}"
                         Direction="Row" JustifyContent="Start" VerticalOptions="Start" Wrap="Wrap">
@@ -78,48 +90,48 @@
                         </DataTrigger>
                     </FlexLayout.Triggers>
                 </FlexLayout>
-            </StackLayout>
-
-            <Border Style="{StaticResource MaterialBorder}" IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}">
-                <Grid ColumnDefinitions="Auto,*">
-                    <Label Text="{x:Static resx:AppResources.TimeString}" TextColor="{StaticResource Main}" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" FontAttributes="Bold"/>
-                    <Entry Grid.Column="1" HorizontalOptions="Fill" Margin="30,0,0,0" HorizontalTextAlignment="Start" VerticalOptions="Center"
-                           Text="{Binding TimeString}" />
-                </Grid>
-            </Border>
-        </StackLayout>
-
-        <FlexLayout Grid.Row="3" BindableLayout.ItemsSource="{Binding Muscles}" Style="{StaticResource MuscleFlexStyle}">
-            <BindableLayout.ItemTemplate>
-                <DataTemplate x:DataType="viewModels:MuscleViewModel">
-                    <AbsoluteLayout>
-                        <Border Style="{StaticResource MuscleBorderCellStyle}">
-                            <Label Text="{Binding Name}" FontSize="14" TextColor="White" LineBreakMode="NoWrap"/>
-                        </Border>
-                    </AbsoluteLayout>
-                </DataTemplate>
-            </BindableLayout.ItemTemplate>
-        </FlexLayout>
-
-        <Border Grid.Row="4" Margin="0" Padding="0" Style="{StaticResource BorderCellStyle}" VerticalOptions="Fill" IsVisible="True">
-            <StackLayout Margin="5">
-                <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.StartPosition}" TextColor="DodgerBlue" VerticalTextAlignment="Center" 
-           IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
-                <Label FontSize="Small" Text="{Binding Description.StartPosition}" 
-           IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
-
-                <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Execution}" TextColor="LimeGreen" VerticalTextAlignment="Center" 
-           IsVisible="{Binding Description.Execution, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
-                <Label FontSize="Small" Text="{Binding Description.Execution}" 
-           IsVisible="{Binding Description.Execution, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
-
-                <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Advice}" TextColor="Orange" VerticalTextAlignment="Center" 
-           IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
-
-                <Label FontSize="Small" Text="{Binding Description.Advice}" 
-           IsVisible="{Binding Description.Advice, Converter={StaticResource IsEmptyStringConverter},ConverterParameter='inverse'}"/>
-            </StackLayout>
+            </VerticalStackLayout>
         </Border>
 
-    </Grid>
+        <!-- Time-based exercise -->
+        <Border Style="{StaticResource BorderCellStyle}"
+                IsVisible="{Binding Tags, Converter={StaticResource ExerciseTagExistsConverter}, ConverterParameter={x:Static data:ExerciseTags.ExerciseByTime}}">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="20">
+                <Label Text="{x:Static resx:AppResources.TimeString}" FontSize="17" FontAttributes="Bold" VerticalOptions="Center" Margin="4,0,0,0"/>
+                <Entry Grid.Column="1" Text="{Binding TimeString}" Placeholder="00:00:00" FontSize="Medium"
+                       HorizontalTextAlignment="End" VerticalOptions="Center"
+                       SemanticProperties.Description="{x:Static resx:AppResources.TimeString}"/>
+            </Grid>
+        </Border>
+
+        <!-- Instructions: hidden entirely when the exercise has no description -->
+        <Border Style="{StaticResource BorderCellStyle}" Padding="14">
+            <Border.IsVisible>
+                <MultiBinding Converter="{StaticResource AnyTrueConverter}">
+                    <Binding Path="Description.StartPosition" Converter="{StaticResource IsStringNotNullOrEmptyConverter}"/>
+                    <Binding Path="Description.Execution" Converter="{StaticResource IsStringNotNullOrEmptyConverter}"/>
+                    <Binding Path="Description.Advice" Converter="{StaticResource IsStringNotNullOrEmptyConverter}"/>
+                </MultiBinding>
+            </Border.IsVisible>
+
+            <VerticalStackLayout Spacing="12">
+                <Label Text="{x:Static resx:AppResources.ExerciseInstructions}" FontSize="17" FontAttributes="Bold" SemanticProperties.HeadingLevel="Level2"/>
+
+                <VerticalStackLayout Spacing="2" IsVisible="{Binding Description.StartPosition, Converter={StaticResource IsStringNotNullOrEmptyConverter}}">
+                    <Label FontSize="15" FontAttributes="Bold" Text="{x:Static resx:AppResources.StartPosition}" TextColor="DodgerBlue"/>
+                    <Label FontSize="14" Text="{Binding Description.StartPosition}"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="2" IsVisible="{Binding Description.Execution, Converter={StaticResource IsStringNotNullOrEmptyConverter}}">
+                    <Label FontSize="15" FontAttributes="Bold" Text="{x:Static resx:AppResources.Execution}" TextColor="LimeGreen"/>
+                    <Label FontSize="14" Text="{Binding Description.Execution}"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="2" IsVisible="{Binding Description.Advice, Converter={StaticResource IsStringNotNullOrEmptyConverter}}">
+                    <Label FontSize="15" FontAttributes="Bold" Text="{x:Static resx:AppResources.Advice}" TextColor="Orange"/>
+                    <Label FontSize="14" Text="{Binding Description.Advice}"/>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </Border>
+    </VerticalStackLayout>
 </ContentView>

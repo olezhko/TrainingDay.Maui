@@ -2,7 +2,9 @@ using TrainingDay.Common.Extensions;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.Extensions;
 using TrainingDay.Maui.Models;
+using TrainingDay.Maui.Resources.Strings;
 using TrainingDay.Maui.Services;
+using TrainingDay.Maui.Views;
 using ExerciseEntity = TrainingDay.Maui.Models.Database.ExerciseEntity;
 
 namespace TrainingDay.Maui.ViewModels;
@@ -109,16 +111,24 @@ public class SocialWorkoutViewModel : BaseViewModel
         }
     }
 
-    public string DurationFormatted => Duration.ToString(@"hh\:mm\:ss");
+    public string DurationFormatted => Duration.ToShortDurationString();
 
-    public string DateFormatted => Date.ToString("d", Settings.GetLanguage());
+    public string DateFormatted => Date.ToRelativeDateString(DateTime.Now, Settings.GetLanguage());
 
     private string topMuscles;
     public string TopMuscles
     {
         get => topMuscles;
-        set => SetProperty(ref topMuscles, value);
+        set
+        {
+            if (SetProperty(ref topMuscles, value))
+            {
+                OnPropertyChanged(nameof(HasTopMuscles));
+            }
+        }
     }
+
+    public bool HasTopMuscles => !string.IsNullOrEmpty(TopMuscles);
 
     private List<SocialWorkoutExerciseDisplay> exercises;
     public List<SocialWorkoutExerciseDisplay> Exercises
@@ -129,11 +139,15 @@ public class SocialWorkoutViewModel : BaseViewModel
             if (SetProperty(ref exercises, value))
             {
                 OnPropertyChanged(nameof(ExerciseCount));
+                OnPropertyChanged(nameof(ExerciseCountText));
             }
         }
     }
 
     public int ExerciseCount => Exercises?.Count ?? 0;
+
+    public string ExerciseCountText => ExerciseCount.ToPluralString(Settings.GetLanguage(),
+        AppResources.ExerciseCountOne, AppResources.ExerciseCountFew, AppResources.ExerciseCountMany);
 
     private int likesCount;
     public int LikesCount
@@ -147,5 +161,49 @@ public class SocialWorkoutViewModel : BaseViewModel
     {
         get => isLikedByMe;
         set => SetProperty(ref isLikedByMe, value);
+    }
+
+    /// <summary>
+    /// Optimistically flips the like state so the heart reacts instantly, then rolls back if the server rejects it.
+    /// </summary>
+    public async Task ToggleLikeAsync(ISocialWorkoutsService socialWorkoutsService)
+    {
+        if (!Settings.IsLoggedIn)
+        {
+            // Liking needs an account; previously the tap silently did nothing.
+            var goToLogin = await MessageManager.DisplayAlert(AppResources.LoginString, AppResources.LoginToLikeString, AppResources.LoginString, AppResources.CancelString);
+            if (goToLogin)
+            {
+                await Shell.Current.GoToAsync(nameof(LoginPage));
+            }
+
+            return;
+        }
+
+        var like = !IsLikedByMe;
+        IsLikedByMe = like;
+        LikesCount += like ? 1 : -1;
+
+        bool result;
+        try
+        {
+            result = like
+                ? await socialWorkoutsService.LikeAsync(ServerId)
+                : await socialWorkoutsService.UnlikeAsync(ServerId);
+        }
+        catch (Exception ex)
+        {
+            LoggingService.TrackError(ex);
+            result = false;
+        }
+
+        if (result)
+        {
+            LoggingService.TrackEvent(like ? "Workout Liked" : "Workout Unliked");
+            return;
+        }
+
+        IsLikedByMe = !like;
+        LikesCount += like ? -1 : 1;
     }
 }

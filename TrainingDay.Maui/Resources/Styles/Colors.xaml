@@ -28,4 +28,8 @@
 
     <Color x:Key="ContentPageBackgroundColor">#1b1b1b</Color>
     <Color x:Key="ContentPageBackgroundColorLight">#f0f0f0</Color>
+
+    <!-- Background of a selected list item: Primary / PrimaryDark with low opacity -->
+    <Color x:Key="SelectedItemBackgroundColor">#33ac99ea</Color>
+    <Color x:Key="SelectedItemBackgroundColorLight">#1A512BD4</Color>
 </ResourceDictionary>

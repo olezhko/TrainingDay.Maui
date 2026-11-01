@@ -104,7 +104,7 @@ public class ImplementTrainingExerciseViewModel : TrainingExerciseViewModel
 
     public ICommand AddSetCommand => new RelayCommand(() =>
     {
-        var lastItem = WeightAndRepsItems.LastOrDefault() ?? new WeightAndRepsViewModel(0,15);
+        var lastItem = WeightAndRepsItems.LastOrDefault() ?? WeightAndRepsViewModel.CreateDefault();
         WeightAndRepsItems.Add(new WeightAndRepsViewModel(lastItem.Weight, lastItem.Repetitions));
         IsNotFinished = true;
     });

@@ -2,77 +2,155 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
+             xmlns:questions="clr-namespace:TrainingDay.Maui.Models.Questions"
+             xmlns:vm="clr-namespace:TrainingDay.Maui.ViewModels.Pages"
              xmlns:resx="clr-namespace:TrainingDay.Maui.Resources.Strings"
              x:Class="TrainingDay.Maui.Views.WorkoutQuestinariumPage"
+             x:DataType="vm:WorkoutQuestinariumPageViewModel"
              Shell.TabBarIsVisible="False"
+             BackgroundColor="{AppThemeBinding Dark={StaticResource ContentPageBackgroundColor}, Light={StaticResource ContentPageBackgroundColorLight}}"
              Title="{x:Static resx:AppResources.LetsBuildYourWorkout}">
-    <Grid RowDefinitions="auto,*,auto,auto" RowSpacing="5" Margin="5">
 
-        <ActivityIndicator IsRunning="True" IsVisible="{Binding IsBusy}" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="150" HeightRequest="150"
-                           />
+    <Shell.TitleView>
+        <Grid Style="{StaticResource PageTitleViewStyle}">
+            <Label Style="{StaticResource PageTitleStyle}" Text="{x:Static resx:AppResources.LetsBuildYourWorkout}"/>
+        </Grid>
+    </Shell.TitleView>
 
-        <controls:StepBar x:Name="Steps" Grid.Row="0" StepCount="6" CurrentStep="{Binding CurrentStepIndex}" FinishedColor="{StaticResource Primary}" UnfinishedColor="{StaticResource Gray500}" 
-                          HorizontalOptions="Fill" Margin="5,0"/>
+    <!-- Toolbar back arrow walks back through the steps instead of leaving the wizard -->
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding BackOrCancelCommand}"/>
+    </Shell.BackButtonBehavior>
 
-        <VerticalStackLayout Grid.Row="1" BindingContext="{Binding CurrentStep}" Margin="10"
-                             IsVisible="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}">
-            <Label Text="{Binding Title}" FontSize="20" FontAttributes="Bold"/>
-            <CollectionView ItemsSource="{Binding Variants}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid IsVisible="{Binding IsMultiple}" ColumnDefinitions="auto,*">
-                                <Label Grid.Column="1" Text="{Binding Title}" VerticalTextAlignment="Center"/>
-                                <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked}" VerticalOptions="Center" HorizontalOptions="Start"/>
-                            </Grid>
-                            <RadioButton VerticalOptions="Center" Content="{Binding Title}"
-                                         IsVisible="{Binding IsMultiple, Converter={StaticResource InverseBooleanConverter}}" IsChecked="{Binding IsChecked}">
-                                <RadioButton.Style>
-                                    <Style TargetType="RadioButton">
-                                        <Style.Triggers>
-                                            <Trigger TargetType="RadioButton" Property="IsVisible" Value="Visible">
-                                                <Setter Property="GroupName" Value="{Binding QuestionNumber}"/>
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </RadioButton.Style>
-                            </RadioButton>
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+    <Grid RowDefinitions="auto,auto,*,auto">
+
+        <!-- Wizard look: filled circles, earlier steps and their lines in the accent colour, not tappable -->
+        <controls:StepProgressBar Grid.Row="0" StepCount="{Binding StepCount}" StepSelected="{Binding CurrentStepIndex, Mode=OneWay}"
+                                  CompletePreviousSteps="True" StepCanTouch="False" StepSize="32" LineThickness="2"
+                                  StepColor="Transparent" StepTextColor="White"
+                                  SteppedColor="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}"
+                                  FinishedColor="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}"
+                                  FinishedLineColor="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}"
+                                  UnfinishedColor="{StaticResource Gray500}" LineColor="{StaticResource Gray500}"
+                                  HorizontalOptions="Fill" Margin="16,12,16,0"/>
+
+        <VerticalStackLayout x:Name="StepHeader" Grid.Row="1" Spacing="4" Padding="16,20,16,12">
+            <Label Text="{Binding StepCounterText}" FontSize="13" FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}"/>
+            <Label Text="{Binding CurrentStep.Title}" FontSize="24" FontAttributes="Bold" LineBreakMode="WordWrap"/>
+            <Label Text="{Binding CurrentStep.Hint}" FontSize="14"
+                   TextColor="{AppThemeBinding Dark={StaticResource Gray300}, Light={StaticResource Gray500}}"/>
         </VerticalStackLayout>
 
-        <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="10" Padding="10">
-            <Button Grid.Column="0" Command="{Binding BackOrCancelCommand}" BackgroundColor="Transparent" 
-                    TextColor="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}" 
-                    BorderColor="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}" 
-                    BorderWidth="1" IsEnabled="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}"> 
+        <CollectionView x:Name="VariantsList" Grid.Row="2" Margin="16,0"
+                        x:DataType="questions:WorkoutQuestinariumStepViewModel"
+                        BindingContext="{Binding CurrentStep, x:DataType=vm:WorkoutQuestinariumPageViewModel}"
+                        ItemsSource="{Binding Variants}" SelectionMode="None">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.Footer>
+                <BoxView HeightRequest="12" Color="Transparent" BackgroundColor="Transparent"/>
+            </CollectionView.Footer>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="questions:WorkoutQuestinariumVariantViewModel">
+                    <Border Padding="16,14" StrokeThickness="2" StrokeShape="RoundRectangle 16" MinimumHeightRequest="56"
+                            Stroke="Transparent"
+                            BackgroundColor="{AppThemeBinding Dark={StaticResource ListItemBackgroundColor}, Light={StaticResource ListItemBackgroundColorLight}}"
+                            SemanticProperties.Description="{Binding Title}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SelectVariantCommand, Source={RelativeSource AncestorType={x:Type questions:WorkoutQuestinariumStepViewModel}}, x:DataType=questions:WorkoutQuestinariumStepViewModel}"
+                                                  CommandParameter="{Binding .}"/>
+                        </Border.GestureRecognizers>
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding IsChecked}" Value="True">
+                                <Setter Property="Stroke" Value="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}"/>
+                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource SelectedItemBackgroundColor}, Light={StaticResource SelectedItemBackgroundColorLight}}"/>
+                            </DataTrigger>
+                        </Border.Triggers>
+
+                        <Grid ColumnDefinitions="*,auto" ColumnSpacing="12">
+                            <Label Text="{Binding Title}" FontSize="16" VerticalTextAlignment="Center" LineBreakMode="WordWrap"/>
+
+                            <!-- Circle for a single choice, rounded square for multiple choice -->
+                            <Border Grid.Column="1" WidthRequest="24" HeightRequest="24" Padding="3" VerticalOptions="Center"
+                                    StrokeThickness="2" StrokeShape="Ellipse" BackgroundColor="Transparent"
+                                    Stroke="{AppThemeBinding Dark={StaticResource Gray400}, Light={StaticResource Gray300}}">
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding IsMultiple}" Value="True">
+                                        <Setter Property="StrokeShape" Value="RoundRectangle 6"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding IsChecked}" Value="True">
+                                        <Setter Property="Stroke" Value="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}"/>
+                                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}"/>
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Grid>
+                                    <!-- Single choice: inner dot -->
+                                    <Ellipse WidthRequest="8" HeightRequest="8" HorizontalOptions="Center" VerticalOptions="Center"
+                                             Fill="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}">
+                                        <Ellipse.IsVisible>
+                                            <MultiBinding Converter="{StaticResource AllTrueConverter}">
+                                                <Binding Path="IsChecked"/>
+                                                <Binding Path="IsMultiple" Converter="{StaticResource InvertedBoolConverter}"/>
+                                            </MultiBinding>
+                                        </Ellipse.IsVisible>
+                                    </Ellipse>
+                                    <!-- Multiple choice: check mark -->
+                                    <Path Data="M2,7 L6,11 L14,3" Aspect="Uniform" StrokeThickness="2.5" StrokeLineCap="Round" StrokeLineJoin="Round"
+                                          Stroke="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}">
+                                        <Path.IsVisible>
+                                            <MultiBinding Converter="{StaticResource AllTrueConverter}">
+                                                <Binding Path="IsChecked"/>
+                                                <Binding Path="IsMultiple"/>
+                                            </MultiBinding>
+                                        </Path.IsVisible>
+                                    </Path>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Grid Grid.Row="3" ColumnDefinitions="*,2*" ColumnSpacing="12" Padding="16,8,16,16">
+            <Button Grid.Column="0" Command="{Binding BackOrCancelCommand}" HeightRequest="48">
                 <Button.Style>
-                    <Style TargetType="Button">
+                    <Style TargetType="Button" BasedOn="{StaticResource SecondActionButton}">
                         <Setter Property="Text" Value="{x:Static resx:AppResources.Back}" />
                         <Style.Triggers>
-                            <DataTrigger TargetType="Button" Binding="{Binding CurrentStep.Previous, Converter={StaticResource IsNullConverter}}" Value="True">
+                            <DataTrigger TargetType="Button" Binding="{Binding IsFirstStep}" Value="True">
                                 <Setter Property="Text" Value="{x:Static resx:AppResources.CancelString}" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>
             </Button>
-            <Button Grid.Column="1"
-                    Command="{Binding NextOrFinishCommand}" 
-                    IsEnabled="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}">
+            <Button Grid.Column="1" Command="{Binding NextOrFinishCommand}" HeightRequest="48"
+                    IsEnabled="{Binding CurrentStep.HasSelection, FallbackValue=False}">
                 <Button.Style>
                     <Style TargetType="Button">
+                        <Setter Property="CornerRadius" Value="15" />
                         <Setter Property="Text" Value="{x:Static resx:AppResources.Next}" />
                         <Style.Triggers>
-                            <DataTrigger TargetType="Button" Binding="{Binding CurrentStep.Next, Converter={StaticResource IsNullConverter}}" Value="True">
+                            <DataTrigger TargetType="Button" Binding="{Binding IsLastStep}" Value="True">
                                 <Setter Property="Text" Value="{x:Static resx:AppResources.Finish}" />
                             </DataTrigger>
+                            <Trigger TargetType="Button" Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.5" />
+                            </Trigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>
             </Button>
+        </Grid>
+
+        <!-- Busy overlay while the workout is being built -->
+        <Grid Grid.RowSpan="4" IsVisible="{Binding IsBusy}" BackgroundColor="#80000000" InputTransparent="False">
+            <ActivityIndicator IsRunning="{Binding IsBusy}" VerticalOptions="Center" HorizontalOptions="Center"
+                               WidthRequest="64" HeightRequest="64"
+                               Color="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}"/>
         </Grid>
     </Grid>
 </ContentPage>
