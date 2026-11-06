@@ -445,11 +445,13 @@ Public sync `UpdateItems()` wraps `async void LoadItemsAsync()` — awaitability
 ### STATIC-03 — Controls/ToolTipControl.xaml.cs:228
 `view.PropertyChanged += (sender, e) => ...` in `LinkToLinksPreviewControl` has no matching unsubscribe.
 
-### STATIC-04 — Controls/MaterialLabelAttached.cs:40,100-111,126-139
+### STATIC-04 — Controls/MaterialLabelAttached.cs:40,100-111,126-139 — ✅ FIXED
 `Loaded`, `Focused`/`Unfocused`/`TextChanged`/`SelectedIndexChanged` all subscribed via anonymous lambdas with no unsubscription — handlers accumulate if the attached property toggles repeatedly.
+*Fix:* a private per-label `MaterialLabelState` subscribes `Loaded`/`Unloaded` once with named handlers, attaches to the sibling `InputView`/`Picker` on `Loaded`, detaches on `Unloaded`, and is disposed when `IsMaterialBehavior` changes.
 
-### STATIC-05 — Controls/ImageCache.cs:15
+### STATIC-05 — Controls/ImageCache.cs:15 — ✅ FIXED
 `Loaded += ImageCache_Loaded;` never unsubscribed (lower severity — `Loaded` typically fires once).
+*Fix:* `ImageCache_Loaded` unsubscribes itself on first fire and only loads if no image key was set yet; reloads come from the `CodeNum`/`ExerciseId` property-changed callbacks.
 
 ### STATIC-06 — Extensions/PushMessagesExtensions.cs:41-63
 A dozen `public static { get; set; }` fields (notification IDs, state flags, localized strings resolved once at class load) — `NewWorkoutMessageTitle` etc. won't update on later language switches (stale-localization risk).

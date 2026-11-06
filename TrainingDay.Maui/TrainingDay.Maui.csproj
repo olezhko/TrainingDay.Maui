@@ -35,26 +35,26 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
-		<ApplicationVersion>385</ApplicationVersion>
-		<ApplicationDisplayVersion>1.3.4.10</ApplicationDisplayVersion>
+		<ApplicationVersion>387</ApplicationVersion>
+		<ApplicationDisplayVersion>1.3.4.12</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-ios|AnyCPU'">
 		<CreatePackage>false</CreatePackage>
-		<ApplicationVersion>385</ApplicationVersion>
-		<ApplicationDisplayVersion>1.3.4.10</ApplicationDisplayVersion>
+		<ApplicationVersion>387</ApplicationVersion>
+		<ApplicationDisplayVersion>1.3.4.12</ApplicationDisplayVersion>
 		<EnableSGenConc>True</EnableSGenConc>
 		<SkipStaticLibraryValidation>true</SkipStaticLibraryValidation>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
-		<ApplicationVersion>385</ApplicationVersion>
-		<ApplicationDisplayVersion>1.3.4.10</ApplicationDisplayVersion>
+		<ApplicationVersion>387</ApplicationVersion>
+		<ApplicationDisplayVersion>1.3.4.12</ApplicationDisplayVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-ios|AnyCPU'">
-		<ApplicationVersion>385</ApplicationVersion>
-		<ApplicationDisplayVersion>1.3.4.10</ApplicationDisplayVersion>
+		<ApplicationVersion>387</ApplicationVersion>
+		<ApplicationDisplayVersion>1.3.4.12</ApplicationDisplayVersion>
 		<CreatePackage>false</CreatePackage>
 		<CodesignProvision>TrainingDayPublish</CodesignProvision>
 		<CodesignKey>Apple Distribution: Oleg Ladyka (36WMJT4QLC)</CodesignKey>

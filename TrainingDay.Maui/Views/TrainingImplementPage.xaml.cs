@@ -77,8 +77,39 @@ public partial class TrainingImplementPage : ContentPage
     {
         if (e.PropertyName == nameof(StepProgressBar.StepSelected))
         {
-            SkipButton.IsVisible = FinishButton.IsVisible = Items[StepProgressBarControl.StepSelected].First().IsNotFinished;
+            UpdateActionButtons();
         }
+    }
+
+    private void UpdateActionButtons()
+    {
+        SkipButton.IsVisible = FinishButton.IsVisible = Items[StepProgressBarControl.StepSelected].Any(item => item.IsNotFinished);
+    }
+
+    private void TrackExercise(ImplementTrainingExerciseViewModel exercise)
+    {
+        exercise.PropertyChanged += OnExercisePropertyChanged;
+    }
+
+    /// <summary>
+    /// Adding a set reopens a finished exercise, so its step and the action buttons have to follow.
+    /// </summary>
+    private void OnExercisePropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName != nameof(ImplementTrainingExerciseViewModel.IsNotFinished)
+            || sender is not ImplementTrainingExerciseViewModel { IsNotFinished: true, IsSkipped: false } exercise
+            || !Items[StepProgressBarControl.StepSelected].Contains(exercise))
+        {
+            return;
+        }
+
+        StepProgressBarControl.SkipElement(false);
+        UpdateActionButtons();
+    }
+
+    private static bool HasPendingExercise(SuperSetViewModel<ImplementTrainingExerciseViewModel> superSet)
+    {
+        return superSet.Any(item => item.IsNotFinished && !item.IsSkipped);
     }
 
     protected override async void OnAppearing()
@@ -106,6 +137,8 @@ public partial class TrainingImplementPage : ContentPage
                 {
                     currentSuperSet = item;
                 }
+
+                item.ForEach(TrackExercise);
 
                 if (!item.SuperSetItems.First().IsNotFinished)
                 {
@@ -212,7 +245,6 @@ public partial class TrainingImplementPage : ContentPage
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-        StepProgressBarControl.PropertyChanged -= StepProgressBarControl_PropertyChanged;
         HandlerChanged -= OnHandlerChanged;
     }
 
@@ -374,7 +406,7 @@ public partial class TrainingImplementPage : ContentPage
             Items[StepProgressBarControl.StepSelected].ForEach(item => item.IsNotFinished = false);
             Items[StepProgressBarControl.StepSelected].ForEach(item => item.IsSkipped = false);
 
-            if (Items.All(a => a.All(item => !item.IsNotFinished || item.IsSkipped)) && enabledTimer)
+            if (!Items.Any(HasPendingExercise) && enabledTimer)
             {
                 await FinishAndSave();
                 LoggingService.TrackEvent($"{GetType().Name}: Training Implementing Finished");
@@ -399,7 +431,7 @@ public partial class TrainingImplementPage : ContentPage
         int index = 0;
         foreach (var trainingExerciseViewModel in Items)
         {
-            if (trainingExerciseViewModel.First().IsNotFinished && !trainingExerciseViewModel.First().IsSkipped)
+            if (HasPendingExercise(trainingExerciseViewModel))
             {
                 return index;
             }
@@ -604,6 +636,7 @@ public partial class TrainingImplementPage : ContentPage
             var newSuperSet = new SuperSetViewModel<ImplementTrainingExerciseViewModel>() { TrainingId = TrainingItem.Id };
             var superSetExercise = MapBaseSuperSetToImplementMapper.Map(exerciseItem);
             newSuperSet.Add(superSetExercise);
+            TrackExercise(superSetExercise);
 
             Items.Add(newSuperSet);
             superSetExercise.TrainingId = TrainingItem.Id;
@@ -640,7 +673,7 @@ public partial class TrainingImplementPage : ContentPage
         {
             StepProgressBarControl.SkipElement(); // make it skipped in step
             StepProgressBarControl.NextElement(FirstIndexIsNotFinished());
-            if (Items.All(a => a.All(item => !item.IsNotFinished || item.IsSkipped)) && enabledTimer)
+            if (!Items.Any(HasPendingExercise) && enabledTimer)
             {
                 await FinishAndSave();
             }
