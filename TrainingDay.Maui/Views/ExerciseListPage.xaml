@@ -105,7 +105,7 @@
                                 </Border>
 
                                 <!-- already in the workout -->
-                                <Border StrokeShape="RoundRectangle 11" Stroke="Transparent" WidthRequest="22" HeightRequest="22" Padding="3" Margin="-4"
+                                <Border StrokeShape="RoundRectangle 11" Stroke="Transparent" WidthRequest="22" HeightRequest="22" Padding="3" Margin="0"
                                         HorizontalOptions="Start" VerticalOptions="Start" InputTransparent="True" BackgroundColor="Green"
                                         IsVisible="{Binding IsExerciseExistsInWorkout}">
                                     <Image Source="save.png">

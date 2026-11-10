@@ -100,7 +100,7 @@ DB: reads/writes `TrainingEntity`, `TrainingExerciseEntity`; messaging: `Exercis
 
 ### TrainingExerciseItemPage
 **ViewModel:** none (uses `ExerciseView` control)  
-Edit a single exercise's parameters within a training (sets, reps, weight, time). Saves on toolbar button. Receives exercise data via Shell query parameters.  
+Edit a single exercise's parameters within a training (sets, reps, weight, time). Execution and Advice text are shown via `InstructionStepsView` (Execution: numbered steps, bullets for timed exercises; Advice: bullets; a paragraph for one sentence). Saves on toolbar button. Receives exercise data via Shell query parameters.  
 DB: writes `TrainingExerciseEntity`.
 
 ### ExerciseItemPage

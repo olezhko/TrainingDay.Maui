@@ -15,9 +15,16 @@ public class ImageCache : Image
         Loaded += ImageCache_Loaded;
     }
 
+    // One-shot: covers the case where CodeNum/ExerciseId never change from their defaults.
+    // Later reloads are driven by the property-changed callbacks, so re-entering the visual tree
+    // (cell recycling, page re-appearing) must not decode the same image again.
     private void ImageCache_Loaded(object? sender, EventArgs e)
     {
-        LoadImage();
+        Loaded -= ImageCache_Loaded;
+        if (currentKey == null)
+        {
+            LoadImage();
+        }
     }
 
     public static readonly BindableProperty CodeNumProperty = BindableProperty.Create(nameof(CodeNum), typeof(int), typeof(ImageCache), null, propertyChanged: (bindable, oldvalue, newvalue) => ((ImageCache)bindable).OnImageUrlChanged(), defaultBindingMode: BindingMode.TwoWay);

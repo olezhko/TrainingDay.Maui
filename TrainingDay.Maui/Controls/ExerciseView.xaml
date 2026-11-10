@@ -124,12 +124,12 @@
 
                 <VerticalStackLayout Spacing="2" IsVisible="{Binding Description.Execution, Converter={StaticResource IsStringNotNullOrEmptyConverter}}">
                     <Label FontSize="15" FontAttributes="Bold" Text="{x:Static resx:AppResources.Execution}" TextColor="LimeGreen"/>
-                    <Label FontSize="14" Text="{Binding Description.Execution}"/>
+                    <controls:InstructionStepsView Text="{Binding Description.Execution}" Tags="{Binding Tags}"/>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Spacing="2" IsVisible="{Binding Description.Advice, Converter={StaticResource IsStringNotNullOrEmptyConverter}}">
                     <Label FontSize="15" FontAttributes="Bold" Text="{x:Static resx:AppResources.Advice}" TextColor="Orange"/>
-                    <Label FontSize="14" Text="{Binding Description.Advice}"/>
+                    <controls:InstructionStepsView Text="{Binding Description.Advice}" IsBulletList="True" MarkerColor="Orange"/>
                 </VerticalStackLayout>
             </VerticalStackLayout>
         </Border>

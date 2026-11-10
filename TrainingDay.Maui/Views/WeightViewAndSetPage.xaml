@@ -133,12 +133,12 @@
                                 <VerticalStackLayout>
                                     <Label Text="{x:Static resx:AppResources.CurrentString}" TextColor="{StaticResource Main}" FontSize="13"/>
                                     <Grid ColumnDefinitions="*,auto">
-                                        <Entry Text="{Binding CurrentValueString}" Placeholder="0" FontSize="22" FontAttributes="Bold"
+                                        <Entry x:Name="CurrentValueEntry" Text="{Binding CurrentValueString}" Placeholder="0" FontSize="22" FontAttributes="Bold"
                                                Keyboard="Numeric" ReturnType="Done" HorizontalOptions="Fill" HorizontalTextAlignment="Start">
                                             <Entry.Behaviors>
-                                                <toolkit:EventToCommandBehavior EventName="Unfocused" CommandParameter="{Binding .}"
+                                                <toolkit:EventToCommandBehavior EventName="Unfocused" CommandParameter="{Binding Source={x:Reference CurrentValueEntry}, Path=BindingContext}"
                                                                                 Command="{Binding Source={x:Reference Page}, Path=BindingContext.SaveCurrentValueCommand}"/>
-                                                <toolkit:EventToCommandBehavior EventName="Completed" CommandParameter="{Binding .}"
+                                                <toolkit:EventToCommandBehavior EventName="Completed" CommandParameter="{Binding Source={x:Reference CurrentValueEntry}, Path=BindingContext}"
                                                                                 Command="{Binding Source={x:Reference Page}, Path=BindingContext.SaveCurrentValueCommand}"/>
                                             </Entry.Behaviors>
                                         </Entry>
@@ -152,12 +152,12 @@
                                 <VerticalStackLayout>
                                     <Label Text="{x:Static resx:AppResources.GoalString}" TextColor="Goldenrod" FontSize="13"/>
                                     <Grid ColumnDefinitions="*,auto">
-                                        <Entry Text="{Binding GoalValueString}" Placeholder="0" FontSize="22" FontAttributes="Bold"
+                                        <Entry x:Name="GoalValueEntry" Text="{Binding GoalValueString}" Placeholder="0" FontSize="22" FontAttributes="Bold"
                                                Keyboard="Numeric" ReturnType="Done" HorizontalOptions="Fill" HorizontalTextAlignment="Start">
                                             <Entry.Behaviors>
-                                                <toolkit:EventToCommandBehavior EventName="Unfocused" CommandParameter="{Binding .}"
+                                                <toolkit:EventToCommandBehavior EventName="Unfocused" CommandParameter="{Binding Source={x:Reference GoalValueEntry}, Path=BindingContext}"
                                                                                 Command="{Binding Source={x:Reference Page}, Path=BindingContext.SaveGoalValueCommand}"/>
-                                                <toolkit:EventToCommandBehavior EventName="Completed" CommandParameter="{Binding .}"
+                                                <toolkit:EventToCommandBehavior EventName="Completed" CommandParameter="{Binding Source={x:Reference GoalValueEntry}, Path=BindingContext}"
                                                                                 Command="{Binding Source={x:Reference Page}, Path=BindingContext.SaveGoalValueCommand}"/>
                                             </Entry.Behaviors>
                                         </Entry>
