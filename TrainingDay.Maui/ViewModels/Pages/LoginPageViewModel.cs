@@ -51,11 +51,11 @@ public class LoginPageViewModel : BaseViewModel
 
     public bool HasError => !string.IsNullOrEmpty(ErrorMessage);
 
-    public ICommand LoginCommand => new AsyncRelayCommand(Login);
+    public ICommand LoginCommand => field ??= new AsyncRelayCommand(Login);
 
-    public ICommand GoToRegisterCommand => new AsyncRelayCommand(() => Shell.Current.GoToAsync(nameof(RegisterPage)));
+    public ICommand GoToRegisterCommand => field ??= new AsyncRelayCommand(() => Shell.Current.GoToAsync(nameof(RegisterPage)));
 
-    public ICommand GoToForgotPasswordCommand => new AsyncRelayCommand(() => Shell.Current.GoToAsync(nameof(ForgotPasswordPage)));
+    public ICommand GoToForgotPasswordCommand => field ??= new AsyncRelayCommand(() => Shell.Current.GoToAsync(nameof(ForgotPasswordPage)));
 
     private async Task Login()
     {

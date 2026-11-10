@@ -37,8 +37,8 @@ public class DataManageViewModel : BaseViewModel
         _repository = repository;
     }
 
-    public ICommand ExportDataCommand => new AsyncRelayCommand(ExportData);
-    public ICommand ImportDataCommand => new AsyncRelayCommand(ImportData);
+    public ICommand ExportDataCommand => field ??= new AsyncRelayCommand(ExportData);
+    public ICommand ImportDataCommand => field ??= new AsyncRelayCommand(ImportData);
 
     private async Task ImportData()
     {

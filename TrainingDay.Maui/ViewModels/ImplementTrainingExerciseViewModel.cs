@@ -102,14 +102,14 @@ public class ImplementTrainingExerciseViewModel : TrainingExerciseViewModel
         }
     }
 
-    public ICommand AddSetCommand => new RelayCommand(() =>
+    public ICommand AddSetCommand => field ??= new RelayCommand(() =>
     {
         var lastItem = WeightAndRepsItems.LastOrDefault() ?? WeightAndRepsViewModel.CreateDefault();
         WeightAndRepsItems.Add(new WeightAndRepsViewModel(lastItem.Weight, lastItem.Repetitions));
         IsNotFinished = true;
     });
 
-    public ICommand RemoveSetCommand => new RelayCommand(() =>
+    public ICommand RemoveSetCommand => field ??= new RelayCommand(() =>
     {
         if (WeightAndRepsItems.Count == 0)
             return;
@@ -117,7 +117,7 @@ public class ImplementTrainingExerciseViewModel : TrainingExerciseViewModel
         WeightAndRepsItems.RemoveAt(WeightAndRepsItems.Count - 1);
     });
 
-    public ICommand StartCalculatingTimeCommand => new RelayCommand(StartCalculateTime);
+    public ICommand StartCalculatingTimeCommand => field ??= new RelayCommand(StartCalculateTime);
     private void StartCalculateTime()
     {
         if (IsTimeCalculating)

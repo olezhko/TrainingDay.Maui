@@ -708,7 +708,7 @@ public partial class TrainingImplementPage : ContentPage
     }
 
     #region Properties
-    public ICommand AddExercisesCommand => new AsyncRelayCommand(AddExercisesRequest);
+    public ICommand AddExercisesCommand => field ??= new AsyncRelayCommand(AddExercisesRequest);
 
     public string CurrentTime { get; set; }
 

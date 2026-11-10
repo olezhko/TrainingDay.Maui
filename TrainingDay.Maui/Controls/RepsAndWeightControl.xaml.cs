@@ -44,7 +44,7 @@ public partial class RepsAndWeightControl : ContentView
     }
 
     public static readonly BindableProperty DeleteRequestCommandProperty =
-        BindableProperty.Create("DeleteRequestCommand", typeof(Command), typeof(RepsAndWeightControl), null);
+        BindableProperty.Create(nameof(DeleteRequestCommand), typeof(ICommand), typeof(RepsAndWeightControl), null);
 
     public ICommand DeleteRequestCommand
     {
