@@ -15,15 +15,21 @@ public class ImageCache : Image
         Loaded += ImageCache_Loaded;
     }
 
-    // One-shot: covers the case where CodeNum/ExerciseId never change from their defaults.
-    // Later reloads are driven by the property-changed callbacks, so re-entering the visual tree
-    // (cell recycling, page re-appearing) must not decode the same image again.
+    // First load covers the case where CodeNum/ExerciseId never change from their defaults.
+    // On re-entering the visual tree (page re-appearing, tab switch, cell re-attached) the platform
+    // image loader (Glide on Android) may have released the bitmap of a stream source while detached,
+    // leaving an empty view, so the current image is re-applied from the in-memory cache (no DB hit).
     private void ImageCache_Loaded(object? sender, EventArgs e)
     {
-        Loaded -= ImageCache_Loaded;
         if (currentKey == null)
         {
             LoadImage();
+            return;
+        }
+
+        if (ImageService.TryGetCachedImageData(currentKey, out var cached) && cached != null)
+        {
+            ApplyImage(cached);
         }
     }
 
