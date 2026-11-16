@@ -29,19 +29,34 @@ namespace TrainingDay.Maui.Controls
             view.SetValue(MaterialControlTypeProperty, value);
         }
 
+        // Holds the single set of handlers for one label so they can be unsubscribed again.
+        private static readonly BindableProperty MaterialLabelStateProperty =
+            BindableProperty.CreateAttached("MaterialLabelState", typeof(MaterialLabelState), typeof(Label), null);
+
         private static void OnIsMaterialBehaviorPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            if (bindable == null)
+            if (bindable is not Label label)
             {
                 return;
             }
 
-            var label = (Label)bindable;
-            label.Loaded += (sender, args) => Label_Loaded(sender, bindable);
+            if (label.GetValue(MaterialLabelStateProperty) is MaterialLabelState oldState)
+            {
+                oldState.Dispose();
+                label.ClearValue(MaterialLabelStateProperty);
+            }
+
             if (!(bool)newValue)
             {
                 label.IsVisible = false;
                 return;
+            }
+
+            var state = new MaterialLabelState(label);
+            label.SetValue(MaterialLabelStateProperty, state);
+            if (label.IsLoaded)
+            {
+                state.AttachToControl();
             }
         }
 
@@ -75,45 +90,70 @@ namespace TrainingDay.Maui.Controls
                 label.Margin = new Thickness(5, 0, 5, 0);
             }
         }
-        
-        private static void Label_Loaded(object? sender, BindableObject bindable)
+
+        private static void ControlFocusChanged(FocusEventArgs args, Label label, bool isEmpty)
         {
-            var label = (Label)sender;
-            var parent = label.Parent as Grid;
-            
-            var type = GetMaterialControlType(bindable);
-            switch (type)
+            if (!isEmpty)
             {
-                case MaterialControlTypes.Editor:
-                case MaterialControlTypes.Entry:
-                    {
-                        var entry = parent.Children.FirstOrDefault(item => (item as InputView) != null) as InputView;
-                        if (entry is null )
+                return;
+            }
+
+            ChangeActivate(label, args.IsFocused);
+        }
+
+        /// <summary>
+        /// Per-label subscriptions. Label Loaded/Unloaded are subscribed once for the lifetime of the
+        /// behavior; the sibling input control is attached on Loaded and detached on Unloaded, so
+        /// re-loading the page (or toggling the attached property) never stacks handlers.
+        /// </summary>
+        private sealed class MaterialLabelState : IDisposable
+        {
+            private readonly Label label;
+            private InputView? inputView;
+            private Picker? picker;
+
+            public MaterialLabelState(Label label)
+            {
+                this.label = label;
+                label.Loaded += Label_Loaded;
+                label.Unloaded += Label_Unloaded;
+            }
+
+            public void AttachToControl()
+            {
+                DetachFromControl();
+
+                if (label.Parent is not Grid parent)
+                {
+                    return;
+                }
+
+                switch (GetMaterialControlType(label))
+                {
+                    case MaterialControlTypes.Editor:
+                    case MaterialControlTypes.Entry:
+                        inputView = parent.Children.OfType<InputView>().FirstOrDefault();
+                        if (inputView is null)
                         {
                             return;
                         }
-                        if (entry.Text.IsNotNullOrEmpty())
+
+                        if (inputView.Text.IsNotNullOrEmpty())
                         {
                             ChangeActivate(label, true);
                         }
 
-                        entry.Focused += (sender, args) =>
+                        inputView.Focused += InputView_FocusChanged;
+                        inputView.Unfocused += InputView_FocusChanged;
+                        inputView.TextChanged += InputView_TextChanged;
+                        break;
+                    case MaterialControlTypes.Picker:
+                        picker = parent.Children.OfType<Picker>().FirstOrDefault();
+                        if (picker is null)
                         {
-                            ControlFocusChanged(sender, args, label, () => string.IsNullOrEmpty(entry.Text));
-                        };
-                        entry.Unfocused += (sender, args) =>
-                        {
-                            ControlFocusChanged(sender, args, label, () => string.IsNullOrEmpty(entry.Text));
-                        };
-                        entry.TextChanged += (sender, args) =>
-                        {
-                            ChangeActivate(label, args.NewTextValue.IsNotNullOrEmpty());
-                        };
-                    }
-                    break;
-                case MaterialControlTypes.Picker:
-                    {
-                        var picker = parent.Children.FirstOrDefault(item => (item as Picker) != null) as Picker;
+                            return;
+                        }
+
                         if (picker.SelectedIndex != -1)
                         {
                             ChangeActivate(label, true);
@@ -123,41 +163,57 @@ namespace TrainingDay.Maui.Controls
                             ChangeActivate(label, false, isVisible: false);
                         }
 
-                        picker.Focused += (sender, args) =>
-                        {
-                            ControlFocusChanged(sender, args, label, () => picker.SelectedIndex == -1);
-                        };
-
-                        picker.Unfocused += (sender, args) =>
-                        {
-                            ControlFocusChanged(sender, args, label, () => picker.SelectedIndex == -1);
-                        };
-
-                        picker.SelectedIndexChanged += (sender, args) =>
-                        {
-                            ChangeActivate(label, picker.SelectedIndex != -1);
-                        };
-                    }
-                    break;
-                case MaterialControlTypes.None:
-                    ChangeActivate(label, true);
-                    break;
+                        picker.Focused += Picker_FocusChanged;
+                        picker.Unfocused += Picker_FocusChanged;
+                        picker.SelectedIndexChanged += Picker_SelectedIndexChanged;
+                        break;
+                    case MaterialControlTypes.None:
+                        ChangeActivate(label, true);
+                        break;
+                }
             }
-        }
 
-        private static void ControlFocusChanged(object? sender, FocusEventArgs args, Label label, Func<bool> checkEmptyAction)
-        {
-            if (args.IsFocused && checkEmptyAction.Invoke())
+            public void Dispose()
             {
-                ChangeActivate(label, true);
-                return;
+                label.Loaded -= Label_Loaded;
+                label.Unloaded -= Label_Unloaded;
+                DetachFromControl();
             }
 
-            if (!args.IsFocused && checkEmptyAction.Invoke())
+            private void DetachFromControl()
             {
-                ChangeActivate(label, false);
-                return;
+                if (inputView != null)
+                {
+                    inputView.Focused -= InputView_FocusChanged;
+                    inputView.Unfocused -= InputView_FocusChanged;
+                    inputView.TextChanged -= InputView_TextChanged;
+                    inputView = null;
+                }
+
+                if (picker != null)
+                {
+                    picker.Focused -= Picker_FocusChanged;
+                    picker.Unfocused -= Picker_FocusChanged;
+                    picker.SelectedIndexChanged -= Picker_SelectedIndexChanged;
+                    picker = null;
+                }
             }
+
+            private void Label_Loaded(object? sender, EventArgs e) => AttachToControl();
+
+            private void Label_Unloaded(object? sender, EventArgs e) => DetachFromControl();
+
+            private void InputView_FocusChanged(object? sender, FocusEventArgs e) =>
+                ControlFocusChanged(e, label, string.IsNullOrEmpty(inputView?.Text));
+
+            private void InputView_TextChanged(object? sender, TextChangedEventArgs e) =>
+                ChangeActivate(label, e.NewTextValue.IsNotNullOrEmpty());
+
+            private void Picker_FocusChanged(object? sender, FocusEventArgs e) =>
+                ControlFocusChanged(e, label, picker?.SelectedIndex == -1);
+
+            private void Picker_SelectedIndexChanged(object? sender, EventArgs e) =>
+                ChangeActivate(label, picker?.SelectedIndex != -1);
         }
     }
 

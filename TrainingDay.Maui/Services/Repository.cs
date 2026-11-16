@@ -5,6 +5,7 @@ using System.Collections.Concurrent;
 using TrainingDay.Common.Models;
 using TrainingDay.Maui.Models;
 using TrainingDay.Maui.Models.Database;
+using TrainingDay.Maui.Extensions;
 
 namespace TrainingDay.Maui.Services;
 
@@ -142,29 +143,30 @@ public class Repository : IRepository
         }
     }
     
-    private bool AddorUpdateExercise(BaseExercise newExercise, IEnumerable<ExerciseEntity> dbExercises)
+    private void AddorUpdateExercise(BaseExercise newExercise, IEnumerable<ExerciseEntity> dbExercises)
     {
+        if (newExercise.CodeNum > ConstantKeys.ExerciseMaxCodeNum)
+        {
+            return;
+        }
+
         try
         {
-			var dbExercise = dbExercises.FirstOrDefault(item => item.CodeNum == newExercise.CodeNum);
-			if (dbExercise == null)
-			{
-				dbExercise = new ExerciseEntity();
-				dbExercise.CodeNum = newExercise.CodeNum;
-			}
+            var dbExercise = dbExercises.FirstOrDefault(item => item.CodeNum == newExercise.CodeNum) ?? new ExerciseEntity
+            {
+                CodeNum = newExercise.CodeNum
+            };
 
-			dbExercise.DifficultType = newExercise.DifficultLevel;
+            dbExercise.DifficultType = newExercise.DifficultLevel;
 			dbExercise.Description = JsonSerializer.Serialize(newExercise.Description);
 			dbExercise.MusclesString = newExercise.MusclesString;
 			dbExercise.Name = newExercise.Name;
 			dbExercise.TagsValue = ExerciseExtensions.ConvertTagStringToInt(newExercise.Tags);
 			SaveExerciseItem(dbExercise);
-            return true;
 		}
 		catch (Exception e)
         {
 			LoggingService.TrackError(e);
-            return false;
 		}
     }
 

@@ -227,13 +227,13 @@
 
                             <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Execution}" TextColor="LimeGreen" VerticalTextAlignment="Center"
                                 IsVisible="{Binding Description.Execution, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"/>
-                            <Label FontSize="Small" Text="{Binding Description.Execution}"
+                            <controls:InstructionStepsView Text="{Binding Description.Execution}" Tags="{Binding Tags}"
                                 IsVisible="{Binding Description.Execution, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"/>
 
                             <Label FontSize="Medium" HorizontalTextAlignment="Center" Text="{x:Static resx:AppResources.Advice}" TextColor="Orange" VerticalTextAlignment="Center"
                                 IsVisible="{Binding Description.Advice, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"/>
 
-                            <Label FontSize="Small" Text="{Binding Description.Advice}"
+                            <controls:InstructionStepsView Text="{Binding Description.Advice}" IsBulletList="True" MarkerColor="Orange"
                                 IsVisible="{Binding Description.Advice, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"/>
                         </StackLayout>
                     </VerticalStackLayout>

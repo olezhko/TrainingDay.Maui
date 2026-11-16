@@ -15,9 +15,22 @@ public class ImageCache : Image
         Loaded += ImageCache_Loaded;
     }
 
+    // First load covers the case where CodeNum/ExerciseId never change from their defaults.
+    // On re-entering the visual tree (page re-appearing, tab switch, cell re-attached) the platform
+    // image loader (Glide on Android) may have released the bitmap of a stream source while detached,
+    // leaving an empty view, so the current image is re-applied from the in-memory cache (no DB hit).
     private void ImageCache_Loaded(object? sender, EventArgs e)
     {
-        LoadImage();
+        if (currentKey == null)
+        {
+            LoadImage();
+            return;
+        }
+
+        if (ImageService.TryGetCachedImageData(currentKey, out var cached) && cached != null)
+        {
+            ApplyImage(cached);
+        }
     }
 
     public static readonly BindableProperty CodeNumProperty = BindableProperty.Create(nameof(CodeNum), typeof(int), typeof(ImageCache), null, propertyChanged: (bindable, oldvalue, newvalue) => ((ImageCache)bindable).OnImageUrlChanged(), defaultBindingMode: BindingMode.TwoWay);

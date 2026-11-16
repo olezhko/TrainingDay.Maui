@@ -51,7 +51,7 @@ public class RegisterPageViewModel : BaseViewModel
 
     public bool HasError => !string.IsNullOrEmpty(ErrorMessage);
 
-    public ICommand RegisterCommand => new AsyncRelayCommand(Register);
+    public ICommand RegisterCommand => field ??= new AsyncRelayCommand(Register);
 
     private async Task Register()
     {

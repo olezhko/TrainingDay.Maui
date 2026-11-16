@@ -7,7 +7,7 @@ namespace TrainingDay.Maui.Platforms.iOS
 {
 	public class PushNotificationService : IPushNotification
     {
-        bool hasNotificationsPermission;
+        private const UNAuthorizationOptions RequestedOptions = UNAuthorizationOptions.Alert | UNAuthorizationOptions.Sound;
 
         public PushNotificationService()
 		{
@@ -15,39 +15,63 @@ namespace TrainingDay.Maui.Platforms.iOS
             UNUserNotificationCenter.Current.Delegate = new iOSNotificationReceiver();
 
             // Request permission to use local notifications.
-            UNUserNotificationCenter.Current.RequestAuthorization(UNAuthorizationOptions.Alert, (approved, err) =>
+            UNUserNotificationCenter.Current.RequestAuthorization(RequestedOptions, (approved, err) =>
             {
-                hasNotificationsPermission = approved;
+                if (err != null)
+                {
+                    LoggingService.TrackError(new Exception($"Notification authorization failed: {err}"));
+                }
             });
         }
 
         public void Cancel(int id)
         {
-            UNUserNotificationCenter.Current.RemoveDeliveredNotifications(new[] { id.ToString() });
+            var ids = new[] { id.ToString() };
+            UNUserNotificationCenter.Current.RemovePendingNotificationRequests(ids);
+            UNUserNotificationCenter.Current.RemoveDeliveredNotifications(ids);
         }
 
         public void Show(PushMessage message)
         {
-            if (!hasNotificationsPermission)
-                return;
-
-            var content = new UNMutableNotificationContent()
+            // Check the actual, current authorization state instead of a cached flag:
+            // the user can change it in Settings at any time, and the initial request is async.
+            UNUserNotificationCenter.Current.GetNotificationSettings(settings =>
             {
-                Title = message.Title,
-                Subtitle = "",
-                Body = message.Message,
-                Badge = 1
-            };
+                var status = settings.AuthorizationStatus;
+                if (status != UNAuthorizationStatus.Authorized
+                    && status != UNAuthorizationStatus.Provisional
+                    && status != UNAuthorizationStatus.Ephemeral)
+                {
+                    return;
+                }
 
-            UNNotificationTrigger trigger;
-            // Create a time-based trigger, interval is in seconds and must be greater than 0.
-            trigger = UNTimeIntervalNotificationTrigger.CreateTrigger(0.25, false);
+                if (settings.AlertSetting != UNNotificationSetting.Enabled)
+                {
+                    return;
+                }
 
-            var request = UNNotificationRequest.FromIdentifier(message.Id.ToString(), content, trigger);
-            UNUserNotificationCenter.Current.AddNotificationRequest(request, (err) =>
-            {
-                if (err != null)
-                    throw new Exception($"Failed to schedule notification: {err}");
+                var content = new UNMutableNotificationContent()
+                {
+                    Title = message.Title ?? string.Empty,
+                    Body = message.Message ?? string.Empty,
+                };
+
+                if (!message.IsSilent && settings.SoundSetting == UNNotificationSetting.Enabled)
+                {
+                    content.Sound = UNNotificationSound.Default;
+                }
+
+                // Interval is in seconds and must be greater than 0.
+                var trigger = UNTimeIntervalNotificationTrigger.CreateTrigger(0.25, false);
+                var request = UNNotificationRequest.FromIdentifier(message.Id.ToString(), content, trigger);
+
+                UNUserNotificationCenter.Current.AddNotificationRequest(request, err =>
+                {
+                    if (err != null)
+                    {
+                        LoggingService.TrackError(new Exception($"Failed to schedule notification {message.Id}: {err}"));
+                    }
+                });
             });
         }
     }
@@ -62,9 +86,8 @@ namespace TrainingDay.Maui.Platforms.iOS
             }
             else
             {
-                completionHandler(UNNotificationPresentationOptions.Banner);
+                completionHandler(UNNotificationPresentationOptions.Banner | UNNotificationPresentationOptions.List);
             }
         }
     }
 }
-

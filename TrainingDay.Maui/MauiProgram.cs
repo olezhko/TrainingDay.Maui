@@ -86,7 +86,7 @@ namespace TrainingDay.Maui
 #endif
 
 #if IOS
-            builder.Services.AddTransient<IPushNotification, Platforms.iOS.PushNotificationService>();
+            builder.Services.AddSingleton<IPushNotification, Platforms.iOS.PushNotificationService>();
 #endif
 
             Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("NoUnderLine", (handler, entry) =>

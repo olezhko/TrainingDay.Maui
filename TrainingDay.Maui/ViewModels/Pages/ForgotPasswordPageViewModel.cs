@@ -28,7 +28,7 @@ public class ForgotPasswordPageViewModel : BaseViewModel
         set => SetProperty(ref statusMessage, value);
     }
 
-    public ICommand SubmitCommand => new AsyncRelayCommand(Submit);
+    public ICommand SubmitCommand => field ??= new AsyncRelayCommand(Submit);
 
     private async Task Submit()
     {

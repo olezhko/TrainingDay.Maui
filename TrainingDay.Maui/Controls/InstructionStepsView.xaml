@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:TrainingDay.Maui.Controls"
+             xmlns:models="clr-namespace:TrainingDay.Maui.Models"
+             x:Class="TrainingDay.Maui.Controls.InstructionStepsView"
+             x:Name="Self">
+    <VerticalStackLayout>
+        <Label x:Name="PlainLabel" FontSize="14" IsVisible="False"/>
+
+        <VerticalStackLayout x:Name="StepsLayout" Spacing="8" IsVisible="False">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate x:DataType="models:InstructionStep">
+                    <Grid ColumnDefinitions="22,*" ColumnSpacing="8">
+                        <Border WidthRequest="22" HeightRequest="22" StrokeThickness="0" StrokeShape="RoundRectangle 11"
+                                BackgroundColor="{Binding Source={x:Reference Self}, Path=MarkerColor, x:DataType=controls:InstructionStepsView}"
+                                VerticalOptions="Start"
+                                IsVisible="{Binding IsNumbered}"
+                                SemanticProperties.Description="{Binding AccessibilityLabel}">
+                            <Label Text="{Binding Marker}" FontSize="12" FontAttributes="Bold" TextColor="Black"
+                                   FontAutoScalingEnabled="False"
+                                   HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                        </Border>
+
+                        <Label Text="{Binding Marker}" FontSize="16" FontAttributes="Bold"
+                               TextColor="{Binding Source={x:Reference Self}, Path=MarkerColor, x:DataType=controls:InstructionStepsView}"
+                               HorizontalTextAlignment="Center" VerticalOptions="Start"
+                               IsVisible="{Binding IsSymbol}"
+                               AutomationProperties.IsInAccessibleTree="False"/>
+
+                        <Label Grid.Column="1" Text="{Binding Text}" FontSize="14"/>
+                    </Grid>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+</ContentView>

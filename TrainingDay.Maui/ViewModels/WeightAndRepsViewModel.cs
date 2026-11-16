@@ -28,7 +28,7 @@ public class WeightAndRepsViewModel : BaseViewModel
     }
 
     [JsonIgnore]
-    public ICommand ChangeFinishedCommand => new RelayCommand(ChangeFinished);
+    public ICommand ChangeFinishedCommand => field ??= new RelayCommand(ChangeFinished);
 
     [JsonIgnore]
     private int repetitions;

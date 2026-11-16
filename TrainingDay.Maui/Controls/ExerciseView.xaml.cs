@@ -7,7 +7,7 @@ namespace TrainingDay.Maui.Controls;
 
 public partial class ExerciseView : ContentView
 {
-    public ICommand DeleteRequestCommand => new RelayCommand<WeightAndRepsViewModel>(DeleteRequestWeightAndReps);
+    public ICommand DeleteRequestCommand { get; }
 
     public TrainingExerciseViewModel CurrentExercise
     {
@@ -18,6 +18,7 @@ public partial class ExerciseView : ContentView
 
     public ExerciseView()
     {
+        DeleteRequestCommand = new RelayCommand<WeightAndRepsViewModel>(DeleteRequestWeightAndReps);
         InitializeComponent();
     }
 

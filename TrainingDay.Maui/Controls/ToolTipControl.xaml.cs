@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using Microsoft.Maui.Controls;
 using TrainingDay.Maui.Services;
 
 namespace TrainingDay.Maui.Controls;

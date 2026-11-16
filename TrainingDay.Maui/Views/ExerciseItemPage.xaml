@@ -182,7 +182,7 @@
                                         Text="{Binding Description.Execution}"
                                         SemanticProperties.Description="{x:Static resx:AppResources.Execution}"/>
                             </Border>
-                            <Label FontSize="14" Text="{Binding Description.Execution}" IsVisible="{Binding IsBase}"/>
+                            <controls:InstructionStepsView Text="{Binding Description.Execution}" Tags="{Binding Tags}" IsVisible="{Binding IsBase}"/>
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Spacing="4">
@@ -200,7 +200,7 @@
                                         Text="{Binding Description.Advice}"
                                         SemanticProperties.Description="{x:Static resx:AppResources.Advice}"/>
                             </Border>
-                            <Label FontSize="14" Text="{Binding Description.Advice}" IsVisible="{Binding IsBase}"/>
+                            <controls:InstructionStepsView Text="{Binding Description.Advice}" IsBulletList="True" MarkerColor="Orange" IsVisible="{Binding IsBase}"/>
                         </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Border>
